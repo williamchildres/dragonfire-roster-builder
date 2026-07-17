@@ -10,7 +10,9 @@ export interface DragonDetailPresentation {
   headerLine: string;
   metadataNotice: string | null;
   provides: string[];
+  lockedProvides: string[];
   benefitsFrom: string[];
+  lockedBenefitsFrom: string[];
   placementNotes: string[];
 }
 
@@ -186,22 +188,33 @@ const SUMMARY_PRIORITY = [
 
 export function buildDragonDetailPresentation(
   profile: DragonSynergyProfile | undefined,
+  progression?: DragonProgression,
 ): DragonDetailPresentation {
-  const provides = profile
-    ? collectUnique([
-        ...describeSignals(profile.outputs, OUTPUT_SIGNAL_LABELS),
-        ...describeSignals(profile.supports, SUPPORT_SIGNAL_LABELS),
-      ])
-    : [];
-  const benefitsFrom = profile ? collectUnique(describeSignals(profile.benefitsFrom, BENEFIT_SIGNAL_LABELS)) : [];
+  const providedSignals = profile
+    ? describeSignalStates(
+        [
+          ...describeSignalEntries(profile.outputs, OUTPUT_SIGNAL_LABELS),
+          ...describeSignalEntries(profile.supports, SUPPORT_SIGNAL_LABELS),
+        ],
+        progression,
+      )
+    : emptySignalStates;
+  const benefitSignals = profile
+    ? describeSignalStates(
+        describeSignalEntries(profile.benefitsFrom, BENEFIT_SIGNAL_LABELS),
+        progression,
+      )
+    : emptySignalStates;
   const placementNotes = profile ? collectUnique(describePlacementNotes(profile)) : [];
   const headerLine = profile ? buildHeadlineLine(profile) : 'Metadata-only record. Ability details not verified.';
 
   return {
     headerLine,
     metadataNotice: profile ? null : 'Metadata-only record. Ability details not verified.',
-    provides,
-    benefitsFrom,
+    provides: providedSignals.active,
+    lockedProvides: providedSignals.locked,
+    benefitsFrom: benefitSignals.active,
+    lockedBenefitsFrom: benefitSignals.locked,
     placementNotes,
   };
 }
@@ -308,6 +321,100 @@ function describeSignals(
         .filter((label): label is string => Boolean(label)),
     ),
   ).sort((left, right) => headlinePriority(left) - headlinePriority(right));
+}
+
+interface SignalLabelEntry {
+  label: string;
+  signal: SynergySignal;
+}
+
+interface SignalLabelStates {
+  active: string[];
+  locked: string[];
+}
+
+const emptySignalStates: SignalLabelStates = { active: [], locked: [] };
+
+function describeSignalEntries(
+  signals: SynergySignal[],
+  labels: Partial<Record<SynergyTag, string>>,
+): SignalLabelEntry[] {
+  return signals.flatMap((signal) =>
+    displayTagsFrom(providedTags(signal)).flatMap((tag) => {
+      const label = labelForSignalTag(signal, tag, labels);
+      return label ? [{ label, signal }] : [];
+    }),
+  );
+}
+
+function describeSignalStates(
+  entries: SignalLabelEntry[],
+  progression: DragonProgression | undefined,
+): SignalLabelStates {
+  if (progression === undefined) {
+    return {
+      active: collectUnique(entries.map((entry) => entry.label)).sort(labelPriority),
+      locked: [],
+    };
+  }
+
+  const entriesByLabel = new Map<string, SignalLabelEntry[]>();
+  for (const entry of entries) {
+    entriesByLabel.set(entry.label, [...(entriesByLabel.get(entry.label) ?? []), entry]);
+  }
+
+  const active: string[] = [];
+  const locked: string[] = [];
+  for (const [label, matchingEntries] of entriesByLabel) {
+    if (matchingEntries.some((entry) => signalIsUnlocked(entry.signal, progression))) {
+      active.push(label);
+      continue;
+    }
+
+    const requirement = matchingEntries
+      .map((entry) => entry.signal.unlock)
+      .filter((candidate): candidate is NonNullable<typeof candidate> => candidate !== undefined)
+      .sort(compareRequirements)[0];
+    if (requirement) {
+      locked.push(`${label} — inactive until ${formatUnlockRequirement(requirement)}`);
+    }
+  }
+
+  return {
+    active: active.sort(labelPriority),
+    locked: locked.sort(labelPriority),
+  };
+}
+
+function signalIsUnlocked(signal: SynergySignal, progression: DragonProgression): boolean {
+  return (
+    (signal.unlock?.minimumStarRank === undefined ||
+      (progression.starRank ?? 0) >= signal.unlock.minimumStarRank) &&
+    (signal.unlock?.minimumDragonLevel === undefined ||
+      (progression.dragonLevel ?? 0) >= signal.unlock.minimumDragonLevel)
+  );
+}
+
+function compareRequirements(
+  left: NonNullable<SynergySignal['unlock']>,
+  right: NonNullable<SynergySignal['unlock']>,
+): number {
+  return (
+    (left.minimumStarRank ?? Number.POSITIVE_INFINITY) -
+      (right.minimumStarRank ?? Number.POSITIVE_INFINITY) ||
+    (left.minimumDragonLevel ?? Number.POSITIVE_INFINITY) -
+      (right.minimumDragonLevel ?? Number.POSITIVE_INFINITY)
+  );
+}
+
+function formatUnlockRequirement(requirement: NonNullable<SynergySignal['unlock']>): string {
+  const requirements = [
+    requirement.minimumStarRank !== undefined ? `${requirement.minimumStarRank}★` : null,
+    requirement.minimumDragonLevel !== undefined
+      ? `Dragon Level ${requirement.minimumDragonLevel}`
+      : null,
+  ].filter((value): value is string => value !== null);
+  return requirements.join(' and ');
 }
 
 function describePlacementNotes(profile: DragonSynergyProfile): string[] {

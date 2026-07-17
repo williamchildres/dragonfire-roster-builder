@@ -142,4 +142,63 @@ describe('dragon detail presentation helpers', () => {
       }
     }
   });
+
+  it('qualifies Dawnseeker First Light at 9 Stars and activates it once 10 Stars is selected', () => {
+    const atNine = buildDragonDetailPresentation(profileById('dawnseeker'), {
+      starRank: 9,
+      dragonLevel: 16,
+    });
+    const atTen = buildDragonDetailPresentation(profileById('dawnseeker'), {
+      starRank: 10,
+      dragonLevel: 16,
+    });
+
+    expect(atNine.provides).not.toContain('Grants First-Strike to both teammates (rounds 1-3)');
+    expect(atNine.lockedProvides).toContain(
+      'Grants First-Strike to both teammates (rounds 1-3) — inactive until 10★',
+    );
+    expect(atTen.provides).toContain('Grants First-Strike to both teammates (rounds 1-3)');
+    expect(atTen.lockedProvides.join(' ')).not.toContain('First-Strike');
+  });
+
+  it('qualifies Vesper Confusion and its Control rollup at 9 Stars without duplicating the active 10-Star labels', () => {
+    const atNine = buildDragonDetailPresentation(profileById('vesper'), {
+      starRank: 9,
+      dragonLevel: 16,
+    });
+    const atTen = buildDragonDetailPresentation(profileById('vesper'), {
+      starRank: 10,
+      dragonLevel: 16,
+    });
+
+    expect(atNine.provides).not.toEqual(expect.arrayContaining(['Applies Confusion', 'Control']));
+    expect(atNine.lockedProvides).toEqual(
+      expect.arrayContaining([
+        'Applies Confusion — inactive until 10★',
+        'Control — inactive until 10★',
+      ]),
+    );
+    expect(atTen.provides).toEqual(expect.arrayContaining(['Applies Confusion', 'Control']));
+    expect(atTen.lockedProvides.join(' ')).not.toMatch(/Confusion|Control/);
+  });
+
+  it('qualifies a Level 16 Vanguard Trait signal at Level 15 and preserves existing active signals', () => {
+    const atFifteen = buildDragonDetailPresentation(profileById('dawnseeker'), {
+      starRank: 10,
+      dragonLevel: 15,
+    });
+    const atSixteen = buildDragonDetailPresentation(profileById('dawnseeker'), {
+      starRank: 10,
+      dragonLevel: 16,
+    });
+
+    expect(atFifteen.provides).toContain('Tactical Damage');
+    expect(atFifteen.lockedProvides).toContain(
+      'Fire Damage support — inactive until Dragon Level 16',
+    );
+    expect(atSixteen.provides).toContain('Fire Damage support');
+    expect(atSixteen.lockedProvides).not.toContain(
+      'Fire Damage support — inactive until Dragon Level 16',
+    );
+  });
 });

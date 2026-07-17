@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { buildDragonDetailPresentation } from '../app/dragonDetailPresentation';
 import { runFullRosterAudit } from '../audit/fullRosterAudit';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
@@ -22,6 +23,13 @@ const maxProgression: SimpleProgressionByDragonId = Object.fromEntries(
   ]),
 );
 
+let auditReport: ReturnType<typeof runFullRosterAudit> | undefined;
+
+function report() {
+  auditReport ??= runFullRosterAudit();
+  return auditReport;
+}
+
 function resultsFor(formation: SimpleFormation) {
   return evaluateFormation({
     formation,
@@ -38,27 +46,29 @@ function activeRelationships(formation: SimpleFormation) {
 
 describe('full-roster regression audit', () => {
   it('audits all canonical data, profiles, progression states, provider/payoff pairs, and ordered formations', () => {
-    const report = runFullRosterAudit();
+    const result = report();
 
-    expect(report.reliable).toBe(true);
-    expect(report.generatedFrom).toEqual({
-      databaseVersion: '0.6.8',
+    expect(result.reliable).toBe(true);
+    expect(result.generatedFrom).toEqual({
+      databaseVersion: '0.6.9',
       dataSchemaVersion: 13,
       localRosterSchemaVersion: 4,
     });
-    expect(report.rarityCoverage).toEqual({ Epic: 10, Legendary: 9, Rare: 12 });
-    expect(report.totals.dragons).toBe(31);
-    expect(report.totals.abilities).toBe(217);
-    expect(report.totals.auditDispositions).toBe(217);
-    expect(report.totals.orderedFormationsEvaluated).toBe(26_970);
-    expect(report.totals.progressionStatesEvaluated).toBeGreaterThan(0);
-    expect(report.totals.providerPayoffPairsEvaluated).toBeGreaterThan(0);
-    expect(report.totals.failedChecks).toBe(1);
-    expect(report.checks.find((check) => check.id === 'FRR-C030')?.status).toBe('FAIL');
-    expect(report.findings.some((finding) => finding.id === 'FRR-F003')).toBe(true);
-    expect(report.perDragon).toHaveLength(31);
-    expect(report.perDragon.every((row) => row.status === 'PASS')).toBe(true);
-    expect(report.formationSweep.deterministicFullResultHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(result.rarityCoverage).toEqual({ Epic: 10, Legendary: 9, Rare: 12 });
+    expect(result.totals).toMatchObject({
+      dragons: 31,
+      abilities: 217,
+      auditDispositions: 217,
+      progressionStatesEvaluated: 15_300,
+      providerPayoffPairsEvaluated: 4_023,
+      orderedFormationsEvaluated: 26_970,
+      passChecks: 30,
+      failedChecks: 0,
+    });
+    expect(result.checks.find((check) => check.id === 'FRR-C030')?.status).toBe('PASS');
+    expect(result.findings.map((finding) => finding.id)).toEqual(['FRR-F001', 'FRR-F002']);
+    expect(result.perDragon).toHaveLength(31);
+    expect(result.perDragon.every((row) => row.status === 'PASS')).toBe(true);
   }, 120_000);
 
   it('keeps the verified Control alias family exact and prohibits unrelated status/damage aliases', () => {
@@ -171,10 +181,56 @@ describe('full-roster regression audit', () => {
   it.todo(
     'FRR-F002: resolve highest-stat recipients only when canonical combat-stat values have a unique known maximum',
   );
-  it.todo(
-    'FRR-F003: exclude locked and position-inactive ability references from active aggregated relationships',
-  );
-  it.todo('FRR-F004: make Details At a glance progression-aware for locked future signals');
-  it.todo('FRR-F005: wrap long Details headings and technical labels without descendant overflow');
-  it.todo('FRR-F006: keep About coverage copy consistent with the 31/31 roster baseline');
+  it('FRR-F003: excludes inactive relationship evidence without changing any numeric rating baseline', () => {
+    const sweep = report().formationSweep;
+
+    expect(sweep.invariantViolationCount).toBe(0);
+    expect(sweep.inactiveAbilityReferenceExamples).toEqual([]);
+    expect(sweep.deterministicFullResultHash).toBe(
+      '2a4561cdb2aa6d0b9483005f44cc3ee3747d21fb6c4ecb1fe0cc375c1dafbf64',
+    );
+    expect(sweep.rating).toMatchObject({
+      minimum: 16,
+      maximum: 93,
+      median: 52,
+      byTier: {
+        Excellent: 41,
+        Strong: 1_241,
+        Solid: 7_339,
+        Developing: 13_773,
+        Weak: 4_576,
+      },
+    });
+  }, 120_000);
+
+  it('FRR-F004: qualifies future Details signals at their Star and Dragon Level boundaries', () => {
+    const dawnseeker = simpleSynergyProfiles.find((profile) => profile.dragonId === 'dawnseeker')!;
+    const vesper = simpleSynergyProfiles.find((profile) => profile.dragonId === 'vesper')!;
+    const dawnAtNine = buildDragonDetailPresentation(dawnseeker, {
+      starRank: 9,
+      dragonLevel: 15,
+    });
+    const vesperAtNine = buildDragonDetailPresentation(vesper, {
+      starRank: 9,
+      dragonLevel: 16,
+    });
+
+    expect(dawnAtNine.lockedProvides.join(' ')).toMatch(/First-Strike.*10★/);
+    expect(dawnAtNine.lockedProvides.join(' ')).toMatch(/Fire Damage support.*Dragon Level 16/);
+    expect(vesperAtNine.lockedProvides.join(' ')).toMatch(/Confusion.*10★/);
+    expect(vesperAtNine.lockedProvides.join(' ')).toMatch(/Control.*10★/);
+  });
+
+  it('FRR-F005: keeps the reusable scoped Details wrapping regression active', async () => {
+    const css = await import('../styles/global.css?raw').then((module) => module.default);
+    expect(css).toContain('.details-dialog :where(');
+    expect(css).toContain('overflow-wrap: anywhere;');
+    expect(css).toContain('word-break: break-word;');
+  });
+
+  it('FRR-F006: records complete About coverage copy', async () => {
+    const source = await import('../app/App.tsx?raw').then((module) => module.default);
+    expect(source).toContain('All 31 known dragons have detailed coverage: Legendary 9/9, Epic 10/10, and Rare');
+    expect(source).toContain('12/12.');
+  });
 });

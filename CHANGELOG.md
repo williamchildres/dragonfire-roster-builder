@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Corrected semantic relationship aggregation so active paths retain only active ability evidence while equivalent active paths still collapse to one relationship with unchanged scoring.
+- Made Dragon Details At a glance progression-aware, added scoped long-label wrapping, and added current 31/31 coverage copy to About.
+- Increased database/package version to `0.6.9`; source data schema remains `13`, local roster schema remains `4`, and import/export/share-link contracts are unchanged.
 - Added screenshot-verified detailed records and curated simple-synergy profiles for Rare dragons Vesper, Nyrena, and Dawnseeker. Coverage is now complete at 31 known dragons, 31 detailed dragons, 31 simple profiles, and 0 metadata-only dragons, with Rare coverage at 12 / 12.
 - Added reusable adjacent-group recipient selection, support-only benefit presentation, and non-scoring defensive/Recovery Received signals. Slow is no longer a Control alias; Confusion remains specifically visible while satisfying Control once, and First-Strike remains outside Control.
 - Increased database/package version to `0.6.8`; source data schema remains `13`, local roster schema remains `4`, and import/export/share-link contracts are unchanged.

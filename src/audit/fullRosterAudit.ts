@@ -107,7 +107,7 @@ export interface FormationSummaryRow {
 }
 
 export interface FullRosterAuditReport {
-  auditVersion: '0.6.8';
+  auditVersion: string;
   generatedFrom: {
     databaseVersion: string;
     dataSchemaVersion: number;
@@ -228,7 +228,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const rarityCoverage = countBy(dragons, (dragon) => dragon.rarity);
   addCheck(
     'FRR-C001',
-    databaseMetadata.databaseVersion === '0.6.8',
+    databaseMetadata.databaseVersion === '0.6.9',
     `Database version is ${databaseMetadata.databaseVersion}.`,
   );
   addCheck(
@@ -595,7 +595,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
       affectedAbilityOrSignal: 'Framework invariant',
       currentBehavior: check.detail,
       expectedBehavior:
-        'The audited invariant should pass against canonical 0.6.8 source data and current evaluator behavior.',
+        `The audited invariant should pass against canonical ${databaseMetadata.databaseVersion} source data and current evaluator behavior.`,
       reproducibleSetup: `Run pnpm run audit:full-roster and inspect check ${check.id}.`,
       fileReferences: fileReferencesForFailedCheck(check.id),
       focusedTestReproduction: true,
@@ -619,7 +619,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const reliable = !failedChecks.some((check) => fundamentalCheckIds.has(check.id));
 
   return {
-    auditVersion: '0.6.8',
+    auditVersion: databaseMetadata.databaseVersion,
     generatedFrom: {
       databaseVersion: databaseMetadata.databaseVersion,
       dataSchemaVersion: databaseMetadata.schemaVersion,
@@ -1199,11 +1199,13 @@ function passesExcellentGuardrails(
   const component = (label: string) =>
     rating.breakdown.find((item) => item.label === label)?.score ?? 0;
   const missingBenefits = new Set([
-    ...presentation.missingEnablers.map((result) => `${result.dragonIds[0]}:${result.tag}`),
+    ...presentation.missingEnablers.map(
+      (result) => `${result.dragonIds[0]}:${normalizeAuditMeaning(result.tag?.split(':').at(-1))}`,
+    ),
     ...Object.entries(chips).flatMap(([dragonId, value]) =>
       value.benefitsFrom
         .filter((chip) => chip.state === 'missing')
-        .map((chip) => `${dragonId}:${chip.label}`),
+        .map((chip) => `${dragonId}:${normalizeAuditMeaning(chip.label)}`),
     ),
   ]).size;
   const payoff = component('Realized synergy payoff');
@@ -1215,6 +1217,13 @@ function passesExcellentGuardrails(
     component('Placement / conflict risk') > 5 &&
     !(support >= 16 && payoff < 28)
   );
+}
+
+function normalizeAuditMeaning(value: string | undefined): string {
+  return (value ?? 'unknown')
+    .toLowerCase()
+    .replaceAll(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 function formationWithProfileAt(dragonId: string, position: FormationPosition): SimpleFormation {
