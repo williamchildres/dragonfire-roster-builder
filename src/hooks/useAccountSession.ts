@@ -4,6 +4,7 @@ import type { AccountSession, AuthService } from '../cloud/types';
 export function useAccountSession(auth: AuthService | null) {
   const [session, setSession] = useState<AccountSession | null>(null);
   const [loading, setLoading] = useState(auth !== null);
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
 
   useEffect(() => {
     if (!auth) {
@@ -11,9 +12,10 @@ export function useAccountSession(auth: AuthService | null) {
     }
 
     let active = true;
-    const unsubscribe = auth.onAuthStateChange((nextSession) => {
+    const unsubscribe = auth.onAuthStateChange(({ event, session: nextSession }) => {
       if (active) {
         setSession(nextSession);
+        setPasswordRecovery(event === 'password-recovery');
         setLoading(false);
       }
     });
@@ -39,5 +41,5 @@ export function useAccountSession(auth: AuthService | null) {
     };
   }, [auth]);
 
-  return { session, loading };
+  return { session, loading, passwordRecovery, clearPasswordRecovery: () => setPasswordRecovery(false) };
 }

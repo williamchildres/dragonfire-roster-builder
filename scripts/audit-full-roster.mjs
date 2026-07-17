@@ -32,7 +32,7 @@ const resolvedFindings = [
 ];
 const browserQaObservation = {
   status: 'PENDING',
-  auditedUrl: 'Pending required Chrome QA on local 0.7.1 production build',
+  auditedUrl: 'Pending required Chrome QA on local 0.8.0 production build',
   pendingReason: 'Automated/manual Chrome viewport QA before push is PENDING by explicit owner decision; no mobile visual QA result is represented as a pass.',
   desktop: {
     requestedViewport: { width: 1440, height: 1000 },
@@ -123,10 +123,10 @@ try {
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: '3846245dbf9a02236104b8948fd66510c919e56a',
-      branch: 'fix/account-production-acceptance',
+      originMainSha: 'e56c3a5176c7cd48173de85007e32c621b8e4c2f',
+      branch: 'feat/google-password-auth',
       worktree:
-        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/account-production-acceptance',
+        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/google-password-auth',
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,

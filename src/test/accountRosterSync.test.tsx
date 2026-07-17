@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { App } from '../app/App';
 import type {
+  AccountAuthEvent,
+  AccountAuthState,
   AccountServices,
   AccountSession,
   AuthService,
@@ -21,9 +23,19 @@ import {
 
 class FakeAuth implements AuthService {
   readonly magicLinks: Array<{ email: string; redirectTo: string }> = [];
-  readonly listeners = new Set<(session: AccountSession | null) => void>();
+  readonly googleRedirects: string[] = [];
+  readonly passwordSignIns: Array<{ email: string; password: string }> = [];
+  readonly signUps: Array<{ email: string; password: string; redirectTo: string }> = [];
+  readonly passwordResets: Array<{ email: string; redirectTo: string }> = [];
+  readonly passwordUpdates: string[] = [];
+  readonly listeners = new Set<(state: AccountAuthState) => void>();
   cleanupCount = 0;
   failMagicLink = false;
+  failGoogle = false;
+  failPasswordSignIn = false;
+  failPasswordUpdate = false;
+  failPasswordReset = false;
+  immediateSignUpSession = false;
 
   constructor(public session: AccountSession | null) {}
 
@@ -31,12 +43,43 @@ class FakeAuth implements AuthService {
     return Promise.resolve(this.session);
   }
 
-  onAuthStateChange(listener: (session: AccountSession | null) => void) {
+  onAuthStateChange(listener: (state: AccountAuthState) => void) {
     this.listeners.add(listener);
     return () => {
       this.listeners.delete(listener);
       this.cleanupCount += 1;
     };
+  }
+
+  signInWithGoogle(redirectTo: string) {
+    this.googleRedirects.push(redirectTo);
+    return this.failGoogle ? Promise.reject(new Error('private authentication detail')) : Promise.resolve();
+  }
+
+  signInWithPassword(email: string, password: string) {
+    this.passwordSignIns.push({ email, password });
+    if (this.failPasswordSignIn) return Promise.reject(new Error('private authentication detail'));
+    this.emit(signedInSession);
+    return Promise.resolve();
+  }
+
+  signUpWithPassword(email: string, password: string, redirectTo: string) {
+    this.signUps.push({ email, password, redirectTo });
+    if (this.immediateSignUpSession) {
+      this.emit(signedInSession);
+      return Promise.resolve({ session: signedInSession });
+    }
+    return Promise.resolve({ session: null });
+  }
+
+  sendPasswordReset(email: string, redirectTo: string) {
+    this.passwordResets.push({ email, redirectTo });
+    return this.failPasswordReset ? Promise.reject(new Error('rate limit exceeded')) : Promise.resolve();
+  }
+
+  updatePassword(password: string) {
+    this.passwordUpdates.push(password);
+    return this.failPasswordUpdate ? Promise.reject(new Error('private authentication detail')) : Promise.resolve();
   }
 
   sendMagicLink(email: string, redirectTo: string) {
@@ -52,10 +95,10 @@ class FakeAuth implements AuthService {
     return Promise.resolve();
   }
 
-  emit(session: AccountSession | null) {
+  emit(session: AccountSession | null, event: AccountAuthEvent = session ? 'session' : 'signed-out') {
     this.session = session;
     for (const listener of this.listeners) {
-      listener(session);
+      listener({ session, event });
     }
   }
 }
@@ -100,7 +143,7 @@ describe('optional account authentication UI', () => {
     expect(screen.queryByText(/Roster storage/i)).not.toBeInTheDocument();
   });
 
-  it('validates and normalizes a magic-link request without password or social controls', async () => {
+  it('offers Google first and retains a normalized magic-link fallback', async () => {
     const auth = new FakeAuth(null);
     const services = makeServices(auth, new FakeRosters(null));
     const user = userEvent.setup();
@@ -109,11 +152,12 @@ describe('optional account authentication UI', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: /^sign in$/i })).toBeInTheDocument());
     await user.click(screen.getByRole('button', { name: /^sign in$/i }));
     const signInDialog = screen.getByRole('dialog', { name: 'Sign in to Dragonfire Lab' });
-    expect(within(signInDialog).queryByLabelText(/password/i)).not.toBeInTheDocument();
-    expect(within(signInDialog).queryByRole('button', { name: /google|facebook|pro|billing/i })).not.toBeInTheDocument();
+    expect(within(signInDialog).getByRole('button', { name: 'Continue with Google' })).toHaveClass('primary-button');
+    expect(within(signInDialog).getByLabelText('Password')).toHaveAttribute('autocomplete', 'current-password');
+    await user.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
     await user.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
     expect(screen.getByText('Enter a valid email address.')).toBeInTheDocument();
-    await user.type(screen.getByLabelText('Email address'), '  PLAYER@Example.COM  ');
+    await user.type(screen.getByLabelText('Email'), '  PLAYER@Example.COM  ');
     await user.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
     expect(await screen.findByText('Check your email for a Dragonfire Lab sign-in link.')).toBeInTheDocument();
     expect(auth.magicLinks).toHaveLength(1);
@@ -139,10 +183,114 @@ describe('optional account authentication UI', () => {
     const user = userEvent.setup();
     render(<App accountServices={makeServices(auth, new FakeRosters(null))} />);
     await user.click(await screen.findByRole('button', { name: /^sign in$/i }));
-    await user.type(screen.getByLabelText('Email address'), 'test@example.com');
+    await user.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
+    await user.type(screen.getByLabelText('Email'), 'test@example.com');
     await user.click(screen.getByRole('button', { name: 'Email me a sign-in link' }));
     expect(await screen.findByText('We could not send a sign-in link. Please try again.')).toBeInTheDocument();
     expect(screen.queryByText('private authentication detail')).not.toBeInTheDocument();
+  });
+
+  it('starts Google OAuth with the safe redirect and shows a generic initiation error', async () => {
+    const auth = new FakeAuth(null);
+    const user = userEvent.setup();
+    render(<App accountServices={makeServices(auth, new FakeRosters(null))} />);
+    await user.click(await screen.findByRole('button', { name: /^sign in$/i }));
+    await user.click(screen.getByRole('button', { name: 'Continue with Google' }));
+    expect(auth.googleRedirects).toHaveLength(1);
+    expect(auth.googleRedirects[0]).not.toContain('#formation');
+    auth.failGoogle = true;
+    await user.click(screen.getByRole('button', { name: 'Continue with Google' }));
+    expect(await screen.findByText('We could not start Google sign-in. Please try again.')).toBeInTheDocument();
+    expect(screen.queryByText('private authentication detail')).not.toBeInTheDocument();
+  });
+
+  it('signs in with a normalized email on Enter and keeps credential failures generic', async () => {
+    const auth = new FakeAuth(null);
+    const user = userEvent.setup();
+    render(<App accountServices={makeServices(auth, new FakeRosters(null))} />);
+    await user.click(await screen.findByRole('button', { name: /^sign in$/i }));
+    await user.type(screen.getByLabelText('Email'), ' PLAYER@Example.COM ');
+    await user.type(screen.getByLabelText('Password'), 'not transformed');
+    await user.keyboard('{Enter}');
+    await waitFor(() => expect(auth.passwordSignIns).toEqual([{ email: 'player@example.com', password: 'not transformed' }]));
+    expect(await screen.findByRole('button', { name: /Account for/i })).toBeInTheDocument();
+
+    const failing = new FakeAuth(null);
+    failing.failPasswordSignIn = true;
+    render(<App accountServices={makeServices(failing, new FakeRosters(null))} />);
+    const signInButtons = await screen.findAllByRole('button', { name: /^sign in$/i });
+    await user.click(signInButtons.at(-1)!);
+    const dialogs = screen.getAllByRole('dialog', { name: 'Sign in to Dragonfire Lab' });
+    const dialog = dialogs.at(-1)!;
+    await user.type(within(dialog).getByLabelText('Email'), 'test@example.com');
+    await user.type(within(dialog).getByLabelText('Password'), 'wrong-password');
+    await user.click(within(dialog).getByRole('button', { name: /^sign in$/i }));
+    expect(await within(dialog).findByText('The email or password was not accepted.')).toBeInTheDocument();
+    expect(screen.queryByText('private authentication detail')).not.toBeInTheDocument();
+  });
+
+  it('validates signup and password reset without revealing account existence', async () => {
+    const auth = new FakeAuth(null);
+    const user = userEvent.setup();
+    render(<App accountServices={makeServices(auth, new FakeRosters(null))} />);
+    await user.click(await screen.findByRole('button', { name: /^sign in$/i }));
+    await user.click(screen.getByRole('button', { name: 'Create account' }));
+    await user.type(screen.getByLabelText('Email'), 'new@example.com');
+    await user.type(screen.getByLabelText('Password'), 'short');
+    await user.type(screen.getByLabelText('Confirm password'), 'different');
+    await user.click(screen.getByRole('button', { name: 'Create account' }));
+    expect(screen.getByText('Use a password with at least 8 characters.')).toBeInTheDocument();
+    await user.clear(screen.getByLabelText('Password'));
+    await user.clear(screen.getByLabelText('Confirm password'));
+    await user.type(screen.getByLabelText('Password'), 'password-one');
+    await user.type(screen.getByLabelText('Confirm password'), 'password-two');
+    await user.click(screen.getByRole('button', { name: 'Create account' }));
+    expect(screen.getByText('The password confirmation does not match.')).toBeInTheDocument();
+    await user.clear(screen.getByLabelText('Confirm password'));
+    await user.type(screen.getByLabelText('Confirm password'), 'password-one');
+    await user.click(screen.getByRole('button', { name: 'Create account' }));
+    expect(await screen.findByText('Check your email to confirm your Dragonfire Lab account.')).toBeInTheDocument();
+    expect(auth.signUps[0]!.redirectTo).not.toContain('#formation');
+
+    await user.click(screen.getByRole('button', { name: 'Back to sign in' }));
+    await user.click(screen.getByRole('button', { name: 'Forgot password?' }));
+    await user.click(screen.getByRole('button', { name: 'Send password reset' }));
+    expect(await screen.findByText('If an account can receive a reset email, check that inbox for the next step.')).toBeInTheDocument();
+    expect(auth.passwordResets[0]!.redirectTo).not.toContain('#formation');
+  });
+
+  it('opens only a PASSWORD_RECOVERY event in the new-password dialog and retains the session after saving', async () => {
+    const auth = new FakeAuth(signedInSession);
+    const user = userEvent.setup();
+    render(<App accountServices={makeServices(auth, new FakeRosters(null))} />);
+    await screen.findByRole('button', { name: /Account for/i });
+    expect(screen.queryByRole('dialog', { name: 'Set New Password' })).not.toBeInTheDocument();
+    act(() => auth.emit(signedInSession, 'password-recovery'));
+    const dialog = await screen.findByRole('dialog', { name: 'Set New Password' });
+    await user.type(within(dialog).getByLabelText('New password'), 'new-password');
+    await user.type(within(dialog).getByLabelText('Confirm new password'), 'new-password');
+    await user.click(within(dialog).getByRole('button', { name: 'Save password' }));
+    expect(await within(dialog).findByText('Your password was saved. You remain signed in.')).toBeInTheDocument();
+    expect(auth.passwordUpdates).toEqual(['new-password']);
+    expect(screen.getByRole('button', { name: /Account for/i })).toBeInTheDocument();
+  });
+
+  it('offers signed-in users a neutral set-or-change-password action', async () => {
+    const auth = new FakeAuth(signedInSession);
+    const user = userEvent.setup();
+    render(<App accountServices={makeServices(auth, new FakeRosters(null))} />);
+    await user.click(await screen.findByRole('button', { name: /Account for/i }));
+    await user.click(screen.getByRole('button', { name: 'Set or change password' }));
+    const dialog = screen.getByRole('dialog', { name: 'Set or change password' });
+    await user.type(within(dialog).getByLabelText('New password'), 'account-password');
+    await user.type(within(dialog).getByLabelText('Confirm new password'), 'different-password');
+    await user.click(within(dialog).getByRole('button', { name: 'Save password' }));
+    expect(within(dialog).getByText('The password confirmation does not match.')).toBeInTheDocument();
+    await user.clear(within(dialog).getByLabelText('Confirm new password'));
+    await user.type(within(dialog).getByLabelText('Confirm new password'), 'account-password');
+    await user.click(within(dialog).getByRole('button', { name: 'Save password' }));
+    expect(await within(dialog).findByText('Your password was saved. You remain signed in.')).toBeInTheDocument();
+    expect(auth.passwordUpdates).toEqual(['account-password']);
   });
 });
 

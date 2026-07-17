@@ -1,6 +1,6 @@
 import { Cloud, LogIn, UserRound, X } from 'lucide-react';
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import type { AccountSession } from '../cloud/types';
+import type { AccountSession, SignUpResult } from '../cloud/types';
 import {
   syncStatusLabel,
   type RosterComparison,
@@ -44,79 +44,159 @@ export function HeaderAccountAction({
 
 export function SignInDialog({
   onClose,
+  onGoogle,
+  onPasswordSignIn,
+  onSignUp,
+  onPasswordReset,
   onRequestLink,
   returnFocus,
 }: {
   onClose: () => void;
+  onGoogle: () => Promise<void>;
+  onPasswordSignIn: (email: string, password: string) => Promise<void>;
+  onSignUp: (email: string, password: string) => Promise<SignUpResult>;
+  onPasswordReset: (email: string) => Promise<void>;
   onRequestLink: (email: string) => Promise<void>;
   returnFocus?: HTMLElement | null;
 }) {
+  const [mode, setMode] = useState<'sign-in' | 'sign-up' | 'reset' | 'magic-link'>('sign-in');
   const [email, setEmail] = useState('');
-  const [validationError, setValidationError] = useState<string | null>(null);
-  const [requestError, setRequestError] = useState<string | null>(null);
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageKind, setMessageKind] = useState<'error' | 'success'>('error');
+  const [operation, setOperation] = useState<string | null>(null);
 
-  const submit = async () => {
-    const normalized = email.trim().toLowerCase();
-    if (!isValidEmail(normalized)) {
-      setValidationError('Enter a valid email address.');
-      return;
+  const showError = (text: string) => {
+    setMessageKind('error');
+    setMessage(text);
+  };
+
+  const showSuccess = (text: string) => {
+    setMessageKind('success');
+    setMessage(text);
+  };
+
+  const normalizedEmail = () => {
+    const value = email.trim().toLowerCase();
+    if (!isValidEmail(value)) {
+      showError('Enter a valid email address.');
+      return null;
     }
-    setValidationError(null);
-    setRequestError(null);
-    setLoading(true);
+    return value;
+  };
+
+  const run = async (name: string, action: () => Promise<void>) => {
+    if (operation) return;
+    setOperation(name);
+    setMessage(null);
     try {
-      await onRequestLink(normalized);
-      setSent(true);
-    } catch {
-      setRequestError('We could not send a sign-in link. Please try again.');
+      await action();
     } finally {
-      setLoading(false);
+      setOperation(null);
     }
   };
 
+  const submit = async () => {
+    const normalized = normalizedEmail();
+    if (!normalized) return;
+    if ((mode === 'sign-in' || mode === 'sign-up') && !password) return showError('Enter your password.');
+    if (mode === 'sign-up' && password.length < 8) return showError('Use a password with at least 8 characters.');
+    if (mode === 'sign-up' && password !== confirmPassword) return showError('The password confirmation does not match.');
+    await run(mode, async () => {
+      try {
+        if (mode === 'sign-in') {
+          await onPasswordSignIn(normalized, password);
+          setPassword('');
+          onClose();
+        } else if (mode === 'sign-up') {
+          const result = await onSignUp(normalized, password);
+          setPassword('');
+          setConfirmPassword('');
+          showSuccess(result.session ? 'Account created and signed in.' : 'Check your email to confirm your Dragonfire Lab account.');
+        } else if (mode === 'reset') {
+          await onPasswordReset(normalized);
+          showSuccess('If an account can receive a reset email, check that inbox for the next step.');
+        } else {
+          await onRequestLink(normalized);
+          showSuccess('Check your email for a Dragonfire Lab sign-in link.');
+        }
+      } catch (error) {
+        showError(authErrorMessage(mode, error));
+      }
+    });
+  };
+
+  const changeMode = (nextMode: typeof mode) => {
+    if (operation) return;
+    setPassword('');
+    setConfirmPassword('');
+    setMessage(null);
+    setMode(nextMode);
+  };
+  const title = mode === 'sign-up' ? 'Create your account' : mode === 'reset' ? 'Reset your password' : mode === 'magic-link' ? 'Email sign-in link' : 'Sign in to Dragonfire Lab';
+
   return (
-    <DialogFrame title="Sign in to Dragonfire Lab" titleId="sign-in-title" onClose={onClose} returnFocus={returnFocus}>
-      <p>Use an email magic link to synchronize your roster across devices. No password is required.</p>
-      {sent ? (
-        <div className="status-message success" role="status">
-          Check your email for a Dragonfire Lab sign-in link.
-        </div>
-      ) : (
-        <>
-          <label className="dialog-field">
-            Email address
-            <input
-              type="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              aria-describedby={validationError ? 'sign-in-email-error' : undefined}
-              aria-invalid={validationError ? 'true' : undefined}
-              onChange={(event) => setEmail(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  event.preventDefault();
-                  void submit();
-                }
-              }}
-            />
-          </label>
-          {validationError ? <p id="sign-in-email-error" className="field-error">{validationError}</p> : null}
-          {requestError ? <div className="status-message error" role="alert">{requestError}</div> : null}
-        </>
-      )}
-      <div className="dialog-actions">
-        {!sent ? (
-          <button type="button" className="primary-button" disabled={loading} onClick={() => void submit()}>
-            {loading ? 'Sending…' : 'Email me a sign-in link'}
-          </button>
-        ) : null}
-        <button type="button" className="secondary-button" onClick={onClose}>
-          {sent ? 'Done' : 'Cancel'}
-        </button>
-      </div>
+    <DialogFrame title={title} titleId="sign-in-title" onClose={onClose} returnFocus={returnFocus}>
+      {mode === 'sign-in' ? <><button type="button" className="primary-button auth-google-button" disabled={operation === 'google'} onClick={() => void run('google', async () => { try { await onGoogle(); } catch (error) { showError(authErrorMessage('google', error)); } })}>{operation === 'google' ? 'Opening Google…' : 'Continue with Google'}</button><div className="auth-separator" aria-hidden="true"><span>or</span></div></> : null}
+      <form onSubmit={(event) => { event.preventDefault(); void submit(); }}>
+        {mode === 'magic-link' ? <p>We will send a one-time sign-in link. Password sign-in and Google are also available.</p> : null}
+        {mode === 'reset' ? <p>Enter your email and we will send the next step if that account can receive reset email.</p> : null}
+        <label className="dialog-field">Email<input type="email" autoComplete="email" autoFocus value={email} onChange={(event) => setEmail(event.target.value)} /></label>
+        {mode === 'sign-in' || mode === 'sign-up' ? <label className="dialog-field">Password<input type="password" autoComplete={mode === 'sign-up' ? 'new-password' : 'current-password'} value={password} onChange={(event) => setPassword(event.target.value)} /></label> : null}
+        {mode === 'sign-up' ? <label className="dialog-field">Confirm password<input type="password" autoComplete="new-password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} /></label> : null}
+        {message ? <div className={`status-message ${messageKind}`} role={messageKind === 'error' ? 'alert' : 'status'}>{message}</div> : null}
+        <div className="dialog-actions"><button type="submit" className="primary-button" disabled={operation === mode}>{operation === mode ? 'Working…' : mode === 'sign-up' ? 'Create account' : mode === 'reset' ? 'Send password reset' : mode === 'magic-link' ? 'Email me a sign-in link' : 'Sign in'}</button>{mode !== 'sign-in' ? <button type="button" className="secondary-button" onClick={() => changeMode('sign-in')}>Back to sign in</button> : null}<button type="button" className="secondary-button" onClick={onClose}>Cancel</button></div>
+      </form>
+      {mode === 'sign-in' ? <div className="auth-secondary-actions"><button type="button" className="text-button" onClick={() => changeMode('reset')}>Forgot password?</button><button type="button" className="text-button" onClick={() => changeMode('sign-up')}>Create account</button><button type="button" className="text-button" onClick={() => changeMode('magic-link')}>Email me a sign-in link</button></div> : null}
+    </DialogFrame>
+  );
+}
+
+export function SetPasswordDialog({
+  recovery,
+  onClose,
+  onSave,
+  onCompleted,
+  returnFocus,
+}: {
+  recovery: boolean;
+  onClose: () => void;
+  onSave: (password: string) => Promise<void>;
+  onCompleted: () => void;
+  returnFocus?: HTMLElement | null;
+}) {
+  const [password, setPassword] = useState('');
+  const [confirmation, setConfirmation] = useState('');
+  const [message, setMessage] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const submit = async () => {
+    if (saving) return;
+    if (password.length < 8) { setMessage('Use a password with at least 8 characters.'); return; }
+    if (password !== confirmation) { setMessage('The password confirmation does not match.'); return; }
+    setSaving(true);
+    setMessage(null);
+    try {
+      await onSave(password);
+      setPassword('');
+      setConfirmation('');
+      onCompleted();
+      setMessage('Your password was saved. You remain signed in.');
+    } catch {
+      setMessage('We could not save your password. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
+  return (
+    <DialogFrame title={recovery ? 'Set New Password' : 'Set or change password'} titleId="set-password-title" onClose={onClose} returnFocus={returnFocus}>
+      {recovery ? <p>Choose a new password to finish password recovery.</p> : <p>Add or replace an email/password sign-in method for this account.</p>}
+      <form onSubmit={(event) => { event.preventDefault(); void submit(); }}>
+        <label className="dialog-field">New password<input type="password" autoComplete="new-password" autoFocus value={password} onChange={(event) => setPassword(event.target.value)} /></label>
+        <label className="dialog-field">Confirm new password<input type="password" autoComplete="new-password" value={confirmation} onChange={(event) => setConfirmation(event.target.value)} /></label>
+        {message ? <div className={`status-message ${message.startsWith('Your password') ? 'success' : 'error'}`} role={message.startsWith('Your password') ? 'status' : 'alert'}>{message}</div> : null}
+        <div className="dialog-actions"><button type="submit" className="primary-button" disabled={saving}>{saving ? 'Saving…' : 'Save password'}</button><button type="button" className="secondary-button" onClick={onClose}>Cancel</button></div>
+      </form>
     </DialogFrame>
   );
 }
@@ -128,6 +208,7 @@ export function AccountDialog({
   onClose,
   onResolve,
   onRetry,
+  onSetPassword,
   onSignOut,
   onSyncNow,
   returnFocus,
@@ -138,6 +219,7 @@ export function AccountDialog({
   onClose: () => void;
   onResolve: () => void;
   onRetry: () => void;
+  onSetPassword: () => void;
   onSignOut: () => Promise<void>;
   onSyncNow: () => void;
   returnFocus?: HTMLElement | null;
@@ -162,6 +244,7 @@ export function AccountDialog({
         {status === 'synced' ? (
           <button type="button" className="secondary-button" onClick={onSyncNow}>Sync now</button>
         ) : null}
+        <button type="button" className="secondary-button" onClick={onSetPassword}>Set or change password</button>
         <button
           type="button"
           className="danger-button"
@@ -380,6 +463,18 @@ function shortEmail(email: string): string {
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function authErrorMessage(operation: string, error: unknown): string {
+  const detail = error instanceof Error ? error.message.toLowerCase() : '';
+  if (operation === 'reset' && (detail.includes('rate limit') || detail.includes('too many'))) {
+    return 'Too many authentication emails were requested. Wait a few minutes and try again.';
+  }
+  if (operation === 'sign-in') return 'The email or password was not accepted.';
+  if (operation === 'google') return 'We could not start Google sign-in. Please try again.';
+  if (operation === 'sign-up') return 'We could not create the account. Please try again.';
+  if (operation === 'reset') return 'We could not send a password reset email. Please try again.';
+  return 'We could not send a sign-in link. Please try again.';
 }
 
 function formatTime(value: string | null): string {

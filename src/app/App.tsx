@@ -23,6 +23,7 @@ import {
   ImportSyncDialog,
   RosterDecisionDialog,
   RosterSyncPanel,
+  SetPasswordDialog,
   SignInDialog,
 } from './AccountUi';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
@@ -147,6 +148,7 @@ export function App({ accountServices: providedAccountServices }: { accountServi
   const [showAlreadyAdded, setShowAlreadyAdded] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [passwordDialog, setPasswordDialog] = useState<'account' | 'recovery' | null>(null);
   const [pendingImportedRoster, setPendingImportedRoster] = useState<Record<string, OwnedDragon> | null>(null);
   const rosterSuccessTimerRef = useRef<number | null>(null);
   const [accountDialogReturnFocus, setAccountDialogReturnFocus] = useState<HTMLElement | null>(null);
@@ -161,7 +163,7 @@ export function App({ accountServices: providedAccountServices }: { accountServi
     setIsAccountOpen(true);
   }, []);
 
-  const { session, loading: sessionLoading } = useAccountSession(accountServices?.auth ?? null);
+  const { session, loading: sessionLoading, passwordRecovery, clearPasswordRecovery } = useAccountSession(accountServices?.auth ?? null);
   const applyRosterSnapshot = useCallback((nextSnapshot: StoredRosterSnapshot) => {
     setRosterSnapshot(nextSnapshot);
   }, []);
@@ -172,6 +174,8 @@ export function App({ accountServices: providedAccountServices }: { accountServi
     snapshot: rosterSnapshot,
     onApplyCloud: applyRosterSnapshot,
   });
+
+  const activePasswordDialog = passwordDialog ?? (passwordRecovery && session ? 'recovery' : null);
 
   useEffect(() => {
     if (rosterSnapshot.updatedAt) {
@@ -340,6 +344,31 @@ export function App({ accountServices: providedAccountServices }: { accountServi
       return;
     }
     await accountServices.auth.sendMagicLink(email, buildAuthRedirectUrl(window.location));
+  };
+
+  const signInWithGoogle = async () => {
+    if (!accountServices) return;
+    await accountServices.auth.signInWithGoogle(buildAuthRedirectUrl(window.location));
+  };
+
+  const signInWithPassword = async (email: string, password: string) => {
+    if (!accountServices) return;
+    await accountServices.auth.signInWithPassword(email, password);
+  };
+
+  const signUpWithPassword = async (email: string, password: string) => {
+    if (!accountServices) return { session: null };
+    return accountServices.auth.signUpWithPassword(email, password, buildAuthRedirectUrl(window.location));
+  };
+
+  const requestPasswordReset = async (email: string) => {
+    if (!accountServices) return;
+    await accountServices.auth.sendPasswordReset(email, buildAuthRedirectUrl(window.location));
+  };
+
+  const updatePassword = async (password: string) => {
+    if (!accountServices) return;
+    await accountServices.auth.updatePassword(password);
   };
 
   const signOut = async () => {
@@ -550,7 +579,15 @@ export function App({ accountServices: providedAccountServices }: { accountServi
       ) : null}
 
       {isSignInOpen && accountServices ? (
-        <SignInDialog onClose={() => setIsSignInOpen(false)} onRequestLink={requestMagicLink} returnFocus={accountDialogReturnFocus} />
+        <SignInDialog
+          onClose={() => setIsSignInOpen(false)}
+          onGoogle={signInWithGoogle}
+          onPasswordSignIn={signInWithPassword}
+          onSignUp={signUpWithPassword}
+          onPasswordReset={requestPasswordReset}
+          onRequestLink={requestMagicLink}
+          returnFocus={accountDialogReturnFocus}
+        />
       ) : null}
 
       {isAccountOpen && session ? (
@@ -564,8 +601,25 @@ export function App({ accountServices: providedAccountServices }: { accountServi
             rosterSync.reopenDecision();
           }}
           onRetry={rosterSync.retry}
+          onSetPassword={() => {
+            setIsAccountOpen(false);
+            setPasswordDialog('account');
+          }}
           onSignOut={signOut}
           onSyncNow={rosterSync.syncNow}
+          returnFocus={accountDialogReturnFocus}
+        />
+      ) : null}
+
+      {activePasswordDialog && session && accountServices ? (
+        <SetPasswordDialog
+          recovery={activePasswordDialog === 'recovery'}
+          onClose={() => {
+            if (activePasswordDialog === 'recovery') clearPasswordRecovery();
+            setPasswordDialog(null);
+          }}
+          onSave={updatePassword}
+          onCompleted={() => {}}
           returnFocus={accountDialogReturnFocus}
         />
       ) : null}
