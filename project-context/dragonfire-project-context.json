@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-16T22:45:25.734Z",
+  "generatedAt": "2026-07-17T02:27:12.215Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/add-rare-batch-4",
-    "commit": "0bdde89ca9fa5e3844efe7d9c1969f6753ef45bf",
+    "branch": "audit/full-roster-regression",
+    "commit": "e6961ef559543c32afafcdd2c0f2bd1efe122841",
     "databaseVersion": "0.6.8",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 4,
