@@ -13,7 +13,7 @@ Public site: https://dragonfirelab.com
 - Curated simple synergy profiles for all 31 known dragons.
 - Complete Legendary (9 / 9), Epic (10 / 10), and Rare (12 / 12) coverage.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
-- Optional email magic-link sign-in and account roster synchronization through Supabase; local-only use remains fully supported.
+- Optional Google OAuth, email/password, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with explainable local rating, placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
 - Formation share links and roster JSON import/export.
 - Lightweight project-context export for handoffs.
@@ -79,4 +79,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.7.1`. Source data schema: `13`. Local roster schema: `4`. Supabase migrations: `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`). The account dialog now presents roster comparisons as a readable mobile stack while retaining its desktop table. Saved/exported ownership, collection-state, and shard data from earlier versions migrate to the simplified Owned / Hatched roster state while preserving Star Rank, Dragon Level, Habit Levels, notes, and formations.
+Current release: `0.8.0`. Source data schema: `13`. Local and cloud roster schemas: `4`. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); no database migration is required for authentication. Google OAuth is configured only in Google Cloud and Supabase, with no frontend Google credentials. Email/password is supported, magic links remain a tertiary fallback, and confirmation/reset delivery remains dependent on the pending Resend/custom SMTP setup. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0 - 2026-07-17
+
+- Added Google OAuth as the primary account sign-in option through Supabase, with no Google credential or client ID in the frontend.
+- Added email/password sign-in, account creation, password reset, recovery callback handling, and signed-in password setup/change.
+- Retained email magic links as a tertiary sign-in fallback and preserved existing account roster ownership and synchronization behavior.
+- Increased database/package version to `0.8.0`; source data schema remains `13`, local and cloud roster schemas remain `4`, and import/export/share-link/rating contracts are unchanged.
+
 ## 0.7.1 - 2026-07-17
 
 - Corrected account dialog containment on narrow mobile viewports with dynamic viewport and safe-area handling, wrapped titles, and a fixed upper-right close button.

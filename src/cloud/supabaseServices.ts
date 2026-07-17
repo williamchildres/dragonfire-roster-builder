@@ -44,9 +44,45 @@ class SupabaseAuthService implements AuthService {
     return mapSession(data.session);
   }
 
-  onAuthStateChange(listener: (session: AccountSession | null) => void): () => void {
-    const { data } = this.client.auth.onAuthStateChange((_event, session) => listener(mapSession(session)));
+  onAuthStateChange(listener: Parameters<AuthService['onAuthStateChange']>[0]): () => void {
+    const { data } = this.client.auth.onAuthStateChange((event, session) => listener({
+      event: event === 'PASSWORD_RECOVERY' ? 'password-recovery' : session ? 'session' : 'signed-out',
+      session: mapSession(session),
+    }));
     return () => data.subscription.unsubscribe();
+  }
+
+  async signInWithGoogle(redirectTo: string): Promise<void> {
+    const { error } = await this.client.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo },
+    });
+    if (error) throw error;
+  }
+
+  async signInWithPassword(email: string, password: string): Promise<void> {
+    const { error } = await this.client.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+  }
+
+  async signUpWithPassword(email: string, password: string, redirectTo: string) {
+    const { data, error } = await this.client.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: redirectTo },
+    });
+    if (error) throw error;
+    return { session: mapSession(data.session) };
+  }
+
+  async sendPasswordReset(email: string, redirectTo: string): Promise<void> {
+    const { error } = await this.client.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) throw error;
+  }
+
+  async updatePassword(password: string): Promise<void> {
+    const { error } = await this.client.auth.updateUser({ password });
+    if (error) throw error;
   }
 
   async sendMagicLink(email: string, redirectTo: string): Promise<void> {

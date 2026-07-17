@@ -233,7 +233,7 @@ describe('Dragonfire Lab app', () => {
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
     */
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.7\.1/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.8\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
 

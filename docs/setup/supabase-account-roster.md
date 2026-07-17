@@ -38,7 +38,11 @@ Then reset or repair the local Supabase migration history before applying the mi
 
 ## Authentication URLs
 
-Enable email OTP/magic-link authentication. Set the production Site URL to `https://dragonfirelab.com`. Add approved redirect URLs for `https://dragonfirelab.com/` and the exact local development origin used for testing, normally `http://127.0.0.1:5173/`. Password and social providers are not part of this feature.
+Keep Email enabled with Confirm Email enabled, then enable password sign-in and email OTP/magic links. Enable the Google provider in Supabase and configure its Google web-client credentials only in Google Cloud and Supabase. Do not add a Google client ID, client secret, OAuth token, or new Google frontend environment variable to this repository.
+
+Set the production Site URL to `https://dragonfirelab.com`. Add approved redirect URLs for `https://dragonfirelab.com/` and the exact local development origin used for testing, normally `http://127.0.0.1:5173/`. The application uses these redirects for Google OAuth, signup confirmation, password recovery, and magic links.
+
+Custom SMTP/Resend is still pending. Supabase's temporary sender may constrain signup confirmation, password recovery, and magic-link delivery; do not represent production email delivery as fully configured until SMTP is complete.
 
 ## GitHub Pages variables
 
@@ -67,7 +71,7 @@ After the Supabase project is configured and the PR is merged:
 4. Add GitHub build variables.
 5. Trigger Pages deployment.
 6. Open a fresh private browser session.
-7. Create/sign in through the magic link.
+7. Verify Google OAuth, email/password, and magic-link fallback sign-in.
 8. Create a small local roster before first sign-in.
 9. Choose Save to account.
 10. Verify the row exists for that authenticated user.
@@ -80,3 +84,5 @@ After the Supabase project is configured and the PR is merged:
 17. Reload and verify values.
 18. Confirm a different authenticated user cannot access the first user’s row.
 19. Confirm formations are still local and no UI claims otherwise.
+20. Sign in with Google using the same verified email as an existing magic-link account and confirm the Supabase user UUID and `user_rosters.user_id` are unchanged before treating rollout as accepted. Do not add manual identity linking.
+21. Set a password while signed in, sign out, then verify email/password sign-in. Revisit signup confirmation and password-reset delivery after Resend/custom SMTP is configured.

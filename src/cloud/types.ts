@@ -5,9 +5,25 @@ export interface AccountSession {
   email: string;
 }
 
+export type AccountAuthEvent = 'session' | 'signed-out' | 'password-recovery';
+
+export interface AccountAuthState {
+  event: AccountAuthEvent;
+  session: AccountSession | null;
+}
+
+export interface SignUpResult {
+  session: AccountSession | null;
+}
+
 export interface AuthService {
   getSession(): Promise<AccountSession | null>;
-  onAuthStateChange(listener: (session: AccountSession | null) => void): () => void;
+  onAuthStateChange(listener: (state: AccountAuthState) => void): () => void;
+  signInWithGoogle(redirectTo: string): Promise<void>;
+  signInWithPassword(email: string, password: string): Promise<void>;
+  signUpWithPassword(email: string, password: string, redirectTo: string): Promise<SignUpResult>;
+  sendPasswordReset(email: string, redirectTo: string): Promise<void>;
+  updatePassword(password: string): Promise<void>;
   sendMagicLink(email: string, redirectTo: string): Promise<void>;
   signOut(): Promise<void>;
 }
