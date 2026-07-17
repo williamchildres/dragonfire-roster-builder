@@ -5,11 +5,27 @@ Dragonfire Lab is fully functional without Supabase configuration. When the two 
 ## Project and migration
 
 1. Create or select a Supabase project.
-2. From the repository root, link the Supabase CLI to the development project and run `supabase db push`, or paste and run `supabase/migrations/202607170001_create_user_rosters.sql` in the Supabase SQL editor.
+2. From the repository root, link the Supabase CLI to the development project and run `supabase db push`, or apply both migrations in order: `202607170001_create_user_rosters.sql` and `202607170002_restrict_user_roster_privileges.sql`.
 3. Confirm `public.user_rosters` exists with one row per `user_id`, roster schema version, JSON roster array, client timestamp, and server timestamp.
 4. In Table Editor or with `select relrowsecurity from pg_class where oid = 'public.user_rosters'::regclass;`, confirm Row Level Security is enabled.
-5. Confirm `anon` has no table privilege with `select has_table_privilege('anon', 'public.user_rosters', 'select');` (the result must be false).
-6. Confirm authenticated SELECT, INSERT, and UPDATE policies bind `user_id` to `auth.uid()` in Database > Policies. DELETE is intentionally not granted.
+5. Confirm authenticated SELECT, INSERT, and UPDATE policies bind `user_id` to `auth.uid()` in Database > Policies. No DELETE policy is expected.
+6. Confirm the final table privileges with this query:
+
+```sql
+select
+  has_table_privilege('anon', 'public.user_rosters', 'select') as anon_select,
+  has_table_privilege('anon', 'public.user_rosters', 'insert') as anon_insert,
+  has_table_privilege('anon', 'public.user_rosters', 'update') as anon_update,
+  has_table_privilege('anon', 'public.user_rosters', 'delete') as anon_delete,
+  has_table_privilege('authenticated', 'public.user_rosters', 'select') as authenticated_select,
+  has_table_privilege('authenticated', 'public.user_rosters', 'insert') as authenticated_insert,
+  has_table_privilege('authenticated', 'public.user_rosters', 'update') as authenticated_update,
+  has_table_privilege('authenticated', 'public.user_rosters', 'delete') as authenticated_delete;
+```
+
+All anonymous results must be false. Authenticated SELECT, INSERT, and UPDATE must be true; authenticated DELETE must be false.
+
+Migration `202607170002_restrict_user_roster_privileges.sql` exists because Supabase/default table grants can leave authenticated DELETE available after the original migration. It revokes all table privileges from `public`, `anon`, and `authenticated`, then grants only SELECT, INSERT, and UPDATE to `authenticated`. Production was manually corrected before this repository migration was added; future environments must apply both migrations.
 
 For a development rollback, run:
 

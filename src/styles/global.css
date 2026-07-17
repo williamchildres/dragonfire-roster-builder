@@ -2200,8 +2200,10 @@ th {
   inset: 0;
   justify-content: center;
   overflow-y: auto;
-  padding: clamp(0.75rem, 2vw, 1.5rem);
+  padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
   position: fixed;
+  block-size: 100dvh;
+  box-sizing: border-box;
   z-index: 30;
 }
 
@@ -2215,7 +2217,7 @@ th {
   display: grid;
   gap: 1rem;
   isolation: isolate;
-  max-height: 90vh;
+  max-height: 100%;
   max-width: 74rem;
   overflow-x: hidden;
   overflow-y: auto;
@@ -2389,11 +2391,35 @@ th {
 }
 
 .account-dialog {
-  max-width: 38rem;
+  inline-size: min(38rem, 100%);
+  min-width: 0;
+}
+
+.account-dialog .account-dialog-header {
+  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.account-dialog .details-heading-copy {
+  min-width: 0;
+}
+
+.account-dialog .details-heading-copy h2 {
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+  overflow: visible;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.account-dialog .icon-button {
+  flex: 0 0 auto;
 }
 
 .account-dialog-body {
-  padding: 0 clamp(1rem, 3vw, 1.5rem) clamp(1rem, 3vw, 1.5rem);
+  min-width: 0;
+  padding: 0 clamp(1rem, 3vw, 1.5rem) max(clamp(1rem, 3vw, 1.5rem), calc(env(safe-area-inset-bottom) + 1rem));
 }
 
 .account-dialog-body > :last-child {
@@ -2450,6 +2476,7 @@ th {
 }
 
 .comparison-wrap {
+  min-width: 0;
   overflow-x: auto;
 }
 
@@ -2462,6 +2489,10 @@ th {
 .roster-comparison td {
   border-bottom: 1px solid var(--line-soft);
   padding: 0.65rem;
+}
+
+.comparison-value-label {
+  display: none;
 }
 
 @media (max-width: 900px) {
@@ -2569,6 +2600,81 @@ th {
 }
 
 @media (max-width: 560px) {
+  .modal-backdrop {
+    padding: max(0.625rem, env(safe-area-inset-top)) max(0.625rem, env(safe-area-inset-right)) max(0.625rem, env(safe-area-inset-bottom)) max(0.625rem, env(safe-area-inset-left));
+  }
+
+  .account-dialog {
+    max-height: 100%;
+  }
+
+  .account-dialog .account-dialog-header {
+    gap: 0.75rem;
+  }
+
+  .account-dialog .details-heading-copy h2 {
+    font-size: clamp(1.5rem, 7vw, 1.9rem);
+  }
+
+  .comparison-wrap {
+    overflow: hidden;
+  }
+
+  .roster-comparison,
+  .roster-comparison tbody {
+    display: block;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .roster-comparison thead {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .roster-comparison tr {
+    border: 1px solid var(--line-soft);
+    border-radius: 0.6rem;
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+  }
+
+  .roster-comparison th,
+  .roster-comparison td {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .roster-comparison tbody th {
+    background: rgba(242, 138, 46, 0.08);
+    grid-column: 1 / -1;
+  }
+
+  .roster-comparison td {
+    border-bottom: 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .roster-comparison td + td {
+    border-left: 1px solid var(--line-soft);
+  }
+
+  .comparison-value-label {
+    color: var(--muted);
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
   .brand-lockup {
     align-items: flex-start;
   }

@@ -31,8 +31,9 @@ const resolvedFindings = [
   },
 ];
 const browserQaObservation = {
-  status: 'PASS',
-  auditedUrl: 'local 0.7.0 production build',
+  status: 'PENDING',
+  auditedUrl: 'Pending required Chrome QA on local 0.7.1 production build',
+  pendingReason: 'Automated/manual Chrome viewport QA before push is PENDING by explicit owner decision; no mobile visual QA result is represented as a pass.',
   desktop: {
     requestedViewport: { width: 1440, height: 1000 },
     viewport: { width: 1440, height: 1000 },
@@ -122,10 +123,10 @@ try {
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: 'c2e40b68dce6a5569f0a7273604ed1f9193d1795',
-      branch: 'ui/foundation-polish',
+      originMainSha: '3846245dbf9a02236104b8948fd66510c919e56a',
+      branch: 'fix/account-production-acceptance',
       worktree:
-        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/foundation-polish',
+        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/account-production-acceptance',
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,

@@ -79,4 +79,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.7.0`. Source data schema: `13`. Local roster schema: `4`. Supabase migration: `0001` (`202607170001_create_user_rosters.sql`). Saved/exported ownership, collection-state, and shard data from earlier versions migrate to the simplified Owned / Hatched roster state while preserving Star Rank, Dragon Level, Habit Levels, notes, and formations.
+Current release: `0.7.1`. Source data schema: `13`. Local roster schema: `4`. Supabase migrations: `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`). The account dialog now presents roster comparisons as a readable mobile stack while retaining its desktop table. Saved/exported ownership, collection-state, and shard data from earlier versions migrate to the simplified Owned / Hatched roster state while preserving Star Rank, Dragon Level, Habit Levels, notes, and formations.

@@ -45,9 +45,11 @@ export function HeaderAccountAction({
 export function SignInDialog({
   onClose,
   onRequestLink,
+  returnFocus,
 }: {
   onClose: () => void;
   onRequestLink: (email: string) => Promise<void>;
+  returnFocus?: HTMLElement | null;
 }) {
   const [email, setEmail] = useState('');
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -75,7 +77,7 @@ export function SignInDialog({
   };
 
   return (
-    <DialogFrame title="Sign in to Dragonfire Lab" titleId="sign-in-title" onClose={onClose}>
+    <DialogFrame title="Sign in to Dragonfire Lab" titleId="sign-in-title" onClose={onClose} returnFocus={returnFocus}>
       <p>Use an email magic link to synchronize your roster across devices. No password is required.</p>
       {sent ? (
         <div className="status-message success" role="status">
@@ -128,6 +130,7 @@ export function AccountDialog({
   onRetry,
   onSignOut,
   onSyncNow,
+  returnFocus,
 }: {
   session: AccountSession;
   status: RosterSyncStatus;
@@ -137,10 +140,11 @@ export function AccountDialog({
   onRetry: () => void;
   onSignOut: () => Promise<void>;
   onSyncNow: () => void;
+  returnFocus?: HTMLElement | null;
 }) {
   const [signingOut, setSigningOut] = useState(false);
   return (
-    <DialogFrame title="Your account" titleId="account-title" onClose={onClose}>
+    <DialogFrame title="Your account" titleId="account-title" onClose={onClose} returnFocus={returnFocus}>
       <dl className="account-details">
         <div><dt>Email</dt><dd>{session.email}</dd></div>
         <div><dt>Roster synchronization</dt><dd>{syncStatusLabel(status)}</dd></div>
@@ -284,8 +288,15 @@ function RosterComparisonTable({ comparison }: { comparison: RosterComparison })
   return (
     <div className="comparison-wrap">
       <table className="roster-comparison">
-        <thead><tr><th>Summary</th><th>This browser</th><th>Account</th></tr></thead>
-        <tbody>{rows.map(([label, local, cloud]) => <tr key={label}><th>{label}</th><td>{local}</td><td>{cloud}</td></tr>)}</tbody>
+        <caption className="sr-only">This browser and account roster comparison</caption>
+        <thead><tr><th scope="col">Summary</th><th scope="col">This browser</th><th scope="col">Account</th></tr></thead>
+        <tbody>{rows.map(([label, local, cloud]) => (
+          <tr key={label}>
+            <th scope="row">{label}</th>
+            <td data-column-label="This browser"><span className="comparison-value-label" aria-hidden="true">This browser</span><span>{local}</span></td>
+            <td data-column-label="Account"><span className="comparison-value-label" aria-hidden="true">Account</span><span>{cloud}</span></td>
+          </tr>
+        ))}</tbody>
       </table>
     </div>
   );
@@ -294,18 +305,21 @@ function RosterComparisonTable({ comparison }: { comparison: RosterComparison })
 function DialogFrame({
   children,
   onClose,
+  returnFocus,
   title,
   titleId,
 }: {
   children: ReactNode;
   onClose: () => void;
+  returnFocus?: HTMLElement | null;
   title: string;
   titleId: string;
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const initialReturnFocusRef = useRef(returnFocus);
   useEffect(() => {
-    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    previousFocusRef.current = initialReturnFocusRef.current ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     document.body.classList.add('modal-open');
     dialogRef.current?.focus();
     return () => {
@@ -350,7 +364,7 @@ function DialogFrame({
         tabIndex={-1}
         onKeyDown={handleKeyDown}
       >
-        <header className="details-header">
+        <header className="details-header account-dialog-header">
           <div className="details-heading-copy"><p className="eyebrow">Dragonfire Lab account</p><h2 id={titleId}>{title}</h2></div>
           <button type="button" className="icon-button" aria-label="Close dialog" onClick={onClose}><X size={22} aria-hidden="true" /></button>
         </header>

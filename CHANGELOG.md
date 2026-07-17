@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.1 - 2026-07-17
+
+- Corrected account dialog containment on narrow mobile viewports with dynamic viewport and safe-area handling, wrapped titles, and a fixed upper-right close button.
+- Restyled the roster conflict comparison into readable mobile cards while retaining a semantic compact three-column desktop table.
+- Added a forward-only Supabase privilege migration that revokes default table grants and restores authenticated SELECT, INSERT, and UPDATE only; browser DELETE remains unavailable.
+- Increased database/package version to `0.7.1`; source data schema remains `13`, local roster schema remains `4`, and import/export/share-link/rating contracts are unchanged.
+
 ## 0.7.0 - 2026-07-17
 
 - Added optional Supabase email magic-link authentication and one-row-per-user roster synchronization without requiring an account for local use.

@@ -149,6 +149,17 @@ export function App({ accountServices: providedAccountServices }: { accountServi
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [pendingImportedRoster, setPendingImportedRoster] = useState<Record<string, OwnedDragon> | null>(null);
   const rosterSuccessTimerRef = useRef<number | null>(null);
+  const [accountDialogReturnFocus, setAccountDialogReturnFocus] = useState<HTMLElement | null>(null);
+
+  const openSignInDialog = useCallback(() => {
+    setAccountDialogReturnFocus(document.activeElement instanceof HTMLElement ? document.activeElement : null);
+    setIsSignInOpen(true);
+  }, []);
+
+  const openAccountDialog = useCallback(() => {
+    setAccountDialogReturnFocus(document.activeElement instanceof HTMLElement ? document.activeElement : null);
+    setIsAccountOpen(true);
+  }, []);
 
   const { session, loading: sessionLoading } = useAccountSession(accountServices?.auth ?? null);
   const applyRosterSnapshot = useCallback((nextSnapshot: StoredRosterSnapshot) => {
@@ -423,8 +434,8 @@ export function App({ accountServices: providedAccountServices }: { accountServi
               <HeaderAccountAction
                 session={session}
                 sessionLoading={sessionLoading}
-                onOpenAccount={() => setIsAccountOpen(true)}
-                onOpenSignIn={() => setIsSignInOpen(true)}
+                onOpenAccount={openAccountDialog}
+                onOpenSignIn={openSignInDialog}
               />
             </div>
           ) : null}
@@ -462,8 +473,8 @@ export function App({ accountServices: providedAccountServices }: { accountServi
             accountConfigured={accountServices !== null}
             session={session}
             syncStatus={rosterSync.status}
-            onOpenAccount={() => setIsAccountOpen(true)}
-            onOpenSignIn={() => setIsSignInOpen(true)}
+            onOpenAccount={openAccountDialog}
+            onOpenSignIn={openSignInDialog}
             onResolveSync={rosterSync.reopenDecision}
             onRetrySync={rosterSync.retry}
           />
@@ -539,7 +550,7 @@ export function App({ accountServices: providedAccountServices }: { accountServi
       ) : null}
 
       {isSignInOpen && accountServices ? (
-        <SignInDialog onClose={() => setIsSignInOpen(false)} onRequestLink={requestMagicLink} />
+        <SignInDialog onClose={() => setIsSignInOpen(false)} onRequestLink={requestMagicLink} returnFocus={accountDialogReturnFocus} />
       ) : null}
 
       {isAccountOpen && session ? (
@@ -555,6 +566,7 @@ export function App({ accountServices: providedAccountServices }: { accountServi
           onRetry={rosterSync.retry}
           onSignOut={signOut}
           onSyncNow={rosterSync.syncNow}
+          returnFocus={accountDialogReturnFocus}
         />
       ) : null}
 
