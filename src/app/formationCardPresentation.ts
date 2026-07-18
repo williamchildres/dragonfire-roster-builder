@@ -25,6 +25,8 @@ export interface FormationSignalChip {
   state: FormationSignalState;
   reason: string;
   inactiveCause?: FormationSignalInactiveCause;
+  inactiveCauses?: FormationSignalInactiveCause[];
+  progressionLocked?: boolean;
   scoreable?: boolean;
 }
 
@@ -93,9 +95,7 @@ export function buildFormationFilterOptions(
 }
 
 export function currentProgressionVisibleChips(chips: FormationSignalChip[]): FormationSignalChip[] {
-  return chips.filter(
-    (chip) => chip.inactiveCause !== 'star-rank' && chip.inactiveCause !== 'dragon-level',
-  );
+  return chips.filter((chip) => !chip.progressionLocked);
 }
 
 export function profileDamageProfileLabel(profile: DragonSynergyProfile | undefined, label: string): boolean {
@@ -130,8 +130,8 @@ function buildDamageProfileChips(
   const chips = new Map<string, FormationSignalChip>();
 
   for (const output of damageOutputs(dragon.profile)) {
-    const inactiveCause = signalInactiveCause(output, dragon.position, progression[dragon.profile.dragonId]);
-    const active = inactiveCause === null;
+    const availability = signalAvailability(output, dragon.position, progression[dragon.profile.dragonId]);
+    const active = availability.inactiveCause === undefined;
     const support = active ? matchingActiveSupportForOutput(dragon, output, selected, progression) : null;
     const state: FormationSignalState = active ? (support ? 'supported' : 'available') : 'inactive';
     const reason = active
@@ -141,7 +141,7 @@ function buildDamageProfileChips(
       : signalStateReason(output, dragon.position, progression[dragon.profile.dragonId], 'Damage output');
 
     for (const label of labelsForSignal(output, OUTPUT_SIGNAL_LABELS)) {
-      mergeChip(chips, { label, state, reason, inactiveCause: inactiveCause ?? undefined });
+      mergeChip(chips, { label, state, reason, ...availability });
     }
   }
 
@@ -182,8 +182,8 @@ function buildProvidesChips(
     ...nonDamageOutputs(provider.profile).map((signal) => ({ signal, labels: OUTPUT_SIGNAL_LABELS })),
     ...provider.profile.supports.map((signal) => ({ signal, labels: SUPPORT_SIGNAL_LABELS })),
   ]) {
-    const inactiveCause = signalInactiveCause(source.signal, provider.position, progression[provider.profile.dragonId]);
-    const active = inactiveCause === null;
+    const availability = signalAvailability(source.signal, provider.position, progression[provider.profile.dragonId]);
+    const active = availability.inactiveCause === undefined;
     const inactiveReason = signalStateReason(source.signal, provider.position, progression[provider.profile.dragonId], 'Provides');
 
     for (const { label, tag } of labelledDisplayTagsForSignal(source.signal, source.labels)) {
@@ -194,7 +194,7 @@ function buildProvidesChips(
         label,
         state,
         reason,
-        inactiveCause: inactiveCause ?? undefined,
+        ...availability,
         scoreable:
           source.signal.nonScoring !== true &&
           signalHasResolvedTeammateTarget(provider, source.signal, selected, progression),
@@ -214,14 +214,14 @@ function buildBenefitsChips(
   const chips = new Map<string, FormationSignalChip>();
 
   for (const benefit of beneficiary.profile.benefitsFrom) {
-    const inactiveCause = signalInactiveCause(benefit, beneficiary.position, progression[beneficiary.profile.dragonId]);
-    if (inactiveCause) {
+    const availability = signalAvailability(benefit, beneficiary.position, progression[beneficiary.profile.dragonId]);
+    if (availability.inactiveCause) {
       for (const label of labelsForSignal(benefit, BENEFIT_SIGNAL_LABELS)) {
         mergeChip(chips, {
           label,
           state: 'inactive',
           reason: signalStateReason(benefit, beneficiary.position, progression[beneficiary.profile.dragonId], 'Synergy needs'),
-          inactiveCause,
+          ...availability,
         });
       }
       continue;
@@ -241,7 +241,7 @@ function buildBenefitsChips(
       : 'No selected dragon actively provides this signal.';
 
     for (const label of labelsForSignal(benefit, BENEFIT_SIGNAL_LABELS)) {
-      mergeChip(chips, { label, state, reason });
+      mergeChip(chips, { label, state, reason, progressionLocked: false });
     }
   }
 
@@ -378,27 +378,40 @@ function isSignalActive(
   position: FormationPosition,
   progression: DragonProgression | undefined,
 ): boolean {
-  return signalInactiveCause(signal, position, progression) === null;
+  return signalInactiveCauses(signal, position, progression).length === 0;
 }
 
-function signalInactiveCause(
+function signalAvailability(
   signal: SynergySignal,
   position: FormationPosition,
   progression: DragonProgression | undefined,
-): FormationSignalInactiveCause | null {
+): Pick<FormationSignalChip, 'inactiveCause' | 'inactiveCauses' | 'progressionLocked'> {
+  const inactiveCauses = signalInactiveCauses(signal, position, progression);
+  return {
+    inactiveCause: inactiveCauses[0],
+    inactiveCauses: inactiveCauses.length > 0 ? inactiveCauses : undefined,
+    progressionLocked: inactiveCauses.includes('star-rank') || inactiveCauses.includes('dragon-level'),
+  };
+}
+
+function signalInactiveCauses(
+  signal: SynergySignal,
+  position: FormationPosition,
+  progression: DragonProgression | undefined,
+): FormationSignalInactiveCause[] {
+  const causes: FormationSignalInactiveCause[] = [];
   if (signal.requiredSelfPosition !== undefined && signal.requiredSelfPosition !== position) {
-    return 'position';
+    causes.push('position');
   }
 
   const locked = unmetRequirement(signal, progression);
   if (locked?.minimumStarRank !== undefined) {
-    return 'star-rank';
-  }
-  if (locked?.minimumDragonLevel !== undefined) {
-    return 'dragon-level';
+    causes.push('star-rank');
+  } else if (locked?.minimumDragonLevel !== undefined) {
+    causes.push('dragon-level');
   }
 
-  return null;
+  return causes;
 }
 
 function signalStateReason(
@@ -562,9 +575,21 @@ function providedTags(signal: SynergySignal): SynergyTag[] {
 
 function mergeChip(chips: Map<string, FormationSignalChip>, next: FormationSignalChip) {
   const current = chips.get(next.label);
-  if (!current || statePriority(next.state) > statePriority(current.state)) {
+  if (!current) {
     chips.set(next.label, next);
+    return;
   }
+
+  const nextWins =
+    statePriority(next.state) > statePriority(current.state) ||
+    (statePriority(next.state) === statePriority(current.state) &&
+      current.progressionLocked &&
+      !next.progressionLocked);
+  const preferred = nextWins ? next : current;
+  chips.set(next.label, {
+    ...preferred,
+    progressionLocked: current.progressionLocked === true && next.progressionLocked === true,
+  });
 }
 
 function statePriority(state: FormationSignalState): number {

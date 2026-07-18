@@ -701,7 +701,16 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(vanguardCard).queryByLabelText(/Strength support inactive/i)).not.toBeInTheDocument();
 
     await user.click(within(vanguardCard).getByRole('button', { name: /move to right flank/i }));
-    const rightCard = screen.getByRole('article', { name: 'Right Flank' });
+    let rightCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(rightCard).queryByLabelText(/Strength support inactive/i)).not.toBeInTheDocument();
+
+    await user.click(within(rightCard).getByRole('button', { name: /dragon details/i }));
+    const details = screen.getByRole('dialog', { name: 'Caraxes' });
+    await user.clear(within(details).getByLabelText('Dragon Level'));
+    await user.type(within(details).getByLabelText('Dragon Level'), '16');
+    await user.click(within(details).getByRole('button', { name: /close details/i }));
+
+    rightCard = screen.getByRole('article', { name: 'Right Flank' });
     expect(within(rightCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/requires Vanguard/i);
   });
 
@@ -841,7 +850,17 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(caraxesCard).queryByLabelText(/Strength support inactive.*Dragon Level/i)).not.toBeInTheDocument();
 
     await user.click(within(caraxesCard).getByRole('button', { name: /move to right flank/i }));
-    expect(within(screen.getByRole('article', { name: 'Right Flank' })).getByLabelText(/Strength support inactive.*requires Vanguard/i)).toBeInTheDocument();
+    let movedCaraxesCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(movedCaraxesCard).queryByLabelText(/Strength support inactive/i)).not.toBeInTheDocument();
+
+    await user.click(within(movedCaraxesCard).getByRole('button', { name: /dragon details/i }));
+    const caraxesDetails = screen.getByRole('dialog', { name: 'Caraxes' });
+    await user.clear(within(caraxesDetails).getByLabelText('Dragon Level'));
+    await user.type(within(caraxesDetails).getByLabelText('Dragon Level'), '16');
+    await user.click(within(caraxesDetails).getByRole('button', { name: /close details/i }));
+
+    movedCaraxesCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(movedCaraxesCard).getByLabelText(/Strength support inactive.*requires Vanguard/i)).toBeInTheDocument();
 
     await user.click(within(syraxCard).getByRole('button', { name: /replace dragon/i }));
     const dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
