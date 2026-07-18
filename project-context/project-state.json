@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-18T06:43:56.212Z",
+  "generatedAt": "2026-07-18T07:11:35.068Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "ui/overview-hierarchy-polish",
-    "commit": "65b8531acda61517741ff69df890a5ac7dd774ad",
+    "commit": "179b3ad7485ce81a9a4bf644391da3b92800bd5f",
     "databaseVersion": "0.9.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
