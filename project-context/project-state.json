@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-18T09:46:19.580Z",
+  "generatedAt": "2026-07-18T10:03:13.695Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "ui/formation-card-progression-polish",
-    "commit": "3d466a3b98b1672b43c22ac70597de375d8e6f45",
+    "commit": "749ccf73240c20a3dbaeff1298f1ec42923b6d2c",
     "databaseVersion": "0.9.6",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
