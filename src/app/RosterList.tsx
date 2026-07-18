@@ -37,10 +37,10 @@ export function RosterList({
                 <strong>{dragon.name}</strong>
                 <span>{dragon.rarity} · {dragon.breed}</span>
               </span>
-              <span className="roster-row-progression" aria-label={`${dragon.name} progression`}>
-                <span><span aria-hidden="true">★</span><span className="sr-only">Star Rank </span> {formatUnknown(entry?.starRank)}</span>
+              <span className="roster-row-progression" aria-hidden="true">
+                <span>{formatStarRank(entry?.starRank)}</span>
                 <span>Lv {formatUnknown(entry?.reignLevel)}</span>
-                <span>Habits {unlockedHabits}/{totalHabits} unlocked</span>
+                <span>{unlockedHabits}/{totalHabits} habits</span>
               </span>
               <span className="roster-row-selected-indicator" aria-hidden={!selected}>
                 {selected ? <><Check size={15} aria-hidden="true" /> Selected</> : null}
@@ -64,6 +64,10 @@ export function RosterDragonEmblem({ dragon, compact = false }: { dragon: Dragon
 
 function formatUnknown(value: number | null | undefined): string | number {
   return value === null || value === undefined ? '—' : value;
+}
+
+function formatStarRank(value: number | null | undefined): string {
+  return value === null || value === undefined ? '?★' : `${value}★`;
 }
 
 function formatAccessible(value: number | null | undefined): string | number {

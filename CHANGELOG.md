@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.7 - 2026-07-18
+
+- Compacted the My Roster introduction, healthy synchronization states, count/actions, and filtering controls so the owned-dragon list begins higher while attention-required sync states remain prominent.
+- Standardized full-width roster rows with compact progression summaries, moved Dragon details into the editor header, and now shows every canonical Habit with accurate locked requirements while preserving the existing Habit Level reconciliation contract.
+- Increased database/package version to `0.9.7`; source data schema remains `13`, and local/cloud roster schemas remain `5`. Canonical data, formation evaluation, roster serialization, cloud synchronization, and Supabase migrations are unchanged.
+
 ## 0.9.6 - 2026-07-18
 
 - Kept selected-dragon Star Rank beside each dragon name, clarified card actions with text-supported icons, and hid only current-progression-locked Provides and Synergy Needs signals from compact cards and selector previews.

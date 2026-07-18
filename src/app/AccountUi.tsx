@@ -1,4 +1,4 @@
-import { Cloud, LogIn, UserRound, X } from 'lucide-react';
+import { CircleAlert, CircleCheck, CloudOff, HardDrive, LoaderCircle, LogIn, UserRound, X } from 'lucide-react';
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import type { AccountSession, SignUpResult } from '../cloud/types';
 import {
@@ -318,14 +318,35 @@ export function RosterSyncPanel({
   onResolve: () => void;
   onRetry: () => void;
 }) {
+  const attention = ['migration-required', 'conflict', 'paused', 'offline', 'error'].includes(status);
+  const statusText = session && status === 'synced' ? 'Synced to your account' : syncStatusLabel(status);
+  const StatusIcon = status === 'local-only'
+    ? HardDrive
+    : status === 'auth-loading' || status === 'loading-cloud' || status === 'syncing'
+      ? LoaderCircle
+      : status === 'synced'
+        ? CircleCheck
+        : status === 'offline'
+          ? CloudOff
+          : CircleAlert;
+
   return (
-    <div className="roster-sync-panel">
-      <div>
-        <p className="eyebrow"><Cloud size={15} aria-hidden="true" /> Roster storage</p>
-        <strong>{session && status === 'synced' ? 'Synced to your account and stored in this browser' : syncStatusLabel(status)}</strong>
-        {session ? <span className="sync-email">{session.email}</span> : <span>Sign in to synchronize across devices.</span>}
+    <div
+      className={`roster-sync-panel ${attention ? 'is-attention' : 'is-compact'}`}
+      data-presentation={attention ? 'attention' : 'compact'}
+    >
+      <div className="roster-sync-summary">
+        <StatusIcon
+          className={status === 'auth-loading' || status === 'loading-cloud' || status === 'syncing' ? 'is-spinning' : undefined}
+          size={attention ? 20 : 18}
+          aria-hidden="true"
+        />
+        <div>
+          <strong role="status" aria-live="polite" aria-atomic="true">{statusText}</strong>
+          {session ? <span className="sync-email" title={session.email}>{shortEmail(session.email)}</span> : status === 'local-only' ? <span>Sign in to sync across devices.</span> : null}
+        </div>
       </div>
-      <div className="button-row">
+      <div className="roster-sync-actions">
         {!session ? <button type="button" className="secondary-button" onClick={onOpenSignIn}>Sign in</button> : null}
         {status === 'migration-required' || status === 'conflict' || status === 'paused' ? (
           <button type="button" className="secondary-button" onClick={onResolve}>Resolve</button>

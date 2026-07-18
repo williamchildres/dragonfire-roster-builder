@@ -736,7 +736,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Formation Builder now keeps Star Rank with each dragon name, clarifies card actions, and hides only progression-locked signals from compact views.</p>
+          <p>My Roster now reaches the dragon list sooner, discloses advanced filters on demand, standardizes compact rows, and explains locked Habit requirements.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

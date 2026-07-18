@@ -140,7 +140,7 @@ describe('optional account authentication UI', () => {
     expect(screen.queryByRole('button', { name: /sign in/i })).not.toBeInTheDocument();
     expect(screen.queryByText(/account synchronization/i)).not.toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Roster' }));
-    expect(screen.getByText('Manage ownership, Star Rank, and Dragon Level with local browser storage.')).toBeInTheDocument();
+    expect(screen.getByText('Track ownership, progression, Habit Levels, and notes.')).toBeInTheDocument();
     expect(screen.queryByText(/Roster storage/i)).not.toBeInTheDocument();
   });
 
@@ -437,7 +437,7 @@ describe('ongoing synchronization safety', () => {
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await user.click(screen.getByRole('button', { name: 'Roster' }));
-    await screen.findByText('Synced to your account and stored in this browser');
+    await screen.findByText('Synced to your account');
     const imported = meaningfulRoster('Imported locally', 1);
     const file = new File([serializeRosterExport(imported)], 'roster.json', { type: 'application/json' });
     await user.upload(screen.getByLabelText('Import roster'), file);
@@ -457,7 +457,7 @@ describe('ongoing synchronization safety', () => {
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await user.click(screen.getByRole('button', { name: 'Roster' }));
-    await screen.findByText('Synced to your account and stored in this browser');
+    await screen.findByText('Synced to your account');
     await user.click(screen.getByRole('button', { name: 'Clear local roster' }));
     expect(confirm).toHaveBeenCalledWith(expect.stringContaining('Your account roster will not be deleted'));
     expect(Object.values(loadStoredRosterSnapshot(window.localStorage, dragons).roster).some((entry) => entry.owned)).toBe(false);
@@ -489,7 +489,7 @@ describe('ongoing synchronization safety', () => {
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await user.click(screen.getByRole('button', { name: 'Roster' }));
-    await screen.findByText('Synced to your account and stored in this browser');
+    await screen.findByText('Synced to your account');
     await user.selectOptions(screen.getByLabelText('Star Rank'), '9');
     expect(loadStoredRosterSnapshot(window.localStorage, dragons).roster[dragons[0]!.id]!.starRank).toBe(9);
     expect(await screen.findByText('Could not sync — retry', {}, { timeout: 2500 })).toBeInTheDocument();
@@ -500,7 +500,7 @@ describe('ongoing synchronization safety', () => {
       return Promise.resolve();
     });
     await waitFor(() => expect(repository.upserts).toHaveLength(2));
-    expect(await screen.findByText('Synced to your account and stored in this browser')).toBeInTheDocument();
+    expect(await screen.findByText('Synced to your account')).toBeInTheDocument();
   });
 
   it('ignores a delayed fetch from a prior authenticated user', async () => {
