@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0 - 2026-07-17
+
+- Replaced repeated owned-dragon card forms with a compact, filterable list and one dedicated selected-dragon editor.
+- Added deterministic name, rarity, Star Rank, and Dragon Level sorting plus canonical rarity/breed, progression-completeness, and notes filters.
+- Added desktop two-pane roster management and a narrow-screen list/editor flow with Back-to-roster focus restoration and predictable add/remove selection.
+- Added focused coverage for selection, filters, null-last sorting, Star Rank, Dragon Level, Habit Levels (including explicit level `0`), notes, removal, and account-sync regressions.
+- Confirmed production Google OAuth, password, recovery, magic-link, and Resend SMTP configuration remains external; no credentials are included.
+- Increased database/package version to `0.9.0`; source data schema remains `13`, local and cloud roster schemas remain `4`, and import/export/share-link/rating contracts are unchanged. No Supabase migration was added.
+
 ## 0.8.0 - 2026-07-17
 
 - Added Google OAuth as the primary account sign-in option through Supabase, with no Google credential or client ID in the frontend.

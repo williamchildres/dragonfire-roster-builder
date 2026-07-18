@@ -8,12 +8,12 @@ Public site: https://dragonfirelab.com
 
 ## Current Features
 
-- My Roster as the central local-first dragon-management page, with Add Dragon search/filter flow for 31 known dragons.
+- A compact, filterable My Roster workspace with selectable owned-dragon rows, one dedicated editor, and a focused phone list/editor flow.
 - Full raw Command, Trait, and Habit wording for all 31 known dragons.
 - Curated simple synergy profiles for all 31 known dragons.
 - Complete Legendary (9 / 9), Epic (10 / 10), and Rare (12 / 12) coverage.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
-- Optional Google OAuth, email/password, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
+- Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with explainable local rating, placement, progression locks, missing-enabler, position conflict, and future-unlock explanations.
 - Formation share links and roster JSON import/export.
 - Lightweight project-context export for handoffs.
@@ -25,6 +25,8 @@ Canonical abilities use a minimal descriptive shape: stable ID, dragon ID, kind,
 The repository does not store execution-level schedules, rolls, attempts, target-selection groups, structured effects, ranked battle values, capability dependencies, traces, expected interactions, or unresolved-mechanics exports. Raw ability wording may still mention rounds, chances, targets, durations, and percentages because players need the source text.
 
 Account synchronization stores one RLS-protected normalized roster row per authenticated user. It synchronizes ownership, Star Rank, `reignLevel` (shown as Dragon Level), Habit Levels, and dragon notes. Formations remain browser-local. See [`docs/setup/supabase-account-roster.md`](docs/setup/supabase-account-roster.md) for migration, environment, and security setup.
+
+The Roster workspace keeps search, rarity, breed, details filters, sorting, and row selection as ephemeral UI state. Each progression or notes edit updates the authoritative roster immediately and follows the existing browser/account synchronization path. See [`docs/roster-workspace.md`](docs/roster-workspace.md) for interaction and filter definitions.
 
 ## Formation Builder
 
@@ -79,4 +81,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.8.0`. Source data schema: `13`. Local and cloud roster schemas: `4`. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); no database migration is required for authentication. Google OAuth is configured only in Google Cloud and Supabase, with no frontend Google credentials. Email/password is supported, magic links remain a tertiary fallback, and confirmation/reset delivery remains dependent on the pending Resend/custom SMTP setup. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.
+Current release: `0.9.0`. Source data schema: `13`. Local and cloud roster schemas: `4`. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); this UI release adds no migration. Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.

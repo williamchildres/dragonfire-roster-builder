@@ -114,15 +114,30 @@ describe('Dragonfire Lab app', () => {
     await user.click(screen.getByRole('button', { name: /add to roster/i }));
     expect(screen.getByText('Added Syrax to roster.')).toBeInTheDocument();
     expect(screen.queryByText(/^Added to roster\.$/i)).not.toBeInTheDocument();
-    expect(within(screen.getByRole('dialog', { name: /add dragons to your roster/i })).queryByRole('heading', { name: 'Syrax' })).not.toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: /close add dragon/i }));
+    expect(screen.queryByRole('dialog', { name: /add dragons to your roster/i })).not.toBeInTheDocument();
 
-    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
-    expect(syraxCard).not.toBeNull();
-    expect(within(syraxCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('5');
-    expect(within(syraxCard as HTMLElement).getByLabelText(/dragon level/i)).toHaveValue(12);
-    await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
-    expect(screen.getByLabelText(/personal notes/i)).toHaveValue('Keep with fire support.');
+    const syraxEditor = screen.getByRole('complementary', { name: 'Syrax' });
+    expect(within(syraxEditor).getByLabelText(/star rank/i)).toHaveValue('5');
+    expect(within(syraxEditor).getByLabelText(/dragon level/i)).toHaveValue(12);
+    await user.click(within(syraxEditor).getByRole('button', { name: /view full details/i }));
+    expect(within(screen.getByRole('dialog', { name: /syrax/i })).getByLabelText(/personal notes/i)).toHaveValue('Keep with fire support.');
+  });
+
+  it('returns to the mobile roster list after an Add Dragon request has been consumed', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
+    await user.click(screen.getByRole('button', { name: /add to roster/i }));
+    expect(document.querySelector('.roster-workspace')).toHaveAttribute('data-mobile-view', 'editor');
+    expect(screen.getByRole('complementary', { name: 'Syrax' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /^overview$/i }));
+    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+
+    expect(document.querySelector('.roster-workspace')).toHaveAttribute('data-mobile-view', 'list');
+    expect(screen.getByRole('complementary', { name: 'Syrax' })).toBeInTheDocument();
   });
 
   it('auto-dismisses and refreshes the roster success banner for the latest dragon', () => {
@@ -137,7 +152,6 @@ describe('Dragonfire Lab app', () => {
 
       expect(screen.getByText('Added Feskar to roster.')).toBeInTheDocument();
 
-      fireEvent.click(screen.getByRole('button', { name: /close add dragon/i }));
       fireEvent.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
       fireEvent.change(screen.getByLabelText(/search by dragon name/i), { target: { value: 'Tessarion' } });
       fireEvent.click(screen.getByRole('button', { name: /add to roster/i }));
@@ -233,9 +247,9 @@ describe('Dragonfire Lab app', () => {
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
     */
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.8\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
+    expect(latestUpdate).toHaveTextContent('The compact Roster workspace adds filterable rows');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -554,9 +568,8 @@ describe('Dragonfire Lab app', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
-    expect(syraxCard).not.toBeNull();
-    await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    const syraxEditor = screen.getByRole('complementary', { name: 'Syrax' });
+    await user.click(within(syraxEditor).getByRole('button', { name: /view full details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /syrax/i });
     expect(within(dialog).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
@@ -821,20 +834,15 @@ describe('Dragonfire Lab app', () => {
     const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
     expect(syraxCard).not.toBeNull();
     await user.click(within(syraxCard as HTMLElement).getByRole('button', { name: /add to roster/i }));
-    await user.click(screen.getByRole('button', { name: /close add dragon/i }));
-    const rosterSyraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
-    expect(rosterSyraxCard).not.toBeNull();
-    await user.click(within(rosterSyraxCard as HTMLElement).getByRole('button', { name: /view details/i }));
-    const syraxDialog = screen.getByRole('dialog', { name: /syrax/i });
-    await user.selectOptions(within(syraxDialog).getByLabelText(/star rank/i), '3');
-    await user.click(screen.getByRole('button', { name: /close details/i }));
+    const syraxEditor = screen.getByRole('complementary', { name: 'Syrax' });
+    await user.selectOptions(within(syraxEditor).getByLabelText(/star rank/i), '3');
 
     firstRender.unmount();
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
-    expect(screen.getAllByText('3').length).toBeGreaterThan(0);
+    const reloadedEditor = screen.getByRole('complementary', { name: 'Syrax' });
+    expect(within(reloadedEditor).getByLabelText(/Star Rank/i)).toHaveValue('3');
   });
 
   it('shows simplified ownership in the Add Dragon modal and keeps Add to roster wired to owned state', async () => {
@@ -856,14 +864,11 @@ describe('Dragonfire Lab app', () => {
     expect(daemorosCard).not.toHaveTextContent('Shards');
 
     await user.click(within(daemorosCard as HTMLElement).getByRole('button', { name: /add to roster/i }));
-    expect(within(screen.getByRole('dialog', { name: /add dragons to your roster/i })).queryByRole('heading', { name: 'Daemoros' })).not.toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: /close add dragon/i }));
-
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    expect(screen.getByRole('heading', { name: 'Daemoros' })).toBeInTheDocument();
+    expect(screen.queryByRole('dialog', { name: /add dragons to your roster/i })).not.toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: 'Daemoros' })).toBeInTheDocument();
   });
 
-  it('renders compact My Roster cards without collection or shard controls', async () => {
+  it('renders compact My Roster rows with one dedicated editor', async () => {
     const user = userEvent.setup();
     const roster = createEmptyRoster(dragons);
     roster.syrax!.owned = true;
@@ -874,19 +879,17 @@ describe('Dragonfire Lab app', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    const syraxCard = screen.getByRole('heading', { name: 'Syrax' }).closest('article');
-    expect(syraxCard).not.toBeNull();
-    expect(syraxCard).toHaveTextContent('Verified');
-    expect(syraxCard).not.toHaveTextContent('Community Verified');
-    expect(syraxCard).not.toHaveTextContent('In-game verified, pending official site');
-    expect(syraxCard).toHaveTextContent('Owned / Hatched');
-    expect(syraxCard).toHaveTextContent('View details');
-    expect(within(syraxCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
-    expect(within(syraxCard as HTMLElement).queryByRole('checkbox', { name: /my roster/i })).not.toBeInTheDocument();
-    expect(within(syraxCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('4');
-    expect(within(syraxCard as HTMLElement).getByLabelText(/dragon level/i)).toHaveValue(9);
-    expect(screen.getByRole('button', { name: /export json/i })).toBeInTheDocument();
-    expect(screen.getByText(/import json/i)).toBeInTheDocument();
+    const syraxRow = screen.getByRole('button', { name: /^Syrax,/i });
+    expect(syraxRow).toHaveAttribute('aria-current', 'true');
+    expect(syraxRow).toHaveAccessibleName(/Star Rank 4/);
+    expect(syraxRow).toHaveTextContent('Lv 9');
+    expect(screen.getByRole('list', { name: /owned dragons/i }).querySelector('select, input, textarea')).not.toBeInTheDocument();
+    const editor = screen.getByRole('complementary', { name: 'Syrax' });
+    expect(within(editor).getByLabelText(/star rank/i)).toHaveValue('4');
+    expect(within(editor).getByLabelText(/dragon level/i)).toHaveValue(9);
+    expect(document.querySelectorAll('.roster-editor-form')).toHaveLength(1);
+    expect(screen.getByRole('button', { name: /export roster/i })).toBeInTheDocument();
+    expect(screen.getByText(/import roster/i)).toBeInTheDocument();
   });
 
   it('shows the empty roster state with a visible add action', async () => {
@@ -896,7 +899,7 @@ describe('Dragonfire Lab app', () => {
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
 
     expect(screen.getByText(/No dragons in your roster yet/i)).toBeInTheDocument();
-    expect(screen.getByText(/start tracking Star Rank, Dragon Level, and formation options/i)).toBeInTheDocument();
+    expect(screen.getByText(/start tracking Star Rank, Dragon Level, Habit Levels, notes, and formation options/i)).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /\+ add dragon/i }).length).toBeGreaterThanOrEqual(1);
   });
 
@@ -910,16 +913,12 @@ describe('Dragonfire Lab app', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    const nyrenaCard = screen.getByRole('heading', { name: 'Nyrena' }).closest('article');
-    expect(nyrenaCard).not.toBeNull();
-    expect(nyrenaCard).toHaveTextContent('Verified');
-    expect(nyrenaCard).not.toHaveTextContent('Metadata Only');
-    expect(nyrenaCard).toHaveTextContent('Owned / Hatched');
-    expect(nyrenaCard).toHaveTextContent('View details');
-    expect(within(nyrenaCard as HTMLElement).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
-    expect(within(nyrenaCard as HTMLElement).getByLabelText(/star rank/i)).toHaveValue('2');
-    expect(within(nyrenaCard as HTMLElement).getByLabelText(/dragon level/i)).toBeInTheDocument();
-    await user.click(within(nyrenaCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    const nyrenaRow = screen.getByRole('button', { name: /^Nyrena,/i });
+    expect(nyrenaRow).toHaveAttribute('aria-current', 'true');
+    const nyrenaEditor = screen.getByRole('complementary', { name: 'Nyrena' });
+    expect(within(nyrenaEditor).getByLabelText(/star rank/i)).toHaveValue('2');
+    expect(within(nyrenaEditor).getByLabelText(/dragon level/i)).toBeInTheDocument();
+    await user.click(within(nyrenaEditor).getByRole('button', { name: /view full details/i }));
     expect(screen.getByRole('dialog', { name: /nyrena/i })).toBeInTheDocument();
   });
 
@@ -947,20 +946,13 @@ describe('Dragonfire Lab app', () => {
 
     await user.click(screen.getByRole('button', { name: /close add dragon/i }));
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    const nyrenaCard = screen.getByRole('heading', { name: 'Nyrena' }).closest('article');
-    expect(nyrenaCard).not.toBeNull();
-    expect(nyrenaCard).toHaveTextContent('Verified');
-    expect(nyrenaCard).not.toHaveTextContent('Metadata Only');
-    expect(nyrenaCard).not.toHaveTextContent('Community Verified');
-    expect(nyrenaCard).not.toHaveTextContent('Official Metadata Only');
-    expect(nyrenaCard).not.toHaveTextContent('In-game verified, pending official site');
-    expect(nyrenaCard).not.toHaveTextContent('Collection State');
-    expect(nyrenaCard).not.toHaveTextContent('Not hatched');
-    expect(nyrenaCard).not.toHaveTextContent('Not collected');
-    expect(nyrenaCard).not.toHaveTextContent('Shards');
-    expect(nyrenaCard).not.toHaveTextContent('Shards Required');
-    expect(screen.getByRole('button', { name: /export json/i })).toBeInTheDocument();
-    expect(screen.getByText(/import json/i)).toBeInTheDocument();
+    const nyrenaRow = screen.getByRole('button', { name: /^Nyrena,/i });
+    expect(nyrenaRow).not.toHaveTextContent('Metadata Only');
+    expect(nyrenaRow).not.toHaveTextContent('Community Verified');
+    expect(nyrenaRow).not.toHaveTextContent('Official Metadata Only');
+    expect(nyrenaRow).not.toHaveTextContent('In-game verified, pending official site');
+    expect(screen.getByRole('button', { name: /export roster/i })).toBeInTheDocument();
+    expect(screen.getByText(/import roster/i)).toBeInTheDocument();
   });
 
   it('imports a simplified roster export and shows a success message', async () => {
@@ -972,11 +964,11 @@ describe('Dragonfire Lab app', () => {
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    const importInput = screen.getByLabelText(/import json/i);
+    const importInput = screen.getByLabelText(/import roster/i);
     await user.upload(importInput, new File([serializeRosterExport(roster)], 'roster.json', { type: 'application/json' }));
 
     expect(await screen.findByRole('status')).toHaveTextContent('Roster imported successfully.');
-    expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
+    expect(screen.getByRole('complementary', { name: 'Syrax' })).toBeInTheDocument();
   });
 
   it('keeps retired roster ownership wording out of rendered public roster UI', async () => {

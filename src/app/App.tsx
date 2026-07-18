@@ -1,16 +1,12 @@
 import {
-  Download,
   ExternalLink,
   Flame,
   Home,
   Info,
   Link,
   ChevronRight,
-  Plus,
-  RotateCcw,
   Shield,
   Swords,
-  Upload,
   Users,
   X,
   type LucideIcon,
@@ -22,12 +18,16 @@ import {
   HeaderAccountAction,
   ImportSyncDialog,
   RosterDecisionDialog,
-  RosterSyncPanel,
   SetPasswordDialog,
   SignInDialog,
 } from './AccountUi';
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
+import { RosterWorkspace } from './RosterWorkspace';
+import {
+  clearConsumedSelectionRequest,
+  type RosterSelectionRequest,
+} from './rosterWorkspaceState';
 import {
   buildFormationFilterOptions,
   buildFormationSignalChips,
@@ -50,7 +50,7 @@ import {
   type OwnedDragon,
   type VerificationStatus,
 } from '../models/dragon';
-import { defaultFilters, filterDragons, sortDragons, type DragonFilters, type DragonSort } from '../services/rosterFilters';
+import { defaultFilters, filterDragons, sortDragons, type DragonFilters } from '../services/rosterFilters';
 import {
   createEmptyRoster,
   FORMATION_STORAGE_KEY,
@@ -138,7 +138,6 @@ export function App({ accountServices: providedAccountServices }: { accountServi
   );
   const roster = rosterSnapshot.roster;
   const [addDragonFilters, setAddDragonFilters] = useState<DragonFilters>(defaultFilters);
-  const [rosterSort, setRosterSort] = useState<DragonSort>('name');
   const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
   const [message, setMessage] = useState<StatusMessage | null>(null);
   const [rosterSuccessMessage, setRosterSuccessMessage] = useState<RosterSuccessMessage | null>(null);
@@ -150,6 +149,8 @@ export function App({ accountServices: providedAccountServices }: { accountServi
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [passwordDialog, setPasswordDialog] = useState<'account' | 'recovery' | null>(null);
   const [pendingImportedRoster, setPendingImportedRoster] = useState<Record<string, OwnedDragon> | null>(null);
+  const [rosterSelectionRequest, setRosterSelectionRequest] = useState<RosterSelectionRequest | null>(null);
+  const rosterSelectionRequestIdRef = useRef(0);
   const rosterSuccessTimerRef = useRef<number | null>(null);
   const [accountDialogReturnFocus, setAccountDialogReturnFocus] = useState<HTMLElement | null>(null);
 
@@ -223,16 +224,6 @@ export function App({ accountServices: providedAccountServices }: { accountServi
 
   const detailedAbilityCount = dragons.filter(hasDetailedAbilities).length;
 
-  const ownedDragons = useMemo(
-    () =>
-      sortDragons(
-        dragons.filter((dragon) => roster[dragon.id]?.owned),
-        roster,
-        rosterSort,
-      ),
-    [roster, rosterSort],
-  );
-
   const updateRoster = (dragonId: string, patch: Partial<OwnedDragon>) => {
     setRosterSnapshot((current) => ({
       updatedAt: new Date().toISOString(),
@@ -262,8 +253,18 @@ export function App({ accountServices: providedAccountServices }: { accountServi
   const addDragonToRoster = (dragonId: string) => {
     const dragonName = dragons.find((dragon) => dragon.id === dragonId)?.name ?? 'Unknown dragon';
     updateRoster(dragonId, { owned: true });
+    rosterSelectionRequestIdRef.current += 1;
+    setRosterSelectionRequest({
+      dragonId,
+      requestId: rosterSelectionRequestIdRef.current,
+    });
+    setIsAddDragonOpen(false);
     setRosterSuccessMessage({ text: `Added ${dragonName} to roster.` });
   };
+
+  const consumeRosterSelectionRequest = useCallback((requestId: number) => {
+    setRosterSelectionRequest((current) => clearConsumedSelectionRequest(current, requestId));
+  }, []);
 
   const openAddDragon = () => {
     setAddDragonFilters(defaultFilters);
@@ -487,12 +488,12 @@ export function App({ accountServices: providedAccountServices }: { accountServi
         ) : null}
 
         {activeSection === 'roster' ? (
-          <RosterSection
-            ownedDragons={ownedDragons}
+          <RosterWorkspace
+            allDragons={dragons}
             roster={roster}
             successMessage={rosterSuccessMessage}
-            sortBy={rosterSort}
-            onSortChange={setRosterSort}
+            selectionRequest={rosterSelectionRequest}
+            onSelectionRequestConsumed={consumeRosterSelectionRequest}
             onUpdateRoster={updateRoster}
             onOpenDetails={setSelectedDragon}
             onOpenAddDragon={openAddDragon}
@@ -766,7 +767,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.</p>
+          <p>The compact Roster workspace adds filterable rows, one selected-dragon editor, and a focused phone workflow without changing roster or rating data.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -819,124 +820,6 @@ function FeatureCard({
   }
 
   return <article className={classes}>{content}</article>;
-}
-
-function RosterSection({
-  ownedDragons,
-  roster,
-  successMessage,
-  sortBy,
-  onSortChange,
-  onUpdateRoster,
-  onOpenDetails,
-  onOpenAddDragon,
-  onExport,
-  onImport,
-  onClear,
-  accountConfigured,
-  session,
-  syncStatus,
-  onOpenAccount,
-  onOpenSignIn,
-  onResolveSync,
-  onRetrySync,
-}: {
-  ownedDragons: Dragon[];
-  roster: Record<string, OwnedDragon>;
-  successMessage: RosterSuccessMessage | null;
-  sortBy: DragonSort;
-  onSortChange: (sort: DragonSort) => void;
-  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
-  onOpenDetails: (dragon: Dragon) => void;
-  onOpenAddDragon: () => void;
-  onExport: () => void;
-  onImport: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClear: () => void;
-  accountConfigured: boolean;
-  session: ReturnType<typeof useAccountSession>['session'];
-  syncStatus: RosterSyncStatus;
-  onOpenAccount: () => void;
-  onOpenSignIn: () => void;
-  onResolveSync: () => void;
-  onRetrySync: () => void;
-}) {
-  return (
-    <section aria-labelledby="roster-title">
-      <SectionHeading
-        eyebrow="Stored in your browser"
-        title="My Roster"
-        description="Manage ownership, Star Rank, and Dragon Level with local browser storage."
-      />
-      {accountConfigured ? (
-        <RosterSyncPanel
-          session={session}
-          status={syncStatus}
-          onOpenAccount={onOpenAccount}
-          onOpenSignIn={onOpenSignIn}
-          onResolve={onResolveSync}
-          onRetry={onRetrySync}
-        />
-      ) : null}
-      {successMessage ? (
-        <div className="status-message success" role="status" aria-live="polite">
-          {successMessage.text}
-        </div>
-      ) : null}
-      <div className="toolbar">
-        <label>
-          Sort owned dragons
-          <select value={sortBy} onChange={(event) => onSortChange(event.target.value as DragonSort)}>
-            <option value="name">Name</option>
-            <option value="starRank">Star Rank</option>
-            <option value="rarity">Rarity</option>
-            <option value="breed">Breed</option>
-          </select>
-        </label>
-        <div className="button-row">
-          <button type="button" className="primary-button" onClick={onOpenAddDragon}>
-            <Plus size={18} aria-hidden="true" />
-            + Add Dragon
-          </button>
-          <button type="button" className="secondary-button" onClick={onExport}>
-            <Download size={18} aria-hidden="true" />
-            Export JSON
-          </button>
-          <label className="file-button">
-            <Upload size={18} aria-hidden="true" />
-            Import JSON
-            <input type="file" accept="application/json,.json" onChange={onImport} />
-          </label>
-          <button type="button" className="danger-button" onClick={onClear}>
-            <RotateCcw size={18} aria-hidden="true" />
-            Clear local roster
-          </button>
-        </div>
-      </div>
-      {ownedDragons.length > 0 ? (
-        <div className="dragon-grid">
-          {ownedDragons.map((dragon) => (
-            <DragonCard
-              dragon={dragon}
-              key={dragon.id}
-              rosterEntry={roster[dragon.id]}
-              onOpenDetails={onOpenDetails}
-              onUpdateRoster={onUpdateRoster}
-              editable
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="empty-state">
-          <h3>No dragons in your roster yet.</h3>
-          <p>Add a dragon to start tracking Star Rank, Dragon Level, and formation options. Use the Add Dragon button to begin.</p>
-          <button type="button" className="primary-button" onClick={onOpenAddDragon}>
-            <Plus size={18} aria-hidden="true" />
-            + Add Dragon
-          </button>
-        </div>
-      )}
-    </section>
-  );
 }
 
 function AddDragonDialog({
@@ -1790,138 +1673,6 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
         </p>
       </div>
     </section>
-  );
-}
-
-function DragonCard({
-  dragon,
-  rosterEntry,
-  editable = false,
-  onOpenDetails,
-  onUpdateRoster,
-}: {
-  dragon: Dragon;
-  rosterEntry?: OwnedDragon;
-  editable?: boolean;
-  onOpenDetails: (dragon: Dragon) => void;
-  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
-}) {
-  const owned = rosterEntry?.owned === true;
-  const starRank = rosterEntry?.starRank ?? null;
-  const verificationLabel = getPublicVerificationLabel(dragon.dataStatus);
-  const verificationTone = getPublicVerificationTone(dragon.dataStatus);
-  const ownershipSummary = owned ? 'Owned / Hatched' : 'Not owned';
-  const starSummary = owned ? (starRank !== null ? `Star ${starRank}` : 'Star unknown') : null;
-  const summaryNote = verificationLabel === 'Metadata Only' ? 'Ability details not verified' : null;
-
-  return (
-    <article className={`dragon-card rarity-${dragon.rarity.toLowerCase()}`}>
-      <div className="dragon-card-header">
-        <div className="card-topline">
-          <DragonEmblem dragon={dragon} />
-          <div className="dragon-card-title">
-            <h3>{dragon.name}</h3>
-            <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
-              <span className="badge">{dragon.rarity}</span>
-              <span className="badge">{dragon.breed}</span>
-              {verificationLabel ? (
-                <span className={`badge verification-${verificationTone ?? 'verified'}`}>{verificationLabel}</span>
-              ) : null}
-              {dragon.isNew ? <span className="badge new">New</span> : null}
-            </div>
-          </div>
-        </div>
-        <div className="dragon-card-summary" aria-label={`${dragon.name} roster summary`}>
-          <span className="dragon-card-summary-main">{ownershipSummary}</span>
-          {starSummary ? <span className="dragon-card-summary-chip">{starSummary}</span> : null}
-          {summaryNote ? <span className="dragon-card-summary-note">{summaryNote}</span> : null}
-        </div>
-      </div>
-
-      {editable ? (
-        <RosterEditControls dragon={dragon} rosterEntry={rosterEntry} onUpdateRoster={onUpdateRoster} />
-      ) : null}
-
-      <div className="card-actions">
-        <button type="button" className="secondary-button" onClick={() => onOpenDetails(dragon)}>
-          View details
-        </button>
-        {editable ? null : (
-          <label className="check-row">
-            <input
-              type="checkbox"
-              checked={owned}
-              onChange={(event) =>
-                onUpdateRoster(dragon.id, {
-                  owned: event.target.checked,
-                })
-              }
-            />
-            My Roster
-          </label>
-        )}
-      </div>
-    </article>
-  );
-}
-
-function RosterEditControls({
-  dragon,
-  rosterEntry,
-  onUpdateRoster,
-}: {
-  dragon: Dragon;
-  rosterEntry?: OwnedDragon;
-  onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
-}) {
-  return (
-    <div className="roster-fields">
-      <label className="check-row">
-        <input
-          type="checkbox"
-          checked={rosterEntry?.owned === true}
-          onChange={(event) =>
-            onUpdateRoster(dragon.id, {
-              owned: event.target.checked,
-            })
-          }
-        />
-        Owned / Hatched
-      </label>
-      <label>
-        Star Rank
-        <select
-          value={rosterEntry?.starRank ?? ''}
-          onChange={(event) =>
-            onUpdateRoster(dragon.id, {
-              starRank: event.target.value ? Number(event.target.value) : null,
-            })
-          }
-        >
-          <option value="">Unknown</option>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rank) => (
-            <option key={rank} value={rank}>
-              {rank}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Dragon Level
-        <input
-          min={0}
-          step={1}
-          type="number"
-          value={rosterEntry?.reignLevel ?? ''}
-          placeholder="Unknown"
-          onChange={(event) =>
-            onUpdateRoster(dragon.id, {
-              reignLevel: event.target.value === '' ? null : Math.max(0, Number.parseInt(event.target.value, 10)),
-            })
-          }
-        />
-      </label>
-    </div>
   );
 }
 
