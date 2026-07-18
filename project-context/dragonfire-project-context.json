@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-18T11:25:15.319Z",
+  "generatedAt": "2026-07-18T18:02:29.356Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/header-account-sync-status",
-    "commit": "a065b981a27a72bf1b4ffe5eaff8a59d7cd36e13",
-    "databaseVersion": "0.9.8",
+    "branch": "ui/roster-selected-row-cleanup",
+    "commit": "610dc819f4a8105a86b221b669757b3330fadcf9",
+    "databaseVersion": "0.9.9",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
