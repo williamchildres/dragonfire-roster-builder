@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.4 - 2026-07-18
+
+- Completed controller-reviewed screenshot-source fidelity for all 21 Malachite, Venator, and Sheepstealer canonical ability descriptions, including Habit Level 1–5 values, targeting, durations, status definitions, scaling, mitigation, and stated source uncertainty.
+- Applied five source-backed ability-tag corrections only: Malachite Thunderous Roar `ADVANTAGE`; Venator Feral Precision `DOUBLE_STRIKE`; Venator Armor Break `PHYSICAL_DAMAGE_RECEIVED_UP`; Sheepstealer Hunter's Cunning removal of unsupported `FIRE_DAMAGE_UP`; and Sheepstealer Baited Kill `CLEANSE_NEGATIVE`.
+- Curated profiles, curated signal count, evaluator behavior, and Formation Rating output are unchanged. Database/package version is `0.10.4`; source data schema remains `13`, local/cloud roster schemas remain `5`, and no Supabase migration was added.
+
 ## 0.10.3 - 2026-07-18
 
 - Completed controller-reviewed screenshot-source fidelity for all 21 Seasmoke, Crimson, and Kalspire canonical ability descriptions, including meaningful values, Habit Level 1–5 progressions, targeting, durations, status definitions, scaling, mitigation, and explicit visible source discrepancies.

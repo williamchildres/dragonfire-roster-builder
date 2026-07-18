@@ -91,7 +91,7 @@ describe('canonical dragon affinities', () => {
 
     const venator = dragons.find((dragon) => dragon.id === 'venator')!;
     const armorBreak = venator.habits.find((habit) => habit.id === 'venator-armor-break')!;
-    expect(armorBreak.rawDescription).toContain('opposing enemy');
+    expect(armorBreak.rawDescription).toContain('opposing Enemy');
     expect(armorBreak.rawDescription).not.toContain('same-lane');
     expect(simpleSynergyProfiles.find((profile) => profile.dragonId === 'venator')?.supports.find((signal) => signal.id === 'venator-armor-break-physical')).toMatchObject({ friendlyScope: 'formation', tag: 'damage:physical' });
 

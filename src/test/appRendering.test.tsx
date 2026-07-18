@@ -239,10 +239,10 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.3/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.4/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Source-fidelity descriptions for Seasmoke, Crimson, and Kalspire now preserve controller-reviewed effect values');
-    expect(latestUpdate).toHaveTextContent('two confirmed Strength-scaling relationships are also corrected');
+    expect(latestUpdate).toHaveTextContent('Source-fidelity descriptions for Malachite, Venator, and Sheepstealer now preserve controller-reviewed effect values');
+    expect(latestUpdate).toHaveTextContent('curated synergy profiles remain unchanged');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -794,14 +794,14 @@ describe('Dragonfire Lab app', () => {
     await user.click(rawToggle);
     raw = rawToggle.closest('details');
     expect(raw).not.toBeNull();
-    expect(raw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
-    expect(raw).toHaveTextContent('Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey.');
-    expect(raw).toHaveTextContent('At 10 Stars:');
+    expect(raw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(2);
+    expect(raw).toHaveTextContent("when no Enemy is currently marked as Sheepstealer's Prey");
+    expect(raw).toHaveTextContent('At 10 Stars, while Sheepstealer has a current Prey');
     expect(raw).toHaveTextContent('current Prey');
-    expect(raw).toHaveTextContent('24% rate');
-    expect(raw).toHaveTextContent('10% rate');
-    expect(raw).toHaveTextContent('72% Fire Damage');
-    expect(raw).toHaveTextContent('30% Recovery');
+    expect(raw).toHaveTextContent('current Savage Claim Damage Rate');
+    expect(raw).toHaveTextContent('current Savage Claim Recovery Rate');
+    expect(raw).toHaveTextContent('Fire Damage 24%, tripled to 72%');
+    expect(raw).toHaveTextContent('Recovery 10%, tripled to 30%');
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
     await openAddDragon(user);

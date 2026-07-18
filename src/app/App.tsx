@@ -737,7 +737,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Source-fidelity descriptions for Seasmoke, Crimson, and Kalspire now preserve controller-reviewed effect values, Habit Level progressions, and visible source discrepancies; two confirmed Strength-scaling relationships are also corrected.</p>
+          <p>Source-fidelity descriptions for Malachite, Venator, and Sheepstealer now preserve controller-reviewed effect values, Habit Level progressions, targeting, status definitions, scaling, mitigation, and visible source uncertainty; curated synergy profiles remain unchanged.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

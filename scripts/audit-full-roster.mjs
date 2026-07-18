@@ -32,16 +32,16 @@ const resolvedFindings = [
 ];
 const browserQaObservation = {
   status: 'PASS',
-  auditedUrl: 'http://127.0.0.1:4173/ (local 0.10.3 production preview)',
+  auditedUrl: 'http://127.0.0.1:4173/ (local 0.10.4 production preview)',
   fixture: 'isolated localhost with an empty local roster; no production account or roster used',
   viewports: {
     desktop1440: {
       viewport: { width: 1440, height: 900 },
       document: { clientWidth: 1440, scrollWidth: 1440 },
       dialogs: {
-        Seasmoke: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4528 },
-        Crimson: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4432 },
-        Kalspire: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4349 },
+        Malachite: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4528 },
+        Venator: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4432 },
+        Sheepstealer: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4349 },
       },
       openVerifiedWordingDisclosuresPerDragon: 7,
       overflowingDescendantCount: 0,
@@ -50,9 +50,9 @@ const browserQaObservation = {
       viewport: { width: 390, height: 844 },
       document: { clientWidth: 390, scrollWidth: 390 },
       dialogs: {
-        Seasmoke: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7726 },
-        Crimson: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7593 },
-        Kalspire: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7707 },
+        Malachite: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7726 },
+        Venator: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7593 },
+        Sheepstealer: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7707 },
       },
       openVerifiedWordingDisclosuresPerDragon: 7,
       overflowingDescendantCount: 0,
@@ -61,7 +61,7 @@ const browserQaObservation = {
     phone360: {
       viewport: { width: 360, height: 740 },
       document: { clientWidth: 360, scrollWidth: 360 },
-      KalspireDialog: { clientWidth: 323, scrollWidth: 323, scrollHeight: 8220 },
+      SheepstealerDialog: { clientWidth: 323, scrollWidth: 323, scrollHeight: 8220 },
       overflowingDescendantCount: 0,
       clippedInteractiveControlCount: 0,
     },
@@ -104,8 +104,8 @@ const browserQaObservation = {
   observations: [
     '1440x900: all seven disclosures per dragon opened with 1,033px-wide, 24px-high summary controls and no overflowing descendants.',
     '390x844: all progression sequences wrapped inside 353px-wide dialogs with no horizontal overflow.',
-    '360x740: Kalspire remained usable in a 323px-wide dialog with the Close control visible and no horizontal overflow.',
-    'Seasmoke, Crimson, and Kalspire rendered no Power values or generic screenshot upgrade boilerplate.',
+    '360x740: Sheepstealer remained usable in a 323px-wide dialog with the Close control visible and no horizontal overflow.',
+    'Malachite, Venator, and Sheepstealer rendered no Power values or generic screenshot upgrade boilerplate.',
   ],
   legacyObservations: [
     '1440px: two-pane workspace remained contained with a sticky 415px editor.',
@@ -135,21 +135,21 @@ try {
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: 'e5e7fe84170417ef30d9b4aca2002cce8d7bd4d6',
-      branch: 'data/source-fidelity-seasmoke-crimson-kalspire',
+      originMainSha: '0dc080d9ca6f6f6501f42f370eb68c8cc6944ab4',
+      branch: 'data/source-fidelity-malachite-venator-sheepstealer',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,
     comparison: {
-      baselineVersion: '0.10.2',
+      baselineVersion: '0.10.3',
       baselineDeterministicFullResultHash:
-        'b8e09b1ea60476aa9ea368636a936cc09534b67ea0f294ed3589cf583e845c41',
+        'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48',
       currentVersion: auditVersion,
       currentDeterministicFullResultHash: report.formationSweep.deterministicFullResultHash,
       allNumericScoresAndComponentsUnchanged:
         report.formationSweep.deterministicFullResultHash ===
-        'b8e09b1ea60476aa9ea368636a936cc09534b67ea0f294ed3589cf583e845c41',
+        'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48',
     },
     resolvedFindings,
     findingSummary: {
@@ -205,7 +205,7 @@ function renderMarkdown(report) {
   const lines = [
     `# Full-roster regression audit — ${report.auditVersion}`,
     '',
-    '> Screenshot-source fidelity release for Seasmoke, Crimson, and Kalspire with two confirmed Strength-scaling corrections. Rating formula and calibration remain unchanged.',
+    '> Screenshot-source fidelity release for Malachite, Venator, and Sheepstealer. Curated profiles, rating formula, and calibration remain unchanged.',
     '',
     '## Executive summary',
     '',
@@ -326,8 +326,8 @@ function renderMarkdown(report) {
     '## Explicit non-changes',
     '',
     '- No formula, weight, threshold, guardrail, placement, or calibration changes.',
-    '- Canonical wording changed only for the 21 Seasmoke, Crimson, and Kalspire abilities in this screenshot-source fidelity batch.',
-    '- Curated profile semantics changed only by adding Strength scaling to the two existing confirmed signals; no signal, tag, targeting, or Crimson profile structure changed.',
+    '- Canonical wording changed only for the 21 Malachite, Venator, and Sheepstealer abilities in this screenshot-source fidelity batch.',
+    '- Curated profile semantics and signals are unchanged; source-backed ability tags only were corrected without changing evaluator behavior.',
     '- Source schema 13, formation share links, formation evaluation, and the rating model remain unchanged; local/cloud roster JSON remain at schema 5 without SQL changes.',
     '- FRR-F001 and FRR-F002 remain informational and unresolved by design.',
   );
