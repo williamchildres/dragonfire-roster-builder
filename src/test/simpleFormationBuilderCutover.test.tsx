@@ -176,6 +176,19 @@ describe('Formation Builder simple synergy cutover', () => {
     );
   });
 
+  it('keeps a compact accessible Formation Builder workspace heading', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {} });
+
+    await openFormationBuilder(user);
+
+    const heading = screen.getByRole('heading', { level: 2, name: 'Formation Builder' });
+    expect(heading.closest('.formation-workspace-header')).not.toBeNull();
+    expect(heading.parentElement).toHaveTextContent(
+      'Assign one unique dragon to each position and review curated profile relationships.',
+    );
+  });
+
   it('places a compact rating summary before the cards and keeps it consistent with the full lower analysis', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 } });
@@ -290,12 +303,26 @@ describe('Formation Builder simple synergy cutover', () => {
     const syraxCard = screen.getByRole('article', { name: 'Left Flank' });
     const antaresCard = screen.getByRole('article', { name: 'Right Flank' });
     expect(within(syraxCard).getByLabelText('Favorable affinity: Archers')).toBeInTheDocument();
+    expect(within(syraxCard).getByLabelText('Favorable affinity: Spearmen')).toBeInTheDocument();
     expect(within(syraxCard).getByLabelText('Unfavorable affinity: Siege')).toBeInTheDocument();
-    expect(within(syraxCard).getByLabelText(/additional affinities remain unverified/i)).toBeInTheDocument();
+    expect(within(syraxCard).getByLabelText(/Syrax affinities; additional affinities are unverified/i)).toBeInTheDocument();
+    expect(within(syraxCard).queryByText('+?')).not.toBeInTheDocument();
     expect(within(antaresCard).getByText('Affinities not verified.')).toBeInTheDocument();
     expect(within(antaresCard).queryByLabelText(/Neutral affinity/i)).not.toBeInTheDocument();
     expect(screen.queryByText('None recorded')).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Affinities' })).not.toBeInTheDocument();
+  });
+
+  it('separates selected-dragon identity metadata from progression metadata', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax' });
+
+    const card = screen.getByRole('article', { name: 'Left Flank' });
+    expect(within(card).getByLabelText('Syrax identity metadata')).toHaveTextContent(/Legendary\s*Sentinel/);
+    expect(within(card).getByLabelText('Syrax progression metadata')).toHaveTextContent('Star 10');
   });
 
   it('maps roster Star Rank to progression-locked simple relationships', async () => {

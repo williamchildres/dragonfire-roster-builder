@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.5 - 2026-07-18
+
+- Tightened the Formation Builder workspace introduction, standardized selected-dragon metadata into identity and progression rows, and refined the compact affinity presentation with a single-spear Spearmen symbol.
+- Partially verified affinity sets now show only verified icons; fully unknown sets continue to state that affinities are not verified. No affinity values or verification records changed.
+- Increased database/package version to `0.9.5`; source data schema remains `13`, and local/cloud roster schemas remain `5`. Formation evaluation, ratings, canonical dragon data, storage behavior, and the deterministic result hash are unchanged. No database or Supabase migration was added.
+
 ## 0.9.4 - 2026-07-18
 
 - Moved a compact Formation Rating summary above the three-card board while retaining the complete numerical breakdown, strengths, opportunities, notes, and mapped-synergy trace in Formation Analysis.
