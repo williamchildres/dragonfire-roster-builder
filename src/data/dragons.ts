@@ -24,7 +24,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing Allies that deal Fire Damage.\n\nRounds 1, 4, 6, and 9: deal Tactical Damage to one enemy within adjacency at a 110% Damage Rate.\n\nAt 6+ Stars:\n\nRounds 2, 5, and 8: apply Recovery to the Ally with the least current troops at a 50% Recovery Rate, enhanced by Intelligence. Resistance applies to the same selected Ally. Resistance has a 40% activation chance at effective Habit Level 1 and lasts 2 rounds.\n\nStar Rank 6 augmentation:\nAt 6 Stars, Strategic Revival augments Blazing Fury with Recovery and Resistance on rounds 2, 5, and 8.",
+      "rawDescription": "Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing Allies that deal Fire Damage. First-Strike causes the target to attack before other combatants each round.\n\nRounds 1, 4, 6, and 9: deal Tactical Damage to one Enemy within adjacency at a 110% Damage Rate. Tactical Damage is increased by the attacker's Instinct and mitigated by the target's Intelligence.\n\nAt 6+ Stars, rounds 2, 5, and 8 apply Recovery to the Ally with the least troops. Base Recovery Rate: 50%. Recovery is enhanced by Initiative, not Intelligence, and scales with Dragon Level. Recovery is multiplied by 1.5 if any Enemy is afflicted with Slow; at the Level 1 base rate this is displayed as +75%. Additionally, there is a 40% chance to grant the same target Resistance (-20%) for 2 rounds. Resistance reduces Damage Received by 20%.\n\nStar Rank 6 augmentation: Strategic Revival augments Blazing Fury with Recovery and Resistance on rounds 2, 5, and 8.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Syrax Blazing Fury screenshots",
@@ -81,7 +81,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: increase Intelligence and Instinct of 3 Allies in any lane until end of combat, enhanced by Syrax Initiative.",
+        "rawDescription": "Start of Combat: increase Intelligence and Instinct of three Allies in any lane, enhanced by Syrax Initiative, until end of combat. Habit Level progression (1–5): 6.5%, 7.8%, 9.1%, 11.05%, 13%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Syrax Mindful Synergy screenshot",
@@ -107,7 +107,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: increase Initiative of 3 Allies and reduce Initiative of 3 Enemies in any lane until end of combat, enhanced by Syrax Instinct.",
+        "rawDescription": "Start of Combat: increase Initiative of three Allies in any lane and reduce Initiative of three Enemies in any lane; both are enhanced by Syrax Instinct and last until end of combat. Allied Initiative progression (1–5): +6%, +7.2%, +8.4%, +10.2%, +12%. Enemy Initiative progression (1–5): -6%, -7.2%, -8.4%, -10.2%, -12%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Syrax Flight Mastery screenshot",
@@ -132,7 +132,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Augments Blazing Fury: Rounds 2, 5, 8 recover the Ally with least current troops. Recovery is multiplied by 1.5 if any enemy has Slow. Chance to grant Resistance (-20%) for 2 rounds.",
+        "rawDescription": "Augments Blazing Fury: rounds 2, 5, and 8 apply Recovery to the Ally with the least troops. Recovery is enhanced by Initiative and multiplied by 1.5 if any Enemy has Slow. Resistance reduces Damage Received by 20% and lasts 2 rounds. Resistance chance progression (Habit Level 1–5): 40%, 52%, 64%, 80%, 100%. Recovery Rate progression (Habit Level 1–5): 50%, 60%, 70%, 85%, 100%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Syrax Strategic Revival screenshot",
@@ -158,7 +158,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1: increase Tactical Damage Dealt of one Ally, prioritizing Left Flank, and Fire Damage Dealt of one Ally, prioritizing Right Flank, for 3 rounds.",
+        "rawDescription": "Start of Round 1: increase Tactical Damage Dealt of one Ally in any lane, prioritizing Left Flank, and Fire Damage Dealt of one Ally in any lane, prioritizing Right Flank, for 3 rounds. Both modifiers use Habit Level progression (1–5): 18%, 21.6%, 25.2%, 30.6%, 36%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Syrax Tactical Inferno screenshot",
@@ -184,7 +184,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each Round: chance to cleanse two Negative effects and one Control effect from one Ally in any lane, prioritizing Allies afflicted with Control.",
+        "rawDescription": "Each Round: chance to Cleanse two Negative effects and one Control effect from one Ally in any lane, prioritizing Allies afflicted with Control. Control includes Stun, Stagger, Overwhelm, and Confusion. Cleanse chance progression (Habit Level 1–5): 14%, 18.2%, 22.4%, 28%, 35%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Syrax Mother's Mercy screenshot",
@@ -294,7 +294,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Each round: 25% chance to afflict Taunt on three enemies in any lane for two rounds, doubled to 50% against Burned targets. Even-numbered rounds: deal Physical Damage to one enemy within adjacency, Damage Rate +120%. Taunt roll scope is not stated.",
+      "rawDescription": "Each Round: 25% chance to Taunt three Enemies in any lane for 2 rounds. Chance doubles to 50% against targets afflicted with Burn. Even-numbered rounds: deal Physical Damage to one Enemy within adjacency at a 120% Damage Rate. Physical Damage is increased by Vhagar's Strength and mitigated by the target's Instinct. Taunt forces the target to launch its Basic Attack against Vhagar. The Taunt roll scope is not stated.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Vhagar Fiery Bonds screenshots",
@@ -348,7 +348,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1 for three rounds: reduce Physical and Tactical Damage Received. Start of Round 4 until end of combat: increase Recovery Received.",
+        "rawDescription": "Start of Round 1: reduce Vhagar's Physical and Tactical Damage Received for 3 rounds. Start of Round 4: increase Recovery Received until end of combat. Damage Received progression (Habit Level 1–5): -12%, -14.4%, -16.8%, -20.4%, -24%. Recovery Received progression (Habit Level 1–5): +15%, +18%, +21%, +25.5%, +30%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vhagar Ancestral Shield screenshot",
@@ -373,7 +373,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: select one ally in any lane, preferring Right Flank with fallback, and increase Physical Damage Dealt excluding Basic Attacks.",
+        "rawDescription": "Start of Combat until end of combat: increase non-Basic Physical Damage Dealt of one Ally in any lane, prioritizing Right Flank. The existing safe priority/fallback interpretation applies; the source does not establish a hard Right Flank requirement. Modifier progression (Habit Level 1–5): 12.5%, 15%, 17.5%, 21.25%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vhagar Battle Leader screenshot",
@@ -397,7 +397,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Rounds 3 through 7 inclusive: one shared ranked activation roll. On success, grant Advantage to the ally with most current troops and Weakened to the enemy with most current troops for two rounds. Prose rounds L1 to 18%; table shows 17.5%.",
+        "rawDescription": "Rounds 3–7: one shared activation chance to grant Advantage to the Ally with the most troops and afflict Weakened on the Enemy with the most troops; both effects last 2 rounds. Advantage increases Damage Dealt by 20%. Weakened reduces Damage Dealt by 20%. Source discrepancy: prose displays an 18% Level 1 activation chance; the progression table displays 17.5%. Table progression (Habit Level 1–5): 17.5%, 21%, 24.5%, 29.8%, 35%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vhagar Eclipse Cover screenshot",
@@ -422,7 +422,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1 for three rounds: increase Fire Damage Received on one enemy preferring Left Flank, and Physical Damage Received excluding Basic Attacks on one enemy preferring Right Flank. Effects select independently; distinct targets are not required.",
+        "rawDescription": "Start of Round 1 for 3 rounds: increase Fire Damage Received of one Enemy in any lane, prioritizing Left Flank, and independently increase non-Basic Physical Damage Received of one Enemy in any lane, prioritizing Right Flank. Both effects use Habit Level progression (1–5): 18%, 21.6%, 25.2%, 30.6%, 36%. Selections are independent; distinct targets are not required.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vhagar Blazing Onslaught screenshot",
@@ -447,7 +447,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each round: 30% chance to gain one Bulwark stack, max five, until end of combat. Each stack increases Strength and reduces Physical/Tactical Damage Received. When Vhagar gains the third Bulwark stack, deal Physical Damage to one enemy in the same lane.",
+        "rawDescription": "Each Round: 30% chance to gain one Bulwark stack; maximum five stacks; stacks last until end of combat. Each stack increases Strength and reduces Physical and Tactical Damage Received. Gaining the third stack deals Physical Damage to one Enemy in the same lane; Physical Damage scales with Strength and is mitigated by the target's Instinct. Strength per stack progression (Habit Level 1–5): 5%, 6.5%, 8%, 10%, 12.5%. Damage Received per stack table progression (Habit Level 1–5): -2.5%, -3.25%, -4%, -5%, -6.25%. Third-stack Physical Damage Rate progression (Habit Level 1–5): 100%, 130%, 160%, 200%, 250%. Source discrepancy: prose states -2% Damage Received per stack at the displayed base level; the Level 1 table value is -2.5%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vhagar Skyward Titan screenshot",
@@ -570,7 +570,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Rounds 3, 6, 9: deal Fire Damage to 3 Enemies in any lane (Damage Rate +100%). If Caraxes has First-Strike, damage is multiplied by 1.5 and displayed as +150%.",
+      "rawDescription": "Rounds 3, 6, and 9: deal Fire Damage to three Enemies in any lane at a base 100% Damage Rate. If Caraxes has First-Strike, multiply damage by 1.5, displayed as 150%. Fire Damage is increased by Caraxes's Intelligence and mitigated by the target's Initiative.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Caraxes Infernal Burst screenshot",
@@ -624,7 +624,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: reduce Strength and Initiative of 3 Enemies in any lane by -6%, enhanced by Caraxes Intelligence. Progression table shows -6.5% at Level 1.",
+        "rawDescription": "Start of Combat until end of combat: reduce Strength and Initiative of three Enemies in any lane, enhanced by Caraxes Intelligence. Source discrepancy: prose displays -6%; the Level 1 table displays -6.5%. Table progression (Habit Level 1–5): -6.5%, -7.8%, -9.1%, -11.05%, -13%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Caraxes Battle Dread screenshot",
@@ -649,7 +649,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: increase Caraxes Fire Damage Dealt until end of combat.",
+        "rawDescription": "Start of Combat until end of combat: increase Caraxes Fire Damage Dealt. Habit Level progression (1–5): 12.5%, 15%, 17.5%, 21.25%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Caraxes Dragon's Flair screenshot",
@@ -674,7 +674,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each Round: chance to apply Slow and Burn to 3 Enemies in any lane. Each effect is checked separately for each target and lasts 2 rounds.",
+        "rawDescription": "Each Round: independently check Slow and Burn for each of three Enemies in any lane; both effects last 2 rounds. Burn Damage Rate is 20%; Burn deals Fire Damage each round. Slow causes the target to attack after other combatants each round. Slow and Burn chance progression (Habit Level 1–5): 10%, 12%, 14%, 17%, 20%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Caraxes Crippling Inferno screenshot",
@@ -700,7 +700,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: reduce Physical Damage Dealt, excluding Basic Attacks, of 3 Enemies in any lane by -5%. Progression table shows -5.5% at Level 1.",
+        "rawDescription": "Start of Combat until end of combat: reduce non-Basic Physical Damage Dealt of three Enemies in any lane. Source discrepancy: prose displays -5%; the Level 1 table displays -5.5%. Table progression (Habit Level 1–5): -5.5%, -6.6%, -7.7%, -9.35%, -11%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Caraxes Mass Enfeeble screenshot",
@@ -725,7 +725,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Each Round: for each Enemy below 50% maximum Troop Capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes, enhanced by Initiative.",
+        "rawDescription": "Start of each Round: for each Enemy below 50% maximum troop capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes; Recovery is enhanced by Initiative. Recovery Rate progression (Habit Level 1–5): 40%, 52%, 64%, 80%, 100%. Fire Damage Dealt progression per qualifying Enemy (Habit Level 1–5): 8%, 10.4%, 12.8%, 16%, 20%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Caraxes Blood Wyrm screenshot",

@@ -33,7 +33,7 @@
         "PHYSICAL_DAMAGE",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "Each round: 25% chance to afflict Taunt on three enemies in any lane for two rounds, doubled to 50% against Burned targets. Even-numbered rounds: deal Physical Damage to one enemy within adjacency, Damage Rate +120%. Taunt roll scope is not stated."
+      "rawDescription": "Each Round: 25% chance to Taunt three Enemies in any lane for 2 rounds. Chance doubles to 50% against targets afflicted with Burn. Even-numbered rounds: deal Physical Damage to one Enemy within adjacency at a 120% Damage Rate. Physical Damage is increased by Vhagar's Strength and mitigated by the target's Instinct. Taunt forces the target to launch its Basic Attack against Vhagar. The Taunt roll scope is not stated."
     },
     {
       "id": "vhagar-warriors-resilience",
@@ -83,7 +83,7 @@
         "DAMAGE_RECEIVED_DOWN",
         "RECOVERY_RECEIVED_UP"
       ],
-      "rawDescription": "Start of Round 1 for three rounds: reduce Physical and Tactical Damage Received. Start of Round 4 until end of combat: increase Recovery Received."
+      "rawDescription": "Start of Round 1: reduce Vhagar's Physical and Tactical Damage Received for 3 rounds. Start of Round 4: increase Recovery Received until end of combat. Damage Received progression (Habit Level 1–5): -12%, -14.4%, -16.8%, -20.4%, -24%. Recovery Received progression (Habit Level 1–5): +15%, +18%, +21%, +25.5%, +30%."
     },
     {
       "id": "vhagar-battle-leader",
@@ -106,7 +106,7 @@
       "tags": [
         "PHYSICAL_DAMAGE_UP"
       ],
-      "rawDescription": "Start of Combat until end of combat: select one ally in any lane, preferring Right Flank with fallback, and increase Physical Damage Dealt excluding Basic Attacks."
+      "rawDescription": "Start of Combat until end of combat: increase non-Basic Physical Damage Dealt of one Ally in any lane, prioritizing Right Flank. The existing safe priority/fallback interpretation applies; the source does not establish a hard Right Flank requirement. Modifier progression (Habit Level 1–5): 12.5%, 15%, 17.5%, 21.25%, 25%."
     },
     {
       "id": "vhagar-eclipse-cover",
@@ -130,7 +130,7 @@
         "ADVANTAGE",
         "WEAKENED"
       ],
-      "rawDescription": "Rounds 3 through 7 inclusive: one shared ranked activation roll. On success, grant Advantage to the ally with most current troops and Weakened to the enemy with most current troops for two rounds. Prose rounds L1 to 18%; table shows 17.5%."
+      "rawDescription": "Rounds 3–7: one shared activation chance to grant Advantage to the Ally with the most troops and afflict Weakened on the Enemy with the most troops; both effects last 2 rounds. Advantage increases Damage Dealt by 20%. Weakened reduces Damage Dealt by 20%. Source discrepancy: prose displays an 18% Level 1 activation chance; the progression table displays 17.5%. Table progression (Habit Level 1–5): 17.5%, 21%, 24.5%, 29.8%, 35%."
     },
     {
       "id": "vhagar-blazing-onslaught",
@@ -154,7 +154,7 @@
         "FIRE_DAMAGE",
         "PHYSICAL_DAMAGE_UP"
       ],
-      "rawDescription": "Start of Round 1 for three rounds: increase Fire Damage Received on one enemy preferring Left Flank, and Physical Damage Received excluding Basic Attacks on one enemy preferring Right Flank. Effects select independently; distinct targets are not required."
+      "rawDescription": "Start of Round 1 for 3 rounds: increase Fire Damage Received of one Enemy in any lane, prioritizing Left Flank, and independently increase non-Basic Physical Damage Received of one Enemy in any lane, prioritizing Right Flank. Both effects use Habit Level progression (1–5): 18%, 21.6%, 25.2%, 30.6%, 36%. Selections are independent; distinct targets are not required."
     },
     {
       "id": "vhagar-skyward-titan",
@@ -180,7 +180,7 @@
         "DAMAGE_RECEIVED_DOWN",
         "PHYSICAL_DAMAGE"
       ],
-      "rawDescription": "Each round: 30% chance to gain one Bulwark stack, max five, until end of combat. Each stack increases Strength and reduces Physical/Tactical Damage Received. When Vhagar gains the third Bulwark stack, deal Physical Damage to one enemy in the same lane."
+      "rawDescription": "Each Round: 30% chance to gain one Bulwark stack; maximum five stacks; stacks last until end of combat. Each stack increases Strength and reduces Physical and Tactical Damage Received. Gaining the third stack deals Physical Damage to one Enemy in the same lane; Physical Damage scales with Strength and is mitigated by the target's Instinct. Strength per stack progression (Habit Level 1–5): 5%, 6.5%, 8%, 10%, 12.5%. Damage Received per stack table progression (Habit Level 1–5): -2.5%, -3.25%, -4%, -5%, -6.25%. Third-stack Physical Damage Rate progression (Habit Level 1–5): 100%, 130%, 160%, 200%, 250%. Source discrepancy: prose states -2% Damage Received per stack at the displayed base level; the Level 1 table value is -2.5%."
     }
   ],
   "affinities": {

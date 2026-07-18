@@ -32,7 +32,7 @@
         "FIRE_DAMAGE",
         "ANY_LANE_TARGET"
       ],
-      "rawDescription": "Rounds 3, 6, 9: deal Fire Damage to 3 Enemies in any lane (Damage Rate +100%). If Caraxes has First-Strike, damage is multiplied by 1.5 and displayed as +150%."
+      "rawDescription": "Rounds 3, 6, and 9: deal Fire Damage to three Enemies in any lane at a base 100% Damage Rate. If Caraxes has First-Strike, multiply damage by 1.5, displayed as 150%. Fire Damage is increased by Caraxes's Intelligence and mitigated by the target's Initiative."
     },
     {
       "id": "caraxes-hunters-wrath",
@@ -83,7 +83,7 @@
         "DEBUFF_STRENGTH",
         "DEBUFF_INITIATIVE"
       ],
-      "rawDescription": "Start of Combat: reduce Strength and Initiative of 3 Enemies in any lane by -6%, enhanced by Caraxes Intelligence. Progression table shows -6.5% at Level 1."
+      "rawDescription": "Start of Combat until end of combat: reduce Strength and Initiative of three Enemies in any lane, enhanced by Caraxes Intelligence. Source discrepancy: prose displays -6%; the Level 1 table displays -6.5%. Table progression (Habit Level 1–5): -6.5%, -7.8%, -9.1%, -11.05%, -13%."
     },
     {
       "id": "caraxes-dragons-flair",
@@ -107,7 +107,7 @@
         "FIRE_DAMAGE_UP",
         "BUFF_SELF"
       ],
-      "rawDescription": "Start of Combat: increase Caraxes Fire Damage Dealt until end of combat."
+      "rawDescription": "Start of Combat until end of combat: increase Caraxes Fire Damage Dealt. Habit Level progression (1–5): 12.5%, 15%, 17.5%, 21.25%, 25%."
     },
     {
       "id": "caraxes-crippling-inferno",
@@ -132,7 +132,7 @@
         "BURN",
         "FIRE_DAMAGE"
       ],
-      "rawDescription": "Each Round: chance to apply Slow and Burn to 3 Enemies in any lane. Each effect is checked separately for each target and lasts 2 rounds."
+      "rawDescription": "Each Round: independently check Slow and Burn for each of three Enemies in any lane; both effects last 2 rounds. Burn Damage Rate is 20%; Burn deals Fire Damage each round. Slow causes the target to attack after other combatants each round. Slow and Burn chance progression (Habit Level 1–5): 10%, 12%, 14%, 17%, 20%."
     },
     {
       "id": "caraxes-mass-enfeeble",
@@ -156,7 +156,7 @@
         "PHYSICAL_DAMAGE_UP",
         "EXCLUDES_BASIC_ATTACKS"
       ],
-      "rawDescription": "Start of Combat: reduce Physical Damage Dealt, excluding Basic Attacks, of 3 Enemies in any lane by -5%. Progression table shows -5.5% at Level 1."
+      "rawDescription": "Start of Combat until end of combat: reduce non-Basic Physical Damage Dealt of three Enemies in any lane. Source discrepancy: prose displays -5%; the Level 1 table displays -5.5%. Table progression (Habit Level 1–5): -5.5%, -6.6%, -7.7%, -9.35%, -11%."
     },
     {
       "id": "caraxes-blood-wyrm",
@@ -181,7 +181,7 @@
         "RECOVERY",
         "LOW_HEALTH"
       ],
-      "rawDescription": "Start of Each Round: for each Enemy below 50% maximum Troop Capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes, enhanced by Initiative."
+      "rawDescription": "Start of each Round: for each Enemy below 50% maximum troop capacity, increase Caraxes Fire Damage Dealt. For each Enemy that retreated during the previous round, apply Recovery to Caraxes; Recovery is enhanced by Initiative. Recovery Rate progression (Habit Level 1–5): 40%, 52%, 64%, 80%, 100%. Fire Damage Dealt progression per qualifying Enemy (Habit Level 1–5): 8%, 10.4%, 12.8%, 16%, 20%."
     }
   ],
   "affinities": {

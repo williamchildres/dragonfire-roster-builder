@@ -646,6 +646,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
     reviewer: 'repository-owner',
     notes: [
       'Syrax command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.',
+      'Strategic Revival Recovery is Initiative-enhanced; Mindful Synergy Initiative enhancement and Flight Mastery Instinct enhancement remain possible future controller-review items and do not create new scoring relationships here.',
       'Enemy adjacency for Blazing Fury Tactical Damage remains unresolved and is kept as an explicit assumption.',
       'Observation values are account-specific and not canonical base stats.',
     ],

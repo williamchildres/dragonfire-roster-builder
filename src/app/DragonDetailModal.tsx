@@ -455,10 +455,6 @@ function DragonTechnicalDetails({
                   <dd>{observation.troopCapacity ?? unknown}</dd>
                 </div>
                 <div>
-                  <dt>Dragon Power</dt>
-                  <dd>{observation.dragonPower ?? unknown}</dd>
-                </div>
-                <div>
                   <dt>Modifier context known</dt>
                   <dd>{observation.modifierContextKnown ? 'Known' : 'Unknown'}</dd>
                 </div>

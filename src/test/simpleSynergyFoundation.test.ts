@@ -223,7 +223,7 @@ describe('simple synergy foundation', () => {
     const signal = (dragonId: string, signalId: string) =>
       profilesById.get(dragonId)?.outputs.find((candidate) => candidate.id === signalId);
 
-    expect(signal('syrax', 'syrax-strategic-revival-recovery')?.scalesWith).toEqual(['stat:intelligence']);
+    expect(signal('syrax', 'syrax-strategic-revival-recovery')?.scalesWith).toEqual(['stat:initiative']);
     expect(signal('malachite', 'malachite-wardens-rally-recovery')?.scalesWith).toEqual(['stat:instinct']);
     expect(signal('velar', 'velar-breath-of-renewal-recovery')?.scalesWith).toEqual(['stat:initiative']);
     expect(signal('tashix', 'tashix-shimmering-mirage-fire')?.scalesWith).toEqual(['stat:intelligence']);
@@ -498,8 +498,8 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('amplifier-output', evaluate(formation('syrax', 'caraxes', null)))).toContainEqual(
       expect.objectContaining({ tag: 'stat:intelligence' }),
     );
-    expect(resultsOfKind('amplifier-output', evaluate(formation(null, 'caraxes', 'syrax')))).not.toContainEqual(
-      expect.objectContaining({ tag: 'stat:initiative' }),
+    expect(resultsOfKind('amplifier-output', evaluate(formation(null, 'caraxes', 'syrax')))).toContainEqual(
+      expect.objectContaining({ id: 'amplifier-output:caraxes:stat:initiative:syrax' }),
     );
 
     expect(

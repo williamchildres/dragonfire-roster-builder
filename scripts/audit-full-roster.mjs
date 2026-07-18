@@ -134,10 +134,9 @@ try {
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: '18a890822d99558816e3e7e3e124c75193a1b21d',
-      branch: 'fix/habit-level-unlock-contract',
-      worktree:
-        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/habit-level-contract',
+      originMainSha: '43820e3f6b4a22991ef82179f6886009083d0f7b',
+      branch: 'data/source-fidelity-syrax-vhagar-caraxes',
+      worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,

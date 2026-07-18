@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.2 - 2026-07-18
+
+- Completed controller-reviewed screenshot-source fidelity for all Syrax, Vhagar, and Caraxes canonical ability descriptions, including meaningful values, Habit Level 1–5 progressions, status definitions, scaling, mitigation, and explicit prose/table discrepancies.
+- Corrected Syrax Strategic Revival Recovery from Intelligence-enhanced to Initiative-enhanced in both canonical source text and its existing curated signal. This intentionally changes only relationships traceable to that corrected scaling tag and may change deterministic Formation Ratings.
+- Increased database/package version to `0.10.2`; source data schema remains `13`, local/cloud roster schemas remain `5`, and no Supabase migration was added.
+
 ## 0.10.1 - 2026-07-18
 
 - Completed all canonical dragon affinity maps from the controller-confirmed main-screen screenshots. Visible favorable and unfavorable icons are recorded as positive and negative; unlisted troop types are neutral.
