@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.3 - 2026-07-18
+
+- Refined the public Overview into a compact two-column landscape hero, a responsive three-action feature grid, and a concise dataset-breadth status strip derived from canonical dragon, ability, and curated-profile data.
+- Removed the completed rarity progress dashboard from the Overview and tightened the release/privacy panel spacing across desktop and mobile while preserving feature navigation, focus behavior, and normal mobile page flow.
+- Increased database/package version to `0.9.3`; source data schema remains `13`, and local/cloud roster schemas remain `5`. Formation evaluation and its deterministic result hash are unchanged. No database or Supabase migration was added.
+
 ## 0.9.2 - 2026-07-18
 
 - Restored normal document scrolling on narrow screens: the application header now scrolls away with the page, and Roster list and editor content no longer own nested vertical scrolling. Desktop two-pane scrolling is unchanged.
