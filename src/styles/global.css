@@ -1170,7 +1170,7 @@ dd {
   cursor: pointer;
   display: grid;
   gap: 0.65rem;
-  grid-template-columns: auto minmax(8rem, 1fr) minmax(13rem, auto) 1.6rem;
+  grid-template-columns: auto minmax(8rem, 1fr) minmax(13rem, auto);
   min-height: 4.15rem;
   padding: 0.5rem 0.6rem;
   text-align: left;
@@ -1227,15 +1227,6 @@ dd {
   font-weight: 800;
   padding: 0.24rem 0.48rem;
   white-space: nowrap;
-}
-
-.roster-row-selected-indicator {
-  align-items: center;
-  color: var(--focus);
-  display: flex;
-  justify-content: center;
-  min-height: 1.6rem;
-  min-width: 1.6rem;
 }
 
 .roster-editor-pane {
@@ -3636,13 +3627,10 @@ th {
   .roster-row-progression {
     display: flex;
     flex-wrap: wrap;
-    grid-column: 2 / 4;
+    grid-column: 2 / 3;
     justify-content: start;
   }
 
-  .roster-row-selected-indicator {
-    min-width: 0;
-  }
 
   .roster-editor-primary-fields {
     grid-template-columns: minmax(0, 1fr);
@@ -3796,9 +3784,6 @@ th {
     box-shadow: none;
   }
 
-  .roster-row-selected-indicator {
-    color: HighlightText;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

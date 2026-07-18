@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.9 - 2026-07-18
+
+- Removed the redundant visible Selected marker from roster rows while preserving selected-row highlighting, accessible semantics, keyboard focus, filtering, sorting, and mobile navigation.
+- Increased database/package version to `0.9.9`; source data schema remains `13`, and local/cloud roster schemas remain `5`. Roster data, synchronization, formation evaluation, canonical data, and Supabase migrations are unchanged.
+
 ## 0.9.8 - 2026-07-18
 
 - Moved ordinary roster synchronization feedback into the persistent account action. Header account names now show only a capped email local part, while full email and status remain available in the accessible label and Account dialog.
