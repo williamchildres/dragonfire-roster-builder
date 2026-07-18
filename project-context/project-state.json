@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-18T07:11:35.068Z",
+  "generatedAt": "2026-07-18T08:02:26.721Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/overview-hierarchy-polish",
-    "commit": "179b3ad7485ce81a9a4bf644391da3b92800bd5f",
-    "databaseVersion": "0.9.3",
+    "branch": "ui/formation-builder-hierarchy-polish",
+    "commit": "a954956fa01134414cac253c5851fa39bbb61a08",
+    "databaseVersion": "0.9.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 30,
-    "testCaseCount": 303,
+    "testCaseCount": 307,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
