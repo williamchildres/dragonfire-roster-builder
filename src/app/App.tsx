@@ -75,6 +75,7 @@ import { rateFormation } from '../services/formationRating';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
 import type { AccountServices } from '../cloud/types';
 import { buildAuthRedirectUrl, getProductionAccountServices } from '../cloud/supabaseServices';
@@ -662,10 +663,7 @@ function HomeSection({
   onTeam: () => void;
 }) {
   const versionLabel = `v${databaseMetadata.databaseVersion}`;
-  const abilityCount = dragons.reduce(
-    (total, dragon) => total + Number(Boolean(dragon.command)) + Number(Boolean(dragon.trait)) + dragon.habits.length,
-    0,
-  );
+  const reviewedAbilityCount = simpleSynergyAbilityReviews.length;
   const profileCount = simpleSynergyProfiles.length;
 
   return (
@@ -719,7 +717,7 @@ function HomeSection({
           <span>dragons mapped</span>
         </div>
         <div className="dataset-status-item">
-          <strong>{abilityCount}</strong>
+          <strong>{reviewedAbilityCount}</strong>
           <span>abilities reviewed</span>
         </div>
         <div className="dataset-status-item">

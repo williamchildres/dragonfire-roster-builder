@@ -7,6 +7,7 @@ import { App, RawWordingDisclosure } from '../app/App';
 import { dragons } from '../data/dragons';
 import { createEmptyRoster, saveRoster, serializeRosterExport, STORAGE_KEY } from '../services/rosterStorage';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 
 
 describe('Dragonfire Lab app', () => {
@@ -223,14 +224,11 @@ describe('Dragonfire Lab app', () => {
     const mappedDragonCount = dragons.filter(
       (dragon) => Boolean(dragon.command && dragon.trait && dragon.habits.length > 0),
     ).length;
-    const abilityCount = dragons.reduce(
-      (total, dragon) => total + Number(Boolean(dragon.command)) + Number(Boolean(dragon.trait)) + dragon.habits.length,
-      0,
-    );
+    expect(simpleSynergyAbilityReviews).toHaveLength(217);
     const datasetStatus = screen.getByLabelText('Dataset status');
     expect(datasetStatus).toHaveTextContent(`${mappedDragonCount} / ${dragons.length}`);
     expect(datasetStatus).toHaveTextContent('dragons mapped');
-    expect(datasetStatus).toHaveTextContent(String(abilityCount));
+    expect(datasetStatus).toHaveTextContent(String(simpleSynergyAbilityReviews.length));
     expect(datasetStatus).toHaveTextContent('abilities reviewed');
     expect(datasetStatus).toHaveTextContent(String(simpleSynergyProfiles.length));
     expect(datasetStatus).toHaveTextContent('curated synergy profiles');
