@@ -239,9 +239,9 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.1/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.2/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('All 31 canonical dragon affinity maps are fully specified');
+    expect(latestUpdate).toHaveTextContent('Source-fidelity descriptions for Syrax, Vhagar, and Caraxes now preserve controller-reviewed effect values');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -746,11 +746,9 @@ describe('Dragonfire Lab app', () => {
     expect(commandRaw).not.toBeNull();
     expect(commandRaw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(4);
     expect(commandRaw).toHaveTextContent('Each Round: 20% chance to increase Fire Damage Dealt by 10% and grant First-Strike to one Ally in any lane for 2 rounds, prioritizing Allies that deal Fire Damage.');
-    expect(commandRaw).toHaveTextContent('Rounds 1, 4, 6, and 9: deal Tactical Damage to one enemy within adjacency at a 110% Damage Rate.');
-    expect(commandRaw).toHaveTextContent('At 6+ Stars:');
-    expect(commandRaw).toHaveTextContent('Rounds 2, 5, and 8: apply Recovery to the Ally with the least current troops at a 50% Recovery Rate, enhanced by Intelligence.');
-    expect(commandRaw).toHaveTextContent('Resistance applies to the same selected Ally.');
-    expect(commandRaw).toHaveTextContent('Resistance has a 40% activation chance at effective Habit Level 1 and lasts 2 rounds.');
+    expect(commandRaw).toHaveTextContent('Rounds 1, 4, 6, and 9: deal Tactical Damage to one Enemy within adjacency at a 110% Damage Rate.');
+    expect(commandRaw).toHaveTextContent('Recovery is enhanced by Initiative, not Intelligence, and scales with Dragon Level.');
+    expect(commandRaw).toHaveTextContent('Resistance reduces Damage Received by 20%.');
 
     const rendered = render(<RawWordingDisclosure rawText={null} />);
     expect(rendered.container).toBeEmptyDOMElement();

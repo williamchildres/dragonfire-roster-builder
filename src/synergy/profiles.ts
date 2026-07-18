@@ -36,10 +36,10 @@ export const simpleSynergyProfiles = [
       output({
         id: 'syrax-strategic-revival-recovery',
         tag: 'effect:recovery',
-        scalesWith: ['stat:intelligence'],
+        scalesWith: ['stat:initiative'],
         abilityId: 'syrax-strategic-revival',
         abilityName: 'Strategic Revival',
-        description: 'provides Recovery that is enhanced by Intelligence',
+        description: 'provides Recovery that is enhanced by Initiative',
         unlock: { minimumStarRank: 6 },
         friendlyScope: 'formation',
       }),

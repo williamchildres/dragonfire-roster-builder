@@ -737,7 +737,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>All 31 canonical dragon affinity maps are fully specified from controller-confirmed in-game screenshots; unlisted troop types are neutral.</p>
+          <p>Source-fidelity descriptions for Syrax, Vhagar, and Caraxes now preserve controller-reviewed effect values, Habit Level progressions, and visible source discrepancies.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

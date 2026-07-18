@@ -471,7 +471,7 @@ describe('formation rating helper', () => {
     const placement = breakdown(rating, 'Placement / conflict risk');
 
     expect(placement.max).toBe(15);
-    expect(placement.score).toBeGreaterThanOrEqual(8);
+    expect(placement.score).toBe(6);
     expect(breakdown(rating, 'Realized synergy payoff').score).toBeGreaterThan(placement.max);
   });
 

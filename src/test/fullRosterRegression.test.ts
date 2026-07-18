@@ -50,7 +50,7 @@ describe('full-roster regression audit', () => {
 
     expect(result.reliable).toBe(true);
     expect(result.generatedFrom).toEqual({
-      databaseVersion: '0.10.1',
+      databaseVersion: '0.10.2',
       dataSchemaVersion: 13,
       localRosterSchemaVersion: 5,
     });
@@ -187,18 +187,18 @@ describe('full-roster regression audit', () => {
     expect(sweep.invariantViolationCount).toBe(0);
     expect(sweep.inactiveAbilityReferenceExamples).toEqual([]);
     expect(sweep.deterministicFullResultHash).toBe(
-      '2a4561cdb2aa6d0b9483005f44cc3ee3747d21fb6c4ecb1fe0cc375c1dafbf64',
+      'b8e09b1ea60476aa9ea368636a936cc09534b67ea0f294ed3589cf583e845c41',
     );
     expect(sweep.rating).toMatchObject({
       minimum: 16,
-      maximum: 93,
+        maximum: 94,
       median: 52,
       byTier: {
-        Excellent: 41,
-        Strong: 1_241,
-        Solid: 7_339,
-        Developing: 13_773,
-        Weak: 4_576,
+        Excellent: 19,
+        Strong: 1_168,
+        Solid: 7_403,
+        Developing: 13_788,
+        Weak: 4_592,
       },
     });
   }, 120_000);
