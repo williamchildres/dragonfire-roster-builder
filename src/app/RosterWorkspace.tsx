@@ -4,6 +4,7 @@ import type { AccountSession } from '../cloud/types';
 import type { Dragon, DragonBreed, DragonRarity, OwnedDragon } from '../models/dragon';
 import type { RosterSyncStatus } from '../hooks/useRosterSync';
 import { RosterSyncPanel } from './AccountUi';
+import { isRosterSyncAttention } from './accountSyncPresentation';
 import { RosterEditor } from './RosterEditor';
 import { RosterList } from './RosterList';
 import {
@@ -169,7 +170,7 @@ export function RosterWorkspace({
         <p>Track ownership, progression, Habit Levels, and notes.</p>
       </div>
 
-      {accountConfigured ? (
+      {accountConfigured && isRosterSyncAttention(syncStatus) ? (
         <RosterSyncPanel
           session={session}
           status={syncStatus}
