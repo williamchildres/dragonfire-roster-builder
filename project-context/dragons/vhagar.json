@@ -6,7 +6,7 @@
   "breed": "Warrior",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-06-25",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/vhagar/",
   "abilities": [
@@ -184,11 +184,11 @@
     }
   ],
   "affinities": {
+    "Cavalry": "neutral",
     "Shieldbearers": "positive",
     "Archers": "positive",
-    "Siege": "positive",
-    "Cavalry": "unknown",
-    "Spearmen": "unknown"
+    "Spearmen": "neutral",
+    "Siege": "positive"
   },
   "verification": {
     "identity": {
@@ -234,7 +234,7 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "partially-screenshot-verified",
+      "status": "screenshot-verified",
       "source": "Vhagar main screen screenshot",
       "capturedAt": "2026-06-23",
       "gameVersion": "26.6.53509",

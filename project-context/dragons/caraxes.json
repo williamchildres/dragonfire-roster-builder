@@ -6,7 +6,7 @@
   "breed": "Hunter",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-06-23",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/caraxes/",
   "abilities": [
@@ -186,10 +186,10 @@
   ],
   "affinities": {
     "Cavalry": "positive",
-    "Shieldbearers": "unknown",
-    "Archers": "unknown",
+    "Shieldbearers": "neutral",
+    "Archers": "neutral",
     "Spearmen": "positive",
-    "Siege": "unknown"
+    "Siege": "neutral"
   },
   "verification": {
     "identity": {
@@ -221,7 +221,7 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "partially-screenshot-verified",
+      "status": "screenshot-verified",
       "source": "Caraxes main screen screenshot",
       "capturedAt": "2026-06-23",
       "gameVersion": "26.6.53509",

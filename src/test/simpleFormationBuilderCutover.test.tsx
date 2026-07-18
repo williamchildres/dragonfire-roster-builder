@@ -305,7 +305,8 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(syraxCard).getByLabelText('Favorable affinity: Archers')).toBeInTheDocument();
     expect(within(syraxCard).getByLabelText('Favorable affinity: Spearmen')).toBeInTheDocument();
     expect(within(syraxCard).getByLabelText('Unfavorable affinity: Siege')).toBeInTheDocument();
-    expect(within(syraxCard).getByLabelText(/Syrax affinities; additional affinities are unverified/i)).toBeInTheDocument();
+    expect(within(syraxCard).getByLabelText(/Syrax affinities/i)).toBeInTheDocument();
+    expect(within(syraxCard).queryByLabelText(/additional affinities are unverified/i)).not.toBeInTheDocument();
     expect(within(syraxCard).queryByText('+?')).not.toBeInTheDocument();
     expect(within(antaresCard).getByLabelText('Favorable affinity: Archers')).toBeInTheDocument();
     expect(within(antaresCard).getByLabelText('Unfavorable affinity: Siege')).toBeInTheDocument();

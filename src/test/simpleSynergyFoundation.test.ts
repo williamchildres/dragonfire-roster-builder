@@ -253,23 +253,23 @@ describe('simple synergy foundation', () => {
     expect(dragons.find((dragon) => dragon.id === 'tashix')!.affinities).toMatchObject({
       Archers: 'positive',
       Siege: 'negative',
-      Cavalry: 'unknown',
-      Shieldbearers: 'unknown',
-      Spearmen: 'unknown',
+      Cavalry: 'neutral',
+      Shieldbearers: 'neutral',
+      Spearmen: 'neutral',
     });
     expect(dragons.find((dragon) => dragon.id === 'velar')!.affinities).toMatchObject({
       Shieldbearers: 'positive',
-      Cavalry: 'unknown',
-      Archers: 'unknown',
-      Spearmen: 'unknown',
-      Siege: 'unknown',
+      Cavalry: 'neutral',
+      Archers: 'neutral',
+      Spearmen: 'neutral',
+      Siege: 'neutral',
     });
     expect(dragons.find((dragon) => dragon.id === 'zivern')!.affinities).toMatchObject({
       Archers: 'positive',
       Siege: 'positive',
-      Cavalry: 'unknown',
-      Shieldbearers: 'unknown',
-      Spearmen: 'unknown',
+      Cavalry: 'neutral',
+      Shieldbearers: 'neutral',
+      Spearmen: 'neutral',
     });
   });
 

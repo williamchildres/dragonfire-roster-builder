@@ -34,7 +34,7 @@ describe('seeded dragon data integrity', () => {
       expect(dragon.habits).toEqual([]);
       expect(dragon.tags).toEqual([]);
       expect(Object.values(dragon.stats).every((value) => value === null)).toBe(true);
-      expect(TROOP_TYPES.every((troop) => dragon.affinities[troop] === 'unknown')).toBe(true);
+      expect(TROOP_TYPES.every((troop) => (dragon.affinities[troop] as string) === 'unknown')).toBe(true);
     }
   });
 
@@ -123,8 +123,8 @@ describe('seeded dragon data integrity', () => {
       Spearmen: 'positive',
       Cavalry: 'positive',
       Siege: 'positive',
-      Archers: 'unknown',
-      Shieldbearers: 'unknown',
+      Archers: 'neutral',
+      Shieldbearers: 'neutral',
     });
     expect(Object.values(tessarion!.affinities)).not.toContain('negative');
     expect(Object.values(tessarion!.stats).every((value) => value === null)).toBe(true);

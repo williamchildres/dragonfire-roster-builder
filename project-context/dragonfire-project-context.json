@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-18T19:19:41.770Z",
+  "generatedAt": "2026-07-18T19:53:43.325Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/complete-rare-dragon-affinities",
-    "commit": "4799cdeb065e6bb67ce9e41d82e7eaa061658d08",
-    "databaseVersion": "0.10.0",
+    "branch": "data/complete-affinities-and-source-corrections",
+    "commit": "8a34942b8c41d1edb8b5d1e7c605f90cf3b06972",
+    "databaseVersion": "0.10.1",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -46,7 +46,7 @@
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-23",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/syrax/",
       "abilities": [
@@ -229,8 +229,8 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
         "Archers": "positive",
         "Spearmen": "positive",
         "Siege": "negative"
@@ -265,7 +265,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Syrax main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -293,7 +293,7 @@
       "breed": "Warrior",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-25",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/vhagar/",
       "abilities": [
@@ -471,11 +471,11 @@
         }
       ],
       "affinities": {
+        "Cavalry": "neutral",
         "Shieldbearers": "positive",
         "Archers": "positive",
-        "Siege": "positive",
-        "Cavalry": "unknown",
-        "Spearmen": "unknown"
+        "Spearmen": "neutral",
+        "Siege": "positive"
       },
       "verification": {
         "identity": {
@@ -521,7 +521,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Vhagar main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -548,7 +548,7 @@
       "breed": "Hunter",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-23",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/caraxes/",
       "abilities": [
@@ -728,10 +728,10 @@
       ],
       "affinities": {
         "Cavalry": "positive",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
         "Spearmen": "positive",
-        "Siege": "unknown"
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -763,7 +763,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Caraxes main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -790,7 +790,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-23",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/seasmoke/",
       "abilities": [
@@ -974,10 +974,10 @@
       ],
       "affinities": {
         "Cavalry": "positive",
+        "Shieldbearers": "neutral",
         "Archers": "positive",
-        "Siege": "negative",
-        "Shieldbearers": "unknown",
-        "Spearmen": "unknown"
+        "Spearmen": "neutral",
+        "Siege": "negative"
       },
       "verification": {
         "identity": {
@@ -1002,7 +1002,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Seasmoke main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -1323,7 +1323,7 @@
       "breed": "Hunter",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-25",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/crimson/",
       "abilities": [
@@ -1503,8 +1503,8 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
         "Archers": "positive",
         "Spearmen": "positive",
         "Siege": "positive"
@@ -1553,7 +1553,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Crimson main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -1580,7 +1580,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-25",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/kalspire/",
       "abilities": [
@@ -1765,9 +1765,9 @@
       "affinities": {
         "Cavalry": "positive",
         "Shieldbearers": "positive",
-        "Siege": "positive",
-        "Archers": "unknown",
-        "Spearmen": "unknown"
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "positive"
       },
       "verification": {
         "identity": {
@@ -1813,7 +1813,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Kalspire main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -1840,7 +1840,7 @@
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-23",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/malachite/",
       "abilities": [
@@ -2042,9 +2042,9 @@
       "affinities": {
         "Cavalry": "positive",
         "Shieldbearers": "positive",
-        "Archers": "negative",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "negative"
       },
       "verification": {
         "identity": {
@@ -2069,7 +2069,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Malachite main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -2132,7 +2132,7 @@
       "breed": "Warrior",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-25",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/venator/",
       "abilities": [
@@ -2278,7 +2278,7 @@
           "tags": [
             "PHYSICAL_DAMAGE_UP"
           ],
-          "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy. Opposing-position is provisionally normalized to same-lane enemy for formation compatibility."
+          "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy."
         },
         {
           "id": "venator-desperate-ambush",
@@ -2307,11 +2307,11 @@
         }
       ],
       "affinities": {
-        "Spearmen": "positive",
+        "Cavalry": "neutral",
         "Shieldbearers": "positive",
-        "Cavalry": "unknown",
-        "Archers": "unknown",
-        "Siege": "unknown"
+        "Archers": "neutral",
+        "Spearmen": "positive",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -2357,7 +2357,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Venator main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -2384,7 +2384,7 @@
       "breed": "Warrior",
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-25",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": null,
       "abilities": [
@@ -2564,11 +2564,11 @@
         }
       ],
       "affinities": {
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
         "Archers": "positive",
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -2600,7 +2600,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Daemoros main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -2627,7 +2627,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-26",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": null,
       "abilities": [
@@ -2809,10 +2809,10 @@
       ],
       "affinities": {
         "Cavalry": "positive",
-        "Siege": "negative",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown"
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "negative"
       },
       "verification": {
         "identity": {
@@ -2844,7 +2844,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Feskar main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -2871,7 +2871,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-26",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": null,
       "abilities": [
@@ -3054,11 +3054,11 @@
         }
       ],
       "affinities": {
-        "Spearmen": "positive",
+        "Cavalry": "neutral",
         "Shieldbearers": "positive",
-        "Siege": "positive",
-        "Cavalry": "unknown",
-        "Archers": "unknown"
+        "Archers": "neutral",
+        "Spearmen": "positive",
+        "Siege": "positive"
       },
       "verification": {
         "identity": {
@@ -3090,7 +3090,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Rhysarion main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -3117,7 +3117,7 @@
       "breed": "Hunter",
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-26",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": null,
       "abilities": [
@@ -3301,10 +3301,10 @@
       ],
       "affinities": {
         "Cavalry": "positive",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -3336,7 +3336,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Shadowsong main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -3363,7 +3363,7 @@
       "breed": "Hunter",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-03",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/tashix/",
       "abilities": [
@@ -3553,10 +3553,10 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
         "Archers": "positive",
-        "Spearmen": "unknown",
+        "Spearmen": "neutral",
         "Siege": "negative"
       },
       "verification": {
@@ -3630,7 +3630,7 @@
       "breed": "Warrior",
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-25",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": null,
       "abilities": [
@@ -3810,11 +3810,11 @@
         }
       ],
       "affinities": {
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
         "Spearmen": "positive",
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Siege": "unknown"
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -3846,7 +3846,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Vaeldra main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -3873,7 +3873,7 @@
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-03",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/velar/",
       "abilities": [
@@ -4065,11 +4065,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
+        "Cavalry": "neutral",
         "Shieldbearers": "positive",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -4142,7 +4142,7 @@
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-03",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/zivern/",
       "abilities": [
@@ -4333,10 +4333,10 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
         "Archers": "positive",
-        "Spearmen": "unknown",
+        "Spearmen": "neutral",
         "Siege": "positive"
       },
       "verification": {
@@ -6097,7 +6097,7 @@
           "kind": "trait",
           "name": "Sentinel's Wit",
           "abilityClass": "passive",
-          "unlockStarRank": null,
+          "unlockStarRank": 1,
           "minimumDragonLevel": 16,
           "positionRequirement": "vanguard",
           "verification": {
@@ -6644,7 +6644,7 @@
           "kind": "trait",
           "name": "Champion's Brilliance",
           "abilityClass": "passive",
-          "unlockStarRank": null,
+          "unlockStarRank": 1,
           "minimumDragonLevel": 16,
           "positionRequirement": "vanguard",
           "verification": {
@@ -6925,7 +6925,7 @@
           "kind": "trait",
           "name": "Sentinel's Presence",
           "abilityClass": "passive",
-          "unlockStarRank": null,
+          "unlockStarRank": 1,
           "minimumDragonLevel": 16,
           "positionRequirement": "vanguard",
           "verification": {
@@ -7435,7 +7435,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-10",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": null,
       "abilities": [
@@ -7633,8 +7633,8 @@
       ],
       "affinities": {
         "Cavalry": "positive",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
         "Spearmen": "positive",
         "Siege": "positive"
       },
@@ -7668,7 +7668,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Tessarion main screen screenshot",
           "capturedAt": "2026-07-10",
           "gameVersion": "26.6.53509",
@@ -7697,7 +7697,7 @@
       "breed": "Hunter",
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-23",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": null,
       "abilities": [
@@ -7878,10 +7878,10 @@
       ],
       "affinities": {
         "Cavalry": "positive",
+        "Shieldbearers": "neutral",
         "Archers": "positive",
-        "Shieldbearers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -7913,7 +7913,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Sheepstealer main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -7942,7 +7942,7 @@
       "breed": "Warrior",
       "rosterSourceStatus": "in-game-verified-pending-official-site",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-06-23",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": null,
       "abilities": [
@@ -8118,15 +8118,15 @@
             "ADVANTAGE",
             "WEAKENED"
           ],
-          "rawDescription": "Start of Each Round: chance to grant Advantage +15% for two rounds. If afflicted with Weakend, chance is multiplied by 1.5 and successful activation removes Weakened."
+          "rawDescription": "Start of Each Round: chance to grant Advantage +15% for two rounds. If afflicted with Weakened, chance is multiplied by 1.5 and successful activation removes Weakened."
         }
       ],
       "affinities": {
         "Cavalry": "positive",
         "Shieldbearers": "positive",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -8158,7 +8158,7 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "partially-screenshot-verified",
+          "status": "screenshot-verified",
           "source": "Vermax main screen screenshot",
           "capturedAt": "2026-06-23",
           "gameVersion": "26.6.53509",
@@ -11362,6 +11362,7 @@
             "abilityName": "Sentinel's Wit",
             "description": "improves Instinct and Initiative of the same Left Flank ally",
             "unlock": {
+              "minimumStarRank": 1,
               "minimumDragonLevel": 16
             },
             "requiredSelfPosition": "vanguard",
@@ -11429,6 +11430,7 @@
             "abilityName": "Sentinel's Wit",
             "requiredPosition": "vanguard",
             "unlock": {
+              "minimumStarRank": 1,
               "minimumDragonLevel": 16
             },
             "description": "Sentinel's Wit requires Vanguard",
@@ -11472,6 +11474,7 @@
             "description": "reduces generic Damage Received for the Right Flank ally",
             "publicLabel": "Damage Received reduction (Right Flank)",
             "unlock": {
+              "minimumStarRank": 1,
               "minimumDragonLevel": 16
             },
             "requiredSelfPosition": "vanguard",
@@ -11589,6 +11592,7 @@
             "abilityName": "Champion's Brilliance",
             "requiredPosition": "vanguard",
             "unlock": {
+              "minimumStarRank": 1,
               "minimumDragonLevel": 16
             },
             "description": "Champion's Brilliance requires Vanguard",
@@ -11651,6 +11655,7 @@
             "abilityName": "Sentinel's Presence",
             "description": "improves Fire Damage of the Left Flank ally",
             "unlock": {
+              "minimumStarRank": 1,
               "minimumDragonLevel": 16
             },
             "requiredSelfPosition": "vanguard",
@@ -11776,6 +11781,7 @@
             "abilityName": "Sentinel's Presence",
             "requiredPosition": "vanguard",
             "unlock": {
+              "minimumStarRank": 1,
               "minimumDragonLevel": 16
             },
             "description": "Sentinel's Presence requires Vanguard",
@@ -18833,7 +18839,7 @@
         "Venator command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
         "Feral Strike stores two independently targeted Physical Damage instances and allows the same enemy to receive both.",
         "Feral Precision is modeled as a Double-Strike chance override on rounds 4, 6, and 8, not a second roll.",
-        "Armor Break opposing-position targeting is retained as provisional and normalized to same-lane compatibility."
+        "Armor Break retains unresolved opposing-enemy targeting language; no formation recipient selector is inferred."
       ],
       "evidenceIds": [
         "venator-main-screen-2026-06-25",

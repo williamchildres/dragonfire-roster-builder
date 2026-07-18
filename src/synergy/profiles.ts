@@ -2239,7 +2239,7 @@ export const simpleSynergyProfiles = [
       output({ id: 'vesper-midnight-onslaught-confusion', tag: 'status:confusion', abilityId: 'vesper-midnight-onslaught', abilityName: 'Midnight Onslaught', description: 'applies specifically named Confusion, which satisfies Control', publicLabel: 'Applies Confusion', unlock: { minimumStarRank: 10 }, friendlyScope: 'formation' }),
     ],
     supports: [
-      output({ id: 'vesper-sentinels-wit-left-stats', tag: 'stat:instinct', tags: ['stat:instinct', 'stat:initiative'], abilityId: 'vesper-sentinels-wit', abilityName: "Sentinel's Wit", description: 'improves Instinct and Initiative of the same Left Flank ally', unlock: { minimumDragonLevel: 16 }, requiredSelfPosition: 'vanguard', requiredRecipientPosition: 'left-flank', friendlyScope: 'formation' }),
+      output({ id: 'vesper-sentinels-wit-left-stats', tag: 'stat:instinct', tags: ['stat:instinct', 'stat:initiative'], abilityId: 'vesper-sentinels-wit', abilityName: "Sentinel's Wit", description: 'improves Instinct and Initiative of the same Left Flank ally', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, requiredSelfPosition: 'vanguard', requiredRecipientPosition: 'left-flank', friendlyScope: 'formation' }),
       output({ id: 'vesper-strategic-leader-tactical', tag: 'damage:tactical', abilityId: 'vesper-strategic-leader', abilityName: 'Strategic Leader', description: 'improves Tactical Damage of one self-eligible Ally prioritizing Vanguard', publicLabel: 'Tactical support (prioritizes Vanguard)', unlock: { minimumStarRank: 2 }, recipientSelector: { kind: 'position-priority', preferredPosition: 'vanguard', allowSelf: true }, friendlyScope: 'formation' }),
       output({ id: 'vesper-insightful-allies-instinct', tag: 'stat:instinct', abilityId: 'vesper-insightful-allies', abilityName: 'Insightful Allies', description: 'improves Instinct of the full formation', publicLabel: 'Instinct support to both teammates', unlock: { minimumStarRank: 8 }, friendlyScope: 'formation' }),
     ],
@@ -2248,7 +2248,7 @@ export const simpleSynergyProfiles = [
       output({ id: 'vesper-tactical-payoff', tag: 'damage:tactical', abilityId: 'vesper-eventide-strike', abilityName: 'Eventide Strike', description: 'benefits from Tactical Damage support', supportOnly: true, friendlyScope: 'formation' }),
     ],
     positionClaims: [
-      claim({ id: 'vesper-sentinels-wit-vanguard', abilityId: 'vesper-sentinels-wit', abilityName: "Sentinel's Wit", requiredPosition: 'vanguard', unlock: { minimumDragonLevel: 16 }, description: "Sentinel's Wit requires Vanguard" }),
+      claim({ id: 'vesper-sentinels-wit-vanguard', abilityId: 'vesper-sentinels-wit', abilityName: "Sentinel's Wit", requiredPosition: 'vanguard', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, description: "Sentinel's Wit requires Vanguard" }),
     ],
   },
   {
@@ -2259,7 +2259,7 @@ export const simpleSynergyProfiles = [
       output({ id: 'nyrena-undermine-tactical', tag: 'damage:tactical', scalesWith: ['stat:instinct'], abilityId: 'nyrena-undermine', abilityName: 'Undermine', description: 'deals Tactical Damage using Instinct' }),
     ],
     supports: [
-      output({ id: 'nyrena-champions-brilliance-right-defense', tag: 'defense:damage-received', abilityId: 'nyrena-champions-brilliance', abilityName: "Champion's Brilliance", description: 'reduces generic Damage Received for the Right Flank ally', publicLabel: 'Damage Received reduction (Right Flank)', unlock: { minimumDragonLevel: 16 }, requiredSelfPosition: 'vanguard', requiredRecipientPosition: 'right-flank', nonScoring: true, friendlyScope: 'formation' }),
+      output({ id: 'nyrena-champions-brilliance-right-defense', tag: 'defense:damage-received', abilityId: 'nyrena-champions-brilliance', abilityName: "Champion's Brilliance", description: 'reduces generic Damage Received for the Right Flank ally', publicLabel: 'Damage Received reduction (Right Flank)', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, requiredSelfPosition: 'vanguard', requiredRecipientPosition: 'right-flank', nonScoring: true, friendlyScope: 'formation' }),
       output({ id: 'nyrena-mindful-synergy-stats', tag: 'stat:intelligence', tags: ['stat:intelligence', 'stat:instinct'], abilityId: 'nyrena-mindful-synergy', abilityName: 'Mindful Synergy', description: 'improves Intelligence and Instinct of the same full-formation recipient group', publicLabel: 'Intelligence and Instinct support to both teammates', unlock: { minimumStarRank: 4 }, friendlyScope: 'formation' }),
       output({ id: 'nyrena-deepen-the-breach-fire', tag: 'damage:fire', abilityId: 'nyrena-deepen-the-breach', abilityName: 'Deepen the Breach', description: 'improves Fire Damage of one other adjacent ally during rounds 6-10', publicLabel: 'Fire Damage support to one adjacent other ally (rounds 6-10)', unlock: { minimumStarRank: 6 }, recipientSelector: { kind: 'adjacent-group', recipientCount: 1, includeSelf: false }, friendlyScope: 'adjacent' }),
       output({ id: 'nyrena-the-long-siege-physical-defense', tag: 'defense:physical-damage-received', abilityId: 'nyrena-the-long-siege', abilityName: 'The Long Siege', description: 'reduces Physical Damage Received by the full formation during rounds 6-10', publicLabel: 'Physical Damage Received reduction (rounds 6-10)', unlock: { minimumStarRank: 10 }, nonScoring: true, friendlyScope: 'formation' }),
@@ -2272,7 +2272,7 @@ export const simpleSynergyProfiles = [
       output({ id: 'nyrena-tactical-payoff', tag: 'damage:tactical', abilityId: 'nyrena-undermine', abilityName: 'Undermine', description: 'benefits from Tactical Damage support', supportOnly: true, friendlyScope: 'formation' }),
     ],
     positionClaims: [
-      claim({ id: 'nyrena-champions-brilliance-vanguard', abilityId: 'nyrena-champions-brilliance', abilityName: "Champion's Brilliance", requiredPosition: 'vanguard', unlock: { minimumDragonLevel: 16 }, description: "Champion's Brilliance requires Vanguard" }),
+      claim({ id: 'nyrena-champions-brilliance-vanguard', abilityId: 'nyrena-champions-brilliance', abilityName: "Champion's Brilliance", requiredPosition: 'vanguard', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, description: "Champion's Brilliance requires Vanguard" }),
     ],
   },
   {
@@ -2284,7 +2284,7 @@ export const simpleSynergyProfiles = [
       output({ id: 'dawnseeker-first-light-first-strike', tag: 'status:first-strike', abilityId: 'dawnseeker-first-light', abilityName: 'First Light', description: 'grants First-Strike to both other allies on one shared activation during rounds 1-3', publicLabel: 'Grants First-Strike to both teammates (rounds 1-3)', unlock: { minimumStarRank: 10 }, friendlyScope: 'formation' }),
     ],
     supports: [
-      output({ id: 'dawnseeker-sentinels-presence-left-fire', tag: 'damage:fire', abilityId: 'dawnseeker-sentinels-presence', abilityName: "Sentinel's Presence", description: 'improves Fire Damage of the Left Flank ally', unlock: { minimumDragonLevel: 16 }, requiredSelfPosition: 'vanguard', requiredRecipientPosition: 'left-flank', friendlyScope: 'formation' }),
+      output({ id: 'dawnseeker-sentinels-presence-left-fire', tag: 'damage:fire', abilityId: 'dawnseeker-sentinels-presence', abilityName: "Sentinel's Presence", description: 'improves Fire Damage of the Left Flank ally', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, requiredSelfPosition: 'vanguard', requiredRecipientPosition: 'left-flank', friendlyScope: 'formation' }),
       output({ id: 'dawnseeker-tactical-inferno-tactical', tag: 'damage:tactical', abilityId: 'dawnseeker-tactical-inferno', abilityName: 'Tactical Inferno', description: 'improves Tactical Damage during rounds 1-3 while prioritizing Left Flank', publicLabel: 'Tactical support (rounds 1-3, prioritizes Left Flank)', unlock: { minimumStarRank: 2 }, recipientSelector: { kind: 'position-priority', preferredPosition: 'left-flank', allowSelf: true }, friendlyScope: 'formation' }),
       output({ id: 'dawnseeker-tactical-inferno-fire', tag: 'damage:fire', abilityId: 'dawnseeker-tactical-inferno', abilityName: 'Tactical Inferno', description: 'improves Fire Damage during rounds 1-3 while prioritizing Right Flank', publicLabel: 'Fire support (rounds 1-3, prioritizes Right Flank)', unlock: { minimumStarRank: 2 }, recipientSelector: { kind: 'position-priority', preferredPosition: 'right-flank', allowSelf: true }, friendlyScope: 'formation' }),
       output({ id: 'dawnseeker-unbroken-devotion-recovery-received', tag: 'effect:recovery-received', abilityId: 'dawnseeker-unbroken-devotion', abilityName: 'Unbroken Devotion', description: 'improves Recovery Received of both other allies without applying Recovery', publicLabel: 'Recovery Received support to both teammates', unlock: { minimumStarRank: 4 }, nonScoring: true, friendlyScope: 'formation' }),
@@ -2297,7 +2297,7 @@ export const simpleSynergyProfiles = [
       output({ id: 'dawnseeker-tactical-payoff', tag: 'damage:tactical', abilityId: 'dawnseeker-radiant-wings', abilityName: 'Radiant Wings', description: 'benefits from Tactical Damage support', supportOnly: true, friendlyScope: 'formation' }),
     ],
     positionClaims: [
-      claim({ id: 'dawnseeker-sentinels-presence-vanguard', abilityId: 'dawnseeker-sentinels-presence', abilityName: "Sentinel's Presence", requiredPosition: 'vanguard', unlock: { minimumDragonLevel: 16 }, description: "Sentinel's Presence requires Vanguard" }),
+      claim({ id: 'dawnseeker-sentinels-presence-vanguard', abilityId: 'dawnseeker-sentinels-presence', abilityName: "Sentinel's Presence", requiredPosition: 'vanguard', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, description: "Sentinel's Presence requires Vanguard" }),
     ],
   },
   {

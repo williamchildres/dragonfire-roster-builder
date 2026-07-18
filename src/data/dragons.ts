@@ -13,7 +13,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-23",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "syrax-blazing-fury",
@@ -202,8 +202,8 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
       "Archers": "positive",
       "Spearmen": "positive",
       "Siege": "negative"
@@ -263,7 +263,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Syrax main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -283,7 +283,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-25",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "vhagar-fiery-bonds",
@@ -467,11 +467,11 @@ export const dragons = [
       }
     ],
     "affinities": {
+      "Cavalry": "neutral",
       "Shieldbearers": "positive",
       "Archers": "positive",
-      "Siege": "positive",
-      "Cavalry": "unknown",
-      "Spearmen": "unknown"
+      "Spearmen": "neutral",
+      "Siege": "positive"
     },
     "stats": {
       "strength": null,
@@ -539,7 +539,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Vhagar main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -559,7 +559,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-23",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "caraxes-infernal-burst",
@@ -745,10 +745,10 @@ export const dragons = [
     ],
     "affinities": {
       "Cavalry": "positive",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
       "Spearmen": "positive",
-      "Siege": "unknown"
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -804,7 +804,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Caraxes main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -824,7 +824,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-23",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "seasmoke-cleansing-wrath",
@@ -1014,10 +1014,10 @@ export const dragons = [
     ],
     "affinities": {
       "Cavalry": "positive",
+      "Shieldbearers": "neutral",
       "Archers": "positive",
-      "Siege": "negative",
-      "Shieldbearers": "unknown",
-      "Spearmen": "unknown"
+      "Spearmen": "neutral",
+      "Siege": "negative"
     },
     "stats": {
       "strength": null,
@@ -1069,7 +1069,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Seasmoke main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -1295,7 +1295,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-25",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "crimson-bloodscale-terror",
@@ -1481,8 +1481,8 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
       "Archers": "positive",
       "Spearmen": "positive",
       "Siege": "positive"
@@ -1555,7 +1555,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Crimson main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -1575,7 +1575,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-25",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "kalspire-tactical-strike",
@@ -1766,9 +1766,9 @@ export const dragons = [
     "affinities": {
       "Cavalry": "positive",
       "Shieldbearers": "positive",
-      "Siege": "positive",
-      "Archers": "unknown",
-      "Spearmen": "unknown"
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "positive"
     },
     "stats": {
       "strength": null,
@@ -1840,7 +1840,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Kalspire main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -1860,7 +1860,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-23",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "malachite-wardens-rally",
@@ -2068,9 +2068,9 @@ export const dragons = [
     "affinities": {
       "Cavalry": "positive",
       "Shieldbearers": "positive",
-      "Archers": "negative",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "negative"
     },
     "stats": {
       "strength": null,
@@ -2128,7 +2128,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Malachite main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -2183,7 +2183,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-25",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "venator-feral-strike",
@@ -2321,7 +2321,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy. Opposing-position is provisionally normalized to same-lane enemy for formation compatibility.",
+        "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Venator Armor Break screenshot",
@@ -2364,11 +2364,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Spearmen": "positive",
+      "Cavalry": "neutral",
       "Shieldbearers": "positive",
-      "Cavalry": "unknown",
-      "Archers": "unknown",
-      "Siege": "unknown"
+      "Archers": "neutral",
+      "Spearmen": "positive",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -2433,7 +2433,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Venator main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -2453,7 +2453,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-25",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "daemoros-shadowflame",
@@ -2639,11 +2639,11 @@ export const dragons = [
       }
     ],
     "affinities": {
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
       "Archers": "positive",
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -2698,7 +2698,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Daemoros main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -2718,7 +2718,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-26",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "feskar-calculated-assault",
@@ -2906,10 +2906,10 @@ export const dragons = [
     ],
     "affinities": {
       "Cavalry": "positive",
-      "Siege": "negative",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown"
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "negative"
     },
     "stats": {
       "strength": null,
@@ -2965,7 +2965,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Feskar main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -2985,7 +2985,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-26",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "rhysarion-dawnsong",
@@ -3174,11 +3174,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Spearmen": "positive",
+      "Cavalry": "neutral",
       "Shieldbearers": "positive",
-      "Siege": "positive",
-      "Cavalry": "unknown",
-      "Archers": "unknown"
+      "Archers": "neutral",
+      "Spearmen": "positive",
+      "Siege": "positive"
     },
     "stats": {
       "strength": null,
@@ -3235,7 +3235,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Rhysarion main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -3255,7 +3255,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-26",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "shadowsong-breath-of-fire",
@@ -3445,10 +3445,10 @@ export const dragons = [
     ],
     "affinities": {
       "Cavalry": "positive",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -3506,7 +3506,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Shadowsong main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -3526,7 +3526,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-03",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "tashix-shimmering-mirage",
@@ -3722,10 +3722,10 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
       "Archers": "positive",
-      "Spearmen": "unknown",
+      "Spearmen": "neutral",
       "Siege": "negative"
     },
     "stats": {
@@ -3819,7 +3819,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-25",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "vaeldra-lure",
@@ -4005,11 +4005,11 @@ export const dragons = [
       }
     ],
     "affinities": {
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
       "Spearmen": "positive",
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Siege": "unknown"
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -4064,7 +4064,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Vaeldra main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -4084,7 +4084,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-03",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "velar-whirlwind",
@@ -4282,11 +4282,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
+      "Cavalry": "neutral",
       "Shieldbearers": "positive",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -4376,7 +4376,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-03",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "zivern-silent-shade",
@@ -4573,10 +4573,10 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
       "Archers": "positive",
-      "Spearmen": "unknown",
+      "Spearmen": "neutral",
       "Siege": "positive"
     },
     "stats": {
@@ -5606,7 +5606,7 @@ export const dragons = [
       "kind": "trait",
       "name": "Sentinel's Wit",
       "abilityClass": "passive",
-      "unlockStarRank": null,
+      "unlockStarRank": 1,
       "minimumDragonLevel": 16,
       "positionRequirement": "vanguard",
       "rawDescription": "At Dragon Level 16+ while Vesper is Vanguard: increase Vesper Tactical Damage Dealt by +16%. Increase Instinct and Initiative of the same Left Flank ally by +20 each. The Tactical increase is self-only and is not allied Tactical support.",
@@ -6011,7 +6011,7 @@ export const dragons = [
       "verification": { "status": "screenshot-verified", "source": "Nyrena Undermine screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["nyrena-undermine-2026-07-16"], "tags": ["PHYSICAL_DAMAGE_DEALT_DOWN", "FIRE_DAMAGE", "TACTICAL_DAMAGE", "INTELLIGENCE_SCALING", "ENHANCED_BY_INSTINCT", "ANY_LANE_TARGET", "SAME_LANE_TARGET", "SPECIFIC_ROUNDS", "MULTI_SCHEDULE_COMMAND", "ENEMY_DEBUFF"]
     },
     "trait": {
-      "id": "nyrena-champions-brilliance", "dragonId": "nyrena", "kind": "trait", "name": "Champion's Brilliance", "abilityClass": "passive", "unlockStarRank": null, "minimumDragonLevel": 16, "positionRequirement": "vanguard",
+      "id": "nyrena-champions-brilliance", "dragonId": "nyrena", "kind": "trait", "name": "Champion's Brilliance", "abilityClass": "passive", "unlockStarRank": 1, "minimumDragonLevel": 16, "positionRequirement": "vanguard",
       "rawDescription": "At Dragon Level 16+ while Nyrena is Vanguard: increase Nyrena Strength, Intelligence, and Instinct by +15 each. Reduce Damage Received by the Right Flank ally by -8%. The self stats create no allied support; the Right Flank effect is generic defense, not offensive Physical, Fire, or Tactical support.",
       "verification": { "status": "screenshot-verified", "source": "Nyrena Champion's Brilliance screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["nyrena-champions-brilliance-2026-07-16"], "tags": ["STRENGTH_UP", "INTELLIGENCE_UP", "INSTINCT_UP", "BUFF_SELF", "DAMAGE_RECEIVED_DOWN", "BUFF_ALLIES", "VANGUARD_REQUIRED", "RIGHT_FLANK_TARGET"]
     },
@@ -6104,7 +6104,7 @@ export const dragons = [
       "verification": { "status": "screenshot-verified", "source": "Dawnseeker Radiant Wings screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["dawnseeker-radiant-wings-2026-07-16"], "tags": ["TACTICAL_DAMAGE", "RECOVERY", "INSTINCT_UP", "BUFF_INITIATIVE", "BUFF_SELF", "BUFF_ALLIES", "ADJACENT_TARGET", "SAME_LANE_TARGET", "SPECIFIC_ROUNDS", "MULTI_SCHEDULE_COMMAND", "ENHANCED_BY_INSTINCT", "INITIATIVE_SCALING", "COMMAND_AUGMENTATION"]
     },
     "trait": {
-      "id": "dawnseeker-sentinels-presence", "dragonId": "dawnseeker", "kind": "trait", "name": "Sentinel's Presence", "abilityClass": "passive", "unlockStarRank": null, "minimumDragonLevel": 16, "positionRequirement": "vanguard",
+      "id": "dawnseeker-sentinels-presence", "dragonId": "dawnseeker", "kind": "trait", "name": "Sentinel's Presence", "abilityClass": "passive", "unlockStarRank": 1, "minimumDragonLevel": 16, "positionRequirement": "vanguard",
       "rawDescription": "At Dragon Level 16+ while Dawnseeker is Vanguard: increase Dawnseeker Recovery Dealt by +15% and Instinct by +25. Increase Fire Damage Dealt by the Left Flank ally by +16%. The self Recovery and Instinct bonuses create no allied support.",
       "verification": { "status": "screenshot-verified", "source": "Dawnseeker Sentinel's Presence screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["dawnseeker-sentinels-presence-2026-07-16"], "tags": ["RECOVERY_DEALT_UP", "INSTINCT_UP", "BUFF_SELF", "FIRE_DAMAGE_UP", "BUFF_ALLIES", "VANGUARD_REQUIRED", "LEFT_FLANK_TARGET"]
     },
@@ -6491,7 +6491,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-10",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "tessarion-cobalt-flame",
@@ -6695,8 +6695,8 @@ export const dragons = [
     ],
     "affinities": {
       "Cavalry": "positive",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
       "Spearmen": "positive",
       "Siege": "positive"
     },
@@ -6762,7 +6762,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Tessarion main screen screenshot",
         "capturedAt": "2026-07-10",
         "gameVersion": "26.6.53509",
@@ -6782,7 +6782,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-23",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "sheepstealer-wild-hunt",
@@ -6969,10 +6969,10 @@ export const dragons = [
     ],
     "affinities": {
       "Cavalry": "positive",
+      "Shieldbearers": "neutral",
       "Archers": "positive",
-      "Shieldbearers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -7027,7 +7027,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Sheepstealer main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",
@@ -7047,7 +7047,7 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-06-23",
+    "lastVerified": "2026-07-18",
     "notes": null,
     "command": {
       "id": "vermax-spreading-blaze",
@@ -7215,7 +7215,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Each Round: chance to grant Advantage +15% for two rounds. If afflicted with Weakend, chance is multiplied by 1.5 and successful activation removes Weakened.",
+        "rawDescription": "Start of Each Round: chance to grant Advantage +15% for two rounds. If afflicted with Weakened, chance is multiplied by 1.5 and successful activation removes Weakened.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vermax Unyielding Resolve screenshot",
@@ -7235,9 +7235,9 @@ export const dragons = [
     "affinities": {
       "Cavalry": "positive",
       "Shieldbearers": "positive",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -7291,7 +7291,7 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "partially-screenshot-verified",
+        "status": "screenshot-verified",
         "source": "Vermax main screen screenshot",
         "capturedAt": "2026-06-23",
         "gameVersion": "26.6.53509",

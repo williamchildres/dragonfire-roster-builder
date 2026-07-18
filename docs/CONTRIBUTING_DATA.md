@@ -25,3 +25,6 @@ Do not add scoring, inferred mechanics, or one-off subsystems for unusual wordin
 ## Do Not Add
 
 Do not add capability outputs, modifier capabilities, traces, expected interactions, target-candidate groups, schedule structures, roll structures, per-target checks, stack-transition records, unresolved-mechanics exports, formation-specific repair passes, or combat-simulation logic.
+## Affinity screenshots
+
+For controller-confirmed main-screen affinity transcriptions, visible favorable icons are positive, visible unfavorable icons are negative, and unlisted troop types are neutral. Preserve the existing screenshot source identity, capture metadata, and manual-review status when completing a partial map.

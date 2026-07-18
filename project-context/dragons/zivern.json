@@ -6,7 +6,7 @@
   "breed": "Sentinel",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-07-03",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/zivern/",
   "abilities": [
@@ -197,10 +197,10 @@
     }
   ],
   "affinities": {
-    "Cavalry": "unknown",
-    "Shieldbearers": "unknown",
+    "Cavalry": "neutral",
+    "Shieldbearers": "neutral",
     "Archers": "positive",
-    "Spearmen": "unknown",
+    "Spearmen": "neutral",
     "Siege": "positive"
   },
   "verification": {

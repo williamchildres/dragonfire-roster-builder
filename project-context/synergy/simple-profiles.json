@@ -3144,6 +3144,7 @@
         "abilityName": "Sentinel's Wit",
         "description": "improves Instinct and Initiative of the same Left Flank ally",
         "unlock": {
+          "minimumStarRank": 1,
           "minimumDragonLevel": 16
         },
         "requiredSelfPosition": "vanguard",
@@ -3211,6 +3212,7 @@
         "abilityName": "Sentinel's Wit",
         "requiredPosition": "vanguard",
         "unlock": {
+          "minimumStarRank": 1,
           "minimumDragonLevel": 16
         },
         "description": "Sentinel's Wit requires Vanguard",
@@ -3254,6 +3256,7 @@
         "description": "reduces generic Damage Received for the Right Flank ally",
         "publicLabel": "Damage Received reduction (Right Flank)",
         "unlock": {
+          "minimumStarRank": 1,
           "minimumDragonLevel": 16
         },
         "requiredSelfPosition": "vanguard",
@@ -3371,6 +3374,7 @@
         "abilityName": "Champion's Brilliance",
         "requiredPosition": "vanguard",
         "unlock": {
+          "minimumStarRank": 1,
           "minimumDragonLevel": 16
         },
         "description": "Champion's Brilliance requires Vanguard",
@@ -3433,6 +3437,7 @@
         "abilityName": "Sentinel's Presence",
         "description": "improves Fire Damage of the Left Flank ally",
         "unlock": {
+          "minimumStarRank": 1,
           "minimumDragonLevel": 16
         },
         "requiredSelfPosition": "vanguard",
@@ -3558,6 +3563,7 @@
         "abilityName": "Sentinel's Presence",
         "requiredPosition": "vanguard",
         "unlock": {
+          "minimumStarRank": 1,
           "minimumDragonLevel": 16
         },
         "description": "Sentinel's Presence requires Vanguard",

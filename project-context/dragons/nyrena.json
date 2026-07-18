@@ -47,7 +47,7 @@
       "kind": "trait",
       "name": "Champion's Brilliance",
       "abilityClass": "passive",
-      "unlockStarRank": null,
+      "unlockStarRank": 1,
       "minimumDragonLevel": 16,
       "positionRequirement": "vanguard",
       "verification": {

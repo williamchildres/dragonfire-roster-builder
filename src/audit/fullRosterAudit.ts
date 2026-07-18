@@ -228,7 +228,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const rarityCoverage = countBy(dragons, (dragon) => dragon.rarity);
   addCheck(
     'FRR-C001',
-    databaseMetadata.databaseVersion === '0.10.0',
+    databaseMetadata.databaseVersion === '0.10.1',
     `Database version is ${databaseMetadata.databaseVersion}.`,
   );
   addCheck(
@@ -760,8 +760,6 @@ function validSignalContract(signal: SynergySignal): boolean {
   )
     return false;
   if (unlock?.minimumDragonLevel !== undefined && unlock.minimumDragonLevel < 1) return false;
-  if (unlock?.minimumStarRank !== undefined && unlock?.minimumDragonLevel !== undefined)
-    return false;
   if (
     signal.requiredSelfPosition !== undefined &&
     !SIMPLE_FORMATION_POSITIONS.includes(signal.requiredSelfPosition)

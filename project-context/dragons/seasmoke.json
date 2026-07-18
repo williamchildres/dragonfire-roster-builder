@@ -6,7 +6,7 @@
   "breed": "Champion",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-06-23",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/seasmoke/",
   "abilities": [
@@ -190,10 +190,10 @@
   ],
   "affinities": {
     "Cavalry": "positive",
+    "Shieldbearers": "neutral",
     "Archers": "positive",
-    "Siege": "negative",
-    "Shieldbearers": "unknown",
-    "Spearmen": "unknown"
+    "Spearmen": "neutral",
+    "Siege": "negative"
   },
   "verification": {
     "identity": {
@@ -218,7 +218,7 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "partially-screenshot-verified",
+      "status": "screenshot-verified",
       "source": "Seasmoke main screen screenshot",
       "capturedAt": "2026-06-23",
       "gameVersion": "26.6.53509",
