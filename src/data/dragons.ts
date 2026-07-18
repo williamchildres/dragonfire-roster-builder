@@ -397,7 +397,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Rounds 3–7: grant Advantage to the Ally with the most troops and afflict Weakened on the Enemy with the most troops; both effects last 2 rounds. Advantage increases Damage Dealt by 20%. Weakened reduces Damage Dealt by 20%. Source discrepancy: prose displays an 18% Level 1 activation chance; the progression table displays 17.5%. Table progression (Habit Level 1–5): 17.5%, 21%, 24.5%, 29.8%, 35%.",
+        "rawDescription": "Rounds 3–7: one shared activation chance to grant Advantage to the Ally with the most troops and afflict Weakened on the Enemy with the most troops; both effects last 2 rounds. Advantage increases Damage Dealt by 20%. Weakened reduces Damage Dealt by 20%. Source discrepancy: prose displays an 18% Level 1 activation chance; the progression table displays 17.5%. Table progression (Habit Level 1–5): 17.5%, 21%, 24.5%, 29.8%, 35%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vhagar Eclipse Cover screenshot",

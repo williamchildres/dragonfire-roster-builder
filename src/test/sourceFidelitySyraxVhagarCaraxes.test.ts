@@ -48,6 +48,7 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
     expect(description('caraxes', 'caraxes-battle-dread')).toMatch(/prose displays -6%;.*Level 1 table displays -6\.5%/s);
     expect(description('caraxes', 'caraxes-mass-enfeeble')).toMatch(/prose displays -5%;.*Level 1 table displays -5\.5%/s);
     expect(description('vhagar', 'vhagar-eclipse-cover')).toMatch(/prose displays an 18% Level 1 activation chance;.*table displays 17\.5%/s);
+    expect(description('vhagar', 'vhagar-eclipse-cover')).toContain('one shared activation chance to grant Advantage');
     expect(description('vhagar', 'vhagar-skyward-titan')).toMatch(/prose states -2% Damage Received.*Level 1 table value is -2\.5%/s);
   });
 
