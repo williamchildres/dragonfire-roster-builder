@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.3 - 2026-07-18
+
+- Completed controller-reviewed screenshot-source fidelity for all 21 Seasmoke, Crimson, and Kalspire canonical ability descriptions, including meaningful values, Habit Level 1–5 progressions, targeting, durations, status definitions, scaling, mitigation, and explicit visible source discrepancies.
+- Corrected Strength scaling on the existing `seasmoke-infectious-wrath-physical` and `kalspire-tactical-strike-bleed` signals without adding signals or changing Crimson's curated profile. Seasmoke's correction changes 564 of 26,970 numerical Formation Ratings and 59 tiers (score deltas -6 to +8), while Kalspire's correction enriches existing deduplicated Strength-relationship evidence without changing numerical ratings.
+- Advanced the deterministic full-roster hash from `b8e09b1ea60476aa9ea368636a936cc09534b67ea0f294ed3589cf583e845c41` to `ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48`; the top 50 changes, no relationship is lost, and the rating formula and calibration remain unchanged.
+- Increased database/package version to `0.10.3`; source data schema remains `13`, local/cloud roster schemas remain `5`, and no Supabase migration was added.
+
 ## 0.10.2 - 2026-07-18
 
 - Completed controller-reviewed screenshot-source fidelity for all Syrax, Vhagar, and Caraxes canonical ability descriptions, including meaningful values, Habit Level 1–5 progressions, status definitions, scaling, mitigation, and explicit prose/table discrepancies.

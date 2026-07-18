@@ -514,13 +514,14 @@ export const manualReviewRecords: ManualReviewRecord[] = [
     id: 'seasmoke-infectious-wrath-normalization-review-2026-06-24',
     dragonId: 'seasmoke',
     scope: 'synergy-normalization',
-    status: 'needs-follow-up',
+    status: 'confirmed',
     reviewedAt,
     reviewedAgainstGameBuild: build,
     reviewer: 'repository-owner',
     notes: [
-      "Infectious Wrath's augmentation of Cleansing Wrath needs detailed presentation review.",
-      'This follow-up does not block ordinary synergy analysis because the unresolved details do not determine the main formation interactions currently modeled.',
+      "Infectious Wrath's augmentation of Cleansing Wrath now preserves its complete screenshot-source meaning and Strength scaling.",
+      "Wind's Favor Initiative enhancement and Cunning Ferocity Instinct enhancement remain possible future support-output controller-review items and do not create new scoring relationships here.",
+      'Loyal Bond presents Advantage and Resistance as separate clauses but does not state whether their activation rolls are shared.',
     ],
     evidenceIds: ['seasmoke-infectious-wrath-2026-06-23'],
   },
@@ -699,6 +700,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
       'Crimson command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.',
       "Vermin's Bane is modeled as a Round 1 Stun chance override, not as an additional roll.",
       'Unlikely Hero preserves the Damage Received interpretation from full text and records the table discrepancy.',
+      'A separately curated Bloodscale Fury Weakened output remains a future controller-review question and is not added in this fidelity batch.',
       'Observation values are account-preview values and are not canonical base stats.',
     ],
     evidenceIds: [
@@ -723,6 +725,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
     notes: [
       'Kalspire command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.',
       'Bleed and Panic use independent per-target checks where the screenshots explicitly say checks are separate.',
+      'Tactical Strike Bleed Physical Damage uses Strength; no stat scaling is inferred for Panic.',
       'Radiant Conqueror self-Stun is preserved as a real Control status with cleanse timing unresolved.',
       'Observation values are account-preview values and are not canonical base stats.',
     ],

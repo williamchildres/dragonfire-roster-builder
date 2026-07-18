@@ -300,9 +300,10 @@ export const simpleSynergyProfiles = [
       output({
         id: 'seasmoke-infectious-wrath-physical',
         tag: 'damage:physical',
+        scalesWith: ['stat:strength'],
         abilityId: 'seasmoke-infectious-wrath',
         abilityName: 'Infectious Wrath',
-        description: 'deals Physical Damage',
+        description: 'deals Physical Damage using Strength',
         unlock: { minimumStarRank: 6 },
       }),
       output({
@@ -450,9 +451,10 @@ export const simpleSynergyProfiles = [
       output({
         id: 'kalspire-tactical-strike-bleed',
         tag: 'status:bleed',
+        scalesWith: ['stat:strength'],
         abilityId: 'kalspire-tactical-strike',
         abilityName: 'Tactical Strike',
-        description: 'applies Bleed',
+        description: 'applies Bleed that deals Physical Damage using Strength',
         friendlyScope: 'formation',
       }),
       output({

@@ -98,6 +98,6 @@ describe('canonical dragon affinities', () => {
     const vermax = dragons.find((dragon) => dragon.id === 'vermax')!;
     expect(vermax.habits.find((habit) => habit.id === 'vermax-unyielding-resolve')?.rawDescription).toContain('Weakened');
     expect(vermax.habits.find((habit) => habit.id === 'vermax-unyielding-resolve')?.rawDescription).not.toContain('Weakend');
-    expect(dragons.find((dragon) => dragon.id === 'kalspire')?.command?.rawDescription).toContain('scaling with Strength');
+    expect(dragons.find((dragon) => dragon.id === 'kalspire')?.command?.rawDescription).toContain("increased by Kalspire's Strength");
   });
 });
