@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-18T22:04:28.590Z",
+  "generatedAt": "2026-07-18T23:46:47.037Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/source-fidelity-seasmoke-crimson-kalspire",
-    "commit": "e759cc988cdf5ebb76d8a595ce3f638d585732a4",
-    "databaseVersion": "0.10.3",
+    "branch": "data/source-fidelity-malachite-venator-sheepstealer",
+    "commit": "7b33cd014713690cdd14b83552aa290233c7746e",
+    "databaseVersion": "0.10.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 35,
-    "testCaseCount": 345,
+    "testFileCount": 36,
+    "testCaseCount": 349,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

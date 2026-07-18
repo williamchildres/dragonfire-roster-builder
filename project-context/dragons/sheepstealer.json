@@ -35,7 +35,7 @@
         "PREY",
         "RECOVERY_RECEIVED_DOWN"
       ],
-      "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, and 10: deal Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.\n\nAt 10 Stars:\n\nEach round while Sheepstealer has a current Prey: deal Fire Damage to Prey at a 24% rate and apply Recovery to Sheepstealer at a 10% rate, enhanced by Dragon Level and Intelligence.\n\nIf the current Prey received Recovery during the previous round, both rates are tripled to 72% Fire Damage and 30% Recovery.\n\nStar Rank 10 augmentation:\nAt 10 Stars, Savage Claim augments Wild Hunt while Sheepstealer has a Prey."
+      "rawDescription": "Each Round, when no Enemy is currently marked as Sheepstealer's Prey: 40% chance to mark one Enemy in any lane as Prey, prioritizing Enemies that received Recovery within the previous round. Prey lasts three rounds and reduces Recovery Received by 30%. Rounds 1, 4, 7, and 10: deal Fire Damage to one Enemy in any lane, prioritizing Prey. Base Damage Rate: 100%; damage doubles to 200% against Prey. Fire Damage scales with Intelligence and is mitigated by the target's Initiative.\n\nAt 10 Stars, while Sheepstealer has a current Prey: deal Fire Damage to Prey at the current Savage Claim Damage Rate and apply Recovery to Sheepstealer at the current Savage Claim Recovery Rate. Fire Damage scales with Intelligence and is mitigated by target Initiative; Recovery is enhanced by Intelligence and scales with Dragon Level. If Prey received Recovery during the previous round, triple both rates. At Habit Level 1: Fire Damage 24%, tripled to 72%; Recovery 10%, tripled to 30%."
     },
     {
       "id": "sheepstealer-hunters-cunning",
@@ -58,8 +58,9 @@
       "tags": [
         "VANGUARD_REQUIRED",
         "RECOVERY_RECEIVED_UP",
-        "FIRE_DAMAGE_UP",
-        "PHYSICAL_DAMAGE_UP"
+        "INTELLIGENCE_UP",
+        "PHYSICAL_DAMAGE_UP",
+        "RIGHT_FLANK_TARGET"
       ],
       "rawDescription": "At Level 16+ and deployed in Vanguard, increase self Recovery Received +20%, self Intelligence +25, and Right Flank ally Physical Damage Dealt +10%."
     },
@@ -85,7 +86,7 @@
         "STOLEN_FLOCK",
         "FIRE_DAMAGE_UP"
       ],
-      "rawDescription": "PvE Fire Damage bonus and Stolen Flock stacks from each round or when Prey receives Recovery."
+      "rawDescription": "Start of Combat until end of combat: increase Sheepstealer Fire Damage Dealt when battling non-player armies at Food Tiles; this also applies in Encounters against Beasts. Each Round: fixed 50% chance to gain one Stolen Flock stack, maximum ten stacks. Whenever Sheepstealer's Prey receives Recovery: gain one Stolen Flock stack, maximum ten stacks. Each stack increases Sheepstealer Fire Damage Dealt until end of combat. Non-player Fire Damage progression (Habit Levels 1–5): 10%, 12%, 14%, 17%, 20%. Fire Damage per stack progression (Habit Levels 1–5): 3%, 3.6%, 4.2%, 5.1%, 6%."
     },
     {
       "id": "sheepstealer-dragons-cunning",
@@ -109,7 +110,7 @@
         "DEBUFF_INSTINCTS",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "Start of Combat: increase self Intelligence and reduce Instinct of two enemies within adjacency, enhanced by Initiative."
+      "rawDescription": "Start of Combat until end of combat: increase Sheepstealer's Intelligence and reduce Instinct of two Enemies within adjacency. The enemy Instinct reduction is enhanced by Sheepstealer's Initiative. Intelligence progression (Habit Levels 1–5): 16%, 19.2%, 22.4%, 27.2%, 32%. Enemy Instinct progression (Habit Levels 1–5): -12%, -14.4%, -16.8%, -20.4%, -24%."
     },
     {
       "id": "sheepstealer-baited-kill",
@@ -131,9 +132,9 @@
       ],
       "tags": [
         "VULNERABLE",
-        "CLEANSE_POSITIVE"
+        "CLEANSE_NEGATIVE"
       ],
-      "rawDescription": "Each Round: apply Vulnerable to Prey, doubled chance if Prey received Recovery last round; cleanse Sheepstealer if Prey is above 50% Troop Capacity."
+      "rawDescription": "Each Round: chance to afflict Sheepstealer's Prey with Vulnerable (+20%); the chance doubles when Prey received Recovery within the previous round. Vulnerable increases Damage Received by 20%. Separately, each Round while Prey is above 50% troop capacity: chance to Cleanse Sheepstealer of one Negative effect applied by an Enemy that reduces Sheepstealer's Damage Dealt. The screenshot does not state a Vulnerable duration. Vulnerable chance progression (Habit Levels 1–5): 25%, 30%, 35%, 42.5%, 50%. Cleanse chance progression (Habit Levels 1–5): 50%, 60%, 70%, 85%, 100%."
     },
     {
       "id": "sheepstealer-wary-beast",
@@ -157,7 +158,7 @@
         "EVADE",
         "RECOVERY_RECEIVED_DOWN"
       ],
-      "rawDescription": "Start of Each Round: if Prey is above 50% Troop Capacity gain Evade. Start of Combat reduce Recovery Received of three enemies."
+      "rawDescription": "Start of each Round: when Prey is above 50% troop capacity, Sheepstealer gains Evade until end of the round. Evade gives each incoming damage instance a chance to be ignored. Start of Combat until end of combat: reduce Recovery Received of three Enemies in any lane. Evade Rate progression (Habit Levels 1–5): 10%, 12%, 14%, 17%, 20%. Enemy Recovery Received progression (Habit Levels 1–5): -10%, -12%, -14%, -17%, -20%."
     },
     {
       "id": "sheepstealer-savage-claim",
@@ -182,7 +183,7 @@
         "FIRE_DAMAGE",
         "RECOVERY"
       ],
-      "rawDescription": "Augments Wild Hunt: each round while Sheepstealer has Prey, deal Fire Damage to Prey and apply Recovery to Sheepstealer; triple both if Prey received Recovery previous round."
+      "rawDescription": "Augments Wild Hunt at 10 Stars. Each Round while Sheepstealer has Prey: deal Fire Damage to Prey and apply Recovery to Sheepstealer. Fire Damage scales with Intelligence and is mitigated by target Initiative; Recovery is enhanced by Intelligence and scales with Dragon Level. If Prey received Recovery during the previous round, triple both current rates. Fire Damage Rate progression (Habit Levels 1–5): 24%, 31.2%, 38.4%, 48%, 60%. Recovery Rate progression (Habit Levels 1–5): 10%, 13%, 16%, 20%, 25%."
     }
   ],
   "affinities": {
