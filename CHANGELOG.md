@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.8 - 2026-07-18
+
+- Moved ordinary roster synchronization feedback into the persistent account action. Header account names now show only a capped email local part, while full email and status remain available in the accessible label and Account dialog.
+- Removed healthy roster-page synchronization rows while retaining prominent migration, conflict, paused, offline, and error panels with their existing Resolve and Retry actions.
+- Increased database/package version to `0.9.8`; source data schema remains `13`, and local/cloud roster schemas remain `5`. Authentication, cloud synchronization, roster serialization, formation evaluation, canonical data, and Supabase migrations are unchanged.
+
 ## 0.9.7 - 2026-07-18
 
 - Compacted the My Roster introduction, healthy synchronization states, count/actions, and filtering controls so the owned-dragon list begins higher while attention-required sync states remain prominent.

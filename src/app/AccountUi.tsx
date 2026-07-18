@@ -6,15 +6,18 @@ import {
   type RosterComparison,
   type RosterSyncStatus,
 } from '../hooks/useRosterSync';
+import { accountDisplayName, isRosterSyncAttention } from './accountSyncPresentation';
 
 export function HeaderAccountAction({
   session,
   sessionLoading,
+  status,
   onOpenAccount,
   onOpenSignIn,
 }: {
   session: AccountSession | null;
   sessionLoading: boolean;
+  status: RosterSyncStatus;
   onOpenAccount: () => void;
   onOpenSignIn: () => void;
 }) {
@@ -28,16 +31,29 @@ export function HeaderAccountAction({
       </button>
     );
   }
+  const isLoadingRoster = status === 'loading-cloud' || status === 'syncing';
+  const needsAttention = isRosterSyncAttention(status);
+  const AccountIcon = isLoadingRoster ? LoaderCircle : needsAttention ? (status === 'offline' ? CloudOff : CircleAlert) : UserRound;
+  const statusDescription = status === 'syncing'
+    ? 'roster syncing'
+    : status === 'synced'
+      ? 'roster synchronized'
+      : status === 'loading-cloud'
+        ? 'loading account roster'
+        : needsAttention
+          ? 'roster synchronization needs attention'
+          : undefined;
+
   return (
     <button
       type="button"
       className="secondary-button account-action"
-      aria-label={`Account for ${session.email}`}
+      aria-label={`Account for ${session.email}${statusDescription ? `, ${statusDescription}` : ''}`}
       onClick={onOpenAccount}
     >
-      <UserRound size={17} aria-hidden="true" />
+      <AccountIcon className={`account-status-icon${isLoadingRoster ? ' is-spinning' : ''}`} size={17} aria-hidden="true" />
       <span>Account</span>
-      <span className="account-email-short">{shortEmail(session.email)}</span>
+      <span className="account-email-short" title={session.email}>{accountDisplayName(session.email)}</span>
     </button>
   );
 }
@@ -318,7 +334,7 @@ export function RosterSyncPanel({
   onResolve: () => void;
   onRetry: () => void;
 }) {
-  const attention = ['migration-required', 'conflict', 'paused', 'offline', 'error'].includes(status);
+  const attention = isRosterSyncAttention(status);
   const statusText = session && status === 'synced' ? 'Synced to your account' : syncStatusLabel(status);
   const StatusIcon = status === 'local-only'
     ? HardDrive

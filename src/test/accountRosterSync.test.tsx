@@ -437,7 +437,7 @@ describe('ongoing synchronization safety', () => {
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await user.click(screen.getByRole('button', { name: 'Roster' }));
-    await screen.findByText('Synced to your account');
+    await screen.findByRole('button', { name: /Account for .*roster synchronized/i });
     const imported = meaningfulRoster('Imported locally', 1);
     const file = new File([serializeRosterExport(imported)], 'roster.json', { type: 'application/json' });
     await user.upload(screen.getByLabelText('Import roster'), file);
@@ -457,7 +457,7 @@ describe('ongoing synchronization safety', () => {
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await user.click(screen.getByRole('button', { name: 'Roster' }));
-    await screen.findByText('Synced to your account');
+    await screen.findByRole('button', { name: /Account for .*roster synchronized/i });
     await user.click(screen.getByRole('button', { name: 'Clear local roster' }));
     expect(confirm).toHaveBeenCalledWith(expect.stringContaining('Your account roster will not be deleted'));
     expect(Object.values(loadStoredRosterSnapshot(window.localStorage, dragons).roster).some((entry) => entry.owned)).toBe(false);
@@ -489,7 +489,7 @@ describe('ongoing synchronization safety', () => {
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await user.click(screen.getByRole('button', { name: 'Roster' }));
-    await screen.findByText('Synced to your account');
+    await screen.findByRole('button', { name: /Account for .*roster synchronized/i });
     await user.selectOptions(screen.getByLabelText('Star Rank'), '9');
     expect(loadStoredRosterSnapshot(window.localStorage, dragons).roster[dragons[0]!.id]!.starRank).toBe(9);
     expect(await screen.findByText('Could not sync — retry', {}, { timeout: 2500 })).toBeInTheDocument();
@@ -500,7 +500,7 @@ describe('ongoing synchronization safety', () => {
       return Promise.resolve();
     });
     await waitFor(() => expect(repository.upserts).toHaveLength(2));
-    expect(await screen.findByText('Synced to your account')).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /Account for .*roster synchronized/i })).toBeInTheDocument();
   });
 
   it('ignores a delayed fetch from a prior authenticated user', async () => {

@@ -163,12 +163,11 @@ describe('RosterWorkspace', () => {
   });
 
   it.each(['local-only', 'auth-loading', 'loading-cloud', 'syncing', 'synced'] satisfies RosterSyncStatus[])(
-    'uses compact synchronization presentation for %s',
+    'does not render a redundant roster synchronization panel for %s',
     (syncStatus) => {
       const session = syncStatus === 'local-only' || syncStatus === 'auth-loading' ? null : { userId: 'user-1', email: 'long-account-email@example.com' };
       render(<WorkspaceHarness accountConfigured session={session} syncStatus={syncStatus} />);
-      expect(document.querySelector('.roster-sync-panel')).toHaveAttribute('data-presentation', 'compact');
-      expect(screen.getByText(syncStatus === 'local-only' ? 'Saved in this browser' : syncStatus === 'synced' ? 'Synced to your account' : syncStatus === 'syncing' ? 'Syncing…' : 'Loading account roster…')).toBeInTheDocument();
+      expect(document.querySelector('.roster-sync-panel')).not.toBeInTheDocument();
     },
   );
 
@@ -185,15 +184,10 @@ describe('RosterWorkspace', () => {
     expect(screen.getByRole('button', { name: 'Account' })).toBeInTheDocument();
   });
 
-  it('preserves Sign in, Account, Resolve, and Retry callbacks', async () => {
+  it('preserves Account, Resolve, and Retry callbacks for attention states', async () => {
     const user = userEvent.setup();
-    const onOpenSignIn = vi.fn();
-    const { rerender } = render(<WorkspaceHarness accountConfigured onOpenSignIn={onOpenSignIn} />);
-    await user.click(screen.getByRole('button', { name: 'Sign in' }));
-    expect(onOpenSignIn).toHaveBeenCalledOnce();
-
     const callbacks = { onOpenAccount: vi.fn(), onResolveSync: vi.fn(), onRetrySync: vi.fn() };
-    rerender(<WorkspaceHarness accountConfigured session={{ userId: 'user-1', email: 'qa@example.com' }} syncStatus="conflict" {...callbacks} />);
+    const { rerender } = render(<WorkspaceHarness accountConfigured session={{ userId: 'user-1', email: 'qa@example.com' }} syncStatus="conflict" {...callbacks} />);
     await user.click(screen.getByRole('button', { name: 'Resolve' }));
     await user.click(screen.getByRole('button', { name: 'Account' }));
     expect(callbacks.onResolveSync).toHaveBeenCalledOnce();

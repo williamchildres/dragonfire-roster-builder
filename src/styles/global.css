@@ -3047,6 +3047,10 @@ th {
   white-space: nowrap;
 }
 
+.account-status-icon {
+  flex: 0 0 17px;
+}
+
 .account-email-short {
   color: var(--muted);
   font-size: 0.78rem;

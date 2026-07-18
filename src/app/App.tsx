@@ -468,6 +468,7 @@ export function App({ accountServices: providedAccountServices }: { accountServi
               <HeaderAccountAction
                 session={session}
                 sessionLoading={sessionLoading}
+                status={rosterSync.status}
                 onOpenAccount={openAccountDialog}
                 onOpenSignIn={openSignInDialog}
               />
@@ -736,7 +737,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>My Roster now reaches the dragon list sooner, discloses advanced filters on demand, standardizes compact rows, and explains locked Habit requirements.</p>
+          <p>Roster synchronization now stays visible in the persistent account action, keeping healthy Roster workspaces focused while attention-required states remain prominent.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
