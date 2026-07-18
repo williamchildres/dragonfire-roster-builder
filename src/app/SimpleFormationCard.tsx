@@ -324,17 +324,17 @@ function SpearIcon({ size = 17, 'aria-hidden': ariaHidden }: { size?: number; 'a
   );
 }
 
-function DragonAffinityIcons({
+export function DragonAffinityIcons({
   dragonName,
   affinities,
 }: {
   dragonName: string;
   affinities: Dragon['affinities'];
 }) {
-  const known = TROOP_TYPES.filter((troopType) => affinities[troopType] !== 'unknown');
-  const unknownCount = TROOP_TYPES.length - known.length;
+  const known = TROOP_TYPES.filter((troopType) => affinities[troopType] === 'positive' || affinities[troopType] === 'negative');
+  const unknownCount = TROOP_TYPES.filter((troopType) => affinities[troopType] === 'unknown').length;
 
-  if (known.length === 0) {
+  if (known.length === 0 && unknownCount === TROOP_TYPES.length) {
     return (
       <div className="compact-affinity-group is-unverified" aria-label={`${dragonName} affinities`}>
         <span className="affinity-unverified-mark" aria-hidden="true">?</span>

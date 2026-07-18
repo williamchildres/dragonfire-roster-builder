@@ -293,7 +293,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(destination).not.toHaveTextContent('Each Round: 20% chance');
   });
 
-  it('renders compact accessible affinity symbols and restrained unknown states without a bottom Affinities section', async () => {
+  it('renders compact accessible affinity symbols without a bottom Affinities section', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {}, caraxes: {}, antares: { owned: false } });
 
@@ -307,7 +307,9 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(syraxCard).getByLabelText('Unfavorable affinity: Siege')).toBeInTheDocument();
     expect(within(syraxCard).getByLabelText(/Syrax affinities; additional affinities are unverified/i)).toBeInTheDocument();
     expect(within(syraxCard).queryByText('+?')).not.toBeInTheDocument();
-    expect(within(antaresCard).getByText('Affinities not verified.')).toBeInTheDocument();
+    expect(within(antaresCard).getByLabelText('Favorable affinity: Archers')).toBeInTheDocument();
+    expect(within(antaresCard).getByLabelText('Unfavorable affinity: Siege')).toBeInTheDocument();
+    expect(within(antaresCard).queryByText('Affinities not verified.')).not.toBeInTheDocument();
     expect(within(antaresCard).queryByLabelText(/Neutral affinity/i)).not.toBeInTheDocument();
     expect(screen.queryByText('None recorded')).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Affinities' })).not.toBeInTheDocument();

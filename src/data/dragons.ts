@@ -1110,8 +1110,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": null,
     "command": {
       "id": "solstryker-tactical-onslaught",
       "dragonId": "solstryker",
@@ -1234,11 +1234,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
+      "Archers": "positive",
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -1279,7 +1279,7 @@ export const dragons = [
         "status": "screenshot-verified", "source": "Solstryker Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true
       },
       "affinities": {
-        "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true
+        "status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true
       }
     }
   },
@@ -4675,8 +4675,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-15",
-    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": null,
     "command": {
       "id": "antares-relentless-pursuit",
       "dragonId": "antares",
@@ -4872,11 +4872,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
+      "Archers": "positive",
+      "Spearmen": "neutral",
+      "Siege": "negative"
     },
     "stats": {
       "strength": null,
@@ -4951,9 +4951,9 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "unknown",
-        "source": "Affinity icons were not text-verified",
-        "capturedAt": "2026-07-15",
+        "status": "community-verified",
+        "source": "Controller-provided in-game affinity transcription",
+        "capturedAt": "2026-07-18",
         "gameVersion": null,
         "reviewedManually": true
       }
@@ -4971,8 +4971,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": null,
     "command": {
       "id": "shimmer-unbreakable-loyalty",
       "dragonId": "shimmer",
@@ -5074,11 +5074,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "positive",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "positive"
     },
     "stats": {
       "strength": null,
@@ -5112,7 +5112,7 @@ export const dragons = [
       "command": {"status": "screenshot-verified", "source": "Shimmer Unbreakable Loyalty screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
       "trait": {"status": "screenshot-verified", "source": "Shimmer Sentinel's Presence screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
       "habits": {"status": "screenshot-verified", "source": "Shimmer Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
-      "affinities": {"status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true}
+      "affinities": {"status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true}
     }
   },
   {
@@ -5127,8 +5127,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "Adult life stage was shown. Affinity icon was not text-verified and remains unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": "Adult life stage was shown.",
     "command": {
       "id": "jagadrix-cunning-whispers",
       "dragonId": "jagadrix",
@@ -5230,11 +5230,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
+      "Spearmen": "positive",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -5268,7 +5268,7 @@ export const dragons = [
       "command": {"status": "screenshot-verified", "source": "Jagadrix Cunning Whispers screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
       "trait": {"status": "screenshot-verified", "source": "Jagadrix Hunter's Wrath screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
       "habits": {"status": "screenshot-verified", "source": "Jagadrix Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true},
-      "affinities": {"status": "unknown", "source": "Affinity icon was not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true}
+      "affinities": {"status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true}
     }
   },
   {
@@ -5283,8 +5283,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "Affinity icons were not text-verified and remain unknown. Nature's Reckoning's incorrect in-game Fire Damage Received heading is retained as an evidence discrepancy; the verified body and summary establish Fire Damage Dealt suppression.",
+    "lastVerified": "2026-07-18",
+    "notes": "Nature's Reckoning's incorrect in-game Fire Damage Received heading is retained as an evidence discrepancy; the verified body and summary establish Fire Damage Dealt suppression.",
     "command": {
       "id": "bevlorin-natures-reckoning",
       "dragonId": "bevlorin",
@@ -5341,11 +5341,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
+      "Spearmen": "positive",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -5379,7 +5379,7 @@ export const dragons = [
       "command": { "status": "screenshot-verified", "source": "Bevlorin Nature's Reckoning screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "trait": { "status": "screenshot-verified", "source": "Bevlorin Champion's Vigor screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "habits": { "status": "screenshot-verified", "source": "Bevlorin Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
-      "affinities": { "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
+      "affinities": { "status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true }
     }
   },
   {
@@ -5394,8 +5394,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "Affinity icons were not text-verified and remain unknown. Fueled by Darkness recipient selection and the exact meaning of Advantage +10% remain unresolved.",
+    "lastVerified": "2026-07-18",
+    "notes": "Fueled by Darkness recipient selection and the exact meaning of Advantage +10% remain unresolved.",
     "command": {
       "id": "shadowrend-eclipse-fervor", "dragonId": "shadowrend", "kind": "command", "name": "Eclipse Fervor", "abilityClass": "active", "unlockStarRank": null, "minimumDragonLevel": null, "positionRequirement": null,
       "rawDescription": "Each round: 25% chance to apply Panic to 1 enemy within adjacency for 2 rounds. Panic deals Tactical Damage each round at a +20% Damage Rate. Panic stat scaling and mitigation are not stated.\n\nRounds 4, 7, 9, and 10: deal Physical Damage to 2 enemies within adjacency at a +80% Damage Rate, scaling with Strength and mitigated by target Instinct.\n\nAt 10 Stars, Event Horizon augments Eclipse Fervor on Round 9 with an additional Physical and Tactical attack against the same group of 3 enemies in any lane. The rate for each type comes from Event Horizon. Direct Physical Damage scales with Strength; direct Tactical Damage scales with Instinct. The base Round 9 Physical attack remains and target-group overlap is unresolved.",
@@ -5436,11 +5436,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "positive",
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "positive"
     },
     "stats": {
       "strength": null,
@@ -5474,7 +5474,7 @@ export const dragons = [
       "command": { "status": "screenshot-verified", "source": "Shadowrend Eclipse Fervor screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "trait": { "status": "screenshot-verified", "source": "Shadowrend Warrior's Zeal screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "habits": { "status": "screenshot-verified", "source": "Shadowrend Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
-      "affinities": { "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
+      "affinities": { "status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true }
     }
   },
   {
@@ -5489,8 +5489,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "Affinity icon was not text-verified and remains unknown. Armor Break's opposing-enemy selection remains unresolved enemy-targeting language.",
+    "lastVerified": "2026-07-18",
+    "notes": "Armor Break's opposing-enemy selection remains unresolved enemy-targeting language.",
     "command": {
       "id": "thunderstrike-tail-whip", "dragonId": "thunderstrike", "kind": "command", "name": "Tail Whip", "abilityClass": "active", "unlockStarRank": null, "minimumDragonLevel": null, "positionRequirement": null,
       "rawDescription": "Odd-numbered rounds 1, 3, 5, 7, and 9: deal Physical Damage to 1 enemy in the same lane at a +100% Damage Rate, scaling with Strength and mitigated by target Instinct.\n\nAt 6+ Stars, Barbed Lash augments Tail Whip on even-numbered rounds 2, 4, 6, 8, and 10: deal Physical Damage to 1 enemy in the same lane using Barbed Lash's direct rate, then attempt Bleed on the same target for 2 rounds. Bleed deals Physical Damage each round at a fixed +20% rate; Bleed scaling and mitigation are not stated. At 6+ Stars Thunderstrike attacks on every numbered round.",
@@ -5531,11 +5531,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "positive",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -5569,7 +5569,7 @@ export const dragons = [
       "command": { "status": "screenshot-verified", "source": "Thunderstrike Tail Whip screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "trait": { "status": "screenshot-verified", "source": "Thunderstrike Warrior's Zeal screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "habits": { "status": "screenshot-verified", "source": "Thunderstrike Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
-      "affinities": { "status": "unknown", "source": "Affinity icon was not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
+      "affinities": { "status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true }
     }
   },
   {
@@ -5584,8 +5584,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": false,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "The supplied screen shows the Whelp life stage. Account progression and combat stats are not canonical. Affinity icons were not text-verified and remain unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": "The supplied screen shows the Whelp life stage. Account progression and combat stats are not canonical.",
     "command": {
       "id": "vesper-eventide-strike",
       "dragonId": "vesper",
@@ -5642,11 +5642,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "positive",
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "negative"
     },
     "stats": {
       "strength": null,
@@ -5680,7 +5680,7 @@ export const dragons = [
       "command": { "status": "screenshot-verified", "source": "Vesper Eventide Strike screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "trait": { "status": "screenshot-verified", "source": "Vesper Sentinel's Wit screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "habits": { "status": "screenshot-verified", "source": "Vesper Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
-      "affinities": { "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
+      "affinities": { "status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true }
     }
   },
   {
@@ -5695,8 +5695,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-15",
-    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": null,
     "command": {
       "id": "arulix-gleaming-spiral",
       "dragonId": "arulix",
@@ -5899,11 +5899,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "positive",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -5983,9 +5983,9 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "unknown",
-        "source": "Affinity icons were not text-verified",
-        "capturedAt": "2026-07-15",
+        "status": "community-verified",
+        "source": "Controller-provided in-game affinity transcription",
+        "capturedAt": "2026-07-18",
         "gameVersion": null,
         "reviewedManually": true
       }
@@ -6003,8 +6003,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "The supplied screen shows the Whelp life stage. Account progression and combat stats are not canonical. Affinity icons were not text-verified and remain unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": "The supplied screen shows the Whelp life stage. Account progression and combat stats are not canonical.",
     "command": {
       "id": "nyrena-undermine", "dragonId": "nyrena", "kind": "command", "name": "Undermine", "abilityClass": "active", "unlockStarRank": null, "minimumDragonLevel": null, "positionRequirement": null,
       "rawDescription": "Each round: one 10% activation affects up to 3 enemies in any lane, reducing Physical Damage Dealt by -10% for 1 round, or 2 rounds against a target afflicted with Burn. Burn improves duration only; Nyrena does not apply Burn, and Fire Damage does not imply Burn. The Command summary and detailed heading say Physical Damage Dealt, while the detailed body conflicts by saying Physical Damage Received by -10%; Dealt is canonical. Group-roll behavior, fewer-than-three-enemy behavior, Burn evaluation timing, and suppression refresh/stacking remain unresolved.\n\nRounds 1 and 3: deal Fire Damage to 3 enemies in any lane at a +20% Damage Rate, scaling with Intelligence and mitigated by target Initiative.\n\nRounds 5, 7, and 9: deal Tactical Damage to 1 enemy in the same lane at a +80% Damage Rate, scaling with Instinct and mitigated by target Intelligence. Same-lane fallback remains unresolved.",
@@ -6043,11 +6043,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "positive",
+      "Archers": "neutral",
+      "Spearmen": "neutral",
+      "Siege": "positive"
     },
     "stats": {
       "strength": null,
@@ -6081,7 +6081,7 @@ export const dragons = [
       "command": { "status": "screenshot-verified", "source": "Nyrena Undermine screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "trait": { "status": "screenshot-verified", "source": "Nyrena Champion's Brilliance screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "habits": { "status": "screenshot-verified", "source": "Nyrena Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
-      "affinities": { "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
+      "affinities": { "status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true }
     }
   },
   {
@@ -6096,8 +6096,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-16",
-    "notes": "The supplied screen shows the Whelp life stage. Account progression and combat stats are not canonical. Affinity icons were not text-verified and remain unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": "The supplied screen shows the Whelp life stage. Account progression and combat stats are not canonical.",
     "command": {
       "id": "dawnseeker-radiant-wings", "dragonId": "dawnseeker", "kind": "command", "name": "Radiant Wings", "abilityClass": "active", "unlockStarRank": null, "minimumDragonLevel": null, "positionRequirement": null,
       "rawDescription": "Each round: one shared 30% activation roll increases Dawnseeker Instinct and Initiative by +20% for 1 round. Both buffs are self-only; activation timing and refresh/stacking remain unresolved.\n\nRounds 1, 2, 4, and 7: deal Tactical Damage to 1 enemy in the same lane at a base +50% Damage Rate, scaling with Instinct and mitigated by target Intelligence. Same-lane fallback remains unresolved.\n\nRounds 2, 5, and 8: apply Recovery to 2 Allies within adjacency at a base +30% Recovery Rate, enhanced by Dawnseeker's Initiative. Dawnseeker is eligible. From a flank, Dawnseeker and Vanguard are the two eligible recipients, so Vanguard is the outward recipient. From Vanguard, 2 of 3 eligible Allies are selected and exact recipients remain unresolved.\n\nAt 6+ Stars, Sunbreak augments only existing Round 1 and Round 2 paths: its current final Tactical rate replaces the base rate on rounds 1 and 2, and its current final Recovery rate replaces the base rate on Round 2. It does not create Round 1 Recovery and does not duplicate any Command path.",
@@ -6136,11 +6136,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "neutral",
+      "Archers": "neutral",
+      "Spearmen": "positive",
+      "Siege": "negative"
     },
     "stats": {
       "strength": null,
@@ -6174,7 +6174,7 @@ export const dragons = [
       "command": { "status": "screenshot-verified", "source": "Dawnseeker Radiant Wings screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "trait": { "status": "screenshot-verified", "source": "Dawnseeker Sentinel's Presence screenshot", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
       "habits": { "status": "screenshot-verified", "source": "Dawnseeker Habit screenshots", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true },
-      "affinities": { "status": "unknown", "source": "Affinity icons were not text-verified", "capturedAt": "2026-07-16", "gameVersion": null, "reviewedManually": true }
+      "affinities": { "status": "community-verified", "source": "Controller-provided in-game affinity transcription", "capturedAt": "2026-07-18", "gameVersion": null, "reviewedManually": true }
     }
   },
   {
@@ -6189,8 +6189,8 @@ export const dragons = [
     "gameVersion": null,
     "isNew": true,
     "dataStatus": "community-verified",
-    "lastVerified": "2026-07-15",
-    "notes": "Affinity icons were not text-verified and remain unknown.",
+    "lastVerified": "2026-07-18",
+    "notes": null,
     "command": {
       "id": "arrax-sudden-strike",
       "dragonId": "arrax",
@@ -6388,11 +6388,11 @@ export const dragons = [
       }
     ],
     "affinities": {
-      "Cavalry": "unknown",
-      "Shieldbearers": "unknown",
-      "Archers": "unknown",
-      "Spearmen": "unknown",
-      "Siege": "unknown"
+      "Cavalry": "neutral",
+      "Shieldbearers": "positive",
+      "Archers": "positive",
+      "Spearmen": "neutral",
+      "Siege": "neutral"
     },
     "stats": {
       "strength": null,
@@ -6471,9 +6471,9 @@ export const dragons = [
         "reviewedManually": true
       },
       "affinities": {
-        "status": "unknown",
-        "source": "Affinity icons were not text-verified",
-        "capturedAt": "2026-07-15",
+        "status": "community-verified",
+        "source": "Controller-provided in-game affinity transcription",
+        "capturedAt": "2026-07-18",
         "gameVersion": null,
         "reviewedManually": true
       }

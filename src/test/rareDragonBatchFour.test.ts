@@ -47,14 +47,14 @@ describe('fourth Rare dragon batch', () => {
     expect(dragons.filter((dragon) => dragon.rarity === 'Legendary' && dragon.command)).toHaveLength(9);
     expect(dragons.filter((dragon) => dragon.rarity === 'Epic' && dragon.command)).toHaveLength(10);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.9.9', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.10.0', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
 
     for (const dragonId of targetIds) {
       const dragon = dragons.find((candidate) => candidate.id === dragonId)!;
       expect(dragon.dataStatus).toBe('community-verified');
       expect(dragon.habits.map((habit) => habit.unlockStarRank)).toEqual([2, 4, 6, 8, 10]);
-      expect(Object.values(dragon.affinities).every((affinity) => affinity === 'unknown')).toBe(true);
+      expect(Object.values(dragon.affinities)).not.toContain('unknown');
       expect(Object.values(dragon.stats).every((stat) => stat === null)).toBe(true);
       expect(evidenceSources.filter((source) => source.id.startsWith(`${dragonId}-`))).toHaveLength(7);
       expect(manualReviewRecords.filter((review) => review.dragonId === dragonId)).toHaveLength(1);
