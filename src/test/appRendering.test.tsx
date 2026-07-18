@@ -239,9 +239,10 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.3/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.4/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('compact landscape hero, a three-action feature grid, and a focused dataset status strip');
+    expect(latestUpdate).toHaveTextContent('rating before the card board');
+    expect(latestUpdate).toHaveTextContent('compact expandable dragon cards');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.4 - 2026-07-18
+
+- Moved a compact Formation Rating summary above the three-card board while retaining the complete numerical breakdown, strengths, opportunities, notes, and mapped-synergy trace in Formation Analysis.
+- Reworked selected-dragon cards into independent collapsed/expanded states, replaced the full-width Affinities section with accessible troop symbols and restrained unverified states, clarified signal and movement controls, and renamed the all-dragon planning mode to `All Dragons — Star 10` without changing its mechanics.
+- Corrected selector previews to evaluate each candidate in the actual target position alongside the current tentative formation and progression, without mutating the saved formation before selection.
+- Increased database/package version to `0.9.4`; source data schema remains `13`, and local/cloud roster schemas remain `5`. Formation evaluation, rating formulas, canonical dragon data, affinity values, storage behavior, and the deterministic result hash are unchanged. No database or Supabase migration was added.
+
 ## 0.9.3 - 2026-07-18
 
 - Refined the public Overview into a compact two-column landscape hero, a responsive three-action feature grid, and a concise dataset-breadth status strip derived from canonical dragon, ability, and curated-profile data.

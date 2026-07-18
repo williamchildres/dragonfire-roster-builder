@@ -1,12 +1,14 @@
+import { Bomb, BowArrow, ChessKnight, Shield, Swords, type LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 import type { AbilityDefinition, Dragon, FormationPosition, OwnedDragon, TroopType } from '../models/dragon';
-import { FORMATION_POSITIONS } from '../models/dragon';
+import { FORMATION_POSITIONS, TROOP_TYPES } from '../models/dragon';
 import { positionLabels } from '../services/teamShare';
 import type { DragonSynergyProfile } from '../synergy/types';
 import { summarizeAbilityForProgression } from './dragonDetailPresentation';
 import type { FormationSignalChip } from './formationCardPresentation';
+import { formationSignalStateMarker } from './formationSignalPresentation';
 
-const unknown = 'Not verified yet';
+const unknown = 'Full wording not verified.';
 
 export function SimpleFormationCard({
   position,
@@ -14,6 +16,7 @@ export function SimpleFormationCard({
   rosterEntry,
   profile,
   signalChips,
+  movementOccupancy,
   onChooseDragon,
   onOpenDetails,
   onMove,
@@ -28,13 +31,16 @@ export function SimpleFormationCard({
     provides: FormationSignalChip[];
     benefitsFrom: FormationSignalChip[];
   };
+  movementOccupancy: Partial<Record<FormationPosition, boolean>>;
   onChooseDragon: () => void;
   onOpenDetails: (dragon: Dragon) => void;
   onMove: (position: FormationPosition) => void;
   onClear: () => void;
 }) {
+  const [expanded, setExpanded] = useState(false);
   const owned = dragon ? rosterEntry?.owned === true : false;
   const starSummary = dragon && owned ? (rosterEntry?.starRank !== null && rosterEntry?.starRank !== undefined ? `Star ${rosterEntry.starRank}` : 'Star unknown') : null;
+  const detailsId = `formation-card-details-${position}`;
 
   return (
     <article className={`team-slot formation-position ${position}`} aria-labelledby={`formation-card-${position}`}>
@@ -49,7 +55,8 @@ export function SimpleFormationCard({
       {dragon ? (
         <>
           <div className="formation-dragon-summary" aria-label={`${dragon.name} selected dragon summary`}>
-            <div>
+            <DragonAffinityIcons dragonName={dragon.name} affinities={dragon.affinities} />
+            <div className="formation-dragon-identity">
               <h3>{dragon.name}</h3>
               <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
                 <span className="badge">{dragon.rarity}</span>
@@ -58,12 +65,30 @@ export function SimpleFormationCard({
               </div>
             </div>
           </div>
-          <FormationSignalPanel title="Damage profile" chips={signalChips.damageProfile} fallback="No current damage profile recorded." />
-          <FormationSignalPanel title="Provides" chips={signalChips.provides} fallback="No formation-wide output profile recorded." />
-          <FormationSignalPanel title="Synergy needs" chips={signalChips.benefitsFrom} fallback="No mapped incoming synergy yet." />
+          <div className="formation-signal-grid">
+            <FormationSignalPanel title="Damage profile" chips={signalChips.damageProfile} fallback={profile ? 'No mapped damage profile.' : 'Damage profile not verified.'} />
+            <FormationSignalPanel title="Provides" chips={signalChips.provides} fallback={profile ? 'No mapped Provides signals.' : 'Provides signals not verified.'} />
+            <FormationSignalPanel title="Synergy needs" chips={signalChips.benefitsFrom} fallback={profile ? 'No mapped incoming synergy.' : 'Synergy needs not verified.'} />
+          </div>
           <SimpleCommandPanel command={dragon.command} profile={profile} rosterEntry={rosterEntry} />
-          <SimpleTraitPanel trait={dragon.trait} position={position} />
-          <DragonAffinityStrip dragonName={dragon.name} affinities={dragon.affinities} />
+          <SimpleTraitPanel trait={dragon.trait} position={position} profile={profile} rosterEntry={rosterEntry} />
+          <button
+            type="button"
+            className="secondary-button formation-card-details-toggle"
+            aria-controls={detailsId}
+            aria-expanded={expanded}
+            onClick={() => setExpanded((current) => !current)}
+          >
+            {expanded ? 'Collapse details' : 'Expand details'}
+          </button>
+          {expanded ? (
+            <div className="formation-card-expanded-details" id={detailsId}>
+              <ExpandedAbilityText label="Full Command wording" text={dragon.command?.rawDescription} />
+              {position === 'vanguard' ? (
+                <ExpandedAbilityText label="Full Vanguard Trait wording" text={dragon.trait?.rawDescription} />
+              ) : null}
+            </div>
+          ) : null}
           <div className="formation-card-actions">
             <div className="formation-card-primary-actions">
               <button type="button" className="secondary-button compact-action" onClick={onChooseDragon}>
@@ -74,11 +99,22 @@ export function SimpleFormationCard({
               </button>
             </div>
             <div className="movement-controls" aria-label={`${positionLabels[position]} movement controls`}>
-              {FORMATION_POSITIONS.filter((target) => target !== position).map((target) => (
-                <button className="secondary-button compact-action" key={target} type="button" onClick={() => onMove(target)}>
-                  {positionLabels[target]}
-                </button>
-              ))}
+              {FORMATION_POSITIONS.filter((target) => target !== position).map((target) => {
+                const label = `Move to ${positionLabels[target]}`;
+                const actionLabel = movementOccupancy[target] ? `${label}, swapping with the selected dragon there` : label;
+                return (
+                  <button
+                    aria-label={actionLabel}
+                    className="secondary-button compact-action"
+                    key={target}
+                    title={actionLabel}
+                    type="button"
+                    onClick={() => onMove(target)}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
             <button type="button" className="text-button compact-action clear-position-action" onClick={onClear}>
               Clear position
@@ -87,7 +123,7 @@ export function SimpleFormationCard({
         </>
       ) : (
         <div className="empty-formation-slot">
-          <p className="empty-card-note">Add a dragon to review command, Vanguard Trait, affinities, and synergy signals.</p>
+          <p className="empty-card-note">Add a dragon to review its command, position trait, and mapped synergy signals.</p>
           <button type="button" className="primary-button" onClick={onChooseDragon}>
             + Add Dragon
           </button>
@@ -110,7 +146,7 @@ function SimpleCommandPanel({
     return (
       <section className="card-mini-section command-panel" aria-label="Command">
         <h4>Command</h4>
-        <p>Ability details not verified.</p>
+        <p>Command details not verified.</p>
       </section>
     );
   }
@@ -122,7 +158,6 @@ function SimpleCommandPanel({
         <AbilityTypeBadge label="Command" />
       </div>
       <AbilitySummary ability={command} profile={profile} rosterEntry={rosterEntry} />
-      {command.rawDescription ? <RawDescription text={command.rawDescription} /> : <p>{unknown}</p>}
     </section>
   );
 }
@@ -130,9 +165,13 @@ function SimpleCommandPanel({
 function SimpleTraitPanel({
   trait,
   position,
+  profile,
+  rosterEntry,
 }: {
   trait: Dragon['trait'];
   position: FormationPosition;
+  profile?: DragonSynergyProfile;
+  rosterEntry?: OwnedDragon;
 }) {
   if (position !== 'vanguard') {
     return null;
@@ -142,7 +181,7 @@ function SimpleTraitPanel({
     return (
       <section className="card-mini-section" aria-label="Trait status">
         <h4>Vanguard Trait</h4>
-        <p>Ability details not verified.</p>
+        <p>Vanguard Trait details not verified.</p>
       </section>
     );
   }
@@ -153,9 +192,22 @@ function SimpleTraitPanel({
         <h4>{trait.name}</h4>
         <AbilityTypeBadge label="Vanguard Trait" />
       </div>
-      {trait.rawDescription ? <FullAbilityText text={trait.rawDescription} /> : <p>{unknown}</p>}
+      <p className="trait-compact-context">{traitProgressionSummary(trait, rosterEntry)}</p>
+      <AbilitySummary ability={trait} profile={profile} rosterEntry={rosterEntry} />
     </section>
   );
+}
+
+function traitProgressionSummary(trait: AbilityDefinition, rosterEntry?: OwnedDragon) {
+  if (trait.minimumDragonLevel === null) {
+    return 'Active while deployed in Vanguard.';
+  }
+  if (rosterEntry?.reignLevel === null || rosterEntry?.reignLevel === undefined) {
+    return `Vanguard effect · Dragon Level ${trait.minimumDragonLevel}+`;
+  }
+  return rosterEntry.reignLevel >= trait.minimumDragonLevel
+    ? `Active in Vanguard · Dragon Level ${trait.minimumDragonLevel}+`
+    : `Progression locked · Dragon Level ${trait.minimumDragonLevel}+`;
 }
 
 function FormationSignalPanel({
@@ -172,17 +224,21 @@ function FormationSignalPanel({
       <h4>{title}</h4>
       {chips.length > 0 ? (
         <ul className="chip-list formation-chip-list">
-          {chips.map((chip) => (
-            <li
-              key={chip.label}
-              className={`chip formation-signal-chip signal-${chip.state}`}
-              data-state={chip.state}
-              title={`${chip.label}: ${chip.reason}`}
-              aria-label={`${chip.label} ${chip.state}. ${chip.reason}`}
-            >
-              {chip.label}
-            </li>
-          ))}
+          {chips.map((chip) => {
+            const { Icon, marker } = formationSignalStateMarker(chip);
+            return (
+              <li
+                key={chip.label}
+                className={`chip formation-signal-chip signal-${chip.state}`}
+                data-state={chip.state}
+                title={`${chip.label}: ${chip.reason}`}
+                aria-label={`${chip.label} ${chip.state}. ${chip.reason}`}
+              >
+                <Icon className="signal-state-icon" data-state-marker={marker} size={13} aria-hidden="true" />
+                {chip.label}
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <p className="notice-text">{fallback}</p>
@@ -208,7 +264,7 @@ function AbilitySummary({
   profile?: DragonSynergyProfile;
   rosterEntry?: OwnedDragon;
 }) {
-  const summary = summarizeAbilityForProgression(ability, profile?.outputs ?? [], {
+  const summary = summarizeAbilityForProgression(ability, [...(profile?.outputs ?? []), ...(profile?.supports ?? [])], {
     starRank: rosterEntry?.starRank ?? null,
     dragonLevel: rosterEntry?.reignLevel ?? null,
   });
@@ -220,96 +276,78 @@ function AbilitySummary({
   );
 }
 
-function RawDescription({ text }: { text: string }) {
-  const [expanded, setExpanded] = useState(false);
-
+function ExpandedAbilityText({ label, text }: { label: string; text: string | null | undefined }) {
   return (
-    <>
-      <button
-        type="button"
-        className="text-button formation-wording-toggle"
-        aria-expanded={expanded}
-        onClick={() => setExpanded((current) => !current)}
-      >
-        {expanded ? 'Hide full wording' : 'Show full wording'}
-      </button>
-      {expanded ? (
+    <section className="expanded-ability-section" aria-label={label}>
+      <h4>{label}</h4>
+      {text ? (
         <div className="raw-ability-text">
           {text.split(/\n\n+/).map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
-      ) : null}
-    </>
+      ) : <p className="notice-text">{unknown}</p>}
+    </section>
   );
 }
 
-function FullAbilityText({ text }: { text: string }) {
-  return (
-    <div className="raw-ability-text">
-      {text.split(/\n\n+/).map((paragraph) => (
-        <p key={paragraph}>{paragraph}</p>
-      ))}
-    </div>
-  );
-}
+const troopIcons: Record<TroopType, LucideIcon> = {
+  Cavalry: ChessKnight,
+  Shieldbearers: Shield,
+  Archers: BowArrow,
+  Spearmen: Swords,
+  Siege: Bomb,
+};
 
-function DragonAffinityStrip({
+function DragonAffinityIcons({
   dragonName,
   affinities,
 }: {
   dragonName: string;
   affinities: Dragon['affinities'];
 }) {
-  const favorable = troopTypesForAffinity(affinities, 'positive');
-  const unfavorable = troopTypesForAffinity(affinities, 'negative');
+  const known = TROOP_TYPES.filter((troopType) => affinities[troopType] !== 'unknown');
+  const unknownCount = TROOP_TYPES.length - known.length;
 
-  return (
-    <section className="card-mini-section" aria-label={`${dragonName} affinities`}>
-      <h4>Affinities</h4>
-      <div className="affinity-row">
-        <span className="affinity-label">Favorable</span>
-        <AffinityIconList troopTypes={favorable} polarity="positive" emptyText="None recorded" />
+  if (known.length === 0) {
+    return (
+      <div className="compact-affinity-group is-unverified" aria-label={`${dragonName} affinities`}>
+        <span className="affinity-unverified-mark" aria-hidden="true">?</span>
+        <span>Affinities not verified.</span>
       </div>
-      <div className="affinity-row">
-        <span className="affinity-label">Unfavorable</span>
-        <AffinityIconList troopTypes={unfavorable} polarity="negative" emptyText="None recorded" />
-      </div>
-    </section>
-  );
-}
-
-function troopTypesForAffinity(affinities: Dragon['affinities'], affinity: Dragon['affinities'][TroopType]): TroopType[] {
-  return Object.entries(affinities)
-    .filter((entry): entry is [TroopType, typeof affinity] => entry[1] === affinity)
-    .map(([troopType]) => troopType);
-}
-
-function AffinityIconList({
-  troopTypes,
-  polarity,
-  emptyText,
-}: {
-  troopTypes: TroopType[];
-  polarity: 'positive' | 'negative';
-  emptyText: string;
-}) {
-  if (troopTypes.length === 0) {
-    return <span className="muted-inline">{emptyText}</span>;
+    );
   }
+
   return (
-    <span className="affinity-icons">
-      {troopTypes.map((troopType) => (
+    <div className="compact-affinity-group" aria-label={`${dragonName} affinities`}>
+      <div className="compact-affinity-icons">
+        {known.map((troopType) => {
+          const affinity = affinities[troopType];
+          const Icon = troopIcons[troopType];
+          const polarity = affinity === 'positive' ? 'Favorable' : affinity === 'negative' ? 'Unfavorable' : 'Neutral';
+          const symbol = affinity === 'positive' ? '+' : affinity === 'negative' ? '−' : '•';
+          return (
+            <span
+              className={`compact-affinity-icon affinity-${affinity}`}
+              key={troopType}
+              title={`${polarity} affinity: ${troopType}`}
+              aria-label={`${polarity} affinity: ${troopType}`}
+            >
+              <Icon size={17} aria-hidden="true" />
+              <span className="affinity-polarity" aria-hidden="true">{symbol}</span>
+            </span>
+          );
+        })}
+      </div>
+      {unknownCount > 0 ? (
         <span
-          className={`affinity-chip ${polarity}`}
-          key={troopType}
-          title={`${polarity === 'positive' ? 'Favorable' : 'Unfavorable'} affinity: ${troopType}`}
-          aria-label={`${polarity === 'positive' ? 'Favorable' : 'Unfavorable'} affinity: ${troopType}`}
+          className="partial-affinity-notice"
+          title={`${unknownCount} additional ${unknownCount === 1 ? 'affinity remains' : 'affinities remain'} unverified.`}
+          aria-label={`${unknownCount} additional ${unknownCount === 1 ? 'affinity remains' : 'affinities remain'} unverified.`}
         >
-          <span aria-hidden="true">{polarity === 'positive' ? '+' : '-'}</span>
-          {troopType}
+          +?
         </span>
-      ))}
-    </span>
+      ) : null}
+    </div>
   );
 }
