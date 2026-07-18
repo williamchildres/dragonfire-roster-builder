@@ -239,9 +239,10 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.2/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.3/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Source-fidelity descriptions for Syrax, Vhagar, and Caraxes now preserve controller-reviewed effect values');
+    expect(latestUpdate).toHaveTextContent('Source-fidelity descriptions for Seasmoke, Crimson, and Kalspire now preserve controller-reviewed effect values');
+    expect(latestUpdate).toHaveTextContent('two confirmed Strength-scaling relationships are also corrected');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -773,11 +774,11 @@ describe('Dragonfire Lab app', () => {
     let raw = rawToggle.closest('details');
     expect(raw).not.toBeNull();
     expect(raw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
-    expect(raw).toHaveTextContent('Round 1: 40% chance to Stun one enemy in any lane for 2 rounds.');
-    expect(raw).toHaveTextContent('Other odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds.');
-    expect(raw).toHaveTextContent('one shared 50% activation roll');
-    expect(raw).toHaveTextContent('highest-Instinct enemy');
-    expect(raw).toHaveTextContent('12% for 2 rounds');
+    expect(raw).toHaveTextContent('Round 1 Stun chance is increased to 40%');
+    expect(raw).toHaveTextContent('other odd-numbered rounds retain the ordinary 20% chance');
+    expect(raw).toHaveTextContent('one shared 50% activation chance');
+    expect(raw).toHaveTextContent('Enemy with the highest Instinct');
+    expect(raw).toHaveTextContent("Vermin's Bane's current Habit Level value");
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
     await openAddDragon(user);
@@ -817,11 +818,11 @@ describe('Dragonfire Lab app', () => {
     raw = rawToggle.closest('details');
     expect(raw).not.toBeNull();
     expect(raw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
-    expect(raw).toHaveTextContent('After each Basic Attack: deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate');
-    expect(raw).toHaveTextContent('Then independently attempt Bleed at a 30% chance');
-    expect(raw).toHaveTextContent('At 6+ Stars:');
-    expect(raw).toHaveTextContent('deal Physical Damage at a 25% rate');
-    expect(raw).toHaveTextContent('Then independently attempt Panic at a 15% chance');
+    expect(raw).toHaveTextContent('After each Basic Attack, deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate');
+    expect(raw).toHaveTextContent('independently check a 30% Bleed chance');
+    expect(raw).toHaveTextContent('At 6+ Stars');
+    expect(raw).toHaveTextContent('deal Physical Damage to one Enemy within adjacency that was not the Basic Attack target at a 25% Damage Rate');
+    expect(raw).toHaveTextContent('independently check a 15% Panic chance');
   });
 
   it('persists ownership and star rank after reload', async () => {

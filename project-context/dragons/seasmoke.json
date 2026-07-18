@@ -34,7 +34,7 @@
         "FIRE_DAMAGE",
         "SAME_LANE_TARGET"
       ],
-      "rawDescription": "Each Round: up to three independent 20% Cleanse attempts. Rounds 3, 6, 9: Fire Damage to one enemy in the same lane (Damage Rate: +190%).\n\nStar Rank 6 augmentation:\nAt 6+ Stars, successful Cleanse applies Infectious Wrath and adds scheduled Physical Damage."
+      "rawDescription": "Each Round: make up to three Cleanse attempts. Each Cleanse instance has a separate 20% chance, selects one Enemy in any lane, and removes one Positive effect from that target. The three attempts do not have to select distinct Enemies. A Positive effect increases the target's combat effectiveness.\n\nRounds 3, 6, and 9: deal Fire Damage to one Enemy in the same lane at a 190% Damage Rate. Fire Damage is increased by Seasmoke's Intelligence and mitigated by target Initiative.\n\nAt 6+ Stars, whenever Seasmoke successfully Cleanses an Enemy, afflict that target with one Infectious Wrath stack. Infectious Wrath has a maximum of three stacks; each stack lasts three rounds and reduces Recovery Received. On rounds 3, 6, and 9, also deal Physical Damage to two Enemies within adjacency at a base 30% Damage Rate. The rate doubles to 60% against a target afflicted with Panic. Physical Damage is increased by Seasmoke's Strength and mitigated by target Instinct."
     },
     {
       "id": "seasmoke-champions-brilliance",
@@ -85,7 +85,7 @@
         "BUFF_INTELLIGENCE",
         "BUFF_INITIATIVE"
       ],
-      "rawDescription": "Start of Combat: Increase Intelligence and Initiative of the ally with highest Intelligence until end of combat."
+      "rawDescription": "Start of Combat until end of combat: select the Ally with the highest Intelligence and increase that Ally's Intelligence and Initiative.\n\nHabit Levels 1-5 — Intelligence increase: 22%, 26.4%, 30.8%, 37.4%, 44%. Initiative increase: 12.5%, 15%, 17.5%, 21.25%, 25%."
     },
     {
       "id": "seasmoke-winds-favor",
@@ -109,7 +109,7 @@
         "BUFF_ALLIES",
         "BUFF_INITIATIVE"
       ],
-      "rawDescription": "Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative."
+      "rawDescription": "Start of Combat until end of combat: increase Initiative of three Allies in any lane. The increase is enhanced by Seasmoke's Initiative.\n\nHabit Levels 1-5 — Initiative increase: 12.5%, 15%, 17.5%, 21.25%, 25%."
     },
     {
       "id": "seasmoke-infectious-wrath",
@@ -135,7 +135,7 @@
         "PHYSICAL_DAMAGE",
         "PANIC"
       ],
-      "rawDescription": "Augments Cleansing Wrath with Infectious Wrath stacks and Panic-conditional Physical Damage."
+      "rawDescription": "Augments Cleansing Wrath at 6+ Stars. Each successful Cleanse applies one Infectious Wrath stack to the Cleansed target. Infectious Wrath has a maximum of three stacks; each stack lasts three rounds and reduces Recovery Received.\n\nRounds 3, 6, and 9: deal Physical Damage to two Enemies within adjacency. The current Physical Damage Rate doubles against targets afflicted with Panic. Physical Damage is increased by Seasmoke's Strength and mitigated by target Instinct.\n\nHabit Levels 1-5 — Recovery Received reduction per stack: -15%, -18%, -21%, -25.5%, -30%. Base Physical Damage Rate: 30%, 36%, 42%, 51%, 60%."
     },
     {
       "id": "seasmoke-cunning-ferocity",
@@ -160,7 +160,7 @@
         "BUFF_ALLIES",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "Start of Combat: Increase Intelligence and Fire Damage Dealt of two Allies within adjacency until end of combat."
+      "rawDescription": "Start of Combat until end of combat: affect two Allies within adjacency. Increase their Intelligence, enhanced by Seasmoke's Instinct, and increase their Fire Damage Dealt.\n\nHabit Levels 1-5 — Intelligence increase: 7.5%, 9%, 10.5%, 12.75%, 15%. Fire Damage Dealt increase: 5%, 6%, 7%, 8.5%, 10%."
     },
     {
       "id": "seasmoke-loyal-bond",
@@ -185,7 +185,7 @@
         "RESISTANCE",
         "OTHER_ALLIES_TARGET"
       ],
-      "rawDescription": "Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies."
+      "rawDescription": "Each Round: a chance to grant Advantage (+20%) to two other Allies in any lane that are above 50% troop capacity for two rounds. Advantage increases Damage Dealt by 20%.\n\nEach Round: a chance to grant Resistance (-20%) to two other Allies in any lane that are below 50% troop capacity for two rounds. Resistance reduces Damage Received by 20%. The source presents these as separate clauses and does not state whether their rolls are shared.\n\nHabit Levels 1-5 — Advantage chance: 10%, 13%, 16%, 20%, 25%. Resistance chance: 10%, 13%, 16%, 20%, 25%."
     }
   ],
   "affinities": {

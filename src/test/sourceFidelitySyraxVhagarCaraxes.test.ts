@@ -139,8 +139,8 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
       return ids(row.before) !== ids(row.after);
     }).slice(0, 6).map((row) => ({ formation: row.formation, before: row.before.rating.score, after: row.after.rating.score, lost: row.before.results.filter((result) => !row.after.results.some((candidate) => candidate.id === result.id)).map((result) => result.id), gained: row.after.results.filter((result) => !row.before.results.some((candidate) => candidate.id === result.id)).map((result) => result.id) }));
     const summary = { changed: changed.length, tierChanged: changed.filter((row) => row.before.rating.tier !== row.after.rating.tier).length, min: Math.min(...changed.map((row) => row.after.rating.score - row.before.rating.score)), max: Math.max(...changed.map((row) => row.after.rating.score - row.before.rating.score)), top50Changed: JSON.stringify(beforeTop50) !== JSON.stringify(afterTop50), beforeTop50, afterTop50, representative };
-    expect(summary.changed).toBe(1_257);
-    expect(summary.tierChanged).toBe(220);
+    expect(summary.changed).toBe(1_255);
+    expect(summary.tierChanged).toBe(218);
     expect([summary.min, summary.max]).toEqual([-6, 7]);
     expect(summary.top50Changed).toBe(true);
     expect(summary.representative).toEqual(expect.arrayContaining([

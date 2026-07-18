@@ -31,56 +31,49 @@ const resolvedFindings = [
   },
 ];
 const browserQaObservation = {
-  status: 'PASS_WITH_PENDING_REAL_200_PERCENT_ZOOM',
-  auditedUrl: 'http://127.0.0.1:4190/ (local 0.9.1 production preview)',
-  fixture: 'isolated localhost data ending with one imported schema-4 Syrax entry; no production account or roster used',
+  status: 'PASS',
+  auditedUrl: 'http://127.0.0.1:4173/ (local 0.10.3 production preview)',
+  fixture: 'isolated localhost with an empty local roster; no production account or roster used',
   viewports: {
     desktop1440: {
-      viewport: { width: 1440, height: 1000 },
-      document: { clientWidth: 1425, scrollWidth: 1425 },
-      workspace: { clientWidth: 1314, scrollWidth: 1314 },
-      list: { clientWidth: 849, scrollWidth: 849 },
-      editor: { clientWidth: 415, scrollWidth: 415, position: 'sticky', maxHeight: 888 },
+      viewport: { width: 1440, height: 900 },
+      document: { clientWidth: 1440, scrollWidth: 1440 },
+      dialogs: {
+        Seasmoke: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4528 },
+        Crimson: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4432 },
+        Kalspire: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4349 },
+      },
+      openVerifiedWordingDisclosuresPerDragon: 7,
+      overflowingDescendantCount: 0,
     },
-    tablet1024: {
-      viewport: { width: 1024, height: 768 },
-      document: { clientWidth: 1009, scrollWidth: 1009 },
-      workspace: { clientWidth: 948, scrollWidth: 948 },
-      list: { clientWidth: 483, scrollWidth: 483 },
-      editor: { clientWidth: 415, scrollWidth: 415, position: 'sticky' },
-    },
-    phone390List: {
+    phone390: {
       viewport: { width: 390, height: 844 },
-      document: { clientWidth: 375, scrollWidth: 375 },
-      workspace: { clientWidth: 343, scrollWidth: 343, mode: 'list' },
+      document: { clientWidth: 390, scrollWidth: 390 },
+      dialogs: {
+        Seasmoke: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7726 },
+        Crimson: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7593 },
+        Kalspire: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7707 },
+      },
+      openVerifiedWordingDisclosuresPerDragon: 7,
       overflowingDescendantCount: 0,
       clippedInteractiveControlCount: 0,
     },
-    phone390Editor: {
-      viewport: { width: 390, height: 844 },
-      document: { clientWidth: 375, scrollWidth: 375 },
-      workspace: { clientWidth: 343, scrollWidth: 343, mode: 'editor' },
-      editor: { clientWidth: 326, scrollWidth: 326 },
-      overflowingDescendantCount: 0,
-      clippedInteractiveControlCount: 0,
-    },
-    phone360List: {
+    phone360: {
       viewport: { width: 360, height: 740 },
-      document: { clientWidth: 345, scrollWidth: 345 },
-      workspace: { clientWidth: 313, scrollWidth: 313, mode: 'list' },
-      overflowingDescendantCount: 0,
-      clippedInteractiveControlCount: 0,
-    },
-    phone360Editor: {
-      viewport: { width: 360, height: 740 },
-      document: { clientWidth: 345, scrollWidth: 345 },
-      workspace: { clientWidth: 313, scrollWidth: 313, mode: 'editor' },
-      editor: { clientWidth: 296, scrollWidth: 296 },
+      document: { clientWidth: 360, scrollWidth: 360 },
+      KalspireDialog: { clientWidth: 323, scrollWidth: 323, scrollHeight: 8220 },
       overflowingDescendantCount: 0,
       clippedInteractiveControlCount: 0,
     },
   },
   interactions: {
+    disclosureControls: 'PASS - all seven Verified wording disclosures opened for each dragon',
+    progressionSequences: 'PASS - all controller-reviewed progression sequences rendered in the expanded details',
+    wrapping: 'PASS - long paragraphs and progression lines wrapped within their ability cards',
+    excludedText: 'PASS - no Power rows or screenshot upgrade boilerplate rendered',
+    mobile: 'PASS - detail dialogs and disclosure controls remained usable at 390x844 and 360x740',
+  },
+  legacyInteractions: {
     missingProgression: 'PASS — completeness used only Star Rank and Dragon Level',
     editing: 'PASS — Syrax unlock, Level 1 default, Level 5 persistence, relock deletion, and Level 1 re-unlock rendered immediately',
     reloadPersistence: 'PASS — Syrax Level 5 persisted after a full reload',
@@ -88,14 +81,14 @@ const browserQaObservation = {
     legacyImport: 'PASS — schema-4 null/zero unlocked values migrated to Level 1; locked and unknown values were absent',
     mobile: 'PASS — the same single editor and roster list were usable at 390×844 and 360×740',
   },
-  structure: { editorFormCount: 1, rowProgressionControlCount: 0 },
+  structure: { dragonDetailDialogsInspected: 3, abilityCardsInspected: 21 },
   overflowCount: 0,
   clippedInteractiveControlCount: 0,
   consoleErrors: [],
   consoleWarnings: [],
-  accountSync:
+  legacyAccountSync:
     'Production account was not automated; fake/local service tests passed for the 750 ms debounce, serialized writes, conflict decisions, offline/retry, sign-out retention, stale-user guards, import, and clear-local paths.',
-  zoom200: {
+  legacyZoom200: {
     status: 'PENDING_REAL_BROWSER_ZOOM',
     reason: 'Chrome extension keypresses did not change browser zoom.',
     equivalentViewport: {
@@ -106,7 +99,15 @@ const browserQaObservation = {
       clippedInteractiveControlCount: 0,
     },
   },
+  responsiveSummary:
+    'All inspected document and dialog scroll widths matched their client widths at desktop and phone breakpoints.',
   observations: [
+    '1440x900: all seven disclosures per dragon opened with 1,033px-wide, 24px-high summary controls and no overflowing descendants.',
+    '390x844: all progression sequences wrapped inside 353px-wide dialogs with no horizontal overflow.',
+    '360x740: Kalspire remained usable in a 323px-wide dialog with the Close control visible and no horizontal overflow.',
+    'Seasmoke, Crimson, and Kalspire rendered no Power values or generic screenshot upgrade boilerplate.',
+  ],
+  legacyObservations: [
     '1440px: two-pane workspace remained contained with a sticky 415px editor.',
     '1024px: filter controls wrap to three columns and both panes remain usable without horizontal scrolling.',
     '390px list: stacked toolbar, two-column filters, compact rows, and no horizontal overflow.',
@@ -134,21 +135,21 @@ try {
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: '43820e3f6b4a22991ef82179f6886009083d0f7b',
-      branch: 'data/source-fidelity-syrax-vhagar-caraxes',
+      originMainSha: 'e5e7fe84170417ef30d9b4aca2002cce8d7bd4d6',
+      branch: 'data/source-fidelity-seasmoke-crimson-kalspire',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,
     comparison: {
-      baselineVersion: '0.6.8',
+      baselineVersion: '0.10.2',
       baselineDeterministicFullResultHash:
-        '2a4561cdb2aa6d0b9483005f44cc3ee3747d21fb6c4ecb1fe0cc375c1dafbf64',
+        'b8e09b1ea60476aa9ea368636a936cc09534b67ea0f294ed3589cf583e845c41',
       currentVersion: auditVersion,
       currentDeterministicFullResultHash: report.formationSweep.deterministicFullResultHash,
       allNumericScoresAndComponentsUnchanged:
         report.formationSweep.deterministicFullResultHash ===
-        '2a4561cdb2aa6d0b9483005f44cc3ee3747d21fb6c4ecb1fe0cc375c1dafbf64',
+        'b8e09b1ea60476aa9ea368636a936cc09534b67ea0f294ed3589cf583e845c41',
     },
     resolvedFindings,
     findingSummary: {
@@ -204,7 +205,7 @@ function renderMarkdown(report) {
   const lines = [
     `# Full-roster regression audit — ${report.auditVersion}`,
     '',
-    '> Regression baseline after resolving the actionable 0.6.8 full-roster findings. Canonical dragon data, profile semantics, targeting, and rating calibration remain unchanged.',
+    '> Screenshot-source fidelity release for Seasmoke, Crimson, and Kalspire with two confirmed Strength-scaling corrections. Rating formula and calibration remain unchanged.',
     '',
     '## Executive summary',
     '',
@@ -302,15 +303,15 @@ function renderMarkdown(report) {
     '',
     ...report.resolvedFindings.map((finding) => `- ${finding.id}: ${finding.resolution}`),
     '',
-    `The 0.6.8 deterministic hash was \`${report.comparison.baselineDeterministicFullResultHash}\`; the ${report.auditVersion} hash is \`${report.comparison.currentDeterministicFullResultHash}\`. All 26,970 numeric scores and component totals unchanged: ${report.comparison.allNumericScoresAndComponentsUnchanged ? 'Yes' : 'No'}.`,
+    `The ${report.comparison.baselineVersion} deterministic hash was \`${report.comparison.baselineDeterministicFullResultHash}\`; the ${report.auditVersion} hash is \`${report.comparison.currentDeterministicFullResultHash}\`. All 26,970 numeric scores and component totals unchanged: ${report.comparison.allNumericScoresAndComponentsUnchanged ? 'Yes' : 'No'}.`,
     '',
   );
   lines.push(
     '## Browser QA',
     '',
-    `Status: ${report.browserQa.status}. Audited URL: ${report.browserQa.auditedUrl}. Fixture: isolated localhost schema-4 Syrax import. Workspace overflow: ${report.browserQa.overflowCount}; clipped interactive controls: ${report.browserQa.clippedInteractiveControlCount}; console errors: ${report.browserQa.consoleErrors.length}; console warnings: ${report.browserQa.consoleWarnings.length}.`,
+    `Status: ${report.browserQa.status}. Audited URL: ${report.browserQa.auditedUrl}. Fixture: ${report.browserQa.fixture}. Dragon-detail overflow: ${report.browserQa.overflowCount}; clipped interactive controls: ${report.browserQa.clippedInteractiveControlCount}; console errors: ${report.browserQa.consoleErrors.length}; console warnings: ${report.browserQa.consoleWarnings.length}.`,
     '',
-    `Real desktop 200% zoom: ${report.browserQa.zoom200.status}. ${report.browserQa.zoom200.reason} The 720×500 layout-equivalent check had document, workspace, and list scroll widths equal to their client widths.`,
+    `Responsive detail checks: ${report.browserQa.responsiveSummary}`,
     '',
     '## Rerun',
     '',
@@ -325,8 +326,9 @@ function renderMarkdown(report) {
     '## Explicit non-changes',
     '',
     '- No formula, weight, threshold, guardrail, placement, or calibration changes.',
-    '- No dragon wording, curated profile, targeting, or rating semantics changed.',
-    '- Source schema 13, formation share links, formation evaluation, and the rating model remain unchanged; local/cloud roster JSON advanced to schema 5 without SQL changes.',
+    '- Canonical wording changed only for the 21 Seasmoke, Crimson, and Kalspire abilities in this screenshot-source fidelity batch.',
+    '- Curated profile semantics changed only by adding Strength scaling to the two existing confirmed signals; no signal, tag, targeting, or Crimson profile structure changed.',
+    '- Source schema 13, formation share links, formation evaluation, and the rating model remain unchanged; local/cloud roster JSON remain at schema 5 without SQL changes.',
     '- FRR-F001 and FRR-F002 remain informational and unresolved by design.',
   );
   return `${lines.join('\n')}\n`;

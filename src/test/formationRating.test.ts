@@ -332,12 +332,12 @@ describe('formation rating helper', () => {
     );
   });
 
-  it('keeps top benchmark formations Excellent when active payoff paths justify it', () => {
+  it('keeps benchmark tiers aligned with active payoff paths and corrected placement opportunities', () => {
     const caraxesFeskarSyrax = ratingFor(formation('caraxes', 'feskar', 'syrax'));
     const seasmokeShadowsongZivern = ratingFor(formation('seasmoke', 'shadowsong', 'zivern'));
 
     expect(caraxesFeskarSyrax.tier).toBe('Excellent');
-    expect(seasmokeShadowsongZivern.tier).toBe('Excellent');
+    expect(seasmokeShadowsongZivern.tier).toBe('Strong');
     expect(breakdown(caraxesFeskarSyrax, 'Realized synergy payoff').score).toBeGreaterThanOrEqual(35);
     expect(breakdown(seasmokeShadowsongZivern, 'Realized synergy payoff').score).toBeGreaterThanOrEqual(35);
   });

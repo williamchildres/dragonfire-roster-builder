@@ -835,7 +835,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Each Round: up to three independent 20% Cleanse attempts. Rounds 3, 6, 9: Fire Damage to one enemy in the same lane (Damage Rate: +190%).\n\nStar Rank 6 augmentation:\nAt 6+ Stars, successful Cleanse applies Infectious Wrath and adds scheduled Physical Damage.",
+      "rawDescription": "Each Round: make up to three Cleanse attempts. Each Cleanse instance has a separate 20% chance, selects one Enemy in any lane, and removes one Positive effect from that target. The three attempts do not have to select distinct Enemies. A Positive effect increases the target's combat effectiveness.\n\nRounds 3, 6, and 9: deal Fire Damage to one Enemy in the same lane at a 190% Damage Rate. Fire Damage is increased by Seasmoke's Intelligence and mitigated by target Initiative.\n\nAt 6+ Stars, whenever Seasmoke successfully Cleanses an Enemy, afflict that target with one Infectious Wrath stack. Infectious Wrath has a maximum of three stacks; each stack lasts three rounds and reduces Recovery Received. On rounds 3, 6, and 9, also deal Physical Damage to two Enemies within adjacency at a base 30% Damage Rate. The rate doubles to 60% against a target afflicted with Panic. Physical Damage is increased by Seasmoke's Strength and mitigated by target Instinct.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Seasmoke Cleansing Wrath summary/glossary screenshots",
@@ -890,7 +890,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: Increase Intelligence and Initiative of the ally with highest Intelligence until end of combat.",
+        "rawDescription": "Start of Combat until end of combat: select the Ally with the highest Intelligence and increase that Ally's Intelligence and Initiative.\n\nHabit Levels 1-5 — Intelligence increase: 22%, 26.4%, 30.8%, 37.4%, 44%. Initiative increase: 12.5%, 15%, 17.5%, 21.25%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Seasmoke Clever Maneuver screenshot",
@@ -916,7 +916,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: Increase Initiative of three Allies in any lane until end of combat, enhanced by Initiative.",
+        "rawDescription": "Start of Combat until end of combat: increase Initiative of three Allies in any lane. The increase is enhanced by Seasmoke's Initiative.\n\nHabit Levels 1-5 — Initiative increase: 12.5%, 15%, 17.5%, 21.25%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Seasmoke Wind's Favor screenshot",
@@ -941,7 +941,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Augments Cleansing Wrath with Infectious Wrath stacks and Panic-conditional Physical Damage.",
+        "rawDescription": "Augments Cleansing Wrath at 6+ Stars. Each successful Cleanse applies one Infectious Wrath stack to the Cleansed target. Infectious Wrath has a maximum of three stacks; each stack lasts three rounds and reduces Recovery Received.\n\nRounds 3, 6, and 9: deal Physical Damage to two Enemies within adjacency. The current Physical Damage Rate doubles against targets afflicted with Panic. Physical Damage is increased by Seasmoke's Strength and mitigated by target Instinct.\n\nHabit Levels 1-5 — Recovery Received reduction per stack: -15%, -18%, -21%, -25.5%, -30%. Base Physical Damage Rate: 30%, 36%, 42%, 51%, 60%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Seasmoke Infectious Wrath screenshot",
@@ -968,7 +968,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: Increase Intelligence and Fire Damage Dealt of two Allies within adjacency until end of combat.",
+        "rawDescription": "Start of Combat until end of combat: affect two Allies within adjacency. Increase their Intelligence, enhanced by Seasmoke's Instinct, and increase their Fire Damage Dealt.\n\nHabit Levels 1-5 — Intelligence increase: 7.5%, 9%, 10.5%, 12.75%, 15%. Fire Damage Dealt increase: 5%, 6%, 7%, 8.5%, 10%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Seasmoke Cunning Ferocity screenshot",
@@ -994,7 +994,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each Round: grant Advantage above 50% Troop Capacity or Resistance below 50% Troop Capacity to 2 other Allies.",
+        "rawDescription": "Each Round: a chance to grant Advantage (+20%) to two other Allies in any lane that are above 50% troop capacity for two rounds. Advantage increases Damage Dealt by 20%.\n\nEach Round: a chance to grant Resistance (-20%) to two other Allies in any lane that are below 50% troop capacity for two rounds. Resistance reduces Damage Received by 20%. The source presents these as separate clauses and does not state whether their rolls are shared.\n\nHabit Levels 1-5 — Advantage chance: 10%, 13%, 16%, 20%, 25%. Resistance chance: 10%, 13%, 16%, 20%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Seasmoke Loyal Bond screenshot",
@@ -1306,7 +1306,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds. Rounds 2, 5, and 8: deal Fire Damage to one enemy in any lane at a 140% Damage Rate, scaling with Crimson's Intelligence and mitigated by target Initiative.\n\nAt 10 Stars:\n\nRound 1: 40% chance to Stun one enemy in any lane for 2 rounds. This replaces the ordinary Round 1 Stun chance.\n\nOther odd-numbered rounds: 20% chance to Stun one enemy in any lane for 2 rounds.\n\nEven-numbered rounds: one shared 50% activation roll to reduce Instinct and Initiative of the highest-Instinct enemy by 12% for 2 rounds, enhanced by Crimson's Intelligence.\n\nStar Rank 10 augmentation:\nVermin's Bane augments Bloodscale Terror with a Round 1 replacement and even-numbered round Instinct and Initiative reductions.",
+      "rawDescription": "Odd-numbered rounds: 20% chance to Stun one Enemy in any lane for two rounds. Stun prevents the target from activating Commands or Habits or launching Basic Attacks on its turn.\n\nRounds 2, 5, and 8: deal Fire Damage to one Enemy in any lane at a 140% Damage Rate. Fire Damage is increased by Crimson's Intelligence and mitigated by target Initiative.\n\nAt 10 Stars, the Round 1 Stun chance is increased to 40%, replacing the ordinary 20% Round 1 chance; other odd-numbered rounds retain the ordinary 20% chance. On even-numbered rounds, use one shared 50% activation chance to reduce both Instinct and Initiative of the Enemy with the highest Instinct for two rounds. Both reductions are enhanced by Crimson's Intelligence and use Vermin's Bane's current Habit Level value.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Crimson Bloodscale Terror screenshots",
@@ -1362,7 +1362,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: select one enemy that deals Tactical Damage. Reduce its Tactical Damage Dealt until end of combat. Prose rounds L1 to -13%; table shows -13.5%.",
+        "rawDescription": "Start of Combat until end of combat: select one Enemy that deals Tactical Damage and reduce that Enemy's Tactical Damage Dealt.\n\nVisible source discrepancy: the prose displays -13%, while the Level 1 table displays -13.5%.\n\nHabit Levels 1-5 — Tactical Damage Dealt reduction (table): -13.5%, -16.2%, -18.9%, -22.95%, -27%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Crimson Enervate screenshot",
@@ -1386,7 +1386,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: reduce Damage Received and increase Intelligence.",
+        "rawDescription": "Start of Combat until end of combat: reduce Crimson's Damage Received and increase Crimson's Intelligence.\n\nHabit Levels 1-5 — Damage Received: -6%, -7.2%, -8.4%, -10.2%, -12%. Intelligence increase: 12%, 14.4%, 16.8%, 20.4%, 24%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Crimson Dragon's Intellect screenshot",
@@ -1411,7 +1411,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each Round: afflict Weakened on one enemy in any lane, preferring a target not already Stunned. Chance is doubled against a target with Taunt. Prose rounds L1 to 18%; table shows 17.5%.",
+        "rawDescription": "Each Round: a chance to afflict Weakened (-20%) on one Enemy in any lane, prioritizing targets not already afflicted with Stun. Weakened lasts two rounds and reduces the target's Damage Dealt by 20%. The displayed Level 1 chance doubles to 35% against targets afflicted with Taunt.\n\nVisible source discrepancy: the prose displays an 18% Level 1 chance, while the table displays 17.5%; the prose's doubled display is 35%, matching twice the table value rather than twice the rounded prose value.\n\nHabit Levels 1-5 — Weakened chance (table): 17.5%, 21%, 24.5%, 29.75%, 35%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Crimson Bloodscale Fury screenshot",
@@ -1436,7 +1436,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of each round: enemies strictly above 75% max Troop Capacity receive increased non-Basic Physical Damage and Fire Damage until end of round; enemies strictly below 25% receive reduced Recovery. Table visually says Damage Dealt, text says Damage Received.",
+        "rawDescription": "Start of each Round until end of that round: all Enemies strictly above 75% maximum troop capacity receive increased non-Basic Physical Damage and Fire Damage. All Enemies strictly below 25% maximum troop capacity receive reduced Recovery Received.\n\nVisible source discrepancy: the descriptive prose says Physical and Fire Damage Received, while the progression-table row is visually labeled “Damage Dealt.”\n\nHabit Levels 1-5 — Physical and Fire Damage Received: 10%, 12%, 14%, 17%, 20%. Recovery Received: -20%, -24%, -28%, -34%, -40%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Crimson Unlikely Hero screenshot",
@@ -1462,7 +1462,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Augments Bloodscale Terror: replace Round 1 Stun chance and on even-numbered rounds has 50% chance to reduce Instinct and Initiative of the enemy with highest Instinct for two rounds, enhanced by Crimson's Intelligence.",
+        "rawDescription": "Augments Bloodscale Terror at 10 Stars. Increase the Round 1 Stun chance, replacing Bloodscale Terror's ordinary Round 1 chance. On even-numbered rounds, use a fixed 50% activation chance; on activation, reduce Instinct and Initiative of the Enemy with the highest Instinct for two rounds. Both reductions are enhanced by Crimson's Intelligence.\n\nHabit Levels 1-5 — Round 1 Stun chance: 40%, 52%, 64%, 80%, 100%. Instinct and Initiative reduction: -12%, -15.6%, -19.2%, -24%, -30%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Crimson Vermin's Bane screenshot",
@@ -1586,7 +1586,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "After each Basic Attack: deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate, scaling with Kalspire's Instinct and mitigated by target Intelligence.\n\nThen independently attempt Bleed at a 30% chance on the original Basic Attack target and one other enemy within adjacency. Bleed deals periodic Physical Damage at a 20% rate each round for 2 rounds, scaling with Strength and mitigated by target Instinct.\n\nAt 6+ Stars:\n\nAfter each Basic Attack: deal Physical Damage at a 25% rate to one enemy within adjacency that is distinct from the original Basic Attack target, scaling with Strength.\n\nThen independently attempt Panic at a 15% chance on the Physical Damage target and one other distinct enemy within adjacency. Panic deals periodic Tactical Damage at a 20% rate each round for 2 rounds.\n\nStar Rank 6 augmentation:\nAt 6+ Stars, Tactical Assault augments Tactical Strike with Physical Damage and independent Panic checks.",
+      "rawDescription": "After each Basic Attack, deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate. Tactical Damage is increased by Kalspire's Instinct and mitigated by target Intelligence.\n\nAdditionally, independently check a 30% Bleed chance for the original target and one other Enemy within adjacency. Bleed lasts two rounds and deals Physical Damage each round at a 20% Damage Rate. Its Physical Damage is increased by Kalspire's Strength and mitigated by target Instinct.\n\nAt 6+ Stars, after each Basic Attack, also deal Physical Damage to one Enemy within adjacency that was not the Basic Attack target at a 25% Damage Rate. Physical Damage is increased by Kalspire's Strength and mitigated by target Instinct. Additionally, independently check a 15% Panic chance for that target and one other distinct Enemy within adjacency. The Panic targets must be distinct. Panic lasts two rounds and deals Tactical Damage each round at a 20% Damage Rate.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Kalspire Tactical Strike screenshots",
@@ -1642,7 +1642,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: increase Kalspire Strength and Instinct.",
+        "rawDescription": "Start of Combat until end of combat: increase Kalspire's Strength and Instinct.\n\nHabit Levels 1-5 — Strength increase: 20%, 24%, 28%, 34%, 40%. Instinct increase: 20%, 24%, 28%, 34%, 40%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Kalspire Robust Insight screenshot",
@@ -1667,7 +1667,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: target three enemies in any lane. Reduce Strength and Intelligence, enhanced by Instinct. Prose rounds L1 to -6%; table shows -6.5%.",
+        "rawDescription": "Start of Combat until end of combat: reduce Strength and Intelligence of three Enemies in any lane. Both reductions are enhanced by Kalspire's Instinct.\n\nVisible source discrepancy: the prose displays -6%, while the Level 1 table displays -6.5%.\n\nHabit Levels 1-5 — Strength and Intelligence reduction (table): -6.5%, -7.8%, -9.1%, -11.05%, -13%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Kalspire Battle Cunning screenshot",
@@ -1692,7 +1692,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "At 6+ Stars, Tactical Assault augments Tactical Strike: after each Basic Attack, deal Physical Damage to one enemy within adjacency that is not the original Basic Attack target. Then independently attempt Panic on that target and one other distinct adjacent enemy.",
+        "rawDescription": "Augments Tactical Strike at 6+ Stars. After each Basic Attack, deal Physical Damage to one Enemy within adjacency that was not the Basic Attack target. Physical Damage is increased by Kalspire's Strength. Independently check Panic against that Physical Damage target and one other distinct Enemy within adjacency. Panic lasts two rounds and deals Tactical Damage each round.\n\nHabit Levels 1-5 — Panic chance: 15%, 18%, 21%, 25.5%, 30%. Physical Damage Rate: 25%, 30%, 35%, 42.5%, 50%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Kalspire Tactical Assault screenshot",
@@ -1719,7 +1719,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: reduce Damage Received and increase Instinct.",
+        "rawDescription": "Start of Combat until end of combat: reduce Kalspire's Damage Received and increase Kalspire's Instinct.\n\nHabit Levels 1-5 — Damage Received: -6%, -7.2%, -8.4%, -10.2%, -12%. Instinct increase: 12%, 14.4%, 16.8%, 20.4%, 24%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Kalspire Dragon's Insight screenshot",
@@ -1744,7 +1744,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1 for one round: Kalspire Damage Received -50% and Kalspire is afflicted with Stun. Start of Round 2 for five rounds: reduce non-Basic Physical Damage Dealt of enemy with highest Strength and Fire Damage Dealt of enemy with highest Intelligence. The selected enemies may be same or different.",
+        "rawDescription": "Start of Round 1: reduce Kalspire's Damage Received by 50% for one round and afflict Kalspire with Stun for one round. Stun prevents Commands, Habits, and Basic Attacks on the affected turn.\n\nStart of Round 2: reduce non-Basic Physical Damage Dealt of the Enemy with the highest Strength and reduce Fire Damage Dealt of the Enemy with the highest Intelligence. Both effects last five rounds; the selected Enemies may be the same or different.\n\nHabit Levels 1-5 — Physical and Fire Damage Dealt reduction: -10%, -13%, -16%, -20%, -25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Kalspire Radiant Conqueror screenshot",
