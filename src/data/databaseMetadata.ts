@@ -1,5 +1,5 @@
 export const databaseMetadata = {
-  databaseVersion: '0.8.0',
+  databaseVersion: '0.9.0',
   schemaVersion: 13,
   lastUpdated: '2026-07-17',
   officialRosterLastChecked: '2026-06-23',

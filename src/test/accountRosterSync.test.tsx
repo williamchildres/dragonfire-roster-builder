@@ -409,7 +409,6 @@ describe('ongoing synchronization safety', () => {
     await user.click(screen.getAllByRole('button', { name: /Add Dragon/i })[0]!);
     await user.click(screen.getAllByRole('button', { name: 'Add to roster' })[0]!);
     await waitFor(() => expect(Object.values(loadStoredRosterSnapshot(window.localStorage, dragons).roster).some((entry) => entry.owned)).toBe(true));
-    await user.click(screen.getByRole('button', { name: 'Close add dragon' }));
     await user.selectOptions(screen.getByLabelText('Star Rank'), '7');
     await user.clear(screen.getByLabelText('Dragon Level'));
     await user.type(screen.getByLabelText('Dragon Level'), '21');
@@ -440,7 +439,7 @@ describe('ongoing synchronization safety', () => {
     await screen.findByText('Synced to your account and stored in this browser');
     const imported = meaningfulRoster('Imported locally', 0);
     const file = new File([serializeRosterExport(imported)], 'roster.json', { type: 'application/json' });
-    await user.upload(screen.getByLabelText('Import JSON'), file);
+    await user.upload(screen.getByLabelText('Import roster'), file);
     const dialog = await screen.findByRole('dialog', { name: 'Replace your synchronized roster with this imported roster?' });
     expect(repository.upserts).toHaveLength(0);
     await user.click(within(dialog).getByRole('button', { name: 'Import locally only' }));

@@ -47,7 +47,7 @@ describe('fourth Rare dragon batch', () => {
     expect(dragons.filter((dragon) => dragon.rarity === 'Legendary' && dragon.command)).toHaveLength(9);
     expect(dragons.filter((dragon) => dragon.rarity === 'Epic' && dragon.command)).toHaveLength(10);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.8.0', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.9.0', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(4);
 
     for (const dragonId of targetIds) {

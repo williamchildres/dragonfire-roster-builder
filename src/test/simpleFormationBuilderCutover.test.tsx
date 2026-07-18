@@ -354,9 +354,8 @@ describe('Formation Builder simple synergy cutover', () => {
     );
 
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    const sheepstealerCard = screen.getByRole('heading', { name: 'Sheepstealer' }).closest('article');
-    expect(sheepstealerCard).not.toBeNull();
-    await user.click(within(sheepstealerCard as HTMLElement).getByRole('button', { name: /view details/i }));
+    await user.click(screen.getByRole('button', { name: /^Sheepstealer,/i }));
+    await user.click(within(screen.getByRole('complementary', { name: 'Sheepstealer' })).getByRole('button', { name: /view full details/i }));
     const detailsDialog = screen.getByRole('dialog', { name: /sheepstealer/i });
     await user.clear(within(detailsDialog).getByLabelText(/dragon level/i));
     await user.type(within(detailsDialog).getByLabelText(/dragon level/i), '16');

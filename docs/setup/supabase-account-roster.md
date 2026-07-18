@@ -42,7 +42,9 @@ Keep Email enabled with Confirm Email enabled, then enable password sign-in and 
 
 Set the production Site URL to `https://dragonfirelab.com`. Add approved redirect URLs for `https://dragonfirelab.com/` and the exact local development origin used for testing, normally `http://127.0.0.1:5173/`. The application uses these redirects for Google OAuth, signup confirmation, password recovery, and magic links.
 
-Custom SMTP/Resend is still pending. Supabase's temporary sender may constrain signup confirmation, password recovery, and magic-link delivery; do not represent production email delivery as fully configured until SMTP is complete.
+For the Dragonfire Lab production deployment, Google, password, recovery, magic-link, and custom SMTP flows are configured externally. Authentication email is delivered through Resend using `auth.dragonfirelab.com`. Do not put SMTP credentials, Resend API keys, OAuth credentials, Supabase secrets, or test-user addresses in this repository.
+
+For another environment, configure and verify its own SMTP provider and sender domain in Supabase before representing confirmation, password-recovery, or magic-link delivery as production ready. Keep this setup generic: repository configuration contains only the browser-publishable Supabase URL and publishable key.
 
 ## GitHub Pages variables
 
@@ -85,4 +87,4 @@ After the Supabase project is configured and the PR is merged:
 18. Confirm a different authenticated user cannot access the first user’s row.
 19. Confirm formations are still local and no UI claims otherwise.
 20. Sign in with Google using the same verified email as an existing magic-link account and confirm the Supabase user UUID and `user_rosters.user_id` are unchanged before treating rollout as accepted. Do not add manual identity linking.
-21. Set a password while signed in, sign out, then verify email/password sign-in. Revisit signup confirmation and password-reset delivery after Resend/custom SMTP is configured.
+21. Set a password while signed in, sign out, then verify email/password sign-in, signup confirmation, password recovery, and magic-link delivery through the environment's configured SMTP provider.
