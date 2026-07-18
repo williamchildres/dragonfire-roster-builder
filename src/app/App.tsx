@@ -735,7 +735,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Formation Builder now surfaces its rating before the card board, uses compact expandable dragon cards, and presents troop affinities with accessible symbols.</p>
+          <p>Formation Builder now uses a compact workspace header, deliberate two-row dragon metadata, and streamlined accessible troop affinity symbols.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -1159,11 +1159,10 @@ function FormationBuilderSection({
 
   return (
     <section aria-labelledby="team-title">
-      <SectionHeading
-        eyebrow="Three-position planner"
-        title="Formation Builder"
-        description="Assign one unique dragon to each position and review curated profile relationships."
-      />
+      <div className="formation-workspace-header">
+        <h2 id="team-title">Formation Builder</h2>
+        <p>Assign one unique dragon to each position and review curated profile relationships.</p>
+      </div>
       <div className="toolbar">
         <fieldset className="formation-mode-toggle" aria-label="Formation dragon pool">
           <legend className="sr-only">Formation dragon pool</legend>

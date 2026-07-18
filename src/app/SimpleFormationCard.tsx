@@ -1,5 +1,6 @@
-import { Bomb, BowArrow, ChessKnight, Shield, Swords, type LucideIcon } from 'lucide-react';
+import { Bomb, BowArrow, ChessKnight, Shield, type LucideIcon } from 'lucide-react';
 import { useState } from 'react';
+import type { AriaAttributes } from 'react';
 import type { AbilityDefinition, Dragon, FormationPosition, OwnedDragon, TroopType } from '../models/dragon';
 import { FORMATION_POSITIONS, TROOP_TYPES } from '../models/dragon';
 import { positionLabels } from '../services/teamShare';
@@ -58,10 +59,16 @@ export function SimpleFormationCard({
             <DragonAffinityIcons dragonName={dragon.name} affinities={dragon.affinities} />
             <div className="formation-dragon-identity">
               <h3>{dragon.name}</h3>
-              <div className="dragon-card-chips" aria-label={`${dragon.name} metadata`}>
-                <span className="badge">{dragon.rarity}</span>
-                <span className="badge">{dragon.breed}</span>
-                {starSummary ? <span className="badge">{starSummary}</span> : null}
+              <div className="formation-dragon-metadata" aria-label={`${dragon.name} metadata`}>
+                <div className="formation-identity-metadata" aria-label={`${dragon.name} identity metadata`}>
+                  <span className="badge">{dragon.rarity}</span>
+                  <span className="badge">{dragon.breed}</span>
+                </div>
+                {starSummary ? (
+                  <div className="formation-progression-metadata" aria-label={`${dragon.name} progression metadata`}>
+                    <span className="badge">{starSummary}</span>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -291,13 +298,22 @@ function ExpandedAbilityText({ label, text }: { label: string; text: string | nu
   );
 }
 
-const troopIcons: Record<TroopType, LucideIcon> = {
+const troopIcons: Record<Exclude<TroopType, 'Spearmen'>, LucideIcon> = {
   Cavalry: ChessKnight,
   Shieldbearers: Shield,
   Archers: BowArrow,
-  Spearmen: Swords,
   Siege: Bomb,
 };
+
+function SpearIcon({ size = 17, 'aria-hidden': ariaHidden }: { size?: number; 'aria-hidden'?: AriaAttributes['aria-hidden'] }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden={ariaHidden}>
+      <path d="M5 19 19 5" />
+      <path d="m15 5 4-3 3 3-3 4Z" />
+      <path d="m4 20 3-1-2-2Z" />
+    </svg>
+  );
+}
 
 function DragonAffinityIcons({
   dragonName,
@@ -319,11 +335,14 @@ function DragonAffinityIcons({
   }
 
   return (
-    <div className="compact-affinity-group" aria-label={`${dragonName} affinities`}>
+    <div
+      className="compact-affinity-group"
+      aria-label={`${dragonName} affinities${unknownCount > 0 ? '; additional affinities are unverified' : ''}`}
+    >
       <div className="compact-affinity-icons">
         {known.map((troopType) => {
           const affinity = affinities[troopType];
-          const Icon = troopIcons[troopType];
+          const Icon = troopType === 'Spearmen' ? SpearIcon : troopIcons[troopType];
           const polarity = affinity === 'positive' ? 'Favorable' : affinity === 'negative' ? 'Unfavorable' : 'Neutral';
           const symbol = affinity === 'positive' ? '+' : affinity === 'negative' ? '−' : '•';
           return (
@@ -339,15 +358,6 @@ function DragonAffinityIcons({
           );
         })}
       </div>
-      {unknownCount > 0 ? (
-        <span
-          className="partial-affinity-notice"
-          title={`${unknownCount} additional ${unknownCount === 1 ? 'affinity remains' : 'affinities remain'} unverified.`}
-          aria-label={`${unknownCount} additional ${unknownCount === 1 ? 'affinity remains' : 'affinities remain'} unverified.`}
-        >
-          +?
-        </span>
-      ) : null}
     </div>
   );
 }
