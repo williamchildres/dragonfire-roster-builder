@@ -45,7 +45,7 @@ describe('second Rare dragon batch', () => {
     expect(simpleSynergyProfiles).toHaveLength(31);
     expect(metadataOnlyDragonIds).toHaveLength(0);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.9.1', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.9.2', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
 
     const breeds = { solstryker: 'Champion', shimmer: 'Sentinel', jagadrix: 'Hunter' } as const;

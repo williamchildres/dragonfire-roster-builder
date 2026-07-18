@@ -2909,6 +2909,10 @@ th {
 }
 
 @media (max-width: 900px) {
+  .site-header {
+    position: static;
+  }
+
   .site-header-inner {
     align-items: stretch;
     flex-direction: column;
@@ -2991,10 +2995,15 @@ th {
   }
 
   .roster-editor-pane {
+    height: auto;
     max-height: none;
+    overflow: visible;
+    overscroll-behavior: auto;
     padding-bottom: max(1rem, calc(env(safe-area-inset-bottom) + 1rem));
     position: static;
+    scrollbar-gutter: auto;
     scroll-margin-top: 6rem;
+    top: auto;
   }
 
   .roster-editor-back {
@@ -3003,6 +3012,9 @@ th {
 
   .roster-list {
     max-height: none;
+    overflow-y: visible;
+    overscroll-behavior: auto;
+    scrollbar-gutter: auto;
   }
 }
 
@@ -3169,6 +3181,8 @@ th {
   }
 
   .roster-row-progression {
+    display: flex;
+    flex-wrap: wrap;
     grid-column: 2 / 4;
     justify-content: start;
   }
