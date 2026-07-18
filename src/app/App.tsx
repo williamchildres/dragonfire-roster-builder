@@ -75,6 +75,7 @@ import { rateFormation } from '../services/formationRating';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
 import type { AccountServices } from '../cloud/types';
 import { buildAuthRedirectUrl, getProductionAccountServices } from '../cloud/supabaseServices';
@@ -661,17 +662,9 @@ function HomeSection({
   onRoster: () => void;
   onTeam: () => void;
 }) {
-  const coveragePercent = Math.round((detailedAbilityCount / dragons.length) * 100);
   const versionLabel = `v${databaseMetadata.databaseVersion}`;
-  const rarityCoverage = ['Legendary', 'Epic', 'Rare'].map((rarity) => {
-    const rarityDragons = dragons.filter((dragon) => dragon.rarity === rarity);
-    const mapped = rarityDragons.filter(hasDetailedAbilities).length;
-    return {
-      rarity,
-      mapped,
-      total: rarityDragons.length,
-    };
-  });
+  const reviewedAbilityCount = simpleSynergyAbilityReviews.length;
+  const profileCount = simpleSynergyProfiles.length;
 
   return (
     <section className="overview-section" aria-label="Overview">
@@ -685,86 +678,59 @@ function HomeSection({
           <div className="hero-art-overlay" aria-hidden="true" />
         </div>
         <div className="hero-copy">
-          <div className="hero-introduction">
-            <p className="eyebrow">Roster and formation planner</p>
-            <h2>Build stronger formations from your dragon roster.</h2>
-            <p>
-              Track your dragons, compare explainable formation ratings, and understand which abilities work together.
-            </p>
-          </div>
-          <div className="hero-feature-stack" aria-label="Overview highlights">
-            <FeatureCard
-              icon={Users}
-              title="Track Your Roster"
-              description="Save ownership, Star Rank, Dragon Level, Habit Levels, and notes in this browser."
-              onClick={onRoster}
-            />
-            <FeatureCard
-              icon={Swords}
-              title="Build Formations"
-              description="Build three-dragon formations, compare explainable ratings, and review active synergies and placement risks."
-              onClick={onTeam}
-            />
-            <FeatureCard
-              icon={Flame}
-              title="Understand Formation Ratings"
-              description="Compare realized synergy, support usefulness, Kit Utilization, and conflict risk."
-              onClick={onTeam}
-            />
-          </div>
+          <p className="eyebrow">Roster and formation planner</p>
+          <h2>Build stronger formations from your dragon roster.</h2>
+          <p>
+            Track your dragons, compare explainable formation ratings, and understand which abilities work together.
+          </p>
         </div>
       </div>
 
-      <div className="coverage-panel combined-coverage-panel" aria-labelledby="coverage-title">
-        <div className="coverage-copy">
-          <p className="eyebrow">Coverage</p>
-          <h3 id="coverage-title">Profile coverage</h3>
-          <p>
-            <strong>{detailedAbilityCount} / {dragons.length} dragons mapped</strong>
-          </p>
-          <p>{coveragePercent}%</p>
+      <div className="overview-feature-grid" aria-label="Overview highlights">
+        <FeatureCard
+          icon={Users}
+          title="Track Your Roster"
+          description="Save ownership, Star Rank, Dragon Level, Habit Levels, and notes in this browser."
+          onClick={onRoster}
+        />
+        <FeatureCard
+          icon={Swords}
+          title="Build Formations"
+          description="Build three-dragon formations, compare explainable ratings, and review active synergies and placement risks."
+          onClick={onTeam}
+        />
+        <FeatureCard
+          icon={Flame}
+          title="Understand Formation Ratings"
+          description="Compare realized synergy, support usefulness, Kit Utilization, and conflict risk."
+          onClick={onTeam}
+        />
+      </div>
+
+      <div className="dataset-status-strip" aria-label="Dataset status">
+        <div className="dataset-status-introduction">
+          <p className="eyebrow">Dataset breadth</p>
+          <p>Curated coverage at a glance</p>
         </div>
-        <div className="combined-coverage-bar" aria-label="Coverage by rarity">
-          {rarityCoverage.map((coverage) => {
-            const width = (coverage.total / dragons.length) * 100;
-            const fill = coverage.total === 0 ? 0 : (coverage.mapped / coverage.total) * 100;
-            return (
-              <div
-                key={coverage.rarity}
-                className={`combined-coverage-segment rarity-${coverage.rarity.toLowerCase()}`}
-                style={{ flexBasis: `${width}%` }}
-              >
-                <div className="combined-coverage-fill" style={{ width: `${fill}%` }} />
-              </div>
-            );
-          })}
+        <div className="dataset-status-item">
+          <strong>{detailedAbilityCount} / {dragons.length}</strong>
+          <span>dragons mapped</span>
         </div>
-        <div className="coverage-counts" aria-label="Coverage by rarity counts">
-          {rarityCoverage.map((coverage) => (
-            <div className="coverage-count" key={coverage.rarity}>
-              <span className="coverage-count-label">
-                <span
-                  aria-hidden="true"
-                  className={`coverage-marker rarity-${coverage.rarity.toLowerCase()}`}
-                />
-                {coverage.rarity}
-              </span>
-              <span className="coverage-count-value">
-                {coverage.mapped} / {coverage.total} mapped
-              </span>
-            </div>
-          ))}
+        <div className="dataset-status-item">
+          <strong>{reviewedAbilityCount}</strong>
+          <span>abilities reviewed</span>
+        </div>
+        <div className="dataset-status-item">
+          <strong>{profileCount}</strong>
+          <span>curated synergy profiles</span>
         </div>
       </div>
-      <p className="rarity-note">
-        Legendary, Epic, and Rare profiles are fully mapped.
-      </p>
 
       <div className="overview-footer-grid">
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Habit Levels now appear only after their canonical progression requirements unlock, begin at Level 1, and clear when relocked.</p>
+          <p>The Overview now uses a compact landscape hero, a three-action feature grid, and a focused dataset status strip across desktop and mobile.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

@@ -6,6 +6,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure } from '../app/App';
 import { dragons } from '../data/dragons';
 import { createEmptyRoster, saveRoster, serializeRosterExport, STORAGE_KEY } from '../services/rosterStorage';
+import { simpleSynergyProfiles } from '../synergy/profiles';
+import { simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 
 
 describe('Dragonfire Lab app', () => {
@@ -206,6 +208,7 @@ describe('Dragonfire Lab app', () => {
     ).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /build my roster/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /open formation builder/i })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Build stronger formations from your dragon roster.' })).toBeInTheDocument();
 
     expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Build Formations' })).toBeInTheDocument();
@@ -218,38 +221,27 @@ describe('Dragonfire Lab app', () => {
     expect(screen.queryByRole('heading', { name: 'Compare Verified Dragons' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /compare verified dragons/i })).not.toBeInTheDocument();
 
-    expect(screen.getByText(/31 \/ 31 dragons mapped/i)).toBeInTheDocument();
-    expect(screen.getByText('100%')).toBeInTheDocument();
+    const mappedDragonCount = dragons.filter(
+      (dragon) => Boolean(dragon.command && dragon.trait && dragon.habits.length > 0),
+    ).length;
+    expect(simpleSynergyAbilityReviews).toHaveLength(217);
+    const datasetStatus = screen.getByLabelText('Dataset status');
+    expect(datasetStatus).toHaveTextContent(`${mappedDragonCount} / ${dragons.length}`);
+    expect(datasetStatus).toHaveTextContent('dragons mapped');
+    expect(datasetStatus).toHaveTextContent(String(simpleSynergyAbilityReviews.length));
+    expect(datasetStatus).toHaveTextContent('abilities reviewed');
+    expect(datasetStatus).toHaveTextContent(String(simpleSynergyProfiles.length));
+    expect(datasetStatus).toHaveTextContent('curated synergy profiles');
 
-    expect(screen.getByRole('heading', { name: 'Profile coverage' })).toBeInTheDocument();
-    expect(screen.getByLabelText('Coverage by rarity')).toBeInTheDocument();
-    expect(screen.getByLabelText('Coverage by rarity counts')).toBeInTheDocument();
-    expect(screen.getByText('Legendary')).toBeInTheDocument();
-    expect(screen.getByText('Epic')).toBeInTheDocument();
-    expect(screen.getByText('Rare')).toBeInTheDocument();
-    expect(screen.getByText('9 / 9 mapped')).toBeInTheDocument();
-    expect(screen.getByText('10 / 10 mapped')).toBeInTheDocument();
-    expect(screen.getByText('12 / 12 mapped')).toBeInTheDocument();
-    expect(document.querySelectorAll('.coverage-marker')).toHaveLength(3);
-    expect(document.querySelector('.coverage-marker.rarity-legendary')).toBeInTheDocument();
-    expect(document.querySelector('.coverage-marker.rarity-epic')).toBeInTheDocument();
-    expect(document.querySelector('.coverage-marker.rarity-rare')).toBeInTheDocument();
-    expect(screen.getByText('Legendary, Epic, and Rare profiles are fully mapped.')).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Profile coverage' })).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Coverage by rarity')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Coverage by rarity counts')).not.toBeInTheDocument();
+    expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
+    expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    expect(screen.queryByRole('heading', { name: 'Detailed profile coverage' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Legendary coverage' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Epic coverage' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Rare coverage' })).not.toBeInTheDocument();
-
-    /*
-
-    const latestUpdate = screen.getByRole('heading', { name: /latest release — v0\.6\.9/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.3/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
-    */
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.2/i }).closest('.latest-update-panel');
-    expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Habit Levels now appear only after their canonical progression requirements unlock');
+    expect(latestUpdate).toHaveTextContent('compact landscape hero, a three-action feature grid, and a focused dataset status strip');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -289,6 +281,10 @@ describe('Dragonfire Lab app', () => {
 
     await user.click(screen.getByRole('button', { name: /overview/i }));
     await user.click(screen.getByRole('button', { name: /build formations/i }));
+    expect(screen.getByRole('heading', { name: 'Formation Builder' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /overview/i }));
+    await user.click(screen.getByRole('button', { name: /understand formation ratings/i }));
     expect(screen.getByRole('heading', { name: 'Formation Builder' })).toBeInTheDocument();
   });
 
