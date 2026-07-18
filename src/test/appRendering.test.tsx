@@ -121,7 +121,7 @@ describe('Dragonfire Lab app', () => {
     const syraxEditor = screen.getByRole('complementary', { name: 'Syrax' });
     expect(within(syraxEditor).getByLabelText(/star rank/i)).toHaveValue('5');
     expect(within(syraxEditor).getByLabelText(/dragon level/i)).toHaveValue(12);
-    await user.click(within(syraxEditor).getByRole('button', { name: /view full details/i }));
+    await user.click(within(syraxEditor).getByRole('button', { name: /dragon details/i }));
     expect(within(screen.getByRole('dialog', { name: /syrax/i })).getByLabelText(/personal notes/i)).toHaveValue('Keep with fire support.');
   });
 
@@ -239,10 +239,10 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.6/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.7/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Star Rank with each dragon name');
-    expect(latestUpdate).toHaveTextContent('progression-locked signals');
+    expect(latestUpdate).toHaveTextContent('reaches the dragon list sooner');
+    expect(latestUpdate).toHaveTextContent('explains locked Habit requirements');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -566,7 +566,7 @@ describe('Dragonfire Lab app', () => {
 
     await user.click(screen.getByRole('button', { name: /^roster$/i }));
     const syraxEditor = screen.getByRole('complementary', { name: 'Syrax' });
-    await user.click(within(syraxEditor).getByRole('button', { name: /view full details/i }));
+    await user.click(within(syraxEditor).getByRole('button', { name: /dragon details/i }));
 
     const dialog = screen.getByRole('dialog', { name: /syrax/i });
     expect(within(dialog).getByRole('checkbox', { name: /owned \/ hatched/i })).toBeChecked();
@@ -919,7 +919,7 @@ describe('Dragonfire Lab app', () => {
     const nyrenaEditor = screen.getByRole('complementary', { name: 'Nyrena' });
     expect(within(nyrenaEditor).getByLabelText(/star rank/i)).toHaveValue('2');
     expect(within(nyrenaEditor).getByLabelText(/dragon level/i)).toBeInTheDocument();
-    await user.click(within(nyrenaEditor).getByRole('button', { name: /view full details/i }));
+    await user.click(within(nyrenaEditor).getByRole('button', { name: /dragon details/i }));
     expect(screen.getByRole('dialog', { name: /nyrena/i })).toBeInTheDocument();
   });
 

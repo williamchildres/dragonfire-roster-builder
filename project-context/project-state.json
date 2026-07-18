@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-18T10:03:13.695Z",
+  "generatedAt": "2026-07-18T10:53:43.884Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/formation-card-progression-polish",
-    "commit": "749ccf73240c20a3dbaeff1298f1ec42923b6d2c",
-    "databaseVersion": "0.9.6",
+    "branch": "ui/roster-workspace-polish",
+    "commit": "7b2a73d084e3936c2e1e9186d50ab4a8538a19ac",
+    "databaseVersion": "0.9.7",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 30,
-    "testCaseCount": 315,
+    "testCaseCount": 322,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

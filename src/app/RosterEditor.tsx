@@ -1,10 +1,11 @@
-import { ArrowLeft, ExternalLink, Trash2 } from 'lucide-react';
+import { ArrowLeft, BookOpen, LockKeyhole, Save, Trash2 } from 'lucide-react';
 import type { AccountSession } from '../cloud/types';
 import type { RosterSyncStatus } from '../hooks/useRosterSync';
 import type { Dragon, OwnedDragon } from '../models/dragon';
 import { isHabitUnlocked } from '../services/habitLevels';
 import { MAX_NOTES_LENGTH } from '../services/rosterStorage';
 import { RosterDragonEmblem } from './RosterList';
+import { lockedHabitRequirement } from './rosterHabitRequirements';
 
 export function RosterEditor({
   dragon,
@@ -37,16 +38,14 @@ export function RosterEditor({
 
       <header className="roster-editor-header">
         <RosterDragonEmblem dragon={dragon} />
-        <div>
-          <p className="eyebrow">Selected dragon</p>
+        <div className="roster-editor-identity">
           <h3 id="roster-editor-title">{dragon.name}</h3>
           <p>{dragon.rarity} · {dragon.breed}</p>
         </div>
+        <button type="button" className="secondary-button roster-details-action" onClick={() => onOpenDetails(dragon)}>
+          <BookOpen size={16} aria-hidden="true" /> Dragon details
+        </button>
       </header>
-
-      <button type="button" className="secondary-button roster-details-action" onClick={() => onOpenDetails(dragon)}>
-        View full details <ExternalLink size={16} aria-hidden="true" />
-      </button>
 
       <form className="roster-editor-form" onSubmit={(event) => event.preventDefault()}>
         <section aria-labelledby="roster-progression-title">
@@ -86,24 +85,37 @@ export function RosterEditor({
             <h4 id="roster-habits-title">Habit Levels</h4>
             <p>{unlockedHabits.length} of {dragon.habits.length} habits unlocked</p>
           </div>
-          {unlockedHabits.length > 0 ? <div className="roster-habit-fields">
-            {unlockedHabits.map((habit) => (
-              <label key={habit.id}>
-                {habit.name}
-                <select
-                  value={rosterEntry.habitLevels[habit.id] ?? 1}
-                  onChange={(event) => onUpdateRoster(dragon.id, {
-                    habitLevels: {
-                      ...rosterEntry.habitLevels,
-                      [habit.id]: Number(event.target.value) as 1 | 2 | 3 | 4 | 5,
-                    },
-                  })}
-                >
-                  {[1, 2, 3, 4, 5].map((level) => <option key={level} value={level}>{level}</option>)}
-                </select>
-              </label>
-            ))}
-          </div> : <p>No habits are unlocked at the current Star Rank and Dragon Level.</p>}
+          <div className="roster-habit-list">
+            {dragon.habits.map((habit) => {
+              const unlocked = isHabitUnlocked(habit, rosterEntry);
+              return unlocked ? (
+                <label className="roster-habit-row is-unlocked" key={habit.id}>
+                  <span className="roster-habit-name">{habit.name}</span>
+                  <span className="roster-habit-level-control">
+                    <span>Level</span>
+                    <select
+                      aria-label={habit.name}
+                      value={rosterEntry.habitLevels[habit.id] ?? 1}
+                      onChange={(event) => onUpdateRoster(dragon.id, {
+                        habitLevels: {
+                          ...rosterEntry.habitLevels,
+                          [habit.id]: Number(event.target.value) as 1 | 2 | 3 | 4 | 5,
+                        },
+                      })}
+                    >
+                      {[1, 2, 3, 4, 5].map((level) => <option key={level} value={level}>{level}</option>)}
+                    </select>
+                  </span>
+                </label>
+              ) : (
+                <div className="roster-habit-row is-locked" key={habit.id} aria-label={`${habit.name}, locked. ${lockedHabitRequirement(habit, rosterEntry)}`}>
+                  <span className="roster-habit-name">{habit.name}</span>
+                  <span className="roster-habit-lock-state"><LockKeyhole size={16} aria-hidden="true" /><strong>Locked</strong></span>
+                  <span className="roster-habit-requirement">{lockedHabitRequirement(habit, rosterEntry)}</span>
+                </div>
+              );
+            })}
+          </div>
         </section>
 
         <section aria-labelledby="roster-notes-title">
@@ -124,7 +136,7 @@ export function RosterEditor({
       </form>
 
       <p className="roster-autosave-note" role="note">
-        {autosaveMessage(session, syncStatus)}
+        <Save size={15} aria-hidden="true" /> <span>{autosaveMessage(session, syncStatus)}</span>
       </p>
 
       <section className="roster-editor-danger" aria-labelledby="roster-remove-title">

@@ -1,4 +1,4 @@
-import { Download, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from 'lucide-react';
+import { Download, ListFilter, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type RefObject } from 'react';
 import type { AccountSession } from '../cloud/types';
 import type { Dragon, DragonBreed, DragonRarity, OwnedDragon } from '../models/dragon';
@@ -61,6 +61,7 @@ export function RosterWorkspace({
 }) {
   const [filters, setFilters] = useState<RosterWorkspaceFilters>(defaultRosterWorkspaceFilters);
   const [sortBy, setSortBy] = useState<RosterWorkspaceSort>('name');
+  const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
   const [selection, setSelection] = useState<string | null>(null);
   const [mobileView, setMobileView] = useState<'list' | 'editor'>('list');
   const [consumedSelectionRequestId, setConsumedSelectionRequestId] = useState<number | null>(null);
@@ -87,6 +88,11 @@ export function RosterWorkspace({
     : null;
   const selectedEntry = selectedDragon ? roster[selectedDragon.id] : undefined;
   const activeFilters = filtersAreActive(filters);
+  const activeAdvancedFilterCount = [
+    filters.rarity !== 'all',
+    filters.breed !== 'all',
+    filters.details !== 'all',
+  ].filter(Boolean).length;
 
   const requestedDragon = selectionRequest
     ? allDragons.find(
@@ -158,10 +164,9 @@ export function RosterWorkspace({
 
   return (
     <section className="roster-section" aria-labelledby="roster-title">
-      <div className="section-heading roster-section-heading">
-        <p className="eyebrow">Stored in your browser</p>
+      <div className="roster-workspace-header">
         <h2 id="roster-title">My Roster</h2>
-        <p>Manage ownership, Star Rank, and Dragon Level with local browser storage.</p>
+        <p>Track ownership, progression, Habit Levels, and notes.</p>
       </div>
 
       {accountConfigured ? (
@@ -206,19 +211,34 @@ export function RosterWorkspace({
       ) : (
         <div className="roster-workspace" data-mobile-view={mobileView}>
           <div className="roster-list-pane">
-            <div className="roster-filter-bar" aria-label="Roster filters">
-              <label className="roster-search-field">
-                Search owned dragons
-                <span className="roster-search-control">
-                  <Search size={17} aria-hidden="true" />
-                  <input type="search" value={filters.search} onChange={(event) => updateFilters({ search: event.target.value })} placeholder="Search by name" />
-                  {filters.search ? <button type="button" className="icon-button" onClick={() => updateFilters({ search: '' })} aria-label="Clear roster search"><X size={16} aria-hidden="true" /></button> : null}
-                </span>
-              </label>
-              <label>Rarity<select value={filters.rarity} onChange={(event) => updateFilters({ rarity: event.target.value as DragonRarity | 'all' })}><option value="all">All rarities</option><option value="Legendary">Legendary</option><option value="Epic">Epic</option><option value="Rare">Rare</option></select></label>
-              <label>Breed<select value={filters.breed} onChange={(event) => updateFilters({ breed: event.target.value as DragonBreed | 'all' })}><option value="all">All breeds</option>{breedOptions.map((breed) => <option key={breed} value={breed}>{breed}</option>)}</select></label>
-              <label>Details<select value={filters.details} onChange={(event) => updateFilters({ details: event.target.value as RosterDetailsFilter })}><option value="all">All dragons</option><option value="complete">All progression recorded</option><option value="missing">Missing progression</option><option value="has-notes">Has notes</option><option value="no-notes">No notes</option></select></label>
-              <label>Sort<select value={sortBy} onChange={(event) => setSortBy(event.target.value as RosterWorkspaceSort)}><option value="name">Name A–Z</option><option value="rarity">Rarity</option><option value="star-rank">Star Rank high to low</option><option value="dragon-level">Dragon Level high to low</option></select></label>
+            <div className="roster-filter-toolbar" aria-label="Roster filters">
+              <div className="roster-filter-primary">
+                <label className="roster-search-field">
+                  Search owned dragons
+                  <span className="roster-search-control">
+                    <Search size={17} aria-hidden="true" />
+                    <input type="search" value={filters.search} onChange={(event) => updateFilters({ search: event.target.value })} placeholder="Search by name" />
+                    {filters.search ? <button type="button" className="icon-button" onClick={() => updateFilters({ search: '' })} aria-label="Clear roster search"><X size={16} aria-hidden="true" /></button> : null}
+                  </span>
+                </label>
+                <label className="roster-sort-field">Sort<select value={sortBy} onChange={(event) => setSortBy(event.target.value as RosterWorkspaceSort)}><option value="name">Name A–Z</option><option value="rarity">Rarity</option><option value="star-rank">Star Rank high to low</option><option value="dragon-level">Dragon Level high to low</option></select></label>
+                <button
+                  type="button"
+                  className="secondary-button roster-filters-toggle"
+                  aria-expanded={advancedFiltersOpen}
+                  aria-controls="roster-advanced-filters"
+                  onClick={() => setAdvancedFiltersOpen((open) => !open)}
+                >
+                  <ListFilter size={17} aria-hidden="true" />
+                  Filters{activeAdvancedFilterCount > 0 ? ` (${activeAdvancedFilterCount})` : ''}
+                </button>
+                {activeFilters ? <button type="button" className="text-button roster-clear-filters" onClick={clearFilters}>Clear filters</button> : null}
+              </div>
+              <div id="roster-advanced-filters" className="roster-advanced-filters" hidden={!advancedFiltersOpen}>
+                <label>Rarity<select value={filters.rarity} onChange={(event) => updateFilters({ rarity: event.target.value as DragonRarity | 'all' })}><option value="all">All rarities</option><option value="Legendary">Legendary</option><option value="Epic">Epic</option><option value="Rare">Rare</option></select></label>
+                <label>Breed<select value={filters.breed} onChange={(event) => updateFilters({ breed: event.target.value as DragonBreed | 'all' })}><option value="all">All breeds</option>{breedOptions.map((breed) => <option key={breed} value={breed}>{breed}</option>)}</select></label>
+                <label>Details<select value={filters.details} onChange={(event) => updateFilters({ details: event.target.value as RosterDetailsFilter })}><option value="all">All dragons</option><option value="complete">All progression recorded</option><option value="missing">Missing progression</option><option value="has-notes">Has notes</option><option value="no-notes">No notes</option></select></label>
+              </div>
             </div>
 
             {visibleDragons.length > 0 ? (
@@ -227,7 +247,7 @@ export function RosterWorkspace({
               <div className="empty-state roster-filtered-empty">
                 <h3>No owned dragons match those filters.</h3>
                 <p>Your roster is still here. Clear the filters to see every owned dragon.</p>
-                <div className="button-row"><button type="button" className="primary-button" onClick={clearFilters}>Clear filters</button><button type="button" className="secondary-button" onClick={onOpenAddDragon}>Add Dragon</button></div>
+                <button type="button" className="secondary-button" onClick={onOpenAddDragon}>Add Dragon</button>
               </div>
             )}
           </div>

@@ -3,10 +3,11 @@ import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { RosterWorkspace, type RosterSelectionRequest } from '../app/RosterWorkspace';
+import { lockedHabitRequirement } from '../app/rosterHabitRequirements';
 import type { AccountSession } from '../cloud/types';
 import { dragons } from '../data/dragons';
 import type { RosterSyncStatus } from '../hooks/useRosterSync';
-import type { OwnedDragon } from '../models/dragon';
+import type { Dragon, OwnedDragon } from '../models/dragon';
 import { applyOwnedDragonPatch } from '../services/habitLevels';
 import { createEmptyRoster } from '../services/rosterStorage';
 
@@ -33,10 +34,22 @@ function WorkspaceHarness({
   initialRoster = makeRoster(),
   session = null,
   syncStatus = 'local-only',
+  accountConfigured = session !== null,
+  onOpenDetails = () => undefined,
+  onOpenAccount = () => undefined,
+  onOpenSignIn = () => undefined,
+  onResolveSync = () => undefined,
+  onRetrySync = () => undefined,
 }: {
   initialRoster?: Record<string, OwnedDragon>;
   session?: AccountSession | null;
   syncStatus?: RosterSyncStatus;
+  accountConfigured?: boolean;
+  onOpenDetails?: (dragon: Dragon) => void;
+  onOpenAccount?: () => void;
+  onOpenSignIn?: () => void;
+  onResolveSync?: () => void;
+  onRetrySync?: () => void;
 }) {
   const [roster, setRoster] = useState(initialRoster);
   return (
@@ -50,24 +63,145 @@ function WorkspaceHarness({
         const dragon = workspaceDragons.find((candidate) => candidate.id === dragonId)!;
         return { ...current, [dragonId]: applyOwnedDragonPatch(dragon, current[dragonId]!, patch) };
       })}
-      onOpenDetails={() => undefined}
+      onOpenDetails={onOpenDetails}
       onOpenAddDragon={() => undefined}
       onExport={() => undefined}
       onImport={() => undefined}
       onClear={() => undefined}
-      accountConfigured={session !== null}
+      accountConfigured={accountConfigured}
       session={session}
       syncStatus={syncStatus}
-      onOpenAccount={() => undefined}
-      onOpenSignIn={() => undefined}
-      onResolveSync={() => undefined}
-      onRetrySync={() => undefined}
+      onOpenAccount={onOpenAccount}
+      onOpenSignIn={onOpenSignIn}
+      onResolveSync={onResolveSync}
+      onRetrySync={onRetrySync}
     />
   );
 }
 
 describe('RosterWorkspace', () => {
   afterEach(() => vi.restoreAllMocks());
+
+  it('uses a compact accessible workspace header without the browser-storage hero eyebrow', () => {
+    render(<WorkspaceHarness />);
+    expect(screen.getByRole('heading', { level: 2, name: 'My Roster' })).toBeInTheDocument();
+    expect(screen.getByText('Track ownership, progression, Habit Levels, and notes.')).toBeInTheDocument();
+    expect(screen.queryByText('Stored in your browser')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'My Roster' }).parentElement).toHaveClass('roster-workspace-header');
+  });
+
+  it('keeps Search and Sort visible while disclosing advanced filters with an active count', async () => {
+    const user = userEvent.setup();
+    render(<WorkspaceHarness />);
+
+    expect(screen.getByLabelText('Search owned dragons')).toBeVisible();
+    expect(screen.getByLabelText('Sort')).toBeVisible();
+    const toggle = screen.getByRole('button', { name: 'Filters' });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(toggle).toHaveAttribute('aria-controls', 'roster-advanced-filters');
+    expect(document.querySelector('#roster-advanced-filters')).toHaveAttribute('hidden');
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await user.selectOptions(screen.getByLabelText('Rarity'), 'Legendary');
+    await user.selectOptions(screen.getByLabelText('Breed'), 'Sentinel');
+    expect(screen.getByRole('button', { name: 'Filters (2)' })).toBeInTheDocument();
+    await user.selectOptions(screen.getByLabelText('Sort'), 'star-rank');
+    await user.click(screen.getByRole('button', { name: 'Filters (2)' }));
+    expect(screen.getByRole('button', { name: 'Filters (2)' })).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(screen.getByRole('button', { name: 'Clear filters' }));
+    expect(screen.getByLabelText('Sort')).toHaveValue('star-rank');
+    expect(screen.getByRole('button', { name: 'Filters' })).toBeInTheDocument();
+    expect(screen.getByText('3 owned dragons')).toBeInTheDocument();
+    expect(screen.queryByText(/of 3 shown/i)).not.toBeInTheDocument();
+  });
+
+  it('uses compact full-width row summaries while retaining descriptive unknown progression names', () => {
+    render(<WorkspaceHarness />);
+    const rows = screen.getAllByRole('button', { name: /Star Rank/i });
+    expect(rows).toHaveLength(3);
+    for (const row of rows) expect(row).toHaveClass('roster-row');
+    expect(screen.getByRole('button', { name: /^Caraxes,/i })).toHaveTextContent('10★');
+    expect(screen.getByRole('button', { name: /^Caraxes,/i })).toHaveTextContent('Lv 20');
+    expect(screen.getByRole('button', { name: /^Caraxes,/i })).toHaveTextContent('5/5 habits');
+    const unknownRow = screen.getByRole('button', { name: /Vhagar.*Star Rank unknown.*Dragon Level unknown/i });
+    expect(unknownRow).toHaveTextContent('?★');
+    expect(unknownRow).toHaveTextContent('Lv —');
+  });
+
+  it('opens the existing internal details action with its compact label', async () => {
+    const user = userEvent.setup();
+    const onOpenDetails = vi.fn();
+    render(<WorkspaceHarness onOpenDetails={onOpenDetails} />);
+    expect(screen.queryByRole('button', { name: 'View full details' })).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Dragon details' }));
+    expect(onOpenDetails).toHaveBeenCalledWith(expect.objectContaining({ id: 'caraxes' }));
+  });
+
+  it('renders every canonical Habit and only gives unlocked Habits Level 1–5 selectors', async () => {
+    const user = userEvent.setup();
+    render(<WorkspaceHarness />);
+    await user.click(screen.getByRole('button', { name: /^Syrax,/i }));
+    const editor = screen.getByRole('complementary', { name: 'Syrax' });
+    const syrax = workspaceDragons.find((dragon) => dragon.id === 'syrax')!;
+    for (const habit of syrax.habits) expect(within(editor).getByText(habit.name)).toBeInTheDocument();
+    expect(within(editor).getAllByRole('combobox')).toHaveLength(3);
+    expect(within(editor).getAllByText('Locked')).toHaveLength(3);
+    expect(within(editor).getByLabelText(`${syrax.habits[2]!.name}, locked. Unlocks at 6★`)).toBeInTheDocument();
+    for (const habit of syrax.habits.slice(0, 2)) {
+      const select = within(editor).getByLabelText(habit.name);
+      expect(within(select).getAllByRole('option').map((option) => option.textContent)).toEqual(['1', '2', '3', '4', '5']);
+    }
+  });
+
+  it('formats the currently unmet Star Rank and Dragon Level requirements accurately', () => {
+    const habit = { ...workspaceDragons[0]!.habits[0]!, unlockStarRank: 6, minimumDragonLevel: 16 };
+    expect(lockedHabitRequirement(habit, { starRank: 5, reignLevel: 15 })).toBe('Requires 6★ and Dragon Level 16');
+    expect(lockedHabitRequirement(habit, { starRank: 6, reignLevel: 15 })).toBe('Unlocks at Dragon Level 16');
+    expect(lockedHabitRequirement(habit, { starRank: 5, reignLevel: 16 })).toBe('Unlocks at 6★');
+  });
+
+  it.each(['local-only', 'auth-loading', 'loading-cloud', 'syncing', 'synced'] satisfies RosterSyncStatus[])(
+    'uses compact synchronization presentation for %s',
+    (syncStatus) => {
+      const session = syncStatus === 'local-only' || syncStatus === 'auth-loading' ? null : { userId: 'user-1', email: 'long-account-email@example.com' };
+      render(<WorkspaceHarness accountConfigured session={session} syncStatus={syncStatus} />);
+      expect(document.querySelector('.roster-sync-panel')).toHaveAttribute('data-presentation', 'compact');
+      expect(screen.getByText(syncStatus === 'local-only' ? 'Saved in this browser' : syncStatus === 'synced' ? 'Synced to your account' : syncStatus === 'syncing' ? 'Syncing…' : 'Loading account roster…')).toBeInTheDocument();
+    },
+  );
+
+  it.each([
+    ['migration-required', 'Resolve'],
+    ['conflict', 'Resolve'],
+    ['paused', 'Resolve'],
+    ['offline', 'Retry'],
+    ['error', 'Retry'],
+  ] as const)('keeps %s prominent with its %s action', (syncStatus, action) => {
+    render(<WorkspaceHarness accountConfigured session={{ userId: 'user-1', email: 'qa@example.com' }} syncStatus={syncStatus} />);
+    expect(document.querySelector('.roster-sync-panel')).toHaveAttribute('data-presentation', 'attention');
+    expect(screen.getByRole('button', { name: action })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Account' })).toBeInTheDocument();
+  });
+
+  it('preserves Sign in, Account, Resolve, and Retry callbacks', async () => {
+    const user = userEvent.setup();
+    const onOpenSignIn = vi.fn();
+    const { rerender } = render(<WorkspaceHarness accountConfigured onOpenSignIn={onOpenSignIn} />);
+    await user.click(screen.getByRole('button', { name: 'Sign in' }));
+    expect(onOpenSignIn).toHaveBeenCalledOnce();
+
+    const callbacks = { onOpenAccount: vi.fn(), onResolveSync: vi.fn(), onRetrySync: vi.fn() };
+    rerender(<WorkspaceHarness accountConfigured session={{ userId: 'user-1', email: 'qa@example.com' }} syncStatus="conflict" {...callbacks} />);
+    await user.click(screen.getByRole('button', { name: 'Resolve' }));
+    await user.click(screen.getByRole('button', { name: 'Account' }));
+    expect(callbacks.onResolveSync).toHaveBeenCalledOnce();
+    expect(callbacks.onOpenAccount).toHaveBeenCalledOnce();
+    rerender(<WorkspaceHarness accountConfigured session={{ userId: 'user-1', email: 'qa@example.com' }} syncStatus="error" {...callbacks} />);
+    await user.click(screen.getByRole('button', { name: 'Retry' }));
+    expect(callbacks.onRetrySync).toHaveBeenCalledOnce();
+  });
 
   it('selects the first visible owned dragon, updates selected semantics, and preserves selection while sorting', async () => {
     const user = userEvent.setup();
@@ -130,7 +264,8 @@ describe('RosterWorkspace', () => {
 
     await user.selectOptions(within(editor).getByLabelText('Star Rank'), '1');
     expect(within(editor).queryByLabelText(firstHabit.name)).not.toBeInTheDocument();
-    expect(within(editor).getByText('No habits are unlocked at the current Star Rank and Dragon Level.')).toBeInTheDocument();
+    expect(within(editor).getByLabelText(`${firstHabit.name}, locked. Unlocks at 2★`)).toBeInTheDocument();
+    expect(within(editor).getAllByText('Locked')).toHaveLength(5);
     await user.selectOptions(within(editor).getByLabelText('Star Rank'), '2');
     const habitSelect = within(editor).getByLabelText(firstHabit.name);
     expect(habitSelect).toHaveValue('1');
