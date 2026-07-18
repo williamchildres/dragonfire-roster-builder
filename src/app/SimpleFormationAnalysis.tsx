@@ -37,6 +37,48 @@ export function SimpleFormationAnalysis({
   );
 }
 
+export function CompactFormationRatingSummary({
+  presentation,
+  rating,
+}: {
+  presentation: SimpleFormationPresentation;
+  rating: FormationRatingResult;
+}) {
+  const findings = [
+    { label: 'Active relationships', value: presentation.activeSynergies.length, tone: 'positive' },
+    { label: 'Missing enablers', value: presentation.missingEnablers.length, tone: 'negative' },
+    {
+      label: 'Placement / conflicts',
+      value: presentation.placementIssues.length + presentation.positionConflicts.length,
+      tone: 'negative',
+    },
+    { label: 'Future unlocks', value: presentation.futureUnlocks.length, tone: 'neutral' },
+  ] as const;
+
+  return (
+    <section className="formation-rating-summary-card" aria-labelledby="formation-rating-summary-title">
+      <div className="formation-rating-summary-score" aria-label={`Formation rating ${rating.score} out of 100, ${rating.tier}`}>
+        <span className="formation-rating-value">{rating.score}</span>
+        <span className="formation-rating-max">/ 100</span>
+        <span className="formation-rating-tier">{rating.tier}</span>
+      </div>
+      <div className="formation-rating-summary-copy">
+        <p className="eyebrow">Mapped signal score</p>
+        <h3 id="formation-rating-summary-title">Formation Rating</h3>
+        <p>{rating.summary}</p>
+      </div>
+      <dl className="formation-finding-counts" aria-label="Major formation findings">
+        {findings.map((finding) => (
+          <div className={`formation-finding-count finding-${finding.tone}`} key={finding.label}>
+            <dt>{finding.label}</dt>
+            <dd>{finding.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
 function DetailedSignalTrace({
   hasActiveSynergy,
   presentation,
@@ -54,7 +96,7 @@ function DetailedSignalTrace({
         aria-expanded={isOpen}
         onClick={() => setIsOpen((current) => !current)}
       >
-        {isOpen ? 'Hide full rating breakdown' : 'View full rating breakdown'}
+        {isOpen ? 'Hide mapped synergy details' : 'View mapped synergy details'}
       </button>
       {isOpen ? (
         <div className="detailed-signal-trace-body">

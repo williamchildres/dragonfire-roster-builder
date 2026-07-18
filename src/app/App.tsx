@@ -1,9 +1,12 @@
 import {
+  Check,
+  Circle,
   ExternalLink,
   Flame,
   Home,
   Info,
   Link,
+  LockKeyhole,
   ChevronRight,
   Shield,
   Swords,
@@ -21,7 +24,7 @@ import {
   SetPasswordDialog,
   SignInDialog,
 } from './AccountUi';
-import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
+import { CompactFormationRatingSummary, SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
 import { RosterWorkspace } from './RosterWorkspace';
 import {
@@ -34,6 +37,7 @@ import {
   profileBenefitsFromLabel,
   profileDamageProfileLabel,
   profileProvidesLabel,
+  type FormationSignalChip,
 } from './formationCardPresentation';
 import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 import dragonfireHero from '../assets/dragonfire-hero.png';
@@ -730,7 +734,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>The Overview now uses a compact landscape hero, a three-action feature grid, and a focused dataset status strip across desktop and mobile.</p>
+          <p>Formation Builder now surfaces its rating before the card board, uses compact expandable dragon cards, and presents troop affinities with accessible symbols.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -1169,7 +1173,7 @@ function FormationBuilderSection({
               checked={dragonPoolMode === 'all-star-10'}
               onChange={() => onDragonPoolModeChange('all-star-10')}
             />
-            <span>Maxed Dragons</span>
+            <span>All Dragons — Star 10</span>
           </label>
           <label className={dragonPoolMode === 'roster' ? 'formation-mode-option is-active' : 'formation-mode-option'}>
             <input
@@ -1191,9 +1195,13 @@ function FormationBuilderSection({
           </button>
         </div>
       </div>
-      <p className="formation-chip-legend" role="note">
-        Green = active or satisfied · Red = missing or inactive · Neutral = available
-      </p>
+      <div className="formation-chip-legend" role="note" aria-label="Signal state legend">
+        <span><Check size={14} aria-hidden="true" /> Active or satisfied</span>
+        <span><X size={14} aria-hidden="true" /> Missing or inactive</span>
+        <span><Circle size={13} aria-hidden="true" /> Available</span>
+        <span><LockKeyhole size={13} aria-hidden="true" /> Progression locked</span>
+      </div>
+      <CompactFormationRatingSummary presentation={presentation} rating={rating} />
       <div className="formation-board" aria-label="Formation positions">
         {FORMATION_POSITIONS.map((position) => {
           const dragon = dragons.find((candidate) => candidate.id === formation[position]) ?? null;
@@ -1205,6 +1213,9 @@ function FormationBuilderSection({
               rosterEntry={dragon ? formationRosterEntryForDragon(dragon, roster, dragonPoolMode) : undefined}
               profile={dragon ? profilesById.get(dragon.id) : undefined}
               signalChips={signalChipsByPosition[position]}
+              movementOccupancy={Object.fromEntries(
+                FORMATION_POSITIONS.filter((target) => target !== position).map((target) => [target, Boolean(formation[target])]),
+              )}
               onChooseDragon={() => openSelector(position)}
               onOpenDetails={onOpenDetails}
               onMove={(target) => onFormationChange(moveFormationDragon(formation, position, target))}
@@ -1344,7 +1355,7 @@ function FormationDragonSelectorDialog({
             <h2 id="formation-dragon-selector-title">Choose a dragon for {positionLabel}</h2>
             <p className="details-summary-line">
               {dragonPoolMode === 'all-star-10'
-                ? 'Planning with every mapped dragon at Star 10.'
+                ? 'Showing all dragons at Star Rank 10. Dragon Level and Habit Levels are not forced to maximum.'
                 : 'Showing only dragons saved to your roster.'}
             </p>
           </div>
@@ -1443,11 +1454,13 @@ function FormationDragonSelectorDialog({
               <FormationDragonSelectorRow
                 dragon={dragon}
                 dragonPoolMode={dragonPoolMode}
+                formation={formation}
                 isAlreadySelected={selectedDragonIds.has(dragon.id)}
                 key={dragon.id}
                 profile={profilesById.get(dragon.id)}
                 rosterEntry={roster[dragon.id]}
                 roster={roster}
+                position={position}
                 onOpenDetails={onOpenDetails}
                 onSelect={onSelect}
               />
@@ -1467,19 +1480,23 @@ function FormationDragonSelectorDialog({
 function FormationDragonSelectorRow({
   dragon,
   dragonPoolMode,
+  formation,
   isAlreadySelected,
   profile,
   roster,
   rosterEntry,
+  position,
   onOpenDetails,
   onSelect,
 }: {
   dragon: Dragon;
   dragonPoolMode: FormationDragonPoolMode;
+  formation: Formation;
   isAlreadySelected: boolean;
   profile: (typeof simpleSynergyProfiles)[number] | undefined;
   roster: Record<string, OwnedDragon>;
   rosterEntry?: OwnedDragon;
+  position: FormationPosition;
   onOpenDetails: (dragon: Dragon) => void;
   onSelect: (dragonId: string) => void;
 }) {
@@ -1489,14 +1506,21 @@ function FormationDragonSelectorRow({
       : rosterEntry?.starRank !== null && rosterEntry?.starRank !== undefined
         ? `Star ${rosterEntry.starRank}`
         : 'Star unknown';
+  const tentativeFormation = preventDuplicateFormationPlacement(formation, position, dragon.id);
+  const tentativeProgression = Object.fromEntries(
+    FORMATION_POSITIONS.flatMap((formationPosition) => {
+      const dragonId = tentativeFormation[formationPosition];
+      return dragonId
+        ? [[dragonId, formationProgressionForDragon(dragonId, roster, dragonPoolMode)]]
+        : [];
+    }),
+  );
   const signalPreview = buildFormationSignalChips({
     profile,
-    position: 'vanguard',
-    formation: emptyFormation(),
+    position,
+    formation: tentativeFormation,
     profiles: simpleSynergyProfiles,
-    progression: {
-      [dragon.id]: formationProgressionForDragon(dragon.id, roster, dragonPoolMode),
-    },
+    progression: tentativeProgression,
   });
 
   return (
@@ -1512,9 +1536,9 @@ function FormationDragonSelectorRow({
             {isAlreadySelected ? <span className="badge">Already selected</span> : null}
           </div>
           <div className="formation-selector-signals">
-            <CompactSignalPreview title="Damage profile" labels={signalPreview.damageProfile.map((chip) => chip.label)} />
-            <CompactSignalPreview title="Provides" labels={signalPreview.provides.map((chip) => chip.label)} />
-            <CompactSignalPreview title="Synergy needs" labels={signalPreview.benefitsFrom.map((chip) => chip.label)} />
+            <CompactSignalPreview title="Damage profile" chips={signalPreview.damageProfile} />
+            <CompactSignalPreview title="Provides" chips={signalPreview.provides} />
+            <CompactSignalPreview title="Synergy needs" chips={signalPreview.benefitsFrom} />
           </div>
         </div>
       </div>
@@ -1535,15 +1559,21 @@ function FormationDragonSelectorRow({
   );
 }
 
-function CompactSignalPreview({ title, labels }: { title: 'Damage profile' | 'Provides' | 'Synergy needs'; labels: string[] }) {
+function CompactSignalPreview({ title, chips }: { title: 'Damage profile' | 'Provides' | 'Synergy needs'; chips: FormationSignalChip[] }) {
   return (
     <div className="compact-signal-preview" aria-label={title}>
       <span className="compact-signal-title">{title}</span>
-      {labels.length > 0 ? (
+      {chips.length > 0 ? (
         <ul className="chip-list formation-chip-list">
-          {labels.slice(0, 6).map((label) => (
-            <li key={label} className="chip">
-              {label}
+          {chips.slice(0, 6).map((chip) => (
+            <li
+              aria-label={`${chip.label} ${chip.state}. ${chip.reason}`}
+              className={`chip formation-signal-chip signal-${chip.state}`}
+              data-state={chip.state}
+              key={chip.label}
+              title={`${chip.label}: ${chip.reason}`}
+            >
+              {chip.label}
             </li>
           ))}
         </ul>

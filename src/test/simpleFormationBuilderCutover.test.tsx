@@ -44,7 +44,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await user.click(screen.getByRole('button', { name: /^formations$/i }));
   }
 
-  async function switchFormationMode(user: ReturnType<typeof userEvent.setup>, mode: 'Maxed Dragons' | 'My Roster') {
+  async function switchFormationMode(user: ReturnType<typeof userEvent.setup>, mode: 'All Dragons — Star 10' | 'My Roster') {
     await user.click(screen.getByRole('radio', { name: mode }));
   }
 
@@ -109,14 +109,16 @@ describe('Formation Builder simple synergy cutover', () => {
   }
 
   function ratingPanel() {
-    const heading = screen.getByRole('heading', { name: 'Formation Rating' });
+    const analysis = screen.getByRole('heading', { name: 'Formation Analysis' }).closest('section');
+    expect(analysis).not.toBeNull();
+    const heading = within(analysis as HTMLElement).getByRole('heading', { name: 'Formation Rating' });
     const section = heading.closest('section');
     expect(section).not.toBeNull();
     return section as HTMLElement;
   }
 
   async function openDetailedSignalTrace(user: ReturnType<typeof userEvent.setup>) {
-    const toggle = screen.getByRole('button', { name: /full rating breakdown/i });
+    const toggle = screen.getByRole('button', { name: /mapped synergy details/i });
     if (toggle.getAttribute('aria-expanded') !== 'true') {
       await user.click(toggle);
     }
@@ -146,8 +148,9 @@ describe('Formation Builder simple synergy cutover', () => {
     await openFormationBuilder(user);
 
     expect(screen.queryByText('Include unowned dragons')).not.toBeInTheDocument();
+    expect(screen.queryByText('Maxed Dragons')).not.toBeInTheDocument();
     const modeGroup = screen.getByRole('group', { name: /formation dragon pool/i });
-    const allMode = within(modeGroup).getByRole('radio', { name: 'Maxed Dragons' });
+    const allMode = within(modeGroup).getByRole('radio', { name: 'All Dragons — Star 10' });
     const rosterMode = within(modeGroup).getByRole('radio', { name: 'My Roster' });
 
     expect(allMode).toBeChecked();
@@ -168,9 +171,85 @@ describe('Formation Builder simple synergy cutover', () => {
 
     await openFormationBuilder(user);
 
-    expect(screen.getByRole('note')).toHaveTextContent(
-      'Green = active or satisfied · Red = missing or inactive · Neutral = available',
+    expect(screen.getByRole('note', { name: 'Signal state legend' })).toHaveTextContent(
+      'Active or satisfied Missing or inactive Available Progression locked',
     );
+  });
+
+  it('places a compact rating summary before the cards and keeps it consistent with the full lower analysis', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 } });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'vhagar', 'right-flank': 'caraxes' });
+
+    const summary = document.querySelector<HTMLElement>('.formation-rating-summary-card');
+    const board = screen.getByLabelText('Formation positions');
+    expect(summary).not.toBeNull();
+    expect(summary!.compareDocumentPosition(board) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
+    const upperRating = within(summary!).getByLabelText(/Formation rating .* out of 100/i);
+    const lowerRating = within(ratingPanel()).getByLabelText(/Formation rating .* out of 100/i);
+    expect(upperRating).toHaveAccessibleName(lowerRating.getAttribute('aria-label')!);
+    expect(summary).toHaveTextContent('Active relationships');
+    expect(summary).toHaveTextContent('Missing enablers');
+    expect(summary).toHaveTextContent('Placement / conflicts');
+    expect(summary).toHaveTextContent('Future unlocks');
+    expect(screen.getByRole('button', { name: 'View mapped synergy details' })).toBeInTheDocument();
+    expect(within(ratingPanel()).getByLabelText('Formation rating breakdown')).toBeInTheDocument();
+  });
+
+  it('keeps cards collapsed by default and expands Command and Vanguard Trait wording independently', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {}, caraxes: { reignLevel: 26 }, vhagar: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'vhagar' });
+
+    const left = screen.getByRole('article', { name: 'Left Flank' });
+    const vanguard = screen.getByRole('article', { name: 'Vanguard' });
+    const right = screen.getByRole('article', { name: 'Right Flank' });
+    const leftToggle = within(left).getByRole('button', { name: 'Expand details' });
+    const vanguardToggle = within(vanguard).getByRole('button', { name: 'Expand details' });
+    const rightToggle = within(right).getByRole('button', { name: 'Expand details' });
+
+    expect(leftToggle).toHaveAttribute('aria-expanded', 'false');
+    expect(vanguardToggle).toHaveAttribute('aria-expanded', 'false');
+    expect(rightToggle).toHaveAttribute('aria-expanded', 'false');
+    expect(left).not.toHaveTextContent('Each Round: 20% chance');
+    expect(vanguard).not.toHaveTextContent('At Level 16+ and deployed in Vanguard');
+
+    await user.click(leftToggle);
+    expect(left).toHaveTextContent('Each Round: 20% chance');
+    expect(vanguardToggle).toHaveAttribute('aria-expanded', 'false');
+    expect(rightToggle).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(vanguardToggle);
+    expect(vanguard).toHaveTextContent('At Level 16+ and deployed in Vanguard');
+    expect(leftToggle).toHaveAttribute('aria-expanded', 'true');
+    expect(rightToggle).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(within(left).getByRole('button', { name: 'Collapse details' }));
+    expect(left).not.toHaveTextContent('Each Round: 20% chance');
+    expect(vanguard).toHaveTextContent('At Level 16+ and deployed in Vanguard');
+  });
+
+  it('renders compact accessible affinity symbols and restrained unknown states without a bottom Affinities section', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {}, caraxes: {}, antares: { owned: false } });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'antares' });
+
+    const syraxCard = screen.getByRole('article', { name: 'Left Flank' });
+    const antaresCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(syraxCard).getByLabelText('Favorable affinity: Archers')).toBeInTheDocument();
+    expect(within(syraxCard).getByLabelText('Unfavorable affinity: Siege')).toBeInTheDocument();
+    expect(within(syraxCard).getByLabelText(/additional affinities remain unverified/i)).toBeInTheDocument();
+    expect(within(antaresCard).getByText('Affinities not verified.')).toBeInTheDocument();
+    expect(within(antaresCard).queryByLabelText(/Neutral affinity/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('None recorded')).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Affinities' })).not.toBeInTheDocument();
   });
 
   it('maps roster Star Rank to progression-locked simple relationships', async () => {
@@ -408,7 +487,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     expect(traitSection).toHaveTextContent('Vanguard Trait');
     expect(traitSection).toHaveTextContent("Hunter's Wrath");
-    expect(traitSection).toHaveTextContent('At Level 16+ and deployed in Vanguard');
+    expect(traitSection).toHaveTextContent('Dragon Level 16+');
     expect(within(traitSection).queryByRole('button', { name: /show full wording/i })).not.toBeInTheDocument();
     expect(traitSection).not.toHaveTextContent('Requirement: Star Rank 1, Dragon Level 16, Vanguard');
     expect(traitSection).not.toHaveTextContent('Position requirement met.');
@@ -518,7 +597,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(vanguardCard).getByLabelText(/Strength support inactive/i)).toHaveAttribute('data-state', 'inactive');
     expect(within(vanguardCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/Dragon Level 16/i);
 
-    await user.click(within(vanguardCard).getByRole('button', { name: /^right flank$/i }));
+    await user.click(within(vanguardCard).getByRole('button', { name: /move to right flank/i }));
     const rightCard = screen.getByRole('article', { name: 'Right Flank' });
     expect(within(rightCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/requires Vanguard/i);
   });
@@ -588,6 +667,34 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(dialog).getByRole('heading', { name: 'Vhagar' })).toBeInTheDocument();
   });
 
+  it('previews a candidate in the actual target slot with current allies before applying the selection', async () => {
+    const user = userEvent.setup();
+    seedRoster({ caraxes: { reignLevel: 26 }, vhagar: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { vanguard: 'caraxes' });
+    const leftCard = screen.getByRole('article', { name: 'Left Flank' });
+    await user.click(within(leftCard).getByRole('button', { name: /\+ add dragon/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+    await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Vhagar');
+    const vhagarRow = within(dialog).getByRole('heading', { name: 'Vhagar' }).closest('article');
+    expect(vhagarRow).not.toBeNull();
+    expect(within(vhagarRow as HTMLElement).getByLabelText(/Tactical Damage support inactive.*requires Vanguard/i)).toHaveAttribute(
+      'data-state',
+      'inactive',
+    );
+    expect(within(vhagarRow as HTMLElement).getByLabelText(/Burn satisfied.*Caraxes/i)).toHaveAttribute(
+      'data-state',
+      'satisfied',
+    );
+    expect(leftCard).not.toHaveTextContent('Vhagar');
+
+    await user.click(within(vhagarRow as HTMLElement).getByRole('button', { name: 'Select' }));
+    expect(screen.queryByRole('dialog', { name: /choose a dragon for left flank/i })).not.toBeInTheDocument();
+    expect(screen.getByRole('article', { name: 'Left Flank' })).toHaveTextContent('Vhagar');
+  });
+
   it('keeps the Formation Builder selector on mobile-safe responsive classes', async () => {
     const user = userEvent.setup();
     seedRoster({ caraxes: {}, syrax: {}, vhagar: {} });
@@ -616,13 +723,14 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
   });
 
-  it('opens the selector in Maxed Dragons mode and marks selected dragons unavailable there', async () => {
+  it('opens the selector in All Dragons — Star 10 mode and marks selected dragons unavailable there', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {} });
 
     await openFormationBuilder(user);
     await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
     let dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+    expect(dialog).toHaveTextContent('Dragon Level and Habit Levels are not forced to maximum.');
     await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Antares');
 
     const antaresRow = within(dialog).getByRole('heading', { name: 'Antares' }).closest('article');
@@ -723,7 +831,7 @@ describe('Formation Builder simple synergy cutover', () => {
       expect(within(card).getByRole('region', { name: 'Damage profile' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Provides' })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Synergy needs' })).toBeInTheDocument();
-      expect(within(card).getByRole('region', { name: /affinities/i })).toBeInTheDocument();
+      expect(within(card).getByLabelText(new RegExp(`${position === 'Left Flank' ? 'Syrax' : position === 'Vanguard' ? 'Caraxes' : 'Antares'} affinities`, 'i'))).toBeInTheDocument();
       expect(within(card).queryByRole('region', { name: /curated profile/i })).not.toBeInTheDocument();
     }
     expect(within(screen.getByRole('article', { name: 'Left Flank' })).queryByRole('region', { name: /trait status/i })).not.toBeInTheDocument();
@@ -749,10 +857,13 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(syraxCommand).not.toHaveTextContent('Verified');
     expect(within(syraxCommand).queryByRole('list')).not.toBeInTheDocument();
     expect(syraxCommand).not.toHaveTextContent('Each Round: 20% chance');
-    await user.click(within(syraxCommand).getByRole('button', { name: /show full wording/i }));
-    expect(syraxCommand).toHaveTextContent('Each Round: 20% chance');
-    await user.click(within(syraxCommand).getByRole('button', { name: /hide full wording/i }));
-    expect(syraxCommand).not.toHaveTextContent('Each Round: 20% chance');
+    const syraxExpansion = within(syraxCard).getByRole('button', { name: /expand details/i });
+    expect(syraxExpansion).toHaveAttribute('aria-expanded', 'false');
+    await user.click(syraxExpansion);
+    expect(syraxCard).toHaveTextContent('Each Round: 20% chance');
+    expect(syraxExpansion).toHaveAttribute('aria-expanded', 'true');
+    await user.click(within(syraxCard).getByRole('button', { name: /collapse details/i }));
+    expect(syraxCard).not.toHaveTextContent('Each Round: 20% chance');
 
     const caraxesTrait = within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('region', {
       name: /trait status/i,
@@ -762,7 +873,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(caraxesTrait).not.toHaveTextContent('Passive');
     expect(caraxesTrait).not.toHaveTextContent('Verified');
     expect(within(caraxesTrait).queryByRole('button', { name: /show full wording/i })).not.toBeInTheDocument();
-    expect(caraxesTrait).toHaveTextContent('At Level 16+ and deployed in Vanguard');
+    expect(caraxesTrait).toHaveTextContent('Dragon Level 16+');
 
     expect(analysisText()).not.toContain('Synergy data not yet mapped: Antares.');
     await openDetailedSignalTrace(user);
@@ -777,7 +888,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(syraxRow as HTMLElement).getByRole('button', { name: /already selected/i })).toBeDisabled();
     await user.click(within(selector).getByRole('button', { name: /close dragon selector/i }));
 
-    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /^right flank$/i }));
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /move to right flank/i }));
     expect(screen.getByRole('article', { name: 'Right Flank' })).toHaveTextContent('Syrax');
     expect(screen.getByRole('article', { name: 'Left Flank' })).toHaveTextContent('Antares');
 
@@ -790,6 +901,6 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining('#formation='));
 
     await user.click(screen.getByRole('button', { name: /clear formation/i }));
-    expect(screen.getAllByText(/add a dragon to review command, vanguard trait, affinities, and synergy signals/i)).toHaveLength(3);
+    expect(screen.getAllByText(/add a dragon to review its command, position trait, and mapped synergy signals/i)).toHaveLength(3);
   });
 });
