@@ -50,7 +50,7 @@ describe('canonical dragon affinities', () => {
       expect(dragon.fieldVerification.affinities?.reviewedManually).toBe(true);
     }
 
-    expect(dragons.every((dragon) => Object.values(dragon.affinities).every((value) => value !== 'unknown'))).toBe(true);
+    expect(dragons.every((dragon) => (Object.values(dragon.affinities) as string[]).every((value) => value !== 'unknown'))).toBe(true);
   });
 
   it('removes obsolete affinity caveats while preserving independent canonical note content', () => {
@@ -86,7 +86,7 @@ describe('canonical dragon affinities', () => {
       const profile = simpleSynergyProfiles.find((candidate) => candidate.dragonId === dragonId)!;
       const traitSignals = [...profile.supports, ...profile.positionClaims].filter((signal) => signal.abilityId === dragon.trait?.id);
       expect(traitSignals).toHaveLength(2);
-      expect(traitSignals.every((signal) => signal.unlock.minimumStarRank === 1 && signal.unlock.minimumDragonLevel === 16)).toBe(true);
+      expect(traitSignals.every((signal) => signal.unlock?.minimumStarRank === 1 && signal.unlock?.minimumDragonLevel === 16)).toBe(true);
     }
 
     const venator = dragons.find((dragon) => dragon.id === 'venator')!;
