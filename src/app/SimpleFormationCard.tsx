@@ -1,4 +1,4 @@
-import { Bomb, BowArrow, Check, ChessKnight, Circle, LockKeyhole, Shield, Swords, X, type LucideIcon } from 'lucide-react';
+import { Bomb, BowArrow, ChessKnight, Shield, Swords, type LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 import type { AbilityDefinition, Dragon, FormationPosition, OwnedDragon, TroopType } from '../models/dragon';
 import { FORMATION_POSITIONS, TROOP_TYPES } from '../models/dragon';
@@ -6,6 +6,7 @@ import { positionLabels } from '../services/teamShare';
 import type { DragonSynergyProfile } from '../synergy/types';
 import { summarizeAbilityForProgression } from './dragonDetailPresentation';
 import type { FormationSignalChip } from './formationCardPresentation';
+import { formationSignalStateMarker } from './formationSignalPresentation';
 
 const unknown = 'Full wording not verified.';
 
@@ -224,7 +225,7 @@ function FormationSignalPanel({
       {chips.length > 0 ? (
         <ul className="chip-list formation-chip-list">
           {chips.map((chip) => {
-            const marker = signalMarker(chip);
+            const { Icon, marker } = formationSignalStateMarker(chip);
             return (
               <li
                 key={chip.label}
@@ -233,7 +234,7 @@ function FormationSignalPanel({
                 title={`${chip.label}: ${chip.reason}`}
                 aria-label={`${chip.label} ${chip.state}. ${chip.reason}`}
               >
-                <marker.Icon className="signal-state-icon" size={13} aria-hidden="true" />
+                <Icon className="signal-state-icon" data-state-marker={marker} size={13} aria-hidden="true" />
                 {chip.label}
               </li>
             );
@@ -244,19 +245,6 @@ function FormationSignalPanel({
       )}
     </section>
   );
-}
-
-function signalMarker(chip: FormationSignalChip): { Icon: LucideIcon } {
-  if (chip.state === 'supported' || chip.state === 'used' || chip.state === 'satisfied') {
-    return { Icon: Check };
-  }
-  if (chip.state === 'available') {
-    return { Icon: Circle };
-  }
-  if (chip.state === 'inactive' && /star|dragon level|progression|unlock/i.test(chip.reason)) {
-    return { Icon: LockKeyhole };
-  }
-  return { Icon: X };
 }
 
 function AbilityTypeBadge({ label }: { label: 'Command' | 'Vanguard Trait' }) {

@@ -234,6 +234,52 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(vanguard).toHaveTextContent('At Level 16+ and deployed in Vanguard');
   });
 
+  it('resets expanded details when a position is changed or cleared and re-filled', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {}, malachite: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax' });
+
+    let left = screen.getByRole('article', { name: 'Left Flank' });
+    await user.click(within(left).getByRole('button', { name: 'Expand details' }));
+    expect(left).toHaveTextContent('Each Round: 20% chance');
+
+    await chooseDragonForPosition(user, 'left-flank', 'malachite');
+    left = screen.getByRole('article', { name: 'Left Flank' });
+    expect(within(left).getByRole('button', { name: 'Expand details' })).toHaveAttribute('aria-expanded', 'false');
+    expect(within(left).queryByText('Full Command wording')).not.toBeInTheDocument();
+    expect(left).not.toHaveTextContent('Each Round: 20% chance');
+
+    await user.click(within(left).getByRole('button', { name: 'Expand details' }));
+    await clearPosition(user, 'Left Flank');
+    await chooseDragonForPosition(user, 'left-flank', 'syrax');
+    left = screen.getByRole('article', { name: 'Left Flank' });
+    expect(within(left).getByRole('button', { name: 'Expand details' })).toHaveAttribute('aria-expanded', 'false');
+    expect(within(left).queryByText('Full Command wording')).not.toBeInTheDocument();
+    expect(left).not.toHaveTextContent('Each Round: 20% chance');
+  });
+
+  it('does not carry expanded wording to dragons moved or swapped into another position', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {}, vhagar: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax', 'right-flank': 'vhagar' });
+
+    const left = screen.getByRole('article', { name: 'Left Flank' });
+    await user.click(within(left).getByRole('button', { name: 'Expand details' }));
+    expect(left).toHaveTextContent('Each Round: 20% chance');
+
+    await user.click(within(left).getByRole('button', { name: /move to right flank, swapping/i }));
+
+    const replacement = screen.getByRole('article', { name: 'Left Flank' });
+    const destination = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(replacement).getByRole('button', { name: 'Expand details' })).toHaveAttribute('aria-expanded', 'false');
+    expect(within(destination).getByRole('button', { name: 'Expand details' })).toHaveAttribute('aria-expanded', 'false');
+    expect(destination).not.toHaveTextContent('Each Round: 20% chance');
+  });
+
   it('renders compact accessible affinity symbols and restrained unknown states without a bottom Affinities section', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {}, caraxes: {}, antares: { owned: false } });
@@ -693,6 +739,29 @@ describe('Formation Builder simple synergy cutover', () => {
     await user.click(within(vhagarRow as HTMLElement).getByRole('button', { name: 'Select' }));
     expect(screen.queryByRole('dialog', { name: /choose a dragon for left flank/i })).not.toBeInTheDocument();
     expect(screen.getByRole('article', { name: 'Left Flank' })).toHaveTextContent('Vhagar');
+  });
+
+  it('renders shared non-color state markers in selector signal previews', async () => {
+    const user = userEvent.setup();
+    seedRoster({ arulix: { starRank: 5 }, caraxes: { reignLevel: 26 }, vhagar: {} });
+
+    await openFormationBuilder(user);
+    await switchFormationMode(user, 'My Roster');
+    await selectFormation(user, { vanguard: 'caraxes' });
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
+
+    const dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+    const search = within(dialog).getByLabelText(/search by dragon name/i);
+    await user.type(search, 'Vhagar');
+    const vhagarRow = within(dialog).getByRole('heading', { name: 'Vhagar' }).closest('article') as HTMLElement;
+    expect(vhagarRow.querySelector('[data-state-marker="active"]')).not.toBeNull();
+    expect(vhagarRow.querySelector('[data-state-marker="available"]')).not.toBeNull();
+    expect(vhagarRow.querySelector('[data-state-marker="inactive"]')).not.toBeNull();
+
+    await user.clear(search);
+    await user.type(search, 'Arulix');
+    const arulixRow = within(dialog).getByRole('heading', { name: 'Arulix' }).closest('article') as HTMLElement;
+    expect(arulixRow.querySelector('[data-state-marker="progression-locked"]')).not.toBeNull();
   });
 
   it('keeps the Formation Builder selector on mobile-safe responsive classes', async () => {

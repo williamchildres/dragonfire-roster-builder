@@ -39,6 +39,7 @@ import {
   profileProvidesLabel,
   type FormationSignalChip,
 } from './formationCardPresentation';
+import { formationSignalStateMarker } from './formationSignalPresentation';
 import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
 import dragonfireHero from '../assets/dragonfire-hero.png';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
@@ -1207,7 +1208,7 @@ function FormationBuilderSection({
           const dragon = dragons.find((candidate) => candidate.id === formation[position]) ?? null;
           return (
             <SimpleFormationCard
-              key={position}
+              key={`${position}:${dragon?.id ?? 'empty'}`}
               position={position}
               dragon={dragon}
               rosterEntry={dragon ? formationRosterEntryForDragon(dragon, roster, dragonPoolMode) : undefined}
@@ -1565,17 +1566,21 @@ function CompactSignalPreview({ title, chips }: { title: 'Damage profile' | 'Pro
       <span className="compact-signal-title">{title}</span>
       {chips.length > 0 ? (
         <ul className="chip-list formation-chip-list">
-          {chips.slice(0, 6).map((chip) => (
-            <li
-              aria-label={`${chip.label} ${chip.state}. ${chip.reason}`}
-              className={`chip formation-signal-chip signal-${chip.state}`}
-              data-state={chip.state}
-              key={chip.label}
-              title={`${chip.label}: ${chip.reason}`}
-            >
-              {chip.label}
-            </li>
-          ))}
+          {chips.slice(0, 6).map((chip) => {
+            const { Icon, marker } = formationSignalStateMarker(chip);
+            return (
+              <li
+                aria-label={`${chip.label} ${chip.state}. ${chip.reason}`}
+                className={`chip formation-signal-chip signal-${chip.state}`}
+                data-state={chip.state}
+                key={chip.label}
+                title={`${chip.label}: ${chip.reason}`}
+              >
+                <Icon className="signal-state-icon" data-state-marker={marker} size={13} aria-hidden="true" />
+                {chip.label}
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <span className="muted-inline">None mapped</span>
