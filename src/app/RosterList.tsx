@@ -1,4 +1,4 @@
-import { Check, Shield } from 'lucide-react';
+import { Shield } from 'lucide-react';
 import type { Dragon, OwnedDragon } from '../models/dragon';
 import { applicableHabitCount, unlockedHabitCount } from './rosterWorkspaceState';
 
@@ -41,9 +41,6 @@ export function RosterList({
                 <span>{formatStarRank(entry?.starRank)}</span>
                 <span>Lv {formatUnknown(entry?.reignLevel)}</span>
                 <span>{unlockedHabits}/{totalHabits} habits</span>
-              </span>
-              <span className="roster-row-selected-indicator" aria-hidden={!selected}>
-                {selected ? <><Check size={15} aria-hidden="true" /> Selected</> : null}
               </span>
             </button>
           </li>

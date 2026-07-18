@@ -130,6 +130,24 @@ describe('RosterWorkspace', () => {
     expect(unknownRow).toHaveTextContent('Lv —');
   });
 
+  it('keeps selection accessible without a visible selected indicator', async () => {
+    const user = userEvent.setup();
+    render(<WorkspaceHarness />);
+    const caraxes = screen.getByRole('button', { name: /^Caraxes,/i });
+    expect(caraxes).toHaveAttribute('aria-current', 'true');
+    expect(caraxes).toHaveClass('is-selected');
+    expect(caraxes).toHaveAccessibleName(/selected$/i);
+    expect(caraxes).not.toHaveTextContent('Selected');
+    expect(caraxes.querySelector('.roster-row-selected-indicator')).not.toBeInTheDocument();
+    expect(caraxes.querySelector('.lucide-check')).not.toBeInTheDocument();
+
+    const syrax = screen.getByRole('button', { name: /^Syrax,/i });
+    await user.click(syrax);
+    expect(syrax).toHaveAttribute('aria-current', 'true');
+    expect(syrax).toHaveClass('is-selected');
+    expect(caraxes).not.toHaveAttribute('aria-current');
+  });
+
   it('opens the existing internal details action with its compact label', async () => {
     const user = userEvent.setup();
     const onOpenDetails = vi.fn();

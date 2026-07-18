@@ -737,7 +737,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Roster synchronization now stays visible in the persistent account action, keeping healthy Roster workspaces focused while attention-required states remain prominent.</p>
+          <p>My Roster rows now keep selection clear and accessible without a redundant visible marker.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
