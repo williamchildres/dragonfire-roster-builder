@@ -239,9 +239,9 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.1/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('affinity records are now fully specified');
+    expect(latestUpdate).toHaveTextContent('All 31 canonical dragon affinity maps are fully specified');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();

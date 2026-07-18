@@ -123,8 +123,8 @@ describe('seeded dragon data integrity', () => {
       Spearmen: 'positive',
       Cavalry: 'positive',
       Siege: 'positive',
-      Archers: 'unknown',
-      Shieldbearers: 'unknown',
+      Archers: 'neutral',
+      Shieldbearers: 'neutral',
     });
     expect(Object.values(tessarion!.affinities)).not.toContain('negative');
     expect(Object.values(tessarion!.stats).every((value) => value === null)).toBe(true);

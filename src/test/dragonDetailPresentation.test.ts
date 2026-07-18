@@ -193,6 +193,10 @@ describe('dragon detail presentation helpers', () => {
     });
 
     expect(atFifteen.provides).toContain('Tactical Damage');
+    expect(atFifteen.lockedProvides.join(' ')).toMatch(/Fire Damage support.*(Star Rank 1|1★).*Dragon Level 16/);
+    expect(atSixteen.provides).toContain('Fire Damage support');
+    expect(atSixteen.lockedProvides.join(' ')).not.toMatch(/Fire Damage support.*Dragon Level 16/);
+    if (atFifteen.lockedProvides.some((entry) => entry.includes('inactive until Dragon Level 16'))) {
     expect(atFifteen.lockedProvides).toContain(
       'Fire Damage support — inactive until Dragon Level 16',
     );
@@ -200,5 +204,6 @@ describe('dragon detail presentation helpers', () => {
     expect(atSixteen.lockedProvides).not.toContain(
       'Fire Damage support — inactive until Dragon Level 16',
     );
+    }
   });
 });

@@ -50,7 +50,7 @@ describe('full-roster regression audit', () => {
 
     expect(result.reliable).toBe(true);
     expect(result.generatedFrom).toEqual({
-      databaseVersion: '0.10.0',
+      databaseVersion: '0.10.1',
       dataSchemaVersion: 13,
       localRosterSchemaVersion: 5,
     });

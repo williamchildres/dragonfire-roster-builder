@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.1 - 2026-07-18
+
+- Completed all canonical dragon affinity maps from the controller-confirmed main-screen screenshots. Visible favorable and unfavorable icons are recorded as positive and negative; unlisted troop types are neutral.
+- Corrected Dawnseeker, Nyrena, and Vesper Trait unlocks to Star Rank 1, removed Venator Armor Break's unsupported same-lane interpretation, and corrected Vermax Unyielding Resolve's Weakened transcription.
+- Increased database/package version to `0.10.1`; source data schema remains `13`, local/cloud roster schemas remain `5`, and no Supabase migration was added. Formation evaluation and rating calibration are unchanged.
+
 ## 0.10.0 - 2026-07-18
 
 - Completed the 12 formerly all-unknown Rare-dragon affinity records from controller-provided in-game transcription. Unlisted troop types are recorded as neutral.

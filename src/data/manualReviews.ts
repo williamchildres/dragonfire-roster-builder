@@ -773,7 +773,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
       'Venator command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.',
       'Feral Strike stores two independently targeted Physical Damage instances and allows the same enemy to receive both.',
       'Feral Precision is modeled as a Double-Strike chance override on rounds 4, 6, and 8, not a second roll.',
-      'Armor Break opposing-position targeting is retained as provisional and normalized to same-lane compatibility.',
+      'Armor Break retains unresolved opposing-enemy targeting language; no formation recipient selector is inferred.',
     ],
     evidenceIds: [
       'venator-main-screen-2026-06-25',
