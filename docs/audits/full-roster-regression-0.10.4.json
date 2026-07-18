@@ -3239,7 +3239,7 @@
     "branch": "data/source-fidelity-malachite-venator-sheepstealer",
     "worktree": "C:\\Users\\willi\\Documents\\CodexProjects\\Dragonfire Roster Lab"
   },
-  "recordedAuditRuntimeMs": 21752,
+  "recordedAuditRuntimeMs": 25127,
   "browserQa": {
     "status": "PASS",
     "auditedUrl": "http://127.0.0.1:4173/ (local 0.10.4 production preview)",

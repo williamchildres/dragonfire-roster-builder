@@ -46,6 +46,7 @@ describe('Malachite, Venator, and Sheepstealer screenshot-source fidelity', () =
     expect(description('venator', 'venator-armor-break')).not.toMatch(/same lane/i);
     expect(description('venator', 'venator-desperate-ambush')).toMatch(/same selected target.*Overwhelm/s);
     expect(description('sheepstealer', 'sheepstealer-wild-hunt')).toMatch(/received Recovery within the previous round.*Prey lasts three rounds.*reduces Recovery Received by 30%.*At 10 Stars/s);
+    expect(description('sheepstealer', 'sheepstealer-wild-hunt')).toMatch(/At 10 Stars, Each Round while Sheepstealer has a current Prey/);
     expect(description('sheepstealer', 'sheepstealer-baited-kill')).toContain('screenshot does not state a Vulnerable duration');
     expect(ability('malachite', 'malachite-thunderous-roar').tags).toContain('ADVANTAGE');
     expect(ability('venator', 'venator-feral-precision').tags).toContain('DOUBLE_STRIKE');

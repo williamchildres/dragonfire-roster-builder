@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-18T23:46:47.037Z",
+  "generatedAt": "2026-07-18T23:58:20.139Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "data/source-fidelity-malachite-venator-sheepstealer",
-    "commit": "7b33cd014713690cdd14b83552aa290233c7746e",
+    "commit": "69888d5660d50513efb0a867665c949bf041c416",
     "databaseVersion": "0.10.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
@@ -7728,7 +7728,7 @@
             "PREY",
             "RECOVERY_RECEIVED_DOWN"
           ],
-          "rawDescription": "Each Round, when no Enemy is currently marked as Sheepstealer's Prey: 40% chance to mark one Enemy in any lane as Prey, prioritizing Enemies that received Recovery within the previous round. Prey lasts three rounds and reduces Recovery Received by 30%. Rounds 1, 4, 7, and 10: deal Fire Damage to one Enemy in any lane, prioritizing Prey. Base Damage Rate: 100%; damage doubles to 200% against Prey. Fire Damage scales with Intelligence and is mitigated by the target's Initiative.\n\nAt 10 Stars, while Sheepstealer has a current Prey: deal Fire Damage to Prey at the current Savage Claim Damage Rate and apply Recovery to Sheepstealer at the current Savage Claim Recovery Rate. Fire Damage scales with Intelligence and is mitigated by target Initiative; Recovery is enhanced by Intelligence and scales with Dragon Level. If Prey received Recovery during the previous round, triple both rates. At Habit Level 1: Fire Damage 24%, tripled to 72%; Recovery 10%, tripled to 30%."
+          "rawDescription": "Each Round, when no Enemy is currently marked as Sheepstealer's Prey: 40% chance to mark one Enemy in any lane as Prey, prioritizing Enemies that received Recovery within the previous round. Prey lasts three rounds and reduces Recovery Received by 30%. Rounds 1, 4, 7, and 10: deal Fire Damage to one Enemy in any lane, prioritizing Prey. Base Damage Rate: 100%; damage doubles to 200% against Prey. Fire Damage scales with Intelligence and is mitigated by the target's Initiative.\n\nAt 10 Stars, Each Round while Sheepstealer has a current Prey: deal Fire Damage to Prey at the current Savage Claim Damage Rate and apply Recovery to Sheepstealer at the current Savage Claim Recovery Rate. Fire Damage scales with Intelligence and is mitigated by target Initiative; Recovery is enhanced by Intelligence and scales with Dragon Level. If Prey received Recovery during the previous round, triple both rates. At Habit Level 1: Fire Damage 24%, tripled to 72%; Recovery 10%, tripled to 30%."
         },
         {
           "id": "sheepstealer-hunters-cunning",
