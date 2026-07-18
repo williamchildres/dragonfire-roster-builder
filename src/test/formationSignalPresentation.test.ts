@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   buildFormationFilterOptions,
   buildFormationSignalChips,
+  currentProgressionVisibleChips,
   type FormationSignalChip,
 } from '../app/formationCardPresentation';
 import { emptyFormation, type Formation } from '../services/teamShare';
@@ -132,14 +133,83 @@ describe('Formation Builder signal presentation helpers', () => {
     expect(caraxes.provides.find((signal) => signal.label === 'Control')).toBeUndefined();
   });
 
-  it('keeps locked and position-blocked Vanguard Trait outputs inactive', () => {
+  it('keeps progression locking independent from position causes without changing canonical collections', () => {
     const selected = formation(null, null, 'caraxes');
-    const caraxes = chipsFor('caraxes', 'right-flank', selected, {
+    const lockedCaraxesOutsideVanguard = chipsFor('caraxes', 'right-flank', selected, {
       caraxes: { starRank: 10, dragonLevel: 15 },
     });
 
-    expect(chip(caraxes.provides, 'Strength support')).toMatchObject({ state: 'inactive' });
-    expect(chip(caraxes.provides, 'Initiative support').reason).toContain('requires Vanguard');
+    expect(chip(lockedCaraxesOutsideVanguard.provides, 'Strength support')).toMatchObject({
+      state: 'inactive',
+      inactiveCause: 'position',
+      inactiveCauses: ['position', 'dragon-level'],
+      progressionLocked: true,
+    });
+    expect(currentProgressionVisibleChips(lockedCaraxesOutsideVanguard.provides)).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Strength support' }),
+    ]));
+
+    const lockedCaraxes = chipsFor('caraxes', 'vanguard', formation(null, 'caraxes', null), {
+      caraxes: { starRank: 10, dragonLevel: 15 },
+    });
+    expect(chip(lockedCaraxes.provides, 'Strength support')).toMatchObject({
+      state: 'inactive',
+      inactiveCause: 'dragon-level',
+      inactiveCauses: ['dragon-level'],
+      progressionLocked: true,
+    });
+    expect(currentProgressionVisibleChips(lockedCaraxes.provides)).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Strength support' }),
+    ]));
+
+    const unlockedCaraxesOutsideVanguard = chipsFor('caraxes', 'right-flank', selected, {
+      caraxes: { starRank: 10, dragonLevel: 16 },
+    });
+    expect(chip(unlockedCaraxesOutsideVanguard.provides, 'Strength support')).toMatchObject({
+      state: 'inactive',
+      inactiveCause: 'position',
+      inactiveCauses: ['position'],
+      progressionLocked: false,
+    });
+    expect(currentProgressionVisibleChips(unlockedCaraxesOutsideVanguard.provides)).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Strength support', progressionLocked: false }),
+    ]));
+
+    const everyInitiativeSourceLocked = chipsFor('syrax', 'left-flank', formation('syrax', null, null), {
+      syrax: { starRank: 1, dragonLevel: 15 },
+    });
+    expect(chip(everyInitiativeSourceLocked.provides, 'Initiative support')).toMatchObject({
+      inactiveCause: 'position',
+      inactiveCauses: ['position', 'dragon-level'],
+      progressionLocked: true,
+    });
+    expect(currentProgressionVisibleChips(everyInitiativeSourceLocked.provides)).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Initiative support' }),
+    ]));
+
+    const positionBlockedInitiativeSource = chipsFor('syrax', 'left-flank', formation('syrax', null, null), {
+      syrax: { starRank: 1, dragonLevel: 16 },
+    });
+    expect(chip(positionBlockedInitiativeSource.provides, 'Initiative support')).toMatchObject({
+      state: 'inactive',
+      inactiveCause: 'position',
+      progressionLocked: false,
+    });
+    expect(chip(positionBlockedInitiativeSource.provides, 'Initiative support').reason).toContain('requires Vanguard');
+    expect(currentProgressionVisibleChips(positionBlockedInitiativeSource.provides)).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Initiative support', progressionLocked: false }),
+    ]));
+
+    const activeInitiativeSource = chipsFor('syrax', 'left-flank', formation('syrax', null, null), {
+      syrax: { starRank: 4, dragonLevel: 16 },
+    });
+    expect(chip(activeInitiativeSource.provides, 'Initiative support')).toMatchObject({
+      state: 'available',
+      progressionLocked: false,
+    });
+    expect(currentProgressionVisibleChips(activeInitiativeSource.provides)).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Initiative support', state: 'available' }),
+    ]));
   });
 
   it('returns no signals for metadata-only dragons without inventing tags', () => {

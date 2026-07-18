@@ -24,8 +24,8 @@ describe('Formation Builder simple synergy cutover', () => {
       const entry = roster[dragonId];
       expect(entry).toBeDefined();
       entry!.owned = progression.owned ?? true;
-      entry!.starRank = progression.starRank ?? 10;
-      entry!.reignLevel = progression.reignLevel ?? 26;
+      entry!.starRank = progression.starRank === undefined ? 10 : progression.starRank;
+      entry!.reignLevel = progression.reignLevel === undefined ? 26 : progression.reignLevel;
     }
 
     window.localStorage.setItem(
@@ -76,7 +76,7 @@ describe('Formation Builder simple synergy cutover', () => {
     const card = screen.getByRole('article', { name: labels[position] });
     const chooseButton =
       within(card).queryByRole('button', { name: /\+ add dragon/i }) ??
-      within(card).getByRole('button', { name: /change dragon/i });
+      within(card).getByRole('button', { name: /replace dragon/i });
 
     await user.click(chooseButton);
     const dialog = screen.getByRole('dialog', { name: new RegExp(`choose a dragon for ${labels[position]}`, 'i') });
@@ -313,7 +313,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(screen.queryByRole('heading', { name: 'Affinities' })).not.toBeInTheDocument();
   });
 
-  it('separates selected-dragon identity metadata from progression metadata', async () => {
+  it('shows Star Rank inline with the selected dragon name instead of a separate metadata row', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {} });
 
@@ -322,7 +322,38 @@ describe('Formation Builder simple synergy cutover', () => {
 
     const card = screen.getByRole('article', { name: 'Left Flank' });
     expect(within(card).getByLabelText('Syrax identity metadata')).toHaveTextContent(/Legendary\s*Sentinel/);
-    expect(within(card).getByLabelText('Syrax progression metadata')).toHaveTextContent('Star 10');
+    expect(within(card).getByRole('heading', { name: 'Syrax' })).toHaveTextContent('Syrax');
+    expect(within(card).getByLabelText('Star Rank 10')).toHaveTextContent('10★');
+    expect(within(card).queryByLabelText('Syrax progression metadata')).not.toBeInTheDocument();
+  });
+
+  it('shows saved known and unknown Star Ranks inline without changing identity metadata', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: { starRank: 2 }, caraxes: { starRank: 1 }, tessarion: { starRank: null } });
+
+    await openFormationBuilder(user);
+    await switchFormationMode(user, 'My Roster');
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'tessarion' });
+
+    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText('Star Rank 2')).toHaveTextContent('2★');
+    expect(within(screen.getByRole('article', { name: 'Vanguard' })).getByLabelText('Star Rank 1')).toHaveTextContent('1★');
+    expect(within(screen.getByRole('article', { name: 'Right Flank' })).getByLabelText('Star Rank unknown')).toHaveTextContent('?★');
+    expect(screen.queryByText(/Star 2/)).not.toBeInTheDocument();
+  });
+
+  it('uses text-labelled card actions with supporting hidden icons', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: {} });
+
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'syrax' });
+
+    const card = screen.getByRole('article', { name: 'Left Flank' });
+    for (const name of ['Expand details', 'Replace dragon', 'Dragon details', 'Move to Vanguard', 'Clear position']) {
+      const button = within(card).getByRole('button', { name: new RegExp(name, 'i') });
+      expect(button).toHaveTextContent(name);
+      expect(button.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
+    }
   });
 
   it('maps roster Star Rank to progression-locked simple relationships', async () => {
@@ -667,11 +698,19 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { vanguard: 'caraxes', 'right-flank': 'syrax' });
 
     const vanguardCard = screen.getByRole('article', { name: 'Vanguard' });
-    expect(within(vanguardCard).getByLabelText(/Strength support inactive/i)).toHaveAttribute('data-state', 'inactive');
-    expect(within(vanguardCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/Dragon Level 16/i);
+    expect(within(vanguardCard).queryByLabelText(/Strength support inactive/i)).not.toBeInTheDocument();
 
     await user.click(within(vanguardCard).getByRole('button', { name: /move to right flank/i }));
-    const rightCard = screen.getByRole('article', { name: 'Right Flank' });
+    let rightCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(rightCard).queryByLabelText(/Strength support inactive/i)).not.toBeInTheDocument();
+
+    await user.click(within(rightCard).getByRole('button', { name: /dragon details/i }));
+    const details = screen.getByRole('dialog', { name: 'Caraxes' });
+    await user.clear(within(details).getByLabelText('Dragon Level'));
+    await user.type(within(details).getByLabelText('Dragon Level'), '16');
+    await user.click(within(details).getByRole('button', { name: /close details/i }));
+
+    rightCard = screen.getByRole('article', { name: 'Right Flank' });
     expect(within(rightCard).getByLabelText(/Strength support inactive/i)).toHaveAccessibleName(/requires Vanguard/i);
   });
 
@@ -682,7 +721,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await openFormationBuilder(user);
     await selectFormation(user, { vanguard: 'vhagar' });
 
-    await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /view details/i }));
+    await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /dragon details/i }));
     const dialog = screen.getByRole('dialog', { name: /vhagar/i });
     expect(dialog).toHaveTextContent('At a glance');
     expect(dialog).toHaveTextContent("Warrior's Resilience");
@@ -768,7 +807,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(screen.getByRole('article', { name: 'Left Flank' })).toHaveTextContent('Vhagar');
   });
 
-  it('renders shared non-color state markers in selector signal previews', async () => {
+  it('renders shared non-color state markers in selector previews while hiding progression-locked chips', async () => {
     const user = userEvent.setup();
     seedRoster({ arulix: { starRank: 5 }, caraxes: { reignLevel: 26 }, vhagar: {} });
 
@@ -788,7 +827,47 @@ describe('Formation Builder simple synergy cutover', () => {
     await user.clear(search);
     await user.type(search, 'Arulix');
     const arulixRow = within(dialog).getByRole('heading', { name: 'Arulix' }).closest('article') as HTMLElement;
-    expect(arulixRow.querySelector('[data-state-marker="progression-locked"]')).not.toBeNull();
+    expect(
+      within(arulixRow).getByLabelText('Provides').querySelector('[data-state-marker="progression-locked"]'),
+    ).toBeNull();
+    expect(
+      within(arulixRow).getByLabelText('Synergy needs').querySelector('[data-state-marker="progression-locked"]'),
+    ).toBeNull();
+  });
+
+  it('hides progression-locked card and selector signals while retaining unlocked missing signals', async () => {
+    const user = userEvent.setup();
+    seedRoster({ syrax: { starRank: 1 }, caraxes: { reignLevel: 15 } });
+
+    await openFormationBuilder(user);
+    await switchFormationMode(user, 'My Roster');
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes' });
+
+    const syraxCard = screen.getByRole('article', { name: 'Left Flank' });
+    const caraxesCard = screen.getByRole('article', { name: 'Vanguard' });
+    expect(within(syraxCard).queryByLabelText(/Recovery inactive.*Star Rank/i)).not.toBeInTheDocument();
+    expect(within(syraxCard).queryByLabelText(/Slow inactive.*Star Rank/i)).not.toBeInTheDocument();
+    expect(within(caraxesCard).queryByLabelText(/Strength support inactive.*Dragon Level/i)).not.toBeInTheDocument();
+
+    await user.click(within(caraxesCard).getByRole('button', { name: /move to right flank/i }));
+    let movedCaraxesCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(movedCaraxesCard).queryByLabelText(/Strength support inactive/i)).not.toBeInTheDocument();
+
+    await user.click(within(movedCaraxesCard).getByRole('button', { name: /dragon details/i }));
+    const caraxesDetails = screen.getByRole('dialog', { name: 'Caraxes' });
+    await user.clear(within(caraxesDetails).getByLabelText('Dragon Level'));
+    await user.type(within(caraxesDetails).getByLabelText('Dragon Level'), '16');
+    await user.click(within(caraxesDetails).getByRole('button', { name: /close details/i }));
+
+    movedCaraxesCard = screen.getByRole('article', { name: 'Right Flank' });
+    expect(within(movedCaraxesCard).getByLabelText(/Strength support inactive.*requires Vanguard/i)).toBeInTheDocument();
+
+    await user.click(within(syraxCard).getByRole('button', { name: /replace dragon/i }));
+    const dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
+    await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Syrax');
+    const syraxRow = within(dialog).getByRole('heading', { name: 'Syrax' }).closest('article') as HTMLElement;
+    expect(within(syraxRow).queryByLabelText(/Recovery inactive.*Star Rank/i)).not.toBeInTheDocument();
+    expect(within(syraxRow).queryByText('No currently unlocked synergy needs.')).toBeInTheDocument();
   });
 
   it('keeps the Formation Builder selector on mobile-safe responsive classes', async () => {
@@ -834,9 +913,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(antaresRow).toHaveTextContent('Star 10');
     await user.click(within(antaresRow as HTMLElement).getByRole('button', { name: /^select$/i }));
 
-    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText(/Antares metadata/i)).toHaveTextContent(
-      'Star 10',
-    );
+    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText('Star Rank 10')).toHaveTextContent('10★');
 
     await user.click(screen.getByRole('radio', { name: 'My Roster' }));
     expect(screen.getByRole('status')).toHaveTextContent('My Roster mode cleared unavailable slot: Left Flank.');
@@ -863,9 +940,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(syraxRow).toHaveTextContent('Star 4');
     await user.click(within(syraxRow as HTMLElement).getByRole('button', { name: /^select$/i }));
 
-    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText(/Syrax metadata/i)).toHaveTextContent(
-      'Star 4',
-    );
+    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText('Star Rank 4')).toHaveTextContent('4★');
   });
 
   it('keeps Arulix command and damage-profile wording progression-aware at Star Ranks 5 and 6', async () => {
@@ -884,7 +959,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(command).not.toHaveTextContent('Deals Physical Damage');
     expect(command).toHaveTextContent('gains Physical Damage at 6★');
 
-    await user.click(within(card).getByRole('button', { name: /view details/i }));
+    await user.click(within(card).getByRole('button', { name: /dragon details/i }));
     const details = screen.getByRole('dialog', { name: 'Arulix' });
     const commandDetails = within(details).getByRole('heading', { name: 'Gleaming Spiral' }).closest('article');
     expect(commandDetails).not.toBeNull();
@@ -919,8 +994,8 @@ describe('Formation Builder simple synergy cutover', () => {
     for (const position of ['Left Flank', 'Vanguard', 'Right Flank']) {
       const card = screen.getByRole('article', { name: position });
       expect(within(card).queryByLabelText('Dragon')).not.toBeInTheDocument();
-      expect(within(card).getByRole('button', { name: /change dragon/i })).toBeInTheDocument();
-      expect(within(card).getByRole('button', { name: /view details/i })).toBeInTheDocument();
+      expect(within(card).getByRole('button', { name: /replace dragon/i })).toBeInTheDocument();
+      expect(within(card).getByRole('button', { name: /dragon details/i })).toBeInTheDocument();
       expect(within(card).getByLabelText(/movement controls/i)).toBeInTheDocument();
       expect(within(card).getByRole('button', { name: /clear position/i })).toBeInTheDocument();
       expect(within(card).getByRole('region', { name: 'Command' })).toBeInTheDocument();
@@ -938,10 +1013,10 @@ describe('Formation Builder simple synergy cutover', () => {
 
     const syrax = dragons.find((dragon) => dragon.id === 'syrax')!;
     const syraxCard = screen.getByRole('article', { name: 'Left Flank' });
-    const syraxMetadata = within(syraxCard).getByLabelText(/Syrax metadata/i);
+    const syraxMetadata = within(syraxCard).getByLabelText(/Syrax identity metadata/i);
     expect(syraxMetadata).toHaveTextContent(syrax.rarity);
     expect(syraxMetadata).toHaveTextContent(syrax.breed);
-    expect(syraxMetadata).toHaveTextContent('Star 10');
+    expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText('Star Rank 10')).toHaveTextContent('10★');
     expect(syraxMetadata).not.toHaveTextContent('Verified');
     expect(syraxMetadata).not.toHaveTextContent('Owned / Hatched');
 
@@ -976,7 +1051,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
     expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
     expect(screen.queryByRole('heading', { name: 'Missing enablers' })).not.toBeInTheDocument();
-    await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /change dragon/i }));
+    await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /replace dragon/i }));
     const selector = screen.getByRole('dialog', { name: /choose a dragon for vanguard/i });
     await user.type(within(selector).getByLabelText(/search by dragon name/i), 'Syrax');
     const syraxRow = within(selector).getByRole('heading', { name: 'Syrax' }).closest('article');

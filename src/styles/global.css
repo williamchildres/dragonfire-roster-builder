@@ -1607,7 +1607,15 @@ dd {
 .formation-dragon-summary h3 {
   color: var(--text);
   font-size: 1.12rem;
-  margin: 0 0 0.45rem;
+  margin: 0;
+}
+
+.formation-dragon-title-row {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.45rem;
 }
 
 .formation-dragon-summary {
@@ -1621,16 +1629,17 @@ dd {
   min-width: 0;
 }
 
-.formation-dragon-metadata {
-  display: grid;
-  gap: 0.3rem;
-}
-
-.formation-identity-metadata,
-.formation-progression-metadata {
+.formation-identity-metadata {
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem;
+}
+
+.formation-inline-rank {
+  color: var(--gold);
+  font-size: 0.82em;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .formation-signal-grid {

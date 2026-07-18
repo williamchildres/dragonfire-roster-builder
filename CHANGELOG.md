@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.6 - 2026-07-18
+
+- Kept selected-dragon Star Rank beside each dragon name, clarified card actions with text-supported icons, and hid only current-progression-locked Provides and Synergy Needs signals from compact cards and selector previews.
+- Formation scoring, category components, future-unlock analysis, evaluator output, canonical dragon data, affinity values, and progression requirements are unchanged; the filtering is presentation-only.
+- Increased database/package version to `0.9.6`; source data schema remains `13`, and local/cloud roster schemas remain `5`. No database or Supabase migration was added.
+
 ## 0.9.5 - 2026-07-18
 
 - Tightened the Formation Builder workspace introduction, standardized selected-dragon metadata into identity and progression rows, and refined the compact affinity presentation with a single-spear Spearmen symbol.

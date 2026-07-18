@@ -34,6 +34,7 @@ import {
 import {
   buildFormationFilterOptions,
   buildFormationSignalChips,
+  currentProgressionVisibleChips,
   profileBenefitsFromLabel,
   profileDamageProfileLabel,
   profileProvidesLabel,
@@ -735,7 +736,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Formation Builder now uses a compact workspace header, deliberate two-row dragon metadata, and streamlined accessible troop affinity symbols.</p>
+          <p>Formation Builder now keeps Star Rank with each dragon name, clarifies card actions, and hides only progression-locked signals from compact views.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -1560,12 +1561,14 @@ function FormationDragonSelectorRow({
 }
 
 function CompactSignalPreview({ title, chips }: { title: 'Damage profile' | 'Provides' | 'Synergy needs'; chips: FormationSignalChip[] }) {
+  const visibleChips = title === 'Damage profile' ? chips : currentProgressionVisibleChips(chips);
+  const emptyMessage = title === 'Provides' ? 'No currently unlocked Provides signals.' : 'No currently unlocked synergy needs.';
   return (
     <div className="compact-signal-preview" aria-label={title}>
       <span className="compact-signal-title">{title}</span>
-      {chips.length > 0 ? (
+      {visibleChips.length > 0 ? (
         <ul className="chip-list formation-chip-list">
-          {chips.slice(0, 6).map((chip) => {
+          {visibleChips.slice(0, 6).map((chip) => {
             const { Icon, marker } = formationSignalStateMarker(chip);
             return (
               <li
@@ -1582,7 +1585,7 @@ function CompactSignalPreview({ title, chips }: { title: 'Damage profile' | 'Pro
           })}
         </ul>
       ) : (
-        <span className="muted-inline">None mapped</span>
+        <span className="muted-inline">{chips.length > 0 ? emptyMessage : 'None mapped'}</span>
       )}
     </div>
   );

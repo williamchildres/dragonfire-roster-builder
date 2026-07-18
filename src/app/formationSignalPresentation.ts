@@ -13,7 +13,7 @@ export function formationSignalStateMarker(chip: FormationSignalChip): {
   if (chip.state === 'available') {
     return { Icon: Circle, marker: 'available' };
   }
-  if (chip.state === 'inactive' && /star|dragon level|progression|unlock/i.test(chip.reason)) {
+  if (chip.inactiveCause === 'star-rank' || chip.inactiveCause === 'dragon-level') {
     return { Icon: LockKeyhole, marker: 'progression-locked' };
   }
   return { Icon: X, marker: 'inactive' };
