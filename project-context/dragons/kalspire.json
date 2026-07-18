@@ -33,7 +33,7 @@
         "BLEED",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "After each Basic Attack: deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate, scaling with Kalspire's Instinct and mitigated by target Intelligence.\n\nThen independently attempt Bleed at a 30% chance on the original Basic Attack target and one other enemy within adjacency. Bleed deals periodic Physical Damage at a 20% rate each round for 2 rounds, scaling with Strength and mitigated by target Instinct.\n\nAt 6+ Stars:\n\nAfter each Basic Attack: deal Physical Damage at a 25% rate to one enemy within adjacency that is distinct from the original Basic Attack target, scaling with Strength.\n\nThen independently attempt Panic at a 15% chance on the Physical Damage target and one other distinct enemy within adjacency. Panic deals periodic Tactical Damage at a 20% rate each round for 2 rounds.\n\nStar Rank 6 augmentation:\nAt 6+ Stars, Tactical Assault augments Tactical Strike with Physical Damage and independent Panic checks."
+      "rawDescription": "After each Basic Attack, deal Tactical Damage to the original Basic Attack target at a 50% Damage Rate. Tactical Damage is increased by Kalspire's Instinct and mitigated by target Intelligence.\n\nAdditionally, independently check a 30% Bleed chance for the original target and one other Enemy within adjacency. Bleed lasts two rounds and deals Physical Damage each round at a 20% Damage Rate. Its Physical Damage is increased by Kalspire's Strength and mitigated by target Instinct.\n\nAt 6+ Stars, after each Basic Attack, also deal Physical Damage to one Enemy within adjacency that was not the Basic Attack target at a 25% Damage Rate. Physical Damage is increased by Kalspire's Strength and mitigated by target Instinct. Additionally, independently check a 15% Panic chance for that target and one other distinct Enemy within adjacency. The Panic targets must be distinct. Panic lasts two rounds and deals Tactical Damage each round at a 20% Damage Rate."
     },
     {
       "id": "kalspire-champions-brilliance",
@@ -85,7 +85,7 @@
         "STRENGTH_UP",
         "INSTINCT_UP"
       ],
-      "rawDescription": "Start of Combat until end of combat: increase Kalspire Strength and Instinct."
+      "rawDescription": "Start of Combat until end of combat: increase Kalspire's Strength and Instinct.\n\nHabit Levels 1-5 — Strength increase: 20%, 24%, 28%, 34%, 40%. Instinct increase: 20%, 24%, 28%, 34%, 40%."
     },
     {
       "id": "kalspire-battle-cunning",
@@ -109,7 +109,7 @@
         "DEBUFF_STRENGTH",
         "DEBUFF_INTELLIGENCE"
       ],
-      "rawDescription": "Start of Combat until end of combat: target three enemies in any lane. Reduce Strength and Intelligence, enhanced by Instinct. Prose rounds L1 to -6%; table shows -6.5%."
+      "rawDescription": "Start of Combat until end of combat: reduce Strength and Intelligence of three Enemies in any lane. Both reductions are enhanced by Kalspire's Instinct.\n\nVisible source discrepancy: the prose displays -6%, while the Level 1 table displays -6.5%.\n\nHabit Levels 1-5 — Strength and Intelligence reduction (table): -6.5%, -7.8%, -9.1%, -11.05%, -13%."
     },
     {
       "id": "kalspire-tactical-assault",
@@ -135,7 +135,7 @@
         "PANIC",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "At 6+ Stars, Tactical Assault augments Tactical Strike: after each Basic Attack, deal Physical Damage to one enemy within adjacency that is not the original Basic Attack target. Then independently attempt Panic on that target and one other distinct adjacent enemy."
+      "rawDescription": "Augments Tactical Strike at 6+ Stars. After each Basic Attack, deal Physical Damage to one Enemy within adjacency that was not the Basic Attack target. Physical Damage is increased by Kalspire's Strength. Independently check Panic against that Physical Damage target and one other distinct Enemy within adjacency. Panic lasts two rounds and deals Tactical Damage each round.\n\nHabit Levels 1-5 — Panic chance: 15%, 18%, 21%, 25.5%, 30%. Physical Damage Rate: 25%, 30%, 35%, 42.5%, 50%."
     },
     {
       "id": "kalspire-dragons-insight",
@@ -159,7 +159,7 @@
         "DAMAGE_RECEIVED_DOWN",
         "INSTINCT_UP"
       ],
-      "rawDescription": "Start of Combat until end of combat: reduce Damage Received and increase Instinct."
+      "rawDescription": "Start of Combat until end of combat: reduce Kalspire's Damage Received and increase Kalspire's Instinct.\n\nHabit Levels 1-5 — Damage Received: -6%, -7.2%, -8.4%, -10.2%, -12%. Instinct increase: 12%, 14.4%, 16.8%, 20.4%, 24%."
     },
     {
       "id": "kalspire-radiant-conqueror",
@@ -185,7 +185,7 @@
         "PHYSICAL_DAMAGE_UP",
         "FIRE_DAMAGE"
       ],
-      "rawDescription": "Start of Round 1 for one round: Kalspire Damage Received -50% and Kalspire is afflicted with Stun. Start of Round 2 for five rounds: reduce non-Basic Physical Damage Dealt of enemy with highest Strength and Fire Damage Dealt of enemy with highest Intelligence. The selected enemies may be same or different."
+      "rawDescription": "Start of Round 1: reduce Kalspire's Damage Received by 50% for one round and afflict Kalspire with Stun for one round. Stun prevents Commands, Habits, and Basic Attacks on the affected turn.\n\nStart of Round 2: reduce non-Basic Physical Damage Dealt of the Enemy with the highest Strength and reduce Fire Damage Dealt of the Enemy with the highest Intelligence. Both effects last five rounds; the selected Enemies may be the same or different.\n\nHabit Levels 1-5 — Physical and Fire Damage Dealt reduction: -10%, -13%, -16%, -20%, -25%."
     }
   ],
   "affinities": {
