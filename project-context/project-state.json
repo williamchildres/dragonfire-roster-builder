@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-18T05:38:21.186Z",
+  "generatedAt": "2026-07-18T06:43:56.212Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/mobile-page-scrolling",
-    "commit": "ebaa814206667f180f247754aa0b415eada069cf",
-    "databaseVersion": "0.9.2",
+    "branch": "ui/overview-hierarchy-polish",
+    "commit": "65b8531acda61517741ff69df890a5ac7dd774ad",
+    "databaseVersion": "0.9.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
