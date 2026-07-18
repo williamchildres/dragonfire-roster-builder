@@ -1,14 +1,14 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-18T03:19:33.123Z",
+  "generatedAt": "2026-07-18T04:44:26.289Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/roster-workspace",
-    "commit": "68ad6b4183e2a7d85dd920ce7e9ff1460eca6528",
-    "databaseVersion": "0.9.0",
+    "branch": "fix/habit-level-unlock-contract",
+    "commit": "b72913b07f5d3dd4b6ce3ad03da6eebec79ec605",
+    "databaseVersion": "0.9.1",
     "dataSchemaVersion": 13,
-    "localRosterSchemaVersion": 4,
+    "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
   },
   "projectRules": {
