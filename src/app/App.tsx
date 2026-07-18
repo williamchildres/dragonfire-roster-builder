@@ -737,7 +737,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>My Roster rows now keep selection clear and accessible without a redundant visible marker.</p>
+          <p>The 12 formerly all-unknown Rare-dragon affinity records are now fully specified from controller-provided in-game transcription.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

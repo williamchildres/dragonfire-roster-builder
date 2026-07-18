@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-18T18:02:29.356Z",
+  "generatedAt": "2026-07-18T19:19:41.770Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "ui/roster-selected-row-cleanup",
-    "commit": "610dc819f4a8105a86b221b669757b3330fadcf9",
-    "databaseVersion": "0.9.9",
+    "branch": "data/complete-rare-dragon-affinities",
+    "commit": "4799cdeb065e6bb67ce9e41d82e7eaa061658d08",
+    "databaseVersion": "0.10.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -1051,7 +1051,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/solstryker/",
       "abilities": [
@@ -1246,11 +1246,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
+        "Archers": "positive",
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -1296,9 +1296,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -4410,7 +4410,7 @@
       "breed": "Hunter",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-15",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/antares/",
       "abilities": [
@@ -4601,11 +4601,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
+        "Archers": "positive",
+        "Spearmen": "neutral",
+        "Siege": "negative"
       },
       "verification": {
         "identity": {
@@ -4651,9 +4651,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-15",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -4678,7 +4678,7 @@
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/shimmer/",
       "abilities": [
@@ -4877,11 +4877,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "positive",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "positive"
       },
       "verification": {
         "identity": {
@@ -4927,9 +4927,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -4954,7 +4954,7 @@
       "breed": "Hunter",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/jagadrix/",
       "abilities": [
@@ -5153,11 +5153,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
+        "Spearmen": "positive",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -5203,9 +5203,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icon was not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -5230,7 +5230,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/bevlorin/",
       "abilities": [
@@ -5433,11 +5433,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
+        "Spearmen": "positive",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -5483,9 +5483,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -5510,7 +5510,7 @@
       "breed": "Warrior",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/shadowrend/",
       "abilities": [
@@ -5712,11 +5712,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "positive",
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "positive"
       },
       "verification": {
         "identity": {
@@ -5762,9 +5762,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -5789,7 +5789,7 @@
       "breed": "Warrior",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/thunderstrike/",
       "abilities": [
@@ -5983,11 +5983,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "positive",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -6033,9 +6033,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icon was not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -6060,7 +6060,7 @@
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/vesper/",
       "abilities": [
@@ -6251,11 +6251,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "positive",
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "negative"
       },
       "verification": {
         "identity": {
@@ -6301,9 +6301,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -6328,7 +6328,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-15",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/arulix/",
       "abilities": [
@@ -6526,11 +6526,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "positive",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -6576,9 +6576,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-15",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -6603,7 +6603,7 @@
       "breed": "Champion",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/nyrena/",
       "abilities": [
@@ -6804,11 +6804,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "positive",
+        "Archers": "neutral",
+        "Spearmen": "neutral",
+        "Siege": "positive"
       },
       "verification": {
         "identity": {
@@ -6854,9 +6854,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -6881,7 +6881,7 @@
       "breed": "Sentinel",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-16",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/dawnseeker/",
       "abilities": [
@@ -7088,11 +7088,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "neutral",
+        "Archers": "neutral",
+        "Spearmen": "positive",
+        "Siege": "negative"
       },
       "verification": {
         "identity": {
@@ -7138,9 +7138,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-16",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }
@@ -7165,7 +7165,7 @@
       "breed": "Warrior",
       "rosterSourceStatus": "official-website",
       "dataStatus": "community-verified",
-      "lastVerified": "2026-07-15",
+      "lastVerified": "2026-07-18",
       "profileCompleteness": "detailed-abilities",
       "officialProfileUrl": "https://gotdragonfire.com/dragons/arrax/",
       "abilities": [
@@ -7358,11 +7358,11 @@
         }
       ],
       "affinities": {
-        "Cavalry": "unknown",
-        "Shieldbearers": "unknown",
-        "Archers": "unknown",
-        "Spearmen": "unknown",
-        "Siege": "unknown"
+        "Cavalry": "neutral",
+        "Shieldbearers": "positive",
+        "Archers": "positive",
+        "Spearmen": "neutral",
+        "Siege": "neutral"
       },
       "verification": {
         "identity": {
@@ -7408,9 +7408,9 @@
           "reviewedManually": true
         },
         "affinities": {
-          "status": "unknown",
-          "source": "Affinity icons were not text-verified",
-          "capturedAt": "2026-07-15",
+          "status": "community-verified",
+          "source": "Controller-provided in-game affinity transcription",
+          "capturedAt": "2026-07-18",
           "gameVersion": null,
           "reviewedManually": true
         }

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.10.0 - 2026-07-18
+
+- Completed the 12 formerly all-unknown Rare-dragon affinity records from controller-provided in-game transcription. Unlisted troop types are recorded as neutral.
+- Increased database/package version to `0.10.0`; source data schema remains `13`, local/cloud roster schemas remain `5`, and no Supabase migration was added. Formation evaluation, profiles, and rating calibration are unchanged.
+
 ## 0.9.9 - 2026-07-18
 
 - Removed the redundant visible Selected marker from roster rows while preserving selected-row highlighting, accessible semantics, keyboard focus, filtering, sorting, and mobile navigation.

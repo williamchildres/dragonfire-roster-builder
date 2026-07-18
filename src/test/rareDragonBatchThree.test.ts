@@ -39,7 +39,7 @@ describe('third Rare dragon batch', () => {
     expect(simpleSynergyProfiles).toHaveLength(31);
     expect(metadataOnlyDragonIds).toHaveLength(0);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.9.9', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.10.0', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
 
     const breeds = { bevlorin: 'Champion', shadowrend: 'Warrior', thunderstrike: 'Warrior' } as const;
@@ -50,7 +50,7 @@ describe('third Rare dragon batch', () => {
       expect(matches[0]!.command).not.toBeNull();
       expect(matches[0]!.trait).not.toBeNull();
       expect(matches[0]!.habits.map((habit) => habit.unlockStarRank)).toEqual([2, 4, 6, 8, 10]);
-      expect(Object.values(matches[0]!.affinities).every((affinity) => affinity === 'unknown')).toBe(true);
+      expect(Object.values(matches[0]!.affinities)).not.toContain('unknown');
       expect(Object.values(matches[0]!.stats).every((stat) => stat === null)).toBe(true);
     }
   });

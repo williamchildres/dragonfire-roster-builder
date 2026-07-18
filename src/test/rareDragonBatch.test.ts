@@ -43,7 +43,7 @@ function signalsFor(dragonId: string): SynergySignal[] {
 }
 
 describe('first Rare dragon batch', () => {
-  it('upgrades one canonical Rare record per dragon with complete verified abilities and unknown affinities', () => {
+  it('keeps the first Rare batch complete with controller-verified affinities', () => {
     expect(dragons).toHaveLength(31);
     expect(dragons.filter((dragon) => dragon.command !== null)).toHaveLength(31);
     expect(simpleSynergyProfiles).toHaveLength(31);
@@ -61,11 +61,11 @@ describe('first Rare dragon batch', () => {
       expect(dragon.habits.map((habit) => habit.unlockStarRank)).toEqual([2, 4, 6, 8, 10]);
       expect([dragon.command, dragon.trait, ...dragon.habits]).toHaveLength(7);
       expect([dragon.command, dragon.trait, ...dragon.habits].every((ability) => ability?.verification.status === 'screenshot-verified')).toBe(true);
-      expect(Object.values(dragon.affinities)).toEqual(['unknown', 'unknown', 'unknown', 'unknown', 'unknown']);
+      expect(Object.values(dragon.affinities)).not.toContain('unknown');
       expect(Object.values(dragon.stats).every((value) => value === null)).toBe(true);
     }
 
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.9.9', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.10.0', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
   });
 

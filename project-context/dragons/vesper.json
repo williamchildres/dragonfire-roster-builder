@@ -6,7 +6,7 @@
   "breed": "Sentinel",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-07-16",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/vesper/",
   "abilities": [
@@ -197,11 +197,11 @@
     }
   ],
   "affinities": {
-    "Cavalry": "unknown",
-    "Shieldbearers": "unknown",
-    "Archers": "unknown",
-    "Spearmen": "unknown",
-    "Siege": "unknown"
+    "Cavalry": "neutral",
+    "Shieldbearers": "positive",
+    "Archers": "neutral",
+    "Spearmen": "neutral",
+    "Siege": "negative"
   },
   "verification": {
     "identity": {
@@ -247,9 +247,9 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "unknown",
-      "source": "Affinity icons were not text-verified",
-      "capturedAt": "2026-07-16",
+      "status": "community-verified",
+      "source": "Controller-provided in-game affinity transcription",
+      "capturedAt": "2026-07-18",
       "gameVersion": null,
       "reviewedManually": true
     }
