@@ -131,12 +131,12 @@ describe('legacy combat-analysis architecture deletion guard', () => {
     }
   });
 
-  it('keeps saved Habit Level keys compatible with real Habit IDs', () => {
+  it('keeps sparse saved Habit Level keys compatible with real Habit IDs', () => {
     const roster = createEmptyRoster(dragons);
 
     for (const dragon of dragons) {
       const habitIds = new Set(dragon.habits.map((habit) => habit.id));
-      expect(Object.keys(roster[dragon.id]!.habitLevels).sort()).toEqual([...habitIds].sort());
+      expect(Object.keys(roster[dragon.id]!.habitLevels).every((habitId) => habitIds.has(habitId))).toBe(true);
     }
   });
 });

@@ -8,7 +8,7 @@ import {
   filtersRevealingDragon,
   hasAllProgression,
   nextSelectionAfterRemoval,
-  recordedHabitCount,
+  unlockedHabitCount,
   type RosterWorkspaceFilters,
 } from '../app/rosterWorkspaceState';
 
@@ -38,22 +38,21 @@ describe('roster workspace state', () => {
     expect(result.every((dragon) => dragon.rarity === 'Legendary' && dragon.breed === 'Sentinel')).toBe(true);
   });
 
-  it('treats Habit Level 0 as recorded and distinguishes complete from missing progression', () => {
+  it('counts unlocked habits and bases progression completeness only on Star Rank and Dragon Level', () => {
     const dragon = byId('syrax');
     const roster = createEmptyRoster(dragons);
     const entry = roster.syrax!;
     entry.owned = true;
     entry.starRank = 1;
     entry.reignLevel = 0;
-    entry.habitLevels = Object.fromEntries(dragon.habits.map((habit) => [habit.id, 0]));
 
-    expect(recordedHabitCount(dragon, entry)).toBe(dragon.habits.length);
-    expect(hasAllProgression(dragon, entry)).toBe(true);
+    expect(unlockedHabitCount(dragon, entry)).toBe(0);
+    expect(hasAllProgression(entry)).toBe(true);
     expect(filterAndSortRosterDragons(dragons, roster, { ...defaultRosterWorkspaceFilters, details: 'complete' }, 'name')).toEqual([dragon]);
     expect(filterAndSortRosterDragons(dragons, roster, { ...defaultRosterWorkspaceFilters, details: 'missing' }, 'name')).toEqual([]);
 
-    entry.habitLevels[dragon.habits[0]!.id] = null;
-    expect(hasAllProgression(dragon, entry)).toBe(false);
+    entry.starRank = null;
+    expect(hasAllProgression(entry)).toBe(false);
     expect(filterAndSortRosterDragons(dragons, roster, { ...defaultRosterWorkspaceFilters, details: 'missing' }, 'name')).toEqual([dragon]);
   });
 

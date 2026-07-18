@@ -9,6 +9,7 @@ import {
 } from '../cloud/rosterContract';
 import { InvalidCloudRosterError, UnsupportedRosterSchemaError } from '../cloud/types';
 import { dragons } from '../data/dragons';
+import { applyOwnedDragonPatch } from '../services/habitLevels';
 import { createEmptyRoster, ROSTER_SCHEMA_VERSION } from '../services/rosterStorage';
 
 describe('cloud configuration', () => {
@@ -25,20 +26,16 @@ describe('cloud configuration', () => {
 });
 
 describe('cloud roster contract', () => {
-  it('round-trips normalized ownership, progression, notes, and every Habit Level', () => {
+  it('round-trips the schema-5 sparse normalized roster', () => {
     const roster = createEmptyRoster(dragons);
-    const levels = [null, 0, 1, 2, 3, 4, 5] as const;
-    let levelIndex = 0;
-    for (const entry of Object.values(roster)) {
-      entry.owned = levelIndex === 0;
-      entry.starRank = levelIndex === 0 ? 10 : null;
-      entry.reignLevel = levelIndex === 0 ? 42 : null;
-      entry.notes = levelIndex === 0 ? 'Cloud note' : '';
-      for (const habitId of Object.keys(entry.habitLevels)) {
-        entry.habitLevels[habitId] = levels[levelIndex % levels.length] ?? null;
-        levelIndex += 1;
-      }
-    }
+    const dragon = dragons[0]!;
+    roster[dragon.id] = applyOwnedDragonPatch(dragon, roster[dragon.id]!, {
+      owned: true,
+      starRank: 10,
+      reignLevel: 42,
+      notes: 'Cloud note',
+      habitLevels: Object.fromEntries(dragon.habits.map((habit, index) => [habit.id, (index + 1) as 1 | 2 | 3 | 4 | 5])),
+    });
     const parsed = parseCloudRosterRow({
       user_id: 'user-a',
       roster_schema_version: ROSTER_SCHEMA_VERSION,
@@ -49,7 +46,7 @@ describe('cloud roster contract', () => {
 
     expect(rosterFingerprint(parsed.roster)).toBe(rosterFingerprint(roster));
     expect(parsed.roster[dragons[0]!.id]).toMatchObject({ owned: true, starRank: 10, reignLevel: 42, notes: 'Cloud note' });
-    expect(new Set(Object.values(parsed.roster).flatMap((entry) => Object.values(entry.habitLevels)))).toEqual(new Set(levels));
+    expect(new Set(Object.values(parsed.roster[dragon.id]!.habitLevels))).toEqual(new Set([1, 2, 3, 4, 5]));
   });
 
   it('ignores unknown dragons and restores missing current dragons', () => {
@@ -77,12 +74,43 @@ describe('cloud roster contract', () => {
     })).toThrow(InvalidCloudRosterError);
   });
 
-  it('detects meaningful values including Habit Level zero and summarizes conflicts', () => {
+  it('parses schema 4, removes locked and unknown values, and fingerprints equivalent v4/v5 rosters equally', () => {
+    const dragon = dragons[0]!;
+    const legacyEntries = serializeCloudRoster(createEmptyRoster(dragons));
+    legacyEntries[0] = {
+      ...legacyEntries[0]!,
+      starRank: 2,
+      reignLevel: 20,
+      habitLevels: {
+        [dragon.habits[0]!.id]: 0,
+        [dragon.habits[1]!.id]: 5,
+        'unknown-habit': 4,
+      } as never,
+    };
+    const parsedV4 = parseCloudRosterRow({
+      user_id: 'user-a',
+      roster_schema_version: 4,
+      roster: legacyEntries,
+      client_updated_at: null,
+      updated_at: '2026-07-17T12:00:01.000Z',
+    });
+    const parsedV5 = parseCloudRosterRow({
+      user_id: 'user-a',
+      roster_schema_version: 5,
+      roster: serializeCloudRoster(parsedV4.roster),
+      client_updated_at: null,
+      updated_at: '2026-07-17T12:00:01.000Z',
+    });
+    expect(parsedV4.rosterSchemaVersion).toBe(4);
+    expect(parsedV4.roster[dragon.id]!.habitLevels).toEqual({ [dragon.habits[0]!.id]: 1 });
+    expect(rosterFingerprint(parsedV4.roster)).toBe(rosterFingerprint(parsedV5.roster));
+  });
+
+  it('detects meaningful unlocked Habit Levels and summarizes conflicts', () => {
     const roster = createEmptyRoster(dragons);
     expect(hasMeaningfulRosterData(roster)).toBe(false);
-    const first = roster[dragons[0]!.id]!;
-    const habitId = Object.keys(first.habitLevels)[0]!;
-    first.habitLevels[habitId] = 0;
+    const dragon = dragons[0]!;
+    roster[dragon.id] = applyOwnedDragonPatch(dragon, roster[dragon.id]!, { starRank: 2 });
     expect(hasMeaningfulRosterData(roster)).toBe(true);
     expect(summarizeRoster(roster).habitLevels).toBe(1);
   });

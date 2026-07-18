@@ -7,6 +7,7 @@ import type { AccountSession } from '../cloud/types';
 import { dragons } from '../data/dragons';
 import type { RosterSyncStatus } from '../hooks/useRosterSync';
 import type { OwnedDragon } from '../models/dragon';
+import { applyOwnedDragonPatch } from '../services/habitLevels';
 import { createEmptyRoster } from '../services/rosterStorage';
 
 const workspaceDragons = ['caraxes', 'syrax', 'vhagar'].map((id) => dragons.find((dragon) => dragon.id === id)!);
@@ -14,11 +15,15 @@ const workspaceDragons = ['caraxes', 'syrax', 'vhagar'].map((id) => dragons.find
 function makeRoster() {
   const roster = createEmptyRoster(dragons);
   for (const dragon of workspaceDragons) roster[dragon.id]!.owned = true;
-  roster.caraxes!.starRank = 10;
-  roster.caraxes!.reignLevel = 20;
-  roster.syrax!.starRank = 4;
-  roster.syrax!.reignLevel = 8;
-  roster.syrax!.notes = 'Fire support';
+  roster.caraxes = applyOwnedDragonPatch(workspaceDragons.find((dragon) => dragon.id === 'caraxes')!, roster.caraxes!, {
+    starRank: 10,
+    reignLevel: 20,
+  });
+  roster.syrax = applyOwnedDragonPatch(workspaceDragons.find((dragon) => dragon.id === 'syrax')!, roster.syrax!, {
+    starRank: 4,
+    reignLevel: 8,
+    notes: 'Fire support',
+  });
   roster.vhagar!.starRank = null;
   roster.vhagar!.reignLevel = null;
   return roster;
@@ -41,10 +46,10 @@ function WorkspaceHarness({
       successMessage={null}
       selectionRequest={null}
       onSelectionRequestConsumed={() => undefined}
-      onUpdateRoster={(dragonId, patch) => setRoster((current) => ({
-        ...current,
-        [dragonId]: { ...current[dragonId]!, ...patch },
-      }))}
+      onUpdateRoster={(dragonId, patch) => setRoster((current) => {
+        const dragon = workspaceDragons.find((candidate) => candidate.id === dragonId)!;
+        return { ...current, [dragonId]: applyOwnedDragonPatch(dragon, current[dragonId]!, patch) };
+      })}
       onOpenDetails={() => undefined}
       onOpenAddDragon={() => undefined}
       onExport={() => undefined}
@@ -98,8 +103,6 @@ describe('RosterWorkspace', () => {
   it('supports case-insensitive search, every details filter, and accurate visible counts', async () => {
     const user = userEvent.setup();
     const roster = makeRoster();
-    const caraxes = workspaceDragons.find((dragon) => dragon.id === 'caraxes')!;
-    roster.caraxes!.habitLevels = Object.fromEntries(caraxes.habits.map((habit) => [habit.id, 0]));
     render(<WorkspaceHarness initialRoster={roster} />);
 
     await user.type(screen.getByLabelText('Search owned dragons'), '  sYrAx  ');
@@ -109,46 +112,46 @@ describe('RosterWorkspace', () => {
 
     await user.selectOptions(screen.getByLabelText('Details'), 'complete');
     expect(screen.getByRole('button', { name: /^Caraxes,/i })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /^Syrax,/i })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Syrax,/i })).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText('Details'), 'missing');
-    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+    expect(screen.getAllByRole('listitem')).toHaveLength(1);
     await user.selectOptions(screen.getByLabelText('Details'), 'has-notes');
     expect(screen.getByRole('button', { name: /^Syrax,/i })).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText('Details'), 'no-notes');
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
   });
 
-  it('edits Star Rank, Dragon Level, Habit Level 0 and 5, clears values, and preserves unrelated fields', async () => {
+  it('unlocks habits at Level 1, preserves edits, clears on relock, and restarts at Level 1', async () => {
     const user = userEvent.setup();
     render(<WorkspaceHarness />);
     await user.click(screen.getByRole('button', { name: /^Syrax,/i }));
     const editor = screen.getByRole('complementary', { name: 'Syrax' });
     const firstHabit = workspaceDragons.find((dragon) => dragon.id === 'syrax')!.habits[0]!;
 
-    await user.selectOptions(within(editor).getByLabelText('Star Rank'), '10');
-    expect(within(editor).getByLabelText('Star Rank')).toHaveValue('10');
-    await user.selectOptions(within(editor).getByLabelText('Star Rank'), '');
-    expect(within(editor).getByLabelText('Star Rank')).toHaveValue('');
-
-    await user.clear(within(editor).getByLabelText('Dragon Level'));
-    await user.type(within(editor).getByLabelText('Dragon Level'), '42');
-    expect(within(editor).getByLabelText('Dragon Level')).toHaveValue(42);
-    await user.clear(within(editor).getByLabelText('Dragon Level'));
-    expect(within(editor).getByLabelText('Dragon Level')).toHaveValue(null);
-
-    await user.selectOptions(within(editor).getByLabelText(firstHabit.name), '0');
-    expect(within(editor).getByLabelText(firstHabit.name)).toHaveValue('0');
-    expect(within(editor).getByText(/1 of 5 Habit Levels recorded/i)).toBeInTheDocument();
+    await user.selectOptions(within(editor).getByLabelText('Star Rank'), '1');
+    expect(within(editor).queryByLabelText(firstHabit.name)).not.toBeInTheDocument();
+    expect(within(editor).getByText('No habits are unlocked at the current Star Rank and Dragon Level.')).toBeInTheDocument();
+    await user.selectOptions(within(editor).getByLabelText('Star Rank'), '2');
+    const habitSelect = within(editor).getByLabelText(firstHabit.name);
+    expect(habitSelect).toHaveValue('1');
+    expect(within(habitSelect).getAllByRole('option').map((option) => option.textContent)).toEqual(['1', '2', '3', '4', '5']);
     await user.selectOptions(within(editor).getByLabelText(firstHabit.name), '5');
     expect(within(editor).getByLabelText(firstHabit.name)).toHaveValue('5');
-    await user.selectOptions(within(editor).getByLabelText(firstHabit.name), '');
-    expect(within(editor).getByLabelText(firstHabit.name)).toHaveValue('');
+    await user.selectOptions(within(editor).getByLabelText('Star Rank'), '1');
+    expect(within(editor).queryByLabelText(firstHabit.name)).not.toBeInTheDocument();
+    await user.selectOptions(within(editor).getByLabelText('Star Rank'), '2');
+    expect(within(editor).getByLabelText(firstHabit.name)).toHaveValue('1');
+    await user.selectOptions(within(editor).getByLabelText('Star Rank'), '4');
+    const secondHabit = workspaceDragons.find((dragon) => dragon.id === 'syrax')!.habits[1]!;
+    expect(within(editor).getByLabelText(secondHabit.name)).toHaveValue('1');
+    expect(within(editor).getByLabelText(firstHabit.name)).toHaveValue('1');
+    expect(within(editor).getByText(/2 of 5 habits unlocked/i)).toBeInTheDocument();
 
     const notes = within(editor).getByLabelText('Personal notes for Syrax');
     await user.clear(notes);
     await user.type(notes, 'Line one\nLine two');
     expect(notes).toHaveValue('Line one\nLine two');
-    expect(within(editor).getByLabelText('Star Rank')).toHaveValue('');
+    expect(within(editor).getByLabelText('Star Rank')).toHaveValue('4');
   });
 
   it('uses one editor form and restores row focus from the mobile Back action', async () => {

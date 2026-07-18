@@ -365,7 +365,7 @@ function RosterComparisonTable({ comparison }: { comparison: RosterComparison })
     ['Owned dragons', comparison.local.owned, comparison.cloud.owned],
     ['Recorded Star Ranks', comparison.local.starRanks, comparison.cloud.starRanks],
     ['Recorded Dragon Levels', comparison.local.dragonLevels, comparison.cloud.dragonLevels],
-    ['Recorded Habit Levels', comparison.local.habitLevels, comparison.cloud.habitLevels],
+    ['Unlocked Habit Levels', comparison.local.habitLevels, comparison.cloud.habitLevels],
     ['Last updated', formatTime(comparison.localUpdatedAt), formatTime(comparison.cloudUpdatedAt)],
   ];
   return (

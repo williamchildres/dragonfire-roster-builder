@@ -202,8 +202,10 @@ export interface OwnedDragon {
   starRank: number | null;
   reignLevel: number | null;
   notes: string;
-  habitLevels: Record<string, 0 | 1 | 2 | 3 | 4 | 5 | null>;
+  habitLevels: Partial<Record<string, HabitLevel>>;
 }
+
+export type HabitLevel = 1 | 2 | 3 | 4 | 5;
 
 export interface DragonCollectionProgress {
   state: DragonCollectionState;

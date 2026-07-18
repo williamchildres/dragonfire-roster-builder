@@ -2,8 +2,8 @@ import { ArrowLeft, ExternalLink, Trash2 } from 'lucide-react';
 import type { AccountSession } from '../cloud/types';
 import type { RosterSyncStatus } from '../hooks/useRosterSync';
 import type { Dragon, OwnedDragon } from '../models/dragon';
+import { isHabitUnlocked } from '../services/habitLevels';
 import { MAX_NOTES_LENGTH } from '../services/rosterStorage';
-import { recordedHabitCount } from './rosterWorkspaceState';
 import { RosterDragonEmblem } from './RosterList';
 
 export function RosterEditor({
@@ -27,7 +27,7 @@ export function RosterEditor({
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
   editorRef: React.RefObject<HTMLElement | null>;
 }) {
-  const recordedHabits = recordedHabitCount(dragon, rosterEntry);
+  const unlockedHabits = dragon.habits.filter((habit) => isHabitUnlocked(habit, rosterEntry));
 
   return (
     <aside className="roster-editor-pane" aria-labelledby="roster-editor-title" ref={editorRef} tabIndex={-1}>
@@ -84,27 +84,26 @@ export function RosterEditor({
         <section aria-labelledby="roster-habits-title">
           <div className="roster-editor-section-heading">
             <h4 id="roster-habits-title">Habit Levels</h4>
-            <p>{recordedHabits} of {dragon.habits.length} Habit Levels recorded</p>
+            <p>{unlockedHabits.length} of {dragon.habits.length} habits unlocked</p>
           </div>
-          <div className="roster-habit-fields">
-            {dragon.habits.map((habit) => (
+          {unlockedHabits.length > 0 ? <div className="roster-habit-fields">
+            {unlockedHabits.map((habit) => (
               <label key={habit.id}>
                 {habit.name}
                 <select
-                  value={rosterEntry.habitLevels[habit.id] ?? ''}
+                  value={rosterEntry.habitLevels[habit.id] ?? 1}
                   onChange={(event) => onUpdateRoster(dragon.id, {
                     habitLevels: {
                       ...rosterEntry.habitLevels,
-                      [habit.id]: event.target.value === '' ? null : Number(event.target.value) as 0 | 1 | 2 | 3 | 4 | 5,
+                      [habit.id]: Number(event.target.value) as 1 | 2 | 3 | 4 | 5,
                     },
                   })}
                 >
-                  <option value="">Unknown / not recorded</option>
-                  {[0, 1, 2, 3, 4, 5].map((level) => <option key={level} value={level}>{level}</option>)}
+                  {[1, 2, 3, 4, 5].map((level) => <option key={level} value={level}>{level}</option>)}
                 </select>
               </label>
             ))}
-          </div>
+          </div> : <p>No habits are unlocked at the current Star Rank and Dragon Level.</p>}
         </section>
 
         <section aria-labelledby="roster-notes-title">

@@ -39,7 +39,7 @@ Single selected dragons do not show missing-enabler warnings. Repeated ability p
 
 - `OwnedDragon.starRank` becomes simple `starRank`.
 - `OwnedDragon.reignLevel` becomes simple `dragonLevel`.
-- Habit Level is tracked as roster investment data and does not affect current simple analysis.
+- Unlocked Habit Levels are tracked as sparse roster investment data and do not affect current simple analysis.
 
 ## Placement Contract
 

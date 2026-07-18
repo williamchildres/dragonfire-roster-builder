@@ -11,6 +11,7 @@ import type {
   OwnedDragon,
   VerificationStatus,
 } from '../models/dragon';
+import { isHabitUnlocked } from '../services/habitLevels';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import type { SynergySignal } from '../synergy/types';
 import {
@@ -236,11 +237,11 @@ function DragonAbilityCard({
     starRank,
     dragonLevel: rosterEntry?.reignLevel ?? null,
   });
-  const locked =
-    ability.kind === 'habit' &&
-    ability.unlockStarRank !== null &&
-    (starRank === null || starRank < ability.unlockStarRank);
-  const habitLevel = rosterEntry?.habitLevels[ability.id] ?? null;
+  const locked = ability.kind === 'habit' && !isHabitUnlocked(ability, {
+    starRank,
+    reignLevel: rosterEntry?.reignLevel ?? null,
+  });
+  const habitLevel = rosterEntry?.habitLevels[ability.id];
   const requirementBadge = formatRequirementBadge(ability);
 
   return (
@@ -274,22 +275,21 @@ function DragonAbilityCard({
         ) : null}
       </div>
 
-      {ability.kind === 'habit' ? (
+      {ability.kind === 'habit' && !locked ? (
         <label className="ability-habit-level">
           Habit Level
           <select
-            value={habitLevel ?? ''}
+            value={habitLevel ?? 1}
             onChange={(event) =>
               onUpdateRoster(ability.dragonId, {
                 habitLevels: {
                   ...(rosterEntry?.habitLevels ?? {}),
-                  [ability.id]: event.target.value === '' ? null : (Number(event.target.value) as 0 | 1 | 2 | 3 | 4 | 5),
+                  [ability.id]: Number(event.target.value) as 1 | 2 | 3 | 4 | 5,
                 },
               })
             }
           >
-            <option value="">Not recorded</option>
-            {[0, 1, 2, 3, 4, 5].map((level) => (
+            {[1, 2, 3, 4, 5].map((level) => (
               <option key={level} value={level}>
                 {level}
               </option>

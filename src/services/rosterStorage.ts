@@ -1,11 +1,13 @@
+import { dragons as canonicalDragons } from '../data/dragons';
 import type { Dragon, OwnedDragon } from '../models/dragon';
+import { isHabitLevel, reconcileHabitLevels } from './habitLevels';
 
 export const STORAGE_KEY = 'dragonfire-roster-lab:roster';
 export const TEAM_STORAGE_KEY = 'dragonfire-roster-lab:last-team';
 export const FORMATION_STORAGE_KEY = 'dragonfire-roster-lab:last-formation';
-export const ROSTER_SCHEMA_VERSION = 4;
+export const ROSTER_SCHEMA_VERSION = 5;
 export const MAX_NOTES_LENGTH = 1000;
-const SUPPORTED_ROSTER_SCHEMA_VERSIONS = new Set([1, 2, 3, ROSTER_SCHEMA_VERSION]);
+const SUPPORTED_ROSTER_SCHEMA_VERSIONS = new Set([1, 2, 3, 4, ROSTER_SCHEMA_VERSION]);
 
 export interface StoredRoster {
   format: 'dragonfire-roster-lab-local';
@@ -32,7 +34,6 @@ export interface ImportResult {
   errors: string[];
 }
 
-type HabitLevel = OwnedDragon['habitLevels'][string];
 type LegacyCollectionState = 'not-collected' | 'not-hatched' | 'hatched';
 type LegacyCollectionProgress = {
   state?: unknown;
@@ -55,7 +56,7 @@ export function createEmptyRoster(dragons: Dragon[]): Record<string, OwnedDragon
         starRank: null,
         reignLevel: null,
         notes: '',
-        habitLevels: Object.fromEntries(dragon.habits.map((habit) => [habit.id, null])),
+        habitLevels: {},
       },
     ]),
   );
@@ -73,14 +74,15 @@ export function normalizeRoster(
       continue;
     }
 
-    next[entry.dragonId] = {
+    const dragon = dragons.find((candidate) => candidate.id === entry.dragonId)!;
+    next[entry.dragonId] = reconcileHabitLevels(dragon, {
       dragonId: entry.dragonId,
       owned: normalizeOwnedState(entry),
       starRank: isValidStarRank(entry.starRank) ? entry.starRank : null,
       reignLevel: isValidReignLevel(entry.reignLevel) ? entry.reignLevel : null,
       notes: typeof entry.notes === 'string' ? clampText(entry.notes) : '',
-      habitLevels: normalizeHabitLevels(dragonHabitIds(entry.dragonId, dragons), entry.habitLevels),
-    };
+      habitLevels: entry.habitLevels,
+    });
   }
 
   return next;
@@ -131,7 +133,7 @@ export function saveRosterSnapshot(
     format: 'dragonfire-roster-lab-local',
     schemaVersion: ROSTER_SCHEMA_VERSION,
     updatedAt,
-    roster: Object.values(roster),
+    roster: Object.values(normalizeRoster(canonicalDragons, Object.values(roster))),
   };
   storage.setItem(STORAGE_KEY, JSON.stringify(payload));
 }
@@ -141,7 +143,7 @@ export function serializeRosterExport(roster: Record<string, OwnedDragon>): stri
     format: 'dragonfire-roster-lab',
     schemaVersion: ROSTER_SCHEMA_VERSION,
     exportedAt: new Date().toISOString(),
-    roster: Object.values(roster),
+    roster: Object.values(normalizeRoster(canonicalDragons, Object.values(roster))),
   };
 
   return `${JSON.stringify(payload, null, 2)}\n`;
@@ -165,7 +167,8 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
     errors.push('Unsupported roster format.');
   }
 
-  if (!SUPPORTED_ROSTER_SCHEMA_VERSIONS.has(Number(parsed.schemaVersion))) {
+  const schemaVersion = Number(parsed.schemaVersion);
+  if (!SUPPORTED_ROSTER_SCHEMA_VERSIONS.has(schemaVersion)) {
     errors.push('Unsupported roster schema version.');
   }
 
@@ -214,8 +217,10 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
       errors.push(`${dragonId}: notes must be ${MAX_NOTES_LENGTH} characters or fewer.`);
     }
 
-    if (!isValidHabitLevelRecord(entry.habitLevels, dragonHabitIds(dragonId, dragons))) {
-      errors.push(`${dragonId}: habitLevels must contain null or integers from 0 through 5.`);
+    if (!isValidHabitLevelRecord(entry.habitLevels, schemaVersion)) {
+      errors.push(schemaVersion === ROSTER_SCHEMA_VERSION
+        ? `${dragonId}: habitLevels values must be integers from 1 through 5.`
+        : `${dragonId}: legacy habitLevels values must be null or integers from 0 through 5.`);
     }
 
     if (errors.length === 0) {
@@ -226,7 +231,7 @@ export function validateRosterImport(json: string, dragons: Dragon[]): ImportRes
         starRank: entry.starRank as number | null | undefined,
         reignLevel: entry.reignLevel as number | null | undefined,
         notes: entry.notes as string | undefined,
-        habitLevels: normalizeHabitLevels(dragonHabitIds(dragonId, dragons), entry.habitLevels),
+        habitLevels: entry.habitLevels as OwnedDragon['habitLevels'] | undefined,
       });
     }
   });
@@ -280,33 +285,14 @@ function isLegacyCollection(value: unknown): value is LegacyCollectionProgress |
   return getLegacyCollectionState(value) !== null;
 }
 
-export function isValidHabitLevel(value: unknown): value is HabitLevel {
-  return value === null || (Number.isInteger(value) && Number(value) >= 0 && Number(value) <= 5);
+export function isValidHabitLevel(value: unknown): value is OwnedDragon['habitLevels'][string] {
+  return isHabitLevel(value);
 }
 
-function dragonHabitIds(dragonId: string, dragons: Dragon[]): string[] {
-  return dragons.find((dragon) => dragon.id === dragonId)?.habits.map((habit) => habit.id) ?? [];
-}
-
-function normalizeHabitLevels(
-  habitIds: string[],
-  value: unknown,
-): Record<string, 0 | 1 | 2 | 3 | 4 | 5 | null> {
-  const provided = isRecord(value) ? value : {};
-  return Object.fromEntries(
-    habitIds.map((habitId) => {
-      const habitLevel = provided[habitId];
-      return [habitId, isValidHabitLevel(habitLevel) ? habitLevel : null];
-    }),
-  );
-}
-
-function isValidHabitLevelRecord(value: unknown, habitIds: string[]): boolean {
-  if (habitIds.length === 0) {
-    return value === undefined || isRecord(value);
-  }
-  if (!isRecord(value)) {
-    return value === undefined;
-  }
-  return habitIds.every((habitId) => isValidHabitLevel(value[habitId]));
+function isValidHabitLevelRecord(value: unknown, schemaVersion: number): boolean {
+  if (value === undefined) return true;
+  if (!isRecord(value)) return false;
+  return Object.values(value).every((level) => schemaVersion === ROSTER_SCHEMA_VERSION
+    ? isHabitLevel(level)
+    : level === null || (Number.isInteger(level) && Number(level) >= 0 && Number(level) <= 5));
 }
