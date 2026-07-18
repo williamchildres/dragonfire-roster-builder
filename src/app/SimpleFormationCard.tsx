@@ -1,4 +1,4 @@
-import { Bomb, BowArrow, ChessKnight, Shield, type LucideIcon } from 'lucide-react';
+import { ArrowRightLeft, Bomb, BookOpen, BowArrow, ChevronDown, ChevronUp, ChessKnight, RefreshCw, Shield, X, type LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 import type { AriaAttributes } from 'react';
 import type { AbilityDefinition, Dragon, FormationPosition, OwnedDragon, TroopType } from '../models/dragon';
@@ -6,7 +6,7 @@ import { FORMATION_POSITIONS, TROOP_TYPES } from '../models/dragon';
 import { positionLabels } from '../services/teamShare';
 import type { DragonSynergyProfile } from '../synergy/types';
 import { summarizeAbilityForProgression } from './dragonDetailPresentation';
-import type { FormationSignalChip } from './formationCardPresentation';
+import { currentProgressionVisibleChips, type FormationSignalChip } from './formationCardPresentation';
 import { formationSignalStateMarker } from './formationSignalPresentation';
 
 const unknown = 'Full wording not verified.';
@@ -40,7 +40,9 @@ export function SimpleFormationCard({
 }) {
   const [expanded, setExpanded] = useState(false);
   const owned = dragon ? rosterEntry?.owned === true : false;
-  const starSummary = dragon && owned ? (rosterEntry?.starRank !== null && rosterEntry?.starRank !== undefined ? `Star ${rosterEntry.starRank}` : 'Star unknown') : null;
+  const starRank = dragon && owned ? rosterEntry?.starRank : undefined;
+  const starRankLabel = starRank === null || starRank === undefined ? 'Star Rank unknown' : `Star Rank ${starRank}`;
+  const starRankDisplay = starRank === null || starRank === undefined ? '?★' : `${starRank}★`;
   const detailsId = `formation-card-details-${position}`;
 
   return (
@@ -58,17 +60,13 @@ export function SimpleFormationCard({
           <div className="formation-dragon-summary" aria-label={`${dragon.name} selected dragon summary`}>
             <DragonAffinityIcons dragonName={dragon.name} affinities={dragon.affinities} />
             <div className="formation-dragon-identity">
-              <h3>{dragon.name}</h3>
-              <div className="formation-dragon-metadata" aria-label={`${dragon.name} metadata`}>
-                <div className="formation-identity-metadata" aria-label={`${dragon.name} identity metadata`}>
-                  <span className="badge">{dragon.rarity}</span>
-                  <span className="badge">{dragon.breed}</span>
-                </div>
-                {starSummary ? (
-                  <div className="formation-progression-metadata" aria-label={`${dragon.name} progression metadata`}>
-                    <span className="badge">{starSummary}</span>
-                  </div>
-                ) : null}
+              <div className="formation-dragon-title-row">
+                <h3>{dragon.name}</h3>
+                {owned ? <span className="formation-inline-rank" aria-label={starRankLabel}>{starRankDisplay}</span> : null}
+              </div>
+              <div className="formation-identity-metadata" aria-label={`${dragon.name} identity metadata`}>
+                <span className="badge">{dragon.rarity}</span>
+                <span className="badge">{dragon.breed}</span>
               </div>
             </div>
           </div>
@@ -86,6 +84,7 @@ export function SimpleFormationCard({
             aria-expanded={expanded}
             onClick={() => setExpanded((current) => !current)}
           >
+            {expanded ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
             {expanded ? 'Collapse details' : 'Expand details'}
           </button>
           {expanded ? (
@@ -99,10 +98,12 @@ export function SimpleFormationCard({
           <div className="formation-card-actions">
             <div className="formation-card-primary-actions">
               <button type="button" className="secondary-button compact-action" onClick={onChooseDragon}>
-                Change dragon
+                <RefreshCw size={16} aria-hidden="true" />
+                Replace dragon
               </button>
               <button type="button" className="secondary-button compact-action" onClick={() => onOpenDetails(dragon)}>
-                View details
+                <BookOpen size={16} aria-hidden="true" />
+                Dragon details
               </button>
             </div>
             <div className="movement-controls" aria-label={`${positionLabels[position]} movement controls`}>
@@ -118,12 +119,14 @@ export function SimpleFormationCard({
                     type="button"
                     onClick={() => onMove(target)}
                   >
+                    <ArrowRightLeft size={16} aria-hidden="true" />
                     {label}
                   </button>
                 );
               })}
             </div>
             <button type="button" className="text-button compact-action clear-position-action" onClick={onClear}>
+              <X size={16} aria-hidden="true" />
               Clear position
             </button>
           </div>
@@ -226,12 +229,18 @@ function FormationSignalPanel({
   chips: FormationSignalChip[];
   fallback: string;
 }) {
+  const visibleChips = title === 'Damage profile' ? chips : currentProgressionVisibleChips(chips);
+  const hiddenOnly = chips.length > 0 && visibleChips.length === 0;
+  const emptyMessage = title === 'Provides'
+    ? 'No currently unlocked Provides signals.'
+    : 'No currently unlocked synergy needs.';
+
   return (
     <section className="card-mini-section formation-signal-panel formation-signal-panel--light" aria-label={title}>
       <h4>{title}</h4>
-      {chips.length > 0 ? (
+      {visibleChips.length > 0 ? (
         <ul className="chip-list formation-chip-list">
-          {chips.map((chip) => {
+          {visibleChips.map((chip) => {
             const { Icon, marker } = formationSignalStateMarker(chip);
             return (
               <li
@@ -248,7 +257,7 @@ function FormationSignalPanel({
           })}
         </ul>
       ) : (
-        <p className="notice-text">{fallback}</p>
+        <p className="notice-text">{hiddenOnly ? emptyMessage : fallback}</p>
       )}
     </section>
   );

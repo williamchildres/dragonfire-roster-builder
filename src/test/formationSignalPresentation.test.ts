@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   buildFormationFilterOptions,
   buildFormationSignalChips,
+  currentProgressionVisibleChips,
   type FormationSignalChip,
 } from '../app/formationCardPresentation';
 import { emptyFormation, type Formation } from '../services/teamShare';
@@ -132,14 +133,40 @@ describe('Formation Builder signal presentation helpers', () => {
     expect(caraxes.provides.find((signal) => signal.label === 'Control')).toBeUndefined();
   });
 
-  it('keeps locked and position-blocked Vanguard Trait outputs inactive', () => {
+  it('marks inactive chips with structured progression or position causes without changing the canonical collections', () => {
     const selected = formation(null, null, 'caraxes');
     const caraxes = chipsFor('caraxes', 'right-flank', selected, {
       caraxes: { starRank: 10, dragonLevel: 15 },
     });
 
-    expect(chip(caraxes.provides, 'Strength support')).toMatchObject({ state: 'inactive' });
+    expect(chip(caraxes.provides, 'Strength support')).toMatchObject({ state: 'inactive', inactiveCause: 'position' });
     expect(chip(caraxes.provides, 'Initiative support').reason).toContain('requires Vanguard');
+    expect(currentProgressionVisibleChips(caraxes.provides)).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Strength support', inactiveCause: 'position' }),
+    ]));
+
+    const lockedCaraxes = chipsFor('caraxes', 'vanguard', formation(null, 'caraxes', null), {
+      caraxes: { starRank: 10, dragonLevel: 15 },
+    });
+    expect(chip(lockedCaraxes.provides, 'Strength support')).toMatchObject({
+      state: 'inactive',
+      inactiveCause: 'dragon-level',
+    });
+    expect(currentProgressionVisibleChips(lockedCaraxes.provides)).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Strength support' }),
+    ]));
+
+    const lockedSyrax = chipsFor('syrax', 'left-flank', formation('syrax', null, null), {
+      syrax: { starRank: 1, dragonLevel: 26 },
+    });
+    expect(chip(lockedSyrax.provides, 'Recovery')).toMatchObject({ inactiveCause: 'star-rank' });
+    expect(chip(lockedSyrax.benefitsFrom, 'Slow')).toMatchObject({ inactiveCause: 'star-rank' });
+    expect(currentProgressionVisibleChips(lockedSyrax.provides)).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Recovery' }),
+    ]));
+    expect(currentProgressionVisibleChips(lockedSyrax.benefitsFrom)).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: 'Slow' }),
+    ]));
   });
 
   it('returns no signals for metadata-only dragons without inventing tags', () => {

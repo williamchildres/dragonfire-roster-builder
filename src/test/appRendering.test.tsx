@@ -239,10 +239,10 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.5/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.6/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('compact workspace header');
-    expect(latestUpdate).toHaveTextContent('deliberate two-row dragon metadata');
+    expect(latestUpdate).toHaveTextContent('Star Rank with each dragon name');
+    expect(latestUpdate).toHaveTextContent('progression-locked signals');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
