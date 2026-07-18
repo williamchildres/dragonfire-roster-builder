@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.2 - 2026-07-18
+
+- Restored normal document scrolling on narrow screens: the application header now scrolls away with the page, and Roster list and editor content no longer own nested vertical scrolling. Desktop two-pane scrolling is unchanged.
+- Increased database/package version to `0.9.2`; source data schema remains `13`, and local/cloud roster schemas remain `5`. No Supabase migration or roster-contract change was added.
+
 ## 0.9.1 - 2026-07-17
 
 - Corrected Habit Level tracking to derive unlocks from each canonical habit's Star Rank and Dragon Level requirements. Locked habits have no stored or editable level; newly unlocked habits begin at Level 1; valid levels are 1 through 5.
