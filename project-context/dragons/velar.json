@@ -6,7 +6,7 @@
   "breed": "Sentinel",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-07-03",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/velar/",
   "abilities": [
@@ -198,11 +198,11 @@
     }
   ],
   "affinities": {
-    "Cavalry": "unknown",
+    "Cavalry": "neutral",
     "Shieldbearers": "positive",
-    "Archers": "unknown",
-    "Spearmen": "unknown",
-    "Siege": "unknown"
+    "Archers": "neutral",
+    "Spearmen": "neutral",
+    "Siege": "neutral"
   },
   "verification": {
     "identity": {

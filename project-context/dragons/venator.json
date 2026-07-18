@@ -6,7 +6,7 @@
   "breed": "Warrior",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-06-25",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/venator/",
   "abilities": [
@@ -152,7 +152,7 @@
       "tags": [
         "PHYSICAL_DAMAGE_UP"
       ],
-      "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy. Opposing-position is provisionally normalized to same-lane enemy for formation compatibility."
+      "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy."
     },
     {
       "id": "venator-desperate-ambush",
@@ -181,11 +181,11 @@
     }
   ],
   "affinities": {
-    "Spearmen": "positive",
+    "Cavalry": "neutral",
     "Shieldbearers": "positive",
-    "Cavalry": "unknown",
-    "Archers": "unknown",
-    "Siege": "unknown"
+    "Archers": "neutral",
+    "Spearmen": "positive",
+    "Siege": "neutral"
   },
   "verification": {
     "identity": {
@@ -231,7 +231,7 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "partially-screenshot-verified",
+      "status": "screenshot-verified",
       "source": "Venator main screen screenshot",
       "capturedAt": "2026-06-23",
       "gameVersion": "26.6.53509",

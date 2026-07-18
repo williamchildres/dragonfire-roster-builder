@@ -43,7 +43,7 @@
       "kind": "trait",
       "name": "Sentinel's Wit",
       "abilityClass": "passive",
-      "unlockStarRank": null,
+      "unlockStarRank": 1,
       "minimumDragonLevel": 16,
       "positionRequirement": "vanguard",
       "verification": {

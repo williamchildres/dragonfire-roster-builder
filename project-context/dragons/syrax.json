@@ -6,7 +6,7 @@
   "breed": "Sentinel",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-06-23",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/syrax/",
   "abilities": [
@@ -189,8 +189,8 @@
     }
   ],
   "affinities": {
-    "Cavalry": "unknown",
-    "Shieldbearers": "unknown",
+    "Cavalry": "neutral",
+    "Shieldbearers": "neutral",
     "Archers": "positive",
     "Spearmen": "positive",
     "Siege": "negative"
@@ -225,7 +225,7 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "partially-screenshot-verified",
+      "status": "screenshot-verified",
       "source": "Syrax main screen screenshot",
       "capturedAt": "2026-06-23",
       "gameVersion": "26.6.53509",

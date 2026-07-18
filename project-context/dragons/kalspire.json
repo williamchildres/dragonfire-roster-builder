@@ -6,7 +6,7 @@
   "breed": "Champion",
   "rosterSourceStatus": "official-website",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-06-25",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": "https://gotdragonfire.com/dragons/kalspire/",
   "abilities": [
@@ -191,9 +191,9 @@
   "affinities": {
     "Cavalry": "positive",
     "Shieldbearers": "positive",
-    "Siege": "positive",
-    "Archers": "unknown",
-    "Spearmen": "unknown"
+    "Archers": "neutral",
+    "Spearmen": "neutral",
+    "Siege": "positive"
   },
   "verification": {
     "identity": {
@@ -239,7 +239,7 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "partially-screenshot-verified",
+      "status": "screenshot-verified",
       "source": "Kalspire main screen screenshot",
       "capturedAt": "2026-06-23",
       "gameVersion": "26.6.53509",

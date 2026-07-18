@@ -6,7 +6,7 @@
   "breed": "Champion",
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-07-10",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": null,
   "abilities": [
@@ -204,8 +204,8 @@
   ],
   "affinities": {
     "Cavalry": "positive",
-    "Shieldbearers": "unknown",
-    "Archers": "unknown",
+    "Shieldbearers": "neutral",
+    "Archers": "neutral",
     "Spearmen": "positive",
     "Siege": "positive"
   },
@@ -239,7 +239,7 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "partially-screenshot-verified",
+      "status": "screenshot-verified",
       "source": "Tessarion main screen screenshot",
       "capturedAt": "2026-07-10",
       "gameVersion": "26.6.53509",

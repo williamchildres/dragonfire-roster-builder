@@ -6,7 +6,7 @@
   "breed": "Warrior",
   "rosterSourceStatus": "in-game-verified-pending-official-site",
   "dataStatus": "community-verified",
-  "lastVerified": "2026-06-23",
+  "lastVerified": "2026-07-18",
   "profileCompleteness": "detailed-abilities",
   "officialProfileUrl": null,
   "abilities": [
@@ -182,15 +182,15 @@
         "ADVANTAGE",
         "WEAKENED"
       ],
-      "rawDescription": "Start of Each Round: chance to grant Advantage +15% for two rounds. If afflicted with Weakend, chance is multiplied by 1.5 and successful activation removes Weakened."
+      "rawDescription": "Start of Each Round: chance to grant Advantage +15% for two rounds. If afflicted with Weakened, chance is multiplied by 1.5 and successful activation removes Weakened."
     }
   ],
   "affinities": {
     "Cavalry": "positive",
     "Shieldbearers": "positive",
-    "Archers": "unknown",
-    "Spearmen": "unknown",
-    "Siege": "unknown"
+    "Archers": "neutral",
+    "Spearmen": "neutral",
+    "Siege": "neutral"
   },
   "verification": {
     "identity": {
@@ -222,7 +222,7 @@
       "reviewedManually": true
     },
     "affinities": {
-      "status": "partially-screenshot-verified",
+      "status": "screenshot-verified",
       "source": "Vermax main screen screenshot",
       "capturedAt": "2026-06-23",
       "gameVersion": "26.6.53509",

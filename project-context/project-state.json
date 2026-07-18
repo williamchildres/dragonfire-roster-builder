@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-18T19:19:41.770Z",
+  "generatedAt": "2026-07-18T19:53:43.325Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/complete-rare-dragon-affinities",
-    "commit": "4799cdeb065e6bb67ce9e41d82e7eaa061658d08",
-    "databaseVersion": "0.10.0",
+    "branch": "data/complete-affinities-and-source-corrections",
+    "commit": "8a34942b8c41d1edb8b5d1e7c605f90cf3b06972",
+    "databaseVersion": "0.10.1",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -33,7 +33,7 @@
   "testTotals": {
     "runner": "vitest",
     "testFileCount": 33,
-    "testCaseCount": 330,
+    "testCaseCount": 331,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
