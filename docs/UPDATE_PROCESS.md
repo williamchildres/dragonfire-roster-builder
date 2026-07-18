@@ -48,7 +48,7 @@ Confirm:
 
 - https://dragonfirelab.com loads as the primary public URL.
 - My Roster Add Dragon details show raw ability wording in full.
-- Habit Level selectors still save and load.
+- Only unlocked Habit Level selectors appear, they offer exactly Levels 1 through 5, and relocking deletes the saved value before a Level 1 re-unlock.
 - Formation Builder cards render selected Command and Trait wording.
 - Simple formation analysis still handles setup/payoff, support, missing enablers, future unlocks, adjacency, hard positions, and Vanguard conflicts.
 - Share links and roster import/export still work.

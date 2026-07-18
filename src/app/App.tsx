@@ -51,6 +51,7 @@ import {
   type VerificationStatus,
 } from '../models/dragon';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters } from '../services/rosterFilters';
+import { applyOwnedDragonPatch, reconcileHabitLevels } from '../services/habitLevels';
 import {
   createEmptyRoster,
   FORMATION_STORAGE_KEY,
@@ -225,29 +226,25 @@ export function App({ accountServices: providedAccountServices }: { accountServi
   const detailedAbilityCount = dragons.filter(hasDetailedAbilities).length;
 
   const updateRoster = (dragonId: string, patch: Partial<OwnedDragon>) => {
-    setRosterSnapshot((current) => ({
-      updatedAt: new Date().toISOString(),
-      roster: {
-        ...current.roster,
-        [dragonId]: {
-        ...(current.roster[dragonId] ?? {
-          dragonId,
-          owned: false,
-          starRank: null,
-          reignLevel: null,
-          notes: '',
-          habitLevels: Object.fromEntries(
-            (dragons.find((dragon) => dragon.id === dragonId)?.habits ?? []).map((habit) => [
-              habit.id,
-              null,
-            ]),
-          ),
-        }),
-        ...patch,
+    const dragon = dragons.find((candidate) => candidate.id === dragonId);
+    if (!dragon) return;
+    setRosterSnapshot((current) => {
+      const currentEntry = current.roster[dragonId] ?? {
         dragonId,
-      },
-      },
-    }));
+        owned: false,
+        starRank: null,
+        reignLevel: null,
+        notes: '',
+        habitLevels: {},
+      };
+      return {
+        updatedAt: new Date().toISOString(),
+        roster: {
+          ...current.roster,
+          [dragonId]: applyOwnedDragonPatch(dragon, currentEntry, patch),
+        },
+      };
+    });
   };
 
   const addDragonToRoster = (dragonId: string) => {
@@ -767,7 +764,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>The compact Roster workspace adds filterable rows, one selected-dragon editor, and a focused phone workflow without changing roster or rating data.</p>
+          <p>Habit Levels now appear only after their canonical progression requirements unlock, begin at Level 1, and clear when relocked.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -1057,14 +1054,14 @@ function formationRosterEntryForDragon(
   }
 
   const saved = roster[dragon.id];
-  return {
+  return reconcileHabitLevels(dragon, {
     dragonId: dragon.id,
     owned: true,
     starRank: 10,
     reignLevel: saved?.reignLevel ?? null,
     notes: saved?.notes ?? '',
-    habitLevels: saved?.habitLevels ?? Object.fromEntries(dragon.habits.map((habit) => [habit.id, null])),
-  };
+    habitLevels: saved?.habitLevels ?? {},
+  });
 }
 
 function formationProgressionForDragon(

@@ -1,4 +1,5 @@
 import type { Dragon, DragonBreed, DragonRarity, OwnedDragon } from '../models/dragon';
+import { isHabitUnlocked } from '../services/habitLevels';
 
 export type RosterDetailsFilter = 'all' | 'complete' | 'missing' | 'has-notes' | 'no-notes';
 export type RosterWorkspaceSort = 'name' | 'rarity' | 'star-rank' | 'dragon-level';
@@ -34,17 +35,17 @@ export function applicableHabitCount(dragon: Dragon): number {
   return dragon.habits.length;
 }
 
-export function recordedHabitCount(dragon: Dragon, entry: OwnedDragon | undefined): number {
-  return dragon.habits.filter((habit) => entry?.habitLevels[habit.id] !== null && entry?.habitLevels[habit.id] !== undefined).length;
+export function unlockedHabitCount(dragon: Dragon, entry: OwnedDragon | undefined): number {
+  if (!entry) return 0;
+  return dragon.habits.filter((habit) => isHabitUnlocked(habit, entry)).length;
 }
 
-export function hasAllProgression(dragon: Dragon, entry: OwnedDragon | undefined): boolean {
+export function hasAllProgression(entry: OwnedDragon | undefined): boolean {
   return (
     entry?.starRank !== null &&
     entry?.starRank !== undefined &&
     entry.reignLevel !== null &&
-    entry.reignLevel !== undefined &&
-    recordedHabitCount(dragon, entry) === applicableHabitCount(dragon)
+    entry.reignLevel !== undefined
   );
 }
 
@@ -66,7 +67,7 @@ export function filterAndSortRosterDragons(
     if (filters.rarity !== 'all' && dragon.rarity !== filters.rarity) return false;
     if (filters.breed !== 'all' && dragon.breed !== filters.breed) return false;
 
-    const complete = hasAllProgression(dragon, entry);
+    const complete = hasAllProgression(entry);
     const notes = hasRosterNotes(entry);
     if (filters.details === 'complete' && !complete) return false;
     if (filters.details === 'missing' && complete) return false;
@@ -101,7 +102,7 @@ export function filtersRevealingDragon(
   entry: OwnedDragon | undefined,
 ): RosterWorkspaceFilters {
   const search = normalizeSearch(filters.search);
-  const complete = hasAllProgression(dragon, entry);
+  const complete = hasAllProgression(entry);
   const notes = hasRosterNotes(entry);
   const detailsMatch =
     filters.details === 'all' ||

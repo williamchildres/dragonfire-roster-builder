@@ -65,8 +65,8 @@ describe('first Rare dragon batch', () => {
       expect(Object.values(dragon.stats).every((value) => value === null)).toBe(true);
     }
 
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.9.0', schemaVersion: 13 });
-    expect(ROSTER_SCHEMA_VERSION).toBe(4);
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.9.1', schemaVersion: 13 });
+    expect(ROSTER_SCHEMA_VERSION).toBe(5);
   });
 
   it('models Antares progression once and keeps self-only effects out of allied support', () => {

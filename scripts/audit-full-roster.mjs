@@ -32,22 +32,15 @@ const resolvedFindings = [
 ];
 const browserQaObservation = {
   status: 'PASS_WITH_PENDING_REAL_200_PERCENT_ZOOM',
-  auditedUrl: 'http://127.0.0.1:4190/ (local 0.9.0 production preview)',
-  fixture: '22 isolated localhost-owned dragons; no production account or roster used',
+  auditedUrl: 'http://127.0.0.1:4190/ (local 0.9.1 production preview)',
+  fixture: 'isolated localhost data ending with one imported schema-4 Syrax entry; no production account or roster used',
   viewports: {
     desktop1440: {
       viewport: { width: 1440, height: 1000 },
       document: { clientWidth: 1425, scrollWidth: 1425 },
       workspace: { clientWidth: 1314, scrollWidth: 1314 },
-      list: { clientWidth: 849, scrollWidth: 849, clientHeight: 664, scrollHeight: 1612 },
+      list: { clientWidth: 849, scrollWidth: 849 },
       editor: { clientWidth: 415, scrollWidth: 415, position: 'sticky', maxHeight: 888 },
-    },
-    desktop1280: {
-      viewport: { width: 1280, height: 720 },
-      document: { clientWidth: 1265, scrollWidth: 1265 },
-      workspace: { clientWidth: 1188, scrollWidth: 1188 },
-      list: { clientWidth: 723, scrollWidth: 723 },
-      editor: { clientWidth: 415, scrollWidth: 415, position: 'sticky' },
     },
     tablet1024: {
       viewport: { width: 1024, height: 768 },
@@ -56,23 +49,16 @@ const browserQaObservation = {
       list: { clientWidth: 483, scrollWidth: 483 },
       editor: { clientWidth: 415, scrollWidth: 415, position: 'sticky' },
     },
-    tablet768: {
-      viewport: { width: 768, height: 1024 },
-      document: { clientWidth: 753, scrollWidth: 753 },
-      workspace: { clientWidth: 707, scrollWidth: 707, mode: 'list' },
-      list: { clientWidth: 690, scrollWidth: 690 },
-      editorVisible: false,
-    },
     phone390List: {
       viewport: { width: 390, height: 844 },
-      document: { clientWidth: 375, scrollWidth: 375, scrollHeight: 3749 },
+      document: { clientWidth: 375, scrollWidth: 375 },
       workspace: { clientWidth: 343, scrollWidth: 343, mode: 'list' },
       overflowingDescendantCount: 0,
       clippedInteractiveControlCount: 0,
     },
     phone390Editor: {
       viewport: { width: 390, height: 844 },
-      document: { clientWidth: 375, scrollWidth: 375, scrollHeight: 2240 },
+      document: { clientWidth: 375, scrollWidth: 375 },
       workspace: { clientWidth: 343, scrollWidth: 343, mode: 'editor' },
       editor: { clientWidth: 326, scrollWidth: 326 },
       overflowingDescendantCount: 0,
@@ -80,14 +66,14 @@ const browserQaObservation = {
     },
     phone360List: {
       viewport: { width: 360, height: 740 },
-      document: { clientWidth: 345, scrollWidth: 345, scrollHeight: 3749 },
+      document: { clientWidth: 345, scrollWidth: 345 },
       workspace: { clientWidth: 313, scrollWidth: 313, mode: 'list' },
       overflowingDescendantCount: 0,
       clippedInteractiveControlCount: 0,
     },
     phone360Editor: {
       viewport: { width: 360, height: 740 },
-      document: { clientWidth: 345, scrollWidth: 345, scrollHeight: 2260 },
+      document: { clientWidth: 345, scrollWidth: 345 },
       workspace: { clientWidth: 313, scrollWidth: 313, mode: 'editor' },
       editor: { clientWidth: 296, scrollWidth: 296 },
       overflowingDescendantCount: 0,
@@ -95,17 +81,12 @@ const browserQaObservation = {
     },
   },
   interactions: {
-    search: 'PASS — trimmed uppercase SYRAX returned 1 of 22 and selected Syrax',
-    rarity: 'PASS — Legendary returned 7 rows and preserved Syrax',
-    breed: 'PASS — Legendary Sentinel returned 2 rows and preserved Syrax',
-    missingProgression: 'PASS — 22 rows; Habit Level 0 remained recorded',
-    notes: 'PASS — Has notes returned 4 rows and selected Antares when Syrax was filtered out',
-    sorting: 'PASS — Star Rank high-to-low placed Feskar (9) first and preserved selection',
-    editing: 'PASS — Antares Star Rank 7, Dragon Level 42, Habit Levels 0 and 5, and notes rendered immediately',
-    reloadPersistence: 'PASS — all edited values and 22 owned dragons persisted after reload',
-    add: 'PASS — adding Tessarion produced 23 rows and selected its editor',
-    remove: 'PASS — confirmation identified Tessarion; removal selected/focused adjacent Tashix row',
-    mobile: 'PASS — list opened first, row selection opened one editor, and Back restored focus to the selected row',
+    missingProgression: 'PASS — completeness used only Star Rank and Dragon Level',
+    editing: 'PASS — Syrax unlock, Level 1 default, Level 5 persistence, relock deletion, and Level 1 re-unlock rendered immediately',
+    reloadPersistence: 'PASS — Syrax Level 5 persisted after a full reload',
+    secondUnlock: 'PASS — Flight Mastery appeared at Level 1 at Star Rank 4 while Mindful Synergy remained Level 5',
+    legacyImport: 'PASS — schema-4 null/zero unlocked values migrated to Level 1; locked and unknown values were absent',
+    mobile: 'PASS — the same single editor and roster list were usable at 390×844 and 360×740',
   },
   structure: { editorFormCount: 1, rowProgressionControlCount: 0 },
   overflowCount: 0,
@@ -113,7 +94,7 @@ const browserQaObservation = {
   consoleErrors: [],
   consoleWarnings: [],
   accountSync:
-    'Production account was not automated; existing configured-state visibility, debounce, conflict, sign-out retention, import, and clear-local paths passed automated regressions.',
+    'Production account was not automated; fake/local service tests passed for the 750 ms debounce, serialized writes, conflict decisions, offline/retry, sign-out retention, stale-user guards, import, and clear-local paths.',
   zoom200: {
     status: 'PENDING_REAL_BROWSER_ZOOM',
     reason: 'Chrome extension keypresses did not change browser zoom.',
@@ -126,10 +107,10 @@ const browserQaObservation = {
     },
   },
   observations: [
-    '1440px: true two-pane workspace with a contained scrolling 22-row list and sticky 415px editor.',
+    '1440px: two-pane workspace remained contained with a sticky 415px editor.',
     '1024px: filter controls wrap to three columns and both panes remain usable without horizontal scrolling.',
     '390px list: stacked toolbar, two-column filters, compact rows, and no horizontal overflow.',
-    '390px editor: Back control and full Antares title clear the sticky header; all fields and final removal action remain reachable.',
+    '390px editor: Back control, Syrax progression, two unlocked Habit selectors, notes, and removal action remained reachable.',
     '720x500 layout-equivalent zoom check: focused single-pane list with zero horizontal overflow.',
   ],
   findings: [],
@@ -153,10 +134,10 @@ try {
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: 'ced398a0e6cef2a26e52f2ff1ea95d46158e2ff9',
-      branch: 'ui/roster-workspace',
+      originMainSha: '18a890822d99558816e3e7e3e124c75193a1b21d',
+      branch: 'fix/habit-level-unlock-contract',
       worktree:
-        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/roster-workspace',
+        'C:/Users/willi/Documents/CodexProjects/Dragonfire Roster Lab/.worktrees/habit-level-contract',
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,
@@ -328,7 +309,7 @@ function renderMarkdown(report) {
   lines.push(
     '## Browser QA',
     '',
-    `Status: ${report.browserQa.status}. Audited URL: ${report.browserQa.auditedUrl}. Owned-dragon fixture: 22. Workspace overflow: ${report.browserQa.overflowCount}; clipped interactive controls: ${report.browserQa.clippedInteractiveControlCount}; console errors: ${report.browserQa.consoleErrors.length}; console warnings: ${report.browserQa.consoleWarnings.length}.`,
+    `Status: ${report.browserQa.status}. Audited URL: ${report.browserQa.auditedUrl}. Fixture: isolated localhost schema-4 Syrax import. Workspace overflow: ${report.browserQa.overflowCount}; clipped interactive controls: ${report.browserQa.clippedInteractiveControlCount}; console errors: ${report.browserQa.consoleErrors.length}; console warnings: ${report.browserQa.consoleWarnings.length}.`,
     '',
     `Real desktop 200% zoom: ${report.browserQa.zoom200.status}. ${report.browserQa.zoom200.reason} The 720×500 layout-equivalent check had document, workspace, and list scroll widths equal to their client widths.`,
     '',
@@ -346,7 +327,7 @@ function renderMarkdown(report) {
     '',
     '- No formula, weight, threshold, guardrail, placement, or calibration changes.',
     '- No dragon wording, curated profile, targeting, or rating semantics changed.',
-    '- Source schema 13, local roster schema 4, import/export, and share-link contracts remain unchanged.',
+    '- Source schema 13, formation share links, formation evaluation, and the rating model remain unchanged; local/cloud roster JSON advanced to schema 5 without SQL changes.',
     '- FRR-F001 and FRR-F002 remain informational and unresolved by design.',
   );
   return `${lines.join('\n')}\n`;

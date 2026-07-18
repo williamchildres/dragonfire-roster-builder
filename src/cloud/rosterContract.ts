@@ -32,7 +32,7 @@ export function parseCloudRosterRow(value: unknown): CloudRosterRecord {
     throw new InvalidCloudRosterError();
   }
   const schemaVersion = Number(row.roster_schema_version);
-  if (schemaVersion !== ROSTER_SCHEMA_VERSION) {
+  if (schemaVersion !== 4 && schemaVersion !== ROSTER_SCHEMA_VERSION) {
     throw new UnsupportedRosterSchemaError(schemaVersion);
   }
   if (
@@ -55,7 +55,7 @@ export function parseCloudRosterRow(value: unknown): CloudRosterRecord {
     }
   }
 
-  if (!entries.every(isValidRosterEntry)) {
+  if (!entries.every((entry) => isValidRosterEntry(entry, schemaVersion))) {
     throw new InvalidCloudRosterError();
   }
 
@@ -83,7 +83,7 @@ export function hasMeaningfulRosterData(roster: Record<string, OwnedDragon>): bo
       entry.starRank !== null ||
       entry.reignLevel !== null ||
       entry.notes.trim().length > 0 ||
-      Object.values(entry.habitLevels).some((level) => level !== null),
+      Object.keys(entry.habitLevels).length > 0,
   );
 }
 
@@ -94,13 +94,13 @@ export function summarizeRoster(roster: Record<string, OwnedDragon>) {
     starRanks: entries.filter((entry) => entry.starRank !== null).length,
     dragonLevels: entries.filter((entry) => entry.reignLevel !== null).length,
     habitLevels: entries.reduce(
-      (total, entry) => total + Object.values(entry.habitLevels).filter((level) => level !== null).length,
+      (total, entry) => total + Object.keys(entry.habitLevels).length,
       0,
     ),
   };
 }
 
-function isValidRosterEntry(value: Record<string, unknown>): boolean {
+function isValidRosterEntry(value: Record<string, unknown>, schemaVersion: number): boolean {
   return (
     typeof value.dragonId === 'string' &&
     typeof value.owned === 'boolean' &&
@@ -109,7 +109,9 @@ function isValidRosterEntry(value: Record<string, unknown>): boolean {
     typeof value.notes === 'string' &&
     value.notes.length <= MAX_NOTES_LENGTH &&
     isRecord(value.habitLevels) &&
-    Object.values(value.habitLevels).every(isValidHabitLevel)
+    Object.values(value.habitLevels).every((level) => schemaVersion === ROSTER_SCHEMA_VERSION
+      ? isValidHabitLevel(level)
+      : level === null || (Number.isInteger(level) && Number(level) >= 0 && Number(level) <= 5))
   );
 }
 

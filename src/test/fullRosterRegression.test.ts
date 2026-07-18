@@ -50,9 +50,9 @@ describe('full-roster regression audit', () => {
 
     expect(result.reliable).toBe(true);
     expect(result.generatedFrom).toEqual({
-      databaseVersion: '0.9.0',
+      databaseVersion: '0.9.1',
       dataSchemaVersion: 13,
-      localRosterSchemaVersion: 4,
+      localRosterSchemaVersion: 5,
     });
     expect(result.rarityCoverage).toEqual({ Epic: 10, Legendary: 9, Rare: 12 });
     expect(result.totals).toMatchObject({

@@ -111,7 +111,7 @@ export interface FullRosterAuditReport {
   generatedFrom: {
     databaseVersion: string;
     dataSchemaVersion: number;
-    localRosterSchemaVersion: 4;
+    localRosterSchemaVersion: 5;
   };
   reliable: boolean;
   totals: {
@@ -191,7 +191,7 @@ const EXPECTED_RARITY_COUNTS: Record<string, number> = {
   Rare: 12,
 };
 const EXPECTED_HABIT_UNLOCKS = [2, 4, 6, 8, 10];
-const LOCAL_ROSTER_SCHEMA_VERSION = 4 as const;
+const LOCAL_ROSTER_SCHEMA_VERSION = 5 as const;
 const RATING_COMPONENT_MAXIMUMS: Record<string, number> = {
   'Readiness / profile confidence': 10,
   'Realized synergy payoff': 35,
@@ -228,7 +228,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const rarityCoverage = countBy(dragons, (dragon) => dragon.rarity);
   addCheck(
     'FRR-C001',
-    databaseMetadata.databaseVersion === '0.9.0',
+    databaseMetadata.databaseVersion === '0.9.1',
     `Database version is ${databaseMetadata.databaseVersion}.`,
   );
   addCheck(

@@ -13,6 +13,7 @@ import type {
 } from '../cloud/types';
 import { dragons } from '../data/dragons';
 import type { OwnedDragon } from '../models/dragon';
+import { applyOwnedDragonPatch } from '../services/habitLevels';
 import {
   createEmptyRoster,
   loadStoredRosterSnapshot,
@@ -296,7 +297,7 @@ describe('optional account authentication UI', () => {
 
 describe('initial roster migration and conflict behavior', () => {
   it('prompts for meaningful local data and writes nothing before Save to account', async () => {
-    const local = meaningfulRoster('Browser note', 0);
+    const local = meaningfulRoster('Browser note', 1);
     seedLocal(local);
     const repository = new FakeRosters(null);
     const user = userEvent.setup();
@@ -308,7 +309,7 @@ describe('initial roster migration and conflict behavior', () => {
     await waitFor(() => expect(repository.upserts).toHaveLength(1));
     const saved = repository.upserts[0]!.roster[dragons[0]!.id]!;
     expect(saved.notes).toBe('Browser note');
-    expect(Object.values(saved.habitLevels)).toContain(0);
+    expect(Object.values(saved.habitLevels)).toContain(1);
   });
 
   it('does not prompt for an empty browser with no cloud row', async () => {
@@ -339,7 +340,7 @@ describe('initial roster migration and conflict behavior', () => {
   });
 
   it('shows a readable differing-roster summary and can choose the account roster', async () => {
-    seedLocal(meaningfulRoster('Browser note', 0));
+    seedLocal(meaningfulRoster('Browser note', 1));
     const cloud = meaningfulRoster('Account note', 5);
     cloud[dragons[1]!.id]!.owned = true;
     const repository = new FakeRosters(makeRecord('user-a', cloud));
@@ -349,7 +350,7 @@ describe('initial roster migration and conflict behavior', () => {
     const dialog = await screen.findByRole('dialog', { name: 'Choose which roster to use' });
     const comparison = within(dialog).getByRole('table', { name: 'This browser and account roster comparison' });
     expect(within(dialog).getByText('Owned dragons')).toBeInTheDocument();
-    expect(within(dialog).getByText('Recorded Habit Levels')).toBeInTheDocument();
+    expect(within(dialog).getByText('Unlocked Habit Levels')).toBeInTheDocument();
     expect(within(comparison).getByRole('columnheader', { name: 'Summary' })).toBeInTheDocument();
     expect(within(comparison).getByRole('columnheader', { name: 'This browser' })).toBeInTheDocument();
     expect(within(comparison).getByRole('columnheader', { name: 'Account' })).toBeInTheDocument();
@@ -437,7 +438,7 @@ describe('ongoing synchronization safety', () => {
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await user.click(screen.getByRole('button', { name: 'Roster' }));
     await screen.findByText('Synced to your account and stored in this browser');
-    const imported = meaningfulRoster('Imported locally', 0);
+    const imported = meaningfulRoster('Imported locally', 1);
     const file = new File([serializeRosterExport(imported)], 'roster.json', { type: 'application/json' });
     await user.upload(screen.getByLabelText('Import roster'), file);
     const dialog = await screen.findByRole('dialog', { name: 'Replace your synchronized roster with this imported roster?' });
@@ -526,15 +527,18 @@ function makeServices(auth: AuthService, rosters: CloudRosterRepository): Accoun
   return { auth, rosters };
 }
 
-function meaningfulRoster(note: string, habitLevel: 0 | 1 | 2 | 3 | 4 | 5) {
+function meaningfulRoster(note: string, habitLevel: 1 | 2 | 3 | 4 | 5) {
   const roster = createEmptyRoster(dragons);
-  const entry = roster[dragons[0]!.id]!;
-  entry.owned = true;
-  entry.starRank = 6;
-  entry.reignLevel = 20;
-  entry.notes = note;
-  const habitId = Object.keys(entry.habitLevels)[0]!;
+  const dragon = dragons[0]!;
+  const entry = applyOwnedDragonPatch(dragon, roster[dragon.id]!, {
+    owned: true,
+    starRank: 6,
+    reignLevel: 20,
+    notes: note,
+  });
+  const habitId = dragon.habits[0]!.id;
   entry.habitLevels[habitId] = habitLevel;
+  roster[dragon.id] = entry;
   return roster;
 }
 

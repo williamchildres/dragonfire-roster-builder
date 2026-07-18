@@ -247,9 +247,9 @@ describe('Dragonfire Lab app', () => {
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Vesper, Nyrena, and Dawnseeker complete verified ability data and curated profiles for all 31 dragons.');
     */
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.9\.1/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('The compact Roster workspace adds filterable rows');
+    expect(latestUpdate).toHaveTextContent('Habit Levels now appear only after their canonical progression requirements unlock');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -608,7 +608,7 @@ describe('Dragonfire Lab app', () => {
     expect(phantomCard).not.toHaveTextContent('Mutually exclusive alternatives');
   });
 
-  it("persists Phantom's Veil Habit Level separately from Star Rank locking", async () => {
+  it("clears Phantom's Veil when it relocks and restarts it at Level 1", async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -629,17 +629,21 @@ describe('Dragonfire Lab app', () => {
     expect(phantomCard).not.toHaveTextContent('Current selected value:');
 
     await user.selectOptions(within(dialog).getByLabelText(/star rank/i), '1');
-    await user.selectOptions(within(phantomCard as HTMLElement).getByLabelText(/habit level/i), '');
     phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
     expect(phantomCard).toHaveTextContent('Locked preview');
     expect(phantomCard).toHaveTextContent('Physical, Tactical, or Fire Damage Received');
+    expect(within(phantomCard as HTMLElement).queryByLabelText(/habit level/i)).not.toBeInTheDocument();
 
     const stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '{}') as {
       roster?: Array<{ dragonId: string; habitLevels?: Record<string, unknown> }>;
     };
     expect(
       stored.roster?.find((entry) => entry.dragonId === 'daemoros')?.habitLevels?.['daemoros-phantoms-veil'],
-    ).toBeNull();
+    ).toBeUndefined();
+
+    await user.selectOptions(within(dialog).getByLabelText(/star rank/i), '10');
+    phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
+    expect(within(phantomCard as HTMLElement).getByLabelText(/habit level/i)).toHaveValue('1');
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
     await openAddDragon(user);

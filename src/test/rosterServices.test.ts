@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { dragons } from '../data/dragons';
+import type { OwnedDragon } from '../models/dragon';
 import { defaultFilters, filterDragons, sortDragons } from '../services/rosterFilters';
 import {
   createEmptyRoster,
@@ -97,7 +98,7 @@ describe('roster storage and import/export', () => {
             reignLevel: null,
             notes: 'Partial',
             habitLevels: {
-              'malachite-forests-instinct': 0,
+              'malachite-forests-instinct': 1,
               'malachite-wise-vigor': 1,
               'malachite-thunderous-roar': 2,
               'malachite-collective-might': 3,
@@ -143,9 +144,9 @@ describe('roster storage and import/export', () => {
     expect(isValidStarRank(11)).toBe(false);
   });
 
-  it('accepts Habit Level 0 through 5 and rejects 6', () => {
-    expect([0, 1, 2, 3, 4, 5, null].every((level) => isValidHabitLevel(level))).toBe(true);
-    expect(isValidHabitLevel(6)).toBe(false);
+  it('accepts only Habit Levels 1 through 5', () => {
+    expect([1, 2, 3, 4, 5].every((level) => isValidHabitLevel(level))).toBe(true);
+    expect([null, 0, 6].every((level) => !isValidHabitLevel(level))).toBe(true);
   });
 
   it('migrates existing schema 1 localStorage data without clearing owned fields', () => {
@@ -173,8 +174,7 @@ describe('roster storage and import/export', () => {
     expect(migrated.malachite!.starRank).toBe(1);
     expect(migrated.malachite!.reignLevel).toBe(2);
     expect(migrated.malachite!.notes).toBe('Existing user note');
-    expect(Object.keys(migrated.malachite!.habitLevels)).toHaveLength(5);
-    expect(Object.values(migrated.malachite!.habitLevels).every((level) => level === null)).toBe(true);
+    expect(migrated.malachite!.habitLevels).toEqual({});
   });
 
   it('normalizes legacy collection states and ignores shard values without clearing values', () => {
@@ -242,7 +242,8 @@ describe('roster storage and import/export', () => {
     expect(migrated.malachite!.starRank).toBe(3);
     expect(migrated.malachite!.reignLevel).toBe(7);
     expect(migrated.malachite!.notes).toBe('Not hatched yet');
-    expect(migrated.malachite!.habitLevels['malachite-lightning-strike']).toBe(5);
+    expect(migrated.malachite!.habitLevels['malachite-forests-instinct']).toBe(1);
+    expect(migrated.malachite!.habitLevels['malachite-lightning-strike']).toBeUndefined();
     expect(migrated.caraxes!.owned).toBe(false);
   });
 
@@ -292,7 +293,8 @@ describe('roster storage and import/export', () => {
     expect(valid.roster?.syrax!.starRank).toBe(7);
     expect(valid.roster?.syrax!.reignLevel).toBe(12);
     expect(valid.roster?.syrax!.notes).toBe('Legacy shard values are ignored');
-    expect(valid.roster?.syrax!.habitLevels['syrax-mothers-mercy']).toBe(5);
+    expect(valid.roster?.syrax!.habitLevels['syrax-strategic-revival']).toBe(3);
+    expect(valid.roster?.syrax!.habitLevels['syrax-mothers-mercy']).toBeUndefined();
   });
 
   it('round-trips simplified exports through import without shard or collection fields', () => {
@@ -301,7 +303,7 @@ describe('roster storage and import/export', () => {
     roster.syrax!.starRank = 5;
     roster.syrax!.reignLevel = 11;
     roster.syrax!.notes = 'Ready for vanguard testing';
-    roster.syrax!.habitLevels['syrax-mothers-mercy'] = 4;
+    roster.syrax!.habitLevels['syrax-mindful-synergy'] = 4;
 
     const exported = serializeRosterExport(roster);
     expect(exported).not.toContain('shardsCurrent');
@@ -315,6 +317,73 @@ describe('roster storage and import/export', () => {
     expect(imported.roster?.syrax!.starRank).toBe(5);
     expect(imported.roster?.syrax!.reignLevel).toBe(11);
     expect(imported.roster?.syrax!.notes).toBe('Ready for vanguard testing');
-    expect(imported.roster?.syrax!.habitLevels['syrax-mothers-mercy']).toBe(4);
+    expect(imported.roster?.syrax!.habitLevels['syrax-mindful-synergy']).toBe(4);
+  });
+
+  it('migrates schema-4 null, zero, missing, locked, and unknown Habit Levels deterministically', () => {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      format: 'dragonfire-roster-lab-local',
+      schemaVersion: 4,
+      updatedAt: '2026-07-17T00:00:00.000Z',
+      roster: [{
+        dragonId: 'syrax',
+        owned: true,
+        starRank: 6,
+        reignLevel: 20,
+        notes: '',
+        habitLevels: {
+          'syrax-mindful-synergy': 0,
+          'syrax-flight-mastery': null,
+          'syrax-tactical-inferno': 5,
+          'unknown-habit': 4,
+        },
+      }],
+    }));
+
+    const migrated = loadRoster(window.localStorage, dragons);
+    expect(migrated.syrax!.habitLevels).toEqual({
+      'syrax-mindful-synergy': 1,
+      'syrax-flight-mastery': 1,
+      'syrax-strategic-revival': 1,
+    });
+  });
+
+  it.each([0, null])('rejects an explicitly supplied schema-5 Habit Level %s', (level) => {
+    const result = validateRosterImport(JSON.stringify({
+      format: 'dragonfire-roster-lab',
+      schemaVersion: 5,
+      roster: [{ dragonId: 'syrax', starRank: 2, habitLevels: { 'syrax-mindful-synergy': level } }],
+    }), dragons);
+    expect(result.ok).toBe(false);
+  });
+
+  it('reads every supported legacy import schema and rejects future schemas', () => {
+    for (const schemaVersion of [1, 2, 3, 4]) {
+      expect(validateRosterImport(JSON.stringify({
+        format: 'dragonfire-roster-lab',
+        schemaVersion,
+        roster: [{ dragonId: 'syrax', starRank: 2, habitLevels: { 'syrax-mindful-synergy': 0 } }],
+      }), dragons).ok).toBe(true);
+    }
+    expect(validateRosterImport(JSON.stringify({
+      format: 'dragonfire-roster-lab', schemaVersion: 6, roster: [],
+    }), dragons).ok).toBe(false);
+  });
+
+  it('emits sparse schema-5 Habit Levels with no null, zero, locked, or unknown values', () => {
+    const roster = createEmptyRoster(dragons);
+    Object.assign(roster.syrax!, {
+      starRank: 2,
+      reignLevel: 20,
+      habitLevels: {
+        'syrax-mindful-synergy': 5,
+        'syrax-flight-mastery': 4,
+        'unknown-habit': 3,
+      },
+    });
+    const exported = JSON.parse(serializeRosterExport(roster)) as { roster: OwnedDragon[] };
+    const syrax = exported.roster.find((entry) => entry.dragonId === 'syrax')!;
+    expect(syrax.habitLevels).toEqual({ 'syrax-mindful-synergy': 5 });
+    expect(JSON.stringify(exported.roster.map((entry) => entry.habitLevels))).not.toMatch(/null|:0[,}]/);
   });
 });

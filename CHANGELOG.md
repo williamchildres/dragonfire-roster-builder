@@ -1,11 +1,19 @@
 # Changelog
 
+## 0.9.1 - 2026-07-17
+
+- Corrected Habit Level tracking to derive unlocks from each canonical habit's Star Rank and Dragon Level requirements. Locked habits have no stored or editable level; newly unlocked habits begin at Level 1; valid levels are 1 through 5.
+- Added authoritative roster reconciliation so combined progression updates preserve still-unlocked levels, remove relocked and unknown habit keys, reject locked direct assignments, and restart a re-unlocked habit at Level 1. Removing ownership alone continues to retain progression, notes, and valid unlocked Habit Levels.
+- Advanced local and cloud roster JSON schemas to `5`. Local/import schemas 1 through 4 and cloud schema 4 remain readable. Legacy null, zero, or missing values become Level 1 only for unlocked habits; locked legacy values are discarded. New exports and cloud writes contain only unlocked canonical IDs with values 1 through 5.
+- Updated the roster editor, detail cards, rows, conflict summaries, and progression filters to describe unlocked habits instead of recorded/unknown levels. Formation inputs, rating components, and the deterministic hash are unchanged.
+- Increased database/package version to `0.9.1`; source data schema remains `13`. This JSON-contract migration requires no Supabase SQL migration.
+
 ## 0.9.0 - 2026-07-17
 
 - Replaced repeated owned-dragon card forms with a compact, filterable list and one dedicated selected-dragon editor.
 - Added deterministic name, rarity, Star Rank, and Dragon Level sorting plus canonical rarity/breed, progression-completeness, and notes filters.
 - Added desktop two-pane roster management and a narrow-screen list/editor flow with Back-to-roster focus restoration and predictable add/remove selection.
-- Added focused coverage for selection, filters, null-last sorting, Star Rank, Dragon Level, Habit Levels (including explicit level `0`), notes, removal, and account-sync regressions.
+- Added focused coverage for selection, filters, null-last sorting, Star Rank, Dragon Level, Habit Levels, notes, removal, and account-sync regressions.
 - Confirmed production Google OAuth, password, recovery, magic-link, and Resend SMTP configuration remains external; no credentials are included.
 - Increased database/package version to `0.9.0`; source data schema remains `13`, local and cloud roster schemas remain `4`, and import/export/share-link/rating contracts are unchanged. No Supabase migration was added.
 
@@ -241,7 +249,7 @@
 
 ## 0.2.0 - 2026-06-23
 
-- Corrected Star Rank to 1-10 and added independent Habit Levels 0-5.
+- Corrected Star Rank to 1-10 and added the initial independent Habit Level fields (superseded by the schema-5 unlock contract in 0.9.1).
 - Added localStorage schema 2 migration that preserves existing roster fields and legacy team selections.
 - Replaced the three-slot Team Builder with a Left Flank, Vanguard, Right Flank Formation Builder.
 - Added multi-schedule ability modeling for Commands, Traits, and Habits.
