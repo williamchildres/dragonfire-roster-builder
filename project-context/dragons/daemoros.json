@@ -33,7 +33,7 @@
         "BURN",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "Odd-numbered rounds: deal Physical Damage to one adjacent enemy, Damage Rate +125%; 20% chance to afflict the same target with Burn for two rounds."
+      "rawDescription": "Odd-numbered rounds: deal Physical Damage to one Enemy within adjacency at a 125% Damage Rate; Physical Damage scales with Daemoros's Strength and is mitigated by target Instinct. Additionally, there is a 20% chance to afflict that same target with Burn for two rounds; Burn deals Fire Damage each round at a 20% Damage Rate. The source does not state additional Burn scaling."
     },
     {
       "id": "daemoros-warriors-zeal",
@@ -85,7 +85,7 @@
         "DEBUFF_INSTINCTS",
         "PANIC"
       ],
-      "rawDescription": "Each round: one 25%-50% activation roll targets one enemy in any lane, preferring Right Flank; reduce Intelligence and Instinct by 25% enhanced by Strength and apply Panic for two rounds."
+      "rawDescription": "Each Round: one activation chance targets one Enemy in any lane, prioritizing Right Flank with ordinary fallback; reduce Intelligence and Instinct by 25%, both enhanced by Daemoros's Strength, and afflict Panic at a 20% Damage Rate for two rounds. Panic deals Tactical Damage each round. Activation chance by Habit Level 1-5: 25%, 30%, 35%, 42.5%, 50%."
     },
     {
       "id": "daemoros-powerful-reflexes",
@@ -109,7 +109,7 @@
         "STRENGTH_UP",
         "BUFF_INITIATIVE"
       ],
-      "rawDescription": "Start of Combat until end of combat: increase Daemoros Strength and Initiative."
+      "rawDescription": "Start of Combat until end of combat: increase Daemoros's Strength and Initiative. Both progress by Habit Level 1-5: 16%, 19.2%, 22.4%, 27.2%, 32%."
     },
     {
       "id": "daemoros-shroud-of-shadows",
@@ -134,7 +134,7 @@
         "CONTROL",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "Odd-numbered rounds: 15%-30% chance to afflict one adjacent enemy with Confusion for two rounds."
+      "rawDescription": "Odd-numbered rounds: chance to afflict Confusion on one Enemy within adjacency for two rounds. Whenever Confusion activates a Command or Habit or launches a Basic Attack on its target's turn, that target has a 50% chance to mistake Allies for Enemies and vice versa. Chance by Habit Level 1-5: 15%, 18%, 21%, 25.5%, 30%."
     },
     {
       "id": "daemoros-darkening-fear",
@@ -159,7 +159,7 @@
         "DEBUFF_INSTINCTS",
         "PANIC"
       ],
-      "rawDescription": "Each round: independently roll Instill Fear-like effects on one enemy in any lane, preferring Left Flank."
+      "rawDescription": "Each Round: one activation chance targets one Enemy in any lane, prioritizing Left Flank with ordinary fallback; reduce Intelligence and Instinct by 25%, both enhanced by Daemoros's Strength, and afflict Panic at a 20% Damage Rate for two rounds. Panic deals Tactical Damage each round. Activation chance by Habit Level 1-5: 25%, 30%, 35%, 42.5%, 50%. This is not merged with Instill Fear; it is another activation."
     },
     {
       "id": "daemoros-phantoms-veil",
@@ -182,7 +182,7 @@
       "tags": [
         "DAMAGE_RECEIVED_DOWN"
       ],
-      "rawDescription": "Start of each round until end of that round: reduce exactly one of Physical, Tactical, or Fire Damage Received. Selection method is not stated."
+      "rawDescription": "Start of each Round until end of that round: reduce exactly one of Physical Damage Received, Tactical Damage Received, or Fire Damage Received. The screenshot does not state how the damage type is selected. Damage Received reduction by Habit Level 1-5: -15%, -19.5%, -24%, -30%, -37.5%."
     }
   ],
   "affinities": {

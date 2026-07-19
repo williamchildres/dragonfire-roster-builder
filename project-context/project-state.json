@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-19T00:26:27.299Z",
+  "generatedAt": "2026-07-19T01:23:34.645Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/source-fidelity-malachite-venator-sheepstealer",
-    "commit": "55dc1fe0b1761d9bd3511af707bebe014d3e1e25",
-    "databaseVersion": "0.10.4",
+    "branch": "data/source-fidelity-final-epic-batch",
+    "commit": "8ad895f9201288afe19ad68f745c702d3c6630be",
+    "databaseVersion": "0.10.5",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 36,
-    "testCaseCount": 349,
+    "testFileCount": 37,
+    "testCaseCount": 353,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

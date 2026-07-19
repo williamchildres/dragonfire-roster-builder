@@ -35,7 +35,7 @@
         "CONTROL",
         "MULTI_SCHEDULE_COMMAND"
       ],
-      "rawDescription": "Rounds 1, 4, and 7: Deal Physical Damage to 2 enemies within adjacency at a 70% Damage Rate.\n\nRounds 2, 5, and 8: Deal Fire Damage to 3 enemies in any lane at a 20% Damage Rate. This damage is increased by 1.5x if the target is afflicted with a Control effect, increasing the Damage Rate to 30%. Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nAt 6+ Stars:\n\nRounds 2, 5, and 8: Apply Recovery to 2 other Allies in any lane at a 60% Recovery Rate, enhanced by Intelligence.\n\nStar Rank 6 augmentation:\nEchoing Melody adds Recovery to Dawnsong on Rounds 2, 5, and 8."
+      "rawDescription": "Rounds 1, 4, and 7: deal Physical Damage to two Enemies within adjacency at a 70% Damage Rate; Physical Damage scales with Rhysarion's Strength and is mitigated by target Instinct. Rounds 2, 5, and 8: deal Fire Damage to three Enemies in any lane at a 20% base Damage Rate; multiply damage by 1.5 when the target has Stun, Stagger, Overwhelm, or Confusion (displayed 30% Damage Rate). Fire Damage scales with Rhysarion's Intelligence and is mitigated by target Initiative. At 6+ Stars on rounds 2, 5, and 8: apply Recovery to two other Allies in any lane, excluding Rhysarion, at a 60% Recovery Rate; Recovery is enhanced by Rhysarion's Intelligence and scales with Dragon Level."
     },
     {
       "id": "rhysarion-champions-vigor",
@@ -83,10 +83,10 @@
         "rhysarion-ebbing-fury-2026-06-26"
       ],
       "tags": [
-        "DAMAGE_DEALT_UP",
+        "DAMAGE_DEALT_DOWN",
         "RECOVERY"
       ],
-      "rawDescription": "Start of Round 1 for 3 rounds: reduce Damage Dealt of all enemies and all allies, including Rhysarion. Start of Round 4: apply Recovery to 3 Allies, including Rhysarion."
+      "rawDescription": "Start of Round 1: reduce Damage Dealt of all Enemies and all Allies, including Rhysarion, for three rounds. Source discrepancy: prose displays -27% at Habit Level 1; table displays -27.5%. Damage Dealt table progression: -27.5%, -33%, -38.5%, -46.75%, -55%. Start of Round 4: apply Recovery to three Allies in any lane; plain 'Allies' includes Rhysarion, and Recovery is enhanced by Rhysarion's Strength. Recovery Rate progression: 25%, 30%, 35%, 42.5%, 50%."
     },
     {
       "id": "rhysarion-sharp-resolve",
@@ -110,7 +110,7 @@
         "STRENGTH_UP",
         "BUFF_INTELLIGENCE"
       ],
-      "rawDescription": "Start of combat until end of combat: increase Rhysarion Strength and Intelligence."
+      "rawDescription": "Start of Combat until end of combat: increase Rhysarion's Strength and Intelligence. Both progress by Habit Level 1-5: 16%, 19.2%, 22.4%, 27.2%, 32%."
     },
     {
       "id": "rhysarion-echoing-melody",
@@ -135,7 +135,7 @@
         "RECOVERY",
         "OTHER_ALLIES_TARGET"
       ],
-      "rawDescription": "Command augmentation for Dawnsong: Rounds 2, 5, and 8 apply Recovery to 2 other Allies in any lane, excluding Rhysarion, enhanced by Intelligence."
+      "rawDescription": "Augments Dawnsong on rounds 2, 5, and 8: apply Recovery to two other Allies in any lane, excluding Rhysarion. Recovery is enhanced by Rhysarion's Intelligence and scales with Dragon Level. Recovery Rate progression: 60%, 72%, 84%, 102%, 120%."
     },
     {
       "id": "rhysarion-unbroken-devotion",
@@ -159,7 +159,7 @@
         "RECOVERY_RECEIVED_UP",
         "OTHER_ALLIES_TARGET"
       ],
-      "rawDescription": "Start of combat: increase Recovery Received of 2 other Allies in any lane until end of combat, excluding Rhysarion."
+      "rawDescription": "Start of Combat until end of combat: increase Recovery Received of two other Allies in any lane, excluding Rhysarion. Progression: 20%, 24%, 28%, 34%, 40%."
     },
     {
       "id": "rhysarion-inspiring-melody",
@@ -185,7 +185,7 @@
         "DAMAGE_RECEIVED_DOWN",
         "OTHER_ALLIES_TARGET"
       ],
-      "rawDescription": "Each round: one activation chance. On success, select 1 other adjacent Ally and apply Initiative +20% enhanced by Rhysarion Intelligence plus Resistance Damage Received -15% for 3 rounds."
+      "rawDescription": "Each Round: one shared activation chance. On success, select one other Ally within adjacency and increase that same target's Initiative by 20%, enhanced by Rhysarion's Intelligence; grant that same target Resistance (-15%). Both effects last three rounds. Resistance reduces Damage Received. Activation chance progression: 20%, 26%, 32%, 40%, 50%."
     }
   ],
   "affinities": {

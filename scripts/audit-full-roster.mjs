@@ -32,29 +32,35 @@ const resolvedFindings = [
 ];
 const browserQaObservation = {
   status: 'PASS',
-  auditedUrl: 'http://127.0.0.1:4173/ (local 0.10.4 production preview)',
+  auditedUrl: 'http://127.0.0.1:4173/ (local 0.10.5 production preview)',
   fixture: 'isolated localhost with an empty local roster; no production account or roster used',
   viewports: {
     desktop1440: {
       viewport: { width: 1440, height: 900 },
       document: { clientWidth: 1440, scrollWidth: 1440 },
       dialogs: {
-        Malachite: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4528 },
-        Venator: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4432 },
-        Sheepstealer: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 4349 },
+        Daemoros: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3834 },
+        Feskar: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3798 },
+        Rhysarion: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3938 },
+        Shadowsong: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3903 },
+        Vaeldra: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3832 },
+        Vermax: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3760 },
       },
-      openVerifiedWordingDisclosuresPerDragon: 7,
+      usableDisclosureControlsPerDragon: 19,
       overflowingDescendantCount: 0,
     },
     phone390: {
       viewport: { width: 390, height: 844 },
       document: { clientWidth: 390, scrollWidth: 390 },
       dialogs: {
-        Malachite: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7726 },
-        Venator: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7593 },
-        Sheepstealer: { clientWidth: 353, scrollWidth: 353, scrollHeight: 7707 },
+        Daemoros: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5107 },
+        Feskar: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5068 },
+        Rhysarion: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5309 },
+        Shadowsong: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5355 },
+        Vaeldra: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5377 },
+        Vermax: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5090 },
       },
-      openVerifiedWordingDisclosuresPerDragon: 7,
+      usableDisclosureControlsPerDragon: 19,
       overflowingDescendantCount: 0,
       clippedInteractiveControlCount: 0,
     },
@@ -81,7 +87,7 @@ const browserQaObservation = {
     legacyImport: 'PASS — schema-4 null/zero unlocked values migrated to Level 1; locked and unknown values were absent',
     mobile: 'PASS — the same single editor and roster list were usable at 390×844 and 360×740',
   },
-  structure: { dragonDetailDialogsInspected: 3, abilityCardsInspected: 21 },
+  structure: { dragonDetailDialogsInspected: 6, abilityCardsInspected: 42 },
   overflowCount: 0,
   clippedInteractiveControlCount: 0,
   consoleErrors: [],
@@ -102,10 +108,9 @@ const browserQaObservation = {
   responsiveSummary:
     'All inspected document and dialog scroll widths matched their client widths at desktop and phone breakpoints.',
   observations: [
-    '1440x900: all seven disclosures per dragon opened with 1,033px-wide, 24px-high summary controls and no overflowing descendants.',
-    '390x844: all progression sequences wrapped inside 353px-wide dialogs with no horizontal overflow.',
-    '360x740: Sheepstealer remained usable in a 323px-wide dialog with the Close control visible and no horizontal overflow.',
-    'Malachite, Venator, and Sheepstealer rendered no Power values or generic screenshot upgrade boilerplate.',
+    '1440x900: all six final-batch dialogs matched their 1,167px client widths with no horizontal overflow.',
+    '390x844: all six dialogs exposed 19 disclosure controls, matched their 353px client widths, and had no horizontal overflow.',
+    'Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, and Vermax rendered no Power label or generic screenshot upgrade boilerplate.',
   ],
   legacyObservations: [
     '1440px: two-pane workspace remained contained with a sticky 415px editor.',
@@ -135,14 +140,14 @@ try {
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: '0dc080d9ca6f6f6501f42f370eb68c8cc6944ab4',
-      branch: 'data/source-fidelity-malachite-venator-sheepstealer',
+      originMainSha: '8ad895f9201288afe19ad68f745c702d3c6630be',
+      branch: 'data/source-fidelity-final-epic-batch',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
     browserQa: browserQaObservation,
     comparison: {
-      baselineVersion: '0.10.3',
+      baselineVersion: '0.10.4',
       baselineDeterministicFullResultHash:
         'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48',
       currentVersion: auditVersion,
@@ -205,7 +210,7 @@ function renderMarkdown(report) {
   const lines = [
     `# Full-roster regression audit — ${report.auditVersion}`,
     '',
-    '> Screenshot-source fidelity release for Malachite, Venator, and Sheepstealer. Curated profiles, rating formula, and calibration remain unchanged.',
+    '> Final controller-reviewed screenshot-source fidelity release for all 31 dragons. Curated profiles, rating formula, and calibration remain unchanged.',
     '',
     '## Executive summary',
     '',
@@ -326,7 +331,7 @@ function renderMarkdown(report) {
     '## Explicit non-changes',
     '',
     '- No formula, weight, threshold, guardrail, placement, or calibration changes.',
-    '- Canonical wording changed only for the 21 Malachite, Venator, and Sheepstealer abilities in this screenshot-source fidelity batch.',
+    '- Canonical wording changed only for the 42 Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, and Vermax abilities in this final screenshot-source fidelity batch.',
     '- Curated profile semantics and signals are unchanged; source-backed ability tags only were corrected without changing evaluator behavior.',
     '- Source schema 13, formation share links, formation evaluation, and the rating model remain unchanged; local/cloud roster JSON remain at schema 5 without SQL changes.',
     '- FRR-F001 and FRR-F002 remain informational and unresolved by design.',

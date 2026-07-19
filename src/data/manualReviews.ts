@@ -343,6 +343,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
       'Feskar Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.',
       'Observed account stats are retained only as non-canonical observation data.',
       'Resilient Bond persistent ally reference and unknown maximum stack count are preserved as typed data.',
+      "Controller-review candidate only: Insightful Allies is enhanced by Feskar's Instinct; no curated profile change was made.",
     ],
     evidenceIds: [
       'feskar-main-screen-2026-06-26',
@@ -390,7 +391,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
     notes: [
       'Shadowsong Command, Trait, Habits, progression values, affinities, and unresolved mechanics were normalized from user-supplied in-game screenshots.',
       'Blazing Conductor keeps the two ordered added targets and their Burn chances separate.',
-      'Scorched Earth Panic-conditioned chance is per target; exact roll scope remains unresolved.',
+      'Scorched Earth Panic-conditioned chance is preserved, while shared-versus-per-target activation remains unresolved.',
     ],
     evidenceIds: [
       'shadowsong-main-screen-2026-06-26',
@@ -625,6 +626,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
       "Warrior's Zeal source scope is combat-log confirmed.",
       "Warrior's Zeal increases Vermax's own Basic Attack Physical Damage.",
       'The unqualified Physical Damage Dealt modifier applies to all verified Physical Damage sources unless a source explicitly restricts or excludes one.',
+      "Controller-review candidates only: Reactive Instincts is enhanced by Vermax's Strength and selects the highest-Instinct Ally; Rallying Flame supplies a self Physical Damage stack effect. No curated profile change was made.",
     ],
     evidenceIds: ['vermax-warriors-zeal-2026-06-23', 'vermax-warriors-zeal-basic-attack-combat-log-2026-06-24'],
   },
@@ -809,6 +811,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
       'Daemoros command, trait, affinity, observation state, and five Habits were normalized from supplied screenshot evidence.',
       "Phantom's Veil uses typed one-of effect options so Physical, Tactical, and Fire defenses are not derived as three simultaneous active modifiers.",
       "Warrior's Zeal uses the established all-qualifying Physical source-scope semantic inherited from Vermax.",
+      'Controller-review candidate only: Darkening Fear provides another Panic source; no curated profile change was made.',
       'Observation values are account-specific and are not canonical base stats.',
     ],
     evidenceIds: [
@@ -834,6 +837,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
       'Vaeldra command, trait, affinity, observation state, and five Habits were normalized from supplied screenshot evidence.',
       "Siren's Call uses conditional effect options so a target receives either Taunt or Stagger, never both from one activation.",
       'Tempting Distraction is modeled as a successful-Taunt same-target trigger and preserves non-Basic Physical source scope.',
+      "Lure and Siren's Call activation-roll scopes remain unresolved; no curated profile change was made.",
       'Observation values are account-specific and are not canonical base stats.',
     ],
     evidenceIds: [

@@ -29,13 +29,13 @@
         "feskar-calculated-assault-2026-06-26"
       ],
       "tags": [
-        "PHYSICAL_DAMAGE",
+        "PHYSICAL_DAMAGE_DEALT_DOWN",
         "TACTICAL_DAMAGE",
         "FIRE_DAMAGE",
         "EXCLUDES_BASIC_ATTACKS",
         "MULTI_SCHEDULE_COMMAND"
       ],
-      "rawDescription": "Each Round: 20% chance to reduce Physical Damage Dealt, excluding Basic Attacks, by 12% for the enemy with the highest Strength for 2 rounds.\n\nRounds 2, 4, 7, and 9: Deal Tactical Damage to the enemy with the least troops at a 100% Damage Rate.\n\nAt 6+ Stars:\n\nRounds 3, 5, 8, and 10: Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate. This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.\n\nStar Rank 6 augmentation:\nEmerald Inferno adds Fire Damage on Rounds 3, 5, 8, and 10."
+      "rawDescription": "Each Round: 20% chance to reduce non-Basic Physical Damage Dealt by 12% on the Enemy with the highest Strength for two rounds. Rounds 2, 4, 7, and 9: deal Tactical Damage to the Enemy with the least troops at a 100% Damage Rate; Tactical Damage scales with Feskar's Instinct and is mitigated by target Intelligence. At 6+ Stars, rounds 3, 5, 8, and 10: deal Fire Damage to all Enemies that deal non-Basic Physical Damage at a 40% base Damage Rate; multiply damage by 1.5 against each target afflicted with Burn (displayed 60% Damage Rate). Fire Damage scales with Feskar's Intelligence and is mitigated by target Initiative."
     },
     {
       "id": "feskar-champions-brilliance",
@@ -87,7 +87,7 @@
         "DAMAGE_RECEIVED_DOWN",
         "EXCLUDES_BASIC_ATTACKS"
       ],
-      "rawDescription": "Start of combat: grant Feskar and one other adjacent ally one Resilient Bond stack. Later rounds: if that tracked ally retreated in the previous round, grant Feskar one additional stack. Each stack reduces Physical Damage Received from non-Basic Attacks until end of combat."
+      "rawDescription": "Start of Combat: grant Feskar one Resilient Bond stack and grant one other Ally within adjacency one Resilient Bond stack. At the start of each Round, if the tracked Ally retreated during the previous round, grant Feskar one additional stack. Each stack lasts until end of combat and reduces non-Basic Physical Damage Received of its holder. The screenshot states no maximum stack count. Source discrepancy: prose displays -6% per stack at Habit Level 1, while the table displays -6.5%. Table progression per stack: -6.5%, -7.8%, -9.1%, -11.05%, -13%."
     },
     {
       "id": "feskar-insightful-allies",
@@ -111,7 +111,7 @@
         "INSTINCT_UP",
         "BUFF_ALLIES"
       ],
-      "rawDescription": "Start of combat: increase Instinct of 3 Allies in any lane until end of combat, enhanced by Feskar Instinct. Plain Allies includes Feskar."
+      "rawDescription": "Start of Combat until end of combat: increase Instinct of three Allies in any lane; plain 'Allies' includes Feskar, and the increase is enhanced by Feskar's Instinct. Progression: 10%, 12%, 14%, 17%, 20%."
     },
     {
       "id": "feskar-emerald-inferno",
@@ -135,7 +135,7 @@
         "COMMAND_AUGMENTATION",
         "FIRE_DAMAGE"
       ],
-      "rawDescription": "Command augmentation for Calculated Assault: Rounds 3, 5, 8, and 10 deal Fire Damage to all enemies that deal Physical Damage excluding Basic Attacks; Burn increases damage by 1.5x per target."
+      "rawDescription": "Augments Calculated Assault on rounds 3, 5, 8, and 10: deal Fire Damage to all Enemies that deal non-Basic Physical Damage; damage is multiplied by 1.5 against each target afflicted with Burn. Fire Damage scales with Feskar's Intelligence and is mitigated by target Initiative. Base Fire Damage Rate progression: 40%, 48%, 56%, 68%, 80%."
     },
     {
       "id": "feskar-quick-witted",
@@ -159,7 +159,7 @@
         "BUFF_INTELLIGENCE",
         "BUFF_INITIATIVE"
       ],
-      "rawDescription": "Start of combat until end of combat: increase Feskar Intelligence and Initiative."
+      "rawDescription": "Start of Combat until end of combat: increase Feskar's Intelligence and Initiative. Both progress by Habit Level 1-5: 16%, 19.2%, 22.4%, 27.2%, 32%."
     },
     {
       "id": "feskar-unyielding-grasp",
@@ -183,7 +183,7 @@
         "STAGGER",
         "CONTROL"
       ],
-      "rawDescription": "Each round: one activation chance to Stagger 1 enemy in any lane, prioritizing Warrior role, for 3 rounds."
+      "rawDescription": "Each Round: one activation chance afflicts Stagger on one Enemy in any lane, prioritizing Warriors with ordinary fallback, for three rounds. Stagger prevents Attack Modifier Commands and Basic Attacks on the target's turn. Chance progression: 10%, 13%, 16%, 20%, 25%."
     }
   ],
   "affinities": {
