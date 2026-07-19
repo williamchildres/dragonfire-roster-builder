@@ -14,8 +14,6 @@ export type RecommendationSuppressionReason =
   | 'current-best'
   | 'tied-best'
   | 'below-meaningful-threshold'
-  | 'equivalent-vanguard-trade'
-  | 'progression-locked-only'
   | 'incomplete-formation'
   | 'insufficient-confidence';
 

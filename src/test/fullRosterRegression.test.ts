@@ -205,6 +205,18 @@ describe('full-roster regression audit', () => {
     });
   }, 120_000);
 
+  it('accounts for one reachable recommendation outcome for every ordered formation', () => {
+    const distribution = report().formationSweep.recommendationSuppressionReasonDistribution;
+
+    expect(distribution).toEqual({
+      'action:swap': 13_923,
+      'below-meaningful-threshold': 4_298,
+      'current-best': 2_286,
+      'tied-best': 6_463,
+    });
+    expect(Object.values(distribution).reduce((total, count) => total + count, 0)).toBe(26_970);
+  }, 120_000);
+
   it('FRR-F004: qualifies future Details signals at their Star and Dragon Level boundaries', () => {
     const dawnseeker = simpleSynergyProfiles.find((profile) => profile.dragonId === 'dawnseeker')!;
     const vesper = simpleSynergyProfiles.find((profile) => profile.dragonId === 'vesper')!;

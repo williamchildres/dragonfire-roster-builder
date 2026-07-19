@@ -222,7 +222,7 @@ function renderMarkdown(report) {
     '',
     '- Active Synergy: 80 points. Conditional payoff base 10 (cap 30), output amplification base 6 (cap 30), stat support base 5 (cap 15), plus participation +5 for three dragons or +2 for two.',
     '- Provider redundancy by beneficiary + tag + class: 100%, 50%, then 0% trace-only.',
-    '- Placement Effectiveness: 20 points. Full credit when best/tied, best value is zero, or gain is below both +5 absolute and 10% relative. Otherwise `round(20 × current / best)`.',
+    '- Placement Effectiveness: 20 points. A placement improvement is meaningful only when it reaches both +5 relationship value and a 10% relative gain; otherwise Placement Effectiveness remains 20. A meaningful loss scores `round(20 × current / best)`.',
     '- Analysis Confidence gates score availability. Kit Coverage, inactive alternative Vanguard Traits, missing enablers, unused support, unsupported outputs, and future unlocks are diagnostics, not separate deductions.',
     '',
     '## Empirical calibration',

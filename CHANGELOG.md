@@ -3,7 +3,7 @@
 ## 0.11.0 - 2026-07-18
 
 - Replaced the public Formation Rating contract with Active Synergy (80) and Placement Effectiveness (20). Active relationships now score once through canonical provider → semantic tag → beneficiary edges, with fixed class values, class caps, participation bonuses, and deterministic provider redundancy.
-- Added an exact six-permutation comparison for every complete selected trio. Meaningful placement losses use the current/best relationship-value ratio; recommendations describe gained and lost edges, while ties and trivial gains are suppressed.
+- Added an exact six-permutation comparison for every complete selected trio. A placement improvement is meaningful only when it reaches both +5 relationship value and a 10% relative gain; otherwise Placement Effectiveness remains 20. Meaningful placement losses use the current/best relationship-value ratio, and recommendations describe gained and lost edges while ties and trivial gains are suppressed.
 - Removed ordinary Vanguard competition, inactive alternative Traits, future unlocks, and blocked alternatives from scoring penalties. Kit gaps remain typed, prioritized diagnostics rather than duplicate deductions.
 - Consolidated Formation Analysis into one accessible card with one rating, one verdict, one best-next-move statement, key strengths/gaps, the two-category breakdown, canonical relationship trace, and neutral/future details.
 - Recalibrated tiers from the complete 26,970-formation distribution: Excellent 80, Strong 67, Solid 49, Developing 25, and Weak below 25; Incomplete is a validation gate. The deterministic public hash intentionally changed.

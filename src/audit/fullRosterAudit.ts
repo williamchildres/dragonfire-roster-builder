@@ -10,6 +10,7 @@ import { rateFormation, tierForScore } from '../services/formationRating';
 import {
   buildPlacementComparison,
   compareFormationPlacements,
+  placementScoreFor,
   type FormationArrangement,
   type PlacementCandidate,
 } from '../services/formationPlacementComparison';
@@ -1123,6 +1124,22 @@ function auditFormationSweep(
           );
           return candidate?.activeRelationshipValue === placementComparison.best.activeRelationshipValue;
         }) ?? false;
+        const matchingCurrentCandidate = placementComparison?.candidates.find((candidate) =>
+          SIMPLE_FORMATION_POSITIONS.every(
+            (position) => candidate.arrangement[position] === placementComparison.current.arrangement[position],
+          ),
+        );
+        const currentCandidateConsistent = Boolean(
+          placementComparison &&
+          matchingCurrentCandidate === placementComparison.current &&
+          placementComparison.current.placementScore === placementComparison.placementScore,
+        );
+        const candidateScoresConsistent = placementComparison?.candidates.every(
+          (candidate) => candidate.placementScore === placementScoreFor(
+            candidate.activeRelationshipValue,
+            placementComparison.best.activeRelationshipValue,
+          ),
+        ) ?? false;
         const localViolations = [
           rating.score === null || !Number.isFinite(rating.score) || rating.score < 0 || rating.score > 100
             ? 'rating-bounds'
@@ -1150,6 +1167,8 @@ function auditFormationSweep(
           !placementComparison ? 'missing-placement-comparison' : null,
           !bestCandidatesHaveFullPlacement ? 'best-placement-not-full' : null,
           !tiedValuesStable ? 'tied-best-value-mismatch' : null,
+          !currentCandidateConsistent ? 'current-candidate-score-mismatch' : null,
+          !candidateScoresConsistent ? 'candidate-placement-score-mismatch' : null,
           results.some((result) => result.kind === 'position-conflict') ? 'position-conflict-emitted' : null,
           recommendation.netSummary !== reversedRecommendation.netSummary ||
           recommendation.suppressionReason !== reversedRecommendation.suppressionReason

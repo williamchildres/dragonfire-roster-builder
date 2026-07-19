@@ -348,8 +348,22 @@ function buildFormationRules() {
       permutationCount: 6,
       meaningfulAbsoluteDelta: 5,
       meaningfulRelativeDelta: 0.1,
+      meaningfulImprovementWhen: 'delta >= 5 && relativeDelta >= 0.10',
       meaningfulLossFormula: 'round(20 * currentValue / bestValue)',
-      fullCreditWhen: ['best', 'tied-best', 'best-value-zero', 'below-meaningful-threshold'],
+      candidateScoring: 'Each candidate is scored as though it were the current arrangement.',
+      fullCreditWhen: [
+        'best',
+        'tied-best',
+        'best-value-zero',
+        'improvement-does-not-reach-both-meaningful-thresholds',
+      ],
+      recommendationSuppressionReasons: [
+        'current-best',
+        'tied-best',
+        'below-meaningful-threshold',
+        'incomplete-formation',
+        'insufficient-confidence',
+      ],
       vanguardClaimsAreConflicts: false,
     },
     diagnosticFindingTypes: [

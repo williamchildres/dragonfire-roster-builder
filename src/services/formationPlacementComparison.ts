@@ -80,10 +80,12 @@ export function buildPlacementComparison(
     return null;
   }
   const bestValue = Math.max(...candidates.map((candidate) => candidate.activeRelationshipValue));
-  const scoredCandidates = candidates.map((candidate) => ({
-    ...candidate,
-    placementScore: placementScoreFor(candidate.activeRelationshipValue, bestValue),
-  }));
+  const scoredCandidates = candidates
+    .map((candidate) => ({
+      ...candidate,
+      placementScore: placementScoreFor(candidate.activeRelationshipValue, bestValue),
+    }))
+    .sort((left, right) => arrangementKey(left.arrangement).localeCompare(arrangementKey(right.arrangement)));
   const bestCandidates = scoredCandidates
     .filter((candidate) => candidate.activeRelationshipValue === bestValue)
     .sort((left, right) => arrangementKey(left.arrangement).localeCompare(arrangementKey(right.arrangement)));
@@ -93,18 +95,16 @@ export function buildPlacementComparison(
     return null;
   }
 
-  const valueDelta = bestValue - current.activeRelationshipValue;
-  const relativeDelta = bestValue === 0 ? 0 : valueDelta / bestValue;
-  const meaningfulImprovement =
-    valueDelta >= meaningfulAbsoluteDelta && relativeDelta >= meaningfulRelativeDelta;
+  const { valueDelta, relativeDelta, meaningfulImprovement } = placementDeltaFor(
+    current.activeRelationshipValue,
+    bestValue,
+  );
   const currentIsBest = current.activeRelationshipValue === bestValue;
   const currentTied = currentIsBest && bestCandidates.length > 1;
-  const placementScore = meaningfulImprovement
-    ? placementScoreFor(current.activeRelationshipValue, bestValue)
-    : 20;
+  const placementScore = current.placementScore;
 
   return {
-    current: { ...current, placementScore },
+    current,
     best,
     candidates: scoredCandidates,
     tiedBestArrangements: bestCandidates.map((candidate) => candidate.arrangement),
@@ -138,10 +138,29 @@ export function allFormationPermutations(dragonIds: string[]): FormationArrangem
 }
 
 export function placementScoreFor(currentValue: number, bestValue: number): number {
-  if (bestValue <= 0 || currentValue >= bestValue) {
+  const { meaningfulImprovement } = placementDeltaFor(currentValue, bestValue);
+  if (!meaningfulImprovement) {
     return 20;
   }
   return clamp(Math.round(20 * currentValue / bestValue), 0, 20);
+}
+
+function placementDeltaFor(
+  currentValue: number,
+  bestValue: number,
+): {
+  valueDelta: number;
+  relativeDelta: number;
+  meaningfulImprovement: boolean;
+} {
+  const valueDelta = bestValue - currentValue;
+  const relativeDelta = bestValue === 0 ? 0 : valueDelta / bestValue;
+  return {
+    valueDelta,
+    relativeDelta,
+    meaningfulImprovement:
+      valueDelta >= meaningfulAbsoluteDelta && relativeDelta >= meaningfulRelativeDelta,
+  };
 }
 
 function completeArrangement(

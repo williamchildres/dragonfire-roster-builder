@@ -38,23 +38,59 @@ describe('six-permutation placement comparison', () => {
   });
 
   it('requires both an absolute +5 and relative 10% gain before lowering placement', () => {
-    expect(comparison([46, 50, 0, 0, 0, 0])).toMatchObject({
+    const absoluteBelow = comparison([46, 50, 0, 0, 0, 0]);
+    const relativeBelow = comparison([95, 100, 0, 0, 0, 0]);
+    const meaningful = comparison([45, 50, 0, 0, 0, 0]);
+
+    expect(absoluteBelow).toMatchObject({
       meaningfulImprovement: false,
       placementScore: 20,
+      current: { activeRelationshipValue: 46, placementScore: 20 },
+      best: { activeRelationshipValue: 50, placementScore: 20 },
       status: 'no-meaningful-gain',
     });
-    expect(comparison([95, 100, 0, 0, 0, 0])).toMatchObject({
+    expect(relativeBelow).toMatchObject({
       meaningfulImprovement: false,
       placementScore: 20,
+      current: { activeRelationshipValue: 95, placementScore: 20 },
+      best: { activeRelationshipValue: 100, placementScore: 20 },
       status: 'no-meaningful-gain',
     });
-    expect(comparison([45, 50, 0, 0, 0, 0])).toMatchObject({
+    expect(meaningful).toMatchObject({
       meaningfulImprovement: true,
       placementScore: 18,
+      current: { activeRelationshipValue: 45, placementScore: 18 },
+      best: { activeRelationshipValue: 50, placementScore: 20 },
       status: 'better-available',
     });
+    expect(placementScoreFor(46, 50)).toBe(20);
+    expect(placementScoreFor(95, 100)).toBe(20);
+    expect(placementScoreFor(45, 50)).toBe(18);
     expect(placementScoreFor(3, 10)).toBe(6);
     expect(placementScoreFor(0, 0)).toBe(20);
+  });
+
+  it('uses the exact scored candidate as current and remains stable when candidate input is reversed', () => {
+    const candidates = placementCandidates([46, 50, 20, 10, 5, 0]);
+    const forward = buildPlacementComparison(current, candidates)!;
+    const reversed = buildPlacementComparison(current, [...candidates].reverse())!;
+    const matchingCandidate = forward.candidates.find(
+      (candidate) => key(candidate.arrangement) === key(current),
+    );
+
+    expect(forward.current).toBe(matchingCandidate);
+    expect(forward.current.placementScore).toBe(forward.placementScore);
+    expect(forward.best.placementScore).toBe(20);
+    expect(forward).toEqual(reversed);
+  });
+
+  it('states the conjunctive meaningful-improvement threshold accurately in public scoring copy', async () => {
+    const readme = await import('../../README.md?raw').then((module) => module.default);
+
+    expect(readme).toContain(
+      'A placement improvement is meaningful only when it reaches both +5 relationship value and a 10% relative gain; otherwise Placement Effectiveness remains 20.',
+    );
+    expect(readme).not.toContain('below both +5 absolute and 10% relative');
   });
 
   it('reports exact gained and lost marginal relationships for a meaningful swap', () => {
@@ -123,13 +159,16 @@ describe('six-permutation placement comparison', () => {
 });
 
 function comparison(values: number[]) {
-  const candidates = allFormationPermutations(['a', 'b', 'c']).map((arrangement, index): PlacementCandidate => ({
+  return buildPlacementComparison(current, placementCandidates(values));
+}
+
+function placementCandidates(values: number[]): PlacementCandidate[] {
+  return allFormationPermutations(['a', 'b', 'c']).map((arrangement, index): PlacementCandidate => ({
     arrangement,
     activeRelationshipValue: values[index]!,
     placementScore: 0,
     relationships: [],
   }));
-  return buildPlacementComparison(current, candidates);
 }
 
 function relationship(

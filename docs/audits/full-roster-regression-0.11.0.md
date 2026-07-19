@@ -8,13 +8,13 @@
 - Current: 0.11.0; new hash `12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9`.
 - Coverage unchanged: 31 dragons, 217 abilities, 224 curated signals, 26970 ordered formations, 4023 provider/payoff pairs.
 - Validation: 32 PASS checks, 0 failed checks, 2 informational/unresolved findings.
-- Runtime: 11071 ms; prior audit 12838 ms; delta -1767 ms.
+- Runtime: 10352 ms; prior audit 12838 ms; delta -2486 ms.
 
 ## Public contract
 
 - Active Synergy: 80 points. Conditional payoff base 10 (cap 30), output amplification base 6 (cap 30), stat support base 5 (cap 15), plus participation +5 for three dragons or +2 for two.
 - Provider redundancy by beneficiary + tag + class: 100%, 50%, then 0% trace-only.
-- Placement Effectiveness: 20 points. Full credit when best/tied, best value is zero, or gain is below both +5 absolute and 10% relative. Otherwise `round(20 × current / best)`.
+- Placement Effectiveness: 20 points. A placement improvement is meaningful only when it reaches both +5 relationship value and a 10% relative gain; otherwise Placement Effectiveness remains 20. A meaningful loss scores `round(20 × current / best)`.
 - Analysis Confidence gates score availability. Kit Coverage, inactive alternative Vanguard Traits, missing enablers, unused support, unsupported outputs, and future unlocks are diagnostics, not separate deductions.
 
 ## Empirical calibration
