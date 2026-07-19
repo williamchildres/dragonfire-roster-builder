@@ -1,0 +1,3428 @@
+{
+  "auditVersion": "0.10.4",
+  "generatedFrom": {
+    "databaseVersion": "0.10.4",
+    "dataSchemaVersion": 13,
+    "localRosterSchemaVersion": 5
+  },
+  "reliable": true,
+  "totals": {
+    "dragons": 31,
+    "abilities": 217,
+    "profileSignals": 224,
+    "positionClaims": 31,
+    "auditDispositions": 217,
+    "evidenceSources": 251,
+    "manualReviews": 44,
+    "progressionStatesEvaluated": 15300,
+    "progressionFormationsEvaluated": 15300,
+    "orderedFormationsEvaluated": 26970,
+    "providerPayoffPairsEvaluated": 4023,
+    "compatibleProviderPayoffPairs": 127,
+    "passChecks": 30,
+    "failedChecks": 0
+  },
+  "rarityCoverage": {
+    "Epic": 10,
+    "Legendary": 9,
+    "Rare": 12
+  },
+  "checks": [
+    {
+      "id": "FRR-C001",
+      "status": "PASS",
+      "detail": "Database version is 0.10.4."
+    },
+    {
+      "id": "FRR-C002",
+      "status": "PASS",
+      "detail": "Data schema is 13."
+    },
+    {
+      "id": "FRR-C003",
+      "status": "PASS",
+      "detail": "31 known dragons loaded."
+    },
+    {
+      "id": "FRR-C004",
+      "status": "PASS",
+      "detail": "31 curated profiles loaded."
+    },
+    {
+      "id": "FRR-C005",
+      "status": "PASS",
+      "detail": "0 metadata-only dragon IDs remain."
+    },
+    {
+      "id": "FRR-C006",
+      "status": "PASS",
+      "detail": "Rarity coverage: Epic 10, Legendary 9, Rare 12."
+    },
+    {
+      "id": "FRR-C007",
+      "status": "PASS",
+      "detail": "Vesper, Nyrena, and Dawnseeker are present in canonical data and curated profiles."
+    },
+    {
+      "id": "FRR-C008",
+      "status": "PASS",
+      "detail": "Dragon IDs are globally unique."
+    },
+    {
+      "id": "FRR-C009",
+      "status": "PASS",
+      "detail": "Dragon slugs are globally unique."
+    },
+    {
+      "id": "FRR-C010",
+      "status": "PASS",
+      "detail": "Ability IDs are globally unique."
+    },
+    {
+      "id": "FRR-C011",
+      "status": "PASS",
+      "detail": "Profile signal IDs are globally unique."
+    },
+    {
+      "id": "FRR-C012",
+      "status": "PASS",
+      "detail": "Evidence IDs are globally unique."
+    },
+    {
+      "id": "FRR-C013",
+      "status": "PASS",
+      "detail": "Manual-review IDs are globally unique."
+    },
+    {
+      "id": "FRR-C014",
+      "status": "PASS",
+      "detail": "31 of 31 per-dragon records pass structural checks."
+    },
+    {
+      "id": "FRR-C015",
+      "status": "PASS",
+      "detail": "217 canonical abilities loaded."
+    },
+    {
+      "id": "FRR-C016",
+      "status": "PASS",
+      "detail": "217 explicit ability dispositions cover 217 abilities."
+    },
+    {
+      "id": "FRR-C017",
+      "status": "PASS",
+      "detail": "Every mapped disposition resolves to its canonical ability and profile signal."
+    },
+    {
+      "id": "FRR-C018",
+      "status": "PASS",
+      "detail": "All profile identities, ability references, tags, unlocks, selectors, and positions are valid."
+    },
+    {
+      "id": "FRR-C019",
+      "status": "PASS",
+      "detail": "All ability and manual-review evidence references resolve."
+    },
+    {
+      "id": "FRR-C020",
+      "status": "PASS",
+      "detail": "All manual-review records resolve to canonical dragons."
+    },
+    {
+      "id": "FRR-C021",
+      "status": "PASS",
+      "detail": "Control aliases are status:stun, status:stagger, status:overwhelm, status:confusion."
+    },
+    {
+      "id": "FRR-C022",
+      "status": "PASS",
+      "detail": "All explicitly prohibited Control aliases remain distinct."
+    },
+    {
+      "id": "FRR-C023",
+      "status": "PASS",
+      "detail": "Periodic statuses and damage types do not cross-alias."
+    },
+    {
+      "id": "FRR-C024",
+      "status": "PASS",
+      "detail": "Recovery and Recovery Received remain distinct."
+    },
+    {
+      "id": "FRR-C027",
+      "status": "PASS",
+      "detail": "15300 signal/claim progression states and 15300 evaluator progression formations passed."
+    },
+    {
+      "id": "FRR-C028",
+      "status": "PASS",
+      "detail": "4023 provider/payoff signal-tag pairs evaluated; observed Control compatibility is restricted to the verified family."
+    },
+    {
+      "id": "FRR-C029",
+      "status": "PASS",
+      "detail": "26970 ordered three-dragon formations evaluated."
+    },
+    {
+      "id": "FRR-C030",
+      "status": "PASS",
+      "detail": "All exhaustive formation invariants passed."
+    },
+    {
+      "id": "FRR-C025",
+      "status": "PASS",
+      "detail": "All 31 detail presentations expose named Command, Trait, and five-Habit source records."
+    },
+    {
+      "id": "FRR-C026",
+      "status": "PASS",
+      "detail": "Tier thresholds match the committed rating contract."
+    }
+  ],
+  "findings": [
+    {
+      "id": "FRR-F001",
+      "severity": "informational",
+      "category": "unsupported by current simple evaluator",
+      "affectedArea": "Recipient selection",
+      "affectedAbilityOrSignal": "shadowrend-fueled-by-darkness-advantage",
+      "currentBehavior": "1 curated signal(s) use an unresolved group selector and intentionally create no guessed scored relationship.",
+      "expectedBehavior": "Keep the mechanic visible and non-scoring until canonical wording or data identifies a deterministic recipient.",
+      "reproducibleSetup": "Place each listed provider in a full Level 16, 10-Star formation and inspect relationship output for the listed signal.",
+      "fileReferences": [
+        "src/synergy/profiles.ts",
+        "src/synergy/recipientSelectors.ts"
+      ],
+      "focusedTestReproduction": true,
+      "controllerMechanicConfirmationNeeded": false,
+      "recommendedNextAction": "Retain conservative behavior; add a focused mechanic prompt only if controller evidence resolves the recipient.",
+      "auditDisposition": "Not fixed in this audit PR."
+    },
+    {
+      "id": "FRR-F002",
+      "severity": "informational",
+      "category": "unresolved by design",
+      "affectedArea": "Highest-stat recipient selection",
+      "affectedAbilityOrSignal": "shimmer-sneak-attack-first-strike, shimmer-unbreakable-loyalty-stats, shimmer-sneak-attack-physical, bevlorin-bountiful-gifts-strength, bevlorin-bountiful-gifts-intelligence, bevlorin-bountiful-gifts-instinct, bevlorin-bountiful-gifts-initiative",
+      "currentBehavior": "Canonical combat-stat values are incomplete, so highest-stat recipients remain unresolved and receive neither relationship credit nor Kit Utilization penalties.",
+      "expectedBehavior": "Resolve only a unique known maximum; ties and missing values must remain uncredited.",
+      "reproducibleSetup": "Evaluate the listed signal with canonical progression combatStats; then compare with a synthetic unique maximum and a synthetic tie.",
+      "fileReferences": [
+        "src/data/dragons.ts",
+        "src/synergy/recipientSelectors.ts",
+        "src/services/formationRating.ts"
+      ],
+      "focusedTestReproduction": true,
+      "controllerMechanicConfirmationNeeded": false,
+      "recommendedNextAction": "No production change. Populate verified canonical combat stats only through a separately reviewed data task.",
+      "auditDisposition": "Not fixed in this audit PR."
+    }
+  ],
+  "perDragon": [
+    {
+      "dragonId": "syrax",
+      "name": "Syrax",
+      "rarity": "Legendary",
+      "breed": "Sentinel",
+      "abilityCount": 7,
+      "signalCount": 10,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 8,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "vhagar",
+      "name": "Vhagar",
+      "rarity": "Legendary",
+      "breed": "Warrior",
+      "abilityCount": 7,
+      "signalCount": 7,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "caraxes",
+      "name": "Caraxes",
+      "rarity": "Legendary",
+      "breed": "Hunter",
+      "abilityCount": 7,
+      "signalCount": 6,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "seasmoke",
+      "name": "Seasmoke",
+      "rarity": "Legendary",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 7,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 8,
+      "manualReviewCount": 5,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "solstryker",
+      "name": "Solstryker",
+      "rarity": "Rare",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 6,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "crimson",
+      "name": "Crimson",
+      "rarity": "Legendary",
+      "breed": "Hunter",
+      "abilityCount": 7,
+      "signalCount": 5,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "kalspire",
+      "name": "Kalspire",
+      "rarity": "Legendary",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 4,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "malachite",
+      "name": "Malachite",
+      "rarity": "Legendary",
+      "breed": "Sentinel",
+      "abilityCount": 7,
+      "signalCount": 8,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 8,
+      "manualReviewCount": 5,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "venator",
+      "name": "Venator",
+      "rarity": "Legendary",
+      "breed": "Warrior",
+      "abilityCount": 7,
+      "signalCount": 5,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "daemoros",
+      "name": "Daemoros",
+      "rarity": "Epic",
+      "breed": "Warrior",
+      "abilityCount": 7,
+      "signalCount": 5,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "feskar",
+      "name": "Feskar",
+      "rarity": "Epic",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 5,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "rhysarion",
+      "name": "Rhysarion",
+      "rarity": "Epic",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 9,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "shadowsong",
+      "name": "Shadowsong",
+      "rarity": "Epic",
+      "breed": "Hunter",
+      "abilityCount": 7,
+      "signalCount": 7,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "tashix",
+      "name": "Tashix",
+      "rarity": "Epic",
+      "breed": "Hunter",
+      "abilityCount": 7,
+      "signalCount": 6,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "vaeldra",
+      "name": "Vaeldra",
+      "rarity": "Epic",
+      "breed": "Warrior",
+      "abilityCount": 7,
+      "signalCount": 6,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "velar",
+      "name": "Velar",
+      "rarity": "Epic",
+      "breed": "Sentinel",
+      "abilityCount": 7,
+      "signalCount": 9,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "zivern",
+      "name": "Zivern",
+      "rarity": "Epic",
+      "breed": "Sentinel",
+      "abilityCount": 7,
+      "signalCount": 8,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "antares",
+      "name": "Antares",
+      "rarity": "Rare",
+      "breed": "Hunter",
+      "abilityCount": 7,
+      "signalCount": 6,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "shimmer",
+      "name": "Shimmer",
+      "rarity": "Rare",
+      "breed": "Sentinel",
+      "abilityCount": 7,
+      "signalCount": 11,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "jagadrix",
+      "name": "Jagadrix",
+      "rarity": "Rare",
+      "breed": "Hunter",
+      "abilityCount": 7,
+      "signalCount": 7,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "bevlorin",
+      "name": "Bevlorin",
+      "rarity": "Rare",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 10,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "shadowrend",
+      "name": "Shadowrend",
+      "rarity": "Rare",
+      "breed": "Warrior",
+      "abilityCount": 7,
+      "signalCount": 14,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "thunderstrike",
+      "name": "Thunderstrike",
+      "rarity": "Rare",
+      "breed": "Warrior",
+      "abilityCount": 7,
+      "signalCount": 8,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "vesper",
+      "name": "Vesper",
+      "rarity": "Rare",
+      "breed": "Sentinel",
+      "abilityCount": 7,
+      "signalCount": 9,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "arulix",
+      "name": "Arulix",
+      "rarity": "Rare",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 5,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "nyrena",
+      "name": "Nyrena",
+      "rarity": "Rare",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 11,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "dawnseeker",
+      "name": "Dawnseeker",
+      "rarity": "Rare",
+      "breed": "Sentinel",
+      "abilityCount": 7,
+      "signalCount": 12,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "arrax",
+      "name": "Arrax",
+      "rarity": "Rare",
+      "breed": "Warrior",
+      "abilityCount": 7,
+      "signalCount": 5,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 7,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "tessarion",
+      "name": "Tessarion",
+      "rarity": "Epic",
+      "breed": "Champion",
+      "abilityCount": 7,
+      "signalCount": 4,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 9,
+      "manualReviewCount": 1,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "sheepstealer",
+      "name": "Sheepstealer",
+      "rarity": "Legendary",
+      "breed": "Hunter",
+      "abilityCount": 7,
+      "signalCount": 4,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 9,
+      "manualReviewCount": 5,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "dragonId": "vermax",
+      "name": "Vermax",
+      "rarity": "Epic",
+      "breed": "Warrior",
+      "abilityCount": 7,
+      "signalCount": 5,
+      "dispositionCount": 7,
+      "evidenceReferenceCount": 9,
+      "manualReviewCount": 2,
+      "status": "PASS",
+      "issues": []
+    }
+  ],
+  "aliasTable": [
+    {
+      "providerTag": "status:panic",
+      "providerLabel": "Panic",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:first-strike",
+      "providerLabel": "First-Strike",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:burn",
+      "providerLabel": "Burn",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:slow",
+      "providerLabel": "Slow",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:taunt",
+      "providerLabel": "Taunt",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:control",
+      "providerLabel": "Control",
+      "aliasesTo": [],
+      "satisfiesControl": true
+    },
+    {
+      "providerTag": "status:stun",
+      "providerLabel": "Stun",
+      "aliasesTo": [
+        "status:control"
+      ],
+      "satisfiesControl": true
+    },
+    {
+      "providerTag": "status:stagger",
+      "providerLabel": "Stagger",
+      "aliasesTo": [
+        "status:control"
+      ],
+      "satisfiesControl": true
+    },
+    {
+      "providerTag": "status:overwhelm",
+      "providerLabel": "Overwhelm",
+      "aliasesTo": [
+        "status:control"
+      ],
+      "satisfiesControl": true
+    },
+    {
+      "providerTag": "status:confusion",
+      "providerLabel": "Confusion",
+      "aliasesTo": [
+        "status:control"
+      ],
+      "satisfiesControl": true
+    },
+    {
+      "providerTag": "status:vulnerable",
+      "providerLabel": "Vulnerable",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:weakened",
+      "providerLabel": "Weakened",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:bleed",
+      "providerLabel": "Bleed",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:resistance",
+      "providerLabel": "Resistance",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    },
+    {
+      "providerTag": "status:advantage",
+      "providerLabel": "Advantage",
+      "aliasesTo": [],
+      "satisfiesControl": false
+    }
+  ],
+  "selectorInventory": [
+    {
+      "selector": "adjacent-group:1:other-only",
+      "signalCount": 2,
+      "signalIds": [
+        "nyrena-deepen-the-breach-fire",
+        "vesper-saviors-waltz-resistance"
+      ]
+    },
+    {
+      "selector": "adjacent-group:2:self-eligible",
+      "signalCount": 1,
+      "signalIds": [
+        "dawnseeker-radiant-wings-recovery"
+      ]
+    },
+    {
+      "selector": "adjacent:all-eligible-teammates",
+      "signalCount": 5,
+      "signalIds": [
+        "malachite-lightning-strike-first-strike",
+        "malachite-lightning-strike-strength",
+        "rhysarion-inspiring-melody-initiative",
+        "rhysarion-inspiring-melody-resistance",
+        "seasmoke-cunning-ferocity-fire-intelligence"
+      ]
+    },
+    {
+      "selector": "fixed-position:left-flank",
+      "signalCount": 15,
+      "signalIds": [
+        "arrax-warriors-resilience-left-tactical",
+        "daemoros-warriors-zeal-left-stats",
+        "dawnseeker-sentinels-presence-left-fire",
+        "malachite-sentinels-presence-left-fire",
+        "shadowrend-warriors-zeal-left-stats",
+        "shimmer-sentinels-presence-left-fire",
+        "syrax-sentinels-wit-left-stats",
+        "thunderstrike-warriors-zeal-left-stats",
+        "vaeldra-warriors-resilience-left-tactical",
+        "velar-sentinels-wit-left-stats",
+        "venator-warriors-zeal-left-stats",
+        "vermax-warriors-zeal-left-stats",
+        "vesper-sentinels-wit-left-stats",
+        "vhagar-warriors-resilience-left-tactical",
+        "zivern-sentinels-wit-left-stats"
+      ]
+    },
+    {
+      "selector": "fixed-position:right-flank",
+      "signalCount": 10,
+      "signalIds": [
+        "antares-hunters-wrath-right-stats",
+        "bevlorin-champions-vigor-right-damage",
+        "caraxes-hunters-wrath-right-stats",
+        "crimson-hunters-cunning-right-physical",
+        "jagadrix-hunters-wrath-right-stats",
+        "nyrena-champions-brilliance-right-defense",
+        "rhysarion-champions-vigor-right-damage",
+        "shadowsong-hunters-wrath-right-stats",
+        "sheepstealer-hunters-cunning-right-physical",
+        "tashix-hunters-cunning-right-physical"
+      ]
+    },
+    {
+      "selector": "formation:all-eligible-teammates",
+      "signalCount": 177,
+      "signalIds": [
+        "antares-blazing-onslaught-fire-vulnerability",
+        "antares-blazing-onslaught-non-basic-physical-vulnerability",
+        "antares-fiery-precision-slow-payoff",
+        "antares-relentless-pursuit-fire",
+        "antares-relentless-pursuit-vulnerable",
+        "arrax-sudden-strike-bleed-payoff",
+        "arrax-sudden-strike-physical",
+        "arrax-sudden-strike-weakened",
+        "arrax-turn-the-line-physical",
+        "arulix-battle-cunning-instinct-payoff",
+        "arulix-gleaming-spiral-physical",
+        "arulix-gleaming-spiral-tactical",
+        "arulix-hypnotic-helix-overwhelm",
+        "arulix-hypnotic-helix-stagger",
+        "bevlorin-natures-reckoning-fire",
+        "bevlorin-natures-reckoning-intelligence-payoff",
+        "bevlorin-natures-reckoning-physical",
+        "bevlorin-natures-reckoning-strength-payoff",
+        "bevlorin-renewal-recovery",
+        "caraxes-crippling-inferno-burn",
+        "caraxes-crippling-inferno-fire",
+        "caraxes-crippling-inferno-slow",
+        "caraxes-infernal-burst-fire",
+        "caraxes-infernal-burst-first-strike-payoff",
+        "crimson-bloodscale-fury-taunt-payoff",
+        "crimson-bloodscale-terror-fire",
+        "crimson-bloodscale-terror-stun",
+        "crimson-unlikely-hero-vulnerability",
+        "daemoros-instill-fear-panic",
+        "daemoros-shadowflame-burn",
+        "daemoros-shadowflame-physical",
+        "daemoros-shroud-of-shadows-confusion",
+        "dawnseeker-first-light-first-strike",
+        "dawnseeker-first-light-stats",
+        "dawnseeker-initiative-payoff",
+        "dawnseeker-instinct-payoff",
+        "dawnseeker-radiant-wings-tactical",
+        "dawnseeker-tactical-payoff",
+        "dawnseeker-unbroken-devotion-recovery-received",
+        "dawnseeker-winds-favor-initiative",
+        "feskar-calculated-assault-tactical",
+        "feskar-emerald-inferno-burn-payoff",
+        "feskar-emerald-inferno-fire",
+        "feskar-insightful-allies-instinct",
+        "feskar-unyielding-grasp-stagger",
+        "jagadrix-cunning-whispers-fire",
+        "jagadrix-cunning-whispers-initiative-payoff",
+        "jagadrix-cunning-whispers-intelligence-payoff",
+        "jagadrix-echoes-of-deceit-fire",
+        "jagadrix-echoes-of-deceit-panic-payoff",
+        "jagadrix-whispering-sabotage-weakened",
+        "kalspire-tactical-assault-panic",
+        "kalspire-tactical-assault-physical",
+        "kalspire-tactical-strike-bleed",
+        "kalspire-tactical-strike-tactical",
+        "malachite-collective-might-strength",
+        "malachite-forests-instinct-physical",
+        "malachite-thunderous-roar-damage",
+        "malachite-wardens-rally-recovery",
+        "malachite-wardens-rally-tactical",
+        "nyrena-fire-payoff",
+        "nyrena-initiative-payoff",
+        "nyrena-instinct-payoff",
+        "nyrena-intelligence-payoff",
+        "nyrena-mindful-synergy-stats",
+        "nyrena-tactical-payoff",
+        "nyrena-the-long-siege-physical-defense",
+        "nyrena-undermine-fire",
+        "nyrena-undermine-tactical",
+        "rhysarion-dawnsong-control-payoff",
+        "rhysarion-dawnsong-fire",
+        "rhysarion-dawnsong-physical",
+        "rhysarion-ebbing-fury-recovery",
+        "rhysarion-echoing-melody-recovery",
+        "rhysarion-unbroken-devotion-recovery",
+        "seasmoke-cleansing-wrath-fire",
+        "seasmoke-clever-maneuver-stats",
+        "seasmoke-infectious-wrath-panic-payoff",
+        "seasmoke-infectious-wrath-physical",
+        "seasmoke-loyal-bond-resistance",
+        "seasmoke-winds-favor-initiative",
+        "shadowrend-eclipse-fervor-panic",
+        "shadowrend-eclipse-fervor-physical",
+        "shadowrend-eclipse-fervor-tactical",
+        "shadowrend-event-horizon-physical",
+        "shadowrend-event-horizon-tactical",
+        "shadowrend-initiative-payoff",
+        "shadowrend-instinct-payoff",
+        "shadowrend-midnight-aura-instinct",
+        "shadowrend-midnight-aura-strength",
+        "shadowrend-midnight-mastery-physical",
+        "shadowrend-midnight-mastery-tactical",
+        "shadowrend-strength-payoff",
+        "shadowsong-blazing-conductor-burn",
+        "shadowsong-blazing-onslaught-vulnerability",
+        "shadowsong-breath-of-fire-fire",
+        "shadowsong-panic-payoff",
+        "shadowsong-scorched-earth-vulnerable",
+        "shadowsong-scorched-earth-vulnerable-status",
+        "sheepstealer-hunters-cunning-recovery-payoff",
+        "sheepstealer-wild-hunt-fire",
+        "shimmer-loyal-shield-recovery",
+        "shimmer-loyal-shield-resistance-payoff",
+        "shimmer-unbreakable-loyalty-instinct-payoff",
+        "shimmer-unbreakable-loyalty-tactical",
+        "shimmer-unbroken-devotion-recovery",
+        "solstryker-oppressive-onslaught-overwhelm",
+        "solstryker-tactical-onslaught-instinct-payoff",
+        "solstryker-tactical-onslaught-physical",
+        "solstryker-tactical-onslaught-strength-payoff",
+        "solstryker-tactical-onslaught-tactical",
+        "solstryker-tactical-onslaught-vulnerable-payoff",
+        "syrax-blazing-fury-fire-support",
+        "syrax-blazing-fury-first-strike",
+        "syrax-blazing-fury-tactical",
+        "syrax-flight-mastery-initiative",
+        "syrax-mindful-synergy-stats",
+        "syrax-strategic-revival-recovery",
+        "syrax-strategic-revival-resistance",
+        "syrax-strategic-revival-slow-payoff",
+        "syrax-tactical-inferno-damage-support",
+        "tashix-battle-guile-fire",
+        "tashix-dragons-cunning-initiative-payoff",
+        "tashix-dragons-cunning-physical",
+        "tashix-hunters-cunning-recovery-payoff",
+        "tashix-shimmering-mirage-fire",
+        "tessarion-blazing-leader-fire",
+        "tessarion-clever-maneuver-stats",
+        "tessarion-cobalt-flame-fire",
+        "tessarion-cobalt-flame-physical",
+        "thunderstrike-armor-break-physical",
+        "thunderstrike-barbed-lash-bleed",
+        "thunderstrike-barbed-lash-physical",
+        "thunderstrike-staggering-assault-advantage-payoff",
+        "thunderstrike-staggering-assault-stagger",
+        "thunderstrike-strength-payoff",
+        "thunderstrike-tail-whip-physical",
+        "vaeldra-infernal-force-damage",
+        "vaeldra-lure-physical",
+        "vaeldra-lure-taunt",
+        "vaeldra-sirens-call-stagger",
+        "vaeldra-tempting-distraction-vulnerability",
+        "velar-breath-of-renewal-recovery",
+        "velar-fierce-unity-initiative-payoff",
+        "velar-fierce-unity-stats",
+        "velar-gales-of-power-first-strike",
+        "velar-gales-of-power-slow",
+        "velar-strategic-leader-tactical",
+        "velar-whirlwind-advantage-damage",
+        "velar-whirlwind-tactical",
+        "venator-armor-break-physical",
+        "venator-desperate-ambush-overwhelm",
+        "venator-feral-precision-physical",
+        "venator-feral-strike-physical",
+        "vermax-rallying-flame-tactical",
+        "vermax-reactive-instincts-stats",
+        "vermax-spreading-blaze-physical",
+        "vermax-spreading-blaze-tactical",
+        "vesper-eventide-strike-slow",
+        "vesper-eventide-strike-tactical",
+        "vesper-insightful-allies-instinct",
+        "vesper-instinct-payoff",
+        "vesper-midnight-onslaught-confusion",
+        "vesper-tactical-payoff",
+        "vhagar-battle-leader-physical",
+        "vhagar-blazing-onslaught-vulnerability",
+        "vhagar-fiery-bonds-burn-payoff",
+        "vhagar-fiery-bonds-physical",
+        "vhagar-fiery-bonds-taunt",
+        "vhagar-skyward-titan-physical",
+        "zivern-battle-mastery-intelligence-payoff",
+        "zivern-battle-mastery-physical",
+        "zivern-cloak-of-terror-overwhelm",
+        "zivern-cloak-of-terror-vulnerable-payoff",
+        "zivern-fearsome-reach-panic",
+        "zivern-silent-shade-tactical",
+        "zivern-silent-shade-tactical-vulnerability"
+      ]
+    },
+    {
+      "selector": "highest-stat:initiative:self-eligible",
+      "signalCount": 1,
+      "signalIds": [
+        "bevlorin-bountiful-gifts-initiative"
+      ]
+    },
+    {
+      "selector": "highest-stat:instinct:self-eligible",
+      "signalCount": 1,
+      "signalIds": [
+        "bevlorin-bountiful-gifts-instinct"
+      ]
+    },
+    {
+      "selector": "highest-stat:intelligence:self-eligible",
+      "signalCount": 1,
+      "signalIds": [
+        "bevlorin-bountiful-gifts-intelligence"
+      ]
+    },
+    {
+      "selector": "highest-stat:strength:other-only",
+      "signalCount": 3,
+      "signalIds": [
+        "shimmer-sneak-attack-first-strike",
+        "shimmer-sneak-attack-physical",
+        "shimmer-unbreakable-loyalty-stats"
+      ]
+    },
+    {
+      "selector": "highest-stat:strength:self-eligible",
+      "signalCount": 1,
+      "signalIds": [
+        "bevlorin-bountiful-gifts-strength"
+      ]
+    },
+    {
+      "selector": "position-priority:left-flank:self-eligible",
+      "signalCount": 2,
+      "signalIds": [
+        "dawnseeker-tactical-inferno-tactical",
+        "shimmer-crushing-force-physical"
+      ]
+    },
+    {
+      "selector": "position-priority:right-flank:self-eligible",
+      "signalCount": 2,
+      "signalIds": [
+        "dawnseeker-tactical-inferno-fire",
+        "shimmer-crushing-force-tactical"
+      ]
+    },
+    {
+      "selector": "position-priority:vanguard:self-eligible",
+      "signalCount": 1,
+      "signalIds": [
+        "vesper-strategic-leader-tactical"
+      ]
+    },
+    {
+      "selector": "self-only:no-allied-recipient",
+      "signalCount": 1,
+      "signalIds": [
+        "sheepstealer-savage-claim-recovery"
+      ]
+    },
+    {
+      "selector": "unresolved-group:2:self-eligible",
+      "signalCount": 1,
+      "signalIds": [
+        "shadowrend-fueled-by-darkness-advantage"
+      ]
+    }
+  ],
+  "progression": {
+    "stars": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "levels": [
+      15,
+      16
+    ],
+    "positions": [
+      "left-flank",
+      "vanguard",
+      "right-flank"
+    ],
+    "inactiveStateCount": 6198,
+    "activeStateCount": 9102
+  },
+  "providerPayoffMatrix": {
+    "distinctTagPairs": 305,
+    "compatibleDistinctTagPairs": [
+      "damage:fire->damage:fire",
+      "damage:tactical->damage:tactical",
+      "effect:recovery->effect:recovery",
+      "status:advantage->status:advantage",
+      "status:bleed->status:bleed",
+      "status:burn->status:burn",
+      "status:confusion->status:control",
+      "status:first-strike->status:first-strike",
+      "status:overwhelm->status:control",
+      "status:panic->status:panic",
+      "status:resistance->status:resistance",
+      "status:slow->status:slow",
+      "status:stagger->status:control",
+      "status:stun->status:control",
+      "status:taunt->status:taunt",
+      "status:vulnerable->status:vulnerable"
+    ],
+    "incompatibleControlCandidates": [
+      "status:advantage",
+      "status:bleed",
+      "status:burn",
+      "status:first-strike",
+      "status:panic",
+      "status:resistance",
+      "status:slow",
+      "status:taunt",
+      "status:vulnerable",
+      "status:weakened"
+    ]
+  },
+  "formationSweep": {
+    "expectedCount": 26970,
+    "actualCount": 26970,
+    "deterministicFullResultHash": "ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48",
+    "rating": {
+      "minimum": 16,
+      "maximum": 94,
+      "mean": 52.4681,
+      "median": 52,
+      "percentile90": 70,
+      "percentile95": 74,
+      "percentile99": 84,
+      "byTier": {
+        "Developing": 13788,
+        "Excellent": 16,
+        "Solid": 7401,
+        "Strong": 1171,
+        "Weak": 4594
+      }
+    },
+    "componentDistributions": {
+      "Kit utilization": {
+        "0": 462,
+        "2": 299,
+        "3": 765,
+        "4": 1153,
+        "5": 1573,
+        "6": 2187,
+        "7": 2582,
+        "8": 3119,
+        "9": 3244,
+        "10": 3304,
+        "11": 3056,
+        "12": 2253,
+        "13": 1596,
+        "14": 860,
+        "15": 379,
+        "16": 130,
+        "17": 8
+      },
+      "Placement / conflict risk": {
+        "6": 16048,
+        "9": 6750,
+        "12": 4172
+      },
+      "Readiness / profile confidence": {
+        "10": 26970
+      },
+      "Realized synergy payoff": {
+        "0": 462,
+        "3": 920,
+        "5": 555,
+        "6": 1556,
+        "7": 119,
+        "8": 1699,
+        "9": 451,
+        "10": 1565,
+        "11": 3794,
+        "12": 95,
+        "13": 961,
+        "14": 2972,
+        "15": 114,
+        "16": 1084,
+        "17": 1705,
+        "18": 670,
+        "19": 424,
+        "20": 3083,
+        "21": 1249,
+        "22": 37,
+        "23": 316,
+        "24": 904,
+        "25": 109,
+        "26": 228,
+        "27": 917,
+        "28": 184,
+        "29": 31,
+        "30": 97,
+        "31": 247,
+        "33": 54,
+        "34": 226,
+        "35": 142
+      },
+      "Support usefulness": {
+        "0": 462,
+        "3": 197,
+        "5": 57,
+        "6": 43,
+        "7": 1089,
+        "8": 9316,
+        "9": 14,
+        "10": 382,
+        "11": 24,
+        "12": 7587,
+        "13": 56,
+        "14": 4,
+        "16": 6799,
+        "17": 2,
+        "20": 938
+      }
+    },
+    "relationshipCountDistribution": {
+      "0": 462,
+      "1": 1400,
+      "2": 3161,
+      "3": 3835,
+      "4": 4070,
+      "5": 3616,
+      "6": 3054,
+      "7": 2480,
+      "8": 1833,
+      "9": 1223,
+      "10": 737,
+      "11": 485,
+      "12": 289,
+      "13": 157,
+      "14": 92,
+      "15": 44,
+      "16": 19,
+      "17": 9,
+      "18": 4
+    },
+    "missingEnablerDistribution": {
+      "0": 996,
+      "1": 3264,
+      "2": 5376,
+      "3": 6000,
+      "4": 5268,
+      "5": 3456,
+      "6": 1830,
+      "7": 600,
+      "8": 168,
+      "9": 12
+    },
+    "positionConflictDistribution": {
+      "1": 26970
+    },
+    "kitUtilizationDistribution": {
+      "0": 462,
+      "2": 299,
+      "3": 765,
+      "4": 1153,
+      "5": 1573,
+      "6": 2187,
+      "7": 2582,
+      "8": 3119,
+      "9": 3244,
+      "10": 3304,
+      "11": 3056,
+      "12": 2253,
+      "13": 1596,
+      "14": 860,
+      "15": 379,
+      "16": 130,
+      "17": 8
+    },
+    "topDragonFrequency": {
+      "syrax": 50,
+      "caraxes": 37,
+      "shadowsong": 33,
+      "zivern": 30,
+      "feskar": 21,
+      "shimmer": 13,
+      "antares": 11,
+      "dawnseeker": 11,
+      "malachite": 10,
+      "seasmoke": 10,
+      "sheepstealer": 9,
+      "vesper": 9,
+      "crimson": 7,
+      "shadowrend": 7,
+      "velar": 7,
+      "rhysarion": 6,
+      "tashix": 6,
+      "tessarion": 6,
+      "vaeldra": 6,
+      "nyrena": 3,
+      "daemoros": 2,
+      "kalspire": 2,
+      "solstryker": 2,
+      "arulix": 1,
+      "vhagar": 1
+    },
+    "bottomDragonFrequency": {
+      "bevlorin": 46,
+      "caraxes": 42,
+      "arulix": 32,
+      "daemoros": 28,
+      "sheepstealer": 26,
+      "jagadrix": 23,
+      "kalspire": 20,
+      "arrax": 19,
+      "solstryker": 16,
+      "vesper": 16,
+      "vermax": 8,
+      "antares": 7,
+      "feskar": 7,
+      "shimmer": 7,
+      "rhysarion": 2,
+      "venator": 1
+    },
+    "top50": [
+      {
+        "formation": [
+          "feskar",
+          "caraxes",
+          "syrax"
+        ],
+        "score": 94,
+        "tier": "Excellent",
+        "relationshipCount": 11,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 17,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "malachite",
+          "caraxes",
+          "syrax"
+        ],
+        "score": 93,
+        "tier": "Excellent",
+        "relationshipCount": 10,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "feskar",
+          "shadowsong",
+          "shadowrend"
+        ],
+        "score": 92,
+        "tier": "Strong",
+        "relationshipCount": 11,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "feskar",
+          "zivern",
+          "shadowsong"
+        ],
+        "score": 92,
+        "tier": "Excellent",
+        "relationshipCount": 9,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "zivern",
+          "shadowsong",
+          "seasmoke"
+        ],
+        "score": 92,
+        "tier": "Excellent",
+        "relationshipCount": 12,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "crimson",
+          "rhysarion",
+          "vaeldra"
+        ],
+        "score": 91,
+        "tier": "Excellent",
+        "relationshipCount": 10,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 17,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "vaeldra",
+          "rhysarion",
+          "crimson"
+        ],
+        "score": 91,
+        "tier": "Excellent",
+        "relationshipCount": 10,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 17,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "zivern",
+          "shadowsong",
+          "tessarion"
+        ],
+        "score": 91,
+        "tier": "Excellent",
+        "relationshipCount": 11,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "caraxes",
+          "feskar",
+          "syrax"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 10,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "caraxes",
+          "shimmer",
+          "syrax"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 9,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "caraxes",
+          "syrax",
+          "feskar"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 10,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "feskar",
+          "caraxes",
+          "velar"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 8,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 14,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "feskar",
+          "syrax",
+          "caraxes"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 10,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "shimmer",
+          "caraxes",
+          "syrax"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 9,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "caraxes",
+          "feskar"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 10,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "feskar",
+          "caraxes"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 10,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "vesper",
+          "shimmer"
+        ],
+        "score": 90,
+        "tier": "Excellent",
+        "relationshipCount": 9,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 14,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "antares",
+          "shadowsong",
+          "zivern"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 7,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 12,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "antares",
+          "zivern",
+          "shadowsong"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 7,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 12,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "caraxes",
+          "malachite",
+          "syrax"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 9,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "nyrena",
+          "caraxes",
+          "syrax"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 13,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "seasmoke",
+          "shimmer",
+          "shadowrend"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 9,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 13,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "shadowrend",
+          "zivern",
+          "seasmoke"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 13,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 13,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "shadowsong",
+          "antares",
+          "zivern"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 7,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 12,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "shadowsong",
+          "zivern",
+          "antares"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 7,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 12,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "shimmer",
+          "sheepstealer",
+          "syrax"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 8,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "shimmer",
+          "tashix",
+          "syrax"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 9,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "caraxes",
+          "malachite"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 9,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "caraxes",
+          "nyrena"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 13,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 16,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "malachite",
+          "caraxes"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 9,
+        "missingEnablerCount": 0,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "sheepstealer",
+          "velar"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 11,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "velar",
+          "shimmer"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 12,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 13,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "vesper",
+          "caraxes"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 9,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "velar",
+          "sheepstealer",
+          "syrax"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 11,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "zivern",
+          "antares",
+          "seasmoke"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 8,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 13,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "zivern",
+          "antares",
+          "shadowsong"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 7,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 12,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "zivern",
+          "shadowsong",
+          "antares"
+        ],
+        "score": 89,
+        "tier": "Strong",
+        "relationshipCount": 7,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 12,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "crimson",
+          "caraxes",
+          "vhagar"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 7,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 31,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "feskar",
+          "shadowsong",
+          "solstryker"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 6,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 33,
+          "Support usefulness": 20,
+          "Kit utilization": 13,
+          "Placement / conflict risk": 12
+        }
+      },
+      {
+        "formation": [
+          "feskar",
+          "shadowsong",
+          "zivern"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 8,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 14,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "seasmoke",
+          "shadowsong",
+          "shadowrend"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 14,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "seasmoke",
+          "shadowsong",
+          "zivern"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 11,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 14,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "shadowsong",
+          "feskar",
+          "zivern"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 8,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 14,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "shadowsong",
+          "seasmoke",
+          "zivern"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 11,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 14,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "shadowsong",
+          "tessarion",
+          "zivern"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 10,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "shadowsong",
+          "zivern",
+          "feskar"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 8,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 14,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "shadowsong",
+          "zivern",
+          "tessarion"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 10,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "sheepstealer",
+          "dawnseeker"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 11,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "tashix",
+          "dawnseeker"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 13,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 34,
+          "Support usefulness": 20,
+          "Kit utilization": 15,
+          "Placement / conflict risk": 9
+        }
+      },
+      {
+        "formation": [
+          "syrax",
+          "tashix",
+          "shimmer"
+        ],
+        "score": 88,
+        "tier": "Strong",
+        "relationshipCount": 8,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 35,
+          "Support usefulness": 20,
+          "Kit utilization": 14,
+          "Placement / conflict risk": 9
+        }
+      }
+    ],
+    "bottom50": [
+      {
+        "formation": [
+          "antares",
+          "daemoros",
+          "kalspire"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "antares",
+          "daemoros",
+          "shimmer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "antares",
+          "daemoros",
+          "vermax"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "antares",
+          "kalspire",
+          "daemoros"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "antares",
+          "kalspire",
+          "shimmer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "antares",
+          "venator",
+          "shimmer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "antares",
+          "vermax",
+          "daemoros"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "caraxes",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "caraxes",
+          "vesper"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "feskar",
+          "jagadrix"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "feskar",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "jagadrix",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "jagadrix",
+          "feskar"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "jagadrix",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "jagadrix",
+          "vesper"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "sheepstealer",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "sheepstealer",
+          "feskar"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "sheepstealer",
+          "jagadrix"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "sheepstealer",
+          "vesper"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "vesper",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "vesper",
+          "jagadrix"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arrax",
+          "vesper",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "caraxes",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "jagadrix",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "jagadrix",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "kalspire",
+          "bevlorin"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "kalspire",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "kalspire",
+          "daemoros"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "kalspire",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 1,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "sheepstealer",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "sheepstealer",
+          "jagadrix"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "solstryker",
+          "bevlorin"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 6,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "solstryker",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "solstryker",
+          "daemoros"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "solstryker",
+          "jagadrix"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 7,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "arulix",
+          "solstryker",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "arulix",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "arulix",
+          "daemoros"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "arulix",
+          "jagadrix"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 6,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "arulix",
+          "kalspire"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "arulix",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "arulix",
+          "solstryker"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 6,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "caraxes",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "caraxes",
+          "vesper"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 4,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "daemoros",
+          "arulix"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "daemoros",
+          "caraxes"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 3,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "daemoros",
+          "kalspire"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "daemoros",
+          "sheepstealer"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "daemoros",
+          "solstryker"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 5,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      },
+      {
+        "formation": [
+          "bevlorin",
+          "daemoros",
+          "vermax"
+        ],
+        "score": 16,
+        "tier": "Weak",
+        "relationshipCount": 0,
+        "missingEnablerCount": 2,
+        "positionConflictCount": 1,
+        "components": {
+          "Readiness / profile confidence": 10,
+          "Realized synergy payoff": 0,
+          "Support usefulness": 0,
+          "Kit utilization": 0,
+          "Placement / conflict risk": 6
+        }
+      }
+    ],
+    "invariantViolationCount": 0,
+    "inactiveAbilityReferenceExamples": []
+  },
+  "ratingContract": {
+    "componentMaximums": {
+      "Readiness / profile confidence": 10,
+      "Realized synergy payoff": 35,
+      "Support usefulness": 20,
+      "Kit utilization": 20,
+      "Placement / conflict risk": 15
+    },
+    "tierThresholds": {
+      "Excellent": 90,
+      "Strong": 75,
+      "Solid": 60,
+      "Developing": 40,
+      "Weak": 1,
+      "Incomplete": 0
+    },
+    "excellentGuardrails": [
+      "Realized synergy payoff must be at least 28/35.",
+      "Kit utilization must be at least 13/20.",
+      "Fewer than three Benefits may remain missing.",
+      "Placement score must remain above 5/15.",
+      "Support usefulness at 16+ cannot substitute for payoff below 28."
+    ]
+  },
+  "sourceOfTruth": {
+    "originMainSha": "0dc080d9ca6f6f6501f42f370eb68c8cc6944ab4",
+    "branch": "data/source-fidelity-malachite-venator-sheepstealer",
+    "worktree": "C:\\Users\\willi\\Documents\\CodexProjects\\Dragonfire Roster Lab"
+  },
+  "recordedAuditRuntimeMs": 16366,
+  "browserQa": {
+    "status": "PASS",
+    "auditedUrl": "http://127.0.0.1:4173/ (local 0.10.4 production preview)",
+    "fixture": "isolated localhost with an empty local roster; no production account or roster used",
+    "viewports": {
+      "desktop1440": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "document": {
+          "clientWidth": 1440,
+          "scrollWidth": 1440
+        },
+        "dialogs": {
+          "Malachite": {
+            "clientWidth": 1167,
+            "scrollWidth": 1167,
+            "scrollHeight": 4528
+          },
+          "Venator": {
+            "clientWidth": 1167,
+            "scrollWidth": 1167,
+            "scrollHeight": 4432
+          },
+          "Sheepstealer": {
+            "clientWidth": 1167,
+            "scrollWidth": 1167,
+            "scrollHeight": 4349
+          }
+        },
+        "openVerifiedWordingDisclosuresPerDragon": 7,
+        "overflowingDescendantCount": 0
+      },
+      "phone390": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "document": {
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "dialogs": {
+          "Malachite": {
+            "clientWidth": 353,
+            "scrollWidth": 353,
+            "scrollHeight": 7726
+          },
+          "Venator": {
+            "clientWidth": 353,
+            "scrollWidth": 353,
+            "scrollHeight": 7593
+          },
+          "Sheepstealer": {
+            "clientWidth": 353,
+            "scrollWidth": 353,
+            "scrollHeight": 7707
+          }
+        },
+        "openVerifiedWordingDisclosuresPerDragon": 7,
+        "overflowingDescendantCount": 0,
+        "clippedInteractiveControlCount": 0
+      },
+      "phone360": {
+        "viewport": {
+          "width": 360,
+          "height": 740
+        },
+        "document": {
+          "clientWidth": 360,
+          "scrollWidth": 360
+        },
+        "SheepstealerDialog": {
+          "clientWidth": 323,
+          "scrollWidth": 323,
+          "scrollHeight": 8220
+        },
+        "overflowingDescendantCount": 0,
+        "clippedInteractiveControlCount": 0
+      }
+    },
+    "interactions": {
+      "disclosureControls": "PASS - all seven Verified wording disclosures opened for each dragon",
+      "progressionSequences": "PASS - all controller-reviewed progression sequences rendered in the expanded details",
+      "wrapping": "PASS - long paragraphs and progression lines wrapped within their ability cards",
+      "excludedText": "PASS - no Power rows or screenshot upgrade boilerplate rendered",
+      "mobile": "PASS - detail dialogs and disclosure controls remained usable at 390x844 and 360x740"
+    },
+    "legacyInteractions": {
+      "missingProgression": "PASS — completeness used only Star Rank and Dragon Level",
+      "editing": "PASS — Syrax unlock, Level 1 default, Level 5 persistence, relock deletion, and Level 1 re-unlock rendered immediately",
+      "reloadPersistence": "PASS — Syrax Level 5 persisted after a full reload",
+      "secondUnlock": "PASS — Flight Mastery appeared at Level 1 at Star Rank 4 while Mindful Synergy remained Level 5",
+      "legacyImport": "PASS — schema-4 null/zero unlocked values migrated to Level 1; locked and unknown values were absent",
+      "mobile": "PASS — the same single editor and roster list were usable at 390×844 and 360×740"
+    },
+    "structure": {
+      "dragonDetailDialogsInspected": 3,
+      "abilityCardsInspected": 21
+    },
+    "overflowCount": 0,
+    "clippedInteractiveControlCount": 0,
+    "consoleErrors": [],
+    "consoleWarnings": [],
+    "legacyAccountSync": "Production account was not automated; fake/local service tests passed for the 750 ms debounce, serialized writes, conflict decisions, offline/retry, sign-out retention, stale-user guards, import, and clear-local paths.",
+    "legacyZoom200": {
+      "status": "PENDING_REAL_BROWSER_ZOOM",
+      "reason": "Chrome extension keypresses did not change browser zoom.",
+      "equivalentViewport": {
+        "viewport": {
+          "width": 720,
+          "height": 500
+        },
+        "document": {
+          "clientWidth": 705,
+          "scrollWidth": 705
+        },
+        "workspace": {
+          "clientWidth": 662,
+          "scrollWidth": 662,
+          "mode": "list"
+        },
+        "list": {
+          "clientWidth": 645,
+          "scrollWidth": 645
+        },
+        "clippedInteractiveControlCount": 0
+      }
+    },
+    "responsiveSummary": "All inspected document and dialog scroll widths matched their client widths at desktop and phone breakpoints.",
+    "observations": [
+      "1440x900: all seven disclosures per dragon opened with 1,033px-wide, 24px-high summary controls and no overflowing descendants.",
+      "390x844: all progression sequences wrapped inside 353px-wide dialogs with no horizontal overflow.",
+      "360x740: Sheepstealer remained usable in a 323px-wide dialog with the Close control visible and no horizontal overflow.",
+      "Malachite, Venator, and Sheepstealer rendered no Power values or generic screenshot upgrade boilerplate."
+    ],
+    "legacyObservations": [
+      "1440px: two-pane workspace remained contained with a sticky 415px editor.",
+      "1024px: filter controls wrap to three columns and both panes remain usable without horizontal scrolling.",
+      "390px list: stacked toolbar, two-column filters, compact rows, and no horizontal overflow.",
+      "390px editor: Back control, Syrax progression, two unlocked Habit selectors, notes, and removal action remained reachable.",
+      "720x500 layout-equivalent zoom check: focused single-pane list with zero horizontal overflow."
+    ],
+    "findings": []
+  },
+  "comparison": {
+    "baselineVersion": "0.10.3",
+    "baselineDeterministicFullResultHash": "ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48",
+    "currentVersion": "0.10.4",
+    "currentDeterministicFullResultHash": "ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48",
+    "allNumericScoresAndComponentsUnchanged": true
+  },
+  "resolvedFindings": [
+    {
+      "id": "FRR-F003",
+      "resolution": "Equivalent active paths still aggregate, while locked and position-inactive alternatives no longer contribute ability IDs or presentation evidence."
+    },
+    {
+      "id": "FRR-F004",
+      "resolution": "Details At a glance now uses selected Star Rank and Dragon Level, and future signals are explicitly labeled inactive with their unlock requirement."
+    },
+    {
+      "id": "FRR-F005",
+      "resolution": "Scoped reusable Details styles allow headings, technical labels, and chips to shrink and wrap within their own boxes."
+    },
+    {
+      "id": "FRR-F006",
+      "resolution": "About now states 31/31 detailed coverage with Legendary 9/9, Epic 10/10, and Rare 12/12."
+    }
+  ],
+  "findingSummary": {
+    "total": 2,
+    "bySeverity": {
+      "informational": 2
+    },
+    "byCategory": {
+      "unresolved by design": 1,
+      "unsupported by current simple evaluator": 1
+    }
+  },
+  "todoIds": [
+    "FRR-F001",
+    "FRR-F002"
+  ]
+}

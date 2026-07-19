@@ -39,7 +39,7 @@
         "SPECIFIC_ROUNDS",
         "MULTI_SCHEDULE_COMMAND"
       ],
-      "rawDescription": "Rounds 2, 4, 7, 9: Deal Tactical Damage to 1 Enemy in the same lane (Damage Rate: +100%).\n\nRounds 3, 6, 9: Apply Recovery to 3 Allies in any lane (Recovery Rate: +70%, enhanced by Instinct)."
+      "rawDescription": "Rounds 2, 4, 7, and 9: deal Tactical Damage to one Enemy in the same lane (Damage Rate: 100%). Tactical Damage is increased by Malachite's Instinct and mitigated by the target's Intelligence.\n\nRounds 3, 6, and 9: apply Recovery to three Allies in any lane (Recovery Rate: 70%). Recovery is enhanced by Malachite's Instinct and scales with Dragon Level."
     },
     {
       "id": "malachite-sentinels-presence",
@@ -96,7 +96,7 @@
         "ANY_LANE_TARGET",
         "BUFF_ALLIES"
       ],
-      "rawDescription": "Each Round: 35% chance to increase the Physical Damage Dealt (excluding Basic Attacks) by +8% and reduce the Tactical Damage Received by -8% of 2 other Allies in any lane for 2 round(s)."
+      "rawDescription": "Each Round: fixed 35% activation chance to affect two other Allies in any lane. Increase their non-Basic Physical Damage Dealt and reduce their Tactical Damage Received; both effects last two rounds. Physical Damage Dealt progression (Habit Levels 1–5): 8%, 9.6%, 11.2%, 13.6%, 16%. Tactical Damage Received progression (Habit Levels 1–5): -8%, -9.6%, -11.2%, -13.6%, -16%."
     },
     {
       "id": "malachite-wise-vigor",
@@ -121,7 +121,7 @@
         "RECOVERY_DEALT_UP",
         "BUFF_SELF"
       ],
-      "rawDescription": "Start of Combat: Increase your Instinct by +20% and Recovery Dealt by +20% until the end of combat."
+      "rawDescription": "Start of Combat until end of combat: increase Malachite's Instinct and Recovery Dealt. Both progressions (Habit Levels 1–5): 20%, 24%, 28%, 34%, 40%."
     },
     {
       "id": "malachite-thunderous-roar",
@@ -143,11 +143,12 @@
       ],
       "tags": [
         "DAMAGE_DEALT_UP",
+        "ADVANTAGE",
         "OTHER_ALLIES_TARGET",
         "ANY_LANE_TARGET",
         "BUFF_ALLIES"
       ],
-      "rawDescription": "Each Round: 10% chance to grant Advantage (+20%) to 2 other Allies in any lane for 2 round(s). Advantage increases the target's Damage Dealt."
+      "rawDescription": "Each Round: chance to grant Advantage (+20%) to two other Allies in any lane; it lasts two rounds. Advantage increases Damage Dealt by 20%. Activation chance progression (Habit Levels 1–5): 10%, 12%, 14%, 17%, 20%."
     },
     {
       "id": "malachite-collective-might",
@@ -173,7 +174,7 @@
         "ANY_LANE_TARGET",
         "BUFF_ALLIES"
       ],
-      "rawDescription": "Start of Combat: Increase Strength by +12.5% (enhanced by Strength) of 3 Allies in any lane until the end of combat."
+      "rawDescription": "Start of Combat until end of combat: increase Strength of three Allies in any lane, enhanced by Malachite's Strength. Progression (Habit Levels 1–5): 12.5%, 15%, 17.5%, 21.25%, 25%."
     },
     {
       "id": "malachite-lightning-strike",
@@ -202,7 +203,7 @@
         "OTHER_ALLIES_TARGET",
         "BUFF_ALLIES"
       ],
-      "rawDescription": "Start of Round 1: 40% chance to grant First-Strike, Double-Strike, and increase Strength by +25% (enhanced by Instinct) of 1 other Ally within adjacency for 3 round(s)."
+      "rawDescription": "Start of Round 1: one shared activation chance grants all three effects to one other Ally within adjacency: First-Strike, Double-Strike, and Strength +25% enhanced by Malachite's Instinct. The effects last three rounds. First-Strike causes the target to act before all other combatants each round. Double-Strike grants a second Basic Attack each round. Activation chance progression (Habit Levels 1–5): 40%, 52%, 64%, 80%, 100%."
     }
   ],
   "affinities": {

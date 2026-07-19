@@ -1871,7 +1871,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Rounds 2, 4, 7, 9: Deal Tactical Damage to 1 Enemy in the same lane (Damage Rate: +100%).\n\nRounds 3, 6, 9: Apply Recovery to 3 Allies in any lane (Recovery Rate: +70%, enhanced by Instinct).",
+      "rawDescription": "Rounds 2, 4, 7, and 9: deal Tactical Damage to one Enemy in the same lane (Damage Rate: 100%). Tactical Damage is increased by Malachite's Instinct and mitigated by the target's Intelligence.\n\nRounds 3, 6, and 9: apply Recovery to three Allies in any lane (Recovery Rate: 70%). Recovery is enhanced by Malachite's Instinct and scales with Dragon Level.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Warden's Rally summary and glossary screenshots",
@@ -1934,7 +1934,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each Round: 35% chance to increase the Physical Damage Dealt (excluding Basic Attacks) by +8% and reduce the Tactical Damage Received by -8% of 2 other Allies in any lane for 2 round(s).",
+        "rawDescription": "Each Round: fixed 35% activation chance to affect two other Allies in any lane. Increase their non-Basic Physical Damage Dealt and reduce their Tactical Damage Received; both effects last two rounds. Physical Damage Dealt progression (Habit Levels 1–5): 8%, 9.6%, 11.2%, 13.6%, 16%. Tactical Damage Received progression (Habit Levels 1–5): -8%, -9.6%, -11.2%, -13.6%, -16%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Forest's Instinct screenshot",
@@ -1963,7 +1963,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: Increase your Instinct by +20% and Recovery Dealt by +20% until the end of combat.",
+        "rawDescription": "Start of Combat until end of combat: increase Malachite's Instinct and Recovery Dealt. Both progressions (Habit Levels 1–5): 20%, 24%, 28%, 34%, 40%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Wise Vigor screenshot",
@@ -1989,7 +1989,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each Round: 10% chance to grant Advantage (+20%) to 2 other Allies in any lane for 2 round(s). Advantage increases the target's Damage Dealt.",
+        "rawDescription": "Each Round: chance to grant Advantage (+20%) to two other Allies in any lane; it lasts two rounds. Advantage increases Damage Dealt by 20%. Activation chance progression (Habit Levels 1–5): 10%, 12%, 14%, 17%, 20%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Thunderous Roar screenshot",
@@ -2002,6 +2002,7 @@ export const dragons = [
         ],
         "tags": [
           "DAMAGE_DEALT_UP",
+          "ADVANTAGE",
           "OTHER_ALLIES_TARGET",
           "ANY_LANE_TARGET",
           "BUFF_ALLIES"
@@ -2016,7 +2017,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: Increase Strength by +12.5% (enhanced by Strength) of 3 Allies in any lane until the end of combat.",
+        "rawDescription": "Start of Combat until end of combat: increase Strength of three Allies in any lane, enhanced by Malachite's Strength. Progression (Habit Levels 1–5): 12.5%, 15%, 17.5%, 21.25%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Collective Might screenshot",
@@ -2043,7 +2044,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1: 40% chance to grant First-Strike, Double-Strike, and increase Strength by +25% (enhanced by Instinct) of 1 other Ally within adjacency for 3 round(s).",
+        "rawDescription": "Start of Round 1: one shared activation chance grants all three effects to one other Ally within adjacency: First-Strike, Double-Strike, and Strength +25% enhanced by Malachite's Instinct. The effects last three rounds. First-Strike causes the target to act before all other combatants each round. Double-Strike grants a second Basic Attack each round. Activation chance progression (Habit Levels 1–5): 40%, 52%, 64%, 80%, 100%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Lightning Strike screenshot",
@@ -2099,6 +2100,7 @@ export const dragons = [
       "EXCLUDES_BASIC_ATTACKS",
       "OTHER_ALLIES_TARGET",
       "DAMAGE_DEALT_UP",
+      "ADVANTAGE",
       "STRENGTH_UP",
       "ENHANCED_BY_STRENGTH",
       "FIRST_STRIKE",
@@ -2194,7 +2196,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "After each Basic Attack: deal two independently targeted Physical Damage instances. Rounds 4, 6, and 8: 30% chance to gain Double-Strike for two rounds. Classified as Command while preserving Attack Modifier presentation.\n\nStar Rank 6 augmentation:\nFeral Precision augments Feral Strike damage and Double-Strike chance.",
+      "rawDescription": "Canonical kind: Command; the game presents this as an Attack Modifier. After each Basic Attack, deal two Physical Damage instances; each instance independently selects one Enemy in any lane. Base Damage Rate: 20%. Physical Damage is increased by Venator's Strength and mitigated by the target's Instinct. On rounds 4, 6, and 8: 30% chance to gain Double-Strike for two rounds. At 6+ Stars, after each Basic Attack add one Physical Damage instance against the Enemy with the least current troops (base Damage Rate: 20%, scales with Strength, mitigated by target Instinct), and replace the rounds 4, 6, and 8 Double-Strike chance with 40%. Double-Strike grants a second Basic Attack each round.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Venator Feral Strike screenshots",
@@ -2248,7 +2250,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: reduce Intelligence of one enemy in any lane, preferring Hunter breed with fallback, enhanced by Venator's Strength. Screenshot states no duration.",
+        "rawDescription": "Start of Combat: reduce Intelligence of one Enemy in any lane. Prioritize Hunters, with ordinary fallback if no Hunter is eligible. The reduction is enhanced by Venator's Strength. The screenshot does not state a duration. Progression (Habit Levels 1–5): -30%, -36%, -42%, -51%, -60%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Venator Hunter's Bane screenshot",
@@ -2272,7 +2274,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: increase Venator Physical Damage Dealt excluding Basic Attacks.",
+        "rawDescription": "Start of Combat until end of combat: increase Venator's non-Basic Physical Damage Dealt. Progression (Habit Levels 1–5): 12.5%, 15%, 17.5%, 21.25%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Venator Dragon's Might screenshot",
@@ -2296,7 +2298,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Augments Feral Strike: add one Physical Damage instance targeting the enemy with least current troops and replace Double-Strike chance on rounds 4, 6, and 8.",
+        "rawDescription": "Augments Feral Strike: add one Physical Damage instance against the Enemy with the least current troops; it scales with Venator's Strength and is mitigated by the target's Instinct. Replace, rather than add another roll to, the Double-Strike chance on rounds 4, 6, and 8. Double-Strike chance progression (Habit Levels 1–5): 40%, 42%, 44%, 47%, 50%. Added Physical Damage Rate progression (Habit Levels 1–5): 20%, 24%, 28%, 34%, 40%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Venator Feral Precision screenshot",
@@ -2309,7 +2311,8 @@ export const dragons = [
         ],
         "tags": [
           "COMMAND_AUGMENTATION",
-          "PHYSICAL_DAMAGE"
+          "PHYSICAL_DAMAGE",
+          "DOUBLE_STRIKE"
         ]
       },
       {
@@ -2321,7 +2324,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy.",
+        "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received of one opposing Enemy. Progression (Habit Levels 1–5): 8%, 9.6%, 11.2%, 13.6%, 16%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Venator Armor Break screenshot",
@@ -2333,7 +2336,7 @@ export const dragons = [
           "venator-armor-break-2026-06-25"
         ],
         "tags": [
-          "PHYSICAL_DAMAGE_UP"
+          "PHYSICAL_DAMAGE_RECEIVED_UP"
         ]
       },
       {
@@ -2345,7 +2348,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each round, when Venator is strictly below 50% Troop Capacity: select one enemy, preferring Hunter breed, deal Physical Damage, then attempt Overwhelm on that same selected target for two rounds.",
+        "rawDescription": "Each Round, only while Venator is strictly below 50% troop capacity: select one Enemy in any lane, prioritizing Hunters with ordinary fallback. Deal Physical Damage to the selected target; Physical Damage scales with Venator's Strength and is mitigated by the target's Instinct. Then use the displayed chance to afflict that same selected target with Overwhelm for two rounds. Overwhelm prevents Active Commands and Habits on the target's turn. Physical Damage Rate progression (Habit Levels 1–5): 60%, 78%, 96%, 120%, 150%. Overwhelm chance progression (Habit Levels 1–5): 12%, 15.6%, 19.2%, 24%, 30%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Venator Desperate Ambush screenshot",
@@ -2386,6 +2389,7 @@ export const dragons = [
       "VANGUARD_REQUIRED",
       "DEBUFF_INTELLIGENCE",
       "COMMAND_AUGMENTATION",
+      "PHYSICAL_DAMAGE_RECEIVED_UP",
       "OVERWHELM",
       "CONTROL"
     ],
@@ -6793,7 +6797,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Each Round: if no enemy is currently marked as Prey, 40% chance to apply Prey. Rounds 1, 4, 7, and 10: deal Fire Damage to one enemy, prioritizing Prey. Damage is doubled against Prey.\n\nAt 10 Stars:\n\nEach round while Sheepstealer has a current Prey: deal Fire Damage to Prey at a 24% rate and apply Recovery to Sheepstealer at a 10% rate, enhanced by Dragon Level and Intelligence.\n\nIf the current Prey received Recovery during the previous round, both rates are tripled to 72% Fire Damage and 30% Recovery.\n\nStar Rank 10 augmentation:\nAt 10 Stars, Savage Claim augments Wild Hunt while Sheepstealer has a Prey.",
+      "rawDescription": "Each Round, when no Enemy is currently marked as Sheepstealer's Prey: 40% chance to mark one Enemy in any lane as Prey, prioritizing Enemies that received Recovery within the previous round. Prey lasts three rounds and reduces Recovery Received by 30%. Rounds 1, 4, 7, and 10: deal Fire Damage to one Enemy in any lane, prioritizing Prey. Base Damage Rate: 100%; damage doubles to 200% against Prey. Fire Damage scales with Intelligence and is mitigated by the target's Initiative.\n\nAt 10 Stars, Each Round while Sheepstealer has a current Prey: deal Fire Damage to Prey at the current Savage Claim Damage Rate and apply Recovery to Sheepstealer at the current Savage Claim Recovery Rate. Fire Damage scales with Intelligence and is mitigated by target Initiative; Recovery is enhanced by Intelligence and scales with Dragon Level. If Prey received Recovery during the previous round, triple both rates. At Habit Level 1: Fire Damage 24%, tripled to 72%; Recovery 10%, tripled to 30%.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Sheepstealer Wild Hunt summary/glossary screenshots",
@@ -6835,8 +6839,9 @@ export const dragons = [
       "tags": [
         "VANGUARD_REQUIRED",
         "RECOVERY_RECEIVED_UP",
-        "FIRE_DAMAGE_UP",
-        "PHYSICAL_DAMAGE_UP"
+        "INTELLIGENCE_UP",
+        "PHYSICAL_DAMAGE_UP",
+        "RIGHT_FLANK_TARGET"
       ]
     },
     "habits": [
@@ -6849,7 +6854,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "PvE Fire Damage bonus and Stolen Flock stacks from each round or when Prey receives Recovery.",
+        "rawDescription": "Start of Combat until end of combat: increase Sheepstealer Fire Damage Dealt when battling non-player armies at Food Tiles; this also applies in Encounters against Beasts. Each Round: fixed 50% chance to gain one Stolen Flock stack, maximum ten stacks. Whenever Sheepstealer's Prey receives Recovery: gain one Stolen Flock stack, maximum ten stacks. Each stack increases Sheepstealer Fire Damage Dealt until end of combat. Non-player Fire Damage progression (Habit Levels 1–5): 10%, 12%, 14%, 17%, 20%. Fire Damage per stack progression (Habit Levels 1–5): 3%, 3.6%, 4.2%, 5.1%, 6%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Sheepstealer Stolen Flock screenshot",
@@ -6874,7 +6879,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: increase self Intelligence and reduce Instinct of two enemies within adjacency, enhanced by Initiative.",
+        "rawDescription": "Start of Combat until end of combat: increase Sheepstealer's Intelligence and reduce Instinct of two Enemies within adjacency. The enemy Instinct reduction is enhanced by Sheepstealer's Initiative. Intelligence progression (Habit Levels 1–5): 16%, 19.2%, 22.4%, 27.2%, 32%. Enemy Instinct progression (Habit Levels 1–5): -12%, -14.4%, -16.8%, -20.4%, -24%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Sheepstealer Dragon's Cunning screenshot",
@@ -6899,7 +6904,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each Round: apply Vulnerable to Prey, doubled chance if Prey received Recovery last round; cleanse Sheepstealer if Prey is above 50% Troop Capacity.",
+        "rawDescription": "Each Round: chance to afflict Sheepstealer's Prey with Vulnerable (+20%); the chance doubles when Prey received Recovery within the previous round. Vulnerable increases Damage Received by 20%. Separately, each Round while Prey is above 50% troop capacity: chance to Cleanse Sheepstealer of one Negative effect applied by an Enemy that reduces Sheepstealer's Damage Dealt. The screenshot does not state a Vulnerable duration. Vulnerable chance progression (Habit Levels 1–5): 25%, 30%, 35%, 42.5%, 50%. Cleanse chance progression (Habit Levels 1–5): 50%, 60%, 70%, 85%, 100%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Sheepstealer Baited Kill screenshot",
@@ -6912,7 +6917,7 @@ export const dragons = [
         ],
         "tags": [
           "VULNERABLE",
-          "CLEANSE_POSITIVE"
+          "CLEANSE_NEGATIVE"
         ]
       },
       {
@@ -6924,7 +6929,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Each Round: if Prey is above 50% Troop Capacity gain Evade. Start of Combat reduce Recovery Received of three enemies.",
+        "rawDescription": "Start of each Round: when Prey is above 50% troop capacity, Sheepstealer gains Evade until end of the round. Evade gives each incoming damage instance a chance to be ignored. Start of Combat until end of combat: reduce Recovery Received of three Enemies in any lane. Evade Rate progression (Habit Levels 1–5): 10%, 12%, 14%, 17%, 20%. Enemy Recovery Received progression (Habit Levels 1–5): -10%, -12%, -14%, -17%, -20%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Sheepstealer Wary Beast screenshot",
@@ -6949,7 +6954,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Augments Wild Hunt: each round while Sheepstealer has Prey, deal Fire Damage to Prey and apply Recovery to Sheepstealer; triple both if Prey received Recovery previous round.",
+        "rawDescription": "Augments Wild Hunt at 10 Stars. Each Round while Sheepstealer has Prey: deal Fire Damage to Prey and apply Recovery to Sheepstealer. Fire Damage scales with Intelligence and is mitigated by target Initiative; Recovery is enhanced by Intelligence and scales with Dragon Level. If Prey received Recovery during the previous round, triple both current rates. Fire Damage Rate progression (Habit Levels 1–5): 24%, 31.2%, 38.4%, 48%, 60%. Recovery Rate progression (Habit Levels 1–5): 10%, 13%, 16%, 20%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Sheepstealer Savage Claim screenshot",
@@ -6986,13 +6991,14 @@ export const dragons = [
       "RECOVERY_RECEIVED_DOWN",
       "VANGUARD_REQUIRED",
       "RECOVERY_RECEIVED_UP",
-      "FIRE_DAMAGE_UP",
+      "INTELLIGENCE_UP",
       "PHYSICAL_DAMAGE_UP",
+      "RIGHT_FLANK_TARGET",
       "STOLEN_FLOCK",
       "DEBUFF_INSTINCTS",
       "ADJACENT_TARGET",
       "VULNERABLE",
-      "CLEANSE_POSITIVE",
+      "CLEANSE_NEGATIVE",
       "EVADE",
       "COMMAND_AUGMENTATION",
       "RECOVERY"

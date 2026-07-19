@@ -511,7 +511,8 @@
     "reviewedAgainstGameBuild": "26.6.53509",
     "reviewer": "repository-owner",
     "notes": [
-      "All five Malachite Habits match manual in-game observation."
+      "All five Malachite Habits match manual in-game observation.",
+      "Controller-review candidate only: Lightning Strike grants Double-Strike, but this batch does not add a separately curated Double-Strike signal."
     ],
     "evidenceIds": [
       "malachite-forests-instinct-2026-06-23",
@@ -674,7 +675,8 @@
     "reviewedAgainstGameBuild": "26.6.53509",
     "reviewer": "repository-owner",
     "notes": [
-      "Brief manual review found no mismatches; detailed combat-log behavior remains pending."
+      "Brief manual review found no mismatches; detailed combat-log behavior remains pending.",
+      "Controller-review candidates only: Baited Kill Vulnerable and Savage Claim Recovery have no separately curated outputs."
     ],
     "evidenceIds": [
       "sheepstealer-stolen-flock-2026-06-23",
@@ -890,7 +892,8 @@
       "Venator command, trait, affinities, observation state, and five Habits were normalized from screenshot evidence.",
       "Feral Strike stores two independently targeted Physical Damage instances and allows the same enemy to receive both.",
       "Feral Precision is modeled as a Double-Strike chance override on rounds 4, 6, and 8, not a second roll.",
-      "Armor Break retains unresolved opposing-enemy targeting language; no formation recipient selector is inferred."
+      "Armor Break retains unresolved opposing-enemy targeting language; no formation recipient selector is inferred.",
+      "Controller-review candidate only: Desperate Ambush Physical Damage has no separately curated output."
     ],
     "evidenceIds": [
       "venator-main-screen-2026-06-25",

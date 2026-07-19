@@ -440,7 +440,10 @@ export const manualReviewRecords: ManualReviewRecord[] = [
     reviewedAt,
     reviewedAgainstGameBuild: build,
     reviewer: 'repository-owner',
-    notes: ['All five Malachite Habits match manual in-game observation.'],
+    notes: [
+      'All five Malachite Habits match manual in-game observation.',
+      'Controller-review candidate only: Lightning Strike grants Double-Strike, but this batch does not add a separately curated Double-Strike signal.',
+    ],
     evidenceIds: [
       'malachite-forests-instinct-2026-06-23',
       'malachite-wise-vigor-2026-06-23',
@@ -573,7 +576,10 @@ export const manualReviewRecords: ManualReviewRecord[] = [
     reviewedAt,
     reviewedAgainstGameBuild: build,
     reviewer: 'repository-owner',
-    notes: ['Brief manual review found no mismatches; detailed combat-log behavior remains pending.'],
+    notes: [
+      'Brief manual review found no mismatches; detailed combat-log behavior remains pending.',
+      'Controller-review candidates only: Baited Kill Vulnerable and Savage Claim Recovery have no separately curated outputs.',
+    ],
     evidenceIds: [
       'sheepstealer-stolen-flock-2026-06-23',
       'sheepstealer-dragons-cunning-2026-06-23',
@@ -778,6 +784,7 @@ export const manualReviewRecords: ManualReviewRecord[] = [
       'Feral Strike stores two independently targeted Physical Damage instances and allows the same enemy to receive both.',
       'Feral Precision is modeled as a Double-Strike chance override on rounds 4, 6, and 8, not a second roll.',
       'Armor Break retains unresolved opposing-enemy targeting language; no formation recipient selector is inferred.',
+      'Controller-review candidate only: Desperate Ambush Physical Damage has no separately curated output.',
     ],
     evidenceIds: [
       'venator-main-screen-2026-06-25',

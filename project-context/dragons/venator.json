@@ -32,7 +32,7 @@
         "PHYSICAL_DAMAGE",
         "DOUBLE_STRIKE"
       ],
-      "rawDescription": "After each Basic Attack: deal two independently targeted Physical Damage instances. Rounds 4, 6, and 8: 30% chance to gain Double-Strike for two rounds. Classified as Command while preserving Attack Modifier presentation.\n\nStar Rank 6 augmentation:\nFeral Precision augments Feral Strike damage and Double-Strike chance."
+      "rawDescription": "Canonical kind: Command; the game presents this as an Attack Modifier. After each Basic Attack, deal two Physical Damage instances; each instance independently selects one Enemy in any lane. Base Damage Rate: 20%. Physical Damage is increased by Venator's Strength and mitigated by the target's Instinct. On rounds 4, 6, and 8: 30% chance to gain Double-Strike for two rounds. At 6+ Stars, after each Basic Attack add one Physical Damage instance against the Enemy with the least current troops (base Damage Rate: 20%, scales with Strength, mitigated by target Instinct), and replace the rounds 4, 6, and 8 Double-Strike chance with 40%. Double-Strike grants a second Basic Attack each round."
     },
     {
       "id": "venator-warriors-zeal",
@@ -82,7 +82,7 @@
       "tags": [
         "DEBUFF_INTELLIGENCE"
       ],
-      "rawDescription": "Start of Combat: reduce Intelligence of one enemy in any lane, preferring Hunter breed with fallback, enhanced by Venator's Strength. Screenshot states no duration."
+      "rawDescription": "Start of Combat: reduce Intelligence of one Enemy in any lane. Prioritize Hunters, with ordinary fallback if no Hunter is eligible. The reduction is enhanced by Venator's Strength. The screenshot does not state a duration. Progression (Habit Levels 1–5): -30%, -36%, -42%, -51%, -60%."
     },
     {
       "id": "venator-dragons-might",
@@ -105,7 +105,7 @@
       "tags": [
         "PHYSICAL_DAMAGE_UP"
       ],
-      "rawDescription": "Start of Combat until end of combat: increase Venator Physical Damage Dealt excluding Basic Attacks."
+      "rawDescription": "Start of Combat until end of combat: increase Venator's non-Basic Physical Damage Dealt. Progression (Habit Levels 1–5): 12.5%, 15%, 17.5%, 21.25%, 25%."
     },
     {
       "id": "venator-feral-precision",
@@ -127,9 +127,10 @@
       ],
       "tags": [
         "COMMAND_AUGMENTATION",
-        "PHYSICAL_DAMAGE"
+        "PHYSICAL_DAMAGE",
+        "DOUBLE_STRIKE"
       ],
-      "rawDescription": "Augments Feral Strike: add one Physical Damage instance targeting the enemy with least current troops and replace Double-Strike chance on rounds 4, 6, and 8."
+      "rawDescription": "Augments Feral Strike: add one Physical Damage instance against the Enemy with the least current troops; it scales with Venator's Strength and is mitigated by the target's Instinct. Replace, rather than add another roll to, the Double-Strike chance on rounds 4, 6, and 8. Double-Strike chance progression (Habit Levels 1–5): 40%, 42%, 44%, 47%, 50%. Added Physical Damage Rate progression (Habit Levels 1–5): 20%, 24%, 28%, 34%, 40%."
     },
     {
       "id": "venator-armor-break",
@@ -150,9 +151,9 @@
         "venator-armor-break-2026-06-25"
       ],
       "tags": [
-        "PHYSICAL_DAMAGE_UP"
+        "PHYSICAL_DAMAGE_RECEIVED_UP"
       ],
-      "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received by one opposing enemy."
+      "rawDescription": "Start of Combat until end of combat: increase Physical Damage Received of one opposing Enemy. Progression (Habit Levels 1–5): 8%, 9.6%, 11.2%, 13.6%, 16%."
     },
     {
       "id": "venator-desperate-ambush",
@@ -177,7 +178,7 @@
         "OVERWHELM",
         "CONTROL"
       ],
-      "rawDescription": "Each round, when Venator is strictly below 50% Troop Capacity: select one enemy, preferring Hunter breed, deal Physical Damage, then attempt Overwhelm on that same selected target for two rounds."
+      "rawDescription": "Each Round, only while Venator is strictly below 50% troop capacity: select one Enemy in any lane, prioritizing Hunters with ordinary fallback. Deal Physical Damage to the selected target; Physical Damage scales with Venator's Strength and is mitigated by the target's Instinct. Then use the displayed chance to afflict that same selected target with Overwhelm for two rounds. Overwhelm prevents Active Commands and Habits on the target's turn. Physical Damage Rate progression (Habit Levels 1–5): 60%, 78%, 96%, 120%, 150%. Overwhelm chance progression (Habit Levels 1–5): 12%, 15.6%, 19.2%, 24%, 30%."
     }
   ],
   "affinities": {
