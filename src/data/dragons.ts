@@ -2574,7 +2574,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Odd-numbered rounds: chance to afflict Confusion on one Enemy within adjacency for two rounds. Whenever Confusion activates a Command or Habit or launches a Basic Attack on its target's turn, that target has a 50% chance to mistake Allies for Enemies and vice versa. Chance by Habit Level 1-5: 15%, 18%, 21%, 25.5%, 30%.",
+        "rawDescription": "Odd-numbered rounds: chance to afflict Confusion on one Enemy within adjacency for two rounds. Whenever the affected target activates a Command or Habit or launches a Basic Attack on its turn, it has a 50% chance to mistake Allies for Enemies and vice versa. Chance by Habit Level 1-5: 15%, 18%, 21%, 25.5%, 30%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Daemoros Shroud of Shadows screenshot",
