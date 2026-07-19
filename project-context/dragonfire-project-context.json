@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-19T03:39:58.328Z",
+  "generatedAt": "2026-07-19T04:12:03.024Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "feature/formation-rating-v2",
-    "commit": "239ef11a8827c41e1b4c3b697602f8c3fd0b729a",
+    "commit": "8b6c22302038d3bbacada80877ebad50e63292f3",
     "databaseVersion": "0.11.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
@@ -14481,12 +14481,21 @@
       "permutationCount": 6,
       "meaningfulAbsoluteDelta": 5,
       "meaningfulRelativeDelta": 0.1,
+      "meaningfulImprovementWhen": "delta >= 5 && relativeDelta >= 0.10",
       "meaningfulLossFormula": "round(20 * currentValue / bestValue)",
+      "candidateScoring": "Each candidate is scored as though it were the current arrangement.",
       "fullCreditWhen": [
         "best",
         "tied-best",
         "best-value-zero",
-        "below-meaningful-threshold"
+        "improvement-does-not-reach-both-meaningful-thresholds"
+      ],
+      "recommendationSuppressionReasons": [
+        "current-best",
+        "tied-best",
+        "below-meaningful-threshold",
+        "incomplete-formation",
+        "insufficient-confidence"
       ],
       "vanguardClaimsAreConflicts": false
     },

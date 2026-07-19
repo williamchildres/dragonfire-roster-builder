@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-19T03:39:58.328Z",
+  "generatedAt": "2026-07-19T04:12:03.024Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "feature/formation-rating-v2",
-    "commit": "239ef11a8827c41e1b4c3b697602f8c3fd0b729a",
+    "commit": "8b6c22302038d3bbacada80877ebad50e63292f3",
     "databaseVersion": "0.11.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 40,
-    "testCaseCount": 353,
+    "testFileCount": 41,
+    "testCaseCount": 359,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
