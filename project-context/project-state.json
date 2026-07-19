@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-19T01:36:42.772Z",
+  "generatedAt": "2026-07-19T04:12:03.024Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/source-fidelity-final-epic-batch",
-    "commit": "56300a5dcf149c591f647438bcf4604e56375a7d",
-    "databaseVersion": "0.10.5",
+    "branch": "feature/formation-rating-v2",
+    "commit": "8b6c22302038d3bbacada80877ebad50e63292f3",
+    "databaseVersion": "0.11.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 37,
-    "testCaseCount": 353,
+    "testFileCount": 41,
+    "testCaseCount": 359,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

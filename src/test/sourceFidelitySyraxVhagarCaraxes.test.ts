@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import { summarizeAbility } from '../app/dragonDetailPresentation';
-import { buildFormationSignalChips } from '../app/formationCardPresentation';
 import { dragons } from '../data/dragons';
 import type { AbilityDefinition } from '../models/dragon';
+import type { FormationPlacementComparison } from '../services/formationPlacementComparison';
 import { rateFormation } from '../services/formationRating';
 import { evaluateFormation } from '../synergy/evaluateFormation';
-import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { buildSemanticRelationships, relationshipValue } from '../synergy/semanticRelationships';
 import type { DragonSynergyProfile } from '../synergy/types';
 
 const dragon = (id: string) => dragons.find((candidate) => candidate.id === id)!;
@@ -117,11 +117,9 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
     const rating = (formation: { 'left-flank': string; vanguard: string; 'right-flank': string }, profiles: DragonSynergyProfile[]) => {
       const progression = Object.fromEntries(Object.values(formation).map((id) => [id, { starRank: 10, dragonLevel: 16, combatStats: dragons.find((candidate) => candidate.id === id)?.stats ?? {} }]));
       const results = evaluateFormation({ formation, progression, profiles }).results;
-      const presentation = buildSimpleFormationPresentation({ formation, dragons, mappedProfileIds: new Set(profiles.map((profile) => profile.dragonId)), results });
-      const signalChipsByDragonId = Object.fromEntries(
-        Object.entries(formation).map(([position, dragonId]) => [dragonId, buildFormationSignalChips({ profile: profiles.find((profile) => profile.dragonId === dragonId), position: position as 'left-flank' | 'vanguard' | 'right-flank', formation, profiles, progression })]),
-      );
-      return { rating: rateFormation({ formation, dragons, profiles, presentation, signalChipsByDragonId }), results };
+      const relationships = buildSemanticRelationships(results, profiles);
+      const placementComparison = fixedBestPlacement(formation, relationships);
+      return { rating: rateFormation({ formation, dragons, profiles, relationships, placementComparison }), results };
     };
     const rows: Array<{ formation: string[]; before: ReturnType<typeof rating>; after: ReturnType<typeof rating> }> = [];
     for (const left of dragons) for (const vanguard of dragons) if (vanguard.id !== left.id) for (const right of dragons) if (right.id !== left.id && right.id !== vanguard.id) {
@@ -131,21 +129,29 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
       rows.push({ formation: [left.id, vanguard.id, right.id], before, after });
     }
     const changed = rows.filter((row) => row.before.rating.score !== row.after.rating.score || row.before.rating.tier !== row.after.rating.tier);
-    const top = (key: 'before' | 'after') => rows.slice().sort((left, right) => right[key].rating.score - left[key].rating.score || left.formation.join('/').localeCompare(right.formation.join('/'))).slice(0, 50).map((row) => row.formation.join('/'));
+    const top = (key: 'before' | 'after') => rows.slice().sort((left, right) => (right[key].rating.score ?? 0) - (left[key].rating.score ?? 0) || left.formation.join('/').localeCompare(right.formation.join('/'))).slice(0, 50).map((row) => row.formation.join('/'));
     const beforeTop50 = top('before');
     const afterTop50 = top('after');
     const representative = changed.filter((row) => {
       const ids = (value: typeof row.before) => value.results.filter((result) => result.kind === 'setup-payoff' || result.kind === 'amplifier-output').map((result) => result.id).sort().join('|');
       return ids(row.before) !== ids(row.after);
     }).slice(0, 6).map((row) => ({ formation: row.formation, before: row.before.rating.score, after: row.after.rating.score, lost: row.before.results.filter((result) => !row.after.results.some((candidate) => candidate.id === result.id)).map((result) => result.id), gained: row.after.results.filter((result) => !row.before.results.some((candidate) => candidate.id === result.id)).map((result) => result.id) }));
-    const summary = { changed: changed.length, tierChanged: changed.filter((row) => row.before.rating.tier !== row.after.rating.tier).length, min: Math.min(...changed.map((row) => row.after.rating.score - row.before.rating.score)), max: Math.max(...changed.map((row) => row.after.rating.score - row.before.rating.score)), top50Changed: JSON.stringify(beforeTop50) !== JSON.stringify(afterTop50), beforeTop50, afterTop50, representative };
-    expect(summary.changed).toBe(1_255);
-    expect(summary.tierChanged).toBe(218);
-    expect([summary.min, summary.max]).toEqual([-6, 7]);
+    const summary = { changed: changed.length, tierChanged: changed.filter((row) => row.before.rating.tier !== row.after.rating.tier).length, min: Math.min(...changed.map((row) => (row.after.rating.score ?? 0) - (row.before.rating.score ?? 0))), max: Math.max(...changed.map((row) => (row.after.rating.score ?? 0) - (row.before.rating.score ?? 0))), top50Changed: JSON.stringify(beforeTop50) !== JSON.stringify(afterTop50), beforeTop50, afterTop50, representative };
+    expect(summary.changed).toBe(277);
+    expect(summary.tierChanged).toBe(83);
+    expect([summary.min, summary.max]).toEqual([2, 7]);
     expect(summary.top50Changed).toBe(true);
     expect(summary.representative).toEqual(expect.arrayContaining([
-      expect.objectContaining({ formation: ['syrax', 'vhagar', 'nyrena'], lost: ['amplifier-output:nyrena:stat:intelligence:syrax'] }),
       expect.objectContaining({ formation: ['syrax', 'vhagar', 'vermax'], gained: ['amplifier-output:vermax:stat:initiative:syrax'] }),
     ]));
   }, 120_000);
 });
+
+function fixedBestPlacement(
+  formation: { 'left-flank': string; vanguard: string; 'right-flank': string },
+  relationships: ReturnType<typeof buildSemanticRelationships>,
+): FormationPlacementComparison {
+  const value = relationshipValue(relationships);
+  const candidate = { arrangement: formation, activeRelationshipValue: value, placementScore: 20, relationships };
+  return { current: candidate, best: candidate, candidates: [candidate], tiedBestArrangements: [formation], valueDelta: 0, relativeDelta: 0, meaningfulImprovement: false, placementScore: 20, status: 'best' };
+}

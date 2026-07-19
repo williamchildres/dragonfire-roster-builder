@@ -6,7 +6,6 @@ import {
   explainAmplifierOutput,
   explainMissingEnabler,
   explainPositionBlocked,
-  explainPositionConflict,
   explainProgressionLocked,
   explainSetupPayoff,
   type PositionBlockReason,
@@ -16,7 +15,6 @@ import type {
   DragonSynergyProfile,
   EvaluateFormationInput,
   EvaluateFormationResult,
-  PositionClaim,
   ProgressionRequirement,
   SimpleSynergyResult,
   SimpleSynergyResultKind,
@@ -79,8 +77,6 @@ export function evaluateFormation(input: EvaluateFormationInput): EvaluateFormat
   for (const candidate of relationshipCandidates.values()) {
     addResult(results, candidate.result);
   }
-
-  addPositionConflictResults(results, input, selected);
 
   return {
     results: [...results.values()].sort(compareResults),
@@ -394,31 +390,6 @@ function uniqueSorted(values: string[]): string[] {
   return [...new Set(values)].sort();
 }
 
-function addPositionConflictResults(
-  results: Map<string, SimpleSynergyResult>,
-  input: EvaluateFormationInput,
-  selected: SelectedProfile[],
-): void {
-  const claims = selected.flatMap((entry) =>
-    entry.profile.positionClaims
-      .filter((claim) => isUnlocked(claim, input.progression[entry.profile.dragonId]))
-      .map((claim) => ({ ...entry, claim })),
-  );
-
-  for (const position of SIMPLE_FORMATION_POSITIONS) {
-    const positionClaims = claims.filter((claim) => claim.claim.requiredPosition === position);
-    if (positionClaims.length > 1) {
-      addResult(results, {
-        id: ['position-conflict', position, ...positionClaims.map((claim) => `${claim.profile.dragonId}:${claim.claim.abilityId}`)].join(':'),
-        kind: 'position-conflict',
-        dragonIds: positionClaims.map((claim) => claim.profile.dragonId),
-        abilityIds: positionClaims.map((claim) => claim.claim.abilityId),
-        explanation: explainPositionConflict(positionClaims),
-      });
-    }
-  }
-}
-
 function getRelationshipEligibility(
   input: EvaluateFormationInput,
   provider: SelectedProfile,
@@ -578,12 +549,12 @@ function firstLockedSignal(
   return null;
 }
 
-function isUnlocked(signal: SynergySignal | PositionClaim, progression: DragonProgression | undefined): boolean {
+function isUnlocked(signal: SynergySignal, progression: DragonProgression | undefined): boolean {
   return unmetRequirement(signal, progression) === null;
 }
 
 function unmetRequirement(
-  signal: SynergySignal | PositionClaim,
+  signal: SynergySignal,
   progression: DragonProgression | undefined,
 ): ProgressionRequirement | null {
   const requirement = signal.unlock;

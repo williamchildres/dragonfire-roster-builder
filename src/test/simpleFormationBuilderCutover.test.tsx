@@ -94,33 +94,41 @@ describe('Formation Builder simple synergy cutover', () => {
   }
 
   function analysisText() {
-    return screen.getByRole('heading', { name: 'Formation Analysis' }).closest('section')?.textContent ?? '';
+    return ratingPanel().textContent ?? '';
   }
 
   function sectionText(title: string) {
+    if (title === 'Strong synergies') return analysisText();
+    if (title === 'Missing enablers') return sectionText('Key gaps');
+    if (title === 'Future unlocks' || title === 'Position conflicts') {
+      return screen.queryByText('Neutral and future information')?.closest('details')?.textContent ?? '';
+    }
     const heading = screen.queryByRole('heading', { name: title });
     return heading?.closest('section')?.textContent ?? '';
   }
 
   function sectionItems(title: string) {
-    const heading = screen.queryByRole('heading', { name: title });
-    const section = heading?.closest('section');
-    return section ? within(section).queryAllByRole('listitem').map((item) => item.textContent ?? '') : [];
+    const section = title === 'Strong synergies'
+      ? ratingPanel()
+      : screen.queryByRole('heading', { name: title === 'Missing enablers' ? 'Key gaps' : title })?.closest('section');
+    return section
+      ? [...section.querySelectorAll('li, .formation-relationship-item > p')].map((item) => item.textContent ?? '')
+      : [];
   }
 
   function ratingPanel() {
-    const analysis = screen.getByRole('heading', { name: 'Formation Analysis' }).closest('section');
-    expect(analysis).not.toBeNull();
-    const heading = within(analysis as HTMLElement).getByRole('heading', { name: 'Formation Rating' });
+    const heading = screen.getByRole('heading', { name: 'Formation Rating' });
     const section = heading.closest('section');
     expect(section).not.toBeNull();
     return section as HTMLElement;
   }
 
   async function openDetailedSignalTrace(user: ReturnType<typeof userEvent.setup>) {
-    const toggle = screen.getByRole('button', { name: /mapped synergy details/i });
-    if (toggle.getAttribute('aria-expanded') !== 'true') {
-      await user.click(toggle);
+    const summary = screen.getByText('Relationship details');
+    const details = summary.closest('details');
+    expect(details).not.toBeNull();
+    if (!details!.hasAttribute('open')) {
+      await user.click(summary);
     }
   }
 
@@ -189,27 +197,23 @@ describe('Formation Builder simple synergy cutover', () => {
     );
   });
 
-  it('places a compact rating summary before the cards and keeps it consistent with the full lower analysis', async () => {
+  it('places one primary rating card before the formation board', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 } });
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'vhagar', 'right-flank': 'caraxes' });
 
-    const summary = document.querySelector<HTMLElement>('.formation-rating-summary-card');
+    const summary = ratingPanel();
     const board = screen.getByLabelText('Formation positions');
-    expect(summary).not.toBeNull();
-    expect(summary!.compareDocumentPosition(board) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-
-    const upperRating = within(summary!).getByLabelText(/Formation rating .* out of 100/i);
-    const lowerRating = within(ratingPanel()).getByLabelText(/Formation rating .* out of 100/i);
-    expect(upperRating).toHaveAccessibleName(lowerRating.getAttribute('aria-label')!);
+    expect(summary.compareDocumentPosition(board) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getAllByRole('heading', { name: 'Formation Rating' })).toHaveLength(1);
+    expect(within(summary).getAllByLabelText(/Formation rating .* out of 100/i)).toHaveLength(1);
     expect(summary).toHaveTextContent('Active relationships');
-    expect(summary).toHaveTextContent('Missing enablers');
-    expect(summary).toHaveTextContent('Placement / conflicts');
-    expect(summary).toHaveTextContent('Future unlocks');
-    expect(screen.getByRole('button', { name: 'View mapped synergy details' })).toBeInTheDocument();
-    expect(within(ratingPanel()).getByLabelText('Formation rating breakdown')).toBeInTheDocument();
+    expect(summary).toHaveTextContent('Participating dragons');
+    expect(summary).toHaveTextContent('Key gaps');
+    expect(summary).toHaveTextContent('Placement status');
+    expect(within(summary).getByLabelText('Formation rating breakdown')).toBeInTheDocument();
   });
 
   it('keeps cards collapsed by default and expands Command and Vanguard Trait wording independently', async () => {
@@ -470,33 +474,27 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(sectionText('Future unlocks')).not.toContain('Tactical Inferno');
   });
 
-  it('distinguishes adjacency placement from a Vanguard-only beneficiary requirement', async () => {
+  it('turns a meaningful adjacency loss into one net placement recommendation', async () => {
     const user = userEvent.setup();
-    seedRoster({ malachite: { starRank: 10 }, caraxes: {}, sheepstealer: { reignLevel: 16 } });
+    seedRoster({ malachite: { starRank: 10 }, caraxes: {}, vhagar: {} });
 
     await openFormationBuilder(user);
-    await selectFormation(user, { 'left-flank': 'malachite', vanguard: 'caraxes' });
+    await selectFormation(user, { 'left-flank': 'malachite', vanguard: 'caraxes', 'right-flank': 'vhagar' });
     await openDetailedSignalTrace(user);
     expect(sectionText('Strong synergies')).toContain(
       "Malachite can grant First-Strike, which improves Caraxes's Infernal Burst.",
     );
 
     await clearPosition(user, 'Vanguard');
+    await clearPosition(user, 'Right Flank');
+    await chooseDragonForPosition(user, 'vanguard', 'vhagar');
     await chooseDragonForPosition(user, 'right-flank', 'caraxes');
-    await openDetailedSignalTrace(user);
-    expect(sectionText('Placement issues')).toContain('Malachite and Caraxes are not adjacent in this formation.');
-
-    await clearPosition(user, 'Left Flank');
-    await chooseDragonForPosition(user, 'right-flank', 'sheepstealer');
-    await chooseDragonForPosition(user, 'vanguard', 'malachite');
-    await openDetailedSignalTrace(user);
-    expect(sectionText('Placement issues')).toContain(
-      "Sheepstealer must be deployed in Vanguard for Hunter's Cunning.",
-    );
-    expect(sectionText('Placement issues')).not.toContain('Malachite and Sheepstealer are not adjacent');
+    expect(ratingPanel()).toHaveTextContent('Better arrangement available');
+    expect(ratingPanel()).toHaveTextContent(/Move .* net \+/);
+    expect(screen.queryByRole('heading', { name: 'Placement issues' })).not.toBeInTheDocument();
   });
 
-  it('renders blocked-and-locked relationships as placement issues instead of future unlocks', async () => {
+  it('does not expose individually blocked relationships as placement weaknesses', async () => {
     const user = userEvent.setup();
     seedRoster({
       zivern: { starRank: 10, reignLevel: 15 },
@@ -508,19 +506,10 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { 'left-flank': 'zivern', vanguard: 'rhysarion', 'right-flank': 'shadowsong' });
     await openDetailedSignalTrace(user);
 
-    const placementIssues = sectionItems('Placement issues');
     const futureUnlocks = sectionText('Future unlocks');
 
-    expect(placementIssues).toContain("Zivern must be deployed in Right Flank to receive Rhysarion's Champion's Vigor.");
-    expect(placementIssues).toContain(
-      "Shadowsong must be deployed in Vanguard, and Rhysarion must be deployed in Right Flank, for Hunter's Wrath to support Dawnsong.",
-    );
-    expect(
-      placementIssues.filter((item) =>
-        item ===
-        "Shadowsong must be deployed in Vanguard, and Rhysarion must be deployed in Right Flank, for Hunter's Wrath to support Dawnsong.",
-      ),
-    ).toHaveLength(1);
+    expect(screen.queryByRole('heading', { name: 'Placement issues' })).not.toBeInTheDocument();
+    expect(analysisText()).not.toContain("Zivern must be deployed in Right Flank to receive Rhysarion's Champion's Vigor.");
     expect(futureUnlocks).not.toContain("Rhysarion's Champion's Vigor Tactical Damage support for Zivern's Silent Shade");
     expect(futureUnlocks).not.toContain("Shadowsong's Hunter's Wrath Strength support for Rhysarion's Dawnsong");
     expect(futureUnlocks).toContain(
@@ -528,7 +517,7 @@ describe('Formation Builder simple synergy cutover', () => {
     );
   });
 
-  it('maps roster Reign Level to Sheepstealer Recovery unlocks and Vanguard conflicts', async () => {
+  it('maps roster Reign Level to Sheepstealer Recovery and treats Vanguard alternatives as neutral', async () => {
     const user = userEvent.setup();
     seedRoster({ malachite: {}, sheepstealer: { reignLevel: 15 }, caraxes: { reignLevel: 16 } });
 
@@ -553,8 +542,9 @@ describe('Formation Builder simple synergy cutover', () => {
       "Malachite provides Recovery, which Sheepstealer benefits from through Hunter's Cunning.",
     );
     expect(sectionText('Position conflicts')).toContain(
-      "Malachite's Sentinel's Presence, Sheepstealer's Hunter's Cunning, and Caraxes's Hunter's Wrath require Vanguard; only one dragon can receive that positional benefit.",
+      "Sheepstealer's Vanguard Trait is active. Malachite and Caraxes have alternative Vanguard-only benefits.",
     );
+    expect(screen.queryByRole('heading', { name: 'Position conflicts' })).not.toBeInTheDocument();
   });
 
   it('renders selected-card signal summaries with supported, used, satisfied, and missing states', async () => {
@@ -600,7 +590,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(traitSection).not.toHaveTextContent('Position requirement met.');
   });
 
-  it('renders an explainable Formation Rating panel with score, tier, breakdown, strengths, and opportunities', async () => {
+  it('renders one explainable Formation Rating with two scored categories and diagnostic gaps', async () => {
     const user = userEvent.setup();
     seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 } });
 
@@ -610,12 +600,13 @@ describe('Formation Builder simple synergy cutover', () => {
     const panel = ratingPanel();
     expect(panel).toHaveTextContent(/\/ 100/);
     expect(panel).toHaveTextContent(/Strong|Solid|Developing|Weak|Excellent/);
-    expect(panel).toHaveTextContent('Realized synergy payoff');
-    expect(panel).toHaveTextContent('Support usefulness');
-    expect(panel).toHaveTextContent('Kit utilization');
-    expect(panel).toHaveTextContent(/kit interactions realized/);
-    expect(panel).toHaveTextContent('Strengths');
-    expect(panel).toHaveTextContent('Weaknesses / opportunities');
+    expect(panel).toHaveTextContent('Active Synergy');
+    expect(panel).toHaveTextContent('Placement Effectiveness');
+    expect(panel).not.toHaveTextContent('Realized synergy payoff');
+    expect(panel).not.toHaveTextContent('Support usefulness');
+    expect(panel).not.toHaveTextContent('Kit utilization');
+    expect(panel).toHaveTextContent('Key strengths');
+    expect(panel).toHaveTextContent('Key gaps');
     expect(panel).toHaveTextContent('Caraxes can apply Burn');
     expect(panel).toHaveTextContent('Syrax can grant First-Strike');
     expect(panel).toHaveTextContent('not a combat simulation');
@@ -625,7 +616,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(screen.queryByRole('heading', { name: 'Position conflicts' })).not.toBeInTheDocument();
 
     await openDetailedSignalTrace(user);
-    expect(screen.getByRole('heading', { name: 'Strong synergies' })).toBeInTheDocument();
+    expect(screen.getByText('Relationship details').closest('details')).toHaveAttribute('open');
   });
 
   it('updates Formation Rating when a dragon changes and when a position is cleared', async () => {
@@ -919,7 +910,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByLabelText('Star Rank 10')).toHaveTextContent('10★');
 
     await user.click(screen.getByRole('radio', { name: 'My Roster' }));
-    expect(screen.getByRole('status')).toHaveTextContent('My Roster mode cleared unavailable slot: Left Flank.');
+    expect(screen.getByText('My Roster mode cleared unavailable slot: Left Flank.')).toBeInTheDocument();
     expect(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i })).toBeInTheDocument();
 
     await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));

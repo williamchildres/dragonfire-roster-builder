@@ -376,17 +376,10 @@ describe('simple synergy foundation', () => {
     );
   });
 
-  it('includes Tessarion Champion Brilliance in grouped Vanguard conflicts without duplicate bullets', () => {
+  it('does not emit public conflicts for competing Vanguard-only traits', () => {
     const conflicts = resultsOfKind('position-conflict', evaluate(formation('tessarion', 'daemoros', null)));
 
-    expect(conflicts).toEqual([
-      expect.objectContaining({
-        dragonIds: ['tessarion', 'daemoros'],
-        abilityIds: ['tessarion-champions-brilliance', 'daemoros-warriors-zeal'],
-        explanation:
-          "Tessarion's Champion's Brilliance and Daemoros's Warrior's Zeal require Vanguard; only one dragon can receive that positional benefit.",
-      }),
-    ]);
+    expect(conflicts).toEqual([]);
   });
 
   it('does not turn Tessarion Molten Armor Panic self-condition into a teammate Panic payoff', () => {
@@ -694,15 +687,9 @@ describe('simple synergy foundation', () => {
     expect(resultsOfKind('position-blocked', results)).toHaveLength(0);
   });
 
-  it('groups position conflicts and missing enablers deterministically', () => {
+  it('omits position conflicts while keeping missing enablers deterministic', () => {
     const conflict = resultsOfKind('position-conflict', evaluate(formation('daemoros', 'syrax', 'caraxes')));
-    expect(conflict).toEqual([
-      expect.objectContaining({
-        dragonIds: ['daemoros', 'syrax', 'caraxes'],
-        explanation:
-          "Daemoros's Warrior's Zeal, Syrax's Sentinel's Wit, and Caraxes's Hunter's Wrath require Vanguard; only one dragon can receive that positional benefit.",
-      }),
-    ]);
+    expect(conflict).toEqual([]);
 
     const duplicateMissingProfiles: DragonSynergyProfile[] = [
       {

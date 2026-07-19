@@ -1,245 +1,177 @@
-import { useState } from 'react';
-import type { Dragon } from '../models/dragon';
-import { positionLabels, type Formation } from '../services/teamShare';
+import type { FormationFindingSet } from '../services/formationFindings';
+import type { FormationPlacementComparison } from '../services/formationPlacementComparison';
 import type { FormationRatingResult } from '../services/formationRating';
-import type { SimpleFormationPresentation } from '../synergy/formationPresentation';
-import type { SimpleSynergyResult } from '../synergy/types';
+import type { FormationRecommendationResult } from '../services/formationRecommendation';
+import type { SemanticRelationship } from '../synergy/semanticRelationships';
 
 export function SimpleFormationAnalysis({
-  presentation,
-  dragons,
-  formation,
   rating,
+  relationships,
+  findings,
+  recommendation,
+  placementComparison,
 }: {
-  presentation: SimpleFormationPresentation;
-  dragons: Dragon[];
-  formation: Formation;
   rating: FormationRatingResult;
+  relationships: SemanticRelationship[];
+  findings: FormationFindingSet;
+  recommendation: FormationRecommendationResult;
+  placementComparison: FormationPlacementComparison | null;
 }) {
-  const selectedCount = presentation.selectedDragonIds.length;
-  const hasActiveSynergy = presentation.activeSynergies.length > 0;
-
-  return (
-    <section className="panel simple-formation-analysis" aria-labelledby="simple-formation-analysis-title">
-      <h3 id="simple-formation-analysis-title">Formation Analysis</h3>
-      <FormationSummary formation={formation} dragons={dragons} />
-      <CoverageSummary presentation={presentation} dragons={dragons} />
-      <FormationRatingPanel rating={rating} />
-      {selectedCount < 2 ? (
-        <p className="empty-card-note">Select at least two dragons to review formation synergies.</p>
-      ) : (
-        <DetailedSignalTrace hasActiveSynergy={hasActiveSynergy} presentation={presentation} />
-      )}
-      <p className="notice-text">
-        Formation adjacency is linear: Left Flank and Right Flank are adjacent only to Vanguard.
-      </p>
-    </section>
+  const placementStatus = placementStatusLabel(placementComparison);
+  const primaryRelationshipIds = new Set(
+    findings.keyStrengths.flatMap((finding) => finding.semanticRelationshipId ?? []),
   );
-}
-
-export function CompactFormationRatingSummary({
-  presentation,
-  rating,
-}: {
-  presentation: SimpleFormationPresentation;
-  rating: FormationRatingResult;
-}) {
-  const findings = [
-    { label: 'Active relationships', value: presentation.activeSynergies.length, tone: 'positive' },
-    { label: 'Missing enablers', value: presentation.missingEnablers.length, tone: 'negative' },
-    {
-      label: 'Placement / conflicts',
-      value: presentation.placementIssues.length + presentation.positionConflicts.length,
-      tone: 'negative',
-    },
-    { label: 'Future unlocks', value: presentation.futureUnlocks.length, tone: 'neutral' },
-  ] as const;
 
   return (
-    <section className="formation-rating-summary-card" aria-labelledby="formation-rating-summary-title">
-      <div className="formation-rating-summary-score" aria-label={`Formation rating ${rating.score} out of 100, ${rating.tier}`}>
-        <span className="formation-rating-value">{rating.score}</span>
-        <span className="formation-rating-max">/ 100</span>
-        <span className="formation-rating-tier">{rating.tier}</span>
-      </div>
-      <div className="formation-rating-summary-copy">
-        <p className="eyebrow">Mapped signal score</p>
-        <h3 id="formation-rating-summary-title">Formation Rating</h3>
-        <p>{rating.summary}</p>
-      </div>
-      <dl className="formation-finding-counts" aria-label="Major formation findings">
-        {findings.map((finding) => (
-          <div className={`formation-finding-count finding-${finding.tone}`} key={finding.label}>
-            <dt>{finding.label}</dt>
-            <dd>{finding.value}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-  );
-}
-
-function DetailedSignalTrace({
-  hasActiveSynergy,
-  presentation,
-}: {
-  hasActiveSynergy: boolean;
-  presentation: SimpleFormationPresentation;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <section className="detailed-signal-trace" aria-label="Detailed signal trace">
-      <button
-        type="button"
-        className="secondary-button detailed-signal-trace-toggle"
-        aria-expanded={isOpen}
-        onClick={() => setIsOpen((current) => !current)}
-      >
-        {isOpen ? 'Hide mapped synergy details' : 'View mapped synergy details'}
-      </button>
-      {isOpen ? (
-        <div className="detailed-signal-trace-body">
-        {!hasActiveSynergy ? (
-          <p className="empty-card-note">No active curated relationship is mapped for this formation yet.</p>
-        ) : null}
-        <ResultSection title="Strong synergies" results={presentation.activeSynergies} />
-        {!presentation.hasCompleteProfileCoverage ? <IncompleteMissingEnablerNotice /> : null}
-        <ResultSection title="Missing enablers" results={presentation.missingEnablers} />
-        <ResultSection title="Placement issues" results={presentation.placementIssues} />
-        <ResultSection title="Position conflicts" results={presentation.positionConflicts} />
-        <ResultSection title="Future unlocks" results={presentation.futureUnlocks} />
-      </div>
-      ) : null}
-    </section>
-  );
-}
-
-function FormationRatingPanel({ rating }: { rating: FormationRatingResult }) {
-  return (
-    <section className="formation-rating-panel" aria-labelledby="formation-rating-title">
-      <div className="formation-rating-header">
-        <div>
-          <p className="eyebrow">Mapped signal score</p>
-          <h4 id="formation-rating-title">Formation Rating</h4>
-        </div>
-        <div className="formation-rating-score" aria-label={`Formation rating ${rating.score} out of 100, ${rating.tier}`}>
-          <span className="formation-rating-value">{rating.score}</span>
+    <section className="panel simple-formation-analysis" aria-labelledby="formation-analysis-title">
+      <div className="formation-analysis-header">
+        <div className="formation-rating-summary-score" aria-label={ratingAriaLabel(rating)}>
+          <span className="formation-rating-value">{rating.score ?? '—'}</span>
           <span className="formation-rating-max">/ 100</span>
           <span className="formation-rating-tier">{rating.tier}</span>
         </div>
+        <div className="formation-analysis-heading">
+          <p className="eyebrow">Canonical relationship score</p>
+          <h3 id="formation-analysis-title">Formation Rating</h3>
+          <p>{rating.summary}</p>
+        </div>
       </div>
-      <p className="formation-rating-summary">{rating.summary}</p>
-      <div className="formation-rating-breakdown" aria-label="Formation rating breakdown">
-        {rating.breakdown.map((item) => (
-          <div className="formation-rating-breakdown-row" key={item.label}>
-            <div className="formation-rating-breakdown-copy">
-              <span>{item.label}</span>
-              <small>{item.explanation}</small>
-            </div>
-            <strong>
-              {item.score} / {item.max}
-            </strong>
-          </div>
-        ))}
-      </div>
-      <div className="formation-rating-lists">
-        <RatingList title="Strengths" items={rating.strengths} fallback="No active mapped strength yet." />
-        <RatingList title="Weaknesses / opportunities" items={rating.weaknesses} fallback="No mapped weakness found." />
-      </div>
-      {rating.notes.map((note) => (
-        <p className="formation-rating-note" key={note}>
-          {note}
-        </p>
-      ))}
-    </section>
-  );
-}
 
-function RatingList({ title, items, fallback }: { title: string; items: string[]; fallback: string }) {
-  return (
-    <div>
-      <h5>{title}</h5>
-      {items.length > 0 ? (
-        <ul className="plain-list">
-          {items.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
+      {rating.confidence.status === 'limited' ? (
+        <div className="formation-confidence-warning" role="status">
+          <strong>Analysis incomplete</strong>
+          {rating.confidence.issues.map((issue) => <p key={issue}>{issue}</p>)}
+        </div>
       ) : (
-        <p className="empty-card-note">{fallback}</p>
+        <>
+          <dl className="formation-analysis-metrics" aria-label="Formation analysis summary">
+            <Metric label="Active relationships" value={String(rating.activeRelationshipCount)} />
+            <Metric label="Participating dragons" value={`${rating.participatingDragonCount} / 3`} />
+            <Metric label="Key gaps" value={String(findings.keyGaps.length)} />
+            <Metric label="Placement status" value={placementStatus} />
+          </dl>
+
+          <section className="formation-next-move" aria-labelledby="formation-next-move-title">
+            <p className="eyebrow" id="formation-next-move-title">Best next move</p>
+            <p>{recommendation.netSummary}</p>
+          </section>
+        </>
       )}
-    </div>
-  );
-}
 
-function IncompleteMissingEnablerNotice() {
-  return (
-    <section className="simple-result-section" aria-labelledby="simple-incomplete-missing-enablers">
-      <h4 id="simple-incomplete-missing-enablers">Missing enablers</h4>
-      <p className="notice-text">Missing-enabler checks are incomplete until all selected dragons have curated profiles.</p>
-    </section>
-  );
-}
+      <div className="formation-analysis-highlights">
+        <FindingList
+          title="Key strengths"
+          findings={findings.keyStrengths}
+          fallback="No positive mapped relationship is active yet."
+        />
+        <FindingList
+          title="Key gaps"
+          findings={findings.keyGaps}
+          fallback="No primary diagnostic gap is mapped."
+        />
+      </div>
 
-function FormationSummary({ formation, dragons }: { formation: Formation; dragons: Dragon[] }) {
-  return (
-    <div className="simple-analysis-summary">
-      {Object.entries(formation).map(([position, dragonId]) => {
-        const dragon = dragons.find((candidate) => candidate.id === dragonId);
-        return (
-          <p key={position}>
-            <strong>{positionLabels[position as keyof Formation]}:</strong> {dragon?.name ?? 'Empty'}
-          </p>
-        );
-      })}
-    </div>
-  );
-}
-
-function CoverageSummary({
-  presentation,
-  dragons,
-}: {
-  presentation: SimpleFormationPresentation;
-  dragons: Dragon[];
-}) {
-  const selectedCount = presentation.selectedDragonIds.length;
-  const unmappedNames = presentation.unmappedDragonIds.map((dragonId) => dragonName(dragonId, dragons));
-
-  if (selectedCount === 0) {
-    return <p className="notice-text">No dragons selected.</p>;
-  }
-
-  return (
-    <div className="coverage-summary">
-      <p>
-        Curated profiles are available for {presentation.mappedDragonIds.length} of the {selectedCount} selected dragons.
-      </p>
-      {unmappedNames.length > 0 ? (
-        <p>Synergy data not yet mapped: {unmappedNames.join(', ')}.</p>
+      {rating.confidence.status === 'complete' ? (
+        <section className="formation-score-breakdown" aria-labelledby="formation-score-breakdown-title">
+          <h4 id="formation-score-breakdown-title">Score breakdown</h4>
+          <div className="formation-rating-breakdown" aria-label="Formation rating breakdown">
+            {rating.breakdown.map((item) => (
+              <div className="formation-rating-breakdown-row" key={item.label}>
+                <div className="formation-rating-breakdown-copy">
+                  <span>{item.label}</span>
+                  <small>{item.explanation}</small>
+                </div>
+                <strong>{item.score} / {item.max}</strong>
+              </div>
+            ))}
+          </div>
+        </section>
       ) : null}
-    </div>
-  );
-}
 
-function ResultSection({ title, results }: { title: string; results: SimpleSynergyResult[] }) {
-  if (results.length === 0) {
-    return null;
-  }
+      <div className="formation-analysis-details">
+        <details>
+          <summary>Relationship details</summary>
+          <div className="formation-relationship-trace">
+            {relationships.length === 0 ? (
+              <p className="empty-card-note">No active canonical relationship is mapped.</p>
+            ) : relationships.map((relationship) => (
+              <article className="formation-relationship-item" key={relationship.id}>
+                <div className="formation-relationship-heading">
+                  <strong>{relationship.semanticTag}</strong>
+                  <span>{relationship.relationshipClass}</span>
+                  <span>{formatValue(relationship.marginalValue)} value</span>
+                </div>
+                {!primaryRelationshipIds.has(relationship.id) ? <p>{relationship.summary}</p> : null}
+                <small>
+                  Evidence: {relationship.abilityIds.join(', ')}. Redundancy rank {relationship.redundancyRank}.
+                </small>
+                {relationship.evidenceDetails.map((detail) => <small key={detail}>{detail}</small>)}
+              </article>
+            ))}
+          </div>
+        </details>
 
-  return (
-    <section className="simple-result-section" aria-labelledby={`simple-${title.toLowerCase().replaceAll(' ', '-')}`}>
-      <h4 id={`simple-${title.toLowerCase().replaceAll(' ', '-')}`}>{title}</h4>
-      <ul className="plain-list">
-        {results.map((result) => (
-          <li key={result.id}>{result.explanation}</li>
-        ))}
-      </ul>
+        <details>
+          <summary>Neutral and future information</summary>
+          {findings.neutralDetails.length > 0 ? (
+            <ul className="plain-list formation-neutral-findings">
+              {findings.neutralDetails.map((finding) => (
+                <li key={finding.id}>
+                  <span>{finding.summary}</span>
+                  {finding.detail ? <small>{finding.detail}</small> : null}
+                </li>
+              ))}
+            </ul>
+          ) : <p className="empty-card-note">No additional neutral or future information.</p>}
+        </details>
+      </div>
+
+      <p className="formation-rating-note">
+        Active Synergy is scored once through canonical provider-to-beneficiary relationships. Kit gaps are diagnostic; this is not a combat simulation.
+      </p>
     </section>
   );
 }
 
-function dragonName(dragonId: string, dragons: Dragon[]) {
-  return dragons.find((dragon) => dragon.id === dragonId)?.name ?? dragonId;
+function Metric({ label, value }: { label: string; value: string }) {
+  return <div><dt>{label}</dt><dd>{value}</dd></div>;
+}
+
+function FindingList({
+  title,
+  findings,
+  fallback,
+}: {
+  title: string;
+  findings: FormationFindingSet['keyStrengths'];
+  fallback: string;
+}) {
+  return (
+    <section aria-labelledby={`formation-${title.toLowerCase().replaceAll(' ', '-')}`}>
+      <h4 id={`formation-${title.toLowerCase().replaceAll(' ', '-')}`}>{title}</h4>
+      {findings.length > 0 ? (
+        <ul className="plain-list">
+          {findings.map((finding) => <li key={finding.id}>{finding.summary}</li>)}
+        </ul>
+      ) : <p className="empty-card-note">{fallback}</p>}
+    </section>
+  );
+}
+
+function placementStatusLabel(comparison: FormationPlacementComparison | null): string {
+  if (!comparison) return 'Unavailable';
+  if (comparison.status === 'better-available') return 'Better arrangement available';
+  if (comparison.status === 'tied-best') return 'Tied best';
+  if (comparison.status === 'no-meaningful-gain') return 'No meaningful gain';
+  return 'Best';
+}
+
+function ratingAriaLabel(rating: FormationRatingResult): string {
+  return rating.score === null
+    ? 'Formation rating unavailable, Incomplete'
+    : `Formation rating ${rating.score} out of 100, ${rating.tier}`;
+}
+
+function formatValue(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
 }

@@ -2383,8 +2383,166 @@ dd {
 }
 
 .simple-formation-analysis {
+  background: linear-gradient(135deg, rgba(242, 138, 46, 0.11), rgba(255, 211, 107, 0.035));
+  border-color: rgba(255, 211, 107, 0.42);
   display: grid;
   gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.formation-analysis-header {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.formation-analysis-heading,
+.formation-analysis-heading p,
+.formation-analysis-heading h3 {
+  margin: 0;
+}
+
+.formation-analysis-heading {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.formation-analysis-heading > p:last-child,
+.formation-relationship-item small,
+.formation-neutral-findings small {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.formation-analysis-metrics {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.formation-analysis-metrics > div {
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.6rem;
+}
+
+.formation-analysis-metrics dt {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.formation-analysis-metrics dd {
+  font-weight: 900;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.formation-next-move,
+.formation-confidence-warning {
+  background: rgba(215, 180, 104, 0.09);
+  border: 1px solid rgba(215, 180, 104, 0.32);
+  border-radius: 0.5rem;
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.75rem;
+}
+
+.formation-next-move p,
+.formation-confidence-warning p {
+  margin: 0;
+}
+
+.formation-analysis-highlights {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.formation-analysis-highlights section,
+.formation-score-breakdown {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.formation-analysis-highlights h4,
+.formation-score-breakdown h4 {
+  margin: 0;
+}
+
+.formation-analysis-details {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.formation-analysis-details details {
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.formation-analysis-details summary {
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.formation-relationship-trace {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.formation-relationship-item {
+  border-top: 1px solid var(--line-soft);
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.65rem;
+}
+
+.formation-relationship-item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.formation-relationship-item p,
+.formation-relationship-item small {
+  display: block;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.formation-relationship-heading {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+}
+
+.formation-relationship-heading span {
+  background: rgba(127, 176, 143, 0.12);
+  border: 1px solid rgba(127, 176, 143, 0.34);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.15rem 0.4rem;
+}
+
+.formation-neutral-findings {
+  margin-top: 0.75rem;
+}
+
+.formation-neutral-findings li {
+  display: grid;
+  gap: 0.2rem;
 }
 
 .simple-analysis-summary,
@@ -3320,6 +3478,10 @@ th {
     grid-template-columns: auto minmax(0, 1fr);
   }
 
+  .formation-analysis-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .formation-finding-counts {
     grid-column: 1 / -1;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -3481,6 +3643,20 @@ th {
 
   .formation-finding-counts {
     grid-column: auto;
+  }
+
+  .formation-analysis-header,
+  .formation-analysis-highlights {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .formation-analysis-header .formation-rating-summary-score {
+    justify-self: start;
+  }
+
+  .formation-analysis-metrics {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .formation-card-primary-actions,

@@ -50,7 +50,7 @@ describe('full-roster regression audit', () => {
 
     expect(result.reliable).toBe(true);
     expect(result.generatedFrom).toEqual({
-      databaseVersion: '0.10.5',
+      databaseVersion: '0.11.0',
       dataSchemaVersion: 13,
       localRosterSchemaVersion: 5,
     });
@@ -62,7 +62,7 @@ describe('full-roster regression audit', () => {
       progressionStatesEvaluated: 15_300,
       providerPayoffPairsEvaluated: 4_023,
       orderedFormationsEvaluated: 26_970,
-      passChecks: 30,
+      passChecks: 32,
       failedChecks: 0,
     });
     expect(result.checks.find((check) => check.id === 'FRR-C030')?.status).toBe('PASS');
@@ -181,26 +181,40 @@ describe('full-roster regression audit', () => {
   it.todo(
     'FRR-F002: resolve highest-stat recipients only when canonical combat-stat values have a unique known maximum',
   );
-  it('FRR-F003: excludes inactive relationship evidence without changing any numeric rating baseline', () => {
+  it('commits the intentionally changed Formation Rating v2 deterministic baseline', () => {
     const sweep = report().formationSweep;
 
     expect(sweep.invariantViolationCount).toBe(0);
     expect(sweep.inactiveAbilityReferenceExamples).toEqual([]);
     expect(sweep.deterministicFullResultHash).toBe(
-      'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48',
+      '12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9',
     );
     expect(sweep.rating).toMatchObject({
-      minimum: 16,
-        maximum: 94,
-      median: 52,
+      minimum: 0,
+      maximum: 100,
+      median: 49,
+      percentile90: 67,
+      percentile99: 80,
       byTier: {
-        Excellent: 16,
-        Strong: 1_171,
-        Solid: 7_401,
-        Developing: 13_788,
-        Weak: 4_594,
+        Developing: 11_581,
+        Excellent: 281,
+        Solid: 10_825,
+        Strong: 2_558,
+        Weak: 1_725,
       },
     });
+  }, 120_000);
+
+  it('accounts for one reachable recommendation outcome for every ordered formation', () => {
+    const distribution = report().formationSweep.recommendationSuppressionReasonDistribution;
+
+    expect(distribution).toEqual({
+      'action:swap': 13_923,
+      'below-meaningful-threshold': 4_298,
+      'current-best': 2_286,
+      'tied-best': 6_463,
+    });
+    expect(Object.values(distribution).reduce((total, count) => total + count, 0)).toBe(26_970);
   }, 120_000);
 
   it('FRR-F004: qualifies future Details signals at their Star and Dragon Level boundaries', () => {

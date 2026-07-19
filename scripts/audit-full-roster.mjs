@@ -7,120 +7,10 @@ import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeReports = process.argv.includes('--write');
-const expectedOpenFindingIds = ['FRR-F001', 'FRR-F002'];
-const resolvedFindings = [
-  {
-    id: 'FRR-F003',
-    resolution:
-      'Equivalent active paths still aggregate, while locked and position-inactive alternatives no longer contribute ability IDs or presentation evidence.',
-  },
-  {
-    id: 'FRR-F004',
-    resolution:
-      'Details At a glance now uses selected Star Rank and Dragon Level, and future signals are explicitly labeled inactive with their unlock requirement.',
-  },
-  {
-    id: 'FRR-F005',
-    resolution:
-      'Scoped reusable Details styles allow headings, technical labels, and chips to shrink and wrap within their own boxes.',
-  },
-  {
-    id: 'FRR-F006',
-    resolution:
-      'About now states 31/31 detailed coverage with Legendary 9/9, Epic 10/10, and Rare 12/12.',
-  },
-];
-const browserQaObservation = {
-  status: 'PASS',
-  auditedUrl: 'http://127.0.0.1:4173/ (local 0.10.5 production preview)',
-  fixture: 'isolated localhost with an empty local roster; no production account or roster used',
-  viewports: {
-    desktop1440: {
-      viewport: { width: 1440, height: 900 },
-      document: { clientWidth: 1440, scrollWidth: 1440 },
-      dialogs: {
-        Daemoros: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3834 },
-        Feskar: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3798 },
-        Rhysarion: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3938 },
-        Shadowsong: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3903 },
-        Vaeldra: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3832 },
-        Vermax: { clientWidth: 1167, scrollWidth: 1167, scrollHeight: 3760 },
-      },
-      usableDisclosureControlsPerDragon: 19,
-      overflowingDescendantCount: 0,
-    },
-    phone390: {
-      viewport: { width: 390, height: 844 },
-      document: { clientWidth: 390, scrollWidth: 390 },
-      dialogs: {
-        Daemoros: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5107 },
-        Feskar: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5068 },
-        Rhysarion: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5309 },
-        Shadowsong: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5355 },
-        Vaeldra: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5377 },
-        Vermax: { clientWidth: 353, scrollWidth: 353, scrollHeight: 5090 },
-      },
-      usableDisclosureControlsPerDragon: 19,
-      overflowingDescendantCount: 0,
-      clippedInteractiveControlCount: 0,
-    },
-    phone360: {
-      viewport: { width: 360, height: 740 },
-      document: { clientWidth: 360, scrollWidth: 360 },
-      SheepstealerDialog: { clientWidth: 323, scrollWidth: 323, scrollHeight: 8220 },
-      overflowingDescendantCount: 0,
-      clippedInteractiveControlCount: 0,
-    },
-  },
-  interactions: {
-    disclosureControls: 'PASS - all seven Verified wording disclosures opened for each dragon',
-    progressionSequences: 'PASS - all controller-reviewed progression sequences rendered in the expanded details',
-    wrapping: 'PASS - long paragraphs and progression lines wrapped within their ability cards',
-    excludedText: 'PASS - no Power rows or screenshot upgrade boilerplate rendered',
-    mobile: 'PASS - detail dialogs and disclosure controls remained usable at 390x844 and 360x740',
-  },
-  legacyInteractions: {
-    missingProgression: 'PASS — completeness used only Star Rank and Dragon Level',
-    editing: 'PASS — Syrax unlock, Level 1 default, Level 5 persistence, relock deletion, and Level 1 re-unlock rendered immediately',
-    reloadPersistence: 'PASS — Syrax Level 5 persisted after a full reload',
-    secondUnlock: 'PASS — Flight Mastery appeared at Level 1 at Star Rank 4 while Mindful Synergy remained Level 5',
-    legacyImport: 'PASS — schema-4 null/zero unlocked values migrated to Level 1; locked and unknown values were absent',
-    mobile: 'PASS — the same single editor and roster list were usable at 390×844 and 360×740',
-  },
-  structure: { dragonDetailDialogsInspected: 6, abilityCardsInspected: 42 },
-  overflowCount: 0,
-  clippedInteractiveControlCount: 0,
-  consoleErrors: [],
-  consoleWarnings: [],
-  legacyAccountSync:
-    'Production account was not automated; fake/local service tests passed for the 750 ms debounce, serialized writes, conflict decisions, offline/retry, sign-out retention, stale-user guards, import, and clear-local paths.',
-  legacyZoom200: {
-    status: 'PENDING_REAL_BROWSER_ZOOM',
-    reason: 'Chrome extension keypresses did not change browser zoom.',
-    equivalentViewport: {
-      viewport: { width: 720, height: 500 },
-      document: { clientWidth: 705, scrollWidth: 705 },
-      workspace: { clientWidth: 662, scrollWidth: 662, mode: 'list' },
-      list: { clientWidth: 645, scrollWidth: 645 },
-      clippedInteractiveControlCount: 0,
-    },
-  },
-  responsiveSummary:
-    'All inspected document and dialog scroll widths matched their client widths at desktop and phone breakpoints.',
-  observations: [
-    '1440x900: all six final-batch dialogs matched their 1,167px client widths with no horizontal overflow.',
-    '390x844: all six dialogs exposed 19 disclosure controls, matched their 353px client widths, and had no horizontal overflow.',
-    'Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, and Vermax rendered no Power label or generic screenshot upgrade boilerplate.',
-  ],
-  legacyObservations: [
-    '1440px: two-pane workspace remained contained with a sticky 415px editor.',
-    '1024px: filter controls wrap to three columns and both panes remain usable without horizontal scrolling.',
-    '390px list: stacked toolbar, two-column filters, compact rows, and no horizontal overflow.',
-    '390px editor: Back control, Syrax progression, two unlocked Habit selectors, notes, and removal action remained reachable.',
-    '720x500 layout-equivalent zoom check: focused single-pane list with zero horizontal overflow.',
-  ],
-  findings: [],
-};
+const baselinePath = path.join(root, 'docs', 'audits', 'full-roster-rating-baseline-0.10.5.json');
+const startingMainSha = 'a5c4bc2c05850210a64652921021bba1783e6eb1';
+const expectedOldHash = 'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48';
+const baselineRuntimeMs = 12838;
 
 const server = await createServer({
   root,
@@ -129,40 +19,68 @@ const server = await createServer({
   logLevel: 'error',
 });
 const startedAt = performance.now();
+
 try {
   const module = await server.ssrLoadModule('/src/audit/fullRosterAudit.ts');
   const report = module.runFullRosterAudit();
   const runtimeMs = Math.round(performance.now() - startedAt);
+  const baseline = JSON.parse(await readFile(baselinePath, 'utf8'));
+  validateBaseline(baseline);
+
   const auditVersion = report.generatedFrom.databaseVersion;
   const jsonPath = path.join(root, 'docs', 'audits', `full-roster-regression-${auditVersion}.json`);
   const markdownPath = path.join(root, 'docs', 'audits', `full-roster-regression-${auditVersion}.md`);
-  const combinedFindings = [...report.findings];
+  const comparison = compareRatings(baseline.rows, report.formationSweep.rows);
   const artifact = {
     ...report,
     sourceOfTruth: {
-      originMainSha: '8ad895f9201288afe19ad68f745c702d3c6630be',
-      branch: 'data/source-fidelity-final-epic-batch',
+      startingMainSha,
+      branch: 'feature/formation-rating-v2',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
-    browserQa: browserQaObservation,
+    performance: {
+      baselineRuntimeMs,
+      currentRuntimeMs: runtimeMs,
+      deltaMs: runtimeMs - baselineRuntimeMs,
+    },
     comparison: {
-      baselineVersion: '0.10.4',
-      baselineDeterministicFullResultHash:
-        'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48',
+      baselineVersion: baseline.version,
+      baselineDeterministicFullResultHash: baseline.deterministicHash,
       currentVersion: auditVersion,
       currentDeterministicFullResultHash: report.formationSweep.deterministicFullResultHash,
-      allNumericScoresAndComponentsUnchanged:
-        report.formationSweep.deterministicFullResultHash ===
-        'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48',
+      publicContractIntentionallyChanged: true,
+      ...comparison,
     },
-    resolvedFindings,
-    findingSummary: {
-      total: combinedFindings.length,
-      bySeverity: countValues(combinedFindings.map((finding) => finding.severity)),
-      byCategory: countValues(combinedFindings.map((finding) => finding.category)),
+    browserQa: {
+      status: 'PASS',
+      auditedUrl: 'http://127.0.0.1:4273/',
+      desktop: {
+        viewport: '1440x900',
+        horizontalOverflow: false,
+        formationRatingHeadingCount: 1,
+        formationAnalysisWidth: 1314,
+      },
+      phone390x844: {
+        viewport: '390x844',
+        horizontalOverflow: false,
+        formationRatingHeadingCount: 1,
+        formationAnalysisWidth: 343,
+        interactiveControlsOutsideViewport: 0,
+      },
+      consoleErrors: [],
+      accessibilityNotes: [
+        'Relationship and neutral detail disclosures use native keyboard-focusable summary controls.',
+        'The accessibility tree exposes one Formation Rating region and one two-category score breakdown.',
+        'Primary findings are exposed as named regions and semantic lists.',
+      ],
     },
-    todoIds: expectedOpenFindingIds,
+    schemaSummary: {
+      source: 13,
+      localRoster: 5,
+      cloudRoster: 5,
+      migrationAdded: false,
+    },
   };
 
   if (writeReports) {
@@ -172,32 +90,19 @@ try {
     console.log(`Wrote ${path.relative(root, jsonPath)} and ${path.relative(root, markdownPath)}.`);
   } else {
     const committed = JSON.parse(await readFile(jsonPath, 'utf8'));
-    const committedFindingIds = (committed.findings ?? []).map((finding) => finding.id);
     const stableFieldsMatch =
       committed.auditVersion === auditVersion &&
-      JSON.stringify(committedFindingIds) === JSON.stringify(expectedOpenFindingIds) &&
-      committed.findingSummary?.total === expectedOpenFindingIds.length &&
-      committed.formationSweep?.deterministicFullResultHash ===
-        report.formationSweep.deterministicFullResultHash &&
-      committed.totals?.orderedFormationsEvaluated === report.totals.orderedFormationsEvaluated &&
-      committed.totals?.progressionStatesEvaluated === report.totals.progressionStatesEvaluated &&
-      committed.totals?.providerPayoffPairsEvaluated ===
-        report.totals.providerPayoffPairsEvaluated &&
+      committed.formationSweep?.deterministicFullResultHash === report.formationSweep.deterministicFullResultHash &&
+      committed.formationSweep?.actualCount === report.formationSweep.actualCount &&
+      committed.comparison?.formationMigrations?.length === report.formationSweep.actualCount &&
       committed.totals?.failedChecks === 0 &&
-      committed.totals?.passChecks === report.totals.passChecks &&
-      committed.totals?.failedChecks === report.totals.failedChecks;
+      report.totals.failedChecks === 0;
     if (!stableFieldsMatch) {
-      throw new Error(
-        'Committed audit artifacts are stale. Run pnpm run audit:full-roster:write and review the diff.',
-      );
+      throw new Error('Committed audit artifacts are stale. Run pnpm run audit:full-roster:write and review the complete diff.');
     }
-    console.log(
-      `Audit verified in ${runtimeMs} ms: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.orderedFormationsEvaluated} formations.`,
-    );
+    console.log(`Audit verified in ${runtimeMs} ms: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.orderedFormationsEvaluated} formations.`);
     console.log(`Deterministic result hash: ${report.formationSweep.deterministicFullResultHash}`);
-    console.log(
-      `Checks: ${report.totals.passChecks} PASS, ${report.totals.failedChecks} FAIL; findings: ${report.findings.length + browserQaObservation.findings.length}.`,
-    );
+    console.log(`Checks: ${report.totals.passChecks} PASS, ${report.totals.failedChecks} FAIL; findings: ${report.findings.length}.`);
   }
 
   if (!report.reliable) process.exitCode = 1;
@@ -205,155 +110,202 @@ try {
   await server.close();
 }
 
+function validateBaseline(baseline) {
+  if (
+    baseline.version !== '0.10.5' ||
+    baseline.sourceCommit !== startingMainSha ||
+    baseline.deterministicHash !== expectedOldHash ||
+    baseline.rowCount !== 26970 ||
+    baseline.rows?.length !== 26970
+  ) {
+    throw new Error('The captured 0.10.5 Formation Rating baseline does not match the controller-approved source.');
+  }
+}
+
+function compareRatings(oldRows, newRows) {
+  const oldByFormation = new Map(oldRows.map((row) => [formationKey(row.formation), row]));
+  const newByFormation = new Map(newRows.map((row) => [formationKey(row.formation), row]));
+  const formationMigrations = newRows.map((row) => {
+    const old = oldByFormation.get(formationKey(row.formation));
+    if (!old) throw new Error(`Missing old baseline row for ${formationKey(row.formation)}.`);
+    return {
+      formation: row.formation,
+      oldScore: old.score,
+      newScore: row.score,
+      scoreDelta: row.score - old.score,
+      oldTier: old.tier,
+      newTier: row.tier,
+      activeSynergyScore: row.activeSynergyScore,
+      placementScore: row.placementScore,
+      currentPlacementValue: row.currentPlacementValue,
+      bestPlacementValue: row.bestPlacementValue,
+      recommendation: row.recommendation,
+      suppressionReason: row.suppressionReason,
+      semanticRelationshipCount: row.relationshipCount,
+      relationshipClasses: row.relationshipClasses,
+      redundancyRanks: row.redundancyRanks,
+      gainedRelationshipIds: row.gainedRelationshipIds,
+      lostRelationshipIds: row.lostRelationshipIds,
+    };
+  });
+  const tierMigrationMatrix = {};
+  for (const row of formationMigrations) {
+    const key = `${row.oldTier} -> ${row.newTier}`;
+    tierMigrationMatrix[key] = (tierMigrationMatrix[key] ?? 0) + 1;
+  }
+  const descendingDelta = [...formationMigrations].sort(
+    (left, right) => right.scoreDelta - left.scoreDelta || formationKey(left.formation).localeCompare(formationKey(right.formation)),
+  );
+  const oldRanked = rankRows(oldRows);
+  const newRanked = rankRows(newRows);
+  const oldRanks = new Map(oldRanked.map((row, index) => [formationKey(row.formation), index + 1]));
+  const newRanks = new Map(newRanked.map((row, index) => [formationKey(row.formation), index + 1]));
+  const topKeys = new Set([
+    ...oldRanked.slice(0, 100).map((row) => formationKey(row.formation)),
+    ...newRanked.slice(0, 100).map((row) => formationKey(row.formation)),
+  ]);
+  const topRankMovement = [...topKeys].map((key) => {
+    const old = oldByFormation.get(key);
+    const next = newByFormation.get(key);
+    return {
+      formation: key.split('/'),
+      oldRank: oldRanks.get(key),
+      newRank: newRanks.get(key),
+      rankDelta: oldRanks.get(key) - newRanks.get(key),
+      oldScore: old.score,
+      newScore: next.score,
+      oldTier: old.tier,
+      newTier: next.tier,
+    };
+  }).sort((left, right) => left.newRank - right.newRank || left.oldRank - right.oldRank);
+
+  return {
+    tierMigrationMatrix: sortRecord(tierMigrationMatrix),
+    largestScoreIncreases: descendingDelta.slice(0, 50),
+    largestScoreDecreases: descendingDelta.slice(-50).reverse(),
+    oldTop100: oldRanked.slice(0, 100),
+    newTop100: newRanked.slice(0, 100),
+    topRankMovement,
+    formationMigrations,
+  };
+}
+
+function rankRows(rows) {
+  return [...rows].sort((left, right) =>
+    right.score - left.score || formationKey(left.formation).localeCompare(formationKey(right.formation)));
+}
+
+function formationKey(formation) {
+  return formation.join('/');
+}
+
+function sortRecord(record) {
+  return Object.fromEntries(Object.entries(record).sort(([left], [right]) => left.localeCompare(right)));
+}
+
 function renderMarkdown(report) {
-  const findings = [...report.findings];
+  const sweep = report.formationSweep;
   const lines = [
-    `# Full-roster regression audit — ${report.auditVersion}`,
+    `# Full-roster Formation Rating v2 audit — ${report.auditVersion}`,
     '',
-    '> Final controller-reviewed screenshot-source fidelity release for all 31 dragons. Curated profiles, rating formula, and calibration remain unchanged.',
+    '> Formation Rating v2 intentionally replaces the prior public contract. Canonical semantic relationships score active synergy once; placement compares all six feasible arrangements; kit gaps and ordinary Vanguard alternatives are diagnostic only.',
     '',
     '## Executive summary',
     '',
-    `- Source database: ${report.generatedFrom.databaseVersion}; data schema ${report.generatedFrom.dataSchemaVersion}; local roster schema ${report.generatedFrom.localRosterSchemaVersion}.`,
-    `- Coverage: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.profileSignals} profile signals, ${report.totals.auditDispositions} audit dispositions.`,
-    `- Evaluation: ${report.totals.progressionStatesEvaluated} progression states, ${report.totals.orderedFormationsEvaluated} ordered formations, ${report.totals.providerPayoffPairsEvaluated} provider/payoff pairs.`,
-    `- Result: ${report.totals.passChecks} PASS checks, ${report.totals.failedChecks} failed checks, ${findings.length} classified findings.`,
-    `- Deterministic full-result hash: \`${report.formationSweep.deterministicFullResultHash}\`.`,
-    `- Recorded audit runtime: ${report.recordedAuditRuntimeMs} ms.`,
+    `- Baseline: ${report.comparison.baselineVersion} at \`${report.sourceOfTruth.startingMainSha}\`; old hash \`${report.comparison.baselineDeterministicFullResultHash}\`.`,
+    `- Current: ${report.auditVersion}; new hash \`${report.comparison.currentDeterministicFullResultHash}\`.`,
+    `- Coverage unchanged: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.profileSignals} curated signals, ${report.totals.orderedFormationsEvaluated} ordered formations, ${report.totals.providerPayoffPairsEvaluated} provider/payoff pairs.`,
+    `- Validation: ${report.totals.passChecks} PASS checks, ${report.totals.failedChecks} failed checks, ${report.findings.length} informational/unresolved findings.`,
+    `- Runtime: ${report.recordedAuditRuntimeMs} ms; prior audit ${report.performance.baselineRuntimeMs} ms; delta ${signed(report.performance.deltaMs)} ms.`,
     '',
-    '## Per-dragon audit',
+    '## Public contract',
     '',
-    '| Dragon | Rarity | Breed | Abilities | Signals | Dispositions | Evidence refs | Manual reviews | Result |',
-    '|---|---:|---|---:|---:|---:|---:|---:|---|',
-    ...report.perDragon.map(
-      (row) =>
-        `| ${row.name} (\`${row.dragonId}\`) | ${row.rarity} | ${row.breed} | ${row.abilityCount} | ${row.signalCount} | ${row.dispositionCount} | ${row.evidenceReferenceCount} | ${row.manualReviewCount} | ${row.status}${row.issues.length ? `: ${row.issues.join(', ')}` : ''} |`,
-    ),
+    '- Active Synergy: 80 points. Conditional payoff base 10 (cap 30), output amplification base 6 (cap 30), stat support base 5 (cap 15), plus participation +5 for three dragons or +2 for two.',
+    '- Provider redundancy by beneficiary + tag + class: 100%, 50%, then 0% trace-only.',
+    '- Placement Effectiveness: 20 points. A placement improvement is meaningful only when it reaches both +5 relationship value and a 10% relative gain; otherwise Placement Effectiveness remains 20. A meaningful loss scores `round(20 × current / best)`.',
+    '- Analysis Confidence gates score availability. Kit Coverage, inactive alternative Vanguard Traits, missing enablers, unused support, unsupported outputs, and future unlocks are diagnostics, not separate deductions.',
     '',
-    '## Status and alias matrix',
+    '## Empirical calibration',
     '',
-    '| Specific status | Aliases to | Satisfies Control |',
-    '|---|---|---|',
-    ...report.aliasTable.map(
-      (row) =>
-        `| ${row.providerLabel} (\`${row.providerTag}\`) | ${row.aliasesTo.length ? row.aliasesTo.map((tag) => report.aliasTable.find((candidate) => candidate.providerTag === tag)?.providerLabel ?? tag).join(', ') : 'None'} | ${row.satisfiesControl ? 'Yes' : 'No'} |`,
-    ),
+    `Scores range ${sweep.rating.minimum}–${sweep.rating.maximum}; mean ${sweep.rating.mean}; median ${sweep.rating.median}; P10 ${sweep.rating.percentile10}; P25 ${sweep.rating.percentile25}; P75 ${sweep.rating.percentile75}; P90 ${sweep.rating.percentile90}; P95 ${sweep.rating.percentile95}; P99 ${sweep.rating.percentile99}.`,
     '',
-    'Control is satisfied only by Stun, Stagger, Overwhelm, and Confusion (plus Control itself). Specific labels remain distinct; there are no damage-type aliases for periodic statuses. Recovery and Recovery Received are separate tags.',
+    '| Tier | Threshold | Count |',
+    '|---|---:|---:|',
+    ...Object.entries(report.ratingContract.tierThresholds).map(([tier, threshold]) =>
+      `| ${tier} | ${threshold} | ${sweep.rating.byTier[tier] ?? 0} |`),
     '',
-    '## Recipient selector inventory',
+    ...report.ratingContract.calibrationRationale.map((reason) => `- ${reason}`),
     '',
-    '| Selector | Signal count | Signal IDs |',
-    '|---|---:|---|',
-    ...report.selectorInventory.map(
-      (row) =>
-        `| ${row.selector} | ${row.signalCount} | ${row.signalIds.map((id) => `\`${id}\``).join(', ')} |`,
-    ),
+    '## Placement and relationship statistics',
     '',
-    '## Progression audit',
+    `- Exact best or tied best: ${sweep.bestOrTiedBestPercentage}%.`,
+    `- Meaningful swap recommendations: ${sweep.meaningfulPlacementRecommendationCount}.`,
+    `- Recommendation outcomes: ${formatRecord(sweep.recommendationSuppressionReasonDistribution)}.`,
+    `- Relationship classes: ${formatRecord(sweep.relationshipClassDistribution)}.`,
+    `- Redundancy ranks: ${formatRecord(sweep.redundancyRankDistribution)}.`,
+    `- Placement scores: ${formatRecord(sweep.placementScoreDistribution)}.`,
     '',
-    `Every signal and position claim was evaluated at Star Ranks ${report.progression.stars.join(', ')}, Dragon Levels ${report.progression.levels.join(' and ')}, and all three positions. ${report.progression.activeStateCount} states were active and ${report.progression.inactiveStateCount} were inactive. The evaluator was additionally exercised across ${report.totals.progressionFormationsEvaluated} progression formations.`,
+    '## Tier migration',
     '',
-    '## Provider/payoff matrix',
-    '',
-    `The audit evaluated ${report.totals.providerPayoffPairsEvaluated} ordered provider/payoff signal-tag pairs (${report.providerPayoffMatrix.distinctTagPairs} distinct tag pairs); ${report.totals.compatibleProviderPayoffPairs} were compatible. Compatible distinct pairs: ${report.providerPayoffMatrix.compatibleDistinctTagPairs.map((pair) => `\`${pair}\``).join(', ') || 'none'}.`,
-    '',
-    '## Formation and rating sweep',
-    '',
-    `All ${report.formationSweep.actualCount} ordered formations were evaluated at 10 Stars and Dragon Level 16. Rating range ${report.formationSweep.rating.minimum}–${report.formationSweep.rating.maximum}; mean ${report.formationSweep.rating.mean}; median ${report.formationSweep.rating.median}; P90 ${report.formationSweep.rating.percentile90}; P95 ${report.formationSweep.rating.percentile95}; P99 ${report.formationSweep.rating.percentile99}.`,
-    '',
-    '| Tier | Count |',
+    '| Migration | Formations |',
     '|---|---:|',
-    ...Object.entries(report.formationSweep.rating.byTier).map(
-      ([tier, count]) => `| ${tier} | ${count} |`,
-    ),
+    ...Object.entries(report.comparison.tierMigrationMatrix).map(([migration, count]) => `| ${migration} | ${count} |`),
     '',
-    '### Top 50 formations',
+    '## New top 50',
     '',
-    ...formationTable(report.formationSweep.top50),
+    ...formationTable(sweep.top50),
     '',
-    '### Bottom 50 formations',
+    '## Largest increases',
     '',
-    ...formationTable(report.formationSweep.bottom50),
+    ...migrationTable(report.comparison.largestScoreIncreases.slice(0, 20)),
+    '',
+    '## Largest decreases',
+    '',
+    ...migrationTable(report.comparison.largestScoreDecreases.slice(0, 20)),
     '',
     '## Findings',
     '',
-    `Finding totals by severity: ${Object.entries(report.findingSummary.bySeverity)
-      .map(([severity, count]) => `${severity} ${count}`)
-      .join(', ')}. By category: ${Object.entries(report.findingSummary.byCategory)
-      .map(([category, count]) => `${category} ${count}`)
-      .join(', ')}.`,
+    ...(report.findings.length === 0 ? ['No unresolved findings.'] : report.findings.map((finding) =>
+      `- ${finding.id} (${finding.severity}, ${finding.category}): ${finding.currentBehavior}`)),
     '',
-  ];
-  if (findings.length === 0) lines.push('No non-PASS findings.');
-  for (const finding of findings) {
-    lines.push(
-      `### ${finding.id} — ${finding.category} (${finding.severity})`,
-      '',
-      `- Affected area: ${finding.affectedArea}`,
-      `- Ability/profile signal: ${finding.affectedAbilityOrSignal}`,
-      `- Current behavior: ${finding.currentBehavior}`,
-      `- Expected behavior: ${finding.expectedBehavior}`,
-      `- Reproduction: ${finding.reproducibleSetup}`,
-      `- Files: ${finding.fileReferences.map((file) => `\`${file}\``).join(', ')}`,
-      `- Focused automated reproduction: ${finding.focusedTestReproduction ? 'Yes' : 'No'}`,
-      `- Controller mechanic confirmation needed: ${finding.controllerMechanicConfirmationNeeded ? 'Yes' : 'No'}`,
-      `- Recommended next action: ${finding.recommendedNextAction}`,
-      `- Audit disposition: ${finding.auditDisposition}`,
-      '',
-    );
-  }
-  lines.push(
-    '## Resolved findings compared with 0.6.8',
+    '## Compatibility and release',
     '',
-    ...report.resolvedFindings.map((finding) => `- ${finding.id}: ${finding.resolution}`),
-    '',
-    `The ${report.comparison.baselineVersion} deterministic hash was \`${report.comparison.baselineDeterministicFullResultHash}\`; the ${report.auditVersion} hash is \`${report.comparison.currentDeterministicFullResultHash}\`. All 26,970 numeric scores and component totals unchanged: ${report.comparison.allNumericScoresAndComponentsUnchanged ? 'Yes' : 'No'}.`,
-    '',
-  );
-  lines.push(
-    '## Browser QA',
-    '',
-    `Status: ${report.browserQa.status}. Audited URL: ${report.browserQa.auditedUrl}. Fixture: ${report.browserQa.fixture}. Dragon-detail overflow: ${report.browserQa.overflowCount}; clipped interactive controls: ${report.browserQa.clippedInteractiveControlCount}; console errors: ${report.browserQa.consoleErrors.length}; console warnings: ${report.browserQa.consoleWarnings.length}.`,
-    '',
-    `Responsive detail checks: ${report.browserQa.responsiveSummary}`,
+    '- Source schema remains 13; local and cloud roster schemas remain 5; no Supabase migration was added.',
+    '- Dragon source data, curated profiles, and all 224 curated signals are unchanged.',
+    '- The old hash is not preserved; the new hash is a reviewed baseline for the replacement public contract.',
+    '- The JSON companion contains every old/new score and tier, category scores, placement values, recommendation outcome, relationship counts/classes/redundancy, gained/lost edges, tier migration, and top-rank movement.',
     '',
     '## Rerun',
     '',
     '```powershell',
     'pnpm run audit:full-roster',
     '```',
-    '',
-    'Use `pnpm run audit:full-roster:write` only when intentionally refreshing the committed audit artifacts, then review the complete diff. The normal command verifies the committed deterministic baseline without rewriting it.',
-    '',
-    `Focused \`it.todo\` markers (${report.todoIds.length}): ${report.todoIds.map((id) => `\`${id}\``).join(', ')}.`,
-    '',
-    '## Explicit non-changes',
-    '',
-    '- No formula, weight, threshold, guardrail, placement, or calibration changes.',
-    '- Canonical wording changed only for the 42 Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, and Vermax abilities in this final screenshot-source fidelity batch.',
-    '- Curated profile semantics and signals are unchanged; source-backed ability tags only were corrected without changing evaluator behavior.',
-    '- Source schema 13, formation share links, formation evaluation, and the rating model remain unchanged; local/cloud roster JSON remain at schema 5 without SQL changes.',
-    '- FRR-F001 and FRR-F002 remain informational and unresolved by design.',
-  );
+  ];
   return `${lines.join('\n')}\n`;
 }
 
 function formationTable(rows) {
   return [
-    '| Left / Vanguard / Right | Score | Tier | Relationships | Missing | Conflicts |',
-    '|---|---:|---|---:|---:|---:|',
-    ...rows.map(
-      (row) =>
-        `| ${row.formation.join(' / ')} | ${row.score} | ${row.tier} | ${row.relationshipCount} | ${row.missingEnablerCount} | ${row.positionConflictCount} |`,
-    ),
+    '| Left / Vanguard / Right | Score | Tier | Active | Placement | Current / Best value | Relationships | Recommendation |',
+    '|---|---:|---|---:|---:|---:|---:|---|',
+    ...rows.map((row) =>
+      `| ${row.formation.join(' / ')} | ${row.score} | ${row.tier} | ${row.activeSynergyScore} | ${row.placementScore} | ${row.currentPlacementValue} / ${row.bestPlacementValue} | ${row.relationshipCount} | ${row.recommendation ?? row.suppressionReason} |`),
   ];
 }
 
-function countValues(values) {
-  const counts = {};
-  for (const value of values) counts[value] = (counts[value] ?? 0) + 1;
-  return Object.fromEntries(
-    Object.entries(counts).sort(([left], [right]) => left.localeCompare(right)),
-  );
+function migrationTable(rows) {
+  return [
+    '| Left / Vanguard / Right | Old | New | Delta | Tier migration |',
+    '|---|---:|---:|---:|---|',
+    ...rows.map((row) =>
+      `| ${row.formation.join(' / ')} | ${row.oldScore} | ${row.newScore} | ${signed(row.scoreDelta)} | ${row.oldTier} → ${row.newTier} |`),
+  ];
+}
+
+function formatRecord(record) {
+  return Object.entries(record).map(([key, value]) => `${key} ${value}`).join(', ');
+}
+
+function signed(value) {
+  return value > 0 ? `+${value}` : String(value);
 }

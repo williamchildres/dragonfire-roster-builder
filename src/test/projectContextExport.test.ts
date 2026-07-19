@@ -104,7 +104,15 @@ describe('project context export', () => {
       source: { commit: string };
       dragons: unknown[];
       simpleSynergy: { profiles: unknown[]; profileAudit: { reviewedAbilityCount: number } };
-      formationRules: { adjacency: Record<string, string[]> };
+      formationRules: {
+        adjacency: Record<string, string[]>;
+        placementComparison: {
+          meaningfulImprovementWhen: string;
+          candidateScoring: string;
+          fullCreditWhen: string[];
+          recommendationSuppressionReasons: string[];
+        };
+      };
       statusGlossary: unknown[];
       statDefinitions: unknown[];
       manualReviews: unknown[];
@@ -117,6 +125,23 @@ describe('project context export', () => {
     expect(context.simpleSynergy.profileAudit.reviewedAbilityCount).toBeGreaterThan(0);
     expect(context.formationRules.adjacency['left-flank']).toEqual(['vanguard']);
     expect(context.formationRules.adjacency.vanguard).toEqual(['left-flank', 'right-flank']);
+    expect(context.formationRules.placementComparison).toMatchObject({
+      meaningfulImprovementWhen: 'delta >= 5 && relativeDelta >= 0.10',
+      candidateScoring: 'Each candidate is scored as though it were the current arrangement.',
+      fullCreditWhen: [
+        'best',
+        'tied-best',
+        'best-value-zero',
+        'improvement-does-not-reach-both-meaningful-thresholds',
+      ],
+      recommendationSuppressionReasons: [
+        'current-best',
+        'tied-best',
+        'below-meaningful-threshold',
+        'incomplete-formation',
+        'insufficient-confidence',
+      ],
+    });
     expect(context.statusGlossary.length).toBeGreaterThan(0);
     expect(context.statDefinitions.length).toBeGreaterThan(0);
     expect(context.manualReviews.length).toBeGreaterThan(0);
