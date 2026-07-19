@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-19T01:36:42.772Z",
+  "generatedAt": "2026-07-19T03:39:58.328Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "data/source-fidelity-final-epic-batch",
-    "commit": "56300a5dcf149c591f647438bcf4604e56375a7d",
-    "databaseVersion": "0.10.5",
+    "branch": "feature/formation-rating-v2",
+    "commit": "239ef11a8827c41e1b4c3b697602f8c3fd0b729a",
+    "databaseVersion": "0.11.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -14426,7 +14426,80 @@
       "right-flank": [
         "vanguard"
       ]
-    }
+    },
+    "semanticRelationships": {
+      "identity": [
+        "providerDragonId",
+        "canonicalSemanticTag",
+        "beneficiaryDragonId"
+      ],
+      "classes": {
+        "conditional-payoff": {
+          "baseValue": 10,
+          "activeSynergyCap": 30
+        },
+        "output-amplification": {
+          "baseValue": 6,
+          "activeSynergyCap": 30
+        },
+        "stat-support": {
+          "baseValue": 5,
+          "activeSynergyCap": 15
+        }
+      },
+      "providerRedundancy": [
+        1,
+        0.5,
+        0
+      ],
+      "controlAliasesCanonicalizeTo": "status:control",
+      "lockedBlockedAndUnresolvedAreActive": false
+    },
+    "publicRating": {
+      "total": 100,
+      "categories": {
+        "Active Synergy": 80,
+        "Placement Effectiveness": 20
+      },
+      "participationBonus": {
+        "threeDragons": 5,
+        "twoDragons": 2,
+        "otherwise": 0
+      },
+      "tierThresholds": {
+        "Excellent": 80,
+        "Strong": 67,
+        "Solid": 49,
+        "Developing": 25,
+        "Weak": 0
+      },
+      "incompleteIsValidationGate": true,
+      "analysisConfidenceScored": false,
+      "kitCoverageScored": false
+    },
+    "placementComparison": {
+      "permutationCount": 6,
+      "meaningfulAbsoluteDelta": 5,
+      "meaningfulRelativeDelta": 0.1,
+      "meaningfulLossFormula": "round(20 * currentValue / bestValue)",
+      "fullCreditWhen": [
+        "best",
+        "tied-best",
+        "best-value-zero",
+        "below-meaningful-threshold"
+      ],
+      "vanguardClaimsAreConflicts": false
+    },
+    "diagnosticFindingTypes": [
+      "active-strength",
+      "missing-enabler",
+      "unsupported-output",
+      "unused-support",
+      "better-placement",
+      "alternative-vanguard",
+      "future-unlock",
+      "confidence-limitation"
+    ]
   },
   "statusGlossary": [
     {
