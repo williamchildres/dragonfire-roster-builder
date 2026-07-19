@@ -1,8 +1,8 @@
 # Dragonfire Roster Lab Project Context
 
-Generated: 2026-07-18T23:58:20.139Z
+Generated: 2026-07-19T00:26:27.299Z
 Branch: data/source-fidelity-malachite-venator-sheepstealer
-Commit: 69888d5660d50513efb0a867665c949bf041c416
+Commit: 55dc1fe0b1761d9bd3511af707bebe014d3e1e25
 
 Dragonfire Roster Lab is a curated dragon knowledge base and transparent tag-and-position formation recommender. It is not a combat simulator.
 

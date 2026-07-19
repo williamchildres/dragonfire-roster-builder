@@ -796,7 +796,7 @@ describe('Dragonfire Lab app', () => {
     expect(raw).not.toBeNull();
     expect(raw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(2);
     expect(raw).toHaveTextContent("when no Enemy is currently marked as Sheepstealer's Prey");
-    expect(raw).toHaveTextContent('At 10 Stars, while Sheepstealer has a current Prey');
+    expect(raw).toHaveTextContent('At 10 Stars, Each Round while Sheepstealer has a current Prey');
     expect(raw).toHaveTextContent('current Prey');
     expect(raw).toHaveTextContent('current Savage Claim Damage Rate');
     expect(raw).toHaveTextContent('current Savage Claim Recovery Rate');

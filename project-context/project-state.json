@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-18T23:58:20.139Z",
+  "generatedAt": "2026-07-19T00:26:27.299Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "data/source-fidelity-malachite-venator-sheepstealer",
-    "commit": "69888d5660d50513efb0a867665c949bf041c416",
+    "commit": "55dc1fe0b1761d9bd3511af707bebe014d3e1e25",
     "databaseVersion": "0.10.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,

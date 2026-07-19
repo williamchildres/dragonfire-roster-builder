@@ -9,7 +9,7 @@
 - Evaluation: 15300 progression states, 26970 ordered formations, 4023 provider/payoff pairs.
 - Result: 30 PASS checks, 0 failed checks, 2 classified findings.
 - Deterministic full-result hash: `ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48`.
-- Recorded audit runtime: 25127 ms.
+- Recorded audit runtime: 16366 ms.
 
 ## Per-dragon audit
 
