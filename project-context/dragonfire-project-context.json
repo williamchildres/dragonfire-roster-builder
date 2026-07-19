@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-19T01:25:36.081Z",
+  "generatedAt": "2026-07-19T01:36:42.772Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "data/source-fidelity-final-epic-batch",
-    "commit": "72c271a1dd198d7d56ae5fdada5424be181930e2",
+    "commit": "56300a5dcf149c591f647438bcf4604e56375a7d",
     "databaseVersion": "0.10.5",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
@@ -2514,7 +2514,7 @@
             "CONTROL",
             "ADJACENT_TARGET"
           ],
-          "rawDescription": "Odd-numbered rounds: chance to afflict Confusion on one Enemy within adjacency for two rounds. Whenever Confusion activates a Command or Habit or launches a Basic Attack on its target's turn, that target has a 50% chance to mistake Allies for Enemies and vice versa. Chance by Habit Level 1-5: 15%, 18%, 21%, 25.5%, 30%."
+          "rawDescription": "Odd-numbered rounds: chance to afflict Confusion on one Enemy within adjacency for two rounds. Whenever the affected target activates a Command or Habit or launches a Basic Attack on its turn, it has a 50% chance to mistake Allies for Enemies and vice versa. Chance by Habit Level 1-5: 15%, 18%, 21%, 25.5%, 30%."
         },
         {
           "id": "daemoros-darkening-fear",

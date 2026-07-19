@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-19T01:25:36.081Z",
+  "generatedAt": "2026-07-19T01:36:42.772Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "data/source-fidelity-final-epic-batch",
-    "commit": "72c271a1dd198d7d56ae5fdada5424be181930e2",
+    "commit": "56300a5dcf149c591f647438bcf4604e56375a7d",
     "databaseVersion": "0.10.5",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
