@@ -2468,7 +2468,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Odd-numbered rounds: deal Physical Damage to one adjacent enemy, Damage Rate +125%; 20% chance to afflict the same target with Burn for two rounds.",
+      "rawDescription": "Odd-numbered rounds: deal Physical Damage to one Enemy within adjacency at a 125% Damage Rate; Physical Damage scales with Daemoros's Strength and is mitigated by target Instinct. Additionally, there is a 20% chance to afflict that same target with Burn for two rounds; Burn deals Fire Damage each round at a 20% Damage Rate. The source does not state additional Burn scaling.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Daemoros Shadowflame screenshots",
@@ -2523,7 +2523,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each round: one 25%-50% activation roll targets one enemy in any lane, preferring Right Flank; reduce Intelligence and Instinct by 25% enhanced by Strength and apply Panic for two rounds.",
+        "rawDescription": "Each Round: one activation chance targets one Enemy in any lane, prioritizing Right Flank with ordinary fallback; reduce Intelligence and Instinct by 25%, both enhanced by Daemoros's Strength, and afflict Panic at a 20% Damage Rate for two rounds. Panic deals Tactical Damage each round. Activation chance by Habit Level 1-5: 25%, 30%, 35%, 42.5%, 50%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Daemoros Instill Fear screenshot",
@@ -2549,7 +2549,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: increase Daemoros Strength and Initiative.",
+        "rawDescription": "Start of Combat until end of combat: increase Daemoros's Strength and Initiative. Both progress by Habit Level 1-5: 16%, 19.2%, 22.4%, 27.2%, 32%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Daemoros Powerful Reflexes screenshot",
@@ -2574,7 +2574,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Odd-numbered rounds: 15%-30% chance to afflict one adjacent enemy with Confusion for two rounds.",
+        "rawDescription": "Odd-numbered rounds: chance to afflict Confusion on one Enemy within adjacency for two rounds. Whenever the affected target activates a Command or Habit or launches a Basic Attack on its turn, it has a 50% chance to mistake Allies for Enemies and vice versa. Chance by Habit Level 1-5: 15%, 18%, 21%, 25.5%, 30%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Daemoros Shroud of Shadows screenshot",
@@ -2600,7 +2600,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each round: independently roll Instill Fear-like effects on one enemy in any lane, preferring Left Flank.",
+        "rawDescription": "Each Round: one activation chance targets one Enemy in any lane, prioritizing Left Flank with ordinary fallback; reduce Intelligence and Instinct by 25%, both enhanced by Daemoros's Strength, and afflict Panic at a 20% Damage Rate for two rounds. Panic deals Tactical Damage each round. Activation chance by Habit Level 1-5: 25%, 30%, 35%, 42.5%, 50%. This is not merged with Instill Fear; it is another activation.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Daemoros Darkening Fear screenshot",
@@ -2626,7 +2626,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of each round until end of that round: reduce exactly one of Physical, Tactical, or Fire Damage Received. Selection method is not stated.",
+        "rawDescription": "Start of each Round until end of that round: reduce exactly one of Physical Damage Received, Tactical Damage Received, or Fire Damage Received. The screenshot does not state how the damage type is selected. Damage Received reduction by Habit Level 1-5: -15%, -19.5%, -24%, -30%, -37.5%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Daemoros Phantom's Veil screenshot",
@@ -2733,7 +2733,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Each Round: 20% chance to reduce Physical Damage Dealt, excluding Basic Attacks, by 12% for the enemy with the highest Strength for 2 rounds.\n\nRounds 2, 4, 7, and 9: Deal Tactical Damage to the enemy with the least troops at a 100% Damage Rate.\n\nAt 6+ Stars:\n\nRounds 3, 5, 8, and 10: Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate. This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.\n\nStar Rank 6 augmentation:\nEmerald Inferno adds Fire Damage on Rounds 3, 5, 8, and 10.",
+      "rawDescription": "Each Round: 20% chance to reduce non-Basic Physical Damage Dealt by 12% on the Enemy with the highest Strength for two rounds. Rounds 2, 4, 7, and 9: deal Tactical Damage to the Enemy with the least troops at a 100% Damage Rate; Tactical Damage scales with Feskar's Instinct and is mitigated by target Intelligence. At 6+ Stars, rounds 3, 5, 8, and 10: deal Fire Damage to all Enemies that deal non-Basic Physical Damage at a 40% base Damage Rate; multiply damage by 1.5 against each target afflicted with Burn (displayed 60% Damage Rate). Fire Damage scales with Feskar's Intelligence and is mitigated by target Initiative.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Feskar Calculated Assault screenshots",
@@ -2745,7 +2745,7 @@ export const dragons = [
         "feskar-calculated-assault-2026-06-26"
       ],
       "tags": [
-        "PHYSICAL_DAMAGE",
+        "PHYSICAL_DAMAGE_DEALT_DOWN",
         "TACTICAL_DAMAGE",
         "FIRE_DAMAGE",
         "EXCLUDES_BASIC_ATTACKS",
@@ -2791,7 +2791,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of combat: grant Feskar and one other adjacent ally one Resilient Bond stack. Later rounds: if that tracked ally retreated in the previous round, grant Feskar one additional stack. Each stack reduces Physical Damage Received from non-Basic Attacks until end of combat.",
+        "rawDescription": "Start of Combat: grant Feskar one Resilient Bond stack and grant one other Ally within adjacency one Resilient Bond stack. At the start of each Round, if the tracked Ally retreated during the previous round, grant Feskar one additional stack. Each stack lasts until end of combat and reduces non-Basic Physical Damage Received of its holder. The screenshot states no maximum stack count. Source discrepancy: prose displays -6% per stack at Habit Level 1, while the table displays -6.5%. Table progression per stack: -6.5%, -7.8%, -9.1%, -11.05%, -13%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Feskar Resilient Bond screenshot",
@@ -2816,7 +2816,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of combat: increase Instinct of 3 Allies in any lane until end of combat, enhanced by Feskar Instinct. Plain Allies includes Feskar.",
+        "rawDescription": "Start of Combat until end of combat: increase Instinct of three Allies in any lane; plain 'Allies' includes Feskar, and the increase is enhanced by Feskar's Instinct. Progression: 10%, 12%, 14%, 17%, 20%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Feskar Insightful Allies screenshot",
@@ -2841,7 +2841,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Command augmentation for Calculated Assault: Rounds 3, 5, 8, and 10 deal Fire Damage to all enemies that deal Physical Damage excluding Basic Attacks; Burn increases damage by 1.5x per target.",
+        "rawDescription": "Augments Calculated Assault on rounds 3, 5, 8, and 10: deal Fire Damage to all Enemies that deal non-Basic Physical Damage; damage is multiplied by 1.5 against each target afflicted with Burn. Fire Damage scales with Feskar's Intelligence and is mitigated by target Initiative. Base Fire Damage Rate progression: 40%, 48%, 56%, 68%, 80%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Feskar Emerald Inferno screenshot",
@@ -2866,7 +2866,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of combat until end of combat: increase Feskar Intelligence and Initiative.",
+        "rawDescription": "Start of Combat until end of combat: increase Feskar's Intelligence and Initiative. Both progress by Habit Level 1-5: 16%, 19.2%, 22.4%, 27.2%, 32%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Feskar Quick-Witted screenshot",
@@ -2891,7 +2891,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each round: one activation chance to Stagger 1 enemy in any lane, prioritizing Warrior role, for 3 rounds.",
+        "rawDescription": "Each Round: one activation chance afflicts Stagger on one Enemy in any lane, prioritizing Warriors with ordinary fallback, for three rounds. Stagger prevents Attack Modifier Commands and Basic Attacks on the target's turn. Chance progression: 10%, 13%, 16%, 20%, 25%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Feskar Unyielding Grasp screenshot",
@@ -2922,7 +2922,7 @@ export const dragons = [
       "initiative": null
     },
     "tags": [
-      "PHYSICAL_DAMAGE",
+      "PHYSICAL_DAMAGE_DEALT_DOWN",
       "TACTICAL_DAMAGE",
       "FIRE_DAMAGE",
       "EXCLUDES_BASIC_ATTACKS",
@@ -3000,7 +3000,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Rounds 1, 4, and 7: Deal Physical Damage to 2 enemies within adjacency at a 70% Damage Rate.\n\nRounds 2, 5, and 8: Deal Fire Damage to 3 enemies in any lane at a 20% Damage Rate. This damage is increased by 1.5x if the target is afflicted with a Control effect, increasing the Damage Rate to 30%. Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nAt 6+ Stars:\n\nRounds 2, 5, and 8: Apply Recovery to 2 other Allies in any lane at a 60% Recovery Rate, enhanced by Intelligence.\n\nStar Rank 6 augmentation:\nEchoing Melody adds Recovery to Dawnsong on Rounds 2, 5, and 8.",
+      "rawDescription": "Rounds 1, 4, and 7: deal Physical Damage to two Enemies within adjacency at a 70% Damage Rate; Physical Damage scales with Rhysarion's Strength and is mitigated by target Instinct. Rounds 2, 5, and 8: deal Fire Damage to three Enemies in any lane at a 20% base Damage Rate; multiply damage by 1.5 when the target has Stun, Stagger, Overwhelm, or Confusion (displayed 30% Damage Rate). Fire Damage scales with Rhysarion's Intelligence and is mitigated by target Initiative. At 6+ Stars on rounds 2, 5, and 8: apply Recovery to two other Allies in any lane, excluding Rhysarion, at a 60% Recovery Rate; Recovery is enhanced by Rhysarion's Intelligence and scales with Dragon Level.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Rhysarion Dawnsong screenshots",
@@ -3057,7 +3057,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1 for 3 rounds: reduce Damage Dealt of all enemies and all allies, including Rhysarion. Start of Round 4: apply Recovery to 3 Allies, including Rhysarion.",
+        "rawDescription": "Start of Round 1: reduce Damage Dealt of all Enemies and all Allies, including Rhysarion, for three rounds. Source discrepancy: prose displays -27% at Habit Level 1; table displays -27.5%. Damage Dealt table progression: -27.5%, -33%, -38.5%, -46.75%, -55%. Start of Round 4: apply Recovery to three Allies in any lane; plain 'Allies' includes Rhysarion, and Recovery is enhanced by Rhysarion's Strength. Recovery Rate progression: 25%, 30%, 35%, 42.5%, 50%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Rhysarion Ebbing Fury screenshot",
@@ -3069,7 +3069,7 @@ export const dragons = [
           "rhysarion-ebbing-fury-2026-06-26"
         ],
         "tags": [
-          "DAMAGE_DEALT_UP",
+          "DAMAGE_DEALT_DOWN",
           "RECOVERY"
         ]
       },
@@ -3082,7 +3082,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of combat until end of combat: increase Rhysarion Strength and Intelligence.",
+        "rawDescription": "Start of Combat until end of combat: increase Rhysarion's Strength and Intelligence. Both progress by Habit Level 1-5: 16%, 19.2%, 22.4%, 27.2%, 32%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Rhysarion Sharp Resolve screenshot",
@@ -3107,7 +3107,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Command augmentation for Dawnsong: Rounds 2, 5, and 8 apply Recovery to 2 other Allies in any lane, excluding Rhysarion, enhanced by Intelligence.",
+        "rawDescription": "Augments Dawnsong on rounds 2, 5, and 8: apply Recovery to two other Allies in any lane, excluding Rhysarion. Recovery is enhanced by Rhysarion's Intelligence and scales with Dragon Level. Recovery Rate progression: 60%, 72%, 84%, 102%, 120%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Rhysarion Echoing Melody screenshot",
@@ -3133,7 +3133,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of combat: increase Recovery Received of 2 other Allies in any lane until end of combat, excluding Rhysarion.",
+        "rawDescription": "Start of Combat until end of combat: increase Recovery Received of two other Allies in any lane, excluding Rhysarion. Progression: 20%, 24%, 28%, 34%, 40%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Rhysarion Unbroken Devotion screenshot",
@@ -3158,7 +3158,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each round: one activation chance. On success, select 1 other adjacent Ally and apply Initiative +20% enhanced by Rhysarion Intelligence plus Resistance Damage Received -15% for 3 rounds.",
+        "rawDescription": "Each Round: one shared activation chance. On success, select one other Ally within adjacency and increase that same target's Initiative by 20%, enhanced by Rhysarion's Intelligence; grant that same target Resistance (-15%). Both effects last three rounds. Resistance reduces Damage Received. Activation chance progression: 20%, 26%, 32%, 40%, 50%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Rhysarion Inspiring Melody screenshot",
@@ -3199,6 +3199,7 @@ export const dragons = [
       "RECOVERY_DEALT_UP",
       "BUFF_INITIATIVE",
       "DAMAGE_DEALT_UP",
+      "DAMAGE_DEALT_DOWN",
       "RIGHT_FLANK_TARGET",
       "VANGUARD_REQUIRED",
       "STRENGTH_UP",
@@ -3270,7 +3271,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Rounds 2, 5, and 8: Deal Fire Damage to 2 enemies within adjacency at a 100% Damage Rate. This damage is increased by 1.5x if the target is afflicted with Panic, increasing the Damage Rate to 150%.\n\nAt 10 Stars:\n\nRounds 2, 5, and 8: Deal Fire Damage to 1 enemy in any lane at a 60% Damage Rate, with a 40% chance to afflict that target with Burn for 2 rounds.\n\nThen deal Fire Damage to a different enemy in any lane at a 30% Damage Rate, with a 20% chance to afflict that target with Burn for 2 rounds.\n\nBurn deals Fire Damage to the target each round.\n\nStar Rank 10 augmentation:\nBlazing Conductor adds two ordered Fire attacks and Burn attempts to Breath of Fire on Rounds 2, 5, and 8.",
+      "rawDescription": "Rounds 2, 5, and 8: deal Fire Damage to two Enemies within adjacency at a 100% base Damage Rate; multiply damage by 1.5 against each target afflicted with Panic (displayed 150% Damage Rate). Fire Damage scales with Shadowsong's Intelligence and is mitigated by target Initiative. At 10 Stars on rounds 2, 5, and 8: deal Fire Damage to one Enemy in any lane using Blazing Conductor's first-target Damage Rate and Burn chance, then deal Fire Damage to a different Enemy in any lane using its second-target Damage Rate and Burn chance. Burn lasts two rounds and deals Fire Damage each round at a 20% Damage Rate; both direct attacks scale with Intelligence and are mitigated by target Initiative.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Shadowsong Breath of Fire screenshots",
@@ -3326,7 +3327,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Round 1 for three rounds: reduce Instinct and Initiative of two adjacent enemies, enhanced by Shadowsong Intelligence.",
+        "rawDescription": "Round 1: reduce Instinct and Initiative of two Enemies within adjacency; both reductions are enhanced by Shadowsong's Intelligence and last three rounds. Both progress by Habit Level 1-5: -18%, -21.6%, -25.2%, -30.6%, -36%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Shadowsong Ensnare screenshot",
@@ -3352,7 +3353,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1: independently select one enemy preferring Left Flank for Fire vulnerability and one enemy preferring Right Flank for non-Basic Physical vulnerability; both last 3 rounds.",
+        "rawDescription": "Start of Round 1: select one Enemy in any lane, prioritizing Left Flank, and increase Fire Damage Received; select one Enemy in any lane, prioritizing Right Flank, and increase non-Basic Physical Damage Received. Both effects last three rounds. The screenshot does not require the two selected targets to be distinct. Both progress by Habit Level 1-5: 15%, 18%, 21%, 25.5%, 30%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Shadowsong Blazing Onslaught screenshot",
@@ -3364,8 +3365,8 @@ export const dragons = [
           "shadowsong-blazing-onslaught-2026-06-26"
         ],
         "tags": [
-          "FIRE_DAMAGE_UP",
-          "PHYSICAL_DAMAGE_UP",
+          "FIRE_DAMAGE_RECEIVED_UP",
+          "PHYSICAL_DAMAGE_RECEIVED_UP",
           "EXCLUDES_BASIC_ATTACKS"
         ]
       },
@@ -3378,7 +3379,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Each round: consider 2 adjacent enemies and attempt to apply Vulnerable for 2 rounds. Per target, Panic doubles the applicable chance.",
+        "rawDescription": "Each Round: chance to afflict Vulnerable (+15%) on two Enemies within adjacency for two rounds. Vulnerable increases Damage Received, and the applicable chance doubles against targets afflicted with Panic. The screenshot does not establish whether activation is one shared roll or a separate roll per target. Chance progression: 10%, 12%, 14%, 17%, 20%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Shadowsong Scorched Earth screenshot",
@@ -3404,7 +3405,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of combat until end of combat: reduce Shadowsong Damage Received and increase Intelligence.",
+        "rawDescription": "Start of Combat until end of combat: reduce Shadowsong's Damage Received and increase Shadowsong's Intelligence. Damage Received progression: -5%, -6%, -7%, -8.5%, -10%. Intelligence progression: 8.5%, 10.2%, 11.9%, 14.45%, 17%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Shadowsong Dragon's Intellect screenshot",
@@ -3429,7 +3430,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Command augmentation for Breath of Fire: on Rounds 2, 5, and 8 add two ordered any-lane Fire attacks with separate damage progressions and separate Burn chances. Second added target must differ from first added target.",
+        "rawDescription": "Augments Breath of Fire on rounds 2, 5, and 8. First added attack: Fire Damage to one Enemy in any lane with an independent Burn chance. Second added attack: Fire Damage to a different Enemy in any lane with an independent Burn chance. Burn lasts two rounds and deals Fire Damage each round at a 20% Damage Rate; direct Fire Damage scales with Intelligence and is mitigated by target Initiative. First-target Burn chance progression: 40%, 52%, 64%, 80%, 100%. Second-target Burn chance progression: 20%, 26%, 32%, 40%, 50%. First-target Fire Damage Rate progression: 60%, 78%, 96%, 120%, 150%. Second-target Fire Damage Rate progression: 30%, 39%, 48%, 60%, 75%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Shadowsong Blazing Conductor screenshot",
@@ -3472,7 +3473,8 @@ export const dragons = [
       "VANGUARD_REQUIRED",
       "DEBUFF_INSTINCTS",
       "DEBUFF_INITIATIVE",
-      "PHYSICAL_DAMAGE_UP",
+      "FIRE_DAMAGE_RECEIVED_UP",
+      "PHYSICAL_DAMAGE_RECEIVED_UP",
       "EXCLUDES_BASIC_ATTACKS",
       "VULNERABLE",
       "DAMAGE_RECEIVED_UP",
@@ -3834,7 +3836,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "Each round: 25% chance to afflict Taunt on three enemies for two rounds; odd-numbered rounds: deal Physical Damage to two adjacent enemies, Damage Rate +45%. Taunt roll scope is not stated.",
+      "rawDescription": "Each Round: displayed 25% chance to afflict Taunt on three Enemies in any lane for two rounds; the Taunt roll scope remains unresolved. Odd-numbered rounds: deal Physical Damage to two Enemies within adjacency at a 45% Damage Rate; Physical Damage scales with Vaeldra's Strength and is mitigated by target Instinct. Taunt forces the target to launch its Basic Attack against Vaeldra.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Vaeldra Lure screenshots",
@@ -3888,7 +3890,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat until end of combat: reduce Vaeldra Damage Received and increase Strength.",
+        "rawDescription": "Start of Combat until end of combat: reduce Vaeldra's Damage Received and increase Vaeldra's Strength. Damage Received progression: -5%, -6%, -7%, -8.5%, -10%. Strength progression: 8.5%, 10.2%, 11.9%, 14.45%, 17%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vaeldra Dragon's Valor screenshot",
@@ -3913,7 +3915,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Round 1 for three rounds: reduce Instinct and Initiative of two adjacent enemies, enhanced by Vaeldra Intelligence.",
+        "rawDescription": "Round 1: reduce Instinct and Initiative of two Enemies within adjacency; both reductions are enhanced by Vaeldra's Intelligence and last three rounds. Both progress by Habit Level 1-5: -18%, -21.6%, -25.2%, -30.6%, -36%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vaeldra Ensnare screenshot",
@@ -3939,7 +3941,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "When Vaeldra successfully afflicts an enemy with Taunt: increase that same target's non-Basic Physical Damage Received and Fire Damage Received for two rounds.",
+        "rawDescription": "Whenever Vaeldra successfully afflicts an Enemy with Taunt: increase that same target's non-Basic Physical Damage Received and Fire Damage Received for two rounds. Both progress by Habit Level 1-5: 6%, 7.2%, 8.4%, 10.2%, 12%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vaeldra Tempting Distraction screenshot",
@@ -3951,8 +3953,9 @@ export const dragons = [
           "vaeldra-tempting-distraction-2026-06-26"
         ],
         "tags": [
-          "PHYSICAL_DAMAGE_UP",
-          "FIRE_DAMAGE"
+          "PHYSICAL_DAMAGE_RECEIVED_UP",
+          "FIRE_DAMAGE_RECEIVED_UP",
+          "EXCLUDES_BASIC_ATTACKS"
         ]
       },
       {
@@ -3964,7 +3967,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1 for three rounds: increase Fire Damage Dealt of one ally preferring Left Flank and non-Basic Physical Damage Dealt of one ally preferring Right Flank. Groups select independently.",
+        "rawDescription": "Start of Round 1: increase Fire Damage Dealt of one Ally in any lane, prioritizing Left Flank; increase non-Basic Physical Damage Dealt of one Ally in any lane, prioritizing Right Flank. Both effects last three rounds. The screenshot does not require the two recipients to be distinct. Both progress by Habit Level 1-5: 12%, 14.4%, 16.8%, 20.4%, 24%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vaeldra Infernal Force screenshot",
@@ -3989,7 +3992,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Round 1: reduce self Physical Damage Received for three rounds. Start of Rounds 1-3: 40%-100% chance to apply Taunt to each non-Taunted enemy or Stagger to each already Taunted enemy until end of round; roll scope is not stated.",
+        "rawDescription": "Start of Round 1: reduce Vaeldra's Physical Damage Received for three rounds. Start of rounds 1-3: displayed chance to afflict Taunt on all Enemies until end of the round; Enemies already afflicted with Taunt receive Stagger instead. Taunt forces Basic Attacks against Vaeldra. Stagger prevents Attack Modifier Commands and Basic Attacks on the target's turn. The activation-roll scope remains unresolved. Physical Damage Received progression: -10%, -13%, -16%, -20%, -25%. Taunt/Stagger chance progression: 40%, 52%, 64%, 80%, 100%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vaeldra Siren's Call screenshot",
@@ -4033,8 +4036,10 @@ export const dragons = [
       "DEBUFF_INSTINCTS",
       "DEBUFF_INITIATIVE",
       "PHYSICAL_DAMAGE_UP",
-      "FIRE_DAMAGE",
+      "PHYSICAL_DAMAGE_RECEIVED_UP",
+      "FIRE_DAMAGE_RECEIVED_UP",
       "FIRE_DAMAGE_UP",
+      "EXCLUDES_BASIC_ATTACKS",
       "STAGGER",
       "CONTROL"
     ],
@@ -4300,7 +4305,7 @@ export const dragons = [
     },
     "tags": [
       "ADVANTAGE",
-      "TACTICAL_DAMAGE",
+      "TACTICAL_DAMAGE_UP",
       "ANY_LANE_TARGET",
       "CLEANSE_NEGATIVE",
       "RECOVERY",
@@ -7064,7 +7069,7 @@ export const dragons = [
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "positionRequirement": null,
-      "rawDescription": "After each Basic Attack: deal Physical Damage to one enemy in the same lane (Damage Rate +50%). Additionally, 20% chance to grant one Spreading Blaze stack to one ally that deals Tactical Damage. Repeat this chance once if any enemy deals Fire Damage.",
+      "rawDescription": "After each Basic Attack: deal Physical Damage to one Enemy in the same lane at a 50% Damage Rate; Physical Damage scales with Vermax's Strength and is mitigated by target Instinct. Additionally, 20% chance to grant one Spreading Blaze stack to one Ally that deals Tactical Damage; maximum ten stacks, lasting until end of combat. Repeat this chance once when any Enemy deals Fire Damage, not once per Fire-damage Enemy. Each stack increases the target's Tactical Damage Dealt by 2.5%.",
       "verification": {
         "status": "screenshot-verified",
         "source": "Vermax Spreading Blaze summary/glossary screenshots",
@@ -7079,7 +7084,7 @@ export const dragons = [
       "tags": [
         "PHYSICAL_DAMAGE",
         "SPREADING_BLAZE",
-        "TACTICAL_DAMAGE"
+        "TACTICAL_DAMAGE_UP"
       ]
     },
     "trait": {
@@ -7120,7 +7125,7 @@ export const dragons = [
         "unlockStarRank": 2,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Each Round: reduce Fire Damage Received for allies below strict Troop Capacity thresholds until end of current round.",
+        "rawDescription": "Start of each Round until end of that round: all Allies strictly below 75% troop capacity reduce Fire Damage Received; targets strictly below 50% use double the base reduction; targets strictly below 25% use triple the base reduction. Below-75% progression: -5%, -6%, -7%, -8.5%, -10%. Below-50% progression: -10%, -12%, -14%, -17%, -20%. Below-25% progression: -15%, -18%, -21%, -25.5%, -30%. This is a Fire Damage Received reduction, not the named Resistance status.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vermax Trial by Flame screenshot",
@@ -7133,7 +7138,6 @@ export const dragons = [
         ],
         "tags": [
           "FIRE_DAMAGE_RECEIVED_DOWN",
-          "RESISTANCE",
           "DAMAGE_RECEIVED_DOWN"
         ]
       },
@@ -7146,7 +7150,7 @@ export const dragons = [
         "unlockStarRank": 4,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: increase Instinct and Initiative of ally with highest Instinct, enhanced by Strength.",
+        "rawDescription": "Start of Combat until end of combat: deterministically select the Ally with the highest Instinct; increase that target's Instinct and Initiative, both enhanced by Vermax's Strength. Instinct progression: 18%, 21.6%, 25.2%, 30.6%, 36%. Initiative progression: 9%, 10.8%, 12.6%, 15.3%, 18%. This is not an activation roll.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vermax Reactive Instincts screenshot",
@@ -7171,7 +7175,7 @@ export const dragons = [
         "unlockStarRank": 6,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: gain Rallying Flame and grant Spreading Blaze, repeating once for each enemy that deals Fire Damage.",
+        "rawDescription": "Two separate source clauses. Self Rallying Flame sequence: Start of Combat, chance to grant Vermax one Rallying Flame stack; repeat this chance for each Enemy that deals Fire Damage; maximum four stacks, lasting until end of combat; each stack increases Vermax's Physical Damage Dealt by 5%. Allied Spreading Blaze sequence: Start of Combat, chance to grant one Spreading Blaze stack to one Ally that deals Tactical Damage; repeat this chance for each Enemy that deals Fire Damage; maximum ten stacks, lasting until end of combat; each stack increases the target's Tactical Damage Dealt by 2.5%. The two sequences are not stated to share one roll. Chance progression for both: 50%, 60%, 70%, 85%, 100%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vermax Rallying Flame screenshot",
@@ -7196,7 +7200,7 @@ export const dragons = [
         "unlockStarRank": 8,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Combat: reduce self Damage Received and increase Strength until end of combat.",
+        "rawDescription": "Start of Combat until end of combat: reduce Vermax's Damage Received and increase Vermax's Strength. Damage Received progression: -5%, -6%, -7%, -8.5%, -10%. Strength progression: 8.5%, 10.2%, 11.9%, 14.45%, 17%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vermax Dragon's Valor screenshot",
@@ -7221,7 +7225,7 @@ export const dragons = [
         "unlockStarRank": 10,
         "minimumDragonLevel": null,
         "positionRequirement": null,
-        "rawDescription": "Start of Each Round: chance to grant Advantage +15% for two rounds. If afflicted with Weakened, chance is multiplied by 1.5 and successful activation removes Weakened.",
+        "rawDescription": "Start of each Round: chance to grant Vermax Advantage (+15%) for two rounds; Advantage increases Damage Dealt. If Vermax is afflicted with Weakened, multiply activation chance by 1.5 (displayed as 30% at Habit Level 1); a successful activation removes Weakened. Base activation chance progression: 20%, 26%, 32%, 40%, 50%.",
         "verification": {
           "status": "screenshot-verified",
           "source": "Vermax Unyielding Resolve screenshot",
@@ -7260,7 +7264,6 @@ export const dragons = [
       "INSTINCT_UP",
       "BUFF_INITIATIVE",
       "FIRE_DAMAGE_RECEIVED_DOWN",
-      "RESISTANCE",
       "DAMAGE_RECEIVED_DOWN",
       "RALLYING_FLAME",
       "STRENGTH_UP",

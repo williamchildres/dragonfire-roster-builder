@@ -32,9 +32,9 @@
       "tags": [
         "PHYSICAL_DAMAGE",
         "SPREADING_BLAZE",
-        "TACTICAL_DAMAGE"
+        "TACTICAL_DAMAGE_UP"
       ],
-      "rawDescription": "After each Basic Attack: deal Physical Damage to one enemy in the same lane (Damage Rate +50%). Additionally, 20% chance to grant one Spreading Blaze stack to one ally that deals Tactical Damage. Repeat this chance once if any enemy deals Fire Damage."
+      "rawDescription": "After each Basic Attack: deal Physical Damage to one Enemy in the same lane at a 50% Damage Rate; Physical Damage scales with Vermax's Strength and is mitigated by target Instinct. Additionally, 20% chance to grant one Spreading Blaze stack to one Ally that deals Tactical Damage; maximum ten stacks, lasting until end of combat. Repeat this chance once when any Enemy deals Fire Damage, not once per Fire-damage Enemy. Each stack increases the target's Tactical Damage Dealt by 2.5%."
     },
     {
       "id": "vermax-warriors-zeal",
@@ -83,10 +83,9 @@
       ],
       "tags": [
         "FIRE_DAMAGE_RECEIVED_DOWN",
-        "RESISTANCE",
         "DAMAGE_RECEIVED_DOWN"
       ],
-      "rawDescription": "Start of Each Round: reduce Fire Damage Received for allies below strict Troop Capacity thresholds until end of current round."
+      "rawDescription": "Start of each Round until end of that round: all Allies strictly below 75% troop capacity reduce Fire Damage Received; targets strictly below 50% use double the base reduction; targets strictly below 25% use triple the base reduction. Below-75% progression: -5%, -6%, -7%, -8.5%, -10%. Below-50% progression: -10%, -12%, -14%, -17%, -20%. Below-25% progression: -15%, -18%, -21%, -25.5%, -30%. This is a Fire Damage Received reduction, not the named Resistance status."
     },
     {
       "id": "vermax-reactive-instincts",
@@ -110,7 +109,7 @@
         "INSTINCT_UP",
         "BUFF_INITIATIVE"
       ],
-      "rawDescription": "Start of Combat: increase Instinct and Initiative of ally with highest Instinct, enhanced by Strength."
+      "rawDescription": "Start of Combat until end of combat: deterministically select the Ally with the highest Instinct; increase that target's Instinct and Initiative, both enhanced by Vermax's Strength. Instinct progression: 18%, 21.6%, 25.2%, 30.6%, 36%. Initiative progression: 9%, 10.8%, 12.6%, 15.3%, 18%. This is not an activation roll."
     },
     {
       "id": "vermax-rallying-flame",
@@ -134,7 +133,7 @@
         "RALLYING_FLAME",
         "SPREADING_BLAZE"
       ],
-      "rawDescription": "Start of Combat: gain Rallying Flame and grant Spreading Blaze, repeating once for each enemy that deals Fire Damage."
+      "rawDescription": "Two separate source clauses. Self Rallying Flame sequence: Start of Combat, chance to grant Vermax one Rallying Flame stack; repeat this chance for each Enemy that deals Fire Damage; maximum four stacks, lasting until end of combat; each stack increases Vermax's Physical Damage Dealt by 5%. Allied Spreading Blaze sequence: Start of Combat, chance to grant one Spreading Blaze stack to one Ally that deals Tactical Damage; repeat this chance for each Enemy that deals Fire Damage; maximum ten stacks, lasting until end of combat; each stack increases the target's Tactical Damage Dealt by 2.5%. The two sequences are not stated to share one roll. Chance progression for both: 50%, 60%, 70%, 85%, 100%."
     },
     {
       "id": "vermax-dragons-valor",
@@ -158,7 +157,7 @@
         "DAMAGE_RECEIVED_DOWN",
         "STRENGTH_UP"
       ],
-      "rawDescription": "Start of Combat: reduce self Damage Received and increase Strength until end of combat."
+      "rawDescription": "Start of Combat until end of combat: reduce Vermax's Damage Received and increase Vermax's Strength. Damage Received progression: -5%, -6%, -7%, -8.5%, -10%. Strength progression: 8.5%, 10.2%, 11.9%, 14.45%, 17%."
     },
     {
       "id": "vermax-unyielding-resolve",
@@ -182,7 +181,7 @@
         "ADVANTAGE",
         "WEAKENED"
       ],
-      "rawDescription": "Start of Each Round: chance to grant Advantage +15% for two rounds. If afflicted with Weakened, chance is multiplied by 1.5 and successful activation removes Weakened."
+      "rawDescription": "Start of each Round: chance to grant Vermax Advantage (+15%) for two rounds; Advantage increases Damage Dealt. If Vermax is afflicted with Weakened, multiply activation chance by 1.5 (displayed as 30% at Habit Level 1); a successful activation removes Weakened. Base activation chance progression: 20%, 26%, 32%, 40%, 50%."
     }
   ],
   "affinities": {

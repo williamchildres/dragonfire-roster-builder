@@ -239,9 +239,9 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.4/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.5/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Source-fidelity descriptions for Malachite, Venator, and Sheepstealer now preserve controller-reviewed effect values');
+    expect(latestUpdate).toHaveTextContent('completes the current controller-reviewed screenshot-source fidelity pass for all 31 dragons');
     expect(latestUpdate).toHaveTextContent('curated synergy profiles remain unchanged');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
@@ -374,7 +374,7 @@ describe('Dragonfire Lab app', () => {
     const verifiedWording = within(phantomCard as HTMLElement).getByText('Verified wording');
     expect(verifiedWording.closest('details')).not.toHaveAttribute('open');
     await user.click(verifiedWording);
-    expect(verifiedWording.closest('details')).toHaveTextContent('reduce exactly one of Physical, Tactical, or Fire Damage Received');
+    expect(verifiedWording.closest('details')).toHaveTextContent('reduce exactly one of Physical Damage Received, Tactical Damage Received, or Fire Damage Received');
 
     expect(within(dialog).getByText('Structured tags').closest('details')).not.toHaveAttribute('open');
     expect(within(dialog).queryByRole('heading', { name: 'Evidence & technical details' })).not.toBeInTheDocument();
@@ -599,8 +599,8 @@ describe('Dragonfire Lab app', () => {
     expect(phantomCard).toHaveTextContent('Reduces Damage Received');
     const rawSummary = within(phantomCard as HTMLElement).getByText('Verified wording');
     await user.click(rawSummary);
-    expect(rawSummary.closest('details')).toHaveTextContent('reduce exactly one of Physical, Tactical, or Fire Damage Received');
-    expect(rawSummary.closest('details')).toHaveTextContent('Selection method is not stated');
+    expect(rawSummary.closest('details')).toHaveTextContent('reduce exactly one of Physical Damage Received, Tactical Damage Received, or Fire Damage Received');
+    expect(rawSummary.closest('details')).toHaveTextContent('does not state how the damage type is selected');
     expect(phantomCard).not.toHaveTextContent('Current selected value:');
     expect(phantomCard).not.toHaveTextContent('Mutually exclusive alternatives');
   });
@@ -628,7 +628,7 @@ describe('Dragonfire Lab app', () => {
     await user.selectOptions(within(dialog).getByLabelText(/star rank/i), '1');
     phantomCard = within(dialog).getByRole('heading', { name: "Phantom's Veil" }).closest('article');
     expect(phantomCard).toHaveTextContent('Locked preview');
-    expect(phantomCard).toHaveTextContent('Physical, Tactical, or Fire Damage Received');
+    expect(phantomCard).toHaveTextContent('Physical Damage Received, Tactical Damage Received, or Fire Damage Received');
     expect(within(phantomCard as HTMLElement).queryByLabelText(/habit level/i)).not.toBeInTheDocument();
 
     const stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '{}') as {
@@ -653,8 +653,8 @@ describe('Dragonfire Lab app', () => {
     const sirensCallCard = within(dialog).getByRole('heading', { name: "Siren's Call" }).closest('article');
     expect(sirensCallCard).not.toBeNull();
 
-    expect(sirensCallCard).toHaveTextContent('apply Taunt to each non-Taunted enemy');
-    expect(sirensCallCard).toHaveTextContent('Stagger to each already Taunted enemy');
+    expect(sirensCallCard).toHaveTextContent('afflict Taunt on all Enemies');
+    expect(sirensCallCard).toHaveTextContent('Enemies already afflicted with Taunt receive Stagger instead');
     expect(sirensCallCard).not.toHaveTextContent('Conditional branches');
   });
 
@@ -677,12 +677,12 @@ describe('Dragonfire Lab app', () => {
 
     const rawContent = rawSummary.closest('details');
     expect(rawContent).not.toBeNull();
-    expect(rawContent?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
-    expect(rawContent).toHaveTextContent('Each Round: 20% chance');
+    expect(rawContent?.querySelectorAll('p').length).toBeGreaterThanOrEqual(1);
+    expect(rawContent).toHaveTextContent('Each Round: 20% chance to reduce non-Basic Physical Damage Dealt');
     expect(rawContent).toHaveTextContent('Rounds 2, 4, 7, and 9');
-    expect(rawContent).toHaveTextContent('At 6+ Stars:');
-    expect(rawContent).toHaveTextContent('This damage is increased by 1.5x against targets afflicted with Burn, increasing the Damage Rate to 60%.');
-    expect(rawContent).toHaveTextContent('Deal Fire Damage to all enemies that deal Physical Damage, excluding Basic Attacks, at a 40% Damage Rate.');
+    expect(rawContent).toHaveTextContent('At 6+ Stars, rounds 3, 5, 8, and 10');
+    expect(rawContent).toHaveTextContent('multiply damage by 1.5 against each target afflicted with Burn');
+    expect(rawContent).toHaveTextContent('all Enemies that deal non-Basic Physical Damage');
 
     await user.click(within(dialog).getByRole('button', { name: /close details/i }));
     await openAddDragon(user);
@@ -698,11 +698,11 @@ describe('Dragonfire Lab app', () => {
     await user.click(rhysarionSummary);
     let commandRaw = rhysarionSummary.closest('details');
     expect(commandRaw).not.toBeNull();
-    expect(commandRaw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
+    expect(commandRaw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(1);
     expect(commandRaw).toHaveTextContent('Rounds 1, 4, and 7');
     expect(commandRaw).toHaveTextContent('Rounds 2, 5, and 8');
-    expect(commandRaw).toHaveTextContent('Stun, Stagger, Overwhelm, and Confusion');
-    expect(commandRaw).toHaveTextContent('At 6+ Stars:');
+    expect(commandRaw).toHaveTextContent('Stun, Stagger, Overwhelm, or Confusion');
+    expect(commandRaw).toHaveTextContent('At 6+ Stars on rounds 2, 5, and 8');
     expect(commandRaw).toHaveTextContent('60% Recovery Rate');
 
     await user.click(within(dragonDialog).getByRole('button', { name: /close details/i }));
@@ -719,17 +719,14 @@ describe('Dragonfire Lab app', () => {
     await user.click(shadowsongSummary);
     commandRaw = shadowsongSummary.closest('details');
     expect(commandRaw).not.toBeNull();
-    expect(commandRaw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(3);
+    expect(commandRaw?.querySelectorAll('p').length).toBeGreaterThanOrEqual(1);
     expect(commandRaw).toHaveTextContent('Rounds 2, 5, and 8');
-    expect(commandRaw).toHaveTextContent('100% Damage Rate');
+    expect(commandRaw).toHaveTextContent('100% base Damage Rate');
     expect(commandRaw).toHaveTextContent('150%');
-    expect(commandRaw).toHaveTextContent('At 10 Stars:');
-    expect(commandRaw).toHaveTextContent('60% Damage Rate');
-    expect(commandRaw).toHaveTextContent('40% chance');
-    expect(commandRaw).toHaveTextContent('different enemy');
-    expect(commandRaw).toHaveTextContent('20% chance');
-    expect(commandRaw).toHaveTextContent('Burn deals Fire Damage to the target each round.');
-    expect(commandRaw).toHaveTextContent('2 rounds');
+    expect(commandRaw).toHaveTextContent('At 10 Stars on rounds 2, 5, and 8');
+    expect(commandRaw).toHaveTextContent("Blazing Conductor's first-target Damage Rate and Burn chance");
+    expect(commandRaw).toHaveTextContent('different Enemy');
+    expect(commandRaw).toHaveTextContent('Burn lasts two rounds and deals Fire Damage each round at a 20% Damage Rate');
 
     await user.click(within(dragonDialog).getByRole('button', { name: /close details/i }));
     await openAddDragon(user);

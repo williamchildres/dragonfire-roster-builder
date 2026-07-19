@@ -34,7 +34,7 @@
         "PANIC",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "Rounds 2, 5, and 8: Deal Fire Damage to 2 enemies within adjacency at a 100% Damage Rate. This damage is increased by 1.5x if the target is afflicted with Panic, increasing the Damage Rate to 150%.\n\nAt 10 Stars:\n\nRounds 2, 5, and 8: Deal Fire Damage to 1 enemy in any lane at a 60% Damage Rate, with a 40% chance to afflict that target with Burn for 2 rounds.\n\nThen deal Fire Damage to a different enemy in any lane at a 30% Damage Rate, with a 20% chance to afflict that target with Burn for 2 rounds.\n\nBurn deals Fire Damage to the target each round.\n\nStar Rank 10 augmentation:\nBlazing Conductor adds two ordered Fire attacks and Burn attempts to Breath of Fire on Rounds 2, 5, and 8."
+      "rawDescription": "Rounds 2, 5, and 8: deal Fire Damage to two Enemies within adjacency at a 100% base Damage Rate; multiply damage by 1.5 against each target afflicted with Panic (displayed 150% Damage Rate). Fire Damage scales with Shadowsong's Intelligence and is mitigated by target Initiative. At 10 Stars on rounds 2, 5, and 8: deal Fire Damage to one Enemy in any lane using Blazing Conductor's first-target Damage Rate and Burn chance, then deal Fire Damage to a different Enemy in any lane using its second-target Damage Rate and Burn chance. Burn lasts two rounds and deals Fire Damage each round at a 20% Damage Rate; both direct attacks scale with Intelligence and are mitigated by target Initiative."
     },
     {
       "id": "shadowsong-hunters-wrath",
@@ -86,7 +86,7 @@
         "DEBUFF_INITIATIVE",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "Round 1 for three rounds: reduce Instinct and Initiative of two adjacent enemies, enhanced by Shadowsong Intelligence."
+      "rawDescription": "Round 1: reduce Instinct and Initiative of two Enemies within adjacency; both reductions are enhanced by Shadowsong's Intelligence and last three rounds. Both progress by Habit Level 1-5: -18%, -21.6%, -25.2%, -30.6%, -36%."
     },
     {
       "id": "shadowsong-blazing-onslaught",
@@ -107,11 +107,11 @@
         "shadowsong-blazing-onslaught-2026-06-26"
       ],
       "tags": [
-        "FIRE_DAMAGE_UP",
-        "PHYSICAL_DAMAGE_UP",
+        "FIRE_DAMAGE_RECEIVED_UP",
+        "PHYSICAL_DAMAGE_RECEIVED_UP",
         "EXCLUDES_BASIC_ATTACKS"
       ],
-      "rawDescription": "Start of Round 1: independently select one enemy preferring Left Flank for Fire vulnerability and one enemy preferring Right Flank for non-Basic Physical vulnerability; both last 3 rounds."
+      "rawDescription": "Start of Round 1: select one Enemy in any lane, prioritizing Left Flank, and increase Fire Damage Received; select one Enemy in any lane, prioritizing Right Flank, and increase non-Basic Physical Damage Received. Both effects last three rounds. The screenshot does not require the two selected targets to be distinct. Both progress by Habit Level 1-5: 15%, 18%, 21%, 25.5%, 30%."
     },
     {
       "id": "shadowsong-scorched-earth",
@@ -136,7 +136,7 @@
         "DAMAGE_RECEIVED_UP",
         "ADJACENT_TARGET"
       ],
-      "rawDescription": "Each round: consider 2 adjacent enemies and attempt to apply Vulnerable for 2 rounds. Per target, Panic doubles the applicable chance."
+      "rawDescription": "Each Round: chance to afflict Vulnerable (+15%) on two Enemies within adjacency for two rounds. Vulnerable increases Damage Received, and the applicable chance doubles against targets afflicted with Panic. The screenshot does not establish whether activation is one shared roll or a separate roll per target. Chance progression: 10%, 12%, 14%, 17%, 20%."
     },
     {
       "id": "shadowsong-dragons-intellect",
@@ -160,7 +160,7 @@
         "DAMAGE_RECEIVED_DOWN",
         "BUFF_INTELLIGENCE"
       ],
-      "rawDescription": "Start of combat until end of combat: reduce Shadowsong Damage Received and increase Intelligence."
+      "rawDescription": "Start of Combat until end of combat: reduce Shadowsong's Damage Received and increase Shadowsong's Intelligence. Damage Received progression: -5%, -6%, -7%, -8.5%, -10%. Intelligence progression: 8.5%, 10.2%, 11.9%, 14.45%, 17%."
     },
     {
       "id": "shadowsong-blazing-conductor",
@@ -185,7 +185,7 @@
         "FIRE_DAMAGE",
         "BURN"
       ],
-      "rawDescription": "Command augmentation for Breath of Fire: on Rounds 2, 5, and 8 add two ordered any-lane Fire attacks with separate damage progressions and separate Burn chances. Second added target must differ from first added target."
+      "rawDescription": "Augments Breath of Fire on rounds 2, 5, and 8. First added attack: Fire Damage to one Enemy in any lane with an independent Burn chance. Second added attack: Fire Damage to a different Enemy in any lane with an independent Burn chance. Burn lasts two rounds and deals Fire Damage each round at a 20% Damage Rate; direct Fire Damage scales with Intelligence and is mitigated by target Initiative. First-target Burn chance progression: 40%, 52%, 64%, 80%, 100%. Second-target Burn chance progression: 20%, 26%, 32%, 40%, 50%. First-target Fire Damage Rate progression: 60%, 78%, 96%, 120%, 150%. Second-target Fire Damage Rate progression: 30%, 39%, 48%, 60%, 75%."
     }
   ],
   "affinities": {

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.5 - 2026-07-18
+
+- Completed the current controller-reviewed screenshot-source fidelity pass for all 31 dragons by updating Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, and Vermax canonical ability descriptions with source values, Habit Level 1-5 progressions, targeting, durations, scaling, mitigation, and explicit uncertainty.
+- Applied only the source-backed canonical tag corrections for Feskar Calculated Assault, Rhysarion Ebbing Fury, Shadowsong Blazing Onslaught, Vaeldra Tempting Distraction, Vermax Trial by Flame, and Vermax Spreading Blaze.
+- Curated profiles, the 224 curated signals, evaluator behavior, and Formation Rating output are unchanged. Database/package version is `0.10.5`; source data schema remains `13`, local/cloud roster schemas remain `5`, and no Supabase migration was added.
+
 ## 0.10.4 - 2026-07-18
 
 - Completed controller-reviewed screenshot-source fidelity for all 21 Malachite, Venator, and Sheepstealer canonical ability descriptions, including Habit Level 1–5 values, targeting, durations, status definitions, scaling, mitigation, and stated source uncertainty.
