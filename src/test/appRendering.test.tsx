@@ -217,7 +217,7 @@ describe('Dragonfire Lab app', () => {
     expect(screen.getByRole('button', { name: /build formations/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /understand formation ratings/i })).toBeInTheDocument();
     expect(screen.getByText(/compare explainable ratings/i)).toBeInTheDocument();
-    expect(screen.getByText(/realized synergy, support usefulness, Kit Utilization/i)).toBeInTheDocument();
+    expect(screen.getByText(/canonical active synergy once, exact placement effectiveness/i)).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Compare Verified Dragons' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /compare verified dragons/i })).not.toBeInTheDocument();
 
@@ -239,10 +239,10 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.10\.5/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.11\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('completes the current controller-reviewed screenshot-source fidelity pass for all 31 dragons');
-    expect(latestUpdate).toHaveTextContent('curated synergy profiles remain unchanged');
+    expect(latestUpdate).toHaveTextContent('scores canonical active relationships once');
+    expect(latestUpdate).toHaveTextContent('Normal Vanguard alternatives and kit gaps');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -262,7 +262,7 @@ describe('Dragonfire Lab app', () => {
     expect(screen.getByRole('heading', { name: 'Community data and contributions' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Unofficial and open source' })).toBeInTheDocument();
     expect(screen.getByText(/Compare explainable Formation Ratings/i)).toBeInTheDocument();
-    expect(screen.getByText(/active synergy, Kit Utilization, and placement risks/i)).toBeInTheDocument();
+    expect(screen.getByText(/canonical active synergy, exact placement effectiveness, and diagnostic kit gaps/i)).toBeInTheDocument();
     expect(
       screen.getByText(/Ability and profile updates require sourced community evidence/i),
     ).toBeInTheDocument();

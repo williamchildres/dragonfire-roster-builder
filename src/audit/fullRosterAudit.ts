@@ -1,6 +1,5 @@
 import { createHash } from 'node:crypto';
 
-import { buildFormationSignalChips } from '../app/formationCardPresentation';
 import { buildDragonDetailPresentation } from '../app/dragonDetailPresentation';
 import { databaseMetadata } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
@@ -8,11 +7,18 @@ import { evidenceSources } from '../data/evidence';
 import { manualReviewRecords } from '../data/manualReviews';
 import type { Dragon, FormationPosition } from '../models/dragon';
 import { rateFormation, tierForScore } from '../services/formationRating';
+import {
+  buildPlacementComparison,
+  compareFormationPlacements,
+  type FormationArrangement,
+  type PlacementCandidate,
+} from '../services/formationPlacementComparison';
+import { buildFormationRecommendation } from '../services/formationRecommendation';
 import { evaluateFormation } from '../synergy/evaluateFormation';
-import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
 import { SIMPLE_FORMATION_POSITIONS } from '../synergy/positionRules';
 import { metadataOnlyDragonIds, simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { buildSemanticRelationships } from '../synergy/semanticRelationships';
 import {
   CONTROL_ALIAS_TAGS,
   SYNERGY_TAGS,
@@ -100,9 +106,18 @@ export interface FormationSummaryRow {
   formation: [string, string, string];
   score: number;
   tier: string;
+  activeSynergyScore: number;
+  placementScore: number;
+  currentPlacementValue: number;
+  bestPlacementValue: number;
   relationshipCount: number;
   missingEnablerCount: number;
-  positionConflictCount: number;
+  recommendation: string | null;
+  suppressionReason: string | null;
+  relationshipClasses: Record<string, number>;
+  redundancyRanks: Record<string, number>;
+  gainedRelationshipIds: string[];
+  lostRelationshipIds: string[];
   components: Record<string, number>;
 }
 
@@ -157,20 +172,30 @@ export interface FullRosterAuditReport {
       maximum: number;
       mean: number;
       median: number;
+      percentile10: number;
+      percentile25: number;
+      percentile75: number;
       percentile90: number;
       percentile95: number;
       percentile99: number;
       byTier: Record<string, number>;
     };
     componentDistributions: Record<string, Record<string, number>>;
+    scoreFrequency: Record<string, number>;
     relationshipCountDistribution: Record<string, number>;
     missingEnablerDistribution: Record<string, number>;
-    positionConflictDistribution: Record<string, number>;
-    kitUtilizationDistribution: Record<string, number>;
+    placementScoreDistribution: Record<string, number>;
+    recommendationSuppressionReasonDistribution: Record<string, number>;
+    meaningfulPlacementRecommendationCount: number;
+    bestOrTiedBestPercentage: number;
+    relationshipClassDistribution: Record<string, number>;
+    redundancyRankDistribution: Record<string, number>;
     topDragonFrequency: Record<string, number>;
     bottomDragonFrequency: Record<string, number>;
     top50: FormationSummaryRow[];
+    top100: FormationSummaryRow[];
     bottom50: FormationSummaryRow[];
+    rows: FormationSummaryRow[];
     invariantViolationCount: number;
     inactiveAbilityReferenceExamples: Array<{
       formation: [string, string, string];
@@ -180,8 +205,8 @@ export interface FullRosterAuditReport {
   };
   ratingContract: {
     componentMaximums: Record<string, number>;
-    tierThresholds: Record<string, number>;
-    excellentGuardrails: string[];
+    tierThresholds: Record<string, number | string>;
+    calibrationRationale: string[];
   };
 }
 
@@ -193,11 +218,8 @@ const EXPECTED_RARITY_COUNTS: Record<string, number> = {
 const EXPECTED_HABIT_UNLOCKS = [2, 4, 6, 8, 10];
 const LOCAL_ROSTER_SCHEMA_VERSION = 5 as const;
 const RATING_COMPONENT_MAXIMUMS: Record<string, number> = {
-  'Readiness / profile confidence': 10,
-  'Realized synergy payoff': 35,
-  'Support usefulness': 20,
-  'Kit utilization': 20,
-  'Placement / conflict risk': 15,
+  'Active Synergy': 80,
+  'Placement Effectiveness': 20,
 };
 const STATUS_TAGS = SYNERGY_TAGS.filter((tag) => tag.startsWith('status:'));
 
@@ -228,7 +250,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const rarityCoverage = countBy(dragons, (dragon) => dragon.rarity);
   addCheck(
     'FRR-C001',
-    databaseMetadata.databaseVersion === '0.10.5',
+    databaseMetadata.databaseVersion === '0.11.0',
     `Database version is ${databaseMetadata.databaseVersion}.`,
   );
   addCheck(
@@ -483,7 +505,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
         .join('; '),
       fileReferences: [
         'src/synergy/evaluateFormation.ts',
-        'src/synergy/formationPresentation.ts',
+        'src/synergy/semanticRelationships.ts',
         'src/app/formationCardPresentation.ts',
       ],
       focusedTestReproduction: true,
@@ -514,12 +536,12 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   );
   addCheck(
     'FRR-C026',
-    tierForScore(90) === 'Excellent' &&
-      tierForScore(75) === 'Strong' &&
-      tierForScore(60) === 'Solid' &&
-      tierForScore(40) === 'Developing' &&
-      tierForScore(1) === 'Weak' &&
-      tierForScore(0) === 'Incomplete',
+    tierForScore(80) === 'Excellent' &&
+      tierForScore(67) === 'Strong' &&
+      tierForScore(49) === 'Solid' &&
+      tierForScore(25) === 'Developing' &&
+      tierForScore(24) === 'Weak' &&
+      tierForScore(0) === 'Weak',
     'Tier thresholds match the committed rating contract.',
   );
 
@@ -664,19 +686,19 @@ export function runFullRosterAudit(): FullRosterAuditReport {
     ratingContract: {
       componentMaximums: RATING_COMPONENT_MAXIMUMS,
       tierThresholds: {
-        Excellent: 90,
-        Strong: 75,
-        Solid: 60,
-        Developing: 40,
-        Weak: 1,
-        Incomplete: 0,
+        Excellent: 80,
+        Strong: 67,
+        Solid: 49,
+        Developing: 25,
+        Weak: 0,
+        Incomplete: 'validation gate',
       },
-      excellentGuardrails: [
-        'Realized synergy payoff must be at least 28/35.',
-        'Kit utilization must be at least 13/20.',
-        'Fewer than three Benefits may remain missing.',
-        'Placement score must remain above 5/15.',
-        'Support usefulness at 16+ cannot substitute for payoff below 28.',
+      calibrationRationale: [
+        'Excellent begins at the empirical P99 score of 80.',
+        'Strong begins at the empirical P90 score of 67.',
+        'Solid begins at the empirical median score of 49.',
+        'Developing begins at 25, separating little active value from meaningful but incomplete synergy.',
+        'Incomplete is reserved for the validation gate and is not a numeric score band.',
       ],
     },
   };
@@ -990,14 +1012,20 @@ function auditFormationSweep(
   const rows: FormationSummaryRow[] = [];
   const tierCounts: Record<string, number> = {};
   const componentDistributions: Record<string, Record<string, number>> = {};
+  const scoreFrequency: Record<string, number> = {};
   const relationshipCountDistribution: Record<string, number> = {};
   const missingEnablerDistribution: Record<string, number> = {};
-  const positionConflictDistribution: Record<string, number> = {};
-  const kitUtilizationDistribution: Record<string, number> = {};
+  const placementScoreDistribution: Record<string, number> = {};
+  const recommendationSuppressionReasonDistribution: Record<string, number> = {};
+  const relationshipClassDistribution: Record<string, number> = {};
+  const redundancyRankDistribution: Record<string, number> = {};
   const violations: string[] = [];
   const inactiveAbilityReferenceExamples: FullRosterAuditReport['formationSweep']['inactiveAbilityReferenceExamples'] =
     [];
-  const mappedProfileIds = new Set(simpleSynergyProfiles.map((profile) => profile.dragonId));
+  const comparisonCandidatesByTrio = new Map<string, PlacementCandidate[]>();
+  const dragonNamesById = new Map(dragons.map((dragon) => [dragon.id, dragon.name]));
+  let meaningfulPlacementRecommendationCount = 0;
+  let bestOrTiedBestCount = 0;
 
   for (const left of dragons) {
     for (const vanguard of dragons) {
@@ -1015,66 +1043,61 @@ function auditFormationSweep(
           progression,
           profiles: simpleSynergyProfiles,
         }).results;
-        const presentation = buildSimpleFormationPresentation({
-          formation,
-          dragons,
-          mappedProfileIds,
-          results,
-        });
-        const signalChipsByDragonId = Object.fromEntries(
-          (Object.entries(formation) as Array<[FormationPosition, string]>).map(
-            ([position, dragonId]) => {
-              const profile = simpleSynergyProfiles.find(
-                (candidate) => candidate.dragonId === dragonId,
-              );
-              return [
-                dragonId,
-                buildFormationSignalChips({
-                  profile,
-                  position,
-                  formation,
-                  profiles: simpleSynergyProfiles,
-                  progression,
-                }),
-              ];
-            },
-          ),
-        );
+        const relationships = buildSemanticRelationships(results, simpleSynergyProfiles);
+        const arrangement: FormationArrangement = {
+          'left-flank': left.id,
+          vanguard: vanguard.id,
+          'right-flank': right.id,
+        };
+        const trioKey = [left.id, vanguard.id, right.id].sort().join('/');
+        let comparisonCandidates = comparisonCandidatesByTrio.get(trioKey);
+        if (!comparisonCandidates) {
+          comparisonCandidates = compareFormationPlacements({
+            formation,
+            progression,
+            profiles: simpleSynergyProfiles,
+          })?.candidates;
+          if (comparisonCandidates) {
+            comparisonCandidatesByTrio.set(trioKey, comparisonCandidates);
+          }
+        }
+        const placementComparison = comparisonCandidates
+          ? buildPlacementComparison(arrangement, comparisonCandidates)
+          : null;
         const rating = rateFormation({
           formation,
           dragons,
           profiles: simpleSynergyProfiles,
-          presentation,
-          signalChipsByDragonId,
+          relationships,
+          placementComparison,
         });
-        const activeRelationships = results.filter(
-          (result) => result.kind === 'setup-payoff' || result.kind === 'amplifier-output',
-        );
+        const recommendation = buildFormationRecommendation({
+          comparison: placementComparison,
+          progression,
+          dragonNamesById,
+          confidence: rating.confidence.status,
+        });
+        const activeRelationships = relationships.filter((relationship) => relationship.marginalValue > 0);
         const selectedIds = new Set([left.id, vanguard.id, right.id]);
         const resultIds = results.map((result) => result.id);
-        const relationshipKeys = activeRelationships.map(
-          (result) => `${result.kind}:${result.dragonIds.join('>')}:${result.tag ?? ''}`,
-        );
+        const relationshipKeys = relationships.map((relationship) => relationship.id);
         const componentTotal = rating.breakdown.reduce((sum, item) => sum + item.score, 0);
-        const excellentViolation =
-          rating.tier === 'Excellent' &&
-          !passesExcellentGuardrails(rating, presentation, signalChipsByDragonId);
-        const inactiveAbilityIds = activeRelationships.flatMap((result) =>
-          result.abilityIds.filter(
+        const inactiveAbilityIds = relationships.flatMap((relationship) =>
+          relationship.abilityIds.filter(
             (abilityId) => !abilityHasActiveSignal(abilityId, formation, progression),
           ),
         );
         if (inactiveAbilityIds.length > 0 && inactiveAbilityReferenceExamples.length < 50) {
-          const result = activeRelationships.find((candidate) =>
+          const relationship = relationships.find((candidate) =>
             candidate.abilityIds.some((abilityId) => inactiveAbilityIds.includes(abilityId)),
           );
-          if (result) {
+          if (relationship) {
             inactiveAbilityReferenceExamples.push({
               formation: [left.id, vanguard.id, right.id],
-              resultId: result.id,
+              resultId: relationship.id,
               inactiveAbilityIds: [
                 ...new Set(
-                  result.abilityIds.filter(
+                  relationship.abilityIds.filter(
                     (abilityId) => !abilityHasActiveSignal(abilityId, formation, progression),
                   ),
                 ),
@@ -1082,8 +1105,26 @@ function auditFormationSweep(
             });
           }
         }
+        const reversedComparison = comparisonCandidates
+          ? buildPlacementComparison(arrangement, [...comparisonCandidates].reverse())
+          : null;
+        const reversedRecommendation = buildFormationRecommendation({
+          comparison: reversedComparison,
+          progression,
+          dragonNamesById,
+          confidence: rating.confidence.status,
+        });
+        const bestCandidatesHaveFullPlacement = placementComparison?.candidates
+          .filter((candidate) => candidate.activeRelationshipValue === placementComparison.best.activeRelationshipValue)
+          .every((candidate) => candidate.placementScore === 20) ?? false;
+        const tiedValuesStable = placementComparison?.tiedBestArrangements.every((candidateArrangement) => {
+          const candidate = placementComparison.candidates.find((entry) =>
+            SIMPLE_FORMATION_POSITIONS.every((position) => entry.arrangement[position] === candidateArrangement[position]),
+          );
+          return candidate?.activeRelationshipValue === placementComparison.best.activeRelationshipValue;
+        }) ?? false;
         const localViolations = [
-          !Number.isFinite(rating.score) || rating.score < 0 || rating.score > 100
+          rating.score === null || !Number.isFinite(rating.score) || rating.score < 0 || rating.score > 100
             ? 'rating-bounds'
             : null,
           rating.breakdown.some(
@@ -1097,15 +1138,23 @@ function auditFormationSweep(
             ? 'duplicate-relationship'
             : null,
           activeRelationships.some(
-            (result) => result.dragonIds.length < 2 || result.dragonIds[0] === result.dragonIds[1],
+            (relationship) => relationship.providerDragonId === relationship.beneficiaryDragonId,
           )
             ? 'self-relationship'
             : null,
-          activeRelationships.some((result) => result.dragonIds.some((id) => !selectedIds.has(id)))
+          activeRelationships.some((relationship) =>
+            !selectedIds.has(relationship.providerDragonId) || !selectedIds.has(relationship.beneficiaryDragonId))
             ? 'outside-formation'
             : null,
           inactiveAbilityIds.length > 0 ? 'inactive-signal' : null,
-          excellentViolation ? 'excellent-guardrail' : null,
+          !placementComparison ? 'missing-placement-comparison' : null,
+          !bestCandidatesHaveFullPlacement ? 'best-placement-not-full' : null,
+          !tiedValuesStable ? 'tied-best-value-mismatch' : null,
+          results.some((result) => result.kind === 'position-conflict') ? 'position-conflict-emitted' : null,
+          recommendation.netSummary !== reversedRecommendation.netSummary ||
+          recommendation.suppressionReason !== reversedRecommendation.suppressionReason
+            ? 'unstable-recommendation'
+            : null,
         ].filter((issue): issue is string => issue !== null);
         if (localViolations.length > 0)
           violations.push(`${left.id}/${vanguard.id}/${right.id}:${localViolations.join('+')}`);
@@ -1113,22 +1162,42 @@ function auditFormationSweep(
         const components = Object.fromEntries(
           rating.breakdown.map((item) => [item.label, item.score]),
         );
+        const relationshipClasses = countBy(relationships, (relationship) => relationship.relationshipClass);
+        const redundancyRanks = countBy(relationships, (relationship) => String(relationship.redundancyRank));
         const row: FormationSummaryRow = {
           formation: [left.id, vanguard.id, right.id],
-          score: rating.score,
+          score: rating.score!,
           tier: rating.tier,
+          activeSynergyScore: components['Active Synergy'] ?? 0,
+          placementScore: components['Placement Effectiveness'] ?? 0,
+          currentPlacementValue: placementComparison?.current.activeRelationshipValue ?? 0,
+          bestPlacementValue: placementComparison?.best.activeRelationshipValue ?? 0,
           relationshipCount: activeRelationships.length,
-          missingEnablerCount: presentation.missingEnablers.length,
-          positionConflictCount: presentation.positionConflicts.length,
+          missingEnablerCount: results.filter((result) => result.kind === 'missing-enabler').length,
+          recommendation: recommendation.action?.kind ?? null,
+          suppressionReason: recommendation.suppressionReason ?? null,
+          relationshipClasses,
+          redundancyRanks,
+          gainedRelationshipIds: recommendation.gainedRelationships.map((relationship) => relationship.relationshipId),
+          lostRelationshipIds: recommendation.lostRelationships.map((relationship) => relationship.relationshipId),
           components,
         };
         rows.push(row);
-        hash.update(`${JSON.stringify({ ...row, resultIds })}\n`);
+        hash.update(`${JSON.stringify({ ...row, resultIds, relationships })}\n`);
         increment(tierCounts, rating.tier);
+        increment(scoreFrequency, String(row.score));
         increment(relationshipCountDistribution, String(row.relationshipCount));
         increment(missingEnablerDistribution, String(row.missingEnablerCount));
-        increment(positionConflictDistribution, String(row.positionConflictCount));
-        increment(kitUtilizationDistribution, String(components['Kit utilization'] ?? 0));
+        increment(placementScoreDistribution, String(row.placementScore));
+        increment(recommendationSuppressionReasonDistribution, recommendation.suppressionReason ?? 'action:swap');
+        if (recommendation.action?.kind === 'swap') meaningfulPlacementRecommendationCount += 1;
+        if (placementComparison?.current.activeRelationshipValue === placementComparison?.best.activeRelationshipValue) {
+          bestOrTiedBestCount += 1;
+        }
+        relationships.forEach((relationship) => {
+          increment(relationshipClassDistribution, relationship.relationshipClass);
+          increment(redundancyRankDistribution, String(relationship.redundancyRank));
+        });
         for (const [label, score] of Object.entries(components)) {
           const distribution = componentDistributions[label] ?? {};
           increment(distribution, String(score));
@@ -1150,6 +1219,16 @@ function auditFormationSweep(
       ? 'All exhaustive formation invariants passed.'
       : `Formation invariant violations: ${violations.slice(0, 20).join(', ')}.`,
   );
+  addCheck(
+    'FRR-C031',
+    meaningfulPlacementRecommendationCount <= rows.length,
+    `${meaningfulPlacementRecommendationCount} formations receive a meaningful placement recommendation.`,
+  );
+  addCheck(
+    'FRR-C032',
+    rows.every((row) => row.score === row.activeSynergyScore + row.placementScore),
+    'Every complete Formation Rating is the exact sum of Active Synergy and Placement Effectiveness.',
+  );
   const sortedScores = rows.map((row) => row.score).sort((left, right) => left - right);
   const topRows = [...rows].sort(compareFormationRowsDescending);
   const bottomRows = [...rows].sort(compareFormationRowsAscending);
@@ -1166,6 +1245,9 @@ function auditFormationSweep(
       maximum: sortedScores.at(-1) ?? 0,
       mean: round(totalScore / Math.max(1, sortedScores.length), 4),
       median: percentile(sortedScores, 0.5),
+      percentile10: percentile(sortedScores, 0.1),
+      percentile25: percentile(sortedScores, 0.25),
+      percentile75: percentile(sortedScores, 0.75),
       percentile90: percentile(sortedScores, 0.9),
       percentile95: percentile(sortedScores, 0.95),
       percentile99: percentile(sortedScores, 0.99),
@@ -1176,52 +1258,24 @@ function auditFormationSweep(
         .sort(([left], [right]) => left.localeCompare(right))
         .map(([label, distribution]) => [label, numericSortRecord(distribution)]),
     ),
+    scoreFrequency: numericSortRecord(scoreFrequency),
     relationshipCountDistribution: numericSortRecord(relationshipCountDistribution),
     missingEnablerDistribution: numericSortRecord(missingEnablerDistribution),
-    positionConflictDistribution: numericSortRecord(positionConflictDistribution),
-    kitUtilizationDistribution: numericSortRecord(kitUtilizationDistribution),
+    placementScoreDistribution: numericSortRecord(placementScoreDistribution),
+    recommendationSuppressionReasonDistribution: sortRecord(recommendationSuppressionReasonDistribution),
+    meaningfulPlacementRecommendationCount,
+    bestOrTiedBestPercentage: round(bestOrTiedBestCount / Math.max(1, rows.length) * 100, 4),
+    relationshipClassDistribution: sortRecord(relationshipClassDistribution),
+    redundancyRankDistribution: numericSortRecord(redundancyRankDistribution),
     topDragonFrequency: frequencyByDragon(top100),
     bottomDragonFrequency: frequencyByDragon(bottom100),
     top50: topRows.slice(0, 50),
+    top100,
     bottom50: bottomRows.slice(0, 50),
+    rows,
     invariantViolationCount: violations.length,
     inactiveAbilityReferenceExamples,
   };
-}
-
-function passesExcellentGuardrails(
-  rating: ReturnType<typeof rateFormation>,
-  presentation: ReturnType<typeof buildSimpleFormationPresentation>,
-  chips: Record<string, ReturnType<typeof buildFormationSignalChips>>,
-): boolean {
-  const component = (label: string) =>
-    rating.breakdown.find((item) => item.label === label)?.score ?? 0;
-  const missingBenefits = new Set([
-    ...presentation.missingEnablers.map(
-      (result) => `${result.dragonIds[0]}:${normalizeAuditMeaning(result.tag?.split(':').at(-1))}`,
-    ),
-    ...Object.entries(chips).flatMap(([dragonId, value]) =>
-      value.benefitsFrom
-        .filter((chip) => chip.state === 'missing')
-        .map((chip) => `${dragonId}:${normalizeAuditMeaning(chip.label)}`),
-    ),
-  ]).size;
-  const payoff = component('Realized synergy payoff');
-  const support = component('Support usefulness');
-  return (
-    payoff >= 28 &&
-    component('Kit utilization') >= 13 &&
-    missingBenefits < 3 &&
-    component('Placement / conflict risk') > 5 &&
-    !(support >= 16 && payoff < 28)
-  );
-}
-
-function normalizeAuditMeaning(value: string | undefined): string {
-  return (value ?? 'unknown')
-    .toLowerCase()
-    .replaceAll(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
 }
 
 function formationWithProfileAt(dragonId: string, position: FormationPosition): SimpleFormation {

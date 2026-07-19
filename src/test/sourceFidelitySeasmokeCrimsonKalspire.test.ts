@@ -1,21 +1,24 @@
 import { describe, expect, it } from 'vitest';
 
 import { summarizeAbility } from '../app/dragonDetailPresentation';
-import { buildFormationSignalChips } from '../app/formationCardPresentation';
 import { dragons } from '../data/dragons';
 import type { AbilityDefinition } from '../models/dragon';
-import {
-  rateFormation,
-  type FormationRatingSignalChipsByDragonId,
-} from '../services/formationRating';
+import type { FormationPlacementComparison } from '../services/formationPlacementComparison';
+import { rateFormation } from '../services/formationRating';
 import { evaluateFormation } from '../synergy/evaluateFormation';
-import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { buildSemanticRelationships, relationshipValue } from '../synergy/semanticRelationships';
 import type {
   DragonSynergyProfile,
   SimpleFormation,
   SimpleProgressionByDragonId,
 } from '../synergy/types';
+
+type FormationArrangementFixture = {
+  'left-flank': string;
+  vanguard: string;
+  'right-flank': string;
+};
 
 const dragon = (id: string) => dragons.find((candidate) => candidate.id === id)!;
 const ability = (dragonId: string, abilityId: string): AbilityDefinition =>
@@ -296,31 +299,14 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
         };
       }
       const results = evaluateFormation({ formation, progression, profiles }).results;
-      const presentation = buildSimpleFormationPresentation({
-        formation,
-        dragons,
-        mappedProfileIds: new Set(profiles.map((candidate) => candidate.dragonId)),
-        results,
-      });
-      const signalChipsByDragonId: FormationRatingSignalChipsByDragonId = {};
-      for (const [position, dragonId] of Object.entries(formation) as Array<
-        [keyof SimpleFormation, string]
-      >) {
-        signalChipsByDragonId[dragonId] = buildFormationSignalChips({
-          profile: profiles.find((candidate) => candidate.dragonId === dragonId),
-          position,
-          formation,
-          profiles,
-          progression,
-        });
-      }
+      const relationships = buildSemanticRelationships(results, profiles);
       return {
         rating: rateFormation({
           formation,
           dragons,
           profiles,
-          presentation,
-          signalChipsByDragonId,
+          relationships,
+          placementComparison: fixedBestPlacement(formation as FormationArrangementFixture, relationships),
         }),
         results,
       };
@@ -375,7 +361,7 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
         .slice()
         .sort(
           (left, right) =>
-            right[key].rating.score - left[key].rating.score ||
+            (right[key].rating.score ?? 0) - (left[key].rating.score ?? 0) ||
             left.formation.join('/').localeCompare(right.formation.join('/')),
         )
         .slice(0, 50)
@@ -383,8 +369,8 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
     const summary = {
       changed: changed.length,
       tierChanged: changed.filter((row) => row.before.rating.tier !== row.after.rating.tier).length,
-      minimumDelta: Math.min(...changed.map((row) => row.after.rating.score - row.before.rating.score)),
-      maximumDelta: Math.max(...changed.map((row) => row.after.rating.score - row.before.rating.score)),
+      minimumDelta: Math.min(...changed.map((row) => (row.after.rating.score ?? 0) - (row.before.rating.score ?? 0))),
+      maximumDelta: Math.max(...changed.map((row) => (row.after.rating.score ?? 0) - (row.before.rating.score ?? 0))),
       top50Changed: JSON.stringify(top('before')) !== JSON.stringify(top('after')),
       seasmokeExamples: deltaDetails
         .filter((row) => row.gained.some((id) => id.endsWith(':seasmoke')))
@@ -437,13 +423,13 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
     };
     expect(rows).toHaveLength(26_970);
     expect(summary).toMatchObject({
-      changed: 564,
-      tierChanged: 59,
-      minimumDelta: -6,
+      changed: 351,
+      tierChanged: 110,
+      minimumDelta: 2,
       maximumDelta: 8,
       top50Changed: true,
       perCorrection: {
-        seasmoke: { changed: 564, tierChanged: 59 },
+        seasmoke: { changed: 351, tierChanged: 110 },
         kalspire: { changed: 0, tierChanged: 0 },
       },
       formationsLosingRelationships: [],
@@ -452,7 +438,7 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
     expect(summary.seasmokeExamples).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          formation: 'syrax/caraxes/seasmoke',
+          formation: 'vhagar/caraxes/seasmoke',
           gained: ['amplifier-output:caraxes:stat:strength:seasmoke'],
         }),
       ]),
@@ -474,3 +460,12 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
     expect(summary.everyChangeTraced).toBe(true);
   }, 120_000);
 });
+
+function fixedBestPlacement(
+  formation: FormationArrangementFixture,
+  relationships: ReturnType<typeof buildSemanticRelationships>,
+): FormationPlacementComparison {
+  const value = relationshipValue(relationships);
+  const candidate = { arrangement: formation, activeRelationshipValue: value, placementScore: 20, relationships };
+  return { current: candidate, best: candidate, candidates: [candidate], tiedBestArrangements: [formation], valueDelta: 0, relativeDelta: 0, meaningfulImprovement: false, placementScore: 20, status: 'best' };
+}

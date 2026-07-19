@@ -24,7 +24,7 @@ import {
   SetPasswordDialog,
   SignInDialog,
 } from './AccountUi';
-import { CompactFormationRatingSummary, SimpleFormationAnalysis } from './SimpleFormationAnalysis';
+import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
 import { RosterWorkspace } from './RosterWorkspace';
 import {
@@ -78,9 +78,12 @@ import {
   type Formation,
 } from '../services/teamShare';
 import { rateFormation } from '../services/formationRating';
+import { compareFormationPlacements } from '../services/formationPlacementComparison';
+import { buildFormationRecommendation } from '../services/formationRecommendation';
+import { buildFormationFindings } from '../services/formationFindings';
 import { evaluateFormation } from '../synergy/evaluateFormation';
-import { buildSimpleFormationPresentation } from '../synergy/formationPresentation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { buildSemanticRelationships } from '../synergy/semanticRelationships';
 import { simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
 import type { AccountServices } from '../cloud/types';
@@ -703,13 +706,13 @@ function HomeSection({
         <FeatureCard
           icon={Swords}
           title="Build Formations"
-          description="Build three-dragon formations, compare explainable ratings, and review active synergies and placement risks."
+          description="Build three-dragon formations, compare explainable ratings, and review active relationships across all six placements."
           onClick={onTeam}
         />
         <FeatureCard
           icon={Flame}
           title="Understand Formation Ratings"
-          description="Compare realized synergy, support usefulness, Kit Utilization, and conflict risk."
+          description="See canonical active synergy once, exact placement effectiveness, and prioritized diagnostic gaps."
           onClick={onTeam}
         />
       </div>
@@ -737,7 +740,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>This release completes the current controller-reviewed screenshot-source fidelity pass for all 31 dragons, preserving effect values, Habit Level progressions, targeting, status definitions, scaling, mitigation, and visible source uncertainty; curated synergy profiles remain unchanged.</p>
+          <p>Formation Rating now scores canonical active relationships once and compares all six placements for the selected trio. Normal Vanguard alternatives and kit gaps remain explainable diagnostics instead of duplicate penalties.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -1092,21 +1095,20 @@ function FormationBuilderSection({
     [dragonPoolMode, formation, roster],
   );
   const selectedCount = FORMATION_POSITIONS.filter((position) => formation[position]).length;
-  const simpleResults =
-    selectedCount >= 2
+  const simpleResults = useMemo(
+    () => selectedCount >= 2
       ? evaluateFormation({
           formation,
           progression,
           profiles: simpleSynergyProfiles,
         }).results
-      : [];
-  const mappedProfileIds = new Set(simpleSynergyProfiles.map((profile) => profile.dragonId));
-  const presentation = buildSimpleFormationPresentation({
-    formation,
-    dragons,
-    mappedProfileIds,
-    results: simpleResults,
-  });
+      : [],
+    [formation, progression, selectedCount],
+  );
+  const semanticRelationships = useMemo(
+    () => buildSemanticRelationships(simpleResults, simpleSynergyProfiles),
+    [simpleResults],
+  );
   const signalChipsByPosition = useMemo(
     () =>
       Object.fromEntries(
@@ -1136,13 +1138,50 @@ function FormationBuilderSection({
       ),
     [formation, signalChipsByPosition],
   );
-  const rating = rateFormation({
-    formation,
-    dragons,
-    profiles: simpleSynergyProfiles,
-    presentation,
-    signalChipsByDragonId,
-  });
+  const placementComparison = useMemo(
+    () => compareFormationPlacements({
+      formation,
+      progression,
+      profiles: simpleSynergyProfiles,
+    }),
+    [formation, progression],
+  );
+  const rating = useMemo(
+    () => rateFormation({
+      formation,
+      dragons,
+      profiles: simpleSynergyProfiles,
+      relationships: semanticRelationships,
+      placementComparison,
+    }),
+    [formation, placementComparison, semanticRelationships],
+  );
+  const dragonNamesById = useMemo(
+    () => new Map(dragons.map((dragon) => [dragon.id, dragon.name])),
+    [],
+  );
+  const recommendation = useMemo(
+    () => buildFormationRecommendation({
+      comparison: placementComparison,
+      progression,
+      dragonNamesById,
+      confidence: rating.confidence.status,
+    }),
+    [dragonNamesById, placementComparison, progression, rating.confidence.status],
+  );
+  const findings = useMemo(
+    () => buildFormationFindings({
+      formation,
+      progression,
+      profiles: simpleSynergyProfiles,
+      results: simpleResults,
+      relationships: semanticRelationships,
+      signalChipsByDragonId,
+      recommendation,
+      rating,
+    }),
+    [formation, progression, rating, recommendation, semanticRelationships, signalChipsByDragonId, simpleResults],
+  );
 
   const updatePosition = (position: FormationPosition, nextId: string | null) => {
     onFormationChange(preventDuplicateFormationPlacement(formation, position, nextId));
@@ -1203,7 +1242,13 @@ function FormationBuilderSection({
         <span><Circle size={13} aria-hidden="true" /> Available</span>
         <span><LockKeyhole size={13} aria-hidden="true" /> Progression locked</span>
       </div>
-      <CompactFormationRatingSummary presentation={presentation} rating={rating} />
+      <SimpleFormationAnalysis
+        rating={rating}
+        relationships={semanticRelationships}
+        findings={findings}
+        recommendation={recommendation}
+        placementComparison={placementComparison}
+      />
       <div className="formation-board" aria-label="Formation positions">
         {FORMATION_POSITIONS.map((position) => {
           const dragon = dragons.find((candidate) => candidate.id === formation[position]) ?? null;
@@ -1226,7 +1271,6 @@ function FormationBuilderSection({
           );
         })}
       </div>
-      <SimpleFormationAnalysis presentation={presentation} dragons={dragons} formation={formation} rating={rating} />
       {selectorPosition ? (
         <FormationDragonSelectorDialog
           filters={selectorFilters}
@@ -1616,7 +1660,7 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
             <li>Review verified ability and profile information.</li>
             <li>Build three-dragon formations.</li>
             <li>Compare explainable Formation Ratings.</li>
-            <li>Review active synergy, Kit Utilization, and placement risks.</li>
+            <li>Review canonical active synergy, exact placement effectiveness, and diagnostic kit gaps.</li>
           </ul>
         </div>
 
