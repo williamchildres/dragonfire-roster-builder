@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-21T21:53:38.203Z",
+  "generatedAt": "2026-07-21T22:54:42.245Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/roster-optimizer-strategies",
-    "commit": "96906015750a87b99a575130ea8c3fc83cc8a560",
-    "databaseVersion": "0.13.0",
+    "branch": "feature/add-all-dragons-roster-defaults",
+    "commit": "129510efe8a9fe77efd64cecc210496853620e74",
+    "databaseVersion": "0.14.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 47,
-    "testCaseCount": 401,
+    "testFileCount": 48,
+    "testCaseCount": 406,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
