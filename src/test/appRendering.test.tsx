@@ -239,10 +239,10 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.11\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.12\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('scores canonical active relationships once');
-    expect(latestUpdate).toHaveTextContent('Normal Vanguard alternatives and kit gaps');
+    expect(latestUpdate).toHaveTextContent('10 non-overlapping formations');
+    expect(latestUpdate).toHaveTextContent('Formation Rating v2 remains unchanged');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
@@ -991,6 +991,7 @@ describe('Dragonfire Lab app', () => {
       'Overview',
       'Roster',
       'Formations',
+      'Optimizer',
       'About',
     ]);
     expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();

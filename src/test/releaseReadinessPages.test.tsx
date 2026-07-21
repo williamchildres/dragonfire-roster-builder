@@ -16,9 +16,9 @@ describe('release readiness pages', () => {
     const nav = screen.getByRole('navigation', { name: /primary sections/i });
     const navButtons = within(nav).getAllByRole('button').map((button) => button.textContent?.trim());
 
-    expect(navButtons).toEqual(['Overview', 'Roster', 'Formations', 'About']);
+    expect(navButtons).toEqual(['Overview', 'Roster', 'Formations', 'Optimizer', 'About']);
     expect(within(nav).getByRole('button', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
-    expect(within(nav).queryByRole('button', { name: /sign in|account|pro|optimizer|saved formation/i })).not.toBeInTheDocument();
+    expect(within(nav).queryByRole('button', { name: /sign in|account|pro|saved formation/i })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: /data status/i })).not.toBeInTheDocument();
     expect(within(nav).queryByRole('button', { name: /support/i })).not.toBeInTheDocument();

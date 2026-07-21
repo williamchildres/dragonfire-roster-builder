@@ -15,6 +15,7 @@ Public site: https://dragonfirelab.com
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
+- Roster Optimizer v1 with an exact rarity-prioritized allocation of 10 non-overlapping formations from current My Roster progression.
 - Formation share links and roster JSON import/export.
 - Lightweight project-context export for handoffs.
 
@@ -44,6 +45,14 @@ The 0.11.0 tiers were calibrated from all 26,970 ordered formations: Excellent â
 
 Typed defensive and Recovery Received support may be presented through explicitly non-scoring simple-profile signals. Battlefield-only conditions, troop-gated effects without selected troop context, and conditional status-copy mechanics remain detailed-only. This keeps those mechanics visible without treating defense as offensive support.
 
+## Roster Optimizer
+
+Roster Optimizer v1 uses the same current My Roster eligibility and progression resolution as Formation Builder. At least 30 owned dragons are required. It evaluates every unique three-dragon combination, keeps the best or tied-best of all six Left Flank/Vanguard/Right Flank assignments, and selects exactly 10 formations with 30 unique dragons.
+
+Inclusion priority is strictly lexicographic: maximize Legendary dragons, then Epic dragons, with Rare dragons filling the remaining slots. Formation quality is compared only after rarity inclusion is equal: total Formation Rating, weakest formation, the complete ascending rating vector, uncapped relationship value, active relationship count, then a stable canonical key. The allocation is exact and global, not greedy. Every optimization phase must be proven optimal before the UI accepts a result.
+
+Star Rank and Dragon Level control unlocks and current Formation Ratings. Habit Levels remain stored and are preserved when a result is opened in Formation Builder, but they do not affect optimizer ranking or the roster fingerprint. Formation Rating v2 is reused unchanged, no combat simulation is performed, results remain local, and no database migration is required. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md) and the deterministic audit under [`docs/audits/`](docs/audits/).
+
 ## Development
 
 Use the project scripts:
@@ -52,10 +61,14 @@ Use the project scripts:
 npm run lint
 npm run test
 npm run build
+npm run audit:full-roster
+npm run audit:optimizer
 npm run export:context
 npm run validate:context
 npm run package:context
 ```
+
+The normal full-roster audit validates all 26,970 formations in memory against the unchanged public hash and the committed Markdown summary. When a complete diagnostic trace is needed, `npm run audit:full-roster:write-json` writes an ignored file under `Scratch/`; release branches do not commit duplicate full JSON traces.
 
 If `npm` is unavailable in the local shell, run the equivalent direct Node entry points through the installed dependencies.
 
@@ -79,10 +92,10 @@ There is no `report:synergy` command. The old combat-analysis report and framewo
 4. Add or update the curated simple synergy profile.
 5. Add one profile-audit disposition for each detailed ability.
 6. Run lint, tests, build, context export, context validation, and context ZIP packaging.
-7. Visually confirm My Roster, the Add Dragon flow, and Formation Builder.
+7. Visually confirm My Roster, the Add Dragon flow, Formation Builder, and Roster Optimizer at desktop and phone widths.
 
 Do not add capability outputs, modifier capabilities, traces, expected interactions, formation-specific regression passes, or combat-simulation machinery.
 
 ## Version Notes
 
-Current release: `0.10.0`. Source data schema: `13`. Local and cloud roster schemas: `5`. Schema 5 stores Habit Levels sparsely: locked habits have no key, unlocked habits always have a value from 1 through 5, and lowering progression below an unlock threshold deletes the saved level. Legacy unlocked null/zero values migrate to Level 1; locked and unknown legacy values are discarded. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); roster schema 5 is a JSON-contract change and requires no SQL migration. Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.
+Current release: `0.12.0`. Source data schema: `13`. Local and cloud roster schemas: `5`. Schema 5 stores Habit Levels sparsely: locked habits have no key, unlocked habits always have a value from 1 through 5, and lowering progression below an unlock threshold deletes the saved level. Legacy unlocked null/zero values migrate to Level 1; locked and unknown legacy values are discarded. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); Roster Optimizer v1 adds no SQL migration. Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.

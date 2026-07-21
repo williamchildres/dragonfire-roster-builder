@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.12.0 - 2026-07-21
+
+- Added Roster Optimizer v1, which selects exactly 10 pairwise-disjoint three-dragon formations from the current eligible My Roster pool and clearly identifies unused eligible dragons.
+- Added strict lexicographic rarity inclusion (Legendary, then Epic, then Rare), followed by total rating, weakest-formation, full rating-vector, relationship-value, relationship-count, and stable canonical tie-breaks.
+- Added unique-trio candidate generation that evaluates all six placements through the existing semantic relationship, Formation Rating v2, recommendation, and finding services; retained best placements always calculate 20/20 Placement Effectiveness.
+- Added an exact browser-worker MILP pipeline backed by HiGHS WebAssembly. Every lexicographic phase must return proven optimal status; cancellation terminates the worker and no timeout or heuristic incumbent is labeled optimal.
+- Added ranking fingerprints, stale-result handling, accessible running/cancellation/failure states, ten responsive result cards, technical diagnostics, neutral unused-dragon presentation, and exact My Roster Formation Builder handoff.
+- Added independent branch-and-bound/brute-force exactness tests, the mandatory greedy counterexample (101 greedy vs 120 exact), deterministic maxed and mixed-progression audits, and optimizer result hashes.
+- Configured every production MILP phase with zero relative and absolute MIP gaps through a checked HiGHS WASM option adapter, with adversarial histogram, stable-key, relationship, reversed-order, and randomized oracle-parity tests.
+- Kept the 0.12.0 full-roster audit summary while moving the duplicate complete JSON trace to an explicit ignored diagnostic workflow.
+- Formation Rating v2 remains unchanged at `12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9`. Source schema remains `13`, local/cloud roster schemas remain `5`, all 31 dragons and 224 curated signals are unchanged, and no Supabase migration was added.
+
 ## 0.11.0 - 2026-07-18
 
 - Replaced the public Formation Rating contract with Active Synergy (80) and Placement Effectiveness (20). Active relationships now score once through canonical provider → semantic tag → beneficiary edges, with fixed class values, class caps, participation bonuses, and deterministic provider redundancy.
