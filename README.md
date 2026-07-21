@@ -8,7 +8,7 @@ Public site: https://dragonfirelab.com
 
 ## Current Features
 
-- A compact, filterable My Roster workspace with selectable owned-dragon rows, one dedicated editor, and a focused phone list/editor flow.
+- A compact, filterable My Roster workspace with selectable owned-dragon rows, one dedicated editor, a focused phone list/editor flow, and an Add All Dragons convenience action.
 - Full raw Command, Trait, and Habit wording for all 31 known dragons.
 - Curated simple synergy profiles for all 31 known dragons.
 - Complete Legendary (9 / 9), Epic (10 / 10), and Rare (12 / 12) coverage.
@@ -27,7 +27,7 @@ The repository does not store execution-level schedules, rolls, attempts, target
 
 Account synchronization stores one RLS-protected normalized roster row per authenticated user. It synchronizes ownership, Star Rank, `reignLevel` (shown as Dragon Level), Habit Levels, and dragon notes. Formations remain browser-local. See [`docs/setup/supabase-account-roster.md`](docs/setup/supabase-account-roster.md) for migration, environment, and security setup.
 
-The Roster workspace keeps search, rarity, breed, details filters, sorting, and row selection as ephemeral UI state. Each progression or notes edit updates the authoritative roster immediately and follows the existing browser/account synchronization path. See [`docs/roster-workspace.md`](docs/roster-workspace.md) for interaction and filter definitions.
+The Roster workspace keeps search, rarity, breed, details filters, sorting, and row selection as ephemeral UI state. Individual additions and Add All Dragons use one ownership transition: new dragons begin at Star 1 and Dragon Level 1, while re-added dragons retain saved valid progression, notes, and Habit Levels. Add All Dragons uses the full canonical collection, ignores filters, and commits one roster snapshot through the existing browser/account synchronization path. See [`docs/roster-workspace.md`](docs/roster-workspace.md) for interaction and filter definitions.
 
 ## Formation Builder
 
@@ -100,4 +100,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.13.0`. Source data schema: `13`. Local and cloud roster schemas: `5`. Schema 5 stores Habit Levels sparsely: locked habits have no key, unlocked habits always have a value from 1 through 5, and lowering progression below an unlock threshold deletes the saved level. Legacy unlocked null/zero values migrate to Level 1; locked and unknown legacy values are discarded. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); optimizer strategy choice adds no SQL migration. Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.
+Current release: `0.14.0`. Source data schema: `13`. Local and cloud roster schemas: `5`. New owned dragons default to Star 1 and Dragon Level 1; re-adding a removed dragon preserves valid saved progression. Schema 5 stores Habit Levels sparsely: locked habits have no key, unlocked habits always have a value from 1 through 5, and lowering progression below an unlock threshold deletes the saved level. Legacy unlocked null/zero values migrate to Level 1; locked and unknown legacy values are discarded. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); optimizer strategy choice adds no SQL migration. Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.

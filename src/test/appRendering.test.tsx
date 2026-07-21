@@ -125,6 +125,19 @@ describe('Dragonfire Lab app', () => {
     expect(within(screen.getByRole('dialog', { name: /syrax/i })).getByLabelText(/personal notes/i)).toHaveValue('Keep with fire support.');
   });
 
+  it('initializes an individually added dragon at Star 1 and Dragon Level 1', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await openAddDragon(user);
+    await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
+    await user.click(screen.getByRole('button', { name: /add to roster/i }));
+
+    const syraxEditor = screen.getByRole('complementary', { name: 'Syrax' });
+    expect(within(syraxEditor).getByLabelText(/star rank/i)).toHaveValue('1');
+    expect(within(syraxEditor).getByLabelText(/dragon level/i)).toHaveValue(1);
+  });
+
   it('returns to the mobile roster list after an Add Dragon request has been consumed', async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -239,10 +252,10 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.13\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.14\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Strongest 5 + Backup 5');
-    expect(latestUpdate).toHaveTextContent('Best 10 Overall remains available');
+    expect(latestUpdate).toHaveTextContent('add every missing canonical dragon');
+    expect(latestUpdate).toHaveTextContent('Star 1 and Dragon Level 1');
     expect(latestUpdate).toHaveTextContent('Formation Rating v2 is unchanged');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();

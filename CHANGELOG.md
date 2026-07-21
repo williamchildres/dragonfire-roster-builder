@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.0 - 2026-07-21
+
+- Added the My Roster **Add All Dragons** action. It derives missing dragons from the complete canonical collection, so filters, sort order, visible cards, and future dragon additions never limit the bulk result.
+- Added one shared ownership-transition helper for individual and bulk additions. New entries begin owned at Star Rank 1 and Dragon Level 1 (`reignLevel`); valid retained progression, notes, and normalized Habit Levels are preserved when a removed dragon is re-added.
+- Added an accessible confirmation dialog with the live canonical missing count, singular/plural copy, Cancel, focus return, Escape, and completed `All Dragons Added` state. Bulk addition performs one immutable roster snapshot update, one browser persistence pass, and one debounced account upsert when cloud sync is active.
+- Source schema remains `13`; local and cloud roster schemas remain `5`; dragon data, Formation Rating v2, optimizer contracts, and Supabase migrations are unchanged.
+
 ## 0.13.0 - 2026-07-21
 
 - Added a default Strongest 5 + Backup 5 strategy that reflects the five-formation activation limit, explicitly separates five Primary and five Backup formations, and never repeats a dragon across waves.

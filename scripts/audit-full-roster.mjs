@@ -46,7 +46,7 @@ try {
     ...report,
     sourceOfTruth: {
       startingMainSha,
-      branch: 'feature/roster-optimizer-strategies',
+      branch: 'feature/add-all-dragons-roster-defaults',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
@@ -108,7 +108,7 @@ try {
   } else {
     const committedMarkdown = await readFile(markdownPath, 'utf8');
     const stableFieldsMatch =
-      auditVersion === '0.13.0' &&
+      auditVersion === '0.14.0' &&
       report.formationSweep.deterministicFullResultHash ===
         '12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9' &&
       report.formationSweep.actualCount === 26970 &&

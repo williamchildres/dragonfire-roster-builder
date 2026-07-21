@@ -90,6 +90,59 @@ describe('RosterWorkspace', () => {
     expect(screen.getByRole('heading', { name: 'My Roster' }).parentElement).toHaveClass('roster-workspace-header');
   });
 
+  it('offers canonical bulk addition with confirmation and a disabled completed state', async () => {
+    const user = userEvent.setup();
+    const onAddAllDragons = vi.fn();
+    render(<RosterWorkspace
+      allDragons={workspaceDragons}
+      roster={{ ...makeRoster(), vhagar: { ...makeRoster().vhagar!, owned: false } }}
+      successMessage={null}
+      selectionRequest={null}
+      onSelectionRequestConsumed={() => undefined}
+      onUpdateRoster={() => undefined}
+      onOpenDetails={() => undefined}
+      onOpenAddDragon={() => undefined}
+      onAddAllDragons={onAddAllDragons}
+      onExport={() => undefined}
+      onImport={() => undefined}
+      onClear={() => undefined}
+      accountConfigured={false}
+      session={null}
+      syncStatus="local-only"
+      onOpenAccount={() => undefined}
+      onOpenSignIn={() => undefined}
+      onResolveSync={() => undefined}
+      onRetrySync={() => undefined}
+    />);
+
+    await user.click(screen.getByRole('button', { name: 'Add all 1 missing dragons' }));
+    expect(screen.getByRole('dialog', { name: 'Add All Dragons?' })).toHaveTextContent('Add 1 missing dragon');
+    await user.click(screen.getByRole('button', { name: 'Add 1 Dragon' }));
+    expect(onAddAllDragons).toHaveBeenCalledTimes(1);
+
+    render(<RosterWorkspace
+      allDragons={workspaceDragons}
+      roster={makeRoster()}
+      successMessage={null}
+      selectionRequest={null}
+      onSelectionRequestConsumed={() => undefined}
+      onUpdateRoster={() => undefined}
+      onOpenDetails={() => undefined}
+      onOpenAddDragon={() => undefined}
+      onExport={() => undefined}
+      onImport={() => undefined}
+      onClear={() => undefined}
+      accountConfigured={false}
+      session={null}
+      syncStatus="local-only"
+      onOpenAccount={() => undefined}
+      onOpenSignIn={() => undefined}
+      onResolveSync={() => undefined}
+      onRetrySync={() => undefined}
+    />);
+    expect(screen.getAllByRole('button', { name: 'All Dragons Added' }).at(-1)).toBeDisabled();
+  });
+
   it('keeps Search and Sort visible while disclosing advanced filters with an active count', async () => {
     const user = userEvent.setup();
     render(<WorkspaceHarness />);
