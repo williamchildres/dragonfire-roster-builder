@@ -3,6 +3,7 @@ import { dragons } from '../data/dragons';
 import {
   buildOptimizerRosterSnapshot,
   createRosterOptimizerFingerprint,
+  createRosterOptimizerRequestFingerprint,
   generateOptimizerFormationCandidates,
 } from '../optimizer/rosterOptimizerCandidates';
 import { buildPlacementComparison, compareFormationPlacements } from '../services/formationPlacementComparison';
@@ -99,6 +100,14 @@ describe('optimizer candidate generation and roster progression', () => {
       buildOptimizerRosterSnapshot(dragons, second),
     );
     expect(secondFingerprint).toBe(firstFingerprint);
+  });
+
+  it('includes strategy and contract metadata in the request fingerprint', () => {
+    const snapshot = buildOptimizerRosterSnapshot(dragons, rosterFor(trioIds, 10, 16));
+    expect(createRosterOptimizerRequestFingerprint(snapshot, 'primary-five-backup-five'))
+      .not.toBe(createRosterOptimizerRequestFingerprint(snapshot, 'best-ten-overall'));
+    expect(createRosterOptimizerRequestFingerprint([...snapshot].reverse(), 'best-ten-overall'))
+      .toBe(createRosterOptimizerRequestFingerprint(snapshot, 'best-ten-overall'));
   });
 });
 

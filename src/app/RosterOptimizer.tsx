@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Dragon, DragonRarity, OwnedDragon } from '../models/dragon';
 import {
   buildOptimizerRosterSnapshot,
-  createRosterOptimizerFingerprint,
+  createRosterOptimizerRequestFingerprint,
 } from '../optimizer/rosterOptimizerCandidates';
 import {
   RosterOptimizerClient,
@@ -11,11 +11,17 @@ import {
 } from '../optimizer/rosterOptimizerClient';
 import {
   RosterOptimizerCancelledError,
+  type BestTenOverallOptimizationResult,
   type OptimizedFormation,
   type OptimizerRosterDragon,
+  type OptimizerWaveResult,
+  type PrimaryBackupOptimizationResult,
   type RosterOptimizationResult,
+  type RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationPlacementComparison';
+
+const defaultStrategy: RosterOptimizerStrategy = 'primary-five-backup-five';
 
 export function RosterOptimizer({
   allDragons,
@@ -34,36 +40,40 @@ export function RosterOptimizer({
     suppliedRunner ? null : new RosterOptimizerClient(),
   );
   const runner = suppliedRunner ?? ownedRunner!;
+  const [strategy, setStrategy] = useState<RosterOptimizerStrategy>(defaultStrategy);
   const snapshot = useMemo(
     () => buildOptimizerRosterSnapshot(allDragons, roster),
     [allDragons, roster],
   );
-  const fingerprint = useMemo(
-    () => createRosterOptimizerFingerprint(snapshot),
-    [snapshot],
+  const requestFingerprint = useMemo(
+    () => createRosterOptimizerRequestFingerprint(snapshot, strategy),
+    [snapshot, strategy],
   );
-  const latestFingerprint = useRef(fingerprint);
+  const latestRequestFingerprint = useRef(requestFingerprint);
   const [status, setStatus] = useState<'idle' | 'running' | 'success' | 'error'>('idle');
   const [result, setResult] = useState<RosterOptimizationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const eligibleCounts = rarityCounts(snapshot.map((dragon) => dragon.rarity));
-  const isStale = Boolean(result && result.rosterFingerprint !== fingerprint);
+  const isStale = Boolean(result && result.requestFingerprint !== requestFingerprint);
 
   useEffect(() => () => {
     if (!suppliedRunner) ownedRunner?.dispose();
   }, [ownedRunner, suppliedRunner]);
 
   useEffect(() => {
-    latestFingerprint.current = fingerprint;
-  }, [fingerprint]);
+    latestRequestFingerprint.current = requestFingerprint;
+  }, [requestFingerprint]);
 
   const run = async () => {
-    const requestFingerprint = fingerprint;
+    const activeFingerprint = requestFingerprint;
     setStatus('running');
     setError(null);
     try {
-      const response = await runner.run(roster);
-      if (latestFingerprint.current !== requestFingerprint) {
+      const response = await runner.run(roster, strategy);
+      if (
+        latestRequestFingerprint.current !== activeFingerprint ||
+        response.requestFingerprint !== activeFingerprint
+      ) {
         setStatus('idle');
         return;
       }
@@ -93,7 +103,7 @@ export function RosterOptimizer({
       <header className="optimizer-header">
         <p className="eyebrow">Exact global allocation</p>
         <h2 id="optimizer-title">Roster Optimizer</h2>
-        <p>Build the best complete set of 10 formations from your current roster. Each dragon can be used only once.</p>
+        <p>Build 10 non-overlapping formations from your current roster, with a strategy that reflects how you play.</p>
       </header>
 
       <div className="optimizer-roster-summary" aria-label="Eligible roster summary">
@@ -106,6 +116,37 @@ export function RosterOptimizer({
       <p className="optimizer-policy-note">
         Recommendations use your owned dragons, current Star Ranks, and Dragon Levels. Habit Levels are preserved but do not change synergy ranking.
       </p>
+
+      <fieldset className="optimizer-strategy" disabled={status === 'running'}>
+        <legend>Optimization Strategy</legend>
+        <label className={strategy === 'primary-five-backup-five' ? 'is-selected' : undefined}>
+          <input
+            type="radio"
+            name="optimizer-strategy"
+            value="primary-five-backup-five"
+            checked={strategy === 'primary-five-backup-five'}
+            onChange={() => setStrategy('primary-five-backup-five')}
+          />
+          <span>
+            <strong>Strongest 5 + Backup 5</strong>
+            <small>Prioritize your five active formations first, then optimize five Backup formations from the remaining dragons.</small>
+            <em>Legendary dragons are prioritized into Primary before Epic and Rare.</em>
+          </span>
+        </label>
+        <label className={strategy === 'best-ten-overall' ? 'is-selected' : undefined}>
+          <input
+            type="radio"
+            name="optimizer-strategy"
+            value="best-ten-overall"
+            checked={strategy === 'best-ten-overall'}
+            onChange={() => setStrategy('best-ten-overall')}
+          />
+          <span>
+            <strong>Best 10 Overall</strong>
+            <small>Optimize all ten formations as one equally weighted collection.</small>
+          </span>
+        </label>
+      </fieldset>
 
       {snapshot.length < 30 ? (
         <div className="optimizer-unavailable" role="status">
@@ -123,7 +164,9 @@ export function RosterOptimizer({
             onClick={() => void run()}
           >
             <Sparkles size={18} aria-hidden="true" />
-            {result ? 'Run Again' : 'Find My Best 10 Formations'}
+            {strategy === 'primary-five-backup-five'
+              ? 'Find My Primary & Backup Formations'
+              : 'Find My Best 10 Overall'}
           </button>
           {status === 'running' ? (
             <button type="button" className="secondary-button" onClick={cancel}>
@@ -134,7 +177,7 @@ export function RosterOptimizer({
       )}
 
       <div className="sr-only" role="status" aria-live="polite">
-        {status === 'running' ? 'Finding the exact best complete allocation.' : null}
+        {status === 'running' ? 'Finding the exact optimal roster allocation.' : null}
         {status === 'success' ? 'Exact optimal roster allocation ready.' : null}
         {status === 'error' ? error : null}
       </div>
@@ -142,7 +185,7 @@ export function RosterOptimizer({
         <div className="optimizer-running" role="status">
           <span className="optimizer-spinner" aria-hidden="true" />
           <div>
-            <strong>Finding the exact best complete allocation…</strong>
+            <strong>Finding the exact optimal allocation…</strong>
             <p>Evaluating every trio and proving the global result. No percentage is estimated.</p>
           </div>
         </div>
@@ -150,7 +193,7 @@ export function RosterOptimizer({
       {error ? <div className="status-message error" role="alert">{error}</div> : null}
       {isStale ? (
         <div className="optimizer-stale" role="status">
-          Your roster’s ranking-relevant progression changed. Run the optimizer again to refresh this result.
+          Your roster progression or optimization strategy changed. Run the optimizer again to refresh this result.
         </div>
       ) : null}
       {result ? (
@@ -163,20 +206,7 @@ export function RosterOptimizer({
         />
       ) : null}
 
-      <details className="optimizer-methodology">
-        <summary>How this was chosen</summary>
-        <div>
-          <p>The optimizer uses eligible dragons from My Roster and requires at least 30.</p>
-          <ul>
-            <li>Legendary inclusion is prioritized over Epic; Epic is prioritized over Rare.</li>
-            <li>Every unique three-dragon combination and all six position assignments are evaluated.</li>
-            <li>Exactly 10 formations are selected globally with no dragon reuse; this is not a greedy list.</li>
-            <li>Formation Rating v2 is reused unchanged. Equal totals favor the stronger weakest formation and then the complete rating vector.</li>
-            <li>Star Rank and Dragon Level unlocks are respected. Habit Levels are preserved but do not affect v1 ranking.</li>
-            <li>No combat, damage, troop-capacity, or battle simulation is performed.</li>
-          </ul>
-        </div>
-      </details>
+      <Methodology strategy={strategy} />
     </section>
   );
 }
@@ -200,42 +230,152 @@ function OptimizerResultView({
     <div className={stale ? 'optimizer-result is-stale' : 'optimizer-result'}>
       <header className="optimizer-result-header">
         <div>
-          <p className="eyebrow">Best complete 10-formation allocation</p>
+          <p className="eyebrow">
+            {result.strategy === 'primary-five-backup-five'
+              ? 'Strongest 5 + Backup 5'
+              : 'Best 10 Overall'}
+          </p>
           <h3>Exact optimal result</h3>
         </div>
         <span className="optimizer-optimal-badge"><CircleCheck size={17} aria-hidden="true" /> Proven optimal</span>
       </header>
+      {result.strategy === 'primary-five-backup-five' ? (
+        <PrimaryBackupResult
+          result={result}
+          dragonsById={dragonsById}
+          stale={stale}
+          onOpenFormation={onOpenFormation}
+        />
+      ) : (
+        <BestTenResult
+          result={result}
+          dragonsById={dragonsById}
+          stale={stale}
+          onOpenFormation={onOpenFormation}
+        />
+      )}
+      <UnusedDragons
+        result={result}
+        dragonsById={dragonsById}
+        progressionById={progressionById}
+      />
+      <TechnicalDetails result={result} />
+    </div>
+  );
+}
+
+function BestTenResult({
+  result,
+  dragonsById,
+  stale,
+  onOpenFormation,
+}: {
+  result: BestTenOverallOptimizationResult;
+  dragonsById: Map<string, Dragon>;
+  stale: boolean;
+  onOpenFormation: (arrangement: FormationArrangement) => void;
+}) {
+  return <>
+    <div className="optimizer-result-metrics">
+      <Metric label="Total Formation Rating" value={result.collection.totalRating} />
+      <Metric label="Average" value={result.collection.averageRating.toFixed(1)} />
+      <Metric label="Lowest" value={result.collection.minimumRating} />
+      <Metric label="Dragons used" value={result.usedDragonIds.length} />
+      <Metric label="Legendary used" value={result.usedRarityCounts.Legendary} />
+      <Metric label="Epic used" value={result.usedRarityCounts.Epic} />
+      <Metric label="Rare used" value={result.usedRarityCounts.Rare} />
+    </div>
+    <p className="optimizer-allocation-note">All ten formations are optimized as one equally weighted non-overlapping collection.</p>
+    <div className="optimizer-formation-grid">
+      {result.formations.map((formation) => (
+        <OptimizerFormationCard
+          key={formation.stableCandidateKey}
+          formation={formation}
+          dragonsById={dragonsById}
+          disabled={stale}
+          onOpen={() => onOpenFormation(formation.arrangement)}
+        />
+      ))}
+    </div>
+  </>;
+}
+
+function PrimaryBackupResult({
+  result,
+  dragonsById,
+  stale,
+  onOpenFormation,
+}: {
+  result: PrimaryBackupOptimizationResult;
+  dragonsById: Map<string, Dragon>;
+  stale: boolean;
+  onOpenFormation: (arrangement: FormationArrangement) => void;
+}) {
+  return <>
+    <WaveSection
+      wave={result.primary}
+      description="Your strongest five active formations. Rarity and formation quality are prioritized here before the Backup set."
+      dragonsById={dragonsById}
+      stale={stale}
+      onOpenFormation={onOpenFormation}
+    />
+    <WaveSection
+      wave={result.backup}
+      description="Five optimized Backup formations built from dragons not used by the Primary set."
+      dragonsById={dragonsById}
+      stale={stale}
+      onOpenFormation={onOpenFormation}
+    />
+    <section className="optimizer-combined-summary" aria-labelledby="combined-summary-title">
+      <h4 id="combined-summary-title">Combined result</h4>
       <div className="optimizer-result-metrics">
-        <Metric label="Total Formation Rating" value={result.objective.totalRating} />
-        <Metric label="Average" value={result.averageRating.toFixed(1)} />
-        <Metric label="Lowest" value={result.minimumRating} />
-        <Metric label="Dragons used" value={result.usedDragonIds.length} />
-        <Metric label="Legendary used" value={result.usedRarityCounts.Legendary} />
-        <Metric label="Epic used" value={result.usedRarityCounts.Epic} />
-        <Metric label="Rare used" value={result.usedRarityCounts.Rare} />
+        <Metric label="Total rating" value={result.combined.totalRating} />
+        <Metric label="Average" value={result.combined.averageRating.toFixed(1)} />
+        <Metric label="Unique dragons" value={result.usedDragonIds.length} />
+        <Metric label="Active relationships" value={result.combined.totalActiveRelationships} />
       </div>
-      <p className="optimizer-allocation-note">The optimizer chooses the strongest complete non-overlapping allocation, not the ten highest independent formations.</p>
-      {result.unusedDragonIds.length > 0 ? (
-        <div className="optimizer-unused">
-          <h4>Unused eligible {result.unusedDragonIds.length === 1 ? 'dragon' : 'dragons'}</h4>
-          <p>Not used in this optimal rarity-prioritized 10-formation allocation.</p>
-          <ul>
-            {result.unusedDragonIds.map((dragonId) => {
-              const dragon = dragonsById.get(dragonId);
-              const progression = progressionById.get(dragonId);
-              return (
-                <li key={dragonId}>
-                  <strong>{dragon?.name ?? dragonId}</strong> · {dragon?.rarity ?? 'Unknown rarity'} · Star {progression?.starRank ?? '—'} · Level {progression?.dragonLevel ?? '—'}
-                </li>
-              );
-            })}
-          </ul>
+    </section>
+  </>;
+}
+
+function WaveSection({
+  wave,
+  description,
+  dragonsById,
+  stale,
+  onOpenFormation,
+}: {
+  wave: OptimizerWaveResult;
+  description: string;
+  dragonsById: Map<string, Dragon>;
+  stale: boolean;
+  onOpenFormation: (arrangement: FormationArrangement) => void;
+}) {
+  const headingId = `optimizer-${wave.kind}-heading`;
+  return (
+    <section className={`optimizer-wave optimizer-wave-${wave.kind}`} aria-labelledby={headingId}>
+      <header>
+        <div>
+          <p className="eyebrow">{wave.label} set</p>
+          <h4 id={headingId}>{wave.label} Formations</h4>
+          <p>{description}</p>
         </div>
-      ) : null}
+      </header>
+      <div className="optimizer-result-metrics optimizer-wave-metrics">
+        <Metric label="Formations" value={wave.formations.length} />
+        <Metric label="Total rating" value={wave.totalRating} />
+        <Metric label="Average" value={wave.averageRating.toFixed(1)} />
+        <Metric label="Lowest" value={wave.minimumRating} />
+        <Metric label="Legendary" value={wave.rarityCounts.Legendary} />
+        <Metric label="Epic" value={wave.rarityCounts.Epic} />
+        <Metric label="Rare" value={wave.rarityCounts.Rare} />
+        <Metric label="Active relationships" value={wave.totalActiveRelationships} />
+      </div>
+      <p className="optimizer-tier-summary"><strong>Rating tiers:</strong> {tierSummary(wave.tierDistribution)}</p>
       <div className="optimizer-formation-grid">
-        {result.formations.map((formation) => (
+        {wave.formations.map((formation) => (
           <OptimizerFormationCard
-            key={formation.stableCandidateKey}
+            key={`${wave.kind}-${formation.stableCandidateKey}`}
             formation={formation}
             dragonsById={dragonsById}
             disabled={stale}
@@ -243,20 +383,57 @@ function OptimizerResultView({
           />
         ))}
       </div>
-      <details className="optimizer-technical">
-        <summary>Technical details</summary>
-        <dl>
-          <div><dt>Candidates considered</dt><dd>{result.diagnostics.candidateCount.toLocaleString()}</dd></div>
-          <div><dt>Solver passes</dt><dd>{result.diagnostics.solverPasses ?? '—'}</dd></div>
-          <div><dt>Nodes visited</dt><dd>{result.diagnostics.nodesVisited.toLocaleString()}</dd></div>
-          <div><dt>Branches pruned</dt><dd>{result.diagnostics.branchesPruned.toLocaleString()}</dd></div>
-          <div><dt>Candidate generation</dt><dd>{formatMs(result.diagnostics.candidateGenerationMs)}</dd></div>
-          <div><dt>Exact solver</dt><dd>{formatMs(result.diagnostics.solverMs)}</dd></div>
-          <div><dt>Total</dt><dd>{formatMs(result.diagnostics.totalMs)}</dd></div>
-          <div><dt>Result hash</dt><dd><code>{result.optimizerResultHash}</code></dd></div>
-        </dl>
-      </details>
+    </section>
+  );
+}
+
+function UnusedDragons({
+  result,
+  dragonsById,
+  progressionById,
+}: {
+  result: RosterOptimizationResult;
+  dragonsById: Map<string, Dragon>;
+  progressionById: Map<string, OptimizerRosterDragon>;
+}) {
+  if (result.unusedDragonIds.length === 0) return null;
+  return (
+    <div className="optimizer-unused">
+      <h4>Unused eligible {result.unusedDragonIds.length === 1 ? 'dragon' : 'dragons'}</h4>
+      <p>Not used in this exact, strategy-specific allocation.</p>
+      <ul>
+        {result.unusedDragonIds.map((dragonId) => {
+          const dragon = dragonsById.get(dragonId);
+          const progression = progressionById.get(dragonId);
+          return (
+            <li key={dragonId}>
+              <strong>{dragon?.name ?? dragonId}</strong> · {dragon?.rarity ?? 'Unknown rarity'} · Star {progression?.starRank ?? '—'} · Level {progression?.dragonLevel ?? '—'}
+            </li>
+          );
+        })}
+      </ul>
     </div>
+  );
+}
+
+function TechnicalDetails({ result }: { result: RosterOptimizationResult }) {
+  return (
+    <details className="optimizer-technical">
+      <summary>Technical details</summary>
+      <dl>
+        <div><dt>Strategy</dt><dd>{result.strategy}</dd></div>
+        <div><dt>Exactness</dt><dd>Optimal · zero gap</dd></div>
+        <div><dt>Candidates considered</dt><dd>{result.diagnostics.candidateCount.toLocaleString()}</dd></div>
+        <div><dt>Solver passes</dt><dd>{result.diagnostics.solverPasses ?? '—'}</dd></div>
+        <div><dt>Nodes visited</dt><dd>{result.diagnostics.nodesVisited.toLocaleString()}</dd></div>
+        <div><dt>Branches pruned</dt><dd>{result.diagnostics.branchesPruned.toLocaleString()}</dd></div>
+        <div><dt>Candidate generation</dt><dd>{formatMs(result.diagnostics.candidateGenerationMs)}</dd></div>
+        <div><dt>Exact solver</dt><dd>{formatMs(result.diagnostics.solverMs)}</dd></div>
+        <div><dt>Total</dt><dd>{formatMs(result.diagnostics.totalMs)}</dd></div>
+        <div><dt>Solution hash</dt><dd><code>{result.optimizerSolutionHash}</code></dd></div>
+        <div><dt>Result hash</dt><dd><code>{result.optimizerResultHash}</code></dd></div>
+      </dl>
+    </details>
   );
 }
 
@@ -271,13 +448,18 @@ function OptimizerFormationCard({
   disabled: boolean;
   onOpen: () => void;
 }) {
+  const label = formation.wave
+    ? `${formation.wave === 'primary' ? 'Primary' : 'Backup'} ${formation.waveRank}`
+    : `Formation ${formation.rank}`;
+  const headingId = `optimizer-formation-${formation.wave ?? 'overall'}-${formation.rank}`;
   return (
-    <article className="optimizer-formation-card" aria-labelledby={`optimizer-formation-${formation.rank}`}>
+    <article className="optimizer-formation-card" aria-labelledby={headingId}>
       <header>
         <div>
-          <p className="eyebrow">Formation {formation.rank}</p>
-          <h4 id={`optimizer-formation-${formation.rank}`}>{formation.rating} · {formation.tier}</h4>
+          <p className="eyebrow">{label}</p>
+          <h4 id={headingId}>{formation.rating} · {formation.tier}</h4>
         </div>
+        {formation.wave ? <span className={`optimizer-wave-badge ${formation.wave}`}>{formation.wave === 'primary' ? 'Primary' : 'Backup'}</span> : null}
         <div className="optimizer-score-pills" aria-label="Formation score breakdown">
           <span>Synergy {formation.activeSynergyScore}/80</span>
           <span>Placement {formation.placementScore}/20</span>
@@ -319,6 +501,36 @@ function OptimizerFormationCard({
   );
 }
 
+function Methodology({ strategy }: { strategy: RosterOptimizerStrategy }) {
+  return (
+    <details className="optimizer-methodology">
+      <summary>How this was chosen</summary>
+      <div>
+        <p>The optimizer uses eligible dragons from My Roster and requires at least 30.</p>
+        {strategy === 'primary-five-backup-five' ? (
+          <ul>
+            <li>Only five formations may be active at once, so the Primary five are optimized first.</li>
+            <li>Primary Legendary inclusion is prioritized before Epic and Rare, then Primary formation quality is optimized.</li>
+            <li>Backup uses dragons not used by Primary. Exactly tied Primary results are decided by the strongest possible Backup set.</li>
+            <li>No dragon is repeated across the five Primary and five Backup formations.</li>
+            <li>Every trio checks all six placements and reuses Formation Rating v2 unchanged.</li>
+            <li>Star Rank and Dragon Level are respected. Habit Levels are preserved but unweighted.</li>
+            <li>No combat simulation occurs.</li>
+          </ul>
+        ) : (
+          <ul>
+            <li>All ten formations are optimized together as one collection with no dragon reuse.</li>
+            <li>Legendary inclusion is prioritized over Epic; Epic is prioritized over Rare.</li>
+            <li>Every trio checks all six placements and reuses Formation Rating v2 unchanged.</li>
+            <li>Star Rank and Dragon Level are respected. Habit Levels are preserved but unweighted.</li>
+            <li>No combat simulation occurs.</li>
+          </ul>
+        )}
+      </div>
+    </details>
+  );
+}
+
 function Metric({ label, value }: { label: string; value: string | number }) {
   return <div><span>{label}</span><strong>{value}</strong></div>;
 }
@@ -328,6 +540,13 @@ function rarityCounts(rarities: DragonRarity[]) {
     (counts, rarity) => ({ ...counts, [rarity]: counts[rarity] + 1 }),
     { Legendary: 0, Epic: 0, Rare: 0 },
   );
+}
+
+function tierSummary(distribution: OptimizerWaveResult['tierDistribution']): string {
+  return Object.entries(distribution)
+    .filter(([, count]) => count > 0)
+    .map(([tier, count]) => `${tier} ${count}`)
+    .join(' · ');
 }
 
 function formatMs(milliseconds: number): string {

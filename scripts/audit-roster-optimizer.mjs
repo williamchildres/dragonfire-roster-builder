@@ -5,8 +5,8 @@ import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeReports = process.argv.includes('--write');
-const jsonPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.12.0.json');
-const markdownPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.12.0.md');
+const jsonPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.13.0.json');
+const markdownPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.13.0.md');
 const server = await createServer({
   root,
   appType: 'custom',
@@ -24,8 +24,18 @@ try {
     console.log(`Wrote ${path.relative(root, jsonPath)} and ${path.relative(root, markdownPath)}.`);
   } else {
     const committed = JSON.parse(await readFile(jsonPath, 'utf8'));
-    const actualHashes = report.fixtures.map((fixture) => fixture.optimizerResultHash);
-    const committedHashes = committed.fixtures.map((fixture) => fixture.optimizerResultHash);
+    const actualHashes = report.fixtures.map((fixture) => ({
+      name: fixture.name,
+      strategy: fixture.strategy,
+      solution: fixture.optimizerSolutionHash,
+      result: fixture.optimizerResultHash,
+    }));
+    const committedHashes = committed.fixtures.map((fixture) => ({
+      name: fixture.name,
+      strategy: fixture.strategy,
+      solution: fixture.optimizerSolutionHash,
+      result: fixture.optimizerResultHash,
+    }));
     if (
       report.auditVersion !== committed.auditVersion ||
       report.formationRatingV2Hash !== committed.formationRatingV2Hash ||
@@ -35,7 +45,7 @@ try {
     ) {
       throw new Error('Committed roster optimizer audit does not match the deterministic result.');
     }
-    console.log(`Optimizer audit verified: ${actualHashes.join(', ')}`);
+    console.log(`Optimizer audit verified: ${actualHashes.map((entry) => `${entry.strategy} ${entry.result}`).join(', ')}`);
   }
 } finally {
   await server.close();
@@ -43,7 +53,7 @@ try {
 
 function renderMarkdown(report) {
   const lines = [
-    '# Roster Optimizer v1 deterministic audit',
+    '# Roster Optimizer strategies deterministic audit',
     '',
     `Formation Rating v2 hash: \`${report.formationRatingV2Hash}\``,
     '',
@@ -52,26 +62,41 @@ function renderMarkdown(report) {
   ];
   for (const fixture of report.fixtures) {
     lines.push(
-      `## ${fixture.name}`,
+      `## ${fixture.name} · ${fixture.strategy}`,
       '',
       `- Eligible dragons: ${fixture.eligibleDragonCount}`,
       `- Trio candidates: ${fixture.candidateCount}`,
-      `- Total / average / minimum rating: ${fixture.totalRating} / ${fixture.averageRating.toFixed(1)} / ${fixture.minimumRating}`,
       `- Used: ${fixture.usedDragonIds.join(', ')}`,
       `- Unused: ${fixture.unusedDragonIds.join(', ')}`,
       `- Runtime (candidate / solver / total): ${fixture.diagnostics.candidateGenerationMs.toFixed(1)} / ${fixture.diagnostics.solverMs.toFixed(1)} / ${fixture.diagnostics.totalMs.toFixed(1)} ms`,
       `- Solver passes / nodes: ${fixture.diagnostics.solverPasses} / ${fixture.diagnostics.nodesVisited}`,
-      `- Exact optimality: ${fixture.optimal ? 'PASS' : 'FAIL'}`,
+      `- Exact optimality: ${fixture.exactOptimality ? 'PASS' : 'FAIL'}`,
+      `- Solution hash: \`${fixture.optimizerSolutionHash}\``,
       `- Result hash: \`${fixture.optimizerResultHash}\``,
       '',
-      '| # | Left Flank | Vanguard | Right Flank | Rating | Tier |',
-      '| -: | --- | --- | --- | -: | --- |',
-      ...fixture.formations.map(
-        (formation) =>
-          `| ${formation.rank} | ${formation.arrangement['left-flank']} | ${formation.arrangement.vanguard} | ${formation.arrangement['right-flank']} | ${formation.rating} | ${formation.tier} |`,
-      ),
-      '',
     );
+    if (fixture.strategy === 'best-ten-overall') {
+      lines.push(
+        `- Total / average / minimum rating: ${fixture.collection.totalRating} / ${fixture.collection.averageRating.toFixed(1)} / ${fixture.collection.minimumRating}`,
+        '',
+        ...formationTable(fixture.formations),
+      );
+    } else {
+      lines.push(
+        `### Primary · ${fixture.primary.totalRating} / ${fixture.primary.averageRating.toFixed(1)} / ${fixture.primary.minimumRating}`,
+        '',
+        `Rarity: ${JSON.stringify(fixture.primary.rarityCounts)}`,
+        '',
+        ...formationTable(fixture.primary.formations),
+        `### Backup · ${fixture.backup.totalRating} / ${fixture.backup.averageRating.toFixed(1)} / ${fixture.backup.minimumRating}`,
+        '',
+        `Rarity: ${JSON.stringify(fixture.backup.rarityCounts)}`,
+        '',
+        ...formationTable(fixture.backup.formations),
+        `Combined total / average: ${fixture.combined.totalRating} / ${fixture.combined.averageRating.toFixed(1)}`,
+        '',
+      );
+    }
   }
   lines.push(
     '## Exactness checks',
@@ -82,5 +107,17 @@ function renderMarkdown(report) {
     '- Used and unused dragons partition each eligible roster — PASS',
     '',
   );
-  return `${lines.join('\n')}\n`;
+  return `${lines.join('\n').trimEnd()}\n`;
+}
+
+function formationTable(formations) {
+  return [
+    '| # | Left Flank | Vanguard | Right Flank | Rating | Tier |',
+    '| -: | --- | --- | --- | -: | --- |',
+    ...formations.map(
+      (formation) =>
+        `| ${formation.waveRank ?? formation.rank} | ${formation.arrangement['left-flank']} | ${formation.arrangement.vanguard} | ${formation.arrangement['right-flank']} | ${formation.rating} | ${formation.tier} |`,
+    ),
+    '',
+  ];
 }

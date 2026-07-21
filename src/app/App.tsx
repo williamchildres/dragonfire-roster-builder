@@ -749,8 +749,8 @@ function HomeSection({
         />
         <FeatureCard
           icon={Sparkles}
-          title="Optimize Your Best 10"
-          description="Build one exact rarity-prioritized allocation of 10 non-overlapping formations from your current roster."
+          title="Choose Your Optimizer Strategy"
+          description="Prioritize five active formations plus five Backups, or optimize all ten together."
           onClick={onOptimizer}
         />
       </div>
@@ -778,7 +778,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Roster Optimizer now proves the best rarity-prioritized allocation of 10 non-overlapping formations from current My Roster progression. Formation Rating v2 remains unchanged and no combat simulation is performed.</p>
+          <p>Roster Optimizer now offers Strongest 5 + Backup 5 for the five-formation activation limit, while Best 10 Overall remains available. Both are exact, zero-gap, non-overlapping allocations; Formation Rating v2 is unchanged and no combat simulation is performed.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

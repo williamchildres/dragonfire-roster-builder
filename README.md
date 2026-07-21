@@ -15,7 +15,7 @@ Public site: https://dragonfirelab.com
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
-- Roster Optimizer v1 with an exact rarity-prioritized allocation of 10 non-overlapping formations from current My Roster progression.
+- Roster Optimizer with exact Strongest 5 + Backup 5 and Best 10 Overall strategies over current My Roster progression.
 - Formation share links and roster JSON import/export.
 - Lightweight project-context export for handoffs.
 
@@ -47,11 +47,13 @@ Typed defensive and Recovery Received support may be presented through explicitl
 
 ## Roster Optimizer
 
-Roster Optimizer v1 uses the same current My Roster eligibility and progression resolution as Formation Builder. At least 30 owned dragons are required. It evaluates every unique three-dragon combination, keeps the best or tied-best of all six Left Flank/Vanguard/Right Flank assignments, and selects exactly 10 formations with 30 unique dragons.
+Roster Optimizer uses the same current My Roster eligibility and progression resolution as Formation Builder. At least 30 owned dragons are required. It evaluates every unique three-dragon combination, keeps the best or tied-best of all six Left Flank/Vanguard/Right Flank assignments, and selects exactly 10 formations with 30 unique dragons.
 
-Inclusion priority is strictly lexicographic: maximize Legendary dragons, then Epic dragons, with Rare dragons filling the remaining slots. Formation quality is compared only after rarity inclusion is equal: total Formation Rating, weakest formation, the complete ascending rating vector, uncapped relationship value, active relationship count, then a stable canonical key. The allocation is exact and global, not greedy. Every optimization phase must be proven optimal before the UI accepts a result.
+Strongest 5 + Backup 5 is the default because players can activate only five formations at once. Primary first maximizes Legendary and then Epic inclusion, followed by total Formation Rating, weakest formation, the complete ascending five-rating vector, relationship value, and relationship count. Backup is optimized from the 16 remaining eligible dragons only after every Primary numeric objective is fixed. Exactly tied Primary solutions are resolved by the strongest possible Backup before stable keys.
 
-Star Rank and Dragon Level control unlocks and current Formation Ratings. Habit Levels remain stored and are preserved when a result is opened in Formation Builder, but they do not affect optimizer ranking or the roster fingerprint. Formation Rating v2 is reused unchanged, no combat simulation is performed, results remain local, and no database migration is required. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md) and the deterministic audit under [`docs/audits/`](docs/audits/).
+Best 10 Overall remains available with its v0.12.0 behavior and deterministic allocations unchanged. It optimizes all ten formations as one equally weighted collection.
+
+Both strategies are exact, joint, zero-gap MILP allocations rather than greedy lists. Star Rank and Dragon Level control unlocks and current ratings. Habit Levels remain stored and are preserved in Formation Builder handoff but are unweighted. Formation Rating v2 is unchanged, no dragon repeats, no combat simulation occurs, results remain local, and no migration is required. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md) and the deterministic audit under [`docs/audits/`](docs/audits/).
 
 ## Development
 
@@ -98,4 +100,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.12.0`. Source data schema: `13`. Local and cloud roster schemas: `5`. Schema 5 stores Habit Levels sparsely: locked habits have no key, unlocked habits always have a value from 1 through 5, and lowering progression below an unlock threshold deletes the saved level. Legacy unlocked null/zero values migrate to Level 1; locked and unknown legacy values are discarded. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); Roster Optimizer v1 adds no SQL migration. Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.
+Current release: `0.13.0`. Source data schema: `13`. Local and cloud roster schemas: `5`. Schema 5 stores Habit Levels sparsely: locked habits have no key, unlocked habits always have a value from 1 through 5, and lowering progression below an unlock threshold deletes the saved level. Legacy unlocked null/zero values migrate to Level 1; locked and unknown legacy values are discarded. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); optimizer strategy choice adds no SQL migration. Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.

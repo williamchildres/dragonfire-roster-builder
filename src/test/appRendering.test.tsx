@@ -239,10 +239,11 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.12\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.13\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('10 non-overlapping formations');
-    expect(latestUpdate).toHaveTextContent('Formation Rating v2 remains unchanged');
+    expect(latestUpdate).toHaveTextContent('Strongest 5 + Backup 5');
+    expect(latestUpdate).toHaveTextContent('Best 10 Overall remains available');
+    expect(latestUpdate).toHaveTextContent('Formation Rating v2 is unchanged');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
