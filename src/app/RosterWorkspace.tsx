@@ -1,9 +1,9 @@
-import { Download, ListFilter, Plus, RotateCcw, Search, SlidersHorizontal, Upload, X } from 'lucide-react';
+import { Download, ListFilter, Plus, RotateCcw, Search, SlidersHorizontal, Upload, UsersRound, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type RefObject } from 'react';
 import type { AccountSession } from '../cloud/types';
 import type { Dragon, DragonBreed, DragonRarity, OwnedDragon } from '../models/dragon';
 import type { RosterSyncStatus } from '../hooks/useRosterSync';
-import { RosterSyncPanel } from './AccountUi';
+import { ConfirmationDialog, RosterSyncPanel } from './AccountUi';
 import { isRosterSyncAttention } from './accountSyncPresentation';
 import { RosterEditor } from './RosterEditor';
 import { RosterList } from './RosterList';
@@ -30,6 +30,7 @@ export function RosterWorkspace({
   onUpdateRoster,
   onOpenDetails,
   onOpenAddDragon,
+  onAddAllDragons = () => undefined,
   onExport,
   onImport,
   onClear,
@@ -49,6 +50,7 @@ export function RosterWorkspace({
   onUpdateRoster: (dragonId: string, patch: Partial<OwnedDragon>) => void;
   onOpenDetails: (dragon: Dragon) => void;
   onOpenAddDragon: () => void;
+  onAddAllDragons?: () => void;
   onExport: () => void;
   onImport: (event: ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
@@ -65,6 +67,7 @@ export function RosterWorkspace({
   const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
   const [selection, setSelection] = useState<string | null>(null);
   const [mobileView, setMobileView] = useState<'list' | 'editor'>('list');
+  const [isAddAllOpen, setIsAddAllOpen] = useState(false);
   const [consumedSelectionRequestId, setConsumedSelectionRequestId] = useState<number | null>(null);
   const acknowledgedSelectionRequestRef = useRef<number | null>(null);
   const rowRefs = useRef(new Map<string, HTMLButtonElement>());
@@ -74,6 +77,8 @@ export function RosterWorkspace({
     () => allDragons.filter((dragon) => roster[dragon.id]?.owned === true).length,
     [allDragons, roster],
   );
+  const missingCount = allDragons.length - ownedCount;
+  const isSaving = syncStatus === 'syncing';
   const breedOptions = useMemo(
     () => [...new Set(allDragons.map((dragon) => dragon.breed))].sort((a, b) => a.localeCompare(b, 'en')),
     [allDragons],
@@ -192,6 +197,15 @@ export function RosterWorkspace({
           <button type="button" className="primary-button" onClick={onOpenAddDragon} ref={addButtonRef} aria-label="+ Add Dragon">
             <Plus size={18} aria-hidden="true" /> Add Dragon
           </button>
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => setIsAddAllOpen(true)}
+            disabled={missingCount === 0 || isSaving}
+            aria-label={missingCount === 0 ? 'All Dragons Added' : `Add all ${missingCount} missing dragons`}
+          >
+            <UsersRound size={18} aria-hidden="true" /> {missingCount === 0 ? 'All Dragons Added' : 'Add All Dragons'}
+          </button>
           <details className="roster-utilities">
             <summary><SlidersHorizontal size={17} aria-hidden="true" /> Roster utilities</summary>
             <div className="roster-utility-actions">
@@ -270,6 +284,21 @@ export function RosterWorkspace({
           ) : null}
         </div>
       )}
+      {isAddAllOpen ? (
+        <ConfirmationDialog
+          title="Add All Dragons?"
+          description={missingCount === 1
+            ? 'Add 1 missing dragon to My Roster? Dragons without saved progression will start at Star 1 and Dragon Level 1. Existing roster progress will not be changed.'
+            : `Add ${missingCount} missing dragons to My Roster? Dragons without saved progression will start at Star 1 and Dragon Level 1. Existing roster progress will not be changed.`}
+          confirmLabel={missingCount === 1 ? 'Add 1 Dragon' : `Add ${missingCount} Dragons`}
+          confirmDisabled={missingCount === 0 || isSaving}
+          onCancel={() => setIsAddAllOpen(false)}
+          onConfirm={() => {
+            onAddAllDragons();
+            setIsAddAllOpen(false);
+          }}
+        />
+      ) : null}
     </section>
   );
 }

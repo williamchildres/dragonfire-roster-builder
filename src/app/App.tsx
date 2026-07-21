@@ -60,6 +60,7 @@ import {
 } from '../models/dragon';
 import { defaultFilters, filterDragons, sortDragons, type DragonFilters } from '../services/rosterFilters';
 import { applyOwnedDragonPatch, reconcileHabitLevels } from '../services/habitLevels';
+import { addMissingDragonsToRoster, markDragonOwned } from '../services/rosterOwnership';
 import {
   createEmptyRoster,
   FORMATION_STORAGE_KEY,
@@ -259,11 +260,14 @@ export function App({
         notes: '',
         habitLevels: {},
       };
+      const ownershipTransition = patch.owned === true && currentEntry.owned !== true
+        ? markDragonOwned(dragon, currentEntry)
+        : currentEntry;
       return {
         updatedAt: new Date().toISOString(),
         roster: {
           ...current.roster,
-          [dragonId]: applyOwnedDragonPatch(dragon, currentEntry, patch),
+          [dragonId]: applyOwnedDragonPatch(dragon, ownershipTransition, patch),
         },
       };
     });
@@ -279,6 +283,20 @@ export function App({
     });
     setIsAddDragonOpen(false);
     setRosterSuccessMessage({ text: `Added ${dragonName} to roster.` });
+  };
+
+  const addAllDragonsToRoster = () => {
+    setRosterSnapshot((current) => {
+      const result = addMissingDragonsToRoster(dragons, current.roster);
+      if (result.addedDragonIds.length === 0) return current;
+      const count = result.addedDragonIds.length;
+      setRosterSuccessMessage({
+        text: result.restoredProgressionCount > 0
+          ? `Added ${count} ${count === 1 ? 'dragon' : 'dragons'}. New roster entries started at Star 1 and Dragon Level 1; saved progression was preserved.`
+          : `Added ${count} ${count === 1 ? 'dragon' : 'dragons'} at Star 1 and Dragon Level 1.`,
+      });
+      return { roster: result.roster, updatedAt: new Date().toISOString() };
+    });
   };
 
   const consumeRosterSelectionRequest = useCallback((requestId: number) => {
@@ -525,6 +543,7 @@ export function App({
             onUpdateRoster={updateRoster}
             onOpenDetails={setSelectedDragon}
             onOpenAddDragon={openAddDragon}
+            onAddAllDragons={addAllDragonsToRoster}
             onExport={exportRoster}
             onImport={(event) => void importRoster(event)}
             onClear={clearRoster}
@@ -778,7 +797,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Roster Optimizer now offers Strongest 5 + Backup 5 for the five-formation activation limit, while Best 10 Overall remains available. Both are exact, zero-gap, non-overlapping allocations; Formation Rating v2 is unchanged and no combat simulation is performed.</p>
+          <p>My Roster can now add every missing canonical dragon at once, starting new entries at Star 1 and Dragon Level 1 while preserving saved progress. Roster Optimizer strategies are unchanged; Formation Rating v2 is unchanged.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

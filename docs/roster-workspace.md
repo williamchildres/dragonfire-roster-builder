@@ -9,11 +9,13 @@ Roster Optimizer and Formation Builder My Roster mode share the same authoritati
 - Desktop and comfortable landscape widths show a scrollable owned-dragon list beside a bounded sticky editor.
 - Narrow widths start in list mode. Selecting or adding a dragon opens the same editor implementation; Back to roster returns focus to and scrolls the selected row into view.
 - Selection is ephemeral. Sorting preserves it, filters preserve it while the row remains visible, and a hidden selection moves to the first visible result.
-- Add Dragon sends a one-time, in-memory selection request. The workspace consumes each request once, selects the new dragon, opens its editor on narrow screens, focuses it safely, and acknowledges that exact request. Returning to Roster later starts in list mode rather than reopening a consumed selection.
+- Add Dragon sends a one-time, in-memory selection request. The workspace consumes each request once, selects the new dragon, opens its editor on narrow screens, focuses it safely, and acknowledges that exact request. Returning to Roster later starts in list mode rather than reopening a consumed selection. New entries default to Star Rank 1 and Dragon Level 1 (`reignLevel`).
+- Add All Dragons derives missing IDs from the complete canonical collection, never from the current filters, sorting, visible rows, or optimizer candidates. It confirms the current missing count before committing one immutable roster snapshot. `All Dragons Added` is disabled when no canonical dragon is missing.
 - Removing selects the next visible row, then the previous row, then the empty state.
 - Star Rank, Dragon Level (`reignLevel` in stored JSON), named Habit Levels, and notes save immediately through the existing local snapshot and optional account-sync path.
 - Habit controls appear only when every canonical `unlockStarRank` and `minimumDragonLevel` requirement is satisfied. An unlocked habit begins at Level 1 and can be set only to 1 through 5. A relocked habit disappears and its saved key is deleted; re-unlocking starts again at Level 1.
 - Removing ownership does not change progression, notes, or valid unlocked Habit Levels. Re-adding the dragon restores those retained values unless progression itself crossed below an unlock threshold.
+- The shared ownership transition preserves valid Star Rank, Dragon Level, notes, and Habit Levels on re-add; only absent or invalid Star Rank and Dragon Level receive the 1/1 defaults. Existing browser persistence and the single debounced account save path remain authoritative; a failed cloud save leaves the complete local snapshot available for the existing retry flow.
 
 ## Filters and sorting
 

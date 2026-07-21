@@ -319,6 +319,32 @@ export function RosterDecisionDialog({
   );
 }
 
+export function ConfirmationDialog({
+  title,
+  description,
+  confirmLabel,
+  confirmDisabled = false,
+  onCancel,
+  onConfirm,
+}: {
+  title: string;
+  description: string;
+  confirmLabel: string;
+  confirmDisabled?: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  return (
+    <DialogFrame title={title} titleId="roster-confirmation-title" onClose={onCancel}>
+      <p>{description}</p>
+      <div className="dialog-actions">
+        <button type="button" className="secondary-button" onClick={onCancel}>Cancel</button>
+        <button type="button" className="primary-button" onClick={onConfirm} disabled={confirmDisabled}>{confirmLabel}</button>
+      </div>
+    </DialogFrame>
+  );
+}
+
 export function RosterSyncPanel({
   session,
   status,
