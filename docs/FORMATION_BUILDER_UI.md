@@ -54,4 +54,4 @@ Placement requirements are evaluated before progression. A relationship that is 
 
 ## Non-Goals
 
-The Formation Builder does not calculate exact combat rounds, proc timing, activation percentages, target probability, stack behavior, damage formulas, expected damage, or win probability. Roster Optimizer reuses Formation Builder's current My Roster progression, semantic relationships, six-placement comparison, and Formation Rating v2; opening an optimized card applies the exact retained arrangement without changing Star Rank, Dragon Level, or Habit Levels.
+The Formation Builder does not calculate exact combat rounds, proc timing, activation percentages, target probability, stack behavior, damage formulas, expected damage, or win probability. Both Roster Optimizer strategies reuse Formation Builder's current My Roster progression, semantic relationships, six-placement comparison, and Formation Rating v2; opening a Primary, Backup, or Best 10 Overall card applies the exact retained arrangement without changing Star Rank, Dragon Level, or Habit Levels.

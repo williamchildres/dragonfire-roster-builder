@@ -1,9 +1,11 @@
 import type { OwnedDragon } from '../models/dragon';
 import { optimizeCurrentRoster } from './rosterOptimizer';
+import type { RosterOptimizerStrategy } from './rosterOptimizerTypes';
 
 export type RosterOptimizerWorkerRequest = {
   type: 'optimize';
   requestId: number;
+  strategy: RosterOptimizerStrategy;
   roster: Record<string, OwnedDragon>;
 };
 
@@ -29,8 +31,8 @@ const workerScope = globalThis as unknown as {
 
 workerScope.addEventListener('message', (event) => {
   if (event.data.type !== 'optimize') return;
-  const { requestId, roster } = event.data;
-  void optimizeCurrentRoster(roster)
+  const { requestId, roster, strategy } = event.data;
+  void optimizeCurrentRoster(roster, strategy)
     .then((result) => {
       workerScope.postMessage({ type: 'result', requestId, result });
     })

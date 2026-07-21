@@ -1,12 +1,19 @@
 import type { OwnedDragon } from '../models/dragon';
-import { RosterOptimizerCancelledError, type RosterOptimizerResponse } from './rosterOptimizerTypes';
+import {
+  RosterOptimizerCancelledError,
+  type RosterOptimizerResponse,
+  type RosterOptimizerStrategy,
+} from './rosterOptimizerTypes';
 import type {
   RosterOptimizerWorkerRequest,
   RosterOptimizerWorkerResponse,
 } from './rosterOptimizerWorker';
 
 export interface RosterOptimizerRunner {
-  run(roster: Record<string, OwnedDragon>): Promise<RosterOptimizerResponse>;
+  run(
+    roster: Record<string, OwnedDragon>,
+    strategy: RosterOptimizerStrategy,
+  ): Promise<RosterOptimizerResponse>;
   cancel(): void;
   dispose(): void;
 }
@@ -27,7 +34,10 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
     ),
   ) {}
 
-  run(roster: Record<string, OwnedDragon>): Promise<RosterOptimizerResponse> {
+  run(
+    roster: Record<string, OwnedDragon>,
+    strategy: RosterOptimizerStrategy,
+  ): Promise<RosterOptimizerResponse> {
     this.cancel();
     const requestId = ++this.requestId;
     const worker = this.createWorker();
@@ -47,6 +57,7 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
       worker.postMessage({
         type: 'optimize',
         requestId,
+        strategy,
         roster: structuredClone(roster),
       } satisfies RosterOptimizerWorkerRequest);
     });

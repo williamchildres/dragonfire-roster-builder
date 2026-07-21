@@ -4,10 +4,18 @@ import type { FormationArrangement } from '../services/formationPlacementCompari
 import type { FormationRatingTier } from '../services/formationRating';
 import type { SemanticRelationship } from '../synergy/semanticRelationships';
 
-export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 1 as const;
+export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 2 as const;
 export const ROSTER_OPTIMIZER_RATING_CONTRACT = 'formation-rating-v2' as const;
 export const OPTIMIZER_FORMATION_COUNT = 10;
 export const OPTIMIZER_DRAGON_COUNT = 30;
+export const OPTIMIZER_WAVE_FORMATION_COUNT = 5;
+export const OPTIMIZER_WAVE_DRAGON_COUNT = 15;
+
+export type RosterOptimizerStrategy =
+  | 'primary-five-backup-five'
+  | 'best-ten-overall';
+
+export type OptimizerWave = 'primary' | 'backup';
 
 export interface OptimizerRosterDragon {
   dragonId: string;
@@ -29,6 +37,18 @@ export interface RosterOptimizerObjective {
   ascendingRatingVector: number[];
   totalRelationshipValue: number;
   totalActiveRelationships: number;
+  stableSolutionKey: string;
+}
+
+export type OptimizerWaveObjective = RosterOptimizerObjective;
+
+export interface PrimaryBackupOptimizerObjective {
+  strategy: 'primary-five-backup-five';
+  primary: OptimizerWaveObjective;
+  backup: OptimizerWaveObjective;
+  combinedTotalRating: number;
+  combinedRelationshipValue: number;
+  combinedActiveRelationships: number;
   stableSolutionKey: string;
 }
 
@@ -56,6 +76,17 @@ export interface OptimizerFormationCandidate {
 
 export interface OptimizedFormation extends Omit<OptimizerFormationCandidate, 'dragonMask'> {
   rank: number;
+  wave?: OptimizerWave;
+  waveRank?: number;
+}
+
+export interface OptimizerPhaseTimings {
+  modelConstructionMs: number;
+  primaryRarityMs: number;
+  primaryQualityMs: number;
+  backupRarityMs: number;
+  backupQualityMs: number;
+  stableKeyMs: number;
 }
 
 export interface OptimizerSearchDiagnostics {
@@ -70,15 +101,30 @@ export interface OptimizerSearchDiagnostics {
   candidateGenerationMs: number;
   solverMs: number;
   totalMs: number;
+  phaseTimings?: OptimizerPhaseTimings;
 }
 
 export type RarityCountRecord = Record<DragonRarity, number>;
+export type TierDistribution = Record<FormationRatingTier, number>;
 
-export interface RosterOptimizationResult {
-  contractVersion: 1;
+export interface OptimizerCollectionSummary {
+  totalRating: number;
+  averageRating: number;
+  minimumRating: number;
+  rarityCounts: RarityCountRecord;
+  tierDistribution: TierDistribution;
+  totalRelationshipValue: number;
+  totalActiveRelationships: number;
+}
+
+export interface BestTenOverallOptimizationResult {
+  contractVersion: 2;
+  strategy: 'best-ten-overall';
   optimal: true;
   rosterFingerprint: string;
+  requestFingerprint: string;
   formations: OptimizedFormation[];
+  collection: OptimizerCollectionSummary;
   usedDragonIds: string[];
   unusedDragonIds: string[];
   usedRarityCounts: RarityCountRecord;
@@ -86,13 +132,55 @@ export interface RosterOptimizationResult {
   objective: RosterOptimizerObjective;
   averageRating: number;
   minimumRating: number;
-  tierDistribution: Record<FormationRatingTier, number>;
+  tierDistribution: TierDistribution;
   diagnostics: OptimizerSearchDiagnostics;
+  /** Stable semantic identity retained from the v0.12.0 allocation contract. */
+  optimizerSolutionHash: string;
+  /** Strategy-aware identity for the complete v2 result. */
   optimizerResultHash: string;
 }
 
+export interface OptimizerWaveResult {
+  kind: OptimizerWave;
+  label: string;
+  formations: OptimizedFormation[];
+  usedDragonIds: string[];
+  rarityCounts: RarityCountRecord;
+  totalRating: number;
+  averageRating: number;
+  minimumRating: number;
+  totalRelationshipValue: number;
+  totalActiveRelationships: number;
+  tierDistribution: TierDistribution;
+  objective: OptimizerWaveObjective;
+}
+
+export interface PrimaryBackupOptimizationResult {
+  contractVersion: 2;
+  strategy: 'primary-five-backup-five';
+  optimal: true;
+  rosterFingerprint: string;
+  requestFingerprint: string;
+  primary: OptimizerWaveResult;
+  backup: OptimizerWaveResult;
+  formations: OptimizedFormation[];
+  usedDragonIds: string[];
+  unusedDragonIds: string[];
+  unusedRarityCounts: RarityCountRecord;
+  combined: OptimizerCollectionSummary;
+  objective: PrimaryBackupOptimizerObjective;
+  diagnostics: OptimizerSearchDiagnostics;
+  optimizerSolutionHash: string;
+  optimizerResultHash: string;
+}
+
+export type RosterOptimizationResult =
+  | BestTenOverallOptimizationResult
+  | PrimaryBackupOptimizationResult;
+
 export interface RosterOptimizationUnavailable {
-  contractVersion: 1;
+  contractVersion: 2;
+  strategy: RosterOptimizerStrategy;
   optimal: false;
   status: 'unavailable';
   reason: 'insufficient-eligible-dragons';
@@ -100,6 +188,7 @@ export interface RosterOptimizationUnavailable {
   requiredDragonCount: number;
   additionalDragonsNeeded: number;
   rosterFingerprint: string;
+  requestFingerprint: string;
 }
 
 export type RosterOptimizerResponse =
@@ -113,6 +202,18 @@ export interface RosterOptimizerSolverResult {
   nodesVisited: number;
   branchesPruned: number;
   cacheEntries: number;
+}
+
+export interface PrimaryBackupOptimizerSolverResult {
+  optimal: true;
+  primaryCandidates: OptimizerFormationCandidate[];
+  backupCandidates: OptimizerFormationCandidate[];
+  objective: PrimaryBackupOptimizerObjective;
+  nodesVisited: number;
+  branchesPruned: number;
+  cacheEntries: number;
+  solverPasses: number;
+  phaseTimings: OptimizerPhaseTimings;
 }
 
 export class RosterOptimizerCancelledError extends Error {

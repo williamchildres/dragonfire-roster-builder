@@ -3485,6 +3485,72 @@ th {
   padding-left: 0.85rem;
 }
 
+.optimizer-strategy {
+  border: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1.25rem 0;
+  padding: 0;
+}
+
+.optimizer-strategy legend {
+  color: var(--gold);
+  font-size: 0.9rem;
+  font-weight: 800;
+  grid-column: 1 / -1;
+  margin-bottom: 0.5rem;
+}
+
+.optimizer-strategy label {
+  align-items: flex-start;
+  background: var(--panel);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.optimizer-strategy label.is-selected {
+  background: rgba(224, 191, 119, 0.08);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(224, 191, 119, 0.18);
+}
+
+.optimizer-strategy input {
+  accent-color: var(--gold);
+  flex: 0 0 auto;
+  height: auto;
+  margin-top: 0.25rem;
+  width: auto;
+}
+
+.optimizer-strategy label > span {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.optimizer-strategy small,
+.optimizer-strategy em {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.optimizer-strategy em {
+  color: var(--blue);
+  font-style: normal;
+}
+
+.optimizer-strategy:disabled label {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .optimizer-actions {
   align-items: center;
   display: flex;
@@ -3580,6 +3646,48 @@ th {
   margin: 0.75rem 0 1.25rem;
 }
 
+.optimizer-wave {
+  border-top: 1px solid var(--line-soft);
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.optimizer-wave > header h4,
+.optimizer-combined-summary h4 {
+  margin-bottom: 0.35rem;
+}
+
+.optimizer-wave > header p:last-child,
+.optimizer-tier-summary {
+  color: var(--muted);
+  margin: 0;
+}
+
+.optimizer-wave-metrics {
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+}
+
+.optimizer-tier-summary {
+  font-size: 0.85rem;
+  margin: -0.25rem 0 1rem;
+}
+
+.optimizer-wave-backup {
+  border-top-color: rgba(122, 161, 184, 0.4);
+}
+
+.optimizer-combined-summary {
+  background: rgba(224, 191, 119, 0.06);
+  border: 1px solid rgba(224, 191, 119, 0.25);
+  border-radius: var(--radius);
+  margin: 1.5rem 0;
+  padding: 1rem;
+}
+
+.optimizer-combined-summary .optimizer-result-metrics {
+  margin-bottom: 0;
+}
+
 .optimizer-unused {
   background: rgba(122, 161, 184, 0.08);
   border: 1px solid rgba(122, 161, 184, 0.35);
@@ -3615,6 +3723,23 @@ th {
   flex-wrap: wrap;
   gap: 0.35rem;
   justify-content: flex-end;
+}
+
+.optimizer-wave-badge {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.25rem 0.5rem;
+}
+
+.optimizer-wave-badge.primary {
+  color: var(--gold);
+}
+
+.optimizer-wave-badge.backup {
+  color: var(--blue);
 }
 
 .optimizer-score-pills span {
@@ -4266,6 +4391,10 @@ th {
 }
 
 @media (max-width: 760px) {
+  .optimizer-strategy {
+    grid-template-columns: 1fr;
+  }
+
   .optimizer-formation-grid {
     grid-template-columns: 1fr;
   }
@@ -4284,6 +4413,10 @@ th {
 @media (max-width: 560px) {
   .optimizer-roster-summary,
   .optimizer-result-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .optimizer-wave-metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

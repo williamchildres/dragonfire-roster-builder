@@ -20,9 +20,11 @@ import type {
 } from '../synergy/types';
 import {
   ROSTER_OPTIMIZER_RATING_CONTRACT,
+  ROSTER_OPTIMIZER_CONTRACT_VERSION,
   RosterOptimizerCancelledError,
   type OptimizerFormationCandidate,
   type OptimizerRosterDragon,
+  type RosterOptimizerStrategy,
 } from './rosterOptimizerTypes';
 
 const positions: FormationPosition[] = ['left-flank', 'vanguard', 'right-flank'];
@@ -59,6 +61,18 @@ export function createRosterOptimizerFingerprint(
       ]),
   });
   return stableHash(canonical);
+}
+
+export function createRosterOptimizerRequestFingerprint(
+  snapshot: OptimizerRosterDragon[],
+  strategy: RosterOptimizerStrategy,
+): string {
+  return stableHash(JSON.stringify({
+    contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
+    strategy,
+    rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
+  }));
 }
 
 export function generateOptimizerFormationCandidates({

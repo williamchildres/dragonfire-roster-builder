@@ -1,55 +1,48 @@
-# Roster Optimizer v1
+# Roster Optimizer strategies
 
-Roster Optimizer builds one exact complete allocation from the player's current My Roster data. A successful result always contains exactly 10 formations, exactly 30 unique dragons, and one Left Flank, Vanguard, and Right Flank assignment per formation. It never returns a partial allocation.
+Roster Optimizer builds an exact allocation from current My Roster data. Both strategies require at least 30 eligible dragons and return exactly 10 three-dragon formations using 30 unique dragons. No partial allocation is returned.
 
-## Eligibility and progression
+## Strategies
 
-The optimizer and Formation Builder My Roster mode share `rosterEligibility.ts`. An eligible dragon is an owned/hatched roster entry. Star Rank maps directly to current Star Rank and stored `reignLevel` maps to Dragon Level. Fewer than 30 eligible dragons returns a typed unavailable result with the exact shortfall.
+`Strongest 5 + Backup 5` is the default because players can activate only five formations at once. It returns two explicit waves:
 
-Habit Levels and notes are preserved in roster storage and in the Formation Builder handoff. They do not affect candidate ranking, rarity priority, selected formations, or the roster fingerprint. The fingerprint contains only eligible stable IDs, rarity, Star Rank, Dragon Level, and the Formation Rating v2 contract identifier.
+- Primary: five formations using 15 unique dragons;
+- Backup: five formations using 15 different dragons.
+
+Primary dragon inclusion maximizes Legendary count, then Epic count, before formation quality. Primary quality then compares total Formation Rating, minimum rating, the complete ascending five-rating vector, uncapped relationship value, and active relationship count. Only after every Primary numeric objective is fixed at its proven optimum does the solver optimize Backup rarity and the same Backup quality sequence. Among exactly tied Primary solutions, the one permitting the strongest Backup wins. Primary, Backup, and combined stable keys finish the deterministic tie-break.
+
+`Best 10 Overall` preserves the v0.12.0 behavior unchanged. All ten formations are optimized as one equally weighted collection using the existing Legendary, Epic, total rating, minimum rating, complete rating vector, relationship value, relationship count, and stable-key objective.
+
+## Eligibility, progression, and fingerprints
+
+The optimizer and Formation Builder My Roster mode share `rosterEligibility.ts`. An eligible dragon is owned/hatched. Star Rank and stored `reignLevel` (Dragon Level) affect unlocks and Formation Rating. Notes and Habit Levels remain stored and are preserved on Formation Builder handoff, but they do not affect ranking.
+
+The roster fingerprint contains ranking-relevant roster state. The request fingerprint additionally contains the selected strategy, optimizer contract version 2, and Formation Rating v2 identifier. Ownership, Star Rank, Dragon Level, or strategy changes stale a result; notes, Habit Levels, filters, and presentation state do not.
 
 ## Candidate generation
 
-Every unique unordered trio is generated once. With 31 eligible dragons this is `C(31,3) = 4,495` candidates. The existing placement comparison evaluates all six position assignments, retains every tied-best assignment, and chooses the existing stable first arrangement for display.
+Every unique unordered trio is generated once. With 31 eligible dragons this is `C(31,3) = 4,495` candidates. Existing placement comparison evaluates all six position assignments, retains tied-best assignments, and chooses the stable first arrangement for display. Candidate ratings, semantic relationships, recommendations, and findings all reuse Formation Builder services unchanged. Every retained placement must score 20/20 Placement Effectiveness.
 
-The retained arrangement is evaluated through the existing semantic relationship engine, Formation Rating v2, recommendation, signal, and finding services. No optimizer-specific relationship or rating formula exists. A retained best arrangement must calculate 20/20 Placement Effectiveness; candidate generation throws if that invariant fails.
+## Exact two-wave MILP
 
-## Exact objective
+For every trio candidate `i`, Primary + Backup creates binary variables `primary_i` and `backup_i`. Constraints require five variables in each wave, prevent one candidate from entering both waves, and limit every dragon to one selected variable across both waves. This guarantees 5 + 5 formations, 15 + 15 dragons, and zero cross-wave reuse.
 
-Solutions are compared lexicographically:
+The exact phase order is:
 
-1. included Legendary count;
-2. included Epic count;
-3. total Formation Rating;
-4. lowest individual Formation Rating;
-5. the complete ascending rating vector;
-6. total uncapped active relationship value;
-7. total active semantic relationship count;
-8. the lexicographically smallest stable canonical solution key.
+1. Primary Legendary and Epic counts;
+2. Primary total, minimum, ascending rating vector, relationship value, and relationship count;
+3. Backup Legendary and Epic counts;
+4. Backup total, minimum, ascending rating vector, relationship value, and relationship count;
+5. Primary, Backup, and combined stable-key refinement.
 
-Rarity is not converted to additive weights. Rare fills only the slots remaining after Legendary and Epic inclusion is maximized.
+The five-rating vectors use exact base-6 histogram chunks. Half-point relationship values are doubled to remain integral. Coefficients stay within safe integer precision.
 
-## Solver and optimality proof
+Every HiGHS session sets `mip_rel_gap = 0` and `mip_abs_gap = 0` through the checked WASM C API adapter. Every phase must return `optimal`, and its exact value is fixed before the next phase. There is no arbitrary timeout, heuristic or greedy fallback, or non-optimal incumbent returned as success. The independent TypeScript exhaustive solver and separate brute-force fixtures validate the complete comparator on small cases, including the mandatory tied-Primary/better-Backup counterexample.
 
-The production worker formulates binary set packing for HiGHS WebAssembly:
+## Worker and cancellation
 
-- one binary variable per trio candidate;
-- exactly 10 selected candidates;
-- at most one selected candidate containing each eligible dragon;
-- exact Legendary and Epic counts required by strict rarity priority.
-
-The solver then fixes each lexicographic phase at its proven optimum before starting the next. Total rating is optimized first. The complete sorted rating vector is represented exactly by base-11 histogram chunks, whose digits are counts from 0 through 10. Relationship value is scaled by two so half-point marginal values remain integral. If the preceding objective does not uniquely identify a solution, stable candidate-key chunks finish the canonical tie-break.
-
-Every HiGHS session explicitly sets `mip_rel_gap = 0` and `mip_abs_gap = 0`. `@bubblyworld/highs-ts` 1.2.0 does not expose option readback and its public `setParam` discards the native status. The optimizer therefore uses a narrow adapter over the packaged WASM instance's `Highs_setDoubleOptionValue` C API. Both option calls must return HiGHS status 0 before any model is parsed; an unknown option is rejected in regression coverage. This avoids relative-gap termination when base-11 or binary chunk coefficients make one exact integral unit numerically small relative to the phase objective.
-
-Every phase must return `optimal`. Infeasible, time-limit, iteration-limit, solution-limit, objective-bound, error, or unknown states are rejected. There is no heuristic fallback and no timeout incumbent can become a public result. The independent TypeScript branch-and-bound solver and brute-force enumeration remain test oracles for small fixtures, including a case where greedy allocation scores 101 and the exact allocation scores 120.
-
-## Worker, cancellation, and staleness
-
-Candidate generation and all exact solver phases run in a module Web Worker. Each run gets a monotonically increasing request ID and a roster snapshot captured at start. Cancel and disposal terminate the worker, which guarantees prompt cancellation even while WebAssembly is solving. Results from an older request ID or an obsolete worker cannot replace a newer run.
-
-The UI compares each result fingerprint with current ranking-relevant roster state. Ownership, rarity, Star Rank, Dragon Level, or rating-contract changes make the result stale. Notes, Habit Levels, and UI filters do not. A stale allocation remains visible for reference but its Formation Builder actions are disabled until rerun.
+Candidate generation and solving run in the existing module Web Worker. Each request includes a monotonic ID, selected strategy, and cloned roster. Cancellation terminates the active worker immediately. Stale worker responses are rejected and no partial Primary or Backup result can be labeled optimal.
 
 ## Privacy and scope
 
-Optimization is entirely local and makes no server or network call. It does not synchronize result sets and does not change roster data. It performs no combat simulation, damage estimate, troop-capacity model, battle prediction, or Habit Level valuation. No database migration is required.
+Optimization is local-only and makes no network call. Formation Rating v2, tier thresholds, dragon data, all 224 curated profile signals, source schema 13, and local/cloud roster schemas 5 are unchanged. No combat simulation, Habit Level weighting, cloud result storage, or database migration is introduced.

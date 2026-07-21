@@ -1,6 +1,7 @@
 import type { DragonRarity } from '../models/dragon';
 import type {
   OptimizerFormationCandidate,
+  PrimaryBackupOptimizerObjective,
   RosterOptimizerObjective,
   RosterRarityPriority,
 } from './rosterOptimizerTypes';
@@ -33,6 +34,46 @@ export function compareRosterOptimizerObjectives(
     left.totalActiveRelationships - right.totalActiveRelationships ||
     right.stableSolutionKey.localeCompare(left.stableSolutionKey)
   );
+}
+
+/**
+ * Positive means `left` is better. Primary rarity and quality dominate every
+ * Backup value. Stable keys are intentionally deferred until both waves'
+ * numeric objectives have been compared.
+ */
+export function comparePrimaryBackupOptimizerObjectives(
+  left: PrimaryBackupOptimizerObjective,
+  right: PrimaryBackupOptimizerObjective,
+): number {
+  return (
+    compareRarityPriority(left.primary.rarityPriority, right.primary.rarityPriority) ||
+    compareWaveQuality(left.primary, right.primary) ||
+    compareRarityPriority(left.backup.rarityPriority, right.backup.rarityPriority) ||
+    compareWaveQuality(left.backup, right.backup) ||
+    right.primary.stableSolutionKey.localeCompare(left.primary.stableSolutionKey) ||
+    right.backup.stableSolutionKey.localeCompare(left.backup.stableSolutionKey) ||
+    right.stableSolutionKey.localeCompare(left.stableSolutionKey)
+  );
+}
+
+export function primaryBackupObjectiveForCandidates(
+  primaryCandidates: OptimizerFormationCandidate[],
+  backupCandidates: OptimizerFormationCandidate[],
+  rarityByDragonId: ReadonlyMap<string, DragonRarity>,
+): PrimaryBackupOptimizerObjective {
+  const primary = objectiveForCandidates(primaryCandidates, rarityByDragonId);
+  const backup = objectiveForCandidates(backupCandidates, rarityByDragonId);
+  return {
+    strategy: 'primary-five-backup-five',
+    primary,
+    backup,
+    combinedTotalRating: primary.totalRating + backup.totalRating,
+    combinedRelationshipValue:
+      primary.totalRelationshipValue + backup.totalRelationshipValue,
+    combinedActiveRelationships:
+      primary.totalActiveRelationships + backup.totalActiveRelationships,
+    stableSolutionKey: `primary:${primary.stableSolutionKey}||backup:${backup.stableSolutionKey}`,
+  };
 }
 
 export function objectiveForCandidates(
@@ -87,4 +128,17 @@ export function compareNumberVectors(left: number[], right: number[]): number {
     if (difference !== 0) return difference;
   }
   return left.length - right.length;
+}
+
+function compareWaveQuality(
+  left: RosterOptimizerObjective,
+  right: RosterOptimizerObjective,
+): number {
+  return (
+    left.totalRating - right.totalRating ||
+    left.minimumRating - right.minimumRating ||
+    compareNumberVectors(left.ascendingRatingVector, right.ascendingRatingVector) ||
+    left.totalRelationshipValue - right.totalRelationshipValue ||
+    left.totalActiveRelationships - right.totalActiveRelationships
+  );
 }

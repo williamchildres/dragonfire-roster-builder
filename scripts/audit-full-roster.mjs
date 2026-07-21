@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeMarkdown = process.argv.includes('--write');
 const writeDiagnosticJson = process.argv.includes('--write-json');
 const baselinePath = path.join(root, 'docs', 'audits', 'full-roster-rating-baseline-0.10.5.json');
-const startingMainSha = '7c9d4810b8215ec2c642a83ed5792efc095d9e0b';
+const startingMainSha = '80c3c13261c48f7e18b6044d09dd9b74371451c4';
 const baselineSourceCommit = 'a5c4bc2c05850210a64652921021bba1783e6eb1';
 const expectedOldHash = 'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48';
 const baselineRuntimeMs = 12838;
@@ -46,7 +46,7 @@ try {
     ...report,
     sourceOfTruth: {
       startingMainSha,
-      branch: 'feature/roster-optimizer-v1',
+      branch: 'feature/roster-optimizer-strategies',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
@@ -108,7 +108,7 @@ try {
   } else {
     const committedMarkdown = await readFile(markdownPath, 'utf8');
     const stableFieldsMatch =
-      auditVersion === '0.12.0' &&
+      auditVersion === '0.13.0' &&
       report.formationSweep.deterministicFullResultHash ===
         '12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9' &&
       report.formationSweep.actualCount === 26970 &&

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.13.0 - 2026-07-21
+
+- Added a default Strongest 5 + Backup 5 strategy that reflects the five-formation activation limit, explicitly separates five Primary and five Backup formations, and never repeats a dragon across waves.
+- Added an exact joint two-wave HiGHS MILP. Primary Legendary and Epic inclusion and every Primary quality objective outrank Backup; tied Primary allocations use the strongest achievable Backup before deterministic stable keys.
+- Preserved Best 10 Overall as an explicit strategy with the v0.12.0 candidate generation, objective order, selected maxed/mixed allocations, totals, unused Arulix result, and semantic solution hashes unchanged.
+- Bumped the optimizer result contract to 2, added strategy-aware worker requests and fingerprints, retained cancellation/stale-response guarantees, and separated stable solution hashes from v2 result hashes.
+- Added an accessible strategy selector, wave summaries and badges, responsive Primary/Backup cards, combined diagnostics, strategy-specific methodology, and exact Formation Builder handoff from either wave.
+- Added production-MILP, independent exact oracle, and brute-force coverage for rarity hierarchy, Primary-before-Backup priority, complete wave comparators, reversed ordering, cancellation, the 400/350 versus 399/500 regression, and the mandatory tied-Primary/better-Backup counterexample.
+- Formation Rating v2 remains `12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9`. Source schema remains `13`, local/cloud roster schemas remain `5`, all 31 dragons and 224 curated signals are unchanged, Habit Level storage is unchanged, and no Supabase migration was added.
+
 ## 0.12.0 - 2026-07-21
 
 - Added Roster Optimizer v1, which selects exactly 10 pairwise-disjoint three-dragon formations from the current eligible My Roster pool and clearly identifies unused eligible dragons.
