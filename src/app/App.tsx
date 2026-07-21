@@ -9,6 +9,7 @@ import {
   LockKeyhole,
   ChevronRight,
   Shield,
+  Sparkles,
   Swords,
   Users,
   X,
@@ -27,6 +28,7 @@ import {
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
 import { RosterWorkspace } from './RosterWorkspace';
+import { RosterOptimizer } from './RosterOptimizer';
 import {
   clearConsumedSelectionRequest,
   type RosterSelectionRequest,
@@ -81,6 +83,7 @@ import { rateFormation } from '../services/formationRating';
 import { compareFormationPlacements } from '../services/formationPlacementComparison';
 import { buildFormationRecommendation } from '../services/formationRecommendation';
 import { buildFormationFindings } from '../services/formationFindings';
+import { currentRosterProgression, isRosterDragonEligible } from '../services/rosterEligibility';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import { buildSemanticRelationships } from '../synergy/semanticRelationships';
@@ -90,11 +93,12 @@ import type { AccountServices } from '../cloud/types';
 import { buildAuthRedirectUrl, getProductionAccountServices } from '../cloud/supabaseServices';
 import { useAccountSession } from '../hooks/useAccountSession';
 import { useRosterSync, type RosterSyncStatus } from '../hooks/useRosterSync';
+import type { RosterOptimizerRunner } from '../optimizer/rosterOptimizerClient';
 export { RawWordingDisclosure } from './DragonDetailModal';
 
 const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
 
-type Section = 'home' | 'roster' | 'team' | 'about';
+type Section = 'home' | 'roster' | 'team' | 'optimizer' | 'about';
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
 type RosterSuccessMessage = { text: string };
 type FormationDragonPoolMode = 'all-star-10' | 'roster';
@@ -114,6 +118,7 @@ const sectionLabels: Record<Section, string> = {
   home: 'Overview',
   roster: 'Roster',
   team: 'Formations',
+  optimizer: 'Optimizer',
   about: 'About',
 };
 
@@ -121,6 +126,7 @@ const sectionIcons = {
   home: Home,
   roster: Users,
   team: Swords,
+  optimizer: Sparkles,
   about: Info,
 };
 
@@ -136,7 +142,13 @@ const defaultFormationSelectorFilters: FormationSelectorFilters = {
   benefitsFrom: 'all',
 };
 
-export function App({ accountServices: providedAccountServices }: { accountServices?: AccountServices | null } = {}) {
+export function App({
+  accountServices: providedAccountServices,
+  optimizerRunner,
+}: {
+  accountServices?: AccountServices | null;
+  optimizerRunner?: RosterOptimizerRunner;
+} = {}) {
   const accountServices = useMemo(
     () => providedAccountServices === undefined ? getProductionAccountServices() : providedAccountServices,
     [providedAccountServices],
@@ -413,7 +425,7 @@ export function App({ accountServices: providedAccountServices }: { accountServi
 
     const unavailablePositions = FORMATION_POSITIONS.filter((position) => {
       const dragonId = formation[position];
-      return dragonId ? roster[dragonId]?.owned !== true : false;
+      return dragonId ? !isRosterDragonEligible(roster[dragonId]) : false;
     });
 
     if (unavailablePositions.length === 0) {
@@ -431,6 +443,13 @@ export function App({ accountServices: providedAccountServices }: { accountServi
         .map(formatFormationPosition)
         .join(', ')}.`,
     });
+  };
+
+  const openOptimizedFormation = (arrangement: Formation) => {
+    setFormation(arrangement);
+    setFormationDragonPoolMode('roster');
+    setActiveSection('team');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -492,6 +511,7 @@ export function App({ accountServices: providedAccountServices }: { accountServi
             detailedAbilityCount={detailedAbilityCount}
             onRoster={() => selectSection('roster')}
             onTeam={() => selectSection('team')}
+            onOptimizer={() => selectSection('optimizer')}
           />
         ) : null}
 
@@ -528,6 +548,16 @@ export function App({ accountServices: providedAccountServices }: { accountServi
             onOpenDetails={setSelectedDragon}
             onShare={() => void shareFormation()}
 
+          />
+        ) : null}
+
+        {activeSection === 'optimizer' ? (
+          <RosterOptimizer
+            allDragons={dragons}
+            roster={roster}
+            runner={optimizerRunner}
+            onOpenFormation={openOptimizedFormation}
+            onOpenRoster={() => selectSection('roster')}
           />
         ) : null}
 
@@ -667,10 +697,12 @@ function HomeSection({
   detailedAbilityCount,
   onRoster,
   onTeam,
+  onOptimizer,
 }: {
   detailedAbilityCount: number;
   onRoster: () => void;
   onTeam: () => void;
+  onOptimizer: () => void;
 }) {
   const versionLabel = `v${databaseMetadata.databaseVersion}`;
   const reviewedAbilityCount = simpleSynergyAbilityReviews.length;
@@ -715,6 +747,12 @@ function HomeSection({
           description="See canonical active synergy once, exact placement effectiveness, and prioritized diagnostic gaps."
           onClick={onTeam}
         />
+        <FeatureCard
+          icon={Sparkles}
+          title="Optimize Your Best 10"
+          description="Build one exact rarity-prioritized allocation of 10 non-overlapping formations from your current roster."
+          onClick={onOptimizer}
+        />
       </div>
 
       <div className="dataset-status-strip" aria-label="Dataset status">
@@ -740,7 +778,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Formation Rating now scores canonical active relationships once and compares all six placements for the selected trio. Normal Vanguard alternatives and kit gaps remain explainable diagnostics instead of duplicate penalties.</p>
+          <p>Roster Optimizer now proves the best rarity-prioritized allocation of 10 non-overlapping formations from current My Roster progression. Formation Rating v2 remains unchanged and no combat simulation is performed.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -1046,9 +1084,10 @@ function formationProgressionForDragon(
   mode: FormationDragonPoolMode,
 ) {
   const entry = roster[dragonId];
+  const current = currentRosterProgression(entry);
   return {
-    starRank: mode === 'all-star-10' ? 10 : entry?.starRank ?? null,
-    dragonLevel: entry?.reignLevel ?? null,
+    ...current,
+    starRank: mode === 'all-star-10' ? 10 : current.starRank,
   };
 }
 
@@ -1071,7 +1110,9 @@ function FormationBuilderSection({
 }) {
   const [selectorPosition, setSelectorPosition] = useState<FormationPosition | null>(null);
   const [selectorFilters, setSelectorFilters] = useState<FormationSelectorFilters>(defaultFormationSelectorFilters);
-  const selectableDragons = dragons.filter((dragon) => dragonPoolMode === 'all-star-10' || roster[dragon.id]?.owned);
+  const selectableDragons = dragons.filter(
+    (dragon) => dragonPoolMode === 'all-star-10' || isRosterDragonEligible(roster[dragon.id]),
+  );
   const profilesById = useMemo(
     () => new Map(simpleSynergyProfiles.map((profile) => [profile.dragonId, profile])),
     [],

@@ -2,6 +2,8 @@
 
 Dragonfire Lab 0.9.1 presents owned dragons as a compact roster-management workspace. The authoritative roster remains owned by `App.tsx`; workspace components receive the current roster and the existing update callback. They do not create another roster store, debounce, or cloud client.
 
+Roster Optimizer and Formation Builder My Roster mode share the same authoritative owned/hatched eligibility helper. Optimizer snapshots use stable dragon ID, rarity, Star Rank, and Dragon Level; notes, Habit Levels, filters, sorting, responsive mode, and selection never affect ranking or stale-result detection.
+
 ## Interaction model
 
 - Desktop and comfortable landscape widths show a scrollable owned-dragon list beside a bounded sticky editor.

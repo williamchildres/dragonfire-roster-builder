@@ -1,6 +1,6 @@
 {
   "name": "dragonfire-roster-builder",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +11,9 @@
     "test:watch": "vitest",
     "audit:full-roster": "node scripts/audit-full-roster.mjs",
     "audit:full-roster:write": "node scripts/audit-full-roster.mjs --write",
+    "audit:full-roster:write-json": "node scripts/audit-full-roster.mjs --write-json",
+    "audit:optimizer": "node scripts/audit-roster-optimizer.mjs",
+    "audit:optimizer:write": "node scripts/audit-roster-optimizer.mjs --write",
     "preview": "vite preview --host 127.0.0.1",
     "check:roster": "node scripts/check-official-roster.mjs",
     "export:context": "node scripts/export-project-context.mjs",
@@ -18,6 +21,7 @@
     "package:context": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-project-context.ps1"
   },
   "dependencies": {
+    "@bubblyworld/highs-ts": "1.2.0",
     "@supabase/supabase-js": "^2.110.7",
     "@vitejs/plugin-react": "latest",
     "lucide-react": "latest",

@@ -1,0 +1,527 @@
+{
+  "auditVersion": "0.12.0",
+  "formationRatingV2Hash": "12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9",
+  "fixtures": [
+    {
+      "name": "all-31-maxed",
+      "eligibleDragonCount": 31,
+      "eligibleRarityCounts": {
+        "Legendary": 9,
+        "Epic": 10,
+        "Rare": 12
+      },
+      "candidateCount": 4495,
+      "formations": [
+        {
+          "rank": 1,
+          "dragonIds": [
+            "seasmoke",
+            "shadowsong",
+            "zivern"
+          ],
+          "arrangement": {
+            "left-flank": "zivern",
+            "vanguard": "shadowsong",
+            "right-flank": "seasmoke"
+          },
+          "rating": 100,
+          "tier": "Excellent"
+        },
+        {
+          "rank": 2,
+          "dragonIds": [
+            "shimmer",
+            "syrax",
+            "vesper"
+          ],
+          "arrangement": {
+            "left-flank": "vesper",
+            "vanguard": "shimmer",
+            "right-flank": "syrax"
+          },
+          "rating": 86,
+          "tier": "Excellent"
+        },
+        {
+          "rank": 3,
+          "dragonIds": [
+            "bevlorin",
+            "tashix",
+            "tessarion"
+          ],
+          "arrangement": {
+            "left-flank": "bevlorin",
+            "vanguard": "tashix",
+            "right-flank": "tessarion"
+          },
+          "rating": 80,
+          "tier": "Excellent"
+        },
+        {
+          "rank": 4,
+          "dragonIds": [
+            "crimson",
+            "rhysarion",
+            "vaeldra"
+          ],
+          "arrangement": {
+            "left-flank": "crimson",
+            "vanguard": "rhysarion",
+            "right-flank": "vaeldra"
+          },
+          "rating": 80,
+          "tier": "Excellent"
+        },
+        {
+          "rank": 5,
+          "dragonIds": [
+            "caraxes",
+            "dawnseeker",
+            "feskar"
+          ],
+          "arrangement": {
+            "left-flank": "feskar",
+            "vanguard": "dawnseeker",
+            "right-flank": "caraxes"
+          },
+          "rating": 78,
+          "tier": "Strong"
+        },
+        {
+          "rank": 6,
+          "dragonIds": [
+            "antares",
+            "solstryker",
+            "velar"
+          ],
+          "arrangement": {
+            "left-flank": "solstryker",
+            "vanguard": "antares",
+            "right-flank": "velar"
+          },
+          "rating": 78,
+          "tier": "Strong"
+        },
+        {
+          "rank": 7,
+          "dragonIds": [
+            "shadowrend",
+            "venator",
+            "vermax"
+          ],
+          "arrangement": {
+            "left-flank": "shadowrend",
+            "vanguard": "venator",
+            "right-flank": "vermax"
+          },
+          "rating": 67,
+          "tier": "Strong"
+        },
+        {
+          "rank": 8,
+          "dragonIds": [
+            "arrax",
+            "kalspire",
+            "thunderstrike"
+          ],
+          "arrangement": {
+            "left-flank": "kalspire",
+            "vanguard": "arrax",
+            "right-flank": "thunderstrike"
+          },
+          "rating": 67,
+          "tier": "Strong"
+        },
+        {
+          "rank": 9,
+          "dragonIds": [
+            "malachite",
+            "nyrena",
+            "sheepstealer"
+          ],
+          "arrangement": {
+            "left-flank": "malachite",
+            "vanguard": "sheepstealer",
+            "right-flank": "nyrena"
+          },
+          "rating": 66,
+          "tier": "Solid"
+        },
+        {
+          "rank": 10,
+          "dragonIds": [
+            "daemoros",
+            "jagadrix",
+            "vhagar"
+          ],
+          "arrangement": {
+            "left-flank": "daemoros",
+            "vanguard": "jagadrix",
+            "right-flank": "vhagar"
+          },
+          "rating": 62,
+          "tier": "Solid"
+        }
+      ],
+      "totalRating": 764,
+      "averageRating": 76.4,
+      "minimumRating": 62,
+      "totalRelationshipValue": 540.5,
+      "totalActiveRelationships": 90,
+      "usedDragonIds": [
+        "antares",
+        "arrax",
+        "bevlorin",
+        "caraxes",
+        "crimson",
+        "daemoros",
+        "dawnseeker",
+        "feskar",
+        "jagadrix",
+        "kalspire",
+        "malachite",
+        "nyrena",
+        "rhysarion",
+        "seasmoke",
+        "shadowrend",
+        "shadowsong",
+        "sheepstealer",
+        "shimmer",
+        "solstryker",
+        "syrax",
+        "tashix",
+        "tessarion",
+        "thunderstrike",
+        "vaeldra",
+        "velar",
+        "venator",
+        "vermax",
+        "vesper",
+        "vhagar",
+        "zivern"
+      ],
+      "unusedDragonIds": [
+        "arulix"
+      ],
+      "usedRarityCounts": {
+        "Legendary": 9,
+        "Epic": 10,
+        "Rare": 11
+      },
+      "unusedRarityCounts": {
+        "Legendary": 0,
+        "Epic": 0,
+        "Rare": 1
+      },
+      "objective": {
+        "rarityPriority": {
+          "legendaryCount": 9,
+          "epicCount": 10,
+          "rareCount": 11
+        },
+        "totalRating": 764,
+        "minimumRating": 62,
+        "ascendingRatingVector": [
+          62,
+          66,
+          67,
+          67,
+          78,
+          78,
+          80,
+          80,
+          86,
+          100
+        ],
+        "totalRelationshipValue": 540.5,
+        "totalActiveRelationships": 90,
+        "stableSolutionKey": "antares+solstryker+velar@left-flank:solstryker|vanguard:antares|right-flank:velar||arrax+kalspire+thunderstrike@left-flank:kalspire|vanguard:arrax|right-flank:thunderstrike||bevlorin+tashix+tessarion@left-flank:bevlorin|vanguard:tashix|right-flank:tessarion||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+rhysarion+vaeldra@left-flank:crimson|vanguard:rhysarion|right-flank:vaeldra||daemoros+jagadrix+vhagar@left-flank:daemoros|vanguard:jagadrix|right-flank:vhagar||malachite+nyrena+sheepstealer@left-flank:malachite|vanguard:sheepstealer|right-flank:nyrena||seasmoke+shadowsong+zivern@left-flank:zivern|vanguard:shadowsong|right-flank:seasmoke||shadowrend+venator+vermax@left-flank:shadowrend|vanguard:venator|right-flank:vermax||shimmer+syrax+vesper@left-flank:vesper|vanguard:shimmer|right-flank:syrax"
+      },
+      "diagnostics": {
+        "optimal": true,
+        "eligibleDragonCount": 31,
+        "candidateCount": 4495,
+        "selectedFormationCount": 10,
+        "nodesVisited": 13,
+        "branchesPruned": 0,
+        "cacheEntries": 0,
+        "solverPasses": 15,
+        "candidateGenerationMs": 2380.5024999999996,
+        "solverMs": 3919.795399999999,
+        "totalMs": 6301.972400000001
+      },
+      "optimal": true,
+      "optimizerResultHash": "fnv1a64:49b0498718c54d6a"
+    },
+    {
+      "name": "mixed-progression",
+      "eligibleDragonCount": 31,
+      "eligibleRarityCounts": {
+        "Legendary": 9,
+        "Epic": 10,
+        "Rare": 12
+      },
+      "candidateCount": 4495,
+      "formations": [
+        {
+          "rank": 1,
+          "dragonIds": [
+            "shadowsong",
+            "solstryker",
+            "zivern"
+          ],
+          "arrangement": {
+            "left-flank": "shadowsong",
+            "vanguard": "solstryker",
+            "right-flank": "zivern"
+          },
+          "rating": 72,
+          "tier": "Strong"
+        },
+        {
+          "rank": 2,
+          "dragonIds": [
+            "seasmoke",
+            "sheepstealer",
+            "tashix"
+          ],
+          "arrangement": {
+            "left-flank": "sheepstealer",
+            "vanguard": "seasmoke",
+            "right-flank": "tashix"
+          },
+          "rating": 67,
+          "tier": "Strong"
+        },
+        {
+          "rank": 3,
+          "dragonIds": [
+            "kalspire",
+            "shadowrend",
+            "velar"
+          ],
+          "arrangement": {
+            "left-flank": "kalspire",
+            "vanguard": "shadowrend",
+            "right-flank": "velar"
+          },
+          "rating": 64,
+          "tier": "Solid"
+        },
+        {
+          "rank": 4,
+          "dragonIds": [
+            "caraxes",
+            "nyrena",
+            "syrax"
+          ],
+          "arrangement": {
+            "left-flank": "nyrena",
+            "vanguard": "caraxes",
+            "right-flank": "syrax"
+          },
+          "rating": 60,
+          "tier": "Solid"
+        },
+        {
+          "rank": 5,
+          "dragonIds": [
+            "arrax",
+            "malachite",
+            "thunderstrike"
+          ],
+          "arrangement": {
+            "left-flank": "malachite",
+            "vanguard": "arrax",
+            "right-flank": "thunderstrike"
+          },
+          "rating": 53,
+          "tier": "Solid"
+        },
+        {
+          "rank": 6,
+          "dragonIds": [
+            "dawnseeker",
+            "jagadrix",
+            "vesper"
+          ],
+          "arrangement": {
+            "left-flank": "vesper",
+            "vanguard": "dawnseeker",
+            "right-flank": "jagadrix"
+          },
+          "rating": 53,
+          "tier": "Solid"
+        },
+        {
+          "rank": 7,
+          "dragonIds": [
+            "antares",
+            "bevlorin",
+            "tessarion"
+          ],
+          "arrangement": {
+            "left-flank": "antares",
+            "vanguard": "bevlorin",
+            "right-flank": "tessarion"
+          },
+          "rating": 52,
+          "tier": "Solid"
+        },
+        {
+          "rank": 8,
+          "dragonIds": [
+            "daemoros",
+            "venator",
+            "vhagar"
+          ],
+          "arrangement": {
+            "left-flank": "daemoros",
+            "vanguard": "venator",
+            "right-flank": "vhagar"
+          },
+          "rating": 47,
+          "tier": "Developing"
+        },
+        {
+          "rank": 9,
+          "dragonIds": [
+            "crimson",
+            "rhysarion",
+            "vaeldra"
+          ],
+          "arrangement": {
+            "left-flank": "crimson",
+            "vanguard": "rhysarion",
+            "right-flank": "vaeldra"
+          },
+          "rating": 45,
+          "tier": "Developing"
+        },
+        {
+          "rank": 10,
+          "dragonIds": [
+            "feskar",
+            "shimmer",
+            "vermax"
+          ],
+          "arrangement": {
+            "left-flank": "shimmer",
+            "vanguard": "vermax",
+            "right-flank": "feskar"
+          },
+          "rating": 40,
+          "tier": "Developing"
+        }
+      ],
+      "totalRating": 553,
+      "averageRating": 55.3,
+      "minimumRating": 40,
+      "totalRelationshipValue": 303,
+      "totalActiveRelationships": 50,
+      "usedDragonIds": [
+        "antares",
+        "arrax",
+        "bevlorin",
+        "caraxes",
+        "crimson",
+        "daemoros",
+        "dawnseeker",
+        "feskar",
+        "jagadrix",
+        "kalspire",
+        "malachite",
+        "nyrena",
+        "rhysarion",
+        "seasmoke",
+        "shadowrend",
+        "shadowsong",
+        "sheepstealer",
+        "shimmer",
+        "solstryker",
+        "syrax",
+        "tashix",
+        "tessarion",
+        "thunderstrike",
+        "vaeldra",
+        "velar",
+        "venator",
+        "vermax",
+        "vesper",
+        "vhagar",
+        "zivern"
+      ],
+      "unusedDragonIds": [
+        "arulix"
+      ],
+      "usedRarityCounts": {
+        "Legendary": 9,
+        "Epic": 10,
+        "Rare": 11
+      },
+      "unusedRarityCounts": {
+        "Legendary": 0,
+        "Epic": 0,
+        "Rare": 1
+      },
+      "objective": {
+        "rarityPriority": {
+          "legendaryCount": 9,
+          "epicCount": 10,
+          "rareCount": 11
+        },
+        "totalRating": 553,
+        "minimumRating": 40,
+        "ascendingRatingVector": [
+          40,
+          45,
+          47,
+          52,
+          53,
+          53,
+          60,
+          64,
+          67,
+          72
+        ],
+        "totalRelationshipValue": 303,
+        "totalActiveRelationships": 50,
+        "stableSolutionKey": "antares+bevlorin+tessarion@left-flank:antares|vanguard:bevlorin|right-flank:tessarion||arrax+malachite+thunderstrike@left-flank:malachite|vanguard:arrax|right-flank:thunderstrike||caraxes+nyrena+syrax@left-flank:nyrena|vanguard:caraxes|right-flank:syrax||crimson+rhysarion+vaeldra@left-flank:crimson|vanguard:rhysarion|right-flank:vaeldra||daemoros+venator+vhagar@left-flank:daemoros|vanguard:venator|right-flank:vhagar||dawnseeker+jagadrix+vesper@left-flank:vesper|vanguard:dawnseeker|right-flank:jagadrix||feskar+shimmer+vermax@left-flank:shimmer|vanguard:vermax|right-flank:feskar||kalspire+shadowrend+velar@left-flank:kalspire|vanguard:shadowrend|right-flank:velar||seasmoke+sheepstealer+tashix@left-flank:sheepstealer|vanguard:seasmoke|right-flank:tashix||shadowsong+solstryker+zivern@left-flank:shadowsong|vanguard:solstryker|right-flank:zivern"
+      },
+      "diagnostics": {
+        "optimal": true,
+        "eligibleDragonCount": 31,
+        "candidateCount": 4495,
+        "selectedFormationCount": 10,
+        "nodesVisited": 8,
+        "branchesPruned": 0,
+        "cacheEntries": 0,
+        "solverPasses": 13,
+        "candidateGenerationMs": 1788.3343999999997,
+        "solverMs": 4274.085600000002,
+        "totalMs": 6062.6378
+      },
+      "optimal": true,
+      "optimizerResultHash": "fnv1a64:fc0005be3f0af3ed"
+    }
+  ],
+  "checks": {
+    "exactOptimality": true,
+    "strictMipGaps": {
+      "mip_rel_gap": 0,
+      "mip_abs_gap": 0,
+      "configuredThrough": "Highs_setDoubleOptionValue",
+      "acceptedStatus": 0,
+      "zeroGapRefinementConfirmedExistingHashes": true
+    },
+    "repeatedAndReversedInputStable": true,
+    "usedAndUnusedPartitionEligibleRoster": true,
+    "tenFormationsThirtyUniqueDragons": true,
+    "greedyCounterexample": {
+      "greedyTotal": 101,
+      "exactTotal": 120,
+      "passed": true
+    },
+    "smallFixtureBruteForceMatches": true
+  }
+}
