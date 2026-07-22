@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-22T20:31:00.354Z",
+  "generatedAt": "2026-07-22T21:31:22.897Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "hotfix/optimizer-nonintegral-objective",
-    "commit": "bdbfeb4add6f72f3f218529b2a9bc4f33a3fdfcb",
+    "commit": "207396d8e773c22205735d0e1ecf4d8a3becd03e",
     "databaseVersion": "0.19.1",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
