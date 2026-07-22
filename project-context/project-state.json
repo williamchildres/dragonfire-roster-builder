@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-22T16:03:53.207Z",
+  "generatedAt": "2026-07-22T16:11:27.255Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "feature/estimated-power-v2",
-    "commit": "1592c9f6573951dbc70091bedd861240f77d1b57",
+    "commit": "f4cf3146f7497fc64d6c53e6109d1165946386f1",
     "databaseVersion": "0.17.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
