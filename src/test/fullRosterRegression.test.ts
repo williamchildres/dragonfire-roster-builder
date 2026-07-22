@@ -50,7 +50,7 @@ describe('full-roster regression audit', () => {
 
     expect(result.reliable).toBe(true);
     expect(result.generatedFrom).toEqual({
-      databaseVersion: '0.19.1',
+      databaseVersion: '0.20.0',
       dataSchemaVersion: 13,
       localRosterSchemaVersion: 5,
     });
@@ -246,7 +246,8 @@ describe('full-roster regression audit', () => {
 
   it('FRR-F006: records complete About coverage copy', async () => {
     const source = await import('../app/App.tsx?raw').then((module) => module.default);
-    expect(source).toContain('All 31 known dragons have detailed coverage: Legendary 9/9, Epic 10/10, and Rare');
-    expect(source).toContain('12/12.');
+    expect(source).toContain('productMetrics.detailedDragonCount');
+    expect(source).toContain('dragons with detailed coverage');
+    expect(source).not.toContain('All 31 known dragons');
   });
 });

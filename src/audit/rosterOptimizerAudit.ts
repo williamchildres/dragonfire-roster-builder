@@ -100,7 +100,7 @@ export async function runRosterOptimizerAudit() {
     archivedPowerAwareFixtures.push(await runArchivedPowerAwareRosterOptimizerAudit(fixture));
   }
   return {
-    auditVersion: '0.19.1',
+    auditVersion: '0.20.0',
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     archivedFormationRatingV2Hash: ARCHIVED_FORMATION_RATING_V2_HASH,
     archivedFixtures: archivedReports,
@@ -171,7 +171,7 @@ export async function runPowerAwareRosterOptimizerAudit(
     };
   });
   return {
-    auditVersion: '0.19.1',
+    auditVersion: '0.20.0',
     fixture,
     order,
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,

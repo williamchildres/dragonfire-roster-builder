@@ -34,7 +34,7 @@ try {
   }
   if (writeReport) {
     const orderSuffix = fixture === 'live-regression' ? `-${order}` : '';
-    const base = path.join(root, 'docs', 'audits', `roster-optimizer-power-aware-0.19.1-${fixture}${orderSuffix}`);
+    const base = path.join(root, 'docs', 'audits', `roster-optimizer-power-aware-0.20.0-${fixture}${orderSuffix}`);
     await mkdir(path.dirname(base), { recursive: true });
     await writeFile(`${base}.json`, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
     await writeFile(`${base}.md`, renderMarkdown(report), 'utf8');

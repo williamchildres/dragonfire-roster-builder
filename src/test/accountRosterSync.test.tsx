@@ -139,7 +139,7 @@ describe('optional account authentication UI', () => {
     render(<App accountServices={null} />);
     expect(screen.queryByRole('button', { name: /sign in/i })).not.toBeInTheDocument();
     expect(screen.queryByText(/account synchronization/i)).not.toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Roster' }));
+    await user.click(screen.getByRole('link', { name: 'Roster' }));
     expect(screen.getByText('Track ownership, progression, Habit Levels, and notes.')).toBeInTheDocument();
     expect(screen.queryByText(/Roster storage/i)).not.toBeInTheDocument();
   });
@@ -388,7 +388,7 @@ describe('initial roster migration and conflict behavior', () => {
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await user.click(await screen.findByRole('button', { name: 'Not now' }));
     expect(repository.upserts).toHaveLength(0);
-    await user.click(screen.getByRole('button', { name: 'Roster' }));
+    await user.click(screen.getByRole('link', { name: 'Roster' }));
     await user.selectOptions(screen.getByLabelText('Star Rank'), '8');
     await new Promise((resolve) => window.setTimeout(resolve, 900));
     expect(repository.upserts).toHaveLength(0);
@@ -406,7 +406,7 @@ describe('ongoing synchronization safety', () => {
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
     await screen.findByRole('button', { name: /Account for/i });
-    await user.click(screen.getByRole('button', { name: 'Roster' }));
+    await user.click(screen.getByRole('link', { name: 'Roster' }));
     await user.click(screen.getAllByRole('button', { name: /Add Dragon/i })[0]!);
     await user.click(screen.getAllByRole('button', { name: 'Add to roster' })[0]!);
     await waitFor(() => expect(Object.values(loadStoredRosterSnapshot(window.localStorage, dragons).roster).some((entry) => entry.owned)).toBe(true));
@@ -436,7 +436,7 @@ describe('ongoing synchronization safety', () => {
     const repository = new FakeRosters(makeRecord('user-a', roster));
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
-    await user.click(screen.getByRole('button', { name: 'Roster' }));
+    await user.click(screen.getByRole('link', { name: 'Roster' }));
     await screen.findByRole('button', { name: /Account for .*roster synchronized/i });
     const imported = meaningfulRoster('Imported locally', 1);
     const file = new File([serializeRosterExport(imported)], 'roster.json', { type: 'application/json' });
@@ -456,7 +456,7 @@ describe('ongoing synchronization safety', () => {
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
-    await user.click(screen.getByRole('button', { name: 'Roster' }));
+    await user.click(screen.getByRole('link', { name: 'Roster' }));
     await screen.findByRole('button', { name: /Account for .*roster synchronized/i });
     await user.click(screen.getByRole('button', { name: 'Clear local roster' }));
     expect(confirm).toHaveBeenCalledWith(expect.stringContaining('Your account roster will not be deleted'));
@@ -488,7 +488,7 @@ describe('ongoing synchronization safety', () => {
     repository.failWrite = true;
     const user = userEvent.setup();
     render(<App accountServices={makeServices(new FakeAuth(signedInSession), repository)} />);
-    await user.click(screen.getByRole('button', { name: 'Roster' }));
+    await user.click(screen.getByRole('link', { name: 'Roster' }));
     await screen.findByRole('button', { name: /Account for .*roster synchronized/i });
     await user.selectOptions(screen.getByLabelText('Star Rank'), '9');
     expect(loadStoredRosterSnapshot(window.localStorage, dragons).roster[dragons[0]!.id]!.starRank).toBe(9);
