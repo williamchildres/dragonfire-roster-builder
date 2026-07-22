@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeMarkdown = process.argv.includes('--write');
 const writeDiagnosticJson = process.argv.includes('--write-json');
 const baselinePath = path.join(root, 'docs', 'audits', 'full-roster-rating-baseline-0.10.5.json');
-const startingMainSha = '71897d22ed62025574d600da31d7f12ec6b628d5';
+const startingMainSha = '8c66609e76962eec4a1122a79fb2113c7dc0153b';
 const baselineSourceCommit = 'a5c4bc2c05850210a64652921021bba1783e6eb1';
 const expectedOldHash = 'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48';
 const baselineRuntimeMs = 12838;
@@ -47,7 +47,7 @@ try {
     sourceOfTruth: {
       startingMainSha,
       baselineSourceCommit,
-      branch: 'hotfix/optimizer-nonintegral-objective',
+      branch: 'feature/ui-polish-clean-routes-and-updates',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
@@ -109,7 +109,7 @@ try {
   } else {
     const committedMarkdown = await readFile(markdownPath, 'utf8');
     const stableFieldsMatch =
-      auditVersion === '0.19.1' &&
+      auditVersion === '0.20.0' &&
       report.formationSweep.deterministicFullResultHash ===
         '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf' &&
       report.formationSweep.actualCount === 32736 &&
@@ -248,7 +248,7 @@ function renderMarkdown(report) {
   const lines = [
     `# Full-roster Formation Rating v2 audit — ${report.auditVersion}`,
     '',
-    '> Formation Rating v2 scoring and canonical data are unchanged. This hotfix only corrects exact optimizer phase-value reconstruction.',
+    '> Formation Rating v2 scoring and canonical data are unchanged. This release changes UI, trust content, release history, and routing only.',
     '',
     '## Executive summary',
     '',
@@ -320,7 +320,7 @@ function renderMarkdown(report) {
     '## Compatibility and release',
     '',
     '- Source schema remains 13; local and cloud roster schemas remain 5; no Supabase migration was added.',
-    '- The 0.19.1 optimizer numerical hotfix changes no dragon data, scoring formula, thresholds, or Formation Rating output.',
+    '- The 0.20.0 UI, trust-content, release-history, and routing release changes no dragon data, scoring formula, thresholds, or Formation Rating output.',
     '- The archived 31-dragon optimizer hashes and reviewed 33-dragon full-roster hash are preserved.',
     '- The complete old/new comparison is validated in memory. An ignored full diagnostic JSON can be generated explicitly with `npm run audit:full-roster:write-json`.',
     '',

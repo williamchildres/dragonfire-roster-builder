@@ -29,6 +29,14 @@ import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
 import { RosterWorkspace } from './RosterWorkspace';
 import {
+  AppLink,
+  canonicalRouteFromLocation,
+  routeMetadata,
+  routePaths,
+  type AppRoute,
+  type NavigateToRoute,
+} from './appRouter';
+import {
   DEFAULT_ROSTER_OPTIMIZER_STRATEGY,
   RosterOptimizer,
 } from './RosterOptimizer';
@@ -47,9 +55,10 @@ import {
 } from './formationCardPresentation';
 import { formationSignalStateMarker } from './formationSignalPresentation';
 import { getPublicVerificationLabel, getPublicVerificationTone } from './publicCardLabels';
-import dragonfireHero from '../assets/dragonfire-hero.png';
-import { databaseMetadata, repository } from '../data/databaseMetadata';
+import { repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
+import { productMetrics } from '../data/productMetrics';
+import { releaseHistory } from '../data/releaseHistory';
 import { estimateFormationPower } from '../power/estimatedFormationPower';
 import {
   BREEDS,
@@ -92,7 +101,6 @@ import { currentRosterProgression, isRosterDragonEligible } from '../services/ro
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import { buildSemanticRelationships } from '../synergy/semanticRelationships';
-import { simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 import type { SimpleProgressionByDragonId } from '../synergy/types';
 import type { AccountServices } from '../cloud/types';
 import { buildAuthRedirectUrl, getProductionAccountServices } from '../cloud/supabaseServices';
@@ -107,7 +115,7 @@ export { RawWordingDisclosure } from './DragonDetailModal';
 
 const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
 
-type Section = 'home' | 'roster' | 'team' | 'optimizer' | 'about';
+type Section = AppRoute;
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
 type RosterSuccessMessage = { text: string };
 type FormationDragonPoolMode = 'all-star-10' | 'roster';
@@ -124,19 +132,23 @@ type FormationSelectorFilters = {
 const rosterSuccessMessageTimeoutMs = 4000;
 
 const sectionLabels: Record<Section, string> = {
-  home: 'Overview',
+  overview: 'Overview',
   roster: 'Roster',
-  team: 'Formations',
+  formations: 'Formations',
   optimizer: 'Optimizer',
   about: 'About',
+  updates: 'Updates',
 };
 
+const primarySections: Section[] = ['overview', 'roster', 'formations', 'optimizer', 'about'];
+
 const sectionIcons = {
-  home: Home,
+  overview: Home,
   roster: Users,
-  team: Swords,
+  formations: Swords,
   optimizer: Sparkles,
   about: Info,
+  updates: Flame,
 };
 
 const verificationStatusOptions = [...new Set(dragons.map((dragon) => dragon.dataStatus))] as VerificationStatus[];
@@ -189,6 +201,7 @@ export function App({
   const rosterSelectionRequestIdRef = useRef(0);
   const rosterSuccessTimerRef = useRef<number | null>(null);
   const [accountDialogReturnFocus, setAccountDialogReturnFocus] = useState<HTMLElement | null>(null);
+  const focusHeadingAfterNavigationRef = useRef(false);
 
   const openSignInDialog = useCallback(() => {
     setAccountDialogReturnFocus(document.activeElement instanceof HTMLElement ? document.activeElement : null);
@@ -251,14 +264,24 @@ export function App({
   }, [rosterSuccessMessage]);
 
   useEffect(() => {
-    if (!isStalePublicHash(window.location.hash)) {
-      return;
-    }
-
-    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+    const onPopState = () => setActiveSection(getInitialSection());
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  const detailedAbilityCount = dragons.filter(hasDetailedAbilities).length;
+  useEffect(() => {
+    document.title = routeMetadata[activeSection].title;
+    const canonicalUrl = `https://dragonfirelab.com${routePaths[activeSection]}`;
+    document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', canonicalUrl);
+    document.querySelector<HTMLMetaElement>('meta[property="og:url"]')?.setAttribute('content', canonicalUrl);
+
+    if (focusHeadingAfterNavigationRef.current) {
+      focusHeadingAfterNavigationRef.current = false;
+      requestAnimationFrame(() => {
+        document.querySelector<HTMLElement>('#main-content h2')?.focus();
+      });
+    }
+  }, [activeSection]);
 
   const updateRoster = (dragonId: string, patch: Partial<OwnedDragon>) => {
     const dragon = dragons.find((candidate) => candidate.id === dragonId);
@@ -321,12 +344,19 @@ export function App({
     setIsAddDragonOpen(true);
   };
 
-  const selectSection = (section: Section) => {
+  const selectSection: NavigateToRoute = (section, options) => {
+    const nextUrl = routePaths[section];
+    if (options?.replace) {
+      window.history.replaceState(null, '', nextUrl);
+    } else if (window.location.pathname !== nextUrl || window.location.hash || window.location.search) {
+      window.history.pushState(null, '', nextUrl);
+    }
     setActiveSection(section);
     if (section !== 'roster') {
       setRosterSuccessMessage(null);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    focusHeadingAfterNavigationRef.current = options?.keyboard === true;
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   const exportRoster = () => {
@@ -436,8 +466,8 @@ export function App({
 
   const shareFormation = async () => {
     const shareHash = createFormationShareHash(formation);
-    const url = `${window.location.origin}${window.location.pathname}${shareHash}`;
-    window.history.replaceState(null, '', shareHash);
+    const url = `${window.location.origin}${routePaths.formations}${shareHash}`;
+    window.history.replaceState(null, '', `${routePaths.formations}${shareHash}`);
     try {
       await navigator.clipboard.writeText(url);
       setMessage({ kind: 'success', text: 'Formation share link copied.' });
@@ -478,8 +508,7 @@ export function App({
   const openOptimizedFormation = (arrangement: Formation) => {
     setFormation(arrangement);
     setFormationDragonPoolMode('roster');
-    setActiveSection('team');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    selectSection('formations');
   };
 
   return (
@@ -489,7 +518,7 @@ export function App({
       </a>
       <header className="site-header">
         <div className="site-header-inner">
-          <div className="brand-lockup" aria-label="Dragonfire Lab">
+          <AppLink className="brand-lockup brand-link" route="overview" navigate={selectSection} ariaLabel="Dragonfire Lab Overview">
             <span className="brand-mark" aria-hidden="true">
               <Flame size={28} />
             </span>
@@ -497,21 +526,21 @@ export function App({
               <p className="eyebrow">Unofficial community tool</p>
               <h1>Dragonfire Lab</h1>
             </div>
-          </div>
+          </AppLink>
           <nav aria-label="Primary sections" className="section-nav">
-            {(Object.keys(sectionLabels) as Section[]).map((section) => {
+            {primarySections.map((section) => {
               const Icon = sectionIcons[section];
               return (
-                <button
+                <AppLink
                   className={activeSection === section ? 'nav-button is-active' : 'nav-button'}
                   key={section}
-                  type="button"
-                  aria-current={activeSection === section ? 'page' : undefined}
-                  onClick={() => selectSection(section)}
+                  ariaCurrent={activeSection === section ? 'page' : undefined}
+                  route={section}
+                  navigate={selectSection}
                 >
                   <Icon size={18} aria-hidden="true" />
                   <span>{sectionLabels[section]}</span>
-                </button>
+                </AppLink>
               );
             })}
           </nav>
@@ -536,13 +565,8 @@ export function App({
           </div>
         ) : null}
 
-        {activeSection === 'home' ? (
-          <HomeSection
-            detailedAbilityCount={detailedAbilityCount}
-            onRoster={() => selectSection('roster')}
-            onTeam={() => selectSection('team')}
-            onOptimizer={() => selectSection('optimizer')}
-          />
+        {activeSection === 'overview' ? (
+          <HomeSection navigate={selectSection} />
         ) : null}
 
         {activeSection === 'roster' ? (
@@ -569,7 +593,7 @@ export function App({
           />
         ) : null}
 
-        {activeSection === 'team' ? (
+        {activeSection === 'formations' ? (
           <FormationBuilderSection
             dragonPoolMode={formationDragonPoolMode}
             roster={roster}
@@ -593,10 +617,12 @@ export function App({
             runner={optimizerRunner}
             onOpenFormation={openOptimizedFormation}
             onOpenRoster={() => selectSection('roster')}
+            onNavigate={selectSection}
           />
         ) : null}
 
         {activeSection === 'about' ? <AboutSection accountConfigured={accountServices !== null} /> : null}
+        {activeSection === 'updates' ? <UpdatesSection navigate={selectSection} /> : null}
       </main>
 
       <footer className="site-footer">
@@ -728,65 +754,40 @@ export function App({
   );
 }
 
-function HomeSection({
-  detailedAbilityCount,
-  onRoster,
-  onTeam,
-  onOptimizer,
-}: {
-  detailedAbilityCount: number;
-  onRoster: () => void;
-  onTeam: () => void;
-  onOptimizer: () => void;
-}) {
-  const versionLabel = `v${databaseMetadata.databaseVersion}`;
-  const reviewedAbilityCount = simpleSynergyAbilityReviews.length;
-  const profileCount = simpleSynergyProfiles.length;
+function HomeSection({ navigate }: { navigate: NavigateToRoute }) {
+  const latestRelease = releaseHistory[0]!;
 
   return (
     <section className="overview-section" aria-label="Overview">
-      <div className="hero-section">
-        <div className="hero-art hero-art-panel">
-          <img
-            alt="Dragonfire Lab dragon emblem"
-            className="hero-image"
-            src={dragonfireHero}
-          />
-          <div className="hero-art-overlay" aria-hidden="true" />
-        </div>
-        <div className="hero-copy">
-          <p className="eyebrow">Roster and formation planner</p>
-          <h2>Build stronger formations from your dragon roster.</h2>
-          <p>
-            Track your dragons, compare explainable formation ratings, and understand which abilities work together.
-          </p>
-        </div>
+      <div className="overview-introduction">
+        <p className="eyebrow">Roster and formation planner</p>
+        <h2 tabIndex={-1}>Build stronger formations from your dragon roster.</h2>
+        <p>
+          Track progression, compare explainable Formation Ratings, and generate exact non-overlapping roster plans from the dragons you own.
+        </p>
       </div>
 
-      <div className="overview-feature-grid" aria-label="Overview highlights">
+      <div className="overview-feature-grid" aria-label="Primary workflows">
         <FeatureCard
           icon={Users}
           title="Track Your Roster"
-          description="Save ownership, Star Rank, Dragon Level, Habit Levels, and notes in this browser."
-          onClick={onRoster}
+          description="Track ownership, Star Rank, Dragon Level, Habit Levels, Estimated Power, and personal notes."
+          route="roster"
+          navigate={navigate}
         />
         <FeatureCard
           icon={Swords}
           title="Build Formations"
-          description="Build three-dragon formations, compare explainable ratings, and review active relationships across all six placements."
-          onClick={onTeam}
-        />
-        <FeatureCard
-          icon={Flame}
-          title="Understand Formation Ratings"
-          description="See canonical active synergy once, exact placement effectiveness, and prioritized diagnostic gaps."
-          onClick={onTeam}
+          description="Build three-dragon formations, compare transparent Formation Ratings, and review all six possible placements."
+          route="formations"
+          navigate={navigate}
         />
         <FeatureCard
           icon={Sparkles}
-          title="Choose Your Optimizer Strategy"
-          description="Prioritize five active formations plus five Backups, or optimize all ten together."
-          onClick={onOptimizer}
+          title="Optimize Your Roster"
+          description="Generate ten exact non-overlapping formations using your current roster and selected optimization strategy."
+          route="optimizer"
+          navigate={navigate}
         />
       </div>
 
@@ -796,34 +797,32 @@ function HomeSection({
           <p>Curated coverage at a glance</p>
         </div>
         <div className="dataset-status-item">
-          <strong>{detailedAbilityCount} / {dragons.length}</strong>
+          <strong>{productMetrics.detailedDragonCount} / {productMetrics.dragonCount}</strong>
           <span>dragons mapped</span>
         </div>
         <div className="dataset-status-item">
-          <strong>{reviewedAbilityCount}</strong>
+          <strong>{productMetrics.reviewedAbilityCount}</strong>
           <span>abilities reviewed</span>
         </div>
         <div className="dataset-status-item">
-          <strong>{profileCount}</strong>
+          <strong>{productMetrics.curatedProfileCount}</strong>
           <span>curated synergy profiles</span>
         </div>
       </div>
 
-      <div className="overview-footer-grid">
-        <div className="latest-update-panel panel readable">
-          <p className="eyebrow">Current data</p>
-          <h3>Latest release — {versionLabel}</h3>
-          <p>Estimated Power v2 uses expanded observations and support-aware Star-plus-Level curves for its empirical, unofficial diagnostic. Power-Aware 5 + Backup 5 is the default; Formation Rating v2 is unchanged.</p>
+      <section className="latest-update-panel panel readable" aria-labelledby="recent-update-title">
+        <div>
+          <p className="eyebrow">Recent Update</p>
+          <h3 id="recent-update-title">Version {latestRelease.version}</h3>
+          <p className="release-date"><time dateTime={latestRelease.date}>{latestRelease.date}</time></p>
         </div>
-        <div className="notice-panel trust-note readable">
-          <p className="eyebrow">Local first</p>
-          <h3>Private by design</h3>
-          <p>
-            Works without an account. Your roster is stored in this browser, and Dragonfire Lab
-            does not use private game APIs.
-          </p>
-        </div>
-      </div>
+        <ul className="plain-list">
+          {latestRelease.items.slice(0, 2).map((item) => <li key={item}>{item}</li>)}
+        </ul>
+        <AppLink className="secondary-button latest-update-link" route="updates" navigate={navigate}>
+          View all updates <ChevronRight size={16} aria-hidden="true" />
+        </AppLink>
+      </section>
     </section>
   );
 }
@@ -832,16 +831,22 @@ function FeatureCard({
   icon: Icon,
   title,
   description,
-  onClick,
+  route,
+  navigate,
 }: {
   icon: LucideIcon;
   title: string;
   description: string;
-  onClick?: () => void;
+  route: AppRoute;
+  navigate: NavigateToRoute;
 }) {
-  const classes = onClick ? 'feature-card feature-card-button' : 'feature-card';
-  const content = (
-    <>
+  return (
+    <AppLink
+      ariaLabel={`${title}: open ${routePaths[route]}`}
+      className="feature-card feature-card-link"
+      route={route}
+      navigate={navigate}
+    >
       <div className="feature-icon" aria-hidden="true">
         <Icon size={18} />
       </div>
@@ -849,23 +854,11 @@ function FeatureCard({
         <h3>{title}</h3>
         <p>{description}</p>
       </div>
-      {onClick ? (
-        <span className="feature-card-action" aria-hidden="true">
-          Open <ChevronRight size={14} />
-        </span>
-      ) : null}
-    </>
+      <span className="feature-card-action" aria-hidden="true">
+        Open <ChevronRight size={14} />
+      </span>
+    </AppLink>
   );
-
-  if (onClick) {
-    return (
-      <button type="button" className={classes} onClick={onClick}>
-        {content}
-      </button>
-    );
-  }
-
-  return <article className={classes}>{content}</article>;
 }
 
 function AddDragonDialog({
@@ -1287,7 +1280,7 @@ function FormationBuilderSection({
   return (
     <section aria-labelledby="team-title">
       <div className="formation-workspace-header">
-        <h2 id="team-title">Formation Builder</h2>
+        <h2 id="team-title" tabIndex={-1}>Formation Builder</h2>
         <p>Assign one unique dragon to each position and review curated profile relationships.</p>
       </div>
       <div className="toolbar">
@@ -1724,69 +1717,131 @@ function CompactSignalPreview({ title, chips }: { title: 'Damage profile' | 'Pro
   );
 }
 
-function hasDetailedAbilities(dragon: Dragon) {
-  return Boolean(dragon.command && dragon.trait && dragon.habits.length > 0);
-}
-
 function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
   return (
     <section className="about-section" aria-labelledby="about-title">
       <SectionHeading
         eyebrow="Open source fan project"
         title="About"
-        description="A local-first roster and formation planning tool for Dragonfire."
+        description="How Dragonfire Lab turns reviewed dragon data into reproducible formation recommendations."
       />
-      <div className="about-grid">
-        <div className="panel readable">
-          <h3>What Dragonfire Lab does</h3>
-          <p>
-            All 31 known dragons have detailed coverage: Legendary 9/9, Epic 10/10, and Rare
-            12/12.
-          </p>
-          <ul className="plain-list">
-            <li>Track owned dragons and saved progression.</li>
-            <li>Review verified ability and profile information.</li>
-            <li>Build three-dragon formations.</li>
-            <li>Compare explainable Formation Ratings.</li>
-            <li>Review canonical active synergy, exact placement effectiveness, and diagnostic kit gaps.</li>
-          </ul>
-        </div>
+      <dl className="methodology-metrics" aria-label="Methodology at a glance">
+        <MetricDefinition value={productMetrics.detailedDragonCount} label="dragons with detailed coverage" />
+        <MetricDefinition value={productMetrics.reviewedAbilityCount} label="abilities reviewed" />
+        <MetricDefinition value={productMetrics.curatedScoringSignalCount} label="curated scoring signals" />
+        <MetricDefinition value={productMetrics.orderedFormationPlacementCount} label="ordered placements audited" />
+        <MetricDefinition value={productMetrics.optimizerCandidateCount} label="unique trio candidates" />
+        <MetricDefinition value="500+" label="automated tests" />
+      </dl>
 
-        <div className="panel readable">
-          <h3>Privacy and local storage</h3>
+      <div className="methodology-layout">
+        <section className="methodology-section panel readable">
+          <p className="eyebrow">Reviewed data</p>
+          <h3>Evidence becomes structured records</h3>
           <p>
-            No login is required. Dragonfire Lab does not use private game APIs or collect
-            game credentials. {accountConfigured
-              ? 'Your roster and notes stay in your browser unless you sign in by email and choose account synchronization.'
-              : 'Your roster and notes stay in your browser.'}
+            Dragon identity, affinities, Commands, Traits, Habits, unlocks, values, and targeting are reviewed from sourced evidence. Screenshot evidence and official roster material are reconciled into structured canonical records; the result is community-reviewed, not official game data.
           </p>
-        </div>
+          <p>
+            Unknown information stays unknown rather than being invented. Every ability receives an explicit synergy disposition, and only mechanics that can be represented responsibly become scoring signals. Enemy-only, self-only, unresolved, or non-pair-specific mechanics can remain descriptive instead of being forced into a relationship score.
+          </p>
+        </section>
 
-        <div className="panel readable">
-          <h3>Community data and contributions</h3>
+        <section className="methodology-section panel readable">
+          <p className="eyebrow">Reproducible recommendations</p>
+          <h3>Why this is different from asking AI for formations</h3>
           <p>
-            Ability and profile updates require sourced community evidence. Never submit
-            credentials, private profile information, or confidential material.
+            AI can help interpret or summarize game information, but a one-off prompt does not itself provide Dragonfire Lab's versioned source dataset, explicit unlock and placement rules, deterministic semantic relationships, exhaustive six-arrangement trio comparison, exact 30-dragon non-overlap constraints, reproducible solver objective hierarchy, regression tests, or deterministic audit hashes.
           </p>
-        </div>
+          <p>
+            Dragonfire Lab produces the same result from the same release, roster, progression, and strategy. That makes its recommendation inspectable and repeatable; it does not simulate combat or guarantee the strongest possible in-game army.
+          </p>
+        </section>
 
-        <div className="panel readable">
-          <h3>Unofficial and open source</h3>
-          <p>
-            Dragonfire Lab is an unofficial community tool and is not affiliated with or
-            endorsed by Warner Bros. Entertainment, HBO, or the developers of Game of Thrones:
-            Dragonfire.
+        <section className="methodology-section panel readable" id="formation-rating-methodology">
+          <p className="eyebrow">Formation Rating v2</p>
+          <h3>An explainable 100-point planning score</h3>
+          <p className="methodology-formula">
+            <strong>Formation Rating</strong> = Active Synergy, maximum 80 + Placement Effectiveness, maximum 20
           </p>
           <p>
-            The project is open source on{' '}
-            <a href={repository.url} target="_blank" rel="noreferrer">
-              GitHub <ExternalLink size={14} aria-hidden="true" />
-            </a>
-            . Issues and contributions can be used for sourced corrections.
+            Active Synergy scores unique canonical provider-to-beneficiary relationships with typed semantic tags. It avoids repeatedly counting the same relationship and applies defined relationship values, caps, and participation behavior.
           </p>
-        </div>
+          <p>
+            Placement Effectiveness evaluates all six assignments of the selected three dragons and compares the current relationship value with the best arrangement. Small or immaterial differences remain neutral; a placement recommendation appears only when the improvement is meaningful.
+          </p>
+          <p>Key gaps are diagnostics, not duplicate score penalties. Formation Rating is explainable roster-planning logic, not a combat simulator.</p>
+          <details>
+            <summary>Technical details</summary>
+            <p>The rating uses versioned canonical semantic edges and deterministic placement comparison. Full-roster audits evaluate every ordered three-dragon placement and lock expected output with a release hash.</p>
+          </details>
+        </section>
+
+        <section className="methodology-section panel readable" id="estimated-power-methodology">
+          <p className="eyebrow">Estimated Power v2</p>
+          <h3>An empirical progression estimate</h3>
+          <p className="methodology-formula">
+            <strong>Estimated Power</strong> = rarity-specific Star contribution + rarity-specific Dragon Level contribution
+          </p>
+          <p>
+            Exact observed rarity, Star Rank, and Dragon Level tuples return their observed displayed Power. The current model uses 59 provenance observations representing 42 unique progression tuples. Values between supported anchors use piecewise-linear interpolation; unsupported progression uses documented conservative extrapolation, and levels below the main support region scale from the Level-20 estimate.
+          </p>
+          <p>
+            Outputs round to the nearest 10, monotonic rarity ordering is enforced, and confidence is shown as Observed, Modeled, or Low. Only rarity, Star Rank, and Dragon Level are inputs. Habit Levels, notes, private combat stats, and account-specific displayed stats are not inputs.
+          </p>
+          <p>This is an empirical unofficial estimate, not the game's private formula and not a combat-power simulation.</p>
+          <details>
+            <summary>Technical details</summary>
+            <p>Model version: estimated-power-v2. Support, interpolation, extrapolation, rounding, monotonicity, and the full numerical grid are validated deterministically before release.</p>
+          </details>
+        </section>
+
+        <section className="methodology-section panel readable" id="optimizer-methodology">
+          <p className="eyebrow">Exact optimizer</p>
+          <h3>Ten formations without dragon reuse</h3>
+          <p>
+            Every eligible unique trio is generated, all six placements are evaluated, and the strongest retained placement becomes a candidate. With {productMetrics.dragonCount} eligible dragons, that is {productMetrics.optimizerCandidateCount.toLocaleString()} trio candidates. The exact optimizer selects ten three-dragon formations: 30 dragons are used once and three remain unused.
+          </p>
+          <p>
+            HiGHS solves the defined lexicographic objectives. Every production phase requires optimal status with zero configured MIP gap, and deterministic stable ordering resolves exact ties. No greedy or approximate result is labeled “Proven optimal.”
+          </p>
+          <p>
+            For Power-Aware, Estimated Power chooses the exact strongest 15-dragon Primary pool and Formation Rating arranges it into five formations. Backup Power is optimized only after every Primary numeric objective is fixed, then Formation Rating arranges the Backup pool.
+          </p>
+          <details>
+            <summary>Technical details</summary>
+            <p>Release 0.19.1 added exact integer reconstruction and independent one-integer improvement certification for materially contaminated solver objectives while preserving zero-gap solving and objective order.</p>
+          </details>
+        </section>
+
+        <section className="methodology-section panel readable">
+          <p className="eyebrow">Testing and validation</p>
+          <h3>Plausible is not enough</h3>
+          <p>
+            Validation includes 500+ automated tests, all {productMetrics.orderedFormationPlacementCount.toLocaleString()} ordered three-dragon placements, Formation Rating regression audits, Estimated Power fit/support/monotonicity/full-grid checks, exact optimizer oracle fixtures, forward and reversed input-order determinism, archived 31-dragon and current 33-dragon protections, real-roster numerical regression coverage, deterministic semantic and result hashes, and desktop/mobile QA before releases.
+          </p>
+          <p>A recommendation is not accepted only because it looks plausible. The same inputs must reproduce the same audited result, and algorithm changes must explain any changed hash. This is project validation, not independent third-party certification.</p>
+        </section>
       </div>
-      <div className="support-panel panel readable">
+
+      <div className="about-grid about-trust-grid">
+        <section className="panel readable">
+          <h3>Privacy and local storage</h3>
+          <p>No game credentials are requested and no private game API is used. {accountConfigured
+            ? 'Roster data remains in this browser unless you sign in and choose synchronization.'
+            : 'Roster data remains in this browser.'}</p>
+        </section>
+        <section className="panel readable">
+          <h3>Community data and contributions</h3>
+          <p>Sourced corrections are welcome. Never submit credentials, private profile information, or confidential material.</p>
+        </section>
+        <section className="panel readable">
+          <h3>Unofficial and open source</h3>
+          <p>Dragonfire Lab is an unofficial community tool and is not affiliated with or endorsed by Warner Bros. Entertainment, HBO, or the developers of Game of Thrones: Dragonfire.</p>
+          <p>The project is open source on <a href={repository.url} target="_blank" rel="noreferrer">GitHub <ExternalLink size={14} aria-hidden="true" /></a>.</p>
+        </section>
+      </div>
+
+      <section className="support-panel panel readable">
         <p className="eyebrow">Optional support</p>
         <h3>Support Dragonfire Lab</h3>
         <p>
@@ -1804,6 +1859,46 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
             <ExternalLink size={16} aria-hidden="true" />
           </a>
         </p>
+      </section>
+    </section>
+  );
+}
+
+function MetricDefinition({ value, label }: { value: number | string; label: string }) {
+  return (
+    <div>
+      <dt>{label}</dt>
+      <dd>{typeof value === 'number' ? value.toLocaleString() : value}</dd>
+    </div>
+  );
+}
+
+function UpdatesSection({ navigate }: { navigate: NavigateToRoute }) {
+  return (
+    <section className="updates-section" aria-labelledby="updates-title">
+      <SectionHeading
+        eyebrow="Release history"
+        title="Updates"
+        description="See what changed in each Dragonfire Lab release."
+      />
+      <AppLink className="text-link updates-back-link" route="overview" navigate={navigate}>
+        ← Back to Overview
+      </AppLink>
+      <div className="release-history" aria-label={`${releaseHistory.length} releases`}>
+        {releaseHistory.map((release, index) => (
+          <details className={index === 0 ? 'release-entry is-latest' : 'release-entry'} key={release.version} open={index === 0}>
+            <summary>
+              <span>
+                <strong>Version {release.version}</strong>
+                {index === 0 ? <span className="latest-release-badge">Latest</span> : null}
+              </span>
+              <time dateTime={release.date}>{release.date}</time>
+            </summary>
+            <ul>
+              {release.items.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </details>
+        ))}
       </div>
     </section>
   );
@@ -1830,7 +1925,7 @@ function SectionHeading({
   return (
     <div className="section-heading">
       <p className="eyebrow">{eyebrow}</p>
-      <h2>{title}</h2>
+      <h2 id={title === 'About' ? 'about-title' : title === 'Updates' ? 'updates-title' : undefined} tabIndex={-1}>{title}</h2>
       <p>{description}</p>
     </div>
   );
@@ -1838,18 +1933,19 @@ function SectionHeading({
 
 function getInitialSection(): Section {
   if (typeof window === 'undefined') {
-    return 'home';
+    return 'overview';
   }
 
-  if (FORMATION_POSITIONS.some((position) => parseSharedFormation(window.location.hash, dragons)[position])) {
-    return 'team';
+  const sharedFormation = parseSharedFormation(window.location.hash, dragons);
+  const hasSharedFormation = FORMATION_POSITIONS.some((position) => sharedFormation[position]);
+  const route = hasSharedFormation ? 'formations' : canonicalRouteFromLocation(window.location);
+  const isLegacyRouteHash = window.location.hash === '#data-status' || isStaleDragonDatabaseHash(window.location.hash);
+  const canonicalUrl = `${routePaths[route]}${window.location.search}${isLegacyRouteHash ? '' : window.location.hash}`;
+  const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  if (canonicalUrl !== currentUrl) {
+    window.history.replaceState(null, '', canonicalUrl);
   }
-
-  return isStaleDragonDatabaseHash(window.location.hash) ? 'roster' : 'home';
-}
-
-function isStalePublicHash(hash: string): boolean {
-  return hash === '#data-status' || isStaleDragonDatabaseHash(hash);
+  return route;
 }
 
 function isStaleDragonDatabaseHash(hash: string): boolean {

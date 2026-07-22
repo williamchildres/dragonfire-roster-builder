@@ -6,14 +6,13 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, RawWordingDisclosure } from '../app/App';
 import { dragons } from '../data/dragons';
 import { createEmptyRoster, saveRoster, serializeRosterExport, STORAGE_KEY } from '../services/rosterStorage';
-import { simpleSynergyProfiles } from '../synergy/profiles';
-import { simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 
 
 describe('Dragonfire Lab app', () => {
   afterEach(() => {
     vi.restoreAllMocks();
     window.localStorage.clear();
+    window.history.replaceState(null, '', '/');
   });
 
   it('renders Dragonfire Lab in the public header and not the old visible brand text', () => {
@@ -30,14 +29,14 @@ describe('Dragonfire Lab app', () => {
 
     expect(cname.replace(/\r\n/g, '\n')).toBe('dragonfirelab.com\n');
     expect(index).toContain('<title>Dragonfire Lab</title>');
-    expect(index).toContain('<link rel="canonical" href="https://dragonfirelab.com" />');
+    expect(index).toContain('<link rel="canonical" href="https://dragonfirelab.com/overview" />');
     expect(index).toContain('<meta property="og:site_name" content="Dragonfire Lab" />');
-    expect(index).toContain('<meta property="og:url" content="https://dragonfirelab.com" />');
-    expect(index).toContain('local-first unofficial Dragonfire roster and formation planning tool');
+    expect(index).toContain('<meta property="og:url" content="https://dragonfirelab.com/overview" />');
+    expect(index).toContain('explainable Formation Ratings');
   });
 
   async function openAddDragon(user: ReturnType<typeof userEvent.setup>) {
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     await user.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
   }
 
@@ -148,8 +147,8 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.roster-workspace')).toHaveAttribute('data-mobile-view', 'editor');
     expect(screen.getByRole('complementary', { name: 'Syrax' })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /^overview$/i }));
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^overview$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
 
     expect(document.querySelector('.roster-workspace')).toHaveAttribute('data-mobile-view', 'list');
     expect(screen.getByRole('complementary', { name: 'Syrax' })).toBeInTheDocument();
@@ -160,7 +159,7 @@ describe('Dragonfire Lab app', () => {
     try {
       render(<App />);
 
-      fireEvent.click(screen.getByRole('button', { name: /^roster$/i }));
+      fireEvent.click(screen.getByRole('link', { name: /^roster$/i }));
       fireEvent.click(screen.getAllByRole('button', { name: /\+ add dragon/i })[0]!);
       fireEvent.change(screen.getByLabelText(/search by dragon name/i), { target: { value: 'Feskar' } });
       fireEvent.click(screen.getByRole('button', { name: /add to roster/i }));
@@ -197,13 +196,13 @@ describe('Dragonfire Lab app', () => {
 
     expect(screen.getByText('Added Feskar to roster.')).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /overview/i }));
+    await user.click(screen.getByRole('link', { name: /^overview$/i }));
     expect(screen.queryByText(/Added Feskar to roster\./i)).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('navigation', { name: /primary sections/i }).querySelectorAll('button')[2]!);
+    await user.click(screen.getByRole('navigation', { name: /primary sections/i }).querySelectorAll('a')[2]!);
     expect(screen.queryByText(/Added Feskar to roster\./i)).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /about/i }));
+    await user.click(screen.getByRole('link', { name: /^about$/i }));
     expect(screen.queryByText(/Added Feskar to roster\./i)).not.toBeInTheDocument();
   });
 
@@ -211,97 +210,87 @@ describe('Dragonfire Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    expect(screen.queryByRole('heading', { name: 'Overview' })).not.toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /dragonfire lab dragon emblem/i })).toBeInTheDocument();
-    expect(screen.queryByText(/local-first formation planning/i)).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole('heading', {
-        name: /plan stronger dragonfire formations from verified dragon data/i,
-      }),
-    ).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /build my roster/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /open formation builder/i })).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Build stronger formations from your dragon roster.' })).toBeInTheDocument();
-
-    expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Build Formations' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Understand Formation Ratings' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /track your roster/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /build formations/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /understand formation ratings/i })).toBeInTheDocument();
-    expect(screen.getByText(/compare explainable ratings/i)).toBeInTheDocument();
-    expect(screen.getByText(/canonical active synergy once, exact placement effectiveness/i)).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Compare Verified Dragons' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /compare verified dragons/i })).not.toBeInTheDocument();
-
-    const mappedDragonCount = dragons.filter(
-      (dragon) => Boolean(dragon.command && dragon.trait && dragon.habits.length > 0),
-    ).length;
-    expect(simpleSynergyAbilityReviews).toHaveLength(231);
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
+    const workflowLinks = screen.getByLabelText('Primary workflows').querySelectorAll('a');
+    expect(workflowLinks).toHaveLength(3);
+    expect(screen.getByRole('link', { name: /track your roster/i })).toHaveAttribute('href', '/roster');
+    expect(screen.getByRole('link', { name: /build formations/i })).toHaveAttribute('href', '/formations');
+    expect(screen.getByRole('link', { name: /optimize your roster/i })).toHaveAttribute('href', '/optimizer');
+    expect(screen.queryByText('Understand Formation Ratings')).not.toBeInTheDocument();
+    expect(screen.queryByText('Choose Your Optimizer Strategy')).not.toBeInTheDocument();
+    expect(screen.queryByText('Private by design')).not.toBeInTheDocument();
     const datasetStatus = screen.getByLabelText('Dataset status');
-    expect(datasetStatus).toHaveTextContent(`${mappedDragonCount} / ${dragons.length}`);
-    expect(datasetStatus).toHaveTextContent('dragons mapped');
-    expect(datasetStatus).toHaveTextContent(String(simpleSynergyAbilityReviews.length));
-    expect(datasetStatus).toHaveTextContent('abilities reviewed');
-    expect(datasetStatus).toHaveTextContent(String(simpleSynergyProfiles.length));
-    expect(datasetStatus).toHaveTextContent('curated synergy profiles');
+    expect(datasetStatus).toHaveTextContent('33 / 33');
+    expect(datasetStatus).toHaveTextContent('231');
+    expect(datasetStatus).toHaveTextContent('33');
+    expect(screen.getByText('Recent Update')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Version 0.20.0' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /view all updates/i })).toHaveAttribute('href', '/updates');
 
-    expect(screen.queryByRole('heading', { name: 'Profile coverage' })).not.toBeInTheDocument();
-    expect(screen.queryByLabelText('Coverage by rarity')).not.toBeInTheDocument();
-    expect(screen.queryByLabelText('Coverage by rarity counts')).not.toBeInTheDocument();
-    expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
-    expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
+    await user.click(screen.getByRole('link', { name: /^about$/i }));
+    expect(screen.getByRole('heading', { name: 'Evidence becomes structured records' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Why this is different from asking AI for formations' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'An explainable 100-point planning score' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'An empirical progression estimate' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Ten formations without dragon reuse' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Plausible is not enough' })).toBeInTheDocument();
+    expect(screen.queryByText(/All 31 known dragons/i)).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.19\.1/i }).closest('.latest-update-panel');
-    expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Power-Aware 5 + Backup 5');
-    expect(latestUpdate).toHaveTextContent('empirical, unofficial');
-    expect(latestUpdate).toHaveTextContent('Power-Aware 5 + Backup 5 is the default');
-    expect(latestUpdate).toHaveTextContent('Formation Rating v2');
+    const methodologyMetrics = screen.getByLabelText('Methodology at a glance');
+    expect(methodologyMetrics).toHaveTextContent('33');
+    expect(methodologyMetrics).toHaveTextContent('231');
+    expect(methodologyMetrics).toHaveTextContent('239');
+    expect(methodologyMetrics).toHaveTextContent('32,736');
+    expect(methodologyMetrics).toHaveTextContent('5,456');
+    expect(methodologyMetrics).toHaveTextContent('500+');
 
-    expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();
-    expect(screen.getByText(/Your roster is stored in this browser/i)).toBeInTheDocument();
-    expect(screen.getByText(/does not use private game APIs/i)).toBeInTheDocument();
-    expect(screen.getByText(/Dragonfire Lab is an unofficial community tool/i)).toBeInTheDocument();
+    const aiSection = screen.getByRole('heading', { name: 'Why this is different from asking AI for formations' }).closest('section');
+    expect(aiSection).toHaveTextContent('versioned source dataset');
+    expect(aiSection).toHaveTextContent('does not simulate combat or guarantee the strongest possible in-game army');
 
-    await user.click(screen.getByRole('button', { name: /about/i }));
-    expect(screen.queryByText('Dragonfire Roster Lab')).not.toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'What Dragonfire Lab does' })).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        /All 31 known dragons have detailed coverage: Legendary 9\/9, Epic 10\/10, and Rare 12\/12\./i,
-      ),
-    ).toBeInTheDocument();
+    const ratingSection = screen.getByRole('heading', { name: 'An explainable 100-point planning score' }).closest('section');
+    expect(ratingSection).toHaveTextContent('Formation Rating = Active Synergy, maximum 80 + Placement Effectiveness, maximum 20');
+    expect(ratingSection).toHaveTextContent('all six assignments');
+
+    const powerSection = screen.getByRole('heading', { name: 'An empirical progression estimate' }).closest('section');
+    expect(powerSection).toHaveTextContent('rarity-specific Star contribution + rarity-specific Dragon Level contribution');
+    expect(powerSection).toHaveTextContent('Only rarity, Star Rank, and Dragon Level are inputs');
+    expect(powerSection).toHaveTextContent('Habit Levels, notes, private combat stats, and account-specific displayed stats are not inputs');
+
+    const optimizerSection = screen.getByRole('heading', { name: 'Ten formations without dragon reuse' }).closest('section');
+    expect(optimizerSection).toHaveTextContent('The exact optimizer selects ten three-dragon formations');
+    expect(optimizerSection).toHaveTextContent('Every production phase requires optimal status with zero configured MIP gap');
+    expect(optimizerSection).toHaveTextContent('No greedy or approximate result is labeled “Proven optimal.”');
+
     expect(screen.getByRole('heading', { name: 'Privacy and local storage' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Community data and contributions' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Unofficial and open source' })).toBeInTheDocument();
-    expect(screen.getByText(/Compare explainable Formation Ratings/i)).toBeInTheDocument();
-    expect(screen.getByText(/canonical active synergy, exact placement effectiveness, and diagnostic kit gaps/i)).toBeInTheDocument();
-    expect(
-      screen.getByText(/Ability and profile updates require sourced community evidence/i),
-    ).toBeInTheDocument();
-    expect(screen.getByText(/No login is required\./i)).toBeInTheDocument();
-    expect(screen.getByText(/does not use private game APIs/i)).toBeInTheDocument();
-    expect(screen.getByText(/Your roster and notes stay in your browser/i)).toBeInTheDocument();
-    expect(screen.getByText(/Issues and contributions can be used for sourced corrections/i)).toBeInTheDocument();
-    expect(screen.getByText(/Never submit credentials/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Support Dragonfire Lab' })).toBeInTheDocument();
+  });
+
+  it('links the optimizer to the About methodology', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
+    expect(screen.getByRole('link', { name: 'How recommendations are built' })).toHaveAttribute('href', '/about');
   });
 
   it('navigates from the Overview feature cards to the matching public pages', async () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /track your roster/i }));
+    await user.click(screen.getByRole('link', { name: /track your roster/i }));
     expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /overview/i }));
-    await user.click(screen.getByRole('button', { name: /build formations/i }));
+    await user.click(screen.getByRole('link', { name: /^overview$/i }));
+    await user.click(screen.getByRole('link', { name: /build formations/i }));
     expect(screen.getByRole('heading', { name: 'Formation Builder' })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /overview/i }));
-    await user.click(screen.getByRole('button', { name: /understand formation ratings/i }));
-    expect(screen.getByRole('heading', { name: 'Formation Builder' })).toBeInTheDocument();
+    await user.click(screen.getByRole('link', { name: /^overview$/i }));
+    await user.click(screen.getByRole('link', { name: /optimize your roster/i }));
+    expect(screen.getByRole('heading', { name: 'Roster Optimizer' })).toBeInTheDocument();
   });
 
   it('displays unknown combat values as Not verified yet', async () => {
@@ -579,7 +568,7 @@ describe('Dragonfire Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     const syraxEditor = screen.getByRole('complementary', { name: 'Syrax' });
     await user.click(within(syraxEditor).getByRole('button', { name: /dragon details/i }));
 
@@ -851,7 +840,7 @@ describe('Dragonfire Lab app', () => {
     firstRender.unmount();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     const reloadedEditor = screen.getByRole('complementary', { name: 'Syrax' });
     expect(within(reloadedEditor).getByLabelText(/Star Rank/i)).toHaveValue('3');
   });
@@ -889,7 +878,7 @@ describe('Dragonfire Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     const syraxRow = screen.getByRole('button', { name: /^Syrax,/i });
     expect(syraxRow).toHaveAttribute('aria-current', 'true');
     expect(syraxRow).toHaveAccessibleName(/Star Rank 4/);
@@ -907,7 +896,7 @@ describe('Dragonfire Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
 
     expect(screen.getByText(/No dragons in your roster yet/i)).toBeInTheDocument();
     expect(screen.getByText(/start tracking Star Rank, Dragon Level, Habit Levels, notes, and formation options/i)).toBeInTheDocument();
@@ -923,7 +912,7 @@ describe('Dragonfire Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     const nyrenaRow = screen.getByRole('button', { name: /^Nyrena,/i });
     expect(nyrenaRow).toHaveAttribute('aria-current', 'true');
     const nyrenaEditor = screen.getByRole('complementary', { name: 'Nyrena' });
@@ -956,7 +945,7 @@ describe('Dragonfire Lab app', () => {
     expect(daemorosCard).not.toHaveTextContent('Shards Required');
 
     await user.click(screen.getByRole('button', { name: /close add dragon/i }));
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     const nyrenaRow = screen.getByRole('button', { name: /^Nyrena,/i });
     expect(nyrenaRow).not.toHaveTextContent('Metadata Only');
     expect(nyrenaRow).not.toHaveTextContent('Community Verified');
@@ -974,7 +963,7 @@ describe('Dragonfire Lab app', () => {
 
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     const importInput = screen.getByLabelText(/import roster/i);
     await user.upload(importInput, new File([serializeRosterExport(roster)], 'roster.json', { type: 'application/json' }));
 
@@ -990,7 +979,7 @@ describe('Dragonfire Lab app', () => {
     await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
     await user.click(screen.getByRole('button', { name: /view details/i }));
     await user.click(screen.getByRole('button', { name: /close details/i }));
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
 
     expect(screen.queryByText('Collection State')).not.toBeInTheDocument();
     expect(screen.queryByText('Not hatched')).not.toBeInTheDocument();
@@ -1002,15 +991,15 @@ describe('Dragonfire Lab app', () => {
     render(<App />);
 
     const nav = screen.getByRole('navigation', { name: /primary sections/i });
-    expect(within(nav).getAllByRole('button').map((button) => button.textContent)).toEqual([
+    expect(within(nav).getAllByRole('link').map((link) => link.textContent)).toEqual([
       'Overview',
       'Roster',
       'Formations',
       'Optimizer',
       'About',
     ]);
-    expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();
-    expect(within(nav).queryByRole('button', { name: /data status/i })).not.toBeInTheDocument();
+    expect(within(nav).queryByRole('link', { name: /dragon database/i })).not.toBeInTheDocument();
+    expect(within(nav).queryByRole('link', { name: /data status/i })).not.toBeInTheDocument();
     expect(screen.queryByText('Collection State')).not.toBeInTheDocument();
     expect(screen.queryByText('Shards')).not.toBeInTheDocument();
     expect(screen.queryByText('Shards Required')).not.toBeInTheDocument();
@@ -1022,7 +1011,7 @@ describe('Dragonfire Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /^formations$/i }));
+    await user.click(screen.getByRole('link', { name: /^formations$/i }));
 
     expect(screen.getByText('Left Flank')).toBeInTheDocument();
     expect(screen.getByText('Vanguard')).toBeInTheDocument();
@@ -1033,7 +1022,7 @@ describe('Dragonfire Lab app', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /about/i }));
+    await user.click(screen.getByRole('link', { name: /^about$/i }));
 
     const aboutSupportLink = screen.getByRole('link', { name: /buy me a dragon/i });
     expect(aboutSupportLink).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');

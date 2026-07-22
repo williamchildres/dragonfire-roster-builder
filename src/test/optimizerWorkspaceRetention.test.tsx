@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../app/App';
 import { dragons } from '../data/dragons';
 import {
@@ -16,11 +16,16 @@ import type {
 import { createEmptyRoster, saveRoster } from '../services/rosterStorage';
 
 describe('Optimizer workspace retention', () => {
+  afterEach(() => {
+    window.localStorage.clear();
+    window.history.replaceState(null, '', '/');
+  });
+
   it('defaults to Power-Aware, keeps the other strategies selectable, and renders a mocked Power-Aware result', async () => {
     const user = userEvent.setup();
     renderApp(resolvedRunner(powerAwareResult(700)));
 
-    await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     expect(screen.getByRole('radio', { name: /Power-Aware 5 \+ Backup 5/i })).toBeChecked();
     await user.click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
     expect(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i })).toBeChecked();
@@ -40,18 +45,18 @@ describe('Optimizer workspace retention', () => {
     renderApp({ run, cancel: vi.fn(), dispose: vi.fn() });
     await runOptimizer(user);
 
-    await user.click(screen.getByRole('button', { name: /^overview$/i }));
-    await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^overview$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     expect(screen.getAllByText('700').length).toBeGreaterThan(0);
     expect(screen.queryByText(/progression or optimization strategy changed/i)).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     expect(screen.getAllByText('700').length).toBeGreaterThan(0);
 
     await user.click(screen.getAllByRole('button', { name: /open in formation builder/i })[0]!);
     expect(screen.getByRole('heading', { name: /formation builder/i })).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     expect(screen.getAllByText('700').length).toBeGreaterThan(0);
     expect(run).toHaveBeenCalledTimes(1);
   });
@@ -63,19 +68,19 @@ describe('Optimizer workspace retention', () => {
 
     await user.click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
     expect(screen.getByText(/progression or optimization strategy changed/i)).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: /^overview$/i }));
-    await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^overview$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     expect(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i })).toBeChecked();
     expect(screen.getByText(/progression or optimization strategy changed/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('radio', { name: /Power-Aware 5 \+ Backup 5/i }));
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     const firstDragon = dragons[0]!;
     await user.click(screen.getByRole('button', { name: new RegExp(`^${firstDragon.name},`, 'i') }));
     const editor = screen.getByRole('complementary', { name: firstDragon.name });
     await user.clear(within(editor).getByLabelText(/dragon level/i));
     await user.type(within(editor).getByLabelText(/dragon level/i), '9');
-    await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     expect(screen.getAllByText('700').length).toBeGreaterThan(0);
     expect(screen.getByText(/progression or optimization strategy changed/i)).toBeInTheDocument();
   });
@@ -124,12 +129,12 @@ describe('Optimizer workspace retention', () => {
       dispose: vi.fn(),
     };
     renderApp(runner);
-    await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     await user.click(screen.getByRole('button', { name: /Find My Primary/i }));
-    await user.click(screen.getByRole('button', { name: /^overview$/i }));
+    await user.click(screen.getByRole('link', { name: /^overview$/i }));
     expect(cancel).toHaveBeenCalled();
     resolveLate!(powerAwareResult(900));
-    await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     await waitFor(() => expect(screen.queryByRole('heading', { name: 'Exact optimal result' })).not.toBeInTheDocument());
     expect(run).toHaveBeenCalledTimes(1);
     expect(Object.keys(window.localStorage)).not.toContain('dragonfire-roster-optimizer-workspace');
@@ -146,7 +151,7 @@ function renderApp(runner: RosterOptimizerRunner) {
 }
 
 async function runOptimizer(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole('button', { name: /^optimizer$/i }));
+    await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
   await user.click(screen.getByRole('button', { name: /Find My Primary/i }));
   await screen.findByRole('heading', { name: 'Exact optimal result' });
 }

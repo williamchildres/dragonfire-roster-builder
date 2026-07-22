@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
 import type { Plugin } from 'vite';
 import { defineConfig } from 'vitest/config';
@@ -33,7 +34,15 @@ function highsWasmAsset(): Plugin {
 }
 
 export default defineConfig({
-  base: './',
+  base: '/',
+  build: {
+    rollupOptions: {
+      input: {
+        index: resolve(import.meta.dirname, 'index.html'),
+        404: resolve(import.meta.dirname, '404.html'),
+      },
+    },
+  },
   plugins: [react(), highsWasmAsset()],
   test: {
     environment: 'jsdom',

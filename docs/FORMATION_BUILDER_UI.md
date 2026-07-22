@@ -21,11 +21,11 @@ Cards keep the planner controls and selected-dragon details needed for formation
 - Trait panel with unlock and hard position requirement.
 - Favorable and unfavorable troop affinities.
 
-Cards do not contain Receives/Provides regions, trace cards, target-candidate labels, technical debug controls, or raw effect execution fields.
+Cards present compact Damage Profile, Provides, and Synergy needs signals without exposing trace cards, target-candidate labels, technical debug controls, or raw effect execution fields.
 
 ## Formation Analysis
 
-The formation analysis panel groups simple evaluator results into:
+The Formation Rating panel explains Active Synergy and Placement Effectiveness, then groups actionable evaluator findings into:
 
 - Strong synergies.
 - Missing enablers.

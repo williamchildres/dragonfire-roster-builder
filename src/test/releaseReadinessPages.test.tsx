@@ -1,7 +1,9 @@
-import { render, screen, within } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../app/App';
+import { releaseHistory } from '../data/releaseHistory';
 
 describe('release readiness pages', () => {
   afterEach(() => {
@@ -10,90 +12,136 @@ describe('release readiness pages', () => {
     window.history.replaceState(null, '', '/');
   });
 
-  it('renders the public top navigation without retired public pages', () => {
+  it('uses five real primary links and canonicalizes the root path', () => {
     render(<App />);
-
     const nav = screen.getByRole('navigation', { name: /primary sections/i });
-    const navButtons = within(nav).getAllByRole('button').map((button) => button.textContent?.trim());
+    const links = within(nav).getAllByRole('link');
 
-    expect(navButtons).toEqual(['Overview', 'Roster', 'Formations', 'Optimizer', 'About']);
-    expect(within(nav).getByRole('button', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
-    expect(within(nav).queryByRole('button', { name: /sign in|account|pro|saved formation/i })).not.toBeInTheDocument();
-    expect(within(nav).queryByRole('button', { name: /dragon database/i })).not.toBeInTheDocument();
-    expect(within(nav).queryByRole('button', { name: /data status/i })).not.toBeInTheDocument();
-    expect(within(nav).queryByRole('button', { name: /support/i })).not.toBeInTheDocument();
+    expect(links.map((link) => link.textContent?.trim())).toEqual(['Overview', 'Roster', 'Formations', 'Optimizer', 'About']);
+    expect(links.map((link) => link.getAttribute('href'))).toEqual(['/overview', '/roster', '/formations', '/optimizer', '/about']);
+    expect(within(nav).getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
+    expect(window.location.pathname).toBe('/overview');
   });
 
-  it('renders About support and suppresses the duplicate footer action', async () => {
+  it.each([
+    ['/overview', 'Build stronger formations from your dragon roster.', 'Dragonfire Lab'],
+    ['/roster', 'My Roster', 'My Roster | Dragonfire Lab'],
+    ['/formations', 'Formation Builder', 'Formation Builder | Dragonfire Lab'],
+    ['/optimizer', 'Roster Optimizer', 'Roster Optimizer | Dragonfire Lab'],
+    ['/about', 'About', 'About | Dragonfire Lab'],
+    ['/updates', 'Updates', 'Updates | Dragonfire Lab'],
+  ])('directly renders %s', (path, heading, title) => {
+    window.history.replaceState(null, '', path);
+    render(<App />);
+    expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument();
+    expect(window.location.pathname).toBe(path);
+    expect(document.title).toBe(title);
+  });
+
+  it('updates canonical and Open Graph URLs from the active path', () => {
+    const canonical = document.createElement('link');
+    canonical.rel = 'canonical';
+    document.head.append(canonical);
+    const openGraphUrl = document.createElement('meta');
+    openGraphUrl.setAttribute('property', 'og:url');
+    document.head.append(openGraphUrl);
+
+    window.history.replaceState(null, '', '/optimizer');
+    const view = render(<App />);
+    expect(canonical.href).toBe('https://dragonfirelab.com/optimizer');
+    expect(openGraphUrl.content).toBe('https://dragonfirelab.com/optimizer');
+
+    view.unmount();
+    canonical.remove();
+    openGraphUrl.remove();
+  });
+
+  it('normalizes trailing and unknown paths without adding a history entry', () => {
+    window.history.replaceState(null, '', '/optimizer/');
+    const { unmount } = render(<App />);
+    expect(screen.getByRole('heading', { name: 'Roster Optimizer' })).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/optimizer');
+    unmount();
+
+    window.history.replaceState(null, '', '/not-a-route');
+    render(<App />);
+    expect(screen.getByRole('heading', { name: 'Build stronger formations from your dragon roster.' })).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/overview');
+  });
+
+  it('navigates without reload and responds to Back and Forward popstate', async () => {
     const user = userEvent.setup();
     render(<App />);
+    await user.click(screen.getByRole('link', { name: 'Roster' }));
+    expect(window.location.pathname).toBe('/roster');
 
-    await user.click(screen.getByRole('button', { name: /about/i }));
+    window.history.replaceState(null, '', '/overview');
+    await act(() => window.dispatchEvent(new PopStateEvent('popstate')));
+    expect(screen.getByRole('heading', { name: 'Build stronger formations from your dragon roster.' })).toBeInTheDocument();
 
-    expect(screen.getByRole('heading', { name: 'About' })).toBeInTheDocument();
+    window.history.replaceState(null, '', '/roster');
+    await act(() => window.dispatchEvent(new PopStateEvent('popstate')));
+    expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
+  });
+
+  it('migrates legacy public hashes and preserves unknown auth-like fragments', () => {
+    window.history.replaceState(null, '', '/#data-status');
+    const updates = render(<App />);
+    expect(screen.getByRole('heading', { name: 'Updates' })).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/updates');
+    expect(window.location.hash).toBe('');
+    updates.unmount();
+
+    window.history.replaceState(null, '', '/#dragon-database');
+    const roster = render(<App />);
+    expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/roster');
+    roster.unmount();
+
+    window.history.replaceState(null, '', '/#access_token=auth-token&type=recovery');
+    render(<App />);
+    expect(window.location.hash).toContain('access_token=auth-token');
+  });
+
+  it.each([
+    ['#formation=left-flank:syrax,vanguard:malachite,right-flank:vhagar'],
+    ['#team=syrax,malachite,vhagar'],
+  ])('restores shared formations from %s', (hash) => {
+    window.history.replaceState(null, '', `/${hash}`);
+    render(<App />);
+    expect(window.location.pathname).toBe('/formations');
+    expect(screen.getByRole('article', { name: 'Left Flank' })).toHaveTextContent('Syrax');
+    expect(screen.getByRole('article', { name: 'Vanguard' })).toHaveTextContent('Malachite');
+    expect(screen.getByRole('article', { name: 'Right Flank' })).toHaveTextContent('Vhagar');
+  });
+
+  it('renders parsed updates newest-first without a false primary active tab', () => {
+    window.history.replaceState(null, '', '/updates');
+    render(<App />);
+    const nav = screen.getByRole('navigation', { name: /primary sections/i });
+    expect(within(nav).queryByRole('link', { current: 'page' })).not.toBeInTheDocument();
+    expect(screen.getAllByText(`Version ${releaseHistory[0]!.version}`).length).toBeGreaterThan(0);
+    expect(document.querySelectorAll('.release-entry')).toHaveLength(releaseHistory.length);
+    expect(document.querySelector('.release-entry')).toHaveAttribute('open');
+    expect(screen.getByRole('link', { name: /back to overview/i })).toHaveAttribute('href', '/overview');
+  });
+
+  it('renders changelog content as text without an HTML injection path', () => {
+    const appSource = readFileSync('src/app/App.tsx', 'utf8');
+    expect(appSource).not.toContain('dangerouslySetInnerHTML');
+
+    window.history.replaceState(null, '', '/updates');
+    render(<App />);
+    expect(document.querySelectorAll('.release-entry')).toHaveLength(releaseHistory.length);
+  });
+
+  it('keeps About support and lower-page privacy content', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('link', { name: 'About' }));
+    expect(screen.getByRole('heading', { name: 'Privacy and local storage' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Support Dragonfire Lab' })).toBeInTheDocument();
-    expect(screen.getByText('Optional support')).toBeInTheDocument();
-    expect(screen.getByText(/Optional support helps cover hosting/i)).toBeInTheDocument();
-
-    const aboutSupportLink = screen.getByRole('link', { name: /buy me a dragon/i });
-    expect(aboutSupportLink).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
-    expect(aboutSupportLink).toHaveAttribute('target', '_blank');
-    expect(aboutSupportLink).toHaveAttribute('rel', expect.stringContaining('noopener'));
-    expect(aboutSupportLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'));
-
-    const footer = screen.getByRole('contentinfo');
-    expect(within(footer).getByText(/Dragonfire Lab is an unofficial community tool/i)).toBeInTheDocument();
-    expect(
-      within(footer).getByText(/not affiliated with or endorsed by Warner Bros\. Entertainment, HBO, or the developers/i),
-    ).toBeInTheDocument();
-    expect(within(footer).getByText(/Roster data stays in your browser/i)).toBeInTheDocument();
-    expect(within(footer).queryByText(/Support the project/i)).not.toBeInTheDocument();
-  });
-
-  it('keeps the footer support link on non-About pages', () => {
-    render(<App />);
-
-    const footerSupportLink = within(screen.getByRole('contentinfo')).getByRole('link', { name: /support the project/i });
-    expect(footerSupportLink).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
-    expect(footerSupportLink).toHaveAttribute('target', '_blank');
-    expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noopener'));
-    expect(footerSupportLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'));
-  });
-
-  it('falls back to Overview when a stale data-status hash is present', () => {
-    window.history.replaceState(null, '', '#data-status');
-
-    render(<App />);
-
-    expect(screen.queryByRole('heading', { name: 'Overview' })).not.toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
-    expect(window.location.hash).toBe('');
-  });
-
-  it('falls back to My Roster when a stale Dragon Database hash is present', () => {
-    window.history.replaceState(null, '', '#dragon-database');
-
-    render(<App />);
-
-    expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
-    expect(window.location.hash).toBe('');
-  });
-
-  it('renders the public pages without errors', async () => {
-    const user = userEvent.setup();
-    render(<App />);
-
-    await user.click(screen.getByRole('button', { name: /overview/i }));
-    expect(screen.queryByRole('heading', { name: 'Overview' })).not.toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Track Your Roster' })).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
-    expect(screen.getByRole('heading', { name: 'My Roster' })).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: /^formations$/i }));
-    expect(screen.getByRole('heading', { name: 'Formation Builder' })).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: /about/i }));
-    expect(screen.getByRole('heading', { name: 'About' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /buy me a dragon/i })).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
+    expect(within(screen.getByRole('contentinfo')).queryByRole('link', { name: /support the project/i })).not.toBeInTheDocument();
   });
 });

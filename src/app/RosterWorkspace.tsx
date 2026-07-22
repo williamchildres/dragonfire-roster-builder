@@ -171,7 +171,7 @@ export function RosterWorkspace({
   return (
     <section className="roster-section" aria-labelledby="roster-title">
       <div className="roster-workspace-header">
-        <h2 id="roster-title">My Roster</h2>
+        <h2 id="roster-title" tabIndex={-1}>My Roster</h2>
         <p>Track ownership, progression, Habit Levels, and notes.</p>
       </div>
 

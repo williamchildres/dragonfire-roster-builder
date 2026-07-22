@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.20.0 - 2026-07-22
+
+- Simplified Overview into a compact copy-first introduction, exactly three linked workflow cards, the existing dynamic dataset breadth strip, and a Recent Update panel backed directly by this CHANGELOG. Removed the hero artwork and deferred any replacement background or artwork to a future release.
+- Added the complete public Updates history and expanded About into the methodology and trust page for reviewed data, Formation Rating v2, Estimated Power v2, the exact optimizer, reproducibility, privacy, community contributions, and support. Reduced interior page-heading scale without changing result layouts.
+- Added clean canonical History API routes, real navigation links, route metadata, Back/Forward support, legacy hash migrations, canonical `/formations#formation=...` sharing, and a Vite-built GitHub Pages `404.html` SPA fallback with root-relative assets.
+- Preserved Formation Rating, Estimated Power, optimizer objectives and certification, source schema 13, local/cloud roster schemas 5, optimizer contract 3, Supabase migrations, roster/account persistence, Habit Levels, and every audited semantic hash.
+
 ## 0.19.1 - 2026-07-22
 
 - Fixed a release-blocking Power-Aware optimizer failure exposed by a real 33-dragon progression roster during exact stable-key refinement. HiGHS returned an optimal integral assignment but a contaminated fractional aggregate objective.

@@ -4,20 +4,23 @@ Dragonfire Lab is an unofficial community tool for Game of Thrones: Dragonfire. 
 
 It is not a combat simulator.
 
-Public site: https://dragonfirelab.com
+Public site: https://dragonfirelab.com/overview
 
 ## Current Features
 
 - A compact, filterable My Roster workspace with selectable owned-dragon rows, one dedicated editor, a focused phone list/editor flow, and an Add All Dragons convenience action.
-- Full raw Command, Trait, and Habit wording for all 31 known dragons.
-- Curated simple synergy profiles for all 31 known dragons.
-- Complete Legendary (9 / 9), Epic (10 / 10), and Rare (12 / 12) coverage.
+- Full raw Command, Trait, and Habit wording for all 33 known dragons.
+- Curated simple synergy profiles for all 33 known dragons.
+- Complete detailed coverage for all 33 dragons and 231 abilities.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
 - Read-only Estimated Power v2 diagnostics for roster dragons and complete formations, using 59 provenance observations and support-aware rarity-specific Star-plus-Level curves.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
 - Roster Optimizer with exact Power-Aware 5 + Backup 5, Rarity-Priority 5 + Backup 5, and Best 10 Overall strategies over current My Roster progression.
 - Formation share links and roster JSON import/export.
+- Clean path-based routes for Overview, Roster, Formation Builder, Optimizer, About, and Updates, with a GitHub Pages deep-link fallback.
+- A CHANGELOG-backed Recent Update panel and complete public release history.
+- A methodology-focused About page covering reviewed data, Formation Rating, Estimated Power, exact optimization, validation, privacy, and support.
 - Lightweight project-context export for handoffs.
 
 ## Data Model
@@ -44,7 +47,7 @@ The evaluator discovers active setup/payoff and amplifier/output results at curr
 
 Active Synergy caps conditional payoff at 30, output amplification at 30, and stat support at 15, then adds +5 when all three dragons participate or +2 when exactly two participate. Placement Effectiveness evaluates all six Left Flank/Vanguard/Right Flank assignments for the same trio. A placement improvement is meaningful only when it reaches both +5 relationship value and a 10% relative gain; otherwise Placement Effectiveness remains 20. A meaningful loss scores `round(20 × current relationship value / best relationship value)`. Missing enablers, unsupported outputs, unused support, alternative Vanguard Traits, and future unlocks explain gaps without another hidden deduction.
 
-The 0.11.0 tiers were calibrated from all 26,970 ordered formations: Excellent ≥80 (the empirical P99 band), Strong ≥67 (P90), Solid ≥49 (median), Developing ≥25, and Weak below 25. Incomplete is reserved for invalid, duplicate, partial, or insufficient-confidence selections and has no numeric score. The rating remains deterministic and explainable; it does not model exact timing, rolls, target overlap, stacks, damage formulas, or battle outcomes.
+The tiers were originally calibrated from the complete roster distribution and retain Excellent ≥80, Strong ≥67, Solid ≥49, Developing ≥25, and Weak below 25. The current 33-dragon audit covers 32,736 ordered placements. Incomplete is reserved for invalid, duplicate, partial, or insufficient-confidence selections and has no numeric score. The rating remains deterministic and explainable; it does not model exact timing, rolls, target overlap, stacks, damage formulas, or battle outcomes.
 
 Typed defensive and Recovery Received support may be presented through explicitly non-scoring simple-profile signals. Battlefield-only conditions, troop-gated effects without selected troop context, and conditional status-copy mechanics remain detailed-only. This keeps those mechanics visible without treating defense as offensive support.
 
@@ -80,7 +83,7 @@ npm run validate:context
 npm run package:context
 ```
 
-The normal full-roster audit validates all 26,970 formations in memory against the unchanged public hash and the committed Markdown summary. When a complete diagnostic trace is needed, `npm run audit:full-roster:write-json` writes an ignored file under `Scratch/`; release branches do not commit duplicate full JSON traces.
+The normal full-roster audit validates all 32,736 ordered placements in memory against the unchanged public hash and the committed Markdown summary. When a complete diagnostic trace is needed, `npm run audit:full-roster:write-json` writes an ignored file under `Scratch/`; release branches do not commit duplicate full JSON traces.
 
 If `npm` is unavailable in the local shell, run the equivalent direct Node entry points through the installed dependencies.
 
@@ -110,4 +113,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.19.0`. Source data schema: `13`. Local and cloud roster schemas: `5`; optimizer contract: `3`. Estimated Power v2 remains runtime-only with no manual entry, persistence field, SQL migration, Habit Level effect, or change to Formation Rating v2. The canonical database contains 33 dragons, including screenshot-verified Sunfyre and Tairax records; their previously captured Power observations retain the same model identity. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`). Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.
+Current release: `0.20.0`. Source data schema: `13`. Local and cloud roster schemas: `5`; optimizer contract: `3`. This release changes UI, trust content, release history, and routing only. Estimated Power v2 remains runtime-only with no manual entry, persistence field, SQL migration, Habit Level effect, or change to Formation Rating v2. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`). Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.

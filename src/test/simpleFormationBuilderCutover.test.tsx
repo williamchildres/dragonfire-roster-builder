@@ -41,7 +41,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
   async function openFormationBuilder(user: ReturnType<typeof userEvent.setup>) {
     render(<App />);
-    await user.click(screen.getByRole('button', { name: /^formations$/i }));
+    await user.click(screen.getByRole('link', { name: /^formations$/i }));
   }
 
   async function switchFormationMode(user: ReturnType<typeof userEvent.setup>, mode: 'All Dragons — Star 10' | 'My Roster') {
@@ -528,7 +528,7 @@ describe('Formation Builder simple synergy cutover', () => {
       "Malachite's Warden's Rally Recovery setup for Sheepstealer's Hunter's Cunning unlocks when Sheepstealer reaches Dragon Level 16.",
     );
 
-    await user.click(screen.getByRole('button', { name: /^roster$/i }));
+    await user.click(screen.getByRole('link', { name: /^roster$/i }));
     await user.click(screen.getByRole('button', { name: /^Sheepstealer,/i }));
     await user.click(within(screen.getByRole('complementary', { name: 'Sheepstealer' })).getByRole('button', { name: /dragon details/i }));
     const detailsDialog = screen.getByRole('dialog', { name: /sheepstealer/i });
@@ -536,7 +536,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await user.type(within(detailsDialog).getByLabelText(/dragon level/i), '16');
     await user.click(screen.getByRole('button', { name: /close details/i }));
 
-    await user.click(screen.getByRole('button', { name: /^formations$/i }));
+    await user.click(screen.getByRole('link', { name: /^formations$/i }));
     await openDetailedSignalTrace(user);
     expect(sectionText('Strong synergies')).toContain(
       "Malachite provides Recovery, which Sheepstealer benefits from through Hunter's Cunning.",
@@ -1069,7 +1069,9 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(within(screen.getByRole('article', { name: 'Right Flank' })).getByRole('button', { name: /\+ add dragon/i })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /copy share link/i }));
-    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('#formation='));
+    expect(writeText).toHaveBeenCalledWith(expect.stringMatching(/\/formations#formation=/));
+    expect(window.location.pathname).toBe('/formations');
+    expect(window.location.hash).toMatch(/^#formation=/);
 
     await user.click(screen.getByRole('button', { name: /clear formation/i }));
     expect(screen.getAllByText(/add a dragon to review its command, position trait, and mapped synergy signals/i)).toHaveLength(3);

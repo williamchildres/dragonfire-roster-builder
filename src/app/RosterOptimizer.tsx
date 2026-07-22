@@ -23,6 +23,7 @@ import {
   type RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationPlacementComparison';
+import { AppLink, type NavigateToRoute } from './appRouter';
 
 export const DEFAULT_ROSTER_OPTIMIZER_STRATEGY: RosterOptimizerStrategy =
   'power-aware-primary-five-backup-five';
@@ -37,6 +38,7 @@ export function RosterOptimizer({
   runner: suppliedRunner,
   onOpenFormation,
   onOpenRoster,
+  onNavigate,
 }: {
   allDragons: Dragon[];
   roster: Record<string, OwnedDragon>;
@@ -47,6 +49,7 @@ export function RosterOptimizer({
   runner?: RosterOptimizerRunner;
   onOpenFormation: (arrangement: FormationArrangement) => void;
   onOpenRoster: () => void;
+  onNavigate?: NavigateToRoute;
 }) {
   const [ownedRunner] = useState<RosterOptimizerRunner | null>(() =>
     suppliedRunner ? null : new RosterOptimizerClient(),
@@ -128,7 +131,7 @@ export function RosterOptimizer({
     <section className="optimizer-workspace" aria-labelledby="optimizer-title">
       <header className="optimizer-header">
         <p className="eyebrow">Exact global allocation</p>
-        <h2 id="optimizer-title">Roster Optimizer</h2>
+        <h2 id="optimizer-title" tabIndex={-1}>Roster Optimizer</h2>
         <p>Build 10 non-overlapping formations from your current roster, with a strategy that reflects how you play.</p>
       </header>
 
@@ -140,7 +143,8 @@ export function RosterOptimizer({
         <Metric label="Rare" value={eligibleCounts.Rare} />
       </div>
       <p className="optimizer-policy-note">
-        Recommendations use your owned dragons, current Star Ranks, and Dragon Levels. Habit Levels are preserved but do not change synergy ranking.
+        Recommendations use your owned dragons, current Star Ranks, and Dragon Levels. Habit Levels are preserved but do not change synergy ranking.{' '}
+        <AppLink route="about" navigate={onNavigate}>How recommendations are built</AppLink>
       </p>
 
       <fieldset className="optimizer-strategy" disabled={status === 'running'}>

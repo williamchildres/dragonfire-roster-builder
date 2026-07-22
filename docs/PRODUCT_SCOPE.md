@@ -1,6 +1,6 @@
 # Product Scope
 
-Dragonfire Roster Lab is a curated dragon knowledge base and transparent tag-and-position formation recommender.
+Dragonfire Lab is a curated roster planner and transparent tag-and-position formation recommender.
 
 It is not a combat simulator.
 
@@ -14,7 +14,7 @@ The application should answer:
 - Are dragons competing for an exclusive position?
 - Which enablers are missing?
 - Which relationships are unavailable because of saved progression?
-- Eventually, which formations are strongest among the user's owned dragons?
+- Which exact non-overlapping formation plan best satisfies the selected optimizer strategy?
 
 ## Non-Goals
 
@@ -50,8 +50,8 @@ Raw ability descriptions may preserve these details for reference, but those det
   - Right Flank is adjacent only to Vanguard.
   - Vanguard is adjacent to both flanks.
   - The two flanks are not adjacent.
-- No numerical synergy score is part of this PR.
-- Future recommendation scores must represent relative formation fit, not predicted combat performance.
+- Formation Rating represents relative formation fit, not predicted combat performance.
+- Exact optimizer results must satisfy the documented objective hierarchy and zero-gap proof contract.
 
 ## Ability Data
 
