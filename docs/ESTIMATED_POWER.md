@@ -1,59 +1,73 @@
-# Estimated Dragon Power v1
+# Estimated Dragon Power v2
 
 Estimated Power is an unofficial empirical diagnostic. It approximates the Power value displayed by the game from rarity, Star Rank, and Dragon Level. It is separate from Formation Rating, does not simulate combat, and is not an official game formula.
 
-## Runtime contract
+## Evidence and model choice
 
-- Inputs are rarity (`Legendary`, `Epic`, or `Rare`), Star Rank 1-10, and a nonnegative integer Dragon Level.
-- Dragon identity, Habit Levels, notes, formation position, and synergy are not inputs.
-- Exact observed rarity/Star Rank/Dragon Level combinations return the observed displayed value.
-- Other estimates are rounded to the nearest 10 and remain positive and finite.
-- Estimates are monotone as Star Rank or Dragon Level increases.
-- At equal progression, Legendary is never below Epic and Epic is never below Rare.
-- Invalid inputs throw a `RangeError`; the UI displays no estimate when required progression is missing.
+Version 2 expands the source to 59 provenance observations covering 42 unique rarity/Star Rank/Dragon Level/Power tuples. Duplicate progression tuples are fitted once while retaining all provenance and sample counts. Sunfyre and Tairax remain observation provenance only and are not added to the canonical 31-dragon database.
 
-The fitted base model is:
+The observations form a bipartite support graph for each rarity: Star Rank nodes on one side, Dragon Level nodes on the other, and observed Power values on the edges. Every connected component is exactly compatible with:
 
 ```text
-base = rarityIntercept + rarityLevelSlope * Dragon Level + 2434.713675015537 * Star Rank
+Displayed Power = rarity-specific Star component + rarity-specific Level component
 ```
 
-| Rarity | Intercept | Dragon Level slope |
-| --- | ---: | ---: |
-| Legendary | -5345.526402998704 | 712.604230387158 |
-| Epic | -3518.798289613967 | 491.403841476919 |
-| Rare | -8030.898292604834 | 395.629654678922 |
+All additive cycle residuals are zero. The evidence includes real plateaus and changing increments, so v2 selects deterministic rarity-specific piecewise-linear Star and Level curves instead of smoothing them into one linear slope.
 
-For Dragon Levels below 20, the level-20 estimate is scaled by `max(1, level) / 20`. A monotone empirical lower/upper envelope preserves supplied observations, and a final rarity projection enforces `Legendary >= Epic >= Rare`.
+Legendary and Rare each have one connected component. Epic has two: Star 1 with Levels 20-21, and Stars 2, 3, 4, and 6 with Levels 25-38. The absolute offset between those Epic components is not identified by observations. In particular, Tairax changing from Star 1 Level 20 to Star 2 Level 25 does not independently reveal either the Star gain or the Level gain.
 
-## Confidence
+## Frozen curves
 
-- `Observed`: the exact rarity/Star Rank/Dragon Level combination exists in the observation dataset.
-- `Modeled`: the combination is not observed but lies inside its rarity's observed Star Rank and Dragon Level envelope.
-- `Low`: either input lies outside that rarity-specific envelope and the value is extrapolated.
+Each curve uses an arbitrary documented gauge; only Star-plus-Level sums have empirical meaning.
 
-The envelopes are derived deterministically from deduplicated observations: Legendary Star Rank 1-4 and Dragon Level 20-36; Epic Star Rank 1-6 and Dragon Level 20-36; Rare Star Rank 3-7 and Dragon Level 20-30.
+| Rarity | Star component anchors |
+| --- | --- |
+| Legendary | 1: 0; 2: 2220; 3: 4620; 4: 8640 |
+| Epic | 1: 0; 2: 1600; 3: 3200; 4: 5640; 6: 12880 |
+| Rare | 3: 0; 4: 1350; 7: 7600 |
 
-Confidence describes empirical coverage, not combat effectiveness or the reliability of a specific dragon.
+| Rarity | Level component anchors |
+| --- | --- |
+| Legendary | 20: 11400; 21: 12400; 25: 15400; 35: 22400; 36: 22400; 37: 23400; 38: 24400 |
+| Epic | 20: 9050; 21: 9550; 25: 11940; 30: 13940; 31: 14940; 32: 14940; 35: 16940; 36: 17940; 37: 17940; 38: 18940 |
+| Rare | 20: 8250; 21: 8650; 25: 10050; 28: 11250; 29: 11650; 30: 12050; 31: 12250 |
 
-## Data and identity
+The Epic bridge copies the nearest directly identified adjacent Epic Star increment: Star 2 to 3 is +1600, so the completion assigns +1600 from Star 1 to 2 and an implied +2390 from Level 21 to 25. This is deterministic modeled inference, not an observed game rule. The audit also reports alternative bridge allocations of 0/3990 and 2440/1550 for Star/Level gains.
 
-The source contains 31 raw observations and 25 unique progression combinations. Duplicate combinations are fitted once while retaining sorted provenance and sample counts. Sunfyre and Tairax appear only as observation provenance; neither is added to the 31-dragon canonical database.
+## Runtime and confidence
 
-- Model version: `estimated-power-v1`
-- Observation hash: `fnv1a64:57268e00007bfab8`
-- Model hash: `fnv1a64:5bf2cc559f2fd940`
+- Exact observed tuples return displayed Power with `observed` confidence and `exact-observation` basis.
+- Non-exact tuples inside one connected support component use piecewise-linear interpolation with `modeled` confidence.
+- Tuples crossing disconnected support or outside a component use `low` confidence and `extrapolation` basis.
+- Below Level 20, the Level-20 total is scaled by `max(1, level) / 20`.
+- Other extrapolation uses the smallest positive observed per-unit slope for that rarity and axis. This avoids freezing at a zero-slope plateau or repeating one large endpoint jump indefinitely.
+- Values are positive and rounded to the nearest 10. A final monotone projection preserves `Legendary >= Epic >= Rare` at equal progression.
 
-The hashes and generated coefficients are verified by `npm run fit:power`. `npm run audit:power` performs the same bounded deterministic fit plus observation deduplication, training and leave-one-unique-combination-out errors, exact-observation checks, invalid-value checks, observation-order reversal, and grid validation. No optimizer or solver is loaded.
+Examples of structural low confidence include Epic Star 1 Level 30, Epic Star 2 Level 21, Rare Stars 1-2, and Legendary Stars 5-10. Epic Star 5 within the higher connected component and Rare Stars 5-6 within their connected component are modeled interpolation.
 
-The complete model audit is committed as [`audits/estimated-power-v1.md`](audits/estimated-power-v1.md) and [`audits/estimated-power-v1.json`](audits/estimated-power-v1.json).
+Dragon identity, Habit Levels, notes, formation position, and synergy are not inputs. Invalid rarity, Star Rank outside 1-10, negative Level, or noninteger progression throws a `RangeError`.
 
-## Presentation and persistence
+## Identity and validation
 
-My Roster shows each owned dragon's read-only estimate and confidence basis. Formation Builder sums the three current dragon estimates into Estimated Formation Power and shows each component. Missing progression produces no estimate.
+- Model version: `estimated-power-v2`
+- Observation hash: `fnv1a64:26bfe615f0d9bdd5`
+- Model hash: `fnv1a64:efa6081babb4e520`
+- Numerical Level 0-1000 grid fingerprint: `fnv1a64:1acab49e4408602b`
 
-There is no manual Power field, local roster field, cloud roster field, Supabase migration, or Habit Level Power effect. The experimental Power-Aware optimizer uses the unchanged runtime estimate only as a lexicographically separate pool-selection objective; it never adds Power to Formation Rating. Formation Rating v2 remains unchanged.
+The model hash covers the observations, curves, gauges, Epic completion, support components, interpolation, extrapolation, exact-observation, rounding, monotonicity, rarity projection, and confidence rules. `npm run fit:power` verifies the frozen artifacts and `npm run fit:power --write` regenerates them.
+
+Frozen v1 is retained as a historical benchmark. Against the 17 genuinely new unique combinations, v1 has MAE 522.3529, MAPE 2.564692%, maximum APE 7.55237%, and RMSE 718.7489. V2 training quality is reported before the exact-observation override, and separate leave-one-combination, Level-anchor, Star-anchor, and upgrade-endpoint metrics are committed rather than treating structural zero training error as proof of generalization.
+
+The complete audits are [`audits/estimated-power-v2.md`](audits/estimated-power-v2.md), [`audits/estimated-power-v2.json`](audits/estimated-power-v2.json), and the preserved historical [`audits/estimated-power-v1.md`](audits/estimated-power-v1.md).
+
+## Presentation, persistence, and optimizer impact
+
+My Roster shows each owned dragon's read-only estimate and confidence. Formation Builder sums exactly three individual estimates. Missing progression produces no estimate.
+
+There is no manual Power field, persistence field, Supabase migration, Habit Level Power effect, damage estimate, combat simulation, or win probability. Formation Rating v2 is unchanged.
+
+Power-Aware optimizer requests include the Estimated Power version, observation hash, and model hash. The v2 identity therefore makes stored v1 Power-Aware results stale and recomputes them through the existing objective hierarchy. Solver phases, Primary cutoff logic, Backup phase order, stable keys, zero-gap settings, optimizer contract 3, legacy strategies, and the default strategy are unchanged.
 
 ## Limitations
 
-The dataset is sparse, especially at low Dragon Levels, high Star Ranks, and rarity/progression combinations outside the observed envelope. Duplicate screenshots improve provenance but do not add independent progression combinations. Extrapolated values should be treated as directional diagnostics, not verified game values.
+Support remains sparse at low Levels, high Star Ranks, and outside observed components. The Epic Star 1-to-2 bridge is underidentified, extrapolation is deliberately conservative, and confidence describes empirical support rather than combat effectiveness. Estimates outside support are directional diagnostics, not verified game values.

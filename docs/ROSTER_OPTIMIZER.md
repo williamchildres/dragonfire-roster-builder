@@ -4,7 +4,7 @@ Roster Optimizer builds an exact allocation from current My Roster data. All thr
 
 ## Strategies
 
-`Rarity-Priority 5 + Backup 5` remains the default in 0.16.0. Primary dragon inclusion maximizes Legendary count, then Epic count, before formation quality. Primary quality compares total Formation Rating, minimum rating, the complete ascending five-rating vector, uncapped relationship value, and active relationship count. Only after every Primary numeric objective is fixed does the solver optimize Backup rarity and the same quality sequence.
+`Rarity-Priority 5 + Backup 5` remains the default in 0.17.0. Primary dragon inclusion maximizes Legendary count, then Epic count, before formation quality. Primary quality compares total Formation Rating, minimum rating, the complete ascending five-rating vector, uncapped relationship value, and active relationship count. Only after every Primary numeric objective is fixed does the solver optimize Backup rarity and the same quality sequence.
 
 `Power-Aware 5 + Backup 5` is Estimated / Experimental. Estimated Power selects which 15 dragons belong in Primary. Formation Rating then organizes that equally powerful pool into five formations. The exact hierarchy is:
 
@@ -76,4 +76,4 @@ npm run audit:optimizer:power-aware -- --fixture maxed
 npm run audit:optimizer:power-aware -- --fixture all-one
 ```
 
-Optimization is local-only and makes no network call. Formation Rating v2, Estimated Power v1 formula and observations, tier thresholds, dragon data, all 224 curated profile signals, source schema 13, local/cloud roster schemas 5, Habit Level behavior, and Supabase migrations are unchanged. No manual Power, cloud Power storage, weighted Power/Rating formula, formation-power balancing, combat simulation, locks, exclusions, alternate solutions, or auto-run is introduced.
+Optimization is local-only and makes no network call. Release 0.17.0 changes only the empirical Estimated Power model from v1 to v2. The new version, observation hash, and model hash automatically stale prior Power-Aware requests; the objective hierarchy, Primary cutoff math, Backup phase, integer Power units, MILP constraints, stable keys, zero-gap settings, and confidence-as-diagnostic behavior are unchanged. Formation Rating v2, tier thresholds, dragon data, all 224 curated profile signals, source schema 13, local/cloud roster schemas 5, Habit Level behavior, and Supabase migrations remain unchanged. No manual Power, cloud Power storage, weighted Power/Rating formula, formation-power balancing, combat simulation, locks, exclusions, alternate solutions, or auto-run is introduced.

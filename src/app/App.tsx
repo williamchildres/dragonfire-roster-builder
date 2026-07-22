@@ -798,7 +798,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Power-Aware 5 + Backup 5 can now use empirical, unofficial Estimated Power to select Primary dragons while unchanged Formation Rating v2 organizes their formations. Rarity-Priority remains the default.</p>
+          <p>Estimated Power v2 now uses expanded observations and support-aware Star-plus-Level curves for its empirical, unofficial diagnostic. Power-Aware 5 + Backup 5 consumes the new model automatically; Formation Rating v2 is unchanged, and Rarity-Priority remains the default.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

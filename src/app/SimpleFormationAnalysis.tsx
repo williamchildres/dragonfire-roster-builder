@@ -3,6 +3,7 @@ import type { FormationPlacementComparison } from '../services/formationPlacemen
 import type { FormationRatingResult } from '../services/formationRating';
 import type { FormationRecommendationResult } from '../services/formationRecommendation';
 import type { EstimatedFormationPower } from '../power/estimatedFormationPower';
+import { ESTIMATED_POWER_MODEL_VERSION } from '../power/generatedDragonPowerModel';
 import type { SemanticRelationship } from '../synergy/semanticRelationships';
 
 export function SimpleFormationAnalysis({
@@ -66,7 +67,7 @@ export function SimpleFormationAnalysis({
           </dl>
         ) : null}
         <p className="formation-power-methodology">
-          Estimated from rarity, Star Rank, and Dragon Level using empirical Power Model v1. This is an unofficial diagnostic, not the game&apos;s formula, and it does not simulate combat.
+          Estimated from rarity, Star Rank, and Dragon Level using empirical Estimated Power {ESTIMATED_POWER_MODEL_VERSION.replace('estimated-power-', '')}. This is an unofficial diagnostic, not the game&apos;s formula, and it does not simulate combat.
           {estimatedPower ? ` Model: ${estimatedPower.modelVersion}.` : ''}
         </p>
       </section>

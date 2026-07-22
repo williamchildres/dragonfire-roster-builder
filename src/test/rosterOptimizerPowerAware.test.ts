@@ -213,10 +213,18 @@ describe('Power-Aware Primary + Backup exact optimizer', () => {
     expect(cache.get('b')?.power).toBe(200);
   });
 
-  it('changes only the Power-Aware request fingerprint when the model hash changes', () => {
+  it('changes only the Power-Aware request fingerprint from Estimated Power v1 to v2', () => {
     const snapshot = [rosterDragon('a', 'Rare')];
-    const first = { version: 'estimated-power-v1', modelHash: 'hash-a', observationHash: 'obs' };
-    const second = { ...first, modelHash: 'hash-b' };
+    const first = {
+      version: 'estimated-power-v1',
+      modelHash: 'fnv1a64:5bf2cc559f2fd940',
+      observationHash: 'fnv1a64:57268e00007bfab8',
+    };
+    const second = {
+      version: 'estimated-power-v2',
+      modelHash: 'fnv1a64:efa6081babb4e520',
+      observationHash: 'fnv1a64:26bfe615f0d9bdd5',
+    };
     expect(createRosterOptimizerRequestFingerprint(
       snapshot,
       'power-aware-primary-five-backup-five',
