@@ -1,7 +1,11 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
+import { useState } from 'react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { RosterOptimizer } from '../app/RosterOptimizer';
+import {
+  DEFAULT_ROSTER_OPTIMIZER_STRATEGY,
+  RosterOptimizer,
+} from '../app/RosterOptimizer';
 import { dragons } from '../data/dragons';
 import {
   buildOptimizerRosterSnapshot,
@@ -17,15 +21,17 @@ import type {
   RarityCountRecord,
   RosterOptimizerObjective,
   RosterOptimizerResponse,
+  RosterOptimizationResult,
+  RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationPlacementComparison';
 import { createEmptyRoster } from '../services/rosterStorage';
 
 describe('Roster Optimizer workspace', () => {
-  it('defaults to Rarity-Priority 5 + Backup 5 and exposes all public strategy choices', () => {
+  it('defaults to Power-Aware 5 + Backup 5 and exposes all public strategy choices', () => {
     renderOptimizer({ roster: ownedRoster(30) });
-    expect(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i })).toBeChecked();
-    expect(screen.getByRole('radio', { name: /Power-Aware 5 \+ Backup 5/i })).not.toBeChecked();
+    expect(screen.getByRole('radio', { name: /Power-Aware 5 \+ Backup 5/i })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i })).not.toBeChecked();
     expect(screen.getByRole('radio', { name: /Best 10 Overall/i })).not.toBeChecked();
     expect(screen.getByRole('button', { name: /Find My Primary & Backup Formations/i })).toBeInTheDocument();
   });
@@ -40,7 +46,7 @@ describe('Roster Optimizer workspace', () => {
     };
     renderOptimizer({ roster: ownedRoster(30), runner });
     await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
-    expect(run).toHaveBeenCalledWith(expect.any(Object), 'primary-five-backup-five');
+    expect(run).toHaveBeenCalledWith(expect.any(Object), 'power-aware-primary-five-backup-five');
     expect(screen.getByRole('radio', { name: /Best 10 Overall/i })).toBeDisabled();
     expect(screen.queryByText(/%/)).not.toBeInTheDocument();
     await userEvent.setup().click(screen.getByRole('button', { name: 'Cancel' }));
@@ -66,6 +72,7 @@ describe('Roster Optimizer workspace', () => {
     const roster = ownedRoster(31);
     const result = makePrimaryBackupResult(roster, 'arulix');
     renderOptimizer({ roster, runner: resolvedRunner(result) });
+    await userEvent.setup().click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
     await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
     expect(await screen.findByRole('heading', { name: 'Primary Formations' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Backup Formations' })).toBeInTheDocument();
@@ -105,6 +112,7 @@ describe('Roster Optimizer workspace', () => {
     const roster = ownedRoster(30);
     const result = makePrimaryBackupResult(roster);
     const view = renderOptimizer({ roster, runner: resolvedRunner(result) });
+    await userEvent.setup().click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
     await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
     await screen.findByRole('heading', { name: 'Exact optimal result' });
     const firstId = result.usedDragonIds[0]!;
@@ -127,6 +135,7 @@ describe('Roster Optimizer workspace', () => {
       dispose: vi.fn(),
     };
     renderOptimizer({ roster: ownedRoster(30), runner });
+    await userEvent.setup().click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
     await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Worker failed.');
     await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
@@ -154,8 +163,38 @@ function component(
   onOpenFormation: (arrangement: FormationArrangement) => void = vi.fn(),
   onOpenRoster: () => void = vi.fn(),
 ) {
-  return <RosterOptimizer allDragons={dragons} roster={roster} runner={runner}
-    onOpenFormation={onOpenFormation} onOpenRoster={onOpenRoster} />;
+  return <OptimizerTestHarness
+    roster={roster}
+    runner={runner}
+    onOpenFormation={onOpenFormation}
+    onOpenRoster={onOpenRoster}
+  />;
+}
+
+function OptimizerTestHarness({
+  roster,
+  runner,
+  onOpenFormation,
+  onOpenRoster,
+}: {
+  roster: ReturnType<typeof ownedRoster>;
+  runner: RosterOptimizerRunner;
+  onOpenFormation: (arrangement: FormationArrangement) => void;
+  onOpenRoster: () => void;
+}) {
+  const [strategy, setStrategy] = useState<RosterOptimizerStrategy>(DEFAULT_ROSTER_OPTIMIZER_STRATEGY);
+  const [result, setResult] = useState<RosterOptimizationResult | null>(null);
+  return <RosterOptimizer
+    allDragons={dragons}
+    roster={roster}
+    strategy={strategy}
+    onStrategyChange={setStrategy}
+    result={result}
+    onResultChange={setResult}
+    runner={runner}
+    onOpenFormation={onOpenFormation}
+    onOpenRoster={onOpenRoster}
+  />;
 }
 
 function ownedRoster(count: number) {
