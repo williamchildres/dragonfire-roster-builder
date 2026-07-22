@@ -1,0 +1,767 @@
+{
+  "auditVersion": "estimated-power-v1",
+  "generatedAt": "deterministic",
+  "modelVersion": "estimated-power-v1",
+  "modelFamily": "rarity-level-additive-with-shared-star-contribution-and-monotone-envelope",
+  "observationHash": "fnv1a64:57268e00007bfab8",
+  "modelHash": "fnv1a64:5bf2cc559f2fd940",
+  "rawSampleCount": 31,
+  "uniqueObservationCount": 25,
+  "duplicateSampleCount": 6,
+  "observations": [
+    {
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 35,
+      "displayedPower": 22400,
+      "provenance": [
+        "Malachite",
+        "Venator"
+      ],
+      "sampleCount": 2,
+      "fittedPower": 22030.3353,
+      "residual": -369.6647,
+      "absoluteError": 369.6647,
+      "percentageError": 1.650289,
+      "runtimePower": 22400
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 36,
+      "displayedPower": 22400,
+      "provenance": [
+        "Seasmoke",
+        "Syrax"
+      ],
+      "sampleCount": 2,
+      "fittedPower": 22742.9396,
+      "residual": 342.9396,
+      "absoluteError": 342.9396,
+      "percentageError": 1.53098,
+      "runtimePower": 22400
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 2,
+      "dragonLevel": 20,
+      "displayedPower": 13620,
+      "provenance": [
+        "Sunfyre"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 13775.9856,
+      "residual": 155.9856,
+      "absoluteError": 155.9856,
+      "percentageError": 1.145268,
+      "runtimePower": 13620
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 2,
+      "dragonLevel": 21,
+      "displayedPower": 14620,
+      "provenance": [
+        "Sunfyre"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 14488.5898,
+      "residual": -131.4102,
+      "absoluteError": 131.4102,
+      "percentageError": 0.898839,
+      "runtimePower": 14620
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 2,
+      "dragonLevel": 35,
+      "displayedPower": 24620,
+      "provenance": [
+        "Sheepstealer"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 24465.049,
+      "residual": -154.951,
+      "absoluteError": 154.951,
+      "percentageError": 0.62937,
+      "runtimePower": 24620
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 2,
+      "dragonLevel": 36,
+      "displayedPower": 24620,
+      "provenance": [
+        "Caraxes",
+        "Crimson"
+      ],
+      "sampleCount": 2,
+      "fittedPower": 25177.6532,
+      "residual": 557.6532,
+      "absoluteError": 557.6532,
+      "percentageError": 2.265042,
+      "runtimePower": 24620
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 3,
+      "dragonLevel": 36,
+      "displayedPower": 27020,
+      "provenance": [
+        "Kalspire"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 27612.3669,
+      "residual": 592.3669,
+      "absoluteError": 592.3669,
+      "percentageError": 2.192328,
+      "runtimePower": 27020
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 4,
+      "dragonLevel": 36,
+      "displayedPower": 31040,
+      "provenance": [
+        "Vhagar"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 30047.0806,
+      "residual": -992.9194,
+      "absoluteError": 992.9194,
+      "percentageError": 3.198838,
+      "runtimePower": 31040
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 20,
+      "displayedPower": 9050,
+      "provenance": [
+        "Tairax"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 8743.9922,
+      "residual": -306.0078,
+      "absoluteError": 306.0078,
+      "percentageError": 3.381301,
+      "runtimePower": 9050
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 21,
+      "displayedPower": 9550,
+      "provenance": [
+        "Tairax"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 9235.3961,
+      "residual": -314.6039,
+      "absoluteError": 314.6039,
+      "percentageError": 3.294282,
+      "runtimePower": 9550
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 2,
+      "dragonLevel": 30,
+      "displayedPower": 15540,
+      "provenance": [
+        "Zivern"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 16092.7443,
+      "residual": 552.7443,
+      "absoluteError": 552.7443,
+      "percentageError": 3.556913,
+      "runtimePower": 15540
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 2,
+      "dragonLevel": 31,
+      "displayedPower": 16540,
+      "provenance": [
+        "Feskar",
+        "Vermax"
+      ],
+      "sampleCount": 2,
+      "fittedPower": 16584.1481,
+      "residual": 44.1481,
+      "absoluteError": 44.1481,
+      "percentageError": 0.266917,
+      "runtimePower": 16540
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 2,
+      "dragonLevel": 36,
+      "displayedPower": 19540,
+      "provenance": [
+        "Daemoros"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 19041.1674,
+      "residual": -498.8326,
+      "absoluteError": 498.8326,
+      "percentageError": 2.552879,
+      "runtimePower": 19540
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 3,
+      "dragonLevel": 31,
+      "displayedPower": 18140,
+      "provenance": [
+        "Vaeldra"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 19018.8618,
+      "residual": 878.8618,
+      "absoluteError": 878.8618,
+      "percentageError": 4.844883,
+      "runtimePower": 18140
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 3,
+      "dragonLevel": 35,
+      "displayedPower": 20140,
+      "provenance": [
+        "Shadowsong"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 20984.4772,
+      "residual": 844.4772,
+      "absoluteError": 844.4772,
+      "percentageError": 4.193035,
+      "runtimePower": 20140
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 4,
+      "dragonLevel": 35,
+      "displayedPower": 22580,
+      "provenance": [
+        "Rhysarion",
+        "Tashix",
+        "Velar"
+      ],
+      "sampleCount": 3,
+      "fittedPower": 23419.1909,
+      "residual": 839.1909,
+      "absoluteError": 839.1909,
+      "percentageError": 3.716523,
+      "runtimePower": 22580
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 6,
+      "dragonLevel": 36,
+      "displayedPower": 30820,
+      "provenance": [
+        "Tessarion"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 28780.0221,
+      "residual": -2039.9779,
+      "absoluteError": 2039.9779,
+      "percentageError": 6.619007,
+      "runtimePower": 30820
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 3,
+      "dragonLevel": 29,
+      "displayedPower": 11650,
+      "provenance": [
+        "Antares"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 10746.5027,
+      "residual": -903.4973,
+      "absoluteError": 903.4973,
+      "percentageError": 7.755341,
+      "runtimePower": 11650
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 3,
+      "dragonLevel": 30,
+      "displayedPower": 12050,
+      "provenance": [
+        "Shadowrend"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 11142.1324,
+      "residual": -907.8676,
+      "absoluteError": 907.8676,
+      "percentageError": 7.534171,
+      "runtimePower": 12050
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 20,
+      "displayedPower": 9600,
+      "provenance": [
+        "Solstryker"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 9620.5495,
+      "residual": 20.5495,
+      "absoluteError": 20.5495,
+      "percentageError": 0.214057,
+      "runtimePower": 9600
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 21,
+      "displayedPower": 10000,
+      "provenance": [
+        "Solstryker"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 10016.1792,
+      "residual": 16.1792,
+      "absoluteError": 16.1792,
+      "percentageError": 0.161792,
+      "runtimePower": 10000
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 28,
+      "displayedPower": 12600,
+      "provenance": [
+        "Dawnseeker"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 12785.5867,
+      "residual": 185.5867,
+      "absoluteError": 185.5867,
+      "percentageError": 1.472911,
+      "runtimePower": 12600
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 29,
+      "displayedPower": 13000,
+      "provenance": [
+        "Arulix"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 13181.2164,
+      "residual": 181.2164,
+      "absoluteError": 181.2164,
+      "percentageError": 1.393972,
+      "runtimePower": 13000
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 30,
+      "displayedPower": 13400,
+      "provenance": [
+        "Thunderstrike"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 13576.846,
+      "residual": 176.846,
+      "absoluteError": 176.846,
+      "percentageError": 1.319747,
+      "runtimePower": 13400
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 7,
+      "dragonLevel": 30,
+      "displayedPower": 19650,
+      "provenance": [
+        "Jagadrix"
+      ],
+      "sampleCount": 1,
+      "fittedPower": 20880.9871,
+      "residual": 1230.9871,
+      "absoluteError": 1230.9871,
+      "percentageError": 6.264565,
+      "runtimePower": 19650
+    }
+  ],
+  "candidateModels": [
+    {
+      "id": "shared-monotone-power-law",
+      "description": "Shared level and Star Rank exponents with one positive coefficient per rarity.",
+      "parameterCount": 5,
+      "coefficients": [
+        6.360359303847,
+        6.089673253016,
+        5.729163102963,
+        0.99860719793,
+        0.301178839924
+      ],
+      "trainingMetrics": {
+        "meanAbsoluteError": 913.2879,
+        "mapePercent": 4.789192,
+        "medianAbsolutePercentageErrorPercent": 3.726438,
+        "maximumAbsolutePercentageErrorPercent": 15.982272,
+        "rootMeanSquaredError": 1291.8209
+      },
+      "leaveOneOutMetrics": {
+        "meanAbsoluteError": 1164.5458,
+        "mapePercent": 6.073792,
+        "medianAbsolutePercentageErrorPercent": 4.764539,
+        "maximumAbsolutePercentageErrorPercent": 19.337107,
+        "rootMeanSquaredError": 1684.1482
+      },
+      "gridChecks": {
+        "starRanks": "1-10",
+        "dragonLevels": "1-100",
+        "monotonicityViolations": 0,
+        "rarityOrderViolations": 0,
+        "invalidEstimateCount": 0
+      },
+      "selected": false
+    },
+    {
+      "id": "rarity-specific-monotone-power-laws",
+      "description": "Independent positive power-law coefficient and level/Star Rank exponents for each rarity.",
+      "parameterCount": 9,
+      "coefficients": [
+        6.207114352931,
+        6.837475460456,
+        5.640567970653,
+        1.062618649339,
+        0.756667596369,
+        0.909047884945,
+        0.199724288119,
+        0.391058213299,
+        0.577949320506
+      ],
+      "trainingMetrics": {
+        "meanAbsoluteError": 595.0835,
+        "mapePercent": 2.927356,
+        "medianAbsolutePercentageErrorPercent": 2.989538,
+        "maximumAbsolutePercentageErrorPercent": 8.261563,
+        "rootMeanSquaredError": 828.472
+      },
+      "leaveOneOutMetrics": {
+        "meanAbsoluteError": 1081.9113,
+        "mapePercent": 5.155141,
+        "medianAbsolutePercentageErrorPercent": 3.884103,
+        "maximumAbsolutePercentageErrorPercent": 18.972232,
+        "rootMeanSquaredError": 1703.8446
+      },
+      "gridChecks": {
+        "starRanks": "1-10",
+        "dragonLevels": "1-100",
+        "monotonicityViolations": 0,
+        "rarityOrderViolations": 215,
+        "invalidEstimateCount": 0
+      },
+      "selected": false
+    },
+    {
+      "id": "rarity-level-additive-with-shared-star-contribution-and-monotone-envelope",
+      "description": "Rarity intercepts and level slopes plus one shared Star Rank contribution; a monotone empirical envelope and rarity projection guard runtime estimates.",
+      "parameterCount": 7,
+      "coefficients": [
+        -5345.526402998704,
+        -3518.798289613967,
+        -8030.898292604834,
+        712.604230387158,
+        491.403841476919,
+        395.629654678922,
+        2434.713675015537
+      ],
+      "trainingMetrics": {
+        "meanAbsoluteError": 529.5786,
+        "mapePercent": 2.88213,
+        "medianAbsolutePercentageErrorPercent": 2.265042,
+        "maximumAbsolutePercentageErrorPercent": 7.755341,
+        "rootMeanSquaredError": 702.0812
+      },
+      "leaveOneOutMetrics": {
+        "meanAbsoluteError": 724,
+        "mapePercent": 3.83628,
+        "medianAbsolutePercentageErrorPercent": 2.761982,
+        "maximumAbsolutePercentageErrorPercent": 11.959288,
+        "rootMeanSquaredError": 1044.4175
+      },
+      "gridChecks": {
+        "starRanks": "1-10",
+        "dragonLevels": "1-100",
+        "monotonicityViolations": 0,
+        "rarityOrderViolations": 80,
+        "invalidEstimateCount": 28
+      },
+      "selected": true
+    }
+  ],
+  "selectedModel": {
+    "coefficients": {
+      "rarityIntercept": {
+        "Legendary": -5345.526402998704,
+        "Epic": -3518.798289613967,
+        "Rare": -8030.898292604834
+      },
+      "rarityLevelSlope": {
+        "Legendary": 712.604230387158,
+        "Epic": 491.403841476919,
+        "Rare": 395.629654678922
+      },
+      "sharedStarRankSlope": 2434.713675015537,
+      "empiricalMinimumDragonLevel": 20
+    },
+    "formula": "base(rarity, stars, level>=20) = intercept[rarity] + levelSlope[rarity] * level + sharedStarRankSlope * stars",
+    "lowLevelExtrapolation": "For levels 0-19, scale the level-20 base by max(1, level) / 20.",
+    "runtimeGuardrails": "Round to 10; clamp within monotone empirical lower/upper bounds; project Rare <= Epic <= Legendary.",
+    "trainingMetrics": {
+      "meanAbsoluteError": 529.5786,
+      "mapePercent": 2.88213,
+      "medianAbsolutePercentageErrorPercent": 2.265042,
+      "maximumAbsolutePercentageErrorPercent": 7.755341,
+      "rootMeanSquaredError": 702.0812
+    },
+    "leaveOneOutMetrics": {
+      "meanAbsoluteError": 724,
+      "mapePercent": 3.83628,
+      "medianAbsolutePercentageErrorPercent": 2.761982,
+      "maximumAbsolutePercentageErrorPercent": 11.959288,
+      "rootMeanSquaredError": 1044.4175
+    }
+  },
+  "residualsByRarity": {
+    "Epic": {
+      "count": 9,
+      "meanResidual": 0,
+      "meanAbsoluteError": 702.0938,
+      "mapePercent": 3.60286
+    },
+    "Legendary": {
+      "count": 8,
+      "meanResidual": 0,
+      "meanAbsoluteError": 412.2363,
+      "mapePercent": 1.688869
+    },
+    "Rare": {
+      "count": 8,
+      "meanResidual": 0,
+      "meanAbsoluteError": 452.8412,
+      "mapePercent": 3.26457
+    }
+  },
+  "residualsByStarRank": {
+    "1": {
+      "count": 4,
+      "meanResidual": -161.8342,
+      "meanAbsoluteError": 333.304,
+      "mapePercent": 2.464213
+    },
+    "2": {
+      "count": 7,
+      "meanResidual": 75.0482,
+      "meanAbsoluteError": 299.3893,
+      "mapePercent": 1.616461
+    },
+    "3": {
+      "count": 5,
+      "meanResidual": 100.8682,
+      "meanAbsoluteError": 825.4142,
+      "mapePercent": 5.303952
+    },
+    "4": {
+      "count": 7,
+      "meanResidual": 60.9499,
+      "meanAbsoluteError": 344.6412,
+      "mapePercent": 1.639691
+    },
+    "6": {
+      "count": 1,
+      "meanResidual": -2039.9779,
+      "meanAbsoluteError": 2039.9779,
+      "mapePercent": 6.619007
+    },
+    "7": {
+      "count": 1,
+      "meanResidual": 1230.9871,
+      "meanAbsoluteError": 1230.9871,
+      "mapePercent": 6.264565
+    }
+  },
+  "residualsByDragonLevel": {
+    "20": {
+      "count": 3,
+      "meanResidual": -43.1576,
+      "meanAbsoluteError": 160.8476,
+      "mapePercent": 1.580209
+    },
+    "21": {
+      "count": 3,
+      "meanResidual": -143.2783,
+      "meanAbsoluteError": 154.0644,
+      "mapePercent": 1.451638
+    },
+    "28": {
+      "count": 1,
+      "meanResidual": 185.5867,
+      "meanAbsoluteError": 185.5867,
+      "mapePercent": 1.472911
+    },
+    "29": {
+      "count": 2,
+      "meanResidual": -361.1404,
+      "meanAbsoluteError": 542.3569,
+      "mapePercent": 4.574656
+    },
+    "30": {
+      "count": 4,
+      "meanResidual": 263.1775,
+      "meanAbsoluteError": 717.1112,
+      "mapePercent": 4.668849
+    },
+    "31": {
+      "count": 2,
+      "meanResidual": 461.505,
+      "meanAbsoluteError": 461.505,
+      "mapePercent": 2.5559
+    },
+    "35": {
+      "count": 4,
+      "meanResidual": 289.7631,
+      "meanAbsoluteError": 552.071,
+      "mapePercent": 2.547304
+    },
+    "36": {
+      "count": 6,
+      "meanResidual": -339.795,
+      "meanAbsoluteError": 837.4483,
+      "mapePercent": 3.059846
+    }
+  },
+  "supportedProgression": {
+    "starRanks": "1-10",
+    "dragonLevels": "all nonnegative integers; exhaustive audit through 1000 plus monotone construction"
+  },
+  "confidenceContract": {
+    "roundingRule": "nearest-10",
+    "confidenceRule": "exact-observation-otherwise-per-rarity-star-and-level-envelope",
+    "empiricalEnvelopeDerivation": "derived-from-deduplicated-observations",
+    "observedEnvelopes": {
+      "Legendary": {
+        "starRank": {
+          "minimum": 1,
+          "maximum": 4
+        },
+        "dragonLevel": {
+          "minimum": 20,
+          "maximum": 36
+        }
+      },
+      "Epic": {
+        "starRank": {
+          "minimum": 1,
+          "maximum": 6
+        },
+        "dragonLevel": {
+          "minimum": 20,
+          "maximum": 36
+        }
+      },
+      "Rare": {
+        "starRank": {
+          "minimum": 3,
+          "maximum": 7
+        },
+        "dragonLevel": {
+          "minimum": 20,
+          "maximum": 30
+        }
+      }
+    }
+  },
+  "gridChecks": {
+    "starRankMinimum": 1,
+    "starRankMaximum": 10,
+    "dragonLevelMinimum": 0,
+    "dragonLevelAuditMaximum": 1000,
+    "checkedEstimateCount": 30030,
+    "invalidEstimateCount": 0,
+    "monotonicityViolations": 0,
+    "rarityOrderViolations": 0,
+    "exactObservationMismatches": 0,
+    "analyticalExtension": "All level slopes and the low-level scale are nonnegative; empirical bounds and rarity projection are monotone max/min operations, so the checks extend to every nonnegative integer level."
+  },
+  "validationChecks": {
+    "observationOrderReversalMatches": true,
+    "invalidInputCasesRejected": true
+  },
+  "confidenceExamples": [
+    {
+      "rarity": "Legendary",
+      "starRank": 4,
+      "dragonLevel": 35,
+      "confidence": "modeled",
+      "basis": "interpolation"
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 5,
+      "dragonLevel": 35,
+      "confidence": "low",
+      "basis": "extrapolation"
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 6,
+      "dragonLevel": 35,
+      "confidence": "modeled",
+      "basis": "interpolation"
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 7,
+      "dragonLevel": 35,
+      "confidence": "low",
+      "basis": "extrapolation"
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 29,
+      "confidence": "observed",
+      "basis": "exact-observation"
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 2,
+      "dragonLevel": 29,
+      "confidence": "low",
+      "basis": "extrapolation"
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 30,
+      "confidence": "observed",
+      "basis": "exact-observation"
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 31,
+      "confidence": "low",
+      "basis": "extrapolation"
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 3,
+      "dragonLevel": 34,
+      "confidence": "modeled",
+      "basis": "interpolation"
+    }
+  ]
+}

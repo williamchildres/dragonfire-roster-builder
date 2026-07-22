@@ -2,6 +2,7 @@ import { ArrowLeft, BookOpen, LockKeyhole, Save, Trash2 } from 'lucide-react';
 import type { AccountSession } from '../cloud/types';
 import type { RosterSyncStatus } from '../hooks/useRosterSync';
 import type { Dragon, OwnedDragon } from '../models/dragon';
+import { estimateDragonPower } from '../power/estimatedDragonPower';
 import { isHabitUnlocked } from '../services/habitLevels';
 import { MAX_NOTES_LENGTH } from '../services/rosterStorage';
 import { RosterDragonEmblem } from './RosterList';
@@ -29,6 +30,9 @@ export function RosterEditor({
   editorRef: React.RefObject<HTMLElement | null>;
 }) {
   const unlockedHabits = dragon.habits.filter((habit) => isHabitUnlocked(habit, rosterEntry));
+  const estimatedPower = rosterEntry.starRank != null && rosterEntry.reignLevel != null
+    ? estimateDragonPower({ rarity: dragon.rarity, starRank: rosterEntry.starRank, dragonLevel: rosterEntry.reignLevel })
+    : null;
 
   return (
     <aside className="roster-editor-pane" aria-labelledby="roster-editor-title" ref={editorRef} tabIndex={-1}>
@@ -77,6 +81,14 @@ export function RosterEditor({
                 })}
               />
             </label>
+          </div>
+          <div className="roster-estimated-power">
+            <span>Estimated Power</span>
+            <strong>{estimatedPower ? new Intl.NumberFormat('en-US').format(estimatedPower.power) : 'Unavailable'}</strong>
+            <small>
+              Unofficial empirical estimate from current rarity, Star Rank, and Dragon Level.
+              {estimatedPower ? ` ${estimatedPower.confidence === 'low' ? 'Low-confidence extrapolation.' : `${estimatedPower.confidence === 'observed' ? 'Observed' : 'Modeled'} value.`}` : ''}
+            </small>
           </div>
         </section>
 

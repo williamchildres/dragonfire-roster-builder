@@ -13,6 +13,7 @@ Roster Optimizer and Formation Builder My Roster mode share the same authoritati
 - Add All Dragons derives missing IDs from the complete canonical collection, never from the current filters, sorting, visible rows, or optimizer candidates. It confirms the current missing count before committing one immutable roster snapshot. `All Dragons Added` is disabled when no canonical dragon is missing.
 - Removing selects the next visible row, then the previous row, then the empty state.
 - Star Rank, Dragon Level (`reignLevel` in stored JSON), named Habit Levels, and notes save immediately through the existing local snapshot and optional account-sync path.
+- Estimated Power is derived read-only from rarity, Star Rank, and Dragon Level. It has no editor control or persistence field and does not participate in roster synchronization or optimizer ranking.
 - Habit controls appear only when every canonical `unlockStarRank` and `minimumDragonLevel` requirement is satisfied. An unlocked habit begins at Level 1 and can be set only to 1 through 5. A relocked habit disappears and its saved key is deleted; re-unlocking starts again at Level 1.
 - Removing ownership does not change progression, notes, or valid unlocked Habit Levels. Re-adding the dragon restores those retained values unless progression itself crossed below an unlock threshold.
 - The shared ownership transition preserves valid Star Rank, Dragon Level, notes, and Habit Levels on re-add; only absent or invalid Star Rank and Dragon Level receive the 1/1 defaults. Existing browser persistence and the single debounced account save path remain authoritative; a failed cloud save leaves the complete local snapshot available for the existing retry flow.
@@ -38,3 +39,4 @@ The editor always describes browser autosave. It mentions active account synchro
 - conflict, migration, offline, retry, sign-out retention, import, and clear-local behavior
 - formations remain browser-local
 - no direct Supabase calls from roster UI components
+- Estimated Power is runtime-only; local/cloud schema 5 and Supabase migrations remain unchanged

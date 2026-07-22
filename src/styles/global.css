@@ -1314,6 +1314,82 @@ dd {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.roster-estimated-power,
+.formation-power-diagnostic {
+  border: 1px solid rgba(231, 181, 75, 0.3);
+  border-radius: 14px;
+  background: rgba(231, 181, 75, 0.07);
+}
+
+.roster-estimated-power {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.85rem;
+  padding: 0.8rem 0.9rem;
+}
+
+.roster-estimated-power > span,
+.roster-estimated-power small,
+.formation-power-methodology,
+.formation-power-total span {
+  color: var(--text-muted);
+}
+
+.roster-estimated-power strong,
+.formation-power-total strong {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+}
+
+.formation-power-diagnostic {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.formation-power-diagnostic h4,
+.formation-power-diagnostic p,
+.formation-power-diagnostic dl {
+  margin: 0;
+}
+
+.formation-power-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-top: 0.25rem !important;
+}
+
+.formation-power-dragons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.formation-power-dragons > div {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.formation-power-dragons dt {
+  overflow: hidden;
+  color: var(--text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.formation-power-dragons dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.formation-power-methodology {
+  font-size: 0.83rem;
+  line-height: 1.45;
+}
+
 .roster-habit-list {
   border: 1px solid var(--line-soft);
   border-radius: var(--radius-sm);

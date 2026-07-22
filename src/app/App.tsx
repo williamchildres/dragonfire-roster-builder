@@ -47,6 +47,7 @@ import { getPublicVerificationLabel, getPublicVerificationTone } from './publicC
 import dragonfireHero from '../assets/dragonfire-hero.png';
 import { databaseMetadata, repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
+import { estimateFormationPower } from '../power/estimatedFormationPower';
 import {
   BREEDS,
   FORMATION_POSITIONS,
@@ -797,7 +798,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>My Roster can now add every missing canonical dragon at once, starting new entries at Star 1 and Dragon Level 1 while preserving saved progress. Roster Optimizer strategies are unchanged; Formation Rating v2 is unchanged.</p>
+          <p>My Roster and Formation Builder now show read-only Estimated Power diagnostics from an empirical, unofficial rarity, Star Rank, and Dragon Level model. Roster Optimizer strategies are unchanged. Formation Rating v2 is unchanged.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>
@@ -1216,6 +1217,16 @@ function FormationBuilderSection({
     }),
     [formation, placementComparison, semanticRelationships],
   );
+  const estimatedPower = useMemo(
+    () => placementComparison
+      ? estimateFormationPower({
+          formation: placementComparison.current.arrangement,
+          dragons,
+          progression,
+        })
+      : null,
+    [placementComparison, progression],
+  );
   const dragonNamesById = useMemo(
     () => new Map(dragons.map((dragon) => [dragon.id, dragon.name])),
     [],
@@ -1304,6 +1315,8 @@ function FormationBuilderSection({
       </div>
       <SimpleFormationAnalysis
         rating={rating}
+        estimatedPower={estimatedPower}
+        dragonNamesById={dragonNamesById}
         relationships={semanticRelationships}
         findings={findings}
         recommendation={recommendation}

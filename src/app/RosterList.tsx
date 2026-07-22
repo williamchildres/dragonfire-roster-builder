@@ -1,5 +1,6 @@
 import { Shield } from 'lucide-react';
 import type { Dragon, OwnedDragon } from '../models/dragon';
+import { estimateDragonPower } from '../power/estimatedDragonPower';
 import { applicableHabitCount, unlockedHabitCount } from './rosterWorkspaceState';
 
 export function RosterList({
@@ -22,12 +23,15 @@ export function RosterList({
         const selected = selectedDragonId === dragon.id;
         const unlockedHabits = unlockedHabitCount(dragon, entry);
         const totalHabits = applicableHabitCount(dragon);
+        const estimatedPower = entry?.starRank != null && entry.reignLevel != null
+          ? estimateDragonPower({ rarity: dragon.rarity, starRank: entry.starRank, dragonLevel: entry.reignLevel })
+          : null;
         return (
           <li key={dragon.id}>
             <button
               type="button"
               className={selected ? 'roster-row is-selected' : 'roster-row'}
-              aria-label={`${dragon.name}, ${dragon.rarity} ${dragon.breed}, Star Rank ${formatAccessible(entry?.starRank)}, Dragon Level ${formatAccessible(entry?.reignLevel)}, ${unlockedHabits} of ${totalHabits} habits unlocked${selected ? ', selected' : ''}`}
+              aria-label={`${dragon.name}, ${dragon.rarity} ${dragon.breed}, Star Rank ${formatAccessible(entry?.starRank)}, Dragon Level ${formatAccessible(entry?.reignLevel)}, Estimated Power ${estimatedPower ? formatPower(estimatedPower.power) : 'unavailable'}, ${unlockedHabits} of ${totalHabits} habits unlocked${selected ? ', selected' : ''}`}
               aria-current={selected ? 'true' : undefined}
               onClick={() => onSelect(dragon.id)}
               ref={(element) => registerRow(dragon.id, element)}
@@ -40,6 +44,9 @@ export function RosterList({
               <span className="roster-row-progression" aria-hidden="true">
                 <span>{formatStarRank(entry?.starRank)}</span>
                 <span>Lv {formatUnknown(entry?.reignLevel)}</span>
+                <span title="Unofficial empirical estimate from current rarity, Star Rank, and Dragon Level.">
+                  Est. Power {estimatedPower ? formatPower(estimatedPower.power) : '—'}
+                </span>
                 <span>{unlockedHabits}/{totalHabits} habits</span>
               </span>
             </button>
@@ -69,4 +76,8 @@ function formatStarRank(value: number | null | undefined): string {
 
 function formatAccessible(value: number | null | undefined): string | number {
   return value === null || value === undefined ? 'unknown' : value;
+}
+
+function formatPower(value: number): string {
+  return new Intl.NumberFormat('en-US').format(value);
 }

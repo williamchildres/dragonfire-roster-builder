@@ -252,10 +252,11 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.14\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.15\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('add every missing canonical dragon');
-    expect(latestUpdate).toHaveTextContent('Star 1 and Dragon Level 1');
+    expect(latestUpdate).toHaveTextContent('Estimated Power diagnostics');
+    expect(latestUpdate).toHaveTextContent('empirical, unofficial');
+    expect(latestUpdate).toHaveTextContent('Roster Optimizer strategies');
     expect(latestUpdate).toHaveTextContent('Formation Rating v2 is unchanged');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
