@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeMarkdown = process.argv.includes('--write');
 const writeDiagnosticJson = process.argv.includes('--write-json');
 const baselinePath = path.join(root, 'docs', 'audits', 'full-roster-rating-baseline-0.10.5.json');
-const startingMainSha = '4eb4fbf6e23605266d41c4b3949bf30b31bbc103';
+const startingMainSha = '71897d22ed62025574d600da31d7f12ec6b628d5';
 const baselineSourceCommit = 'a5c4bc2c05850210a64652921021bba1783e6eb1';
 const expectedOldHash = 'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48';
 const baselineRuntimeMs = 12838;
@@ -47,7 +47,7 @@ try {
     sourceOfTruth: {
       startingMainSha,
       baselineSourceCommit,
-      branch: 'feature/add-sunfyre-tairax',
+      branch: 'hotfix/optimizer-nonintegral-objective',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
@@ -109,7 +109,7 @@ try {
   } else {
     const committedMarkdown = await readFile(markdownPath, 'utf8');
     const stableFieldsMatch =
-      auditVersion === '0.19.0' &&
+      auditVersion === '0.19.1' &&
       report.formationSweep.deterministicFullResultHash ===
         '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf' &&
       report.formationSweep.actualCount === 32736 &&
@@ -248,14 +248,14 @@ function renderMarkdown(report) {
   const lines = [
     `# Full-roster Formation Rating v2 audit — ${report.auditVersion}`,
     '',
-    '> Formation Rating v2 scoring is unchanged. This release expands only canonical roster data, profile evidence, and the resulting evaluated formation space.',
+    '> Formation Rating v2 scoring and canonical data are unchanged. This hotfix only corrects exact optimizer phase-value reconstruction.',
     '',
     '## Executive summary',
     '',
     `- Baseline: ${report.comparison.baselineVersion} at \`${report.sourceOfTruth.baselineSourceCommit}\`; old hash \`${report.comparison.baselineDeterministicFullResultHash}\`.`,
     `- Release branch starts from \`${report.sourceOfTruth.startingMainSha}\`.`,
     `- Current: ${report.auditVersion}; new hash \`${report.comparison.currentDeterministicFullResultHash}\`.`,
-    `- Coverage expanded: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.profileSignals} curated signals, ${report.totals.orderedFormationsEvaluated} ordered formations, ${report.totals.providerPayoffPairsEvaluated} provider/payoff pairs.`,
+    `- Coverage remains: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.profileSignals} curated signals, ${report.totals.orderedFormationsEvaluated} ordered formations, ${report.totals.providerPayoffPairsEvaluated} provider/payoff pairs.`,
     `- Baseline comparison covers ${report.comparison.formationMigrations.length} formations composed only of the prior 31 dragons; ${report.comparison.newFormationCount} formations include Sunfyre or Tairax and have no prior-row counterpart.`,
     `- Validation: ${report.totals.passChecks} PASS checks, ${report.totals.failedChecks} failed checks, ${report.findings.length} informational/unresolved findings.`,
     `- Runtime: ${report.recordedAuditRuntimeMs} ms; prior audit ${report.performance.baselineRuntimeMs} ms; delta ${signed(report.performance.deltaMs)} ms.`,
@@ -320,8 +320,8 @@ function renderMarkdown(report) {
     '## Compatibility and release',
     '',
     '- Source schema remains 13; local and cloud roster schemas remain 5; no Supabase migration was added.',
-    `- Sunfyre and Tairax add 14 canonical abilities and 15 curated signals; the scoring formula and thresholds are unchanged.`,
-    '- The old 31-dragon hash is preserved by the archived optimizer fixtures; the new full-roster hash is the reviewed 33-dragon baseline.',
+    '- The 0.19.1 optimizer numerical hotfix changes no dragon data, scoring formula, thresholds, or Formation Rating output.',
+    '- The archived 31-dragon optimizer hashes and reviewed 33-dragon full-roster hash are preserved.',
     '- The complete old/new comparison is validated in memory. An ignored full diagnostic JSON can be generated explicitly with `npm run audit:full-roster:write-json`.',
     '',
     '## Rerun',

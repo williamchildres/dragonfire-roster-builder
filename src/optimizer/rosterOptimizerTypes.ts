@@ -113,6 +113,31 @@ export interface OptimizerPhaseTimings {
   stableKeyMs: number;
 }
 
+export interface OptimizerPhaseObjectiveDiagnostic {
+  stage: string;
+  wave: OptimizerWave;
+  kind: 'scalar' | 'histogram' | 'stable';
+  solverPass: number;
+  status: 'optimal';
+  chunkStart?: number;
+  chunkEnd?: number;
+  rawObjective: number;
+  reconstructedObjective: number;
+  rawObjectiveDelta: number;
+  maximumIntegralityResidual: number;
+  maximumConstraintResidual: number;
+  mipGap: number | null;
+}
+
+export interface OptimizerNumericalExactnessDiagnostics {
+  integralityTolerance: number;
+  maximumIntegralityResidual: number;
+  maximumConstraintResidual: number;
+  maximumRawObjectiveDelta: number;
+  phaseObjectives: OptimizerPhaseObjectiveDiagnostic[];
+  fixedPhasesValidated: boolean;
+}
+
 export interface OptimizerSearchDiagnostics {
   optimal: boolean;
   eligibleDragonCount: number;
@@ -126,6 +151,7 @@ export interface OptimizerSearchDiagnostics {
   solverMs: number;
   totalMs: number;
   phaseTimings?: OptimizerPhaseTimings;
+  numericalExactness?: OptimizerNumericalExactnessDiagnostics;
 }
 
 export type RarityCountRecord = Record<DragonRarity, number>;
@@ -283,6 +309,7 @@ export interface PrimaryBackupOptimizerSolverResult {
   cacheEntries: number;
   solverPasses: number;
   phaseTimings: OptimizerPhaseTimings;
+  numericalExactness?: OptimizerNumericalExactnessDiagnostics;
 }
 
 export interface PowerAwarePrimaryBackupOptimizerSolverResult extends Omit<PrimaryBackupOptimizerSolverResult, 'objective'> {
