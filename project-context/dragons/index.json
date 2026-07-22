@@ -1,8 +1,26 @@
 {
-  "count": 31,
-  "detailedDragonCount": 31,
+  "count": 33,
+  "detailedDragonCount": 33,
   "metadataOnlyDragonCount": 0,
   "dragons": [
+    {
+      "id": "sunfyre",
+      "slug": "sunfyre",
+      "name": "Sunfyre",
+      "rarity": "Legendary",
+      "breed": "Sentinel",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
+    },
+    {
+      "id": "tairax",
+      "slug": "tairax",
+      "name": "Tairax",
+      "rarity": "Epic",
+      "breed": "Hunter",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
+    },
     {
       "id": "syrax",
       "slug": "syrax",

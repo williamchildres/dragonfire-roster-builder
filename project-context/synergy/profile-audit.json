@@ -1,14 +1,178 @@
 {
-  "reviewedAbilityCount": 217,
+  "reviewedAbilityCount": 231,
   "dispositionCounts": {
-    "represented": 145,
-    "general-support-only": 12,
-    "self-only": 36,
-    "no-cross-dragon-synergy": 16,
-    "reinforces-existing": 8
+    "represented": 154,
+    "general-support-only": 13,
+    "reinforces-existing": 9,
+    "self-only": 38,
+    "no-cross-dragon-synergy": 17
   },
   "metadataOnlyDragonIds": [],
   "reviews": [
+    {
+      "dragonId": "sunfyre",
+      "abilityId": "sunfyre-golden-wrath",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "sunfyre-golden-wrath-tactical",
+          "sunfyre-golden-wrath-fire",
+          "sunfyre-golden-wrath-burn"
+        ],
+        "rationale": "Golden Wrath is represented by its Tactical output and its Troop-Capacity-conditional Fire and Burn outputs."
+      }
+    },
+    {
+      "dragonId": "sunfyre",
+      "abilityId": "sunfyre-sentinels-wit",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "sunfyre-sentinels-wit-left-stats",
+          "sunfyre-sentinels-wit-vanguard"
+        ],
+        "rationale": "The Vanguard trait supports Left Flank Instinct and Initiative while its Tactical Damage increase remains self-only."
+      }
+    },
+    {
+      "dragonId": "sunfyre",
+      "abilityId": "sunfyre-radiant-majesty",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "sunfyre-radiant-majesty-damage"
+        ],
+        "rationale": "Radiant Majesty provides one generic Damage support signal without scoring its lower-capacity expansion twice."
+      }
+    },
+    {
+      "dragonId": "sunfyre",
+      "abilityId": "sunfyre-extinguish",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "general-support-only",
+        "rationale": "Enemy Fire prevention has no explicit current teammate payoff."
+      }
+    },
+    {
+      "dragonId": "sunfyre",
+      "abilityId": "sunfyre-the-kings-ire",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "sunfyre-golden-wrath-tactical"
+        ],
+        "rationale": "The King's Ire reinforces Sunfyre's existing Tactical output; its enemy Intelligence reduction has no pair-specific teammate payoff."
+      }
+    },
+    {
+      "dragonId": "sunfyre",
+      "abilityId": "sunfyre-unbroken-splendor",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Fire and generic Damage Received reductions plus conditional Cleanse apply only to Sunfyre."
+      }
+    },
+    {
+      "dragonId": "sunfyre",
+      "abilityId": "sunfyre-adaptive-glory",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "sunfyre-adaptive-glory-damage"
+        ],
+        "rationale": "Only the explicit allied Damage support branch is represented; Recovery, enemy debuff, and self-stat branches remain descriptive."
+      }
+    },
+    {
+      "dragonId": "tairax",
+      "abilityId": "tairax-burning-ward",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tairax-burning-ward-fire",
+          "tairax-burning-ward-burn",
+          "tairax-burning-ward-stagger"
+        ],
+        "rationale": "Burning Ward provides Fire, Burn, and one Stagger output; Stagger satisfies Control through the existing alias."
+      }
+    },
+    {
+      "dragonId": "tairax",
+      "abilityId": "tairax-hunters-wrath",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tairax-hunters-wrath-right-stats",
+          "tairax-hunters-wrath-vanguard"
+        ],
+        "rationale": "The Vanguard trait supports Right Flank Strength and Initiative while its Fire Damage increase remains self-only."
+      }
+    },
+    {
+      "dragonId": "tairax",
+      "abilityId": "tairax-whisper-of-ash",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "no-cross-dragon-synergy",
+        "rationale": "Enemy stat reduction and self buffs remain descriptive with no cross-dragon synergy."
+      }
+    },
+    {
+      "dragonId": "tairax",
+      "abilityId": "tairax-sunder",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tairax-sunder-damage",
+          "tairax-sunder-control-payoff"
+        ],
+        "rationale": "Sunder provides generic Damage amplification and one Control payoff without inventing Vulnerable."
+      }
+    },
+    {
+      "dragonId": "tairax",
+      "abilityId": "tairax-gleamstrike",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tairax-gleamstrike-fire"
+        ],
+        "rationale": "Gleamstrike adds Fire output; its Stagger chance increase reinforces Burning Ward instead of creating a duplicate Stagger signal."
+      }
+    },
+    {
+      "dragonId": "tairax",
+      "abilityId": "tairax-gift-of-fire",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "tairax-gift-of-fire-resistance",
+          "tairax-gift-of-fire-burn-payoff"
+        ],
+        "rationale": "Gift of Fire is represented by its Resistance output and one Burn payoff without treating Resistance as Fire support."
+      }
+    },
+    {
+      "dragonId": "tairax",
+      "abilityId": "tairax-moonlit-hunt",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "self-only",
+        "rationale": "Evade and Fire Damage Dealt increases apply only to Tairax."
+      }
+    },
     {
       "dragonId": "syrax",
       "abilityId": "syrax-blazing-fury",

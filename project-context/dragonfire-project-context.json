@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 2,
-  "generatedAt": "2026-07-22T17:13:24.405Z",
+  "generatedAt": "2026-07-22T19:03:47.762Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/optimizer-default-and-result-retention",
-    "commit": "f315126edc2a95159e207adcc12987d4e6cf7a0c",
-    "databaseVersion": "0.18.0",
+    "branch": "feature/add-sunfyre-tairax",
+    "commit": "6da10598d697e2a5c168b0f346e80cd1e123f72b",
+    "databaseVersion": "0.19.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -29,15 +29,564 @@
     ]
   },
   "rosterSummary": {
-    "totalDragons": 31,
-    "detailedDragons": 31,
+    "totalDragons": 33,
+    "detailedDragons": 33,
     "metadataOnlyDragons": 0,
-    "curatedSimpleProfiles": 31,
-    "profileAuditReviews": 217,
-    "evidenceSources": 251,
-    "manualReviews": 44
+    "curatedSimpleProfiles": 33,
+    "profileAuditReviews": 231,
+    "evidenceSources": 272,
+    "manualReviews": 46
   },
   "dragons": [
+    {
+      "id": "sunfyre",
+      "slug": "sunfyre",
+      "name": "Sunfyre",
+      "rarity": "Legendary",
+      "breed": "Sentinel",
+      "rosterSourceStatus": "in-game-verified-pending-official-site",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-22",
+      "profileCompleteness": "detailed-abilities",
+      "officialProfileUrl": null,
+      "abilities": [
+        {
+          "id": "sunfyre-golden-wrath",
+          "kind": "command",
+          "name": "Golden Wrath",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Sunfyre Golden Wrath screenshots",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "sunfyre-golden-wrath-1-2026-07-22",
+            "sunfyre-golden-wrath-2-2026-07-22",
+            "sunfyre-golden-wrath-3-2026-07-22"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE",
+            "FIRE_DAMAGE",
+            "BURN",
+            "SAME_LANE_TARGET",
+            "ADJACENT_TARGET",
+            "TROOP_CAPACITY_CONDITION",
+            "SPECIFIC_ROUNDS",
+            "ENHANCED_BY_INSTINCT",
+            "INTELLIGENCE_SCALING"
+          ],
+          "rawDescription": "Rounds 1, 4, 7, and 10: deal Tactical Damage to 1 Enemy in the same lane (Damage Rate: +110%). Tactical Damage is increased by the attacker's Instinct and mitigated by the target's Intelligence.\n\nIf Sunfyre is below 75% Troop Capacity, deal this damage to a second Enemy within adjacency.\n\nIf Sunfyre is below 50% Troop Capacity, also deal Fire Damage to the same target or targets (Damage Rate: +55%), with a 50% chance to afflict each target with Burn for 2 rounds. Fire Damage is increased by the attacker's Intelligence and mitigated by the target's Initiative. Burn deals Fire Damage each round for 2 rounds (Damage Rate: +20%)."
+        },
+        {
+          "id": "sunfyre-sentinels-wit",
+          "kind": "trait",
+          "name": "Sentinel's Wit",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Sunfyre Sentinel's Wit screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "sunfyre-sentinels-wit-2026-07-22"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE_UP",
+            "BUFF_INSTINCTS",
+            "BUFF_INITIATIVE",
+            "BUFF_SELF",
+            "BUFF_ALLIES",
+            "VANGUARD_REQUIRED",
+            "LEFT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Level 16+ and deployed in the Vanguard, increase Sunfyre Tactical Damage Dealt by +16%. Increase Instinct and Initiative by +20 of the Ally deployed in the Left Flank."
+        },
+        {
+          "id": "sunfyre-radiant-majesty",
+          "kind": "habit",
+          "name": "Radiant Majesty",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Sunfyre Radiant Majesty screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "sunfyre-radiant-majesty-2026-07-22"
+          ],
+          "tags": [
+            "DAMAGE_DEALT_UP",
+            "MOST_TROOPS_TARGET",
+            "OTHER_ALLIES_TARGET",
+            "TROOP_CAPACITY_CONDITION",
+            "BUFF_ALLIES",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of Each Round: increase the Damage Dealt of the other Ally with the most troops by +5% until the end of the round. If Sunfyre is below 75% Troop Capacity, apply this effect to both other Allies instead. If Sunfyre is below 50% Troop Capacity, also apply this effect to Sunfyre.\n\nHabit Level progression (1–5): +5%, +6%, +7%, +8.5%, +10%.\nHabit Power (Levels 1–5): 420, 920, 1500, 2200, 3100."
+        },
+        {
+          "id": "sunfyre-extinguish",
+          "kind": "habit",
+          "name": "Extinguish",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Sunfyre Extinguish screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "sunfyre-extinguish-2026-07-22"
+          ],
+          "tags": [
+            "FIRE_DAMAGE_DEALT_DOWN",
+            "ENEMY_DEBUFF",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of Combat: reduce Fire Damage Dealt by -13% of 1 Enemy that deals Fire Damage until the end of combat.\n\nThe summary displays -13%; the progression table displays Habit Levels 1–5 as -13.5%, -16.2%, -18.9%, -22.95%, -27%.\nHabit Power (Levels 1–5): 420, 920, 1500, 2200, 3100."
+        },
+        {
+          "id": "sunfyre-the-kings-ire",
+          "kind": "habit",
+          "name": "The King's Ire",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Sunfyre The King's Ire screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "sunfyre-the-kings-ire-2026-07-22"
+          ],
+          "tags": [
+            "TACTICAL_DAMAGE",
+            "DEBUFF_INTELLIGENCE",
+            "ENHANCED_BY_INSTINCT",
+            "ANY_LANE_TARGET",
+            "ENEMY_DEBUFF"
+          ],
+          "rawDescription": "Each Round: the first time any Ally receives Fire Damage, deal Tactical Damage to 1 Enemy in any lane that deals Fire Damage (Damage Rate: +50%). Additionally, reduce the target's Intelligence by -15%, enhanced by Sunfyre's Instinct, for 2 rounds. This effect can trigger only once per round.\n\nTactical Damage Rate progression (Habit Levels 1–5): 50%, 60%, 70%, 85%, 100%. Intelligence progression: -15%, -18%, -21%, -25.5%, -30%.\nHabit Power (Levels 1–5): 420, 920, 1500, 2200, 3100."
+        },
+        {
+          "id": "sunfyre-unbroken-splendor",
+          "kind": "habit",
+          "name": "Unbroken Splendor",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Sunfyre Unbroken Splendor screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "sunfyre-unbroken-splendor-2026-07-22"
+          ],
+          "tags": [
+            "FIRE_DAMAGE_RECEIVED_DOWN",
+            "DAMAGE_RECEIVED_DOWN",
+            "CLEANSE_NEGATIVE",
+            "VULNERABLE",
+            "LOW_HEALTH",
+            "BUFF_SELF"
+          ],
+          "rawDescription": "Start of Combat: reduce Sunfyre's Fire Damage Received by -7% until the end of combat. Start of Each Round while below 50% Troop Capacity: reduce Sunfyre's Damage Received by -7% until the end of the round; additionally, there is a 25% chance to Cleanse 1 Negative effect that increases Damage Received, prioritizing Vulnerable.\n\nThe summary displays -7% for both reductions. Fire Damage Received progression (Habit Levels 1–5): -7.5%, -9%, -10.5%, -12.75%, -15%. Damage Received progression: -7.5%, -9%, -10.5%, -12.75%, -15%. Cleanse Chance progression: 25%, 30%, 35%, 42.5%, 50%.\nHabit Power (Levels 1–5): 420, 920, 1500, 2200, 3100."
+        },
+        {
+          "id": "sunfyre-adaptive-glory",
+          "kind": "habit",
+          "name": "Adaptive Glory",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Sunfyre Adaptive Glory screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "sunfyre-adaptive-glory-2026-07-22"
+          ],
+          "tags": [
+            "RECOVERY",
+            "DAMAGE_DEALT_UP",
+            "DAMAGE_DEALT_DOWN",
+            "MOST_TROOPS_TARGET",
+            "ENHANCED_BY_INSTINCT",
+            "BUFF_SELF",
+            "BUFF_ALLIES",
+            "ENEMY_DEBUFF",
+            "INSTINCT_UP",
+            "BUFF_INITIATIVE",
+            "EXCLUDES_BASIC_ATTACKS"
+          ],
+          "rawDescription": "Each Round, the first time Sunfyre receives Damage, activate one effect based on the damage type received. Fire Damage: apply Recovery to Sunfyre (Recovery Rate: +30%, enhanced by Instinct). Tactical Damage: increase Damage Dealt of the Ally with the most troops by +12% for 1 round. Physical Damage excluding Basic Attacks: reduce Damage Dealt of the Enemy with the most troops by -12% for 1 round. Basic Attack: increase Sunfyre Instinct by +12% and Initiative by +6% for 1 round.\n\nVisible Recovery Rate progression (Habit Levels 1–5): 30%, 39%, 48%, 60%, 75%. Allied Damage Dealt progression: 12%, 15.6%, 19.2%, 24%, 30%. Enemy Damage Dealt progression: -12%, -15.6%, -19.2%, -24%, -30%. The screenshot does not display upgraded Instinct or Initiative values beyond the base +12% and +6%.\nHabit Power (Levels 1–5): 420, 920, 1500, 2200, 3100."
+        }
+      ],
+      "affinities": {
+        "Cavalry": "positive",
+        "Shieldbearers": "unknown",
+        "Archers": "unknown",
+        "Spearmen": "positive",
+        "Siege": "unknown"
+      },
+      "verification": {
+        "identity": {
+          "status": "screenshot-verified",
+          "source": "Sunfyre main screen screenshot",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Sunfyre Golden Wrath screenshots",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Sunfyre Sentinel's Wit screenshot",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Sunfyre Habit screenshots",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "screenshot-verified",
+          "source": "Sunfyre main screen screenshot",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        }
+      },
+      "evidenceIds": [
+        "sunfyre-adaptive-glory-2026-07-22",
+        "sunfyre-extinguish-2026-07-22",
+        "sunfyre-golden-wrath-1-2026-07-22",
+        "sunfyre-golden-wrath-2-2026-07-22",
+        "sunfyre-golden-wrath-3-2026-07-22",
+        "sunfyre-radiant-majesty-2026-07-22",
+        "sunfyre-sentinels-wit-2026-07-22",
+        "sunfyre-the-kings-ire-2026-07-22",
+        "sunfyre-unbroken-splendor-2026-07-22"
+      ],
+      "simpleProfileId": "sunfyre",
+      "simpleProfileStatus": "curated"
+    },
+    {
+      "id": "tairax",
+      "slug": "tairax",
+      "name": "Tairax",
+      "rarity": "Epic",
+      "breed": "Hunter",
+      "rosterSourceStatus": "in-game-verified-pending-official-site",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-07-22",
+      "profileCompleteness": "detailed-abilities",
+      "officialProfileUrl": null,
+      "abilities": [
+        {
+          "id": "tairax-burning-ward",
+          "kind": "command",
+          "name": "Burning Ward",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tairax Burning Ward screenshots",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tairax-burning-ward-1-2026-07-22",
+            "tairax-burning-ward-2-2026-07-22",
+            "tairax-burning-ward-3-2026-07-22",
+            "tairax-burning-ward-4-2026-07-22"
+          ],
+          "tags": [
+            "FIRE_DAMAGE",
+            "BURN",
+            "STAGGER",
+            "CONTROL",
+            "ANY_LANE_TARGET",
+            "SPECIFIC_ROUNDS",
+            "INTELLIGENCE_SCALING",
+            "COMMAND_AUGMENTATION",
+            "AREA_DAMAGE"
+          ],
+          "rawDescription": "Odd-numbered Rounds: 25% chance to afflict Stagger on 1 Enemy in any lane for 2 rounds. Rounds 2, 5, and 8: deal Fire Damage to 1 Enemy in any lane, prioritizing targets not afflicted with Burn (Damage Rate: +115%); additionally, there is a 50% chance to afflict the target with Burn for 2 rounds.\n\nAt 6+ Stars, increase Burning Ward's odd-round Stagger chance to 38%. Each Round: deal Fire Damage to all Enemies afflicted with a Control effect (Damage Rate: +20%). Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nFire Damage is increased by the attacker's Intelligence and mitigated by the target's Initiative. Burn deals Fire Damage each round for 2 rounds (Damage Rate: +20%). Stagger prevents the target from using Attack Modifier Commands or launching Basic Attacks on its turn."
+        },
+        {
+          "id": "tairax-hunters-wrath",
+          "kind": "trait",
+          "name": "Hunter's Wrath",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tairax Hunter's Wrath screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tairax-hunters-wrath-2026-07-22"
+          ],
+          "tags": [
+            "FIRE_DAMAGE_UP",
+            "BUFF_STRENGTH",
+            "BUFF_INITIATIVE",
+            "BUFF_SELF",
+            "BUFF_ALLIES",
+            "VANGUARD_REQUIRED",
+            "RIGHT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Level 16+ and deployed in the Vanguard, increase Tairax Fire Damage Dealt by +16%. Increase Strength and Initiative by +20 of the Ally deployed in the Right Flank."
+        },
+        {
+          "id": "tairax-whisper-of-ash",
+          "kind": "habit",
+          "name": "Whisper of Ash",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tairax Whisper of Ash screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tairax-whisper-of-ash-2026-07-22"
+          ],
+          "tags": [
+            "DEBUFF_STRENGTH",
+            "DEBUFF_INITIATIVE",
+            "BUFF_INTELLIGENCE",
+            "BUFF_INITIATIVE",
+            "BUFF_SELF",
+            "ENEMY_DEBUFF",
+            "SAME_LANE_TARGET",
+            "SPECIFIC_ROUNDS",
+            "INTELLIGENCE_SCALING"
+          ],
+          "rawDescription": "Start of Round 1: reduce Strength and Initiative of 1 Enemy in the same lane by -16%, enhanced by Tairax Intelligence, for 5 rounds. Start of Round 6: increase Tairax Intelligence and Initiative by +16% for 5 rounds.\n\nHabit Level progression for both groups (1–5): 16%, 19.2%, 22.4%, 27.2%, 32%; enemy values are negative and self values are positive.\nHabit Power (Levels 1–5): 340, 740, 1200, 1800, 2500."
+        },
+        {
+          "id": "tairax-sunder",
+          "kind": "habit",
+          "name": "Sunder",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tairax Sunder screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tairax-sunder-2026-07-22"
+          ],
+          "tags": [
+            "DAMAGE_RECEIVED_UP",
+            "CONTROL",
+            "ENEMY_DEBUFF",
+            "AREA_DAMAGE"
+          ],
+          "rawDescription": "Start of Each Round: increase Damage Received by +7.5% of all Enemies afflicted with a Control effect until the end of the round. Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nHabit Level progression (1–5): +7.5%, +9%, +10.5%, +12.75%, +15%.\nHabit Power (Levels 1–5): 340, 740, 1200, 1800, 2500."
+        },
+        {
+          "id": "tairax-gleamstrike",
+          "kind": "habit",
+          "name": "Gleamstrike",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tairax Gleamstrike screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tairax-gleamstrike-2026-07-22"
+          ],
+          "tags": [
+            "COMMAND_AUGMENTATION",
+            "STAGGER",
+            "CONTROL",
+            "FIRE_DAMAGE",
+            "AREA_DAMAGE",
+            "ANY_LANE_TARGET",
+            "SPECIFIC_ROUNDS",
+            "INTELLIGENCE_SCALING"
+          ],
+          "rawDescription": "Burning Ward gains: Odd-numbered Rounds, increase the chance to afflict Stagger to 38%. Each Round, deal Fire Damage to all Enemies afflicted with a Control effect (Damage Rate: +20%). Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nThe summary displays a 38% Stagger chance. Stagger Chance progression (Habit Levels 1–5): 37.5%, 40%, 42.5%, 46.25%, 50%. Fire Damage Rate progression: 20%, 24%, 28%, 34%, 40%.\nHabit Power (Levels 1–5): 340, 740, 1200, 1800, 2500."
+        },
+        {
+          "id": "tairax-gift-of-fire",
+          "kind": "habit",
+          "name": "Gift of Fire",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tairax Gift of Fire screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tairax-gift-of-fire-2026-07-22"
+          ],
+          "tags": [
+            "BURN",
+            "RESISTANCE",
+            "DAMAGE_RECEIVED_DOWN",
+            "BUFF_ALLIES",
+            "ANY_LANE_TARGET"
+          ],
+          "rawDescription": "Start of Each Round: for each Enemy afflicted with Burn, 18% chance to apply Resistance (-15%) to 1 Ally in any lane for 2 rounds, prioritizing targets not already affected by Resistance. Resistance reduces the target's Damage Received.\n\nThe summary displays an 18% chance. Resistance Chance progression (Habit Levels 1–5): 17.5%, 21%, 24.5%, 29.75%, 35%.\nHabit Power (Levels 1–5): 340, 740, 1200, 1800, 2500."
+        },
+        {
+          "id": "tairax-moonlit-hunt",
+          "kind": "habit",
+          "name": "Moonlit Hunt",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Tairax Moonlit Hunt screenshot",
+            "capturedAt": "2026-07-22",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "tairax-moonlit-hunt-2026-07-22"
+          ],
+          "tags": [
+            "EVADE",
+            "FIRE_DAMAGE_UP",
+            "BUFF_SELF",
+            "SPECIFIC_ROUNDS"
+          ],
+          "rawDescription": "Start of Round 1: grant Tairax Evade for 5 rounds. Evade causes each instance of damage against the target to have a chance to be ignored. Start of Round 6: increase Tairax Fire Damage Dealt by +12% for 5 rounds.\n\nEvade Rate progression (Habit Levels 1–5): 5%, 6.5%, 8%, 10%, 12.5%. Fire Damage Dealt progression: 12%, 15.6%, 19.2%, 24%, 30%.\nHabit Power (Levels 1–5): 340, 790, 1400, 2100, 3100."
+        }
+      ],
+      "affinities": {
+        "Cavalry": "positive",
+        "Shieldbearers": "positive",
+        "Archers": "unknown",
+        "Spearmen": "unknown",
+        "Siege": "positive"
+      },
+      "verification": {
+        "identity": {
+          "status": "screenshot-verified",
+          "source": "Tairax main screen screenshot",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Tairax Burning Ward screenshots",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Tairax Hunter's Wrath screenshot",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Tairax Habit screenshots",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "screenshot-verified",
+          "source": "Tairax main screen screenshot",
+          "capturedAt": "2026-07-22",
+          "gameVersion": null,
+          "reviewedManually": true
+        }
+      },
+      "evidenceIds": [
+        "tairax-burning-ward-1-2026-07-22",
+        "tairax-burning-ward-2-2026-07-22",
+        "tairax-burning-ward-3-2026-07-22",
+        "tairax-burning-ward-4-2026-07-22",
+        "tairax-gift-of-fire-2026-07-22",
+        "tairax-gleamstrike-2026-07-22",
+        "tairax-hunters-wrath-2026-07-22",
+        "tairax-moonlit-hunt-2026-07-22",
+        "tairax-sunder-2026-07-22",
+        "tairax-whisper-of-ash-2026-07-22"
+      ],
+      "simpleProfileId": "tairax",
+      "simpleProfileStatus": "curated"
+    },
     {
       "id": "syrax",
       "slug": "syrax",
@@ -8221,6 +8770,255 @@
     ],
     "profiles": [
       {
+        "dragonId": "sunfyre",
+        "dragonName": "Sunfyre",
+        "outputs": [
+          {
+            "id": "sunfyre-golden-wrath-tactical",
+            "tag": "damage:tactical",
+            "scalesWith": [
+              "stat:instinct"
+            ],
+            "abilityId": "sunfyre-golden-wrath",
+            "abilityName": "Golden Wrath",
+            "description": "deals Tactical Damage using Instinct and adds a second adjacent target below 75% Troop Capacity",
+            "confidence": "verified"
+          },
+          {
+            "id": "sunfyre-golden-wrath-fire",
+            "tag": "damage:fire",
+            "scalesWith": [
+              "stat:intelligence"
+            ],
+            "abilityId": "sunfyre-golden-wrath",
+            "abilityName": "Golden Wrath",
+            "description": "deals Intelligence-based Fire Damage only below 50% Troop Capacity",
+            "confidence": "verified"
+          },
+          {
+            "id": "sunfyre-golden-wrath-burn",
+            "tag": "status:burn",
+            "abilityId": "sunfyre-golden-wrath",
+            "abilityName": "Golden Wrath",
+            "description": "applies Burn only through the below-50% Troop Capacity path",
+            "publicLabel": "Applies Burn below 50% Troop Capacity",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "sunfyre-sentinels-wit-left-stats",
+            "tag": "stat:instinct",
+            "tags": [
+              "stat:instinct",
+              "stat:initiative"
+            ],
+            "abilityId": "sunfyre-sentinels-wit",
+            "abilityName": "Sentinel's Wit",
+            "description": "improves Instinct and Initiative of the Left Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "left-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "sunfyre-radiant-majesty-damage",
+            "tag": "damage:any",
+            "abilityId": "sunfyre-radiant-majesty",
+            "abilityName": "Radiant Majesty",
+            "description": "supports the other ally with the most troops and expands to both teammates below 75% Sunfyre Troop Capacity",
+            "publicLabel": "Damage Dealt support to the other ally with the most troops; expands to both teammates below 75% Sunfyre Troop Capacity.",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "recipientSelector": {
+              "kind": "unresolved-group",
+              "recipientCount": 1,
+              "includeSelf": false
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "sunfyre-adaptive-glory-damage",
+            "tag": "damage:any",
+            "abilityId": "sunfyre-adaptive-glory",
+            "abilityName": "Adaptive Glory",
+            "description": "reactively supports the ally with the most troops after Sunfyre receives Tactical Damage",
+            "publicLabel": "Reactive Damage Dealt support to the ally with the most troops after Tactical Damage.",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "recipientSelector": {
+              "kind": "unresolved-group",
+              "recipientCount": 1,
+              "includeSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [],
+        "positionClaims": [
+          {
+            "id": "sunfyre-sentinels-wit-vanguard",
+            "abilityId": "sunfyre-sentinels-wit",
+            "abilityName": "Sentinel's Wit",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Sentinel's Wit requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
+        "dragonId": "tairax",
+        "dragonName": "Tairax",
+        "outputs": [
+          {
+            "id": "tairax-burning-ward-fire",
+            "tag": "damage:fire",
+            "scalesWith": [
+              "stat:intelligence"
+            ],
+            "abilityId": "tairax-burning-ward",
+            "abilityName": "Burning Ward",
+            "description": "deals Fire Damage using Intelligence",
+            "confidence": "verified"
+          },
+          {
+            "id": "tairax-burning-ward-burn",
+            "tag": "status:burn",
+            "abilityId": "tairax-burning-ward",
+            "abilityName": "Burning Ward",
+            "description": "applies Burn",
+            "publicLabel": "Applies Burn",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "tairax-burning-ward-stagger",
+            "tag": "status:stagger",
+            "abilityId": "tairax-burning-ward",
+            "abilityName": "Burning Ward",
+            "description": "applies Stagger, which satisfies Control",
+            "publicLabel": "Applies Stagger (Control)",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "tairax-gleamstrike-fire",
+            "tag": "damage:fire",
+            "scalesWith": [
+              "stat:intelligence"
+            ],
+            "abilityId": "tairax-gleamstrike",
+            "abilityName": "Gleamstrike",
+            "description": "deals additional Fire Damage each round to Control-afflicted enemies",
+            "unlock": {
+              "minimumStarRank": 6
+            },
+            "confidence": "verified"
+          },
+          {
+            "id": "tairax-gift-of-fire-resistance",
+            "tag": "status:resistance",
+            "abilityId": "tairax-gift-of-fire",
+            "abilityName": "Gift of Fire",
+            "description": "grants Resistance to one Ally for each Burn-conditioned activation",
+            "publicLabel": "Grants Resistance to one Ally for each Burn-conditioned activation.",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "recipientSelector": {
+              "kind": "unresolved-group",
+              "recipientCount": 1,
+              "includeSelf": true
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "tairax-hunters-wrath-right-stats",
+            "tag": "stat:strength",
+            "tags": [
+              "stat:strength",
+              "stat:initiative"
+            ],
+            "abilityId": "tairax-hunters-wrath",
+            "abilityName": "Hunter's Wrath",
+            "description": "improves Strength and Initiative of the Right Flank ally",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "right-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "tairax-sunder-damage",
+            "tag": "damage:any",
+            "abilityId": "tairax-sunder",
+            "abilityName": "Sunder",
+            "description": "increases Damage Received of Control-afflicted enemies each round",
+            "publicLabel": "Increases Damage Received of Control-afflicted enemies each round.",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "tairax-sunder-control-payoff",
+            "tag": "status:control",
+            "abilityId": "tairax-sunder",
+            "abilityName": "Sunder",
+            "description": "additional Control providers expand Sunder coverage and later Gleamstrike Fire Damage",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "tairax-gift-of-fire-burn-payoff",
+            "tag": "status:burn",
+            "abilityId": "tairax-gift-of-fire",
+            "abilityName": "Gift of Fire",
+            "description": "Burned enemies create Gift of Fire Resistance opportunities",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "tairax-hunters-wrath-vanguard",
+            "abilityId": "tairax-hunters-wrath",
+            "abilityName": "Hunter's Wrath",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumDragonLevel": 16
+            },
+            "description": "Hunter's Wrath requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
         "dragonId": "syrax",
         "dragonName": "Syrax",
         "outputs": [
@@ -11872,16 +12670,180 @@
       }
     ],
     "profileAudit": {
-      "reviewedAbilityCount": 217,
+      "reviewedAbilityCount": 231,
       "dispositionCounts": {
-        "represented": 145,
-        "general-support-only": 12,
-        "self-only": 36,
-        "no-cross-dragon-synergy": 16,
-        "reinforces-existing": 8
+        "represented": 154,
+        "general-support-only": 13,
+        "reinforces-existing": 9,
+        "self-only": 38,
+        "no-cross-dragon-synergy": 17
       },
       "metadataOnlyDragonIds": [],
       "reviews": [
+        {
+          "dragonId": "sunfyre",
+          "abilityId": "sunfyre-golden-wrath",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "sunfyre-golden-wrath-tactical",
+              "sunfyre-golden-wrath-fire",
+              "sunfyre-golden-wrath-burn"
+            ],
+            "rationale": "Golden Wrath is represented by its Tactical output and its Troop-Capacity-conditional Fire and Burn outputs."
+          }
+        },
+        {
+          "dragonId": "sunfyre",
+          "abilityId": "sunfyre-sentinels-wit",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "sunfyre-sentinels-wit-left-stats",
+              "sunfyre-sentinels-wit-vanguard"
+            ],
+            "rationale": "The Vanguard trait supports Left Flank Instinct and Initiative while its Tactical Damage increase remains self-only."
+          }
+        },
+        {
+          "dragonId": "sunfyre",
+          "abilityId": "sunfyre-radiant-majesty",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "sunfyre-radiant-majesty-damage"
+            ],
+            "rationale": "Radiant Majesty provides one generic Damage support signal without scoring its lower-capacity expansion twice."
+          }
+        },
+        {
+          "dragonId": "sunfyre",
+          "abilityId": "sunfyre-extinguish",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "general-support-only",
+            "rationale": "Enemy Fire prevention has no explicit current teammate payoff."
+          }
+        },
+        {
+          "dragonId": "sunfyre",
+          "abilityId": "sunfyre-the-kings-ire",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "reinforces-existing",
+            "signalIds": [
+              "sunfyre-golden-wrath-tactical"
+            ],
+            "rationale": "The King's Ire reinforces Sunfyre's existing Tactical output; its enemy Intelligence reduction has no pair-specific teammate payoff."
+          }
+        },
+        {
+          "dragonId": "sunfyre",
+          "abilityId": "sunfyre-unbroken-splendor",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "Fire and generic Damage Received reductions plus conditional Cleanse apply only to Sunfyre."
+          }
+        },
+        {
+          "dragonId": "sunfyre",
+          "abilityId": "sunfyre-adaptive-glory",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "sunfyre-adaptive-glory-damage"
+            ],
+            "rationale": "Only the explicit allied Damage support branch is represented; Recovery, enemy debuff, and self-stat branches remain descriptive."
+          }
+        },
+        {
+          "dragonId": "tairax",
+          "abilityId": "tairax-burning-ward",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tairax-burning-ward-fire",
+              "tairax-burning-ward-burn",
+              "tairax-burning-ward-stagger"
+            ],
+            "rationale": "Burning Ward provides Fire, Burn, and one Stagger output; Stagger satisfies Control through the existing alias."
+          }
+        },
+        {
+          "dragonId": "tairax",
+          "abilityId": "tairax-hunters-wrath",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tairax-hunters-wrath-right-stats",
+              "tairax-hunters-wrath-vanguard"
+            ],
+            "rationale": "The Vanguard trait supports Right Flank Strength and Initiative while its Fire Damage increase remains self-only."
+          }
+        },
+        {
+          "dragonId": "tairax",
+          "abilityId": "tairax-whisper-of-ash",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "no-cross-dragon-synergy",
+            "rationale": "Enemy stat reduction and self buffs remain descriptive with no cross-dragon synergy."
+          }
+        },
+        {
+          "dragonId": "tairax",
+          "abilityId": "tairax-sunder",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tairax-sunder-damage",
+              "tairax-sunder-control-payoff"
+            ],
+            "rationale": "Sunder provides generic Damage amplification and one Control payoff without inventing Vulnerable."
+          }
+        },
+        {
+          "dragonId": "tairax",
+          "abilityId": "tairax-gleamstrike",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tairax-gleamstrike-fire"
+            ],
+            "rationale": "Gleamstrike adds Fire output; its Stagger chance increase reinforces Burning Ward instead of creating a duplicate Stagger signal."
+          }
+        },
+        {
+          "dragonId": "tairax",
+          "abilityId": "tairax-gift-of-fire",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "tairax-gift-of-fire-resistance",
+              "tairax-gift-of-fire-burn-payoff"
+            ],
+            "rationale": "Gift of Fire is represented by its Resistance output and one Burn payoff without treating Resistance as Fire support."
+          }
+        },
+        {
+          "dragonId": "tairax",
+          "abilityId": "tairax-moonlit-hunt",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "self-only",
+            "rationale": "Evade and Fire Damage Dealt increases apply only to Tairax."
+          }
+        },
         {
           "dragonId": "syrax",
           "abilityId": "syrax-blazing-fury",
@@ -17990,6 +18952,279 @@
       "verificationStatus": "community-verified"
     },
     {
+      "id": "sunfyre-main-screen-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre main screen",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-golden-wrath-1-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre Golden Wrath summary",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-golden-wrath-2-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre Golden Wrath damage details",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-golden-wrath-3-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre Golden Wrath Burn details",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-sentinels-wit-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre Sentinel's Wit",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-radiant-majesty-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre Radiant Majesty",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-extinguish-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre Extinguish",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-the-kings-ire-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre The King's Ire",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-unbroken-splendor-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre Unbroken Splendor",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "sunfyre-adaptive-glory-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Sunfyre Adaptive Glory",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-main-screen-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax main screen",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-burning-ward-1-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Burning Ward summary page 1",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-burning-ward-2-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Burning Ward summary page 2",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-burning-ward-3-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Burning Ward Fire, Burn, and Stagger details",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-burning-ward-4-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Burning Ward Stagger and 6-Star Fire details",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-hunters-wrath-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Hunter's Wrath",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-whisper-of-ash-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Whisper of Ash",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-sunder-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Sunder",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-gleamstrike-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Gleamstrike",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-gift-of-fire-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Gift of Fire",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "tairax-moonlit-hunt-2026-07-22",
+      "type": "in-game-screenshot",
+      "title": "Tairax Moonlit Hunt",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-07-22",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
       "id": "malachite-wardens-rally-combat-log-self-recovery-2026-06-24",
       "type": "manual-combat-log-observation",
       "title": "Warden's Rally Recovery included Malachite",
@@ -18043,6 +19278,64 @@
     }
   ],
   "manualReviews": [
+    {
+      "id": "sunfyre-profile-review-2026-07-22",
+      "dragonId": "sunfyre",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-22",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Identity, Sentinel breed, Cavalry/Spearmen positive affinities, Golden Wrath, the Level 16 Vanguard trait, and all five Habit tables were transcribed from the supplied in-game screenshots.",
+        "Summary/table rounding differences for Extinguish and Unbroken Splendor are preserved rather than normalized.",
+        "Golden Wrath Fire/Burn remain below-50% conditional outputs; no same-lane fallback or trigger-system schema is inferred.",
+        "Adaptive Glory preserves only the visible base Instinct and Initiative values because upgraded values were not shown.",
+        "Displayed account combat stats, troop capacity, speed, XP, and Power were not ingested as canonical stats."
+      ],
+      "evidenceIds": [
+        "sunfyre-main-screen-2026-07-22",
+        "sunfyre-golden-wrath-1-2026-07-22",
+        "sunfyre-golden-wrath-2-2026-07-22",
+        "sunfyre-golden-wrath-3-2026-07-22",
+        "sunfyre-sentinels-wit-2026-07-22",
+        "sunfyre-radiant-majesty-2026-07-22",
+        "sunfyre-extinguish-2026-07-22",
+        "sunfyre-the-kings-ire-2026-07-22",
+        "sunfyre-unbroken-splendor-2026-07-22",
+        "sunfyre-adaptive-glory-2026-07-22"
+      ]
+    },
+    {
+      "id": "tairax-profile-review-2026-07-22",
+      "dragonId": "tairax",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-07-22",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Identity, Hunter breed, Cavalry/Shieldbearers/Siege positive affinities, Burning Ward, the Level 16 Vanguard trait, and all five Habit tables were transcribed from the supplied in-game screenshots.",
+        "Burning Ward has one Stagger application path; Gleamstrike augments its chance and adds Control-conditioned Fire Damage.",
+        "Sunder remains generic Damage Received amplification rather than Vulnerable, and Resistance remains defensive support rather than Fire support.",
+        "Rounded 38%/18% summaries are preserved alongside exact 37.5%/17.5% Level 1 table values.",
+        "Gift of Fire preserves literal for-each-enemy wording without inferring independent-roll behavior.",
+        "Displayed account combat stats, troop capacity, speed, XP, and Power were not ingested as canonical stats."
+      ],
+      "evidenceIds": [
+        "tairax-main-screen-2026-07-22",
+        "tairax-burning-ward-1-2026-07-22",
+        "tairax-burning-ward-2-2026-07-22",
+        "tairax-burning-ward-3-2026-07-22",
+        "tairax-burning-ward-4-2026-07-22",
+        "tairax-hunters-wrath-2026-07-22",
+        "tairax-whisper-of-ash-2026-07-22",
+        "tairax-sunder-2026-07-22",
+        "tairax-gleamstrike-2026-07-22",
+        "tairax-gift-of-fire-2026-07-22",
+        "tairax-moonlit-hunt-2026-07-22"
+      ]
+    },
     {
       "id": "vesper-profile-review-2026-07-16",
       "dragonId": "vesper",
