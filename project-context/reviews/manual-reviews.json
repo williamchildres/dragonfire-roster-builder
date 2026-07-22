@@ -1,5 +1,63 @@
 [
   {
+    "id": "sunfyre-profile-review-2026-07-22",
+    "dragonId": "sunfyre",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-07-22",
+    "reviewedAgainstGameBuild": "unknown",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Identity, Sentinel breed, Cavalry/Spearmen positive affinities, Golden Wrath, the Level 16 Vanguard trait, and all five Habit tables were transcribed from the supplied in-game screenshots.",
+      "Summary/table rounding differences for Extinguish and Unbroken Splendor are preserved rather than normalized.",
+      "Golden Wrath Fire/Burn remain below-50% conditional outputs; no same-lane fallback or trigger-system schema is inferred.",
+      "Adaptive Glory preserves only the visible base Instinct and Initiative values because upgraded values were not shown.",
+      "Displayed account combat stats, troop capacity, speed, XP, and Power were not ingested as canonical stats."
+    ],
+    "evidenceIds": [
+      "sunfyre-main-screen-2026-07-22",
+      "sunfyre-golden-wrath-1-2026-07-22",
+      "sunfyre-golden-wrath-2-2026-07-22",
+      "sunfyre-golden-wrath-3-2026-07-22",
+      "sunfyre-sentinels-wit-2026-07-22",
+      "sunfyre-radiant-majesty-2026-07-22",
+      "sunfyre-extinguish-2026-07-22",
+      "sunfyre-the-kings-ire-2026-07-22",
+      "sunfyre-unbroken-splendor-2026-07-22",
+      "sunfyre-adaptive-glory-2026-07-22"
+    ]
+  },
+  {
+    "id": "tairax-profile-review-2026-07-22",
+    "dragonId": "tairax",
+    "scope": "habits",
+    "status": "confirmed",
+    "reviewedAt": "2026-07-22",
+    "reviewedAgainstGameBuild": "unknown",
+    "reviewer": "repository-owner",
+    "notes": [
+      "Identity, Hunter breed, Cavalry/Shieldbearers/Siege positive affinities, Burning Ward, the Level 16 Vanguard trait, and all five Habit tables were transcribed from the supplied in-game screenshots.",
+      "Burning Ward has one Stagger application path; Gleamstrike augments its chance and adds Control-conditioned Fire Damage.",
+      "Sunder remains generic Damage Received amplification rather than Vulnerable, and Resistance remains defensive support rather than Fire support.",
+      "Rounded 38%/18% summaries are preserved alongside exact 37.5%/17.5% Level 1 table values.",
+      "Gift of Fire preserves literal for-each-enemy wording without inferring independent-roll behavior.",
+      "Displayed account combat stats, troop capacity, speed, XP, and Power were not ingested as canonical stats."
+    ],
+    "evidenceIds": [
+      "tairax-main-screen-2026-07-22",
+      "tairax-burning-ward-1-2026-07-22",
+      "tairax-burning-ward-2-2026-07-22",
+      "tairax-burning-ward-3-2026-07-22",
+      "tairax-burning-ward-4-2026-07-22",
+      "tairax-hunters-wrath-2026-07-22",
+      "tairax-whisper-of-ash-2026-07-22",
+      "tairax-sunder-2026-07-22",
+      "tairax-gleamstrike-2026-07-22",
+      "tairax-gift-of-fire-2026-07-22",
+      "tairax-moonlit-hunt-2026-07-22"
+    ]
+  },
+  {
     "id": "vesper-profile-review-2026-07-16",
     "dragonId": "vesper",
     "scope": "habits",

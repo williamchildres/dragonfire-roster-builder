@@ -1,6 +1,8 @@
 import type { Dragon } from '../models/dragon';
+import { sunfyreTairaxDragons } from './sunfyreTairax';
 
 export const dragons = [
+  ...sunfyreTairaxDragons,
   {
     "id": "syrax",
     "slug": "syrax",

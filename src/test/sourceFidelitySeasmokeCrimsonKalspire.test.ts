@@ -258,8 +258,8 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
     expect(profile('crimson').benefitsFrom.map((signal) => signal.id)).toEqual([
       'crimson-bloodscale-fury-taunt-payoff',
     ]);
-    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(224);
-    expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(217);
+    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(239);
+    expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(231);
   });
 
   it('keeps presentation summaries readable and canonical descriptions free of excluded screenshot text', () => {
@@ -275,8 +275,10 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
   });
 
   it('reports the exhaustive rating delta caused only by the two corrected Strength relationships', () => {
+    const archivedDragons = dragons.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.id));
+    const archivedProfiles = simpleSynergyProfiles.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.dragonId));
     const withoutScaling = (signalIds: string[]): DragonSynergyProfile[] =>
-      simpleSynergyProfiles.map((candidate) => ({
+      archivedProfiles.map((candidate) => ({
         ...candidate,
         outputs: candidate.outputs.map((signal) =>
           signalIds.includes(signal.id) ? { ...signal, scalesWith: undefined } : signal,
@@ -318,10 +320,10 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
       kalspireOnly: ReturnType<typeof rate>;
       after: ReturnType<typeof rate>;
     }> = [];
-    for (const left of dragons) {
-      for (const vanguard of dragons) {
+    for (const left of archivedDragons) {
+      for (const vanguard of archivedDragons) {
         if (vanguard.id === left.id) continue;
-        for (const right of dragons) {
+        for (const right of archivedDragons) {
           if (right.id === left.id || right.id === vanguard.id) continue;
           const formation: SimpleFormation = {
             'left-flank': left.id,
@@ -333,7 +335,7 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
             before: rate(formation, priorProfiles),
             seasmokeOnly: rate(formation, seasmokeOnlyProfiles),
             kalspireOnly: rate(formation, kalspireOnlyProfiles),
-            after: rate(formation, simpleSynergyProfiles),
+            after: rate(formation, archivedProfiles),
           });
         }
       }

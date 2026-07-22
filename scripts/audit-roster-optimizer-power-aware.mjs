@@ -25,12 +25,12 @@ try {
   const report = await module.runPowerAwareRosterOptimizerAudit(fixture);
   const elapsedMs = performance.now() - startedAt;
   report.commandRuntimeMs = elapsedMs;
-  const previousPath = path.join(root, 'docs', 'audits', `roster-optimizer-power-aware-0.16.0-${fixture}.json`);
+  const previousPath = path.join(root, 'docs', 'audits', `roster-optimizer-power-aware-0.18.0-${fixture}.json`);
   const previous = JSON.parse(await readFile(previousPath, 'utf8'));
   report.beforeV2 = summarizeResult(previous.result);
   report.comparison = compareResults(previous.result, report.result, report.estimatedPowerComparison);
   if (writeReport) {
-    const base = path.join(root, 'docs', 'audits', `roster-optimizer-power-aware-0.18.0-${fixture}`);
+    const base = path.join(root, 'docs', 'audits', `roster-optimizer-power-aware-0.19.0-${fixture}`);
     await mkdir(path.dirname(base), { recursive: true });
     await writeFile(`${base}.json`, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
     await writeFile(`${base}.md`, renderMarkdown(report), 'utf8');
@@ -45,7 +45,7 @@ try {
     phaseTimings: result.diagnostics.phaseTimings,
     primaryDragons: result.primary.usedDragonIds,
     backupDragons: result.backup.usedDragonIds,
-    unusedDragon: result.unusedDragonIds[0],
+    unusedDragons: result.unusedDragonIds,
     primaryTotalEstimatedPower: result.primary.totalEstimatedPower,
     backupTotalEstimatedPower: result.backup.totalEstimatedPower,
     primaryFormationRatings: result.primary.formations.map((formation) => formation.rating),
@@ -80,7 +80,7 @@ function renderMarkdown(report) {
     `- Command runtime: ${report.commandRuntimeMs.toFixed(1)} ms`,
     `- Solver passes: ${result.diagnostics.solverPasses}`,
     `- Phase timings: \`${JSON.stringify(result.diagnostics.phaseTimings)}\``,
-    `- Unused dragon: ${result.unusedDragonIds[0]}`,
+    `- Unused dragons: ${result.unusedDragonIds.join(', ')}`,
     `- Solution hash: \`${result.optimizerSolutionHash}\``,
     `- Result hash: \`${result.optimizerResultHash}\``,
     `- Optimal solver status: ${result.exactOptimality ? 'PASS' : 'FAIL'}`,
@@ -89,7 +89,7 @@ function renderMarkdown(report) {
     '',
     `- Primary added / removed: ${comparison.primaryAdded.join(', ') || 'none'} / ${comparison.primaryRemoved.join(', ') || 'none'}`,
     `- Backup added / removed: ${comparison.backupAdded.join(', ') || 'none'} / ${comparison.backupRemoved.join(', ') || 'none'}`,
-    `- Unused dragon: ${comparison.unusedBefore} -> ${comparison.unusedAfter}`,
+    `- Unused dragons: ${comparison.unusedBefore.join(', ')} -> ${comparison.unusedAfter.join(', ')}`,
     `- Primary Power: ${comparison.primaryTotalPowerBefore} -> ${comparison.primaryTotalPowerAfter} (${signed(comparison.primaryTotalPowerDelta)})`,
     `- Backup Power: ${comparison.backupTotalPowerBefore} -> ${comparison.backupTotalPowerAfter} (${signed(comparison.backupTotalPowerDelta)})`,
     `- Solution hash: \`${comparison.solutionHashBefore}\` -> \`${comparison.solutionHashAfter}\``,
@@ -110,7 +110,7 @@ function summarizeResult(result) {
   return {
     primaryDragons: result.primary.usedDragonIds,
     backupDragons: result.backup.usedDragonIds,
-    unusedDragon: result.unusedDragonIds[0],
+    unusedDragons: result.unusedDragonIds,
     primaryTotalEstimatedPower: result.primary.totalEstimatedPower,
     backupTotalEstimatedPower: result.backup.totalEstimatedPower,
     primaryFormationRatings: result.primary.formations.map((formation) => formation.rating),
@@ -135,8 +135,8 @@ function compareResults(before, after, estimates) {
     primaryRemoved: [...primaryBefore].filter((dragonId) => !primaryAfter.has(dragonId)).sort(),
     backupAdded: [...backupAfter].filter((dragonId) => !backupBefore.has(dragonId)).sort(),
     backupRemoved: [...backupBefore].filter((dragonId) => !backupAfter.has(dragonId)).sort(),
-    unusedBefore: before.unusedDragonIds[0],
-    unusedAfter: after.unusedDragonIds[0],
+    unusedBefore: before.unusedDragonIds,
+    unusedAfter: after.unusedDragonIds,
     primaryTotalPowerBefore: before.primary.totalEstimatedPower,
     primaryTotalPowerAfter: after.primary.totalEstimatedPower,
     primaryTotalPowerDelta: after.primary.totalEstimatedPower - before.primary.totalEstimatedPower,

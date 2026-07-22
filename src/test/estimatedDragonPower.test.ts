@@ -197,11 +197,11 @@ describe('Estimated Dragon Power v2', () => {
     }));
   });
 
-  it('keeps observation-only provenance out of the canonical dragon database', () => {
+  it('keeps Sunfyre and Tairax observations unchanged after adding both to the canonical database', () => {
     const canonicalNames = new Set(dragons.map((dragon) => dragon.name));
-    expect(canonicalNames.has('Sunfyre')).toBe(false);
-    expect(canonicalNames.has('Tairax')).toBe(false);
-    expect(dragons).toHaveLength(31);
+    expect(canonicalNames.has('Sunfyre')).toBe(true);
+    expect(canonicalNames.has('Tairax')).toBe(true);
+    expect(dragons).toHaveLength(33);
   });
 
   it('keeps observation and model identities deterministic and order independent', () => {

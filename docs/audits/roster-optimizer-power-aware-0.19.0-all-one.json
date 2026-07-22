@@ -1,0 +1,1420 @@
+{
+  "auditVersion": "0.19.0",
+  "fixture": "all-one",
+  "formationRatingV2Hash": "5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf",
+  "mipGaps": {
+    "mip_rel_gap": 0,
+    "mip_abs_gap": 0
+  },
+  "estimatedPowerComparison": [
+    {
+      "dragonId": "sunfyre",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "tairax",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "syrax",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "vhagar",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "caraxes",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "seasmoke",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "solstryker",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "crimson",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "kalspire",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "malachite",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "venator",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "daemoros",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "feskar",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "rhysarion",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "shadowsong",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "tashix",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "vaeldra",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "velar",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "zivern",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "antares",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "shimmer",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "jagadrix",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "bevlorin",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "shadowrend",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "thunderstrike",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "vesper",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "arulix",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "nyrena",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "dawnseeker",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "arrax",
+      "rarity": "Rare",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 120,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 280,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 160,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "tessarion",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "sheepstealer",
+      "rarity": "Legendary",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 570,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 570,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 0,
+      "confidenceChanged": false
+    },
+    {
+      "dragonId": "vermax",
+      "rarity": "Epic",
+      "starRank": 1,
+      "dragonLevel": 1,
+      "beforeV2": {
+        "power": 440,
+        "confidence": "low"
+      },
+      "afterV2": {
+        "power": 450,
+        "confidence": "low",
+        "modelVersion": "estimated-power-v2",
+        "modelHash": "fnv1a64:efa6081babb4e520",
+        "observationHash": "fnv1a64:26bfe615f0d9bdd5",
+        "basis": "extrapolation"
+      },
+      "powerDelta": 10,
+      "confidenceChanged": false
+    }
+  ],
+  "primaryPowerCutoffBeforeV2": {
+    "cutoffPower": 440,
+    "aboveCutoffDragonIds": [
+      "caraxes",
+      "crimson",
+      "kalspire",
+      "malachite",
+      "seasmoke",
+      "sheepstealer",
+      "sunfyre",
+      "syrax",
+      "venator",
+      "vhagar"
+    ],
+    "cutoffTiedDragonIds": [
+      "daemoros",
+      "feskar",
+      "rhysarion",
+      "shadowsong",
+      "tairax",
+      "tashix",
+      "tessarion",
+      "vaeldra",
+      "velar",
+      "vermax",
+      "zivern"
+    ],
+    "belowCutoffDragonIds": [
+      "antares",
+      "arrax",
+      "arulix",
+      "bevlorin",
+      "dawnseeker",
+      "jagadrix",
+      "nyrena",
+      "shadowrend",
+      "shimmer",
+      "solstryker",
+      "thunderstrike",
+      "vesper"
+    ],
+    "requiredCutoffTieCount": 5
+  },
+  "primaryPowerCutoffAfterV2": {
+    "cutoffPower": 450,
+    "aboveCutoffDragonIds": [
+      "caraxes",
+      "crimson",
+      "kalspire",
+      "malachite",
+      "seasmoke",
+      "sheepstealer",
+      "sunfyre",
+      "syrax",
+      "venator",
+      "vhagar"
+    ],
+    "cutoffTiedDragonIds": [
+      "daemoros",
+      "feskar",
+      "rhysarion",
+      "shadowsong",
+      "tairax",
+      "tashix",
+      "tessarion",
+      "vaeldra",
+      "velar",
+      "vermax",
+      "zivern"
+    ],
+    "belowCutoffDragonIds": [
+      "antares",
+      "arrax",
+      "arulix",
+      "bevlorin",
+      "dawnseeker",
+      "jagadrix",
+      "nyrena",
+      "shadowrend",
+      "shimmer",
+      "solstryker",
+      "thunderstrike",
+      "vesper"
+    ],
+    "requiredCutoffTieCount": 5
+  },
+  "result": {
+    "name": "all-one",
+    "strategy": "power-aware-primary-five-backup-five",
+    "eligibleDragonCount": 33,
+    "candidateCount": 5456,
+    "usedDragonIds": [
+      "antares",
+      "arrax",
+      "arulix",
+      "bevlorin",
+      "caraxes",
+      "crimson",
+      "daemoros",
+      "dawnseeker",
+      "feskar",
+      "jagadrix",
+      "kalspire",
+      "malachite",
+      "nyrena",
+      "rhysarion",
+      "seasmoke",
+      "shadowrend",
+      "shadowsong",
+      "sheepstealer",
+      "solstryker",
+      "sunfyre",
+      "syrax",
+      "tairax",
+      "tashix",
+      "tessarion",
+      "vaeldra",
+      "velar",
+      "venator",
+      "vermax",
+      "vhagar",
+      "zivern"
+    ],
+    "unusedDragonIds": [
+      "shimmer",
+      "thunderstrike",
+      "vesper"
+    ],
+    "objective": {
+      "strategy": "power-aware-primary-five-backup-five",
+      "primary": {
+        "rarityPriority": {
+          "legendaryCount": 10,
+          "epicCount": 5,
+          "rareCount": 0
+        },
+        "totalRating": 202,
+        "minimumRating": 37,
+        "ascendingRatingVector": [
+          37,
+          37,
+          40,
+          41,
+          47
+        ],
+        "totalRelationshipValue": 77,
+        "totalActiveRelationships": 11,
+        "stableSolutionKey": "caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||kalspire+malachite+vermax@left-flank:kalspire|vanguard:malachite|right-flank:vermax||sheepstealer+velar+venator@left-flank:sheepstealer|vanguard:velar|right-flank:venator||sunfyre+vhagar+zivern@left-flank:sunfyre|vanguard:vhagar|right-flank:zivern",
+        "totalEstimatedPower": 7950
+      },
+      "backup": {
+        "rarityPriority": {
+          "legendaryCount": 0,
+          "epicCount": 6,
+          "rareCount": 9
+        },
+        "totalRating": 124,
+        "minimumRating": 20,
+        "ascendingRatingVector": [
+          20,
+          20,
+          20,
+          32,
+          32
+        ],
+        "totalRelationshipValue": 20,
+        "totalActiveRelationships": 2,
+        "stableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+daemoros@left-flank:arulix|vanguard:bevlorin|right-flank:daemoros||dawnseeker+feskar+jagadrix@left-flank:dawnseeker|vanguard:feskar|right-flank:jagadrix||nyrena+shadowrend+shadowsong@left-flank:nyrena|vanguard:shadowrend|right-flank:shadowsong||tashix+tessarion+vaeldra@left-flank:tashix|vanguard:tessarion|right-flank:vaeldra",
+        "totalEstimatedPower": 5220
+      },
+      "combinedTotalRating": 326,
+      "combinedEstimatedPower": 13170,
+      "combinedRelationshipValue": 97,
+      "combinedActiveRelationships": 13,
+      "stableSolutionKey": "primary:caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||kalspire+malachite+vermax@left-flank:kalspire|vanguard:malachite|right-flank:vermax||sheepstealer+velar+venator@left-flank:sheepstealer|vanguard:velar|right-flank:venator||sunfyre+vhagar+zivern@left-flank:sunfyre|vanguard:vhagar|right-flank:zivern||backup:antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+daemoros@left-flank:arulix|vanguard:bevlorin|right-flank:daemoros||dawnseeker+feskar+jagadrix@left-flank:dawnseeker|vanguard:feskar|right-flank:jagadrix||nyrena+shadowrend+shadowsong@left-flank:nyrena|vanguard:shadowrend|right-flank:shadowsong||tashix+tessarion+vaeldra@left-flank:tashix|vanguard:tessarion|right-flank:vaeldra"
+    },
+    "diagnostics": {
+      "optimal": true,
+      "eligibleDragonCount": 33,
+      "candidateCount": 5456,
+      "selectedFormationCount": 10,
+      "nodesVisited": 182,
+      "branchesPruned": 0,
+      "cacheEntries": 0,
+      "solverPasses": 233,
+      "candidateGenerationMs": 2300.8621999999996,
+      "solverMs": 73931.9598,
+      "totalMs": 76237.6737,
+      "phaseTimings": {
+        "modelConstructionMs": 1054.6797000000006,
+        "primaryPowerMs": 0,
+        "primaryRarityMs": 0,
+        "primaryQualityMs": 8536.508200000002,
+        "backupPowerMs": 243.53840000000127,
+        "backupRarityMs": 0,
+        "backupQualityMs": 2150.3350999999966,
+        "stableKeyMs": 61633.10150000002
+      }
+    },
+    "exactOptimality": true,
+    "optimizerSolutionHash": "fnv1a64:96840bafecd63d34",
+    "optimizerResultHash": "fnv1a64:f2036affa8db5679",
+    "eligibleRarityCounts": {
+      "Legendary": 10,
+      "Epic": 11,
+      "Rare": 12
+    },
+    "primary": {
+      "kind": "primary",
+      "label": "Primary",
+      "formations": [
+        {
+          "rank": 1,
+          "wave": "primary",
+          "waveRank": 1,
+          "dragonIds": [
+            "caraxes",
+            "seasmoke",
+            "syrax"
+          ],
+          "arrangement": {
+            "left-flank": "caraxes",
+            "vanguard": "seasmoke",
+            "right-flank": "syrax"
+          },
+          "rating": 47,
+          "tier": "Developing",
+          "placementScore": 20,
+          "estimatedPower": 1710,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        },
+        {
+          "rank": 2,
+          "wave": "primary",
+          "waveRank": 2,
+          "dragonIds": [
+            "sunfyre",
+            "vhagar",
+            "zivern"
+          ],
+          "arrangement": {
+            "left-flank": "sunfyre",
+            "vanguard": "vhagar",
+            "right-flank": "zivern"
+          },
+          "rating": 41,
+          "tier": "Developing",
+          "placementScore": 20,
+          "estimatedPower": 1590,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        },
+        {
+          "rank": 3,
+          "wave": "primary",
+          "waveRank": 3,
+          "dragonIds": [
+            "crimson",
+            "rhysarion",
+            "tairax"
+          ],
+          "arrangement": {
+            "left-flank": "crimson",
+            "vanguard": "rhysarion",
+            "right-flank": "tairax"
+          },
+          "rating": 40,
+          "tier": "Developing",
+          "placementScore": 20,
+          "estimatedPower": 1470,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        },
+        {
+          "rank": 4,
+          "wave": "primary",
+          "waveRank": 4,
+          "dragonIds": [
+            "kalspire",
+            "malachite",
+            "vermax"
+          ],
+          "arrangement": {
+            "left-flank": "kalspire",
+            "vanguard": "malachite",
+            "right-flank": "vermax"
+          },
+          "rating": 37,
+          "tier": "Developing",
+          "placementScore": 20,
+          "estimatedPower": 1590,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        },
+        {
+          "rank": 5,
+          "wave": "primary",
+          "waveRank": 5,
+          "dragonIds": [
+            "sheepstealer",
+            "velar",
+            "venator"
+          ],
+          "arrangement": {
+            "left-flank": "sheepstealer",
+            "vanguard": "velar",
+            "right-flank": "venator"
+          },
+          "rating": 37,
+          "tier": "Developing",
+          "placementScore": 20,
+          "estimatedPower": 1590,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        }
+      ],
+      "usedDragonIds": [
+        "caraxes",
+        "crimson",
+        "kalspire",
+        "malachite",
+        "rhysarion",
+        "seasmoke",
+        "sheepstealer",
+        "sunfyre",
+        "syrax",
+        "tairax",
+        "velar",
+        "venator",
+        "vermax",
+        "vhagar",
+        "zivern"
+      ],
+      "rarityCounts": {
+        "Legendary": 10,
+        "Epic": 5,
+        "Rare": 0
+      },
+      "totalRating": 202,
+      "averageRating": 40.4,
+      "minimumRating": 37,
+      "totalRelationshipValue": 77,
+      "totalActiveRelationships": 11,
+      "tierDistribution": {
+        "Excellent": 0,
+        "Strong": 0,
+        "Solid": 0,
+        "Developing": 5,
+        "Weak": 0,
+        "Incomplete": 0
+      },
+      "totalEstimatedPower": 7950,
+      "averageEstimatedPowerPerDragon": 530,
+      "minimumFormationEstimatedPower": 1470,
+      "maximumFormationEstimatedPower": 1710,
+      "powerConfidenceCounts": {
+        "observed": 0,
+        "modeled": 0,
+        "low": 15
+      },
+      "objective": {
+        "rarityPriority": {
+          "legendaryCount": 10,
+          "epicCount": 5,
+          "rareCount": 0
+        },
+        "totalRating": 202,
+        "minimumRating": 37,
+        "ascendingRatingVector": [
+          37,
+          37,
+          40,
+          41,
+          47
+        ],
+        "totalRelationshipValue": 77,
+        "totalActiveRelationships": 11,
+        "stableSolutionKey": "caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||kalspire+malachite+vermax@left-flank:kalspire|vanguard:malachite|right-flank:vermax||sheepstealer+velar+venator@left-flank:sheepstealer|vanguard:velar|right-flank:venator||sunfyre+vhagar+zivern@left-flank:sunfyre|vanguard:vhagar|right-flank:zivern",
+        "totalEstimatedPower": 7950
+      }
+    },
+    "backup": {
+      "kind": "backup",
+      "label": "Backup",
+      "formations": [
+        {
+          "rank": 1,
+          "wave": "backup",
+          "waveRank": 1,
+          "dragonIds": [
+            "antares",
+            "arrax",
+            "solstryker"
+          ],
+          "arrangement": {
+            "left-flank": "antares",
+            "vanguard": "arrax",
+            "right-flank": "solstryker"
+          },
+          "rating": 32,
+          "tier": "Developing",
+          "placementScore": 20,
+          "estimatedPower": 840,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        },
+        {
+          "rank": 2,
+          "wave": "backup",
+          "waveRank": 2,
+          "dragonIds": [
+            "nyrena",
+            "shadowrend",
+            "shadowsong"
+          ],
+          "arrangement": {
+            "left-flank": "nyrena",
+            "vanguard": "shadowrend",
+            "right-flank": "shadowsong"
+          },
+          "rating": 32,
+          "tier": "Developing",
+          "placementScore": 20,
+          "estimatedPower": 1010,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        },
+        {
+          "rank": 3,
+          "wave": "backup",
+          "waveRank": 3,
+          "dragonIds": [
+            "arulix",
+            "bevlorin",
+            "daemoros"
+          ],
+          "arrangement": {
+            "left-flank": "arulix",
+            "vanguard": "bevlorin",
+            "right-flank": "daemoros"
+          },
+          "rating": 20,
+          "tier": "Weak",
+          "placementScore": 20,
+          "estimatedPower": 1010,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        },
+        {
+          "rank": 4,
+          "wave": "backup",
+          "waveRank": 4,
+          "dragonIds": [
+            "dawnseeker",
+            "feskar",
+            "jagadrix"
+          ],
+          "arrangement": {
+            "left-flank": "dawnseeker",
+            "vanguard": "feskar",
+            "right-flank": "jagadrix"
+          },
+          "rating": 20,
+          "tier": "Weak",
+          "placementScore": 20,
+          "estimatedPower": 1010,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        },
+        {
+          "rank": 5,
+          "wave": "backup",
+          "waveRank": 5,
+          "dragonIds": [
+            "tashix",
+            "tessarion",
+            "vaeldra"
+          ],
+          "arrangement": {
+            "left-flank": "tashix",
+            "vanguard": "tessarion",
+            "right-flank": "vaeldra"
+          },
+          "rating": 20,
+          "tier": "Weak",
+          "placementScore": 20,
+          "estimatedPower": 1350,
+          "powerConfidenceCounts": {
+            "observed": 0,
+            "modeled": 0,
+            "low": 3
+          }
+        }
+      ],
+      "usedDragonIds": [
+        "antares",
+        "arrax",
+        "arulix",
+        "bevlorin",
+        "daemoros",
+        "dawnseeker",
+        "feskar",
+        "jagadrix",
+        "nyrena",
+        "shadowrend",
+        "shadowsong",
+        "solstryker",
+        "tashix",
+        "tessarion",
+        "vaeldra"
+      ],
+      "rarityCounts": {
+        "Legendary": 0,
+        "Epic": 6,
+        "Rare": 9
+      },
+      "totalRating": 124,
+      "averageRating": 24.8,
+      "minimumRating": 20,
+      "totalRelationshipValue": 20,
+      "totalActiveRelationships": 2,
+      "tierDistribution": {
+        "Excellent": 0,
+        "Strong": 0,
+        "Solid": 0,
+        "Developing": 2,
+        "Weak": 3,
+        "Incomplete": 0
+      },
+      "totalEstimatedPower": 5220,
+      "averageEstimatedPowerPerDragon": 348,
+      "minimumFormationEstimatedPower": 840,
+      "maximumFormationEstimatedPower": 1350,
+      "powerConfidenceCounts": {
+        "observed": 0,
+        "modeled": 0,
+        "low": 15
+      },
+      "objective": {
+        "rarityPriority": {
+          "legendaryCount": 0,
+          "epicCount": 6,
+          "rareCount": 9
+        },
+        "totalRating": 124,
+        "minimumRating": 20,
+        "ascendingRatingVector": [
+          20,
+          20,
+          20,
+          32,
+          32
+        ],
+        "totalRelationshipValue": 20,
+        "totalActiveRelationships": 2,
+        "stableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+daemoros@left-flank:arulix|vanguard:bevlorin|right-flank:daemoros||dawnseeker+feskar+jagadrix@left-flank:dawnseeker|vanguard:feskar|right-flank:jagadrix||nyrena+shadowrend+shadowsong@left-flank:nyrena|vanguard:shadowrend|right-flank:shadowsong||tashix+tessarion+vaeldra@left-flank:tashix|vanguard:tessarion|right-flank:vaeldra",
+        "totalEstimatedPower": 5220
+      }
+    },
+    "combined": {
+      "totalRating": 326,
+      "averageRating": 32.6,
+      "minimumRating": 20,
+      "rarityCounts": {
+        "Legendary": 10,
+        "Epic": 11,
+        "Rare": 9
+      },
+      "tierDistribution": {
+        "Excellent": 0,
+        "Strong": 0,
+        "Solid": 0,
+        "Developing": 7,
+        "Weak": 3,
+        "Incomplete": 0
+      },
+      "totalRelationshipValue": 97,
+      "totalActiveRelationships": 13,
+      "totalEstimatedPower": 13170,
+      "powerConfidenceCounts": {
+        "observed": 0,
+        "modeled": 0,
+        "low": 30
+      }
+    }
+  },
+  "commandRuntimeMs": 84001.6501,
+  "beforeV2": {
+    "primaryDragons": [
+      "caraxes",
+      "crimson",
+      "daemoros",
+      "kalspire",
+      "malachite",
+      "rhysarion",
+      "seasmoke",
+      "sheepstealer",
+      "syrax",
+      "tessarion",
+      "velar",
+      "venator",
+      "vermax",
+      "vhagar",
+      "zivern"
+    ],
+    "backupDragons": [
+      "antares",
+      "arrax",
+      "arulix",
+      "bevlorin",
+      "dawnseeker",
+      "feskar",
+      "jagadrix",
+      "nyrena",
+      "shadowrend",
+      "shadowsong",
+      "shimmer",
+      "solstryker",
+      "tashix",
+      "thunderstrike",
+      "vaeldra"
+    ],
+    "unusedDragons": [
+      "vesper"
+    ],
+    "primaryTotalEstimatedPower": 7830,
+    "backupTotalEstimatedPower": 4880,
+    "primaryFormationRatings": [
+      49,
+      47,
+      37,
+      32,
+      32
+    ],
+    "backupFormationRatings": [
+      32,
+      32,
+      20,
+      20,
+      20
+    ],
+    "primaryConfidenceCounts": {
+      "observed": 0,
+      "modeled": 0,
+      "low": 15
+    },
+    "backupConfidenceCounts": {
+      "observed": 0,
+      "modeled": 0,
+      "low": 15
+    },
+    "optimizerSolutionHash": "fnv1a64:ac1d8d6d903c412b",
+    "optimizerResultHash": "fnv1a64:b691b4886b8a41ba",
+    "runtimeMs": 60192.9492,
+    "solverPasses": 198
+  },
+  "comparison": {
+    "changedEstimateCount": 23,
+    "primaryAdded": [
+      "sunfyre",
+      "tairax"
+    ],
+    "primaryRemoved": [
+      "daemoros",
+      "tessarion"
+    ],
+    "backupAdded": [
+      "daemoros",
+      "tessarion"
+    ],
+    "backupRemoved": [
+      "shimmer",
+      "thunderstrike"
+    ],
+    "unusedBefore": [
+      "vesper"
+    ],
+    "unusedAfter": [
+      "shimmer",
+      "thunderstrike",
+      "vesper"
+    ],
+    "primaryTotalPowerBefore": 7830,
+    "primaryTotalPowerAfter": 7950,
+    "primaryTotalPowerDelta": 120,
+    "backupTotalPowerBefore": 4880,
+    "backupTotalPowerAfter": 5220,
+    "backupTotalPowerDelta": 340,
+    "primaryFormationRatingsBefore": [
+      49,
+      47,
+      37,
+      32,
+      32
+    ],
+    "primaryFormationRatingsAfter": [
+      47,
+      41,
+      40,
+      37,
+      37
+    ],
+    "backupFormationRatingsBefore": [
+      32,
+      32,
+      20,
+      20,
+      20
+    ],
+    "backupFormationRatingsAfter": [
+      32,
+      32,
+      20,
+      20,
+      20
+    ],
+    "solutionHashBefore": "fnv1a64:ac1d8d6d903c412b",
+    "solutionHashAfter": "fnv1a64:96840bafecd63d34",
+    "resultHashBefore": "fnv1a64:b691b4886b8a41ba",
+    "resultHashAfter": "fnv1a64:f2036affa8db5679"
+  }
+}

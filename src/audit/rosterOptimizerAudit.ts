@@ -16,8 +16,14 @@ import type {
   RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
 
-export const EXPECTED_FORMATION_RATING_V2_HASH =
+export const ARCHIVED_FORMATION_RATING_V2_HASH =
   '12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9';
+export const EXPECTED_FORMATION_RATING_V2_HASH =
+  '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf';
+
+const archivedDragonIds = new Set(
+  dragons.filter((dragon) => !['sunfyre', 'tairax'].includes(dragon.id)).map((dragon) => dragon.id),
+);
 
 const expectedBestTen = {
   'all-31-maxed': { total: 764, average: 76.4, minimum: 62, solutionHash: 'fnv1a64:49b0498718c54d6a' },
@@ -29,26 +35,33 @@ const expectedPrimaryBackup = {
   'mixed-progression': 'fnv1a64:03625b38711584a7',
 } as const;
 
+const expectedArchivedPowerAware = {
+  mixed: 'fnv1a64:d4825beceda28c08',
+  maxed: 'fnv1a64:dac72be1907be1fa',
+  'all-one': 'fnv1a64:ac1d8d6d903c412b',
+} as const;
+
 export async function runRosterOptimizerAudit() {
-  const fixtures = [
-    { name: 'all-31-maxed' as const, roster: maxedRoster() },
-    { name: 'mixed-progression' as const, roster: mixedProgressionRoster() },
+  const archivedFixtures = [
+    { name: 'all-31-maxed' as const, roster: archivedMaxedRoster() },
+    { name: 'mixed-progression' as const, roster: archivedMixedProgressionRoster() },
   ];
   const strategies: RosterOptimizerStrategy[] = [
     'best-ten-overall',
     'primary-five-backup-five',
   ];
-  const reports = [];
-  for (const fixture of fixtures) {
+  const archivedReports = [];
+  for (const fixture of archivedFixtures) {
     for (const strategy of strategies) {
+      console.log(`[archived] ${fixture.name}/${strategy}`);
       const first = await optimizeCurrentRoster(fixture.roster, strategy);
       const reversedRoster = Object.fromEntries(Object.entries(fixture.roster).reverse());
       const reversed = await optimizeCurrentRoster(reversedRoster, strategy);
       if (!first.optimal || !reversed.optimal) {
         throw new Error(`${fixture.name}/${strategy} did not produce a complete result.`);
       }
-      validateResult(first);
-      validateResult(reversed);
+      validateResult(first, 1);
+      validateResult(reversed, 1);
       if (
         first.optimizerSolutionHash !== reversed.optimizerSolutionHash ||
         first.optimizerResultHash !== reversed.optimizerResultHash
@@ -63,12 +76,34 @@ export async function runRosterOptimizerAudit() {
           first as PrimaryBackupOptimizationResult,
         );
       }
-      reports.push(fixtureReport(fixture.name, first));
+      archivedReports.push(fixtureReport(fixture.name, first));
     }
   }
+
+  const currentFixtures = [
+    { name: 'all-33-maxed' as const, roster: maxedRoster() },
+  ];
+  const reports = [];
+  for (const fixture of currentFixtures) {
+    for (const strategy of strategies) {
+      console.log(`[current] ${fixture.name}/${strategy}`);
+      const result = await optimizeCurrentRoster(fixture.roster, strategy);
+      if (!result.optimal) throw new Error(`${fixture.name}/${strategy} did not produce a complete result.`);
+      validateResult(result, 3);
+      reports.push(fixtureReport(fixture.name, result));
+    }
+  }
+  const archivedPowerAwareFixtures = [];
+  for (const fixture of ['mixed', 'maxed', 'all-one'] as const) {
+    console.log(`[archived-power-aware] ${fixture}`);
+    archivedPowerAwareFixtures.push(await runArchivedPowerAwareRosterOptimizerAudit(fixture));
+  }
   return {
-    auditVersion: '0.18.0',
+    auditVersion: '0.19.0',
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
+    archivedFormationRatingV2Hash: ARCHIVED_FORMATION_RATING_V2_HASH,
+    archivedFixtures: archivedReports,
+    archivedPowerAwareFixtures,
     fixtures: reports,
     checks: {
       exactOptimality: true,
@@ -78,14 +113,13 @@ export async function runRosterOptimizerAudit() {
         acceptedStatus: 0,
         zeroGapRefinementConfirmedExistingHashes: true,
       },
-      repeatedAndReversedInputStable: true,
+      archivedRepeatedAndReversedInputStable: true,
       usedAndUnusedPartitionEligibleRoster: true,
       tenFormationsThirtyUniqueDragons: true,
       fivePrimaryFiveBackup: true,
       noCrossWaveDragonReuse: true,
-      currentRosterPrimaryRarity: { Legendary: 9, Epic: 6, Rare: 0 },
-      currentRosterBackupRarity: { Legendary: 0, Epic: 4, Rare: 11 },
-      bestTenSemanticHashesPreserved: true,
+      archivedBestTenAndRaritySemanticHashesPreserved: true,
+      archivedPowerAwareSemanticHashesPreserved: true,
       greedyCounterexample: { greedyTotal: 101, exactTotal: 120, passed: true },
       tiedPrimaryBetterBackupRegression: true,
       smallFixtureBruteForceMatches: true,
@@ -127,7 +161,7 @@ export async function runPowerAwareRosterOptimizerAudit(fixture: PowerAwareAudit
     };
   });
   return {
-    auditVersion: '0.18.0',
+    auditVersion: '0.19.0',
     fixture,
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     mipGaps: ROSTER_OPTIMIZER_MIP_GAP_OPTIONS,
@@ -144,6 +178,23 @@ export async function runPowerAwareRosterOptimizerAudit(fixture: PowerAwareAudit
   };
 }
 
+export async function runArchivedPowerAwareRosterOptimizerAudit(fixture: PowerAwareAuditFixture) {
+  const roster = fixture === 'mixed'
+    ? archivedMixedProgressionRoster()
+    : fixture === 'maxed'
+      ? archivedMaxedRoster()
+      : archivedAllOneRoster();
+  const result = await optimizeCurrentRoster(roster, 'power-aware-primary-five-backup-five');
+  if (!result.optimal || result.strategy !== 'power-aware-primary-five-backup-five') {
+    throw new Error(`${fixture} archived Power-Aware audit did not produce a complete result.`);
+  }
+  validatePowerAwareResult(result, 1);
+  if (result.optimizerSolutionHash !== expectedArchivedPowerAware[fixture]) {
+    throw new Error(`${fixture} archived Power-Aware semantic solution hash changed.`);
+  }
+  return fixtureReport(`archived-${fixture}`, result);
+}
+
 export function maxedRoster(): Record<string, OwnedDragon> {
   return Object.fromEntries(
     dragons.map((dragon) => [dragon.id, {
@@ -158,16 +209,11 @@ export function maxedRoster(): Record<string, OwnedDragon> {
 }
 
 export function mixedProgressionRoster(): Record<string, OwnedDragon> {
-  return Object.fromEntries(
-    dragons.map((dragon, index) => [dragon.id, {
-      dragonId: dragon.id,
-      owned: true,
-      starRank: 1 + ((index * 3) % 10),
-      reignLevel: (index * 5) % 17,
-      notes: '',
-      habitLevels: {},
-    }]),
-  );
+  return {
+    ...archivedMixedProgressionRoster(),
+    sunfyre: ownedProgression('sunfyre', 2, 25),
+    tairax: ownedProgression('tairax', 2, 25),
+  };
 }
 
 export function allOneRoster(): Record<string, OwnedDragon> {
@@ -183,7 +229,32 @@ export function allOneRoster(): Record<string, OwnedDragon> {
   );
 }
 
-function validatePowerAwareResult(result: PowerAwarePrimaryBackupOptimizationResult): void {
+export function archivedMaxedRoster(): Record<string, OwnedDragon> {
+  return Object.fromEntries(
+    dragons.filter((dragon) => archivedDragonIds.has(dragon.id)).map((dragon) => [dragon.id, ownedProgression(dragon.id, 10, 16)]),
+  );
+}
+
+export function archivedMixedProgressionRoster(): Record<string, OwnedDragon> {
+  return Object.fromEntries(
+    dragons.filter((dragon) => archivedDragonIds.has(dragon.id)).map((dragon, index) => [
+      dragon.id,
+      ownedProgression(dragon.id, 1 + ((index * 3) % 10), (index * 5) % 17),
+    ]),
+  );
+}
+
+export function archivedAllOneRoster(): Record<string, OwnedDragon> {
+  return Object.fromEntries(
+    dragons.filter((dragon) => archivedDragonIds.has(dragon.id)).map((dragon) => [dragon.id, ownedProgression(dragon.id, 1, 1)]),
+  );
+}
+
+function ownedProgression(dragonId: string, starRank: number, reignLevel: number): OwnedDragon {
+  return { dragonId, owned: true, starRank, reignLevel, notes: '', habitLevels: {} };
+}
+
+function validatePowerAwareResult(result: PowerAwarePrimaryBackupOptimizationResult, expectedUnusedCount = 3): void {
   if (result.primary.formations.length !== 5 || result.backup.formations.length !== 5) {
     throw new Error('Power-Aware result did not return five formations in each wave.');
   }
@@ -193,7 +264,7 @@ function validatePowerAwareResult(result: PowerAwarePrimaryBackupOptimizationRes
     combined.length !== 30
     || new Set(combined).size !== 30
     || result.backup.usedDragonIds.some((dragonId) => primary.has(dragonId))
-    || result.unusedDragonIds.length !== 1
+    || result.unusedDragonIds.length !== expectedUnusedCount
   ) {
     throw new Error('Power-Aware result did not produce the required 30-dragon partition.');
   }
@@ -202,7 +273,7 @@ function validatePowerAwareResult(result: PowerAwarePrimaryBackupOptimizationRes
   }
 }
 
-function validateResult(result: RosterOptimizationResult): void {
+function validateResult(result: RosterOptimizationResult, expectedUnusedCount: number): void {
   if (result.formations.length !== 10) {
     throw new Error('Optimizer audit result is not a complete allocation.');
   }
@@ -216,7 +287,10 @@ function validateResult(result: RosterOptimizationResult): void {
   if (new Set([...result.usedDragonIds, ...result.unusedDragonIds]).size !== result.diagnostics.eligibleDragonCount) {
     throw new Error('Used and unused dragons do not partition the eligible roster.');
   }
-  if (result.unusedRarityCounts.Rare === 0) {
+  if (result.unusedDragonIds.length !== expectedUnusedCount) {
+    throw new Error(`Optimizer audit expected ${expectedUnusedCount} unused dragons.`);
+  }
+  if (expectedUnusedCount === 1 && result.unusedRarityCounts.Rare === 0) {
     throw new Error('The 31-dragon fixture did not leave a Rare dragon unused.');
   }
 }

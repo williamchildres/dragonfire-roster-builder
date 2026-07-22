@@ -4,7 +4,7 @@ Estimated Power is an unofficial empirical diagnostic. It approximates the Power
 
 ## Evidence and model choice
 
-Version 2 expands the source to 59 provenance observations covering 42 unique rarity/Star Rank/Dragon Level/Power tuples. Duplicate progression tuples are fitted once while retaining all provenance and sample counts. Sunfyre and Tairax remain observation provenance only and are not added to the canonical 31-dragon database.
+Version 2 expands the source to 59 provenance observations covering 42 unique rarity/Star Rank/Dragon Level/Power tuples. Duplicate progression tuples are fitted once while retaining all provenance and sample counts. Sunfyre and Tairax are canonical dragons as of 0.19.0, while their existing Power observations and the frozen v2 model remain unchanged.
 
 The observations form a bipartite support graph for each rarity: Star Rank nodes on one side, Dragon Level nodes on the other, and observed Power values on the edges. Every connected component is exactly compatible with:
 
@@ -66,7 +66,7 @@ My Roster shows each owned dragon's read-only estimate and confidence. Formation
 
 There is no manual Power field, persistence field, Supabase migration, Habit Level Power effect, damage estimate, combat simulation, or win probability. Formation Rating v2 is unchanged.
 
-Power-Aware optimizer requests include the Estimated Power version, observation hash, and model hash. The v2 identity therefore makes prior Power-Aware results stale and recomputes them through the existing objective hierarchy. Solver phases, Primary cutoff logic, Backup phase order, stable keys, zero-gap settings, optimizer contract 3, and legacy strategies are unchanged. In 0.18.0, Power-Aware 5 + Backup 5 becomes the UI default without changing its algorithm or scoring.
+Power-Aware optimizer requests include the Estimated Power version, observation hash, and model hash. The v2 identity therefore makes prior Power-Aware results stale and recomputes them through the existing objective hierarchy. Solver phases, Primary cutoff logic, Backup phase order, stable keys, zero-gap settings, optimizer contract 3, and legacy strategies are unchanged. Power-Aware 5 + Backup 5 remains the UI default in 0.19.0 without changing its algorithm or scoring.
 
 ## Limitations
 

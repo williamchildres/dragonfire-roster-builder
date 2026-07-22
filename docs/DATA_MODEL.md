@@ -57,4 +57,4 @@ Local and import schemas 1 through 4 remain readable. During deterministic migra
 
 Schema-5 exports serialize the same sparse representation and never emit null or zero Habit Levels. Schema-5 imports reject explicitly supplied Habit Level values outside 1 through 5. Legacy schema imports may contain null or zero and normalize immediately to the schema-5 runtime invariant. Unknown future schema versions are rejected.
 
-Estimated Power is derived at runtime from rarity, Star Rank, and Dragon Level. It is not part of canonical dragon records, `OwnedDragon`, local/import JSON, cloud roster rows, or Supabase migrations. Observation provenance is maintained in the standalone Estimated Power dataset and does not add dragons to the canonical database.
+Estimated Power is derived at runtime from rarity, Star Rank, and Dragon Level. It is not part of canonical dragon records, `OwnedDragon`, local/import JSON, cloud roster rows, or Supabase migrations. Observation provenance is maintained in the standalone Estimated Power dataset; Sunfyre and Tairax now also have independent canonical records without changing that model or its persisted contracts.

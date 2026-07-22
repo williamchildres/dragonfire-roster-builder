@@ -1,0 +1,275 @@
+{
+  "id": "tairax",
+  "slug": "tairax",
+  "name": "Tairax",
+  "rarity": "Epic",
+  "breed": "Hunter",
+  "rosterSourceStatus": "in-game-verified-pending-official-site",
+  "dataStatus": "community-verified",
+  "lastVerified": "2026-07-22",
+  "profileCompleteness": "detailed-abilities",
+  "officialProfileUrl": null,
+  "abilities": [
+    {
+      "id": "tairax-burning-ward",
+      "kind": "command",
+      "name": "Burning Ward",
+      "abilityClass": "active",
+      "unlockStarRank": null,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tairax Burning Ward screenshots",
+        "capturedAt": "2026-07-22",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tairax-burning-ward-1-2026-07-22",
+        "tairax-burning-ward-2-2026-07-22",
+        "tairax-burning-ward-3-2026-07-22",
+        "tairax-burning-ward-4-2026-07-22"
+      ],
+      "tags": [
+        "FIRE_DAMAGE",
+        "BURN",
+        "STAGGER",
+        "CONTROL",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "INTELLIGENCE_SCALING",
+        "COMMAND_AUGMENTATION",
+        "AREA_DAMAGE"
+      ],
+      "rawDescription": "Odd-numbered Rounds: 25% chance to afflict Stagger on 1 Enemy in any lane for 2 rounds. Rounds 2, 5, and 8: deal Fire Damage to 1 Enemy in any lane, prioritizing targets not afflicted with Burn (Damage Rate: +115%); additionally, there is a 50% chance to afflict the target with Burn for 2 rounds.\n\nAt 6+ Stars, increase Burning Ward's odd-round Stagger chance to 38%. Each Round: deal Fire Damage to all Enemies afflicted with a Control effect (Damage Rate: +20%). Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nFire Damage is increased by the attacker's Intelligence and mitigated by the target's Initiative. Burn deals Fire Damage each round for 2 rounds (Damage Rate: +20%). Stagger prevents the target from using Attack Modifier Commands or launching Basic Attacks on its turn."
+    },
+    {
+      "id": "tairax-hunters-wrath",
+      "kind": "trait",
+      "name": "Hunter's Wrath",
+      "abilityClass": "passive",
+      "unlockStarRank": 1,
+      "minimumDragonLevel": 16,
+      "positionRequirement": "vanguard",
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tairax Hunter's Wrath screenshot",
+        "capturedAt": "2026-07-22",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tairax-hunters-wrath-2026-07-22"
+      ],
+      "tags": [
+        "FIRE_DAMAGE_UP",
+        "BUFF_STRENGTH",
+        "BUFF_INITIATIVE",
+        "BUFF_SELF",
+        "BUFF_ALLIES",
+        "VANGUARD_REQUIRED",
+        "RIGHT_FLANK_TARGET"
+      ],
+      "rawDescription": "At Level 16+ and deployed in the Vanguard, increase Tairax Fire Damage Dealt by +16%. Increase Strength and Initiative by +20 of the Ally deployed in the Right Flank."
+    },
+    {
+      "id": "tairax-whisper-of-ash",
+      "kind": "habit",
+      "name": "Whisper of Ash",
+      "abilityClass": "passive",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tairax Whisper of Ash screenshot",
+        "capturedAt": "2026-07-22",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tairax-whisper-of-ash-2026-07-22"
+      ],
+      "tags": [
+        "DEBUFF_STRENGTH",
+        "DEBUFF_INITIATIVE",
+        "BUFF_INTELLIGENCE",
+        "BUFF_INITIATIVE",
+        "BUFF_SELF",
+        "ENEMY_DEBUFF",
+        "SAME_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "INTELLIGENCE_SCALING"
+      ],
+      "rawDescription": "Start of Round 1: reduce Strength and Initiative of 1 Enemy in the same lane by -16%, enhanced by Tairax Intelligence, for 5 rounds. Start of Round 6: increase Tairax Intelligence and Initiative by +16% for 5 rounds.\n\nHabit Level progression for both groups (1–5): 16%, 19.2%, 22.4%, 27.2%, 32%; enemy values are negative and self values are positive.\nHabit Power (Levels 1–5): 340, 740, 1200, 1800, 2500."
+    },
+    {
+      "id": "tairax-sunder",
+      "kind": "habit",
+      "name": "Sunder",
+      "abilityClass": "passive",
+      "unlockStarRank": 4,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tairax Sunder screenshot",
+        "capturedAt": "2026-07-22",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tairax-sunder-2026-07-22"
+      ],
+      "tags": [
+        "DAMAGE_RECEIVED_UP",
+        "CONTROL",
+        "ENEMY_DEBUFF",
+        "AREA_DAMAGE"
+      ],
+      "rawDescription": "Start of Each Round: increase Damage Received by +7.5% of all Enemies afflicted with a Control effect until the end of the round. Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nHabit Level progression (1–5): +7.5%, +9%, +10.5%, +12.75%, +15%.\nHabit Power (Levels 1–5): 340, 740, 1200, 1800, 2500."
+    },
+    {
+      "id": "tairax-gleamstrike",
+      "kind": "habit",
+      "name": "Gleamstrike",
+      "abilityClass": "passive",
+      "unlockStarRank": 6,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tairax Gleamstrike screenshot",
+        "capturedAt": "2026-07-22",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tairax-gleamstrike-2026-07-22"
+      ],
+      "tags": [
+        "COMMAND_AUGMENTATION",
+        "STAGGER",
+        "CONTROL",
+        "FIRE_DAMAGE",
+        "AREA_DAMAGE",
+        "ANY_LANE_TARGET",
+        "SPECIFIC_ROUNDS",
+        "INTELLIGENCE_SCALING"
+      ],
+      "rawDescription": "Burning Ward gains: Odd-numbered Rounds, increase the chance to afflict Stagger to 38%. Each Round, deal Fire Damage to all Enemies afflicted with a Control effect (Damage Rate: +20%). Control effects include Stun, Stagger, Overwhelm, and Confusion.\n\nThe summary displays a 38% Stagger chance. Stagger Chance progression (Habit Levels 1–5): 37.5%, 40%, 42.5%, 46.25%, 50%. Fire Damage Rate progression: 20%, 24%, 28%, 34%, 40%.\nHabit Power (Levels 1–5): 340, 740, 1200, 1800, 2500."
+    },
+    {
+      "id": "tairax-gift-of-fire",
+      "kind": "habit",
+      "name": "Gift of Fire",
+      "abilityClass": "passive",
+      "unlockStarRank": 8,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tairax Gift of Fire screenshot",
+        "capturedAt": "2026-07-22",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tairax-gift-of-fire-2026-07-22"
+      ],
+      "tags": [
+        "BURN",
+        "RESISTANCE",
+        "DAMAGE_RECEIVED_DOWN",
+        "BUFF_ALLIES",
+        "ANY_LANE_TARGET"
+      ],
+      "rawDescription": "Start of Each Round: for each Enemy afflicted with Burn, 18% chance to apply Resistance (-15%) to 1 Ally in any lane for 2 rounds, prioritizing targets not already affected by Resistance. Resistance reduces the target's Damage Received.\n\nThe summary displays an 18% chance. Resistance Chance progression (Habit Levels 1–5): 17.5%, 21%, 24.5%, 29.75%, 35%.\nHabit Power (Levels 1–5): 340, 740, 1200, 1800, 2500."
+    },
+    {
+      "id": "tairax-moonlit-hunt",
+      "kind": "habit",
+      "name": "Moonlit Hunt",
+      "abilityClass": "passive",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "positionRequirement": null,
+      "verification": {
+        "status": "screenshot-verified",
+        "source": "Tairax Moonlit Hunt screenshot",
+        "capturedAt": "2026-07-22",
+        "gameVersion": null,
+        "reviewedManually": true
+      },
+      "evidenceIds": [
+        "tairax-moonlit-hunt-2026-07-22"
+      ],
+      "tags": [
+        "EVADE",
+        "FIRE_DAMAGE_UP",
+        "BUFF_SELF",
+        "SPECIFIC_ROUNDS"
+      ],
+      "rawDescription": "Start of Round 1: grant Tairax Evade for 5 rounds. Evade causes each instance of damage against the target to have a chance to be ignored. Start of Round 6: increase Tairax Fire Damage Dealt by +12% for 5 rounds.\n\nEvade Rate progression (Habit Levels 1–5): 5%, 6.5%, 8%, 10%, 12.5%. Fire Damage Dealt progression: 12%, 15.6%, 19.2%, 24%, 30%.\nHabit Power (Levels 1–5): 340, 790, 1400, 2100, 3100."
+    }
+  ],
+  "affinities": {
+    "Cavalry": "positive",
+    "Shieldbearers": "positive",
+    "Archers": "unknown",
+    "Spearmen": "unknown",
+    "Siege": "positive"
+  },
+  "verification": {
+    "identity": {
+      "status": "screenshot-verified",
+      "source": "Tairax main screen screenshot",
+      "capturedAt": "2026-07-22",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "command": {
+      "status": "screenshot-verified",
+      "source": "Tairax Burning Ward screenshots",
+      "capturedAt": "2026-07-22",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "trait": {
+      "status": "screenshot-verified",
+      "source": "Tairax Hunter's Wrath screenshot",
+      "capturedAt": "2026-07-22",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "habits": {
+      "status": "screenshot-verified",
+      "source": "Tairax Habit screenshots",
+      "capturedAt": "2026-07-22",
+      "gameVersion": null,
+      "reviewedManually": true
+    },
+    "affinities": {
+      "status": "screenshot-verified",
+      "source": "Tairax main screen screenshot",
+      "capturedAt": "2026-07-22",
+      "gameVersion": null,
+      "reviewedManually": true
+    }
+  },
+  "evidenceIds": [
+    "tairax-burning-ward-1-2026-07-22",
+    "tairax-burning-ward-2-2026-07-22",
+    "tairax-burning-ward-3-2026-07-22",
+    "tairax-burning-ward-4-2026-07-22",
+    "tairax-gift-of-fire-2026-07-22",
+    "tairax-gleamstrike-2026-07-22",
+    "tairax-hunters-wrath-2026-07-22",
+    "tairax-moonlit-hunt-2026-07-22",
+    "tairax-sunder-2026-07-22",
+    "tairax-whisper-of-ash-2026-07-22"
+  ],
+  "simpleProfileId": "tairax",
+  "simpleProfileStatus": "curated"
+}

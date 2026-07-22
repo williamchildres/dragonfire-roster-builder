@@ -165,7 +165,7 @@ export interface FullRosterAuditReport {
     incompatibleControlCandidates: string[];
   };
   formationSweep: {
-    expectedCount: 26970;
+    expectedCount: 32736;
     actualCount: number;
     deterministicFullResultHash: string;
     rating: {
@@ -212,8 +212,8 @@ export interface FullRosterAuditReport {
 }
 
 const EXPECTED_RARITY_COUNTS: Record<string, number> = {
-  Legendary: 9,
-  Epic: 10,
+  Legendary: 10,
+  Epic: 11,
   Rare: 12,
 };
 const EXPECTED_HABIT_UNLOCKS = [2, 4, 6, 8, 10];
@@ -251,7 +251,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const rarityCoverage = countBy(dragons, (dragon) => dragon.rarity);
   addCheck(
     'FRR-C001',
-    databaseMetadata.databaseVersion === '0.18.0',
+    databaseMetadata.databaseVersion === '0.19.0',
     `Database version is ${databaseMetadata.databaseVersion}.`,
   );
   addCheck(
@@ -259,10 +259,10 @@ export function runFullRosterAudit(): FullRosterAuditReport {
     databaseMetadata.schemaVersion === 13,
     `Data schema is ${databaseMetadata.schemaVersion}.`,
   );
-  addCheck('FRR-C003', dragons.length === 31, `${dragons.length} known dragons loaded.`);
+  addCheck('FRR-C003', dragons.length === 33, `${dragons.length} known dragons loaded.`);
   addCheck(
     'FRR-C004',
-    simpleSynergyProfiles.length === 31,
+    simpleSynergyProfiles.length === 33,
     `${simpleSynergyProfiles.length} curated profiles loaded.`,
   );
   addCheck(
@@ -325,7 +325,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   );
   addCheck(
     'FRR-C015',
-    allAbilities.length === 217,
+    allAbilities.length === 231,
     `${allAbilities.length} canonical abilities loaded.`,
   );
   addCheck(
@@ -1228,7 +1228,7 @@ function auditFormationSweep(
 
   addCheck(
     'FRR-C029',
-    rows.length === 26970,
+    rows.length === 32736,
     `${rows.length} ordered three-dragon formations evaluated.`,
   );
   addCheck(
@@ -1256,7 +1256,7 @@ function auditFormationSweep(
   const totalScore = sortedScores.reduce((sum, score) => sum + score, 0);
 
   return {
-    expectedCount: 26970,
+    expectedCount: 32736,
     actualCount: rows.length,
     deterministicFullResultHash: hash.digest('hex'),
     rating: {

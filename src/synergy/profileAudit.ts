@@ -73,6 +73,54 @@ export const metadataOnlyDragonIds: readonly string[] = [];
 
 export const simpleSynergyAbilityReviews = [
   review(
+    'sunfyre',
+    'sunfyre-golden-wrath',
+    'command',
+    represented(
+      ['sunfyre-golden-wrath-tactical', 'sunfyre-golden-wrath-fire', 'sunfyre-golden-wrath-burn'],
+      'Golden Wrath is represented by its Tactical output and its Troop-Capacity-conditional Fire and Burn outputs.',
+    ),
+  ),
+  review(
+    'sunfyre',
+    'sunfyre-sentinels-wit',
+    'trait',
+    represented(
+      ['sunfyre-sentinels-wit-left-stats', 'sunfyre-sentinels-wit-vanguard'],
+      'The Vanguard trait supports Left Flank Instinct and Initiative while its Tactical Damage increase remains self-only.',
+    ),
+  ),
+  review('sunfyre', 'sunfyre-radiant-majesty', 'habit', represented(['sunfyre-radiant-majesty-damage'], 'Radiant Majesty provides one generic Damage support signal without scoring its lower-capacity expansion twice.')),
+  review('sunfyre', 'sunfyre-extinguish', 'habit', generalOnly('Enemy Fire prevention has no explicit current teammate payoff.')),
+  review('sunfyre', 'sunfyre-the-kings-ire', 'habit', reinforces(['sunfyre-golden-wrath-tactical'], 'The King\'s Ire reinforces Sunfyre\'s existing Tactical output; its enemy Intelligence reduction has no pair-specific teammate payoff.')),
+  review('sunfyre', 'sunfyre-unbroken-splendor', 'habit', selfOnly('Fire and generic Damage Received reductions plus conditional Cleanse apply only to Sunfyre.')),
+  review('sunfyre', 'sunfyre-adaptive-glory', 'habit', represented(['sunfyre-adaptive-glory-damage'], 'Only the explicit allied Damage support branch is represented; Recovery, enemy debuff, and self-stat branches remain descriptive.')),
+
+  review(
+    'tairax',
+    'tairax-burning-ward',
+    'command',
+    represented(
+      ['tairax-burning-ward-fire', 'tairax-burning-ward-burn', 'tairax-burning-ward-stagger'],
+      'Burning Ward provides Fire, Burn, and one Stagger output; Stagger satisfies Control through the existing alias.',
+    ),
+  ),
+  review(
+    'tairax',
+    'tairax-hunters-wrath',
+    'trait',
+    represented(
+      ['tairax-hunters-wrath-right-stats', 'tairax-hunters-wrath-vanguard'],
+      'The Vanguard trait supports Right Flank Strength and Initiative while its Fire Damage increase remains self-only.',
+    ),
+  ),
+  review('tairax', 'tairax-whisper-of-ash', 'habit', noCross('Enemy stat reduction and self buffs remain descriptive with no cross-dragon synergy.')),
+  review('tairax', 'tairax-sunder', 'habit', represented(['tairax-sunder-damage', 'tairax-sunder-control-payoff'], 'Sunder provides generic Damage amplification and one Control payoff without inventing Vulnerable.')),
+  review('tairax', 'tairax-gleamstrike', 'habit', represented(['tairax-gleamstrike-fire'], 'Gleamstrike adds Fire output; its Stagger chance increase reinforces Burning Ward instead of creating a duplicate Stagger signal.')),
+  review('tairax', 'tairax-gift-of-fire', 'habit', represented(['tairax-gift-of-fire-resistance', 'tairax-gift-of-fire-burn-payoff'], 'Gift of Fire is represented by its Resistance output and one Burn payoff without treating Resistance as Fire support.')),
+  review('tairax', 'tairax-moonlit-hunt', 'habit', selfOnly('Evade and Fire Damage Dealt increases apply only to Tairax.')),
+
+  review(
     'syrax',
     'syrax-blazing-fury',
     'command',
