@@ -1,14 +1,17 @@
 import type { DragonRarity } from '../models/dragon';
 import {
   deduplicateDragonPowerObservations,
-  ESTIMATED_POWER_OBSERVED_ENVELOPES,
-  type UniqueDragonPowerObservation,
+  observationTupleKey,
 } from './dragonPowerObservations';
 import {
-  ESTIMATED_POWER_MODEL_COEFFICIENTS,
+  ESTIMATED_POWER_EXTRAPOLATION_SLOPES,
+  ESTIMATED_POWER_LEVEL_CURVES,
   ESTIMATED_POWER_MODEL_HASH,
   ESTIMATED_POWER_MODEL_VERSION,
   ESTIMATED_POWER_OBSERVATION_HASH,
+  ESTIMATED_POWER_STAR_CURVES,
+  ESTIMATED_POWER_SUPPORT_COMPONENTS,
+  type EstimatedPowerCurvePoint,
 } from './generatedDragonPowerModel';
 
 export type EstimatedPowerConfidence = 'observed' | 'modeled' | 'low';
@@ -32,12 +35,10 @@ export const ESTIMATED_POWER_SUPPORTED_STAR_RANK = { minimum: 1, maximum: 10 } a
 export { ESTIMATED_POWER_OBSERVED_ENVELOPES } from './dragonPowerObservations';
 
 const uniqueObservations = deduplicateDragonPowerObservations();
-const observationsByRarity = new Map<DragonRarity, UniqueDragonPowerObservation[]>(
-  (['Legendary', 'Epic', 'Rare'] as const).map((rarity) => [
-    rarity,
-    uniqueObservations.filter((observation) => observation.rarity === rarity),
-  ]),
-);
+const exactPowerByTuple = new Map(uniqueObservations.map((observation) => [
+  observationTupleKey(observation),
+  observation.displayedPower,
+]));
 
 export function estimateDragonPower(input: EstimateDragonPowerInput): EstimatedDragonPower {
   assertValidProgression(input);
@@ -50,29 +51,37 @@ export function estimateDragonPower(input: EstimateDragonPowerInput): EstimatedD
     estimateWithinRarity('Legendary', input.starRank, input.dragonLevel),
     epicPower,
   );
-  const power = input.rarity === 'Legendary'
+  const projectedPower = input.rarity === 'Legendary'
     ? legendaryPower
     : input.rarity === 'Epic'
       ? epicPower
       : rarePower;
-  const exact = uniqueObservations.find((observation) =>
-    observation.rarity === input.rarity
-      && observation.starRank === input.starRank
-      && observation.dragonLevel === input.dragonLevel,
-  );
-  const envelope = ESTIMATED_POWER_OBSERVED_ENVELOPES[input.rarity];
-  const outsideEnvelope = input.starRank < envelope.starRank.minimum
-    || input.starRank > envelope.starRank.maximum
-    || input.dragonLevel < envelope.dragonLevel.minimum
-    || input.dragonLevel > envelope.dragonLevel.maximum;
+  const exactPower = exactPowerByTuple.get(observationTupleKey(input));
+  const support = classifyEstimatedPowerSupport(input, exactPower != null);
   return {
-    power,
-    confidence: exact ? 'observed' : outsideEnvelope ? 'low' : 'modeled',
+    power: exactPower ?? projectedPower,
+    confidence: support.confidence,
     modelVersion: ESTIMATED_POWER_MODEL_VERSION,
     modelHash: ESTIMATED_POWER_MODEL_HASH,
     observationHash: ESTIMATED_POWER_OBSERVATION_HASH,
-    basis: exact ? 'exact-observation' : outsideEnvelope ? 'extrapolation' : 'interpolation',
+    basis: support.basis,
   };
+}
+
+export function classifyEstimatedPowerSupport(
+  input: EstimateDragonPowerInput,
+  exact = exactPowerByTuple.has(observationTupleKey(input)),
+): Pick<EstimatedDragonPower, 'confidence' | 'basis'> {
+  if (exact) return { confidence: 'observed', basis: 'exact-observation' };
+  const insideConnectedComponent = ESTIMATED_POWER_SUPPORT_COMPONENTS[input.rarity].some((component) =>
+    input.starRank >= component.starRankMinimum
+      && input.starRank <= component.starRankMaximum
+      && input.dragonLevel >= component.dragonLevelMinimum
+      && input.dragonLevel <= component.dragonLevelMaximum,
+  );
+  return insideConnectedComponent
+    ? { confidence: 'modeled', basis: 'interpolation' }
+    : { confidence: 'low', basis: 'extrapolation' };
 }
 
 export function isValidEstimatedPowerProgression(input: EstimateDragonPowerInput): boolean {
@@ -91,45 +100,38 @@ function estimateWithinRarity(
   starRank: number,
   dragonLevel: number,
 ): number {
-  const observations = observationsByRarity.get(rarity) ?? [];
-  const lowerObservedPower = Math.max(
-    10,
-    ...observations
-      .filter((observation) =>
-        observation.starRank <= starRank && observation.dragonLevel <= dragonLevel,
-      )
-      .map((observation) => observation.displayedPower),
+  const starValue = interpolateCurve(
+    ESTIMATED_POWER_STAR_CURVES[rarity],
+    starRank,
+    ESTIMATED_POWER_EXTRAPOLATION_SLOPES[rarity].starRank,
   );
-  const upperObservedPowers = observations
-    .filter((observation) =>
-      observation.starRank >= starRank && observation.dragonLevel >= dragonLevel,
-    )
-    .map((observation) => observation.displayedPower);
-  const upperObservedPower = upperObservedPowers.length > 0
-    ? Math.min(...upperObservedPowers)
-    : Number.POSITIVE_INFINITY;
-  const modeled = rawModeledPower(rarity, starRank, dragonLevel);
-  return roundPower(Math.max(lowerObservedPower, Math.min(modeled, upperObservedPower)));
+  const minimumLevel = ESTIMATED_POWER_LEVEL_CURVES[rarity][0]!.input;
+  if (dragonLevel < minimumLevel) {
+    const atMinimumLevel = starValue + ESTIMATED_POWER_LEVEL_CURVES[rarity][0]!.value;
+    return roundPower(Math.max(10, atMinimumLevel * Math.max(1, dragonLevel) / minimumLevel));
+  }
+  const levelValue = interpolateCurve(
+    ESTIMATED_POWER_LEVEL_CURVES[rarity],
+    dragonLevel,
+    ESTIMATED_POWER_EXTRAPOLATION_SLOPES[rarity].dragonLevel,
+  );
+  return roundPower(Math.max(10, starValue + levelValue));
 }
 
-function rawModeledPower(
-  rarity: DragonRarity,
-  starRank: number,
-  dragonLevel: number,
+function interpolateCurve(
+  points: readonly EstimatedPowerCurvePoint[],
+  input: number,
+  extrapolationSlope: number,
 ): number {
-  const { rarityIntercept, rarityLevelSlope, sharedStarRankSlope, empiricalMinimumDragonLevel } =
-    ESTIMATED_POWER_MODEL_COEFFICIENTS;
-  const empiricalFloorPower = rarityIntercept[rarity]
-    + rarityLevelSlope[rarity] * empiricalMinimumDragonLevel
-    + sharedStarRankSlope * starRank;
-  if (dragonLevel < empiricalMinimumDragonLevel) {
-    return empiricalFloorPower
-      * Math.max(1, dragonLevel)
-      / empiricalMinimumDragonLevel;
-  }
-  return rarityIntercept[rarity]
-    + rarityLevelSlope[rarity] * dragonLevel
-    + sharedStarRankSlope * starRank;
+  const first = points[0]!;
+  const last = points[points.length - 1]!;
+  if (input <= first.input) return first.value - (first.input - input) * extrapolationSlope;
+  if (input >= last.input) return last.value + (input - last.input) * extrapolationSlope;
+  const upperIndex = points.findIndex((point) => point.input >= input);
+  const upper = points[upperIndex]!;
+  const lower = points[upperIndex - 1]!;
+  const share = (input - lower.input) / (upper.input - lower.input);
+  return lower.value + (upper.value - lower.value) * share;
 }
 
 function roundPower(value: number): number {

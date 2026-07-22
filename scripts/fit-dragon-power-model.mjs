@@ -1,17 +1,31 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import {
+  buildDragonPowerSupportGraphs,
   DRAGON_POWER_OBSERVATIONS,
   deduplicateDragonPowerObservations,
   deriveEstimatedPowerObservedEnvelopes,
   hashDragonPowerObservations,
+  observationTupleKey,
 } from '../src/power/dragonPowerObservations.ts';
 import {
-  ESTIMATED_POWER_MODEL_COEFFICIENTS,
+  ESTIMATED_POWER_COMPLETION_RULE,
+  ESTIMATED_POWER_CONFIDENCE_RULE,
+  ESTIMATED_POWER_EXACT_OBSERVATION_RULE,
+  ESTIMATED_POWER_EXTRAPOLATION_RULE,
+  ESTIMATED_POWER_EXTRAPOLATION_SLOPES,
+  ESTIMATED_POWER_INTERPOLATION_RULE,
+  ESTIMATED_POWER_LEVEL_CURVES,
   ESTIMATED_POWER_MODEL_FAMILY,
   ESTIMATED_POWER_MODEL_HASH,
   ESTIMATED_POWER_MODEL_VERSION,
+  ESTIMATED_POWER_MONOTONICITY_RULE,
+  ESTIMATED_POWER_NUMERICAL_GRID_FINGERPRINT,
   ESTIMATED_POWER_OBSERVATION_HASH,
+  ESTIMATED_POWER_RARITY_PROJECTION,
+  ESTIMATED_POWER_ROUNDING_RULE,
+  ESTIMATED_POWER_STAR_CURVES,
+  ESTIMATED_POWER_SUPPORT_COMPONENTS,
 } from '../src/power/generatedDragonPowerModel.ts';
 
 const repositoryRoot = fileURLToPath(new URL('..', import.meta.url));
@@ -19,72 +33,101 @@ const writeArtifacts = process.argv.includes('--write');
 const rarities = ['Legendary', 'Epic', 'Rare'];
 const uniqueObservations = deduplicateDragonPowerObservations();
 const observationHash = hashDragonPowerObservations();
+const supportGraphs = buildDragonPowerSupportGraphs();
+const modelDefinition = buildModelDefinition();
+const modelHash = fnv1a64(JSON.stringify(modelDefinition));
 const observedEnvelopes = deriveEstimatedPowerObservedEnvelopes();
-const supportedGrid = { starRankMinimum: 1, starRankMaximum: 10, dragonLevelMinimum: 0, dragonLevelAuditMaximum: 1000 };
+const supportedGrid = {
+  starRankMinimum: 1,
+  starRankMaximum: 10,
+  dragonLevelMinimum: 0,
+  dragonLevelAuditMaximum: 1000,
+};
 
-const candidateDefinitions = [
-  {
-    id: 'shared-monotone-power-law',
-    description: 'Shared level and Star Rank exponents with one positive coefficient per rarity.',
-    logarithmicTarget: true,
-    features: (observation) => [
-      ...rarityIndicators(observation.rarity),
-      Math.log(Math.max(1, observation.dragonLevel)),
-      Math.log(observation.starRank),
-    ],
+const frozenV1 = {
+  version: 'estimated-power-v1',
+  family: 'rarity-level-additive-with-shared-star-contribution-and-monotone-envelope',
+  observationCount: 31,
+  observationHash: 'fnv1a64:57268e00007bfab8',
+  modelHash: 'fnv1a64:5bf2cc559f2fd940',
+  coefficients: {
+    rarityIntercept: {
+      Legendary: -5345.526402998704,
+      Epic: -3518.798289613967,
+      Rare: -8030.898292604834,
+    },
+    rarityLevelSlope: {
+      Legendary: 712.604230387158,
+      Epic: 491.403841476919,
+      Rare: 395.629654678922,
+    },
+    sharedStarRankSlope: 2434.713675015537,
+    empiricalMinimumDragonLevel: 20,
   },
-  {
-    id: 'rarity-specific-monotone-power-laws',
-    description: 'Independent positive power-law coefficient and level/Star Rank exponents for each rarity.',
-    logarithmicTarget: true,
-    features: (observation) => [
-      ...rarityIndicators(observation.rarity),
-      ...rarityIndicators(observation.rarity).map((value) => value * Math.log(Math.max(1, observation.dragonLevel))),
-      ...rarityIndicators(observation.rarity).map((value) => value * Math.log(observation.starRank)),
-    ],
-  },
-  {
-    id: ESTIMATED_POWER_MODEL_FAMILY,
-    description: 'Rarity intercepts and level slopes plus one shared Star Rank contribution; a monotone empirical envelope and rarity projection guard runtime estimates.',
-    logarithmicTarget: false,
-    features: additiveFeatures,
-  },
-];
+};
 
-const candidates = candidateDefinitions.map(evaluateCandidate);
-const selectedCandidate = candidates.find((candidate) => candidate.id === ESTIMATED_POWER_MODEL_FAMILY);
-if (!selectedCandidate) throw new Error('Selected Estimated Power candidate was not evaluated.');
-const fittedCoefficients = coefficientsFromVector(selectedCandidate.coefficients);
-assertFrozenCoefficients(fittedCoefficients);
-const modelHash = fnv1a64(JSON.stringify({
-  modelVersion: ESTIMATED_POWER_MODEL_VERSION,
-  modelFamily: ESTIMATED_POWER_MODEL_FAMILY,
-  observationHash,
-  coefficients: fittedCoefficients,
-  lowLevelRule: 'scale-level-20-estimate-by-max(1,level)/20',
-  monotoneRule: 'empirical-lower-upper-envelope-then-rare-epic-legendary-projection',
-  exactObservationRule: 'return-deduplicated-displayed-power',
-  roundingRule: 'nearest-10',
-  confidenceRule: 'exact-observation-otherwise-per-rarity-star-and-level-envelope',
-  empiricalEnvelopeDerivation: 'derived-from-deduplicated-observations',
-  observedEnvelopes,
-}));
-const gridChecks = auditRuntimeGrid(fittedCoefficients);
+const frozenV1Observations = DRAGON_POWER_OBSERVATIONS.slice(0, frozenV1.observationCount);
+const frozenV1Unique = deduplicateDragonPowerObservations(frozenV1Observations);
+if (hashDragonPowerObservations(frozenV1Observations) !== frozenV1.observationHash) {
+  throw new Error('Frozen Estimated Power v1 observation set no longer matches its historical hash.');
+}
+const frozenV1Keys = new Set(frozenV1Unique.map(observationTupleKey));
+const historicalHoldout = uniqueObservations.filter((observation) => !frozenV1Keys.has(observationTupleKey(observation)));
+if (historicalHoldout.length !== 17) {
+  throw new Error(`Expected 17 genuinely new v1 holdout combinations, found ${historicalHoldout.length}.`);
+}
+
+const linearCoefficients = fitLinearAdditive(uniqueObservations);
+const linearPredictions = uniqueObservations.map((observation) => predictLinearAdditive(linearCoefficients, observation));
+const linearLooPredictions = uniqueObservations.map((observation, heldOutIndex) => {
+  const training = uniqueObservations.filter((_candidate, index) => index !== heldOutIndex);
+  return predictLinearAdditive(fitLinearAdditive(training), observation);
+});
+
+const fittedCurves = fitAdditiveCurves(uniqueObservations);
+assertGeneratedCurves(fittedCurves);
+const rawV2Predictions = uniqueObservations.map((observation) => predictAdditiveCurves(fittedCurves, observation));
+const leaveOneUniqueCombinationOut = crossValidate(uniqueObservations.map((observation) => [observation]));
+const leaveOneLevelAnchorOut = crossValidate(groupBy(uniqueObservations, (row) => `${row.rarity}:${row.dragonLevel}`));
+const leaveOneStarAnchorOut = crossValidate(groupBy(uniqueObservations, (row) => `${row.rarity}:${row.starRank}`));
+const upgradeEndpoints = uniqueObservations.filter((candidate) => uniqueObservations.some((other) =>
+  other !== candidate
+    && other.rarity === candidate.rarity
+    && (other.starRank === candidate.starRank || other.dragonLevel === candidate.dragonLevel),
+));
+const leaveOneUpgradeEndpointOut = crossValidate(upgradeEndpoints.map((observation) => [observation]));
+
+const transitionDeltaMetrics = buildTransitionDeltaMetrics(uniqueObservations, rawV2Predictions);
+const gridChecks = auditRuntimeGrid();
+const numericalGridFingerprint = gridChecks.numericalGridFingerprint;
+const reversedModelHash = hashModel([...DRAGON_POWER_OBSERVATIONS].reverse());
+const changedObservations = DRAGON_POWER_OBSERVATIONS.map((observation, index) =>
+  index === 0 ? { ...observation, displayedPower: observation.displayedPower + 10 } : observation,
+);
 const validationChecks = {
   observationOrderReversalMatches:
     hashDragonPowerObservations([...DRAGON_POWER_OBSERVATIONS].reverse()) === observationHash,
+  modelOrderReversalMatches: reversedModelHash === modelHash,
+  observationMutationChangesObservationHash:
+    hashDragonPowerObservations(changedObservations) !== observationHash,
+  observationMutationChangesModelHash:
+    hashModel(changedObservations) !== modelHash,
   invalidInputCasesRejected: [
     { rarity: 'Rare', starRank: 0, dragonLevel: 20 },
     { rarity: 'Rare', starRank: 11, dragonLevel: 20 },
     { rarity: 'Rare', starRank: 4, dragonLevel: -1 },
     { rarity: 'Rare', starRank: 4, dragonLevel: 20.5 },
-  ].every((input) => !isValidProgression(input)),
+  ].every((input) => rejectsEstimate(input)),
 };
 if (!Object.values(validationChecks).every(Boolean)) {
   throw new Error(`Estimated Power validation failed: ${JSON.stringify(validationChecks)}.`);
 }
-const residuals = uniqueObservations.map((observation) => {
-  const fittedPower = rawSelectedEstimate(fittedCoefficients, observation);
+if (Object.values(supportGraphs).some((graph) => graph.maximumAdditiveResidual !== 0)) {
+  throw new Error('The observation support graph is not exactly additive.');
+}
+
+const residualRows = uniqueObservations.map((observation, index) => {
+  const fittedPower = rawV2Predictions[index];
   const residual = fittedPower - observation.displayedPower;
   return {
     ...observation,
@@ -92,62 +135,108 @@ const residuals = uniqueObservations.map((observation) => {
     residual: round(residual, 4),
     absoluteError: round(Math.abs(residual), 4),
     percentageError: round(Math.abs(residual) / observation.displayedPower * 100, 6),
-    runtimePower: runtimeEstimate(fittedCoefficients, observation),
+    runtimePower: runtimeGeneratedEstimate(observation),
   };
 });
+
+const historicalHoldoutPredictions = historicalHoldout.map((observation) =>
+  frozenV1RuntimeEstimate(observation, frozenV1Unique),
+);
+const candidateModels = [
+  {
+    id: frozenV1.family,
+    label: 'Frozen Estimated Power v1',
+    selected: false,
+    parameterCount: 7,
+    expandedDataMetrics: errorMetrics(uniqueObservations, uniqueObservations.map((row) => frozenV1RuntimeEstimate(row, frozenV1Unique))),
+    historicalHoldoutMetrics: errorMetrics(historicalHoldout, historicalHoldoutPredictions),
+  },
+  {
+    id: 'rarity-specific-linear-additive-regression',
+    label: 'Rarity-specific linear additive regression',
+    selected: false,
+    parameterCount: 9,
+    coefficients: linearCoefficients.map((value) => round(value, 12)),
+    trainingMetrics: errorMetrics(uniqueObservations, linearPredictions),
+    leaveOneUniqueCombinationOutMetrics: errorMetrics(uniqueObservations, linearLooPredictions),
+  },
+  {
+    id: ESTIMATED_POWER_MODEL_FAMILY,
+    label: 'Rarity-specific monotone additive Star and Level curves',
+    selected: true,
+    parameterCount: Object.values(ESTIMATED_POWER_STAR_CURVES).flat().length
+      + Object.values(ESTIMATED_POWER_LEVEL_CURVES).flat().length,
+    trainingMetrics: errorMetrics(uniqueObservations, rawV2Predictions),
+    leaveOneUniqueCombinationOutMetrics: leaveOneUniqueCombinationOut,
+    leaveOneLevelAnchorOutMetrics: leaveOneLevelAnchorOut,
+    leaveOneStarAnchorOutMetrics: leaveOneStarAnchorOut,
+    leaveOneUpgradeEndpointOutMetrics: leaveOneUpgradeEndpointOut,
+  },
+];
+
 const audit = {
-  auditVersion: 'estimated-power-v1',
+  auditVersion: 'estimated-power-v2',
   generatedAt: 'deterministic',
   modelVersion: ESTIMATED_POWER_MODEL_VERSION,
   modelFamily: ESTIMATED_POWER_MODEL_FAMILY,
   observationHash,
   modelHash,
+  numericalGridFingerprint,
   rawSampleCount: DRAGON_POWER_OBSERVATIONS.length,
   uniqueObservationCount: uniqueObservations.length,
   duplicateSampleCount: DRAGON_POWER_OBSERVATIONS.length - uniqueObservations.length,
-  observations: residuals,
-  candidateModels: candidates,
+  provenanceSampleCounts: uniqueObservations.filter((row) => row.sampleCount > 1),
+  observations: residualRows,
+  candidateModels,
+  historicalV1Benchmark: {
+    ...frozenV1,
+    uniqueObservationCount: frozenV1Unique.length,
+    genuinelyNewUniqueCombinationCount: historicalHoldout.length,
+    holdoutMetrics: errorMetrics(historicalHoldout, historicalHoldoutPredictions),
+  },
+  supportGraph: supportGraphs,
+  additiveChecks: {
+    allUniqueObservationsCompatible: true,
+    maximumAdditiveResidual: Math.max(...Object.values(supportGraphs).map((graph) => graph.maximumAdditiveResidual)),
+    epicStar1To2DirectlyIdentified: false,
+    repeatedDifferences: repeatedDifferenceChecks(uniqueObservations),
+  },
   selectedModel: {
-    coefficients: fittedCoefficients,
-    formula: 'base(rarity, stars, level>=20) = intercept[rarity] + levelSlope[rarity] * level + sharedStarRankSlope * stars',
-    lowLevelExtrapolation: 'For levels 0-19, scale the level-20 base by max(1, level) / 20.',
-    runtimeGuardrails: 'Round to 10; clamp within monotone empirical lower/upper bounds; project Rare <= Epic <= Legendary.',
-    trainingMetrics: selectedCandidate.trainingMetrics,
-    leaveOneOutMetrics: selectedCandidate.leaveOneOutMetrics,
+    starCurves: ESTIMATED_POWER_STAR_CURVES,
+    levelCurves: ESTIMATED_POWER_LEVEL_CURVES,
+    extrapolationSlopes: ESTIMATED_POWER_EXTRAPOLATION_SLOPES,
+    completionRule: ESTIMATED_POWER_COMPLETION_RULE,
+    definition: modelDefinition,
+    trainingMetrics: errorMetrics(uniqueObservations, rawV2Predictions),
+    leaveOneUniqueCombinationOutMetrics: leaveOneUniqueCombinationOut,
+    leaveOneLevelAnchorOutMetrics: leaveOneLevelAnchorOut,
+    leaveOneStarAnchorOutMetrics: leaveOneStarAnchorOut,
+    leaveOneUpgradeEndpointOutMetrics: leaveOneUpgradeEndpointOut,
   },
-  residualsByRarity: groupedResidualMetrics(residuals, (row) => row.rarity),
-  residualsByStarRank: groupedResidualMetrics(residuals, (row) => String(row.starRank)),
-  residualsByDragonLevel: groupedResidualMetrics(residuals, (row) => String(row.dragonLevel)),
-  supportedProgression: {
-    starRanks: '1-10',
-    dragonLevels: 'all nonnegative integers; exhaustive audit through 1000 plus monotone construction',
-  },
-  confidenceContract: {
-    roundingRule: 'nearest-10',
-    confidenceRule: 'exact-observation-otherwise-per-rarity-star-and-level-envelope',
-    empiricalEnvelopeDerivation: 'derived-from-deduplicated-observations',
-    observedEnvelopes,
-  },
+  residualsByRarity: groupedResidualMetrics(residualRows, (row) => row.rarity),
+  residualsByStarRank: groupedResidualMetrics(residualRows, (row) => String(row.starRank)),
+  residualsByDragonLevel: groupedResidualMetrics(residualRows, (row) => String(row.dragonLevel)),
+  transitionDeltaMetrics,
+  observedEnvelopes,
   gridChecks,
   validationChecks,
   confidenceExamples: [
+    { rarity: 'Epic', starRank: 1, dragonLevel: 20 },
+    { rarity: 'Epic', starRank: 1, dragonLevel: 30 },
+    { rarity: 'Epic', starRank: 2, dragonLevel: 21 },
+    { rarity: 'Epic', starRank: 5, dragonLevel: 35 },
+    { rarity: 'Rare', starRank: 5, dragonLevel: 29 },
+    { rarity: 'Rare', starRank: 2, dragonLevel: 29 },
     { rarity: 'Legendary', starRank: 4, dragonLevel: 35 },
     { rarity: 'Legendary', starRank: 5, dragonLevel: 35 },
-    { rarity: 'Epic', starRank: 6, dragonLevel: 35 },
-    { rarity: 'Epic', starRank: 7, dragonLevel: 35 },
-    { rarity: 'Rare', starRank: 4, dragonLevel: 29 },
-    { rarity: 'Rare', starRank: 2, dragonLevel: 29 },
-    { rarity: 'Rare', starRank: 4, dragonLevel: 30 },
-    { rarity: 'Rare', starRank: 4, dragonLevel: 31 },
-    { rarity: 'Epic', starRank: 3, dragonLevel: 34 },
-  ].map((input) => ({ ...input, ...classifyConfidence(input) })),
+  ].map((input) => ({ ...input, ...runtimeResult(input) })),
 };
 
 if (writeArtifacts) {
-  await writeGeneratedModel(observationHash, modelHash, fittedCoefficients);
-  await writeFile(`${repositoryRoot}/docs/audits/estimated-power-v1.json`, `${JSON.stringify(audit, null, 2)}\n`);
-  await writeFile(`${repositoryRoot}/docs/audits/estimated-power-v1.md`, renderMarkdown(audit));
-  console.log(`Estimated Power v1 artifacts written: ${observationHash}, ${modelHash}`);
+  await writeGeneratedIdentities(observationHash, modelHash, numericalGridFingerprint);
+  await writeFile(`${repositoryRoot}/docs/audits/estimated-power-v2.json`, `${JSON.stringify(audit, null, 2)}\n`);
+  await writeFile(`${repositoryRoot}/docs/audits/estimated-power-v2.md`, renderMarkdown(audit));
+  console.log(`Estimated Power v2 artifacts written: ${observationHash}, ${modelHash}, ${numericalGridFingerprint}`);
 } else {
   if (ESTIMATED_POWER_OBSERVATION_HASH !== observationHash) {
     throw new Error(`Frozen observation hash ${ESTIMATED_POWER_OBSERVATION_HASH} does not match ${observationHash}. Run with --write.`);
@@ -155,82 +244,177 @@ if (writeArtifacts) {
   if (ESTIMATED_POWER_MODEL_HASH !== modelHash) {
     throw new Error(`Frozen model hash ${ESTIMATED_POWER_MODEL_HASH} does not match ${modelHash}. Run with --write.`);
   }
-  console.log(`Estimated Power v1 verified: ${observationHash}, ${modelHash}`);
+  if (ESTIMATED_POWER_NUMERICAL_GRID_FINGERPRINT !== numericalGridFingerprint) {
+    throw new Error(`Frozen grid fingerprint ${ESTIMATED_POWER_NUMERICAL_GRID_FINGERPRINT} does not match ${numericalGridFingerprint}. Run with --write.`);
+  }
+  console.log(`Estimated Power v2 verified: ${observationHash}, ${modelHash}, ${numericalGridFingerprint}`);
 }
-console.log(`Training MAPE ${selectedCandidate.trainingMetrics.mapePercent}% (max ${selectedCandidate.trainingMetrics.maximumAbsolutePercentageErrorPercent}%).`);
-console.log(`Leave-one-out MAPE ${selectedCandidate.leaveOneOutMetrics.mapePercent}% (max ${selectedCandidate.leaveOneOutMetrics.maximumAbsolutePercentageErrorPercent}%).`);
+console.log(`Observations: ${DRAGON_POWER_OBSERVATIONS.length} raw, ${uniqueObservations.length} unique.`);
+console.log(`Additive support: Legendary ${supportGraphs.Legendary.components.length}, Epic ${supportGraphs.Epic.components.length}, Rare ${supportGraphs.Rare.components.length} component(s); max residual 0.`);
+console.log(`Historical v1 holdout MAPE ${audit.historicalV1Benchmark.holdoutMetrics.mapePercent}% (max ${audit.historicalV1Benchmark.holdoutMetrics.maximumAbsolutePercentageErrorPercent}%).`);
+console.log(`V2 LOUO MAPE ${leaveOneUniqueCombinationOut.mapePercent}% (max ${leaveOneUniqueCombinationOut.maximumAbsolutePercentageErrorPercent}%).`);
 console.log(`Grid: ${gridChecks.monotonicityViolations} monotonicity violations, ${gridChecks.rarityOrderViolations} rarity-order violations.`);
 
-function evaluateCandidate(definition) {
-  const coefficients = fit(definition, uniqueObservations);
-  const predictions = uniqueObservations.map((observation) => predict(definition, coefficients, observation));
-  const leaveOneOut = uniqueObservations.map((observation, heldOutIndex) => {
-    const training = uniqueObservations.filter((_candidate, index) => index !== heldOutIndex);
-    const heldOutCoefficients = fit(definition, training);
-    return definition.id === ESTIMATED_POWER_MODEL_FAMILY
-      ? runtimeEstimate(coefficientsFromVector(heldOutCoefficients), observation, training)
-      : predict(definition, heldOutCoefficients, observation);
-  });
-  const grid = candidateGridChecks(definition, coefficients);
+function buildModelDefinition(observations = DRAGON_POWER_OBSERVATIONS) {
+  const graphs = buildDragonPowerSupportGraphs(observations);
   return {
-    id: definition.id,
-    description: definition.description,
-    parameterCount: coefficients.length,
-    coefficients: coefficients.map((value) => round(value, 12)),
-    trainingMetrics: errorMetrics(uniqueObservations, predictions),
-    leaveOneOutMetrics: errorMetrics(uniqueObservations, leaveOneOut),
-    gridChecks: grid,
-    selected: definition.id === ESTIMATED_POWER_MODEL_FAMILY,
+    modelVersion: ESTIMATED_POWER_MODEL_VERSION,
+    modelFamily: ESTIMATED_POWER_MODEL_FAMILY,
+    observationHash: hashDragonPowerObservations(observations),
+    starCurves: ESTIMATED_POWER_STAR_CURVES,
+    levelCurves: ESTIMATED_POWER_LEVEL_CURVES,
+    componentGauges: Object.fromEntries(Object.entries(graphs).map(([rarity, graph]) => [
+      rarity,
+      graph.components.map((component) => ({
+        id: component.id,
+        gauge: component.gauge,
+        starRanks: component.starRanks,
+        dragonLevels: component.dragonLevels,
+      })),
+    ])),
+    supportComponents: ESTIMATED_POWER_SUPPORT_COMPONENTS,
+    completionRule: ESTIMATED_POWER_COMPLETION_RULE,
+    interpolationRule: ESTIMATED_POWER_INTERPOLATION_RULE,
+    extrapolationRule: ESTIMATED_POWER_EXTRAPOLATION_RULE,
+    extrapolationSlopes: ESTIMATED_POWER_EXTRAPOLATION_SLOPES,
+    exactObservationRule: ESTIMATED_POWER_EXACT_OBSERVATION_RULE,
+    roundingRule: ESTIMATED_POWER_ROUNDING_RULE,
+    monotonicityGuard: ESTIMATED_POWER_MONOTONICITY_RULE,
+    rarityProjection: ESTIMATED_POWER_RARITY_PROJECTION,
+    confidenceSupportRule: ESTIMATED_POWER_CONFIDENCE_RULE,
   };
 }
 
-function fit(definition, observations) {
-  const matrix = observations.map(definition.features);
-  const target = observations.map((observation) => definition.logarithmicTarget
-    ? Math.log(observation.displayedPower)
-    : observation.displayedPower);
-  return solveNormalEquations(matrix, target);
+function hashModel(observations) {
+  return fnv1a64(JSON.stringify(buildModelDefinition(observations)));
 }
 
-function predict(definition, coefficients, observation) {
-  const linear = dot(definition.features(observation), coefficients);
-  return definition.logarithmicTarget ? Math.exp(linear) : linear;
+function runtimeGeneratedEstimate(input) {
+  if (!isValidProgression(input)) throw new RangeError('Invalid Estimated Power progression.');
+  const exact = uniqueObservations.find((observation) => observationTupleKey(observation) === observationTupleKey(input));
+  return exact?.displayedPower ?? predictAdditiveCurves({
+    starCurves: ESTIMATED_POWER_STAR_CURVES,
+    levelCurves: ESTIMATED_POWER_LEVEL_CURVES,
+    extrapolationSlopes: ESTIMATED_POWER_EXTRAPOLATION_SLOPES,
+  }, input);
 }
 
-function additiveFeatures(observation) {
-  const rarity = rarityIndicators(observation.rarity);
-  return [
-    ...rarity,
-    ...rarity.map((value) => value * observation.dragonLevel),
-    observation.starRank,
-  ];
-}
-
-function coefficientsFromVector(coefficients) {
+function runtimeResult(input) {
+  const exact = uniqueObservations.some((observation) => observationTupleKey(observation) === observationTupleKey(input));
+  const insideComponent = ESTIMATED_POWER_SUPPORT_COMPONENTS[input.rarity].some((component) =>
+    input.starRank >= component.starRankMinimum
+      && input.starRank <= component.starRankMaximum
+      && input.dragonLevel >= component.dragonLevelMinimum
+      && input.dragonLevel <= component.dragonLevelMaximum,
+  );
   return {
-    rarityIntercept: Object.fromEntries(rarities.map((rarity, index) => [rarity, coefficients[index]])),
-    rarityLevelSlope: Object.fromEntries(rarities.map((rarity, index) => [rarity, coefficients[index + 3]])),
-    sharedStarRankSlope: coefficients[6],
-    empiricalMinimumDragonLevel: 20,
+    power: runtimeGeneratedEstimate(input),
+    confidence: exact ? 'observed' : insideComponent ? 'modeled' : 'low',
+    basis: exact ? 'exact-observation' : insideComponent ? 'interpolation' : 'extrapolation',
   };
 }
 
-function assertFrozenCoefficients(fitted) {
+function fitAdditiveCurves(observations) {
+  const graphs = buildDragonPowerSupportGraphs(observations);
+  const starCurves = {};
+  const levelCurves = {};
+  const extrapolationSlopes = {};
   for (const rarity of rarities) {
-    assertNear(fitted.rarityIntercept[rarity], ESTIMATED_POWER_MODEL_COEFFICIENTS.rarityIntercept[rarity], `intercept ${rarity}`);
-    assertNear(fitted.rarityLevelSlope[rarity], ESTIMATED_POWER_MODEL_COEFFICIENTS.rarityLevelSlope[rarity], `level slope ${rarity}`);
+    const graph = graphs[rarity];
+    const bridgeSlope = minimumPositiveStarSlope(graph.components)
+      ?? ESTIMATED_POWER_EXTRAPOLATION_SLOPES[rarity].starRank;
+    const globalMinimumStar = Math.min(...graph.components.flatMap((component) => component.starRanks));
+    const starValues = new Map();
+    const levelValues = new Map();
+    for (const [componentIndex, component] of graph.components.entries()) {
+      const minimumStar = component.starRanks[0];
+      const localMinimumValue = component.starComponents[String(minimumStar)];
+      const targetMinimumValue = componentIndex === 0
+        ? 0
+        : (minimumStar - globalMinimumStar) * bridgeSlope;
+      const offset = targetMinimumValue - localMinimumValue;
+      for (const starRank of component.starRanks) {
+        starValues.set(starRank, component.starComponents[String(starRank)] + offset);
+      }
+      for (const dragonLevel of component.dragonLevels) {
+        levelValues.set(dragonLevel, component.levelComponents[String(dragonLevel)] - offset);
+      }
+    }
+    starCurves[rarity] = [...starValues].sort(([left], [right]) => left - right).map(([input, value]) => ({ input, value }));
+    levelCurves[rarity] = [...levelValues].sort(([left], [right]) => left - right).map(([input, value]) => ({ input, value }));
+    extrapolationSlopes[rarity] = {
+      starRank: minimumPositiveCurveSlope(starCurves[rarity]) ?? ESTIMATED_POWER_EXTRAPOLATION_SLOPES[rarity].starRank,
+      dragonLevel: minimumPositiveCurveSlope(levelCurves[rarity]) ?? ESTIMATED_POWER_EXTRAPOLATION_SLOPES[rarity].dragonLevel,
+    };
   }
-  assertNear(fitted.sharedStarRankSlope, ESTIMATED_POWER_MODEL_COEFFICIENTS.sharedStarRankSlope, 'shared Star Rank slope');
+  return { starCurves, levelCurves, extrapolationSlopes };
 }
 
-function rawSelectedEstimate(coefficients, observation) {
-  return coefficients.rarityIntercept[observation.rarity]
-    + coefficients.rarityLevelSlope[observation.rarity] * observation.dragonLevel
-    + coefficients.sharedStarRankSlope * observation.starRank;
-}
-
-function runtimeEstimate(coefficients, input, observations = uniqueObservations) {
+function predictAdditiveCurves(model, input) {
   const within = (rarity) => {
+    const starValue = interpolateCurve(model.starCurves[rarity], input.starRank, model.extrapolationSlopes[rarity].starRank);
+    const minimumLevel = model.levelCurves[rarity][0].input;
+    if (input.dragonLevel < minimumLevel) {
+      const atMinimum = starValue + model.levelCurves[rarity][0].value;
+      return roundPower(Math.max(10, atMinimum * Math.max(1, input.dragonLevel) / minimumLevel));
+    }
+    return roundPower(Math.max(10, starValue + interpolateCurve(
+      model.levelCurves[rarity],
+      input.dragonLevel,
+      model.extrapolationSlopes[rarity].dragonLevel,
+    )));
+  };
+  const rare = within('Rare');
+  const epic = Math.max(within('Epic'), rare);
+  const legendary = Math.max(within('Legendary'), epic);
+  return input.rarity === 'Legendary' ? legendary : input.rarity === 'Epic' ? epic : rare;
+}
+
+function interpolateCurve(points, input, extrapolationSlope) {
+  const first = points[0];
+  const last = points.at(-1);
+  if (input <= first.input) return first.value - (first.input - input) * extrapolationSlope;
+  if (input >= last.input) return last.value + (input - last.input) * extrapolationSlope;
+  const upperIndex = points.findIndex((point) => point.input >= input);
+  const lower = points[upperIndex - 1];
+  const upper = points[upperIndex];
+  const share = (input - lower.input) / (upper.input - lower.input);
+  return lower.value + (upper.value - lower.value) * share;
+}
+
+function crossValidate(groups) {
+  const actual = [];
+  const predictions = [];
+  for (const heldOut of groups) {
+    const heldKeys = new Set(heldOut.map(observationTupleKey));
+    const training = uniqueObservations.filter((row) => !heldKeys.has(observationTupleKey(row)));
+    const model = fitAdditiveCurves(training);
+    for (const observation of heldOut) {
+      actual.push(observation);
+      predictions.push(predictAdditiveCurves(model, observation));
+    }
+  }
+  return { heldOutPredictionCount: actual.length, ...errorMetrics(actual, predictions) };
+}
+
+function fitLinearAdditive(observations) {
+  const matrix = observations.map((observation) => rarities.flatMap((rarity) => {
+    const indicator = observation.rarity === rarity ? 1 : 0;
+    return [indicator, indicator * observation.dragonLevel, indicator * observation.starRank];
+  }));
+  return solveNormalEquations(matrix, observations.map((observation) => observation.displayedPower));
+}
+
+function predictLinearAdditive(coefficients, observation) {
+  const rarityIndex = rarities.indexOf(observation.rarity) * 3;
+  return coefficients[rarityIndex]
+    + coefficients[rarityIndex + 1] * observation.dragonLevel
+    + coefficients[rarityIndex + 2] * observation.starRank;
+}
+
+function frozenV1RuntimeEstimate(input, observations) {
+  const within = (rarity) => {
+    const coefficients = frozenV1.coefficients;
     const atLevel20 = coefficients.rarityIntercept[rarity]
       + coefficients.rarityLevelSlope[rarity] * 20
       + coefficients.sharedStarRankSlope * input.starRank;
@@ -247,87 +431,121 @@ function runtimeEstimate(coefficients, input, observations = uniqueObservations)
       .filter((observation) => observation.starRank >= input.starRank && observation.dragonLevel >= input.dragonLevel)
       .map((observation) => observation.displayedPower);
     const upper = upperValues.length > 0 ? Math.min(...upperValues) : Number.POSITIVE_INFINITY;
-    return Math.round(Math.max(lower, Math.min(modeled, upper)) / 10) * 10;
+    return roundPower(Math.max(lower, Math.min(modeled, upper)));
   };
+  const exact = observations.find((observation) => observationTupleKey(observation) === observationTupleKey(input));
+  if (exact) return exact.displayedPower;
   const rare = within('Rare');
   const epic = Math.max(within('Epic'), rare);
   const legendary = Math.max(within('Legendary'), epic);
   return input.rarity === 'Legendary' ? legendary : input.rarity === 'Epic' ? epic : rare;
 }
 
-function classifyConfidence(input) {
-  const exact = uniqueObservations.some((observation) => observation.rarity === input.rarity
-    && observation.starRank === input.starRank
-    && observation.dragonLevel === input.dragonLevel);
-  if (exact) return { confidence: 'observed', basis: 'exact-observation' };
-  const envelope = observedEnvelopes[input.rarity];
-  const outsideEnvelope = input.starRank < envelope.starRank.minimum
-    || input.starRank > envelope.starRank.maximum
-    || input.dragonLevel < envelope.dragonLevel.minimum
-    || input.dragonLevel > envelope.dragonLevel.maximum;
-  return outsideEnvelope
-    ? { confidence: 'low', basis: 'extrapolation' }
-    : { confidence: 'modeled', basis: 'interpolation' };
-}
-
-function auditRuntimeGrid(coefficients) {
+function auditRuntimeGrid() {
+  const powers = [];
   let monotonicityViolations = 0;
   let rarityOrderViolations = 0;
   let invalidEstimateCount = 0;
-  let checkedEstimateCount = 0;
   for (const rarity of rarities) {
-    for (let starRank = supportedGrid.starRankMinimum; starRank <= supportedGrid.starRankMaximum; starRank += 1) {
-      for (let dragonLevel = supportedGrid.dragonLevelMinimum; dragonLevel <= supportedGrid.dragonLevelAuditMaximum; dragonLevel += 1) {
-        const current = runtimeEstimate(coefficients, { rarity, starRank, dragonLevel });
-        checkedEstimateCount += 1;
-        if (!Number.isFinite(current) || current <= 0) invalidEstimateCount += 1;
-        if (starRank < supportedGrid.starRankMaximum && runtimeEstimate(coefficients, { rarity, starRank: starRank + 1, dragonLevel }) < current) monotonicityViolations += 1;
-        if (dragonLevel < supportedGrid.dragonLevelAuditMaximum && runtimeEstimate(coefficients, { rarity, starRank, dragonLevel: dragonLevel + 1 }) < current) monotonicityViolations += 1;
+    for (let starRank = 1; starRank <= 10; starRank += 1) {
+      for (let dragonLevel = 0; dragonLevel <= 1000; dragonLevel += 1) {
+        const current = runtimeGeneratedEstimate({ rarity, starRank, dragonLevel });
+        powers.push(current);
+        if (!Number.isFinite(current) || current <= 0 || current % 10 !== 0) invalidEstimateCount += 1;
+        if (starRank < 10 && runtimeGeneratedEstimate({ rarity, starRank: starRank + 1, dragonLevel }) < current) monotonicityViolations += 1;
+        if (dragonLevel < 1000 && runtimeGeneratedEstimate({ rarity, starRank, dragonLevel: dragonLevel + 1 }) < current) monotonicityViolations += 1;
       }
     }
   }
   for (let starRank = 1; starRank <= 10; starRank += 1) {
-    for (let dragonLevel = 0; dragonLevel <= supportedGrid.dragonLevelAuditMaximum; dragonLevel += 1) {
-      const legendary = runtimeEstimate(coefficients, { rarity: 'Legendary', starRank, dragonLevel });
-      const epic = runtimeEstimate(coefficients, { rarity: 'Epic', starRank, dragonLevel });
-      const rare = runtimeEstimate(coefficients, { rarity: 'Rare', starRank, dragonLevel });
+    for (let dragonLevel = 0; dragonLevel <= 1000; dragonLevel += 1) {
+      const legendary = runtimeGeneratedEstimate({ rarity: 'Legendary', starRank, dragonLevel });
+      const epic = runtimeGeneratedEstimate({ rarity: 'Epic', starRank, dragonLevel });
+      const rare = runtimeGeneratedEstimate({ rarity: 'Rare', starRank, dragonLevel });
       if (legendary < epic || epic < rare) rarityOrderViolations += 1;
     }
   }
-  const exactObservationMismatches = uniqueObservations.filter((observation) => runtimeEstimate(coefficients, observation) !== observation.displayedPower).length;
   return {
     ...supportedGrid,
-    checkedEstimateCount,
+    checkedEstimateCount: powers.length,
     invalidEstimateCount,
     monotonicityViolations,
     rarityOrderViolations,
-    exactObservationMismatches,
-    analyticalExtension: 'All level slopes and the low-level scale are nonnegative; empirical bounds and rarity projection are monotone max/min operations, so the checks extend to every nonnegative integer level.',
+    exactObservationMismatches: uniqueObservations.filter((observation) =>
+      runtimeGeneratedEstimate(observation) !== observation.displayedPower,
+    ).length,
+    numericalGridFingerprint: fnv1a64(JSON.stringify(powers)),
   };
 }
 
-function candidateGridChecks(definition, coefficients) {
-  let monotonicityViolations = 0;
-  let rarityOrderViolations = 0;
-  let invalidEstimateCount = 0;
-  const estimate = (rarity, starRank, dragonLevel) => predict(definition, coefficients, { rarity, starRank, dragonLevel, displayedPower: 0 });
-  for (const rarity of rarities) {
-    for (let starRank = 1; starRank <= 10; starRank += 1) {
-      for (let dragonLevel = 1; dragonLevel <= 100; dragonLevel += 1) {
-        const current = estimate(rarity, starRank, dragonLevel);
-        if (!Number.isFinite(current) || current <= 0) invalidEstimateCount += 1;
-        if (starRank < 10 && estimate(rarity, starRank + 1, dragonLevel) < current) monotonicityViolations += 1;
-        if (dragonLevel < 100 && estimate(rarity, starRank, dragonLevel + 1) < current) monotonicityViolations += 1;
-      }
+function repeatedDifferenceChecks(observations) {
+  const power = (rarity, starRank, dragonLevel) => observations.find((row) =>
+    row.rarity === rarity && row.starRank === starRank && row.dragonLevel === dragonLevel,
+  )?.displayedPower;
+  const difference = (rarity, leftStar, leftLevel, rightStar, rightLevel) =>
+    power(rarity, rightStar, rightLevel) - power(rarity, leftStar, leftLevel);
+  return {
+    legendaryStar1To2At35: difference('Legendary', 1, 35, 2, 35),
+    legendaryStar1To2At36: difference('Legendary', 1, 36, 2, 36),
+    legendaryStar1To2At37: difference('Legendary', 1, 37, 2, 37),
+    legendaryLevel35To36Star1: difference('Legendary', 1, 35, 1, 36),
+    legendaryLevel35To36Star2: difference('Legendary', 2, 35, 2, 36),
+    epicStar2To3At31: difference('Epic', 2, 31, 3, 31),
+    epicStar2To3At32: difference('Epic', 2, 32, 3, 32),
+    epicLevel31To32Star2: difference('Epic', 2, 31, 2, 32),
+    epicLevel31To32Star3: difference('Epic', 3, 31, 3, 32),
+    epicLevel36To37Star6: difference('Epic', 6, 36, 6, 37),
+    rareStar3To4At29: difference('Rare', 3, 29, 4, 29),
+    rareStar3To4At30: difference('Rare', 3, 30, 4, 30),
+    rareStar3To4At31: difference('Rare', 3, 31, 4, 31),
+    rareLevel30To31Star3: difference('Rare', 3, 30, 3, 31),
+    rareLevel30To31Star4: difference('Rare', 4, 30, 4, 31),
+    rareLevel30To31Star7: difference('Rare', 7, 30, 7, 31),
+  };
+}
+
+function buildTransitionDeltaMetrics(observations, predictions) {
+  const pairs = [];
+  for (let left = 0; left < observations.length; left += 1) {
+    for (let right = left + 1; right < observations.length; right += 1) {
+      const a = observations[left];
+      const b = observations[right];
+      if (a.rarity !== b.rarity) continue;
+      if (a.starRank !== b.starRank && a.dragonLevel !== b.dragonLevel) continue;
+      const observedDelta = b.displayedPower - a.displayedPower;
+      const predictedDelta = predictions[right] - predictions[left];
+      pairs.push({ observedDelta, predictedDelta, error: predictedDelta - observedDelta });
     }
   }
-  for (let starRank = 1; starRank <= 10; starRank += 1) {
-    for (let dragonLevel = 1; dragonLevel <= 100; dragonLevel += 1) {
-      if (estimate('Legendary', starRank, dragonLevel) < estimate('Epic', starRank, dragonLevel)
-        || estimate('Epic', starRank, dragonLevel) < estimate('Rare', starRank, dragonLevel)) rarityOrderViolations += 1;
-    }
+  return {
+    transitionCount: pairs.length,
+    meanAbsoluteDeltaError: round(mean(pairs.map((pair) => Math.abs(pair.error))), 4),
+    maximumAbsoluteDeltaError: round(Math.max(...pairs.map((pair) => Math.abs(pair.error))), 4),
+  };
+}
+
+function assertGeneratedCurves(fitted) {
+  if (JSON.stringify(fitted.starCurves) !== JSON.stringify(ESTIMATED_POWER_STAR_CURVES)
+    || JSON.stringify(fitted.levelCurves) !== JSON.stringify(ESTIMATED_POWER_LEVEL_CURVES)
+    || JSON.stringify(fitted.extrapolationSlopes) !== JSON.stringify(ESTIMATED_POWER_EXTRAPOLATION_SLOPES)) {
+    throw new Error(`Generated curve artifact is stale. Fitted: ${JSON.stringify(fitted)}.`);
   }
-  return { starRanks: '1-10', dragonLevels: '1-100', monotonicityViolations, rarityOrderViolations, invalidEstimateCount };
+}
+
+function minimumPositiveStarSlope(components) {
+  const slopes = components.flatMap((component) => component.starRanks.slice(1).map((starRank, index) => {
+    const previous = component.starRanks[index];
+    return (component.starComponents[String(starRank)] - component.starComponents[String(previous)])
+      / (starRank - previous);
+  })).filter((value) => value > 0);
+  return slopes.length > 0 ? Math.min(...slopes) : undefined;
+}
+
+function minimumPositiveCurveSlope(points) {
+  const slopes = points.slice(1).map((point, index) =>
+    (point.value - points[index].value) / (point.input - points[index].input),
+  ).filter((value) => value > 0);
+  return slopes.length > 0 ? Math.min(...slopes) : undefined;
 }
 
 function errorMetrics(observations, predictions) {
@@ -343,12 +561,23 @@ function errorMetrics(observations, predictions) {
 }
 
 function groupedResidualMetrics(rows, keyFor) {
-  return Object.fromEntries([...Map.groupBy(rows, keyFor)].sort(([left], [right]) => left < right ? -1 : left > right ? 1 : 0).map(([key, group]) => [key, {
+  return Object.fromEntries(groupBy(rows, keyFor).map((group) => [keyFor(group[0]), {
     count: group.length,
     meanResidual: round(mean(group.map((row) => row.residual)), 4),
     meanAbsoluteError: round(mean(group.map((row) => row.absoluteError)), 4),
     mapePercent: round(mean(group.map((row) => row.percentageError)), 6),
   }]));
+}
+
+function groupBy(values, keyFor) {
+  const groups = new Map();
+  for (const value of values) {
+    const key = keyFor(value);
+    const group = groups.get(key) ?? [];
+    group.push(value);
+    groups.set(key, group);
+  }
+  return [...groups.entries()].sort(([left], [right]) => String(left).localeCompare(String(right))).map(([, group]) => group);
 }
 
 function solveNormalEquations(matrix, target) {
@@ -372,35 +601,86 @@ function solveNormalEquations(matrix, target) {
   return augmented.map((row) => row[width]);
 }
 
-async function writeGeneratedModel(nextObservationHash, nextModelHash, coefficients) {
+async function writeGeneratedIdentities(nextObservationHash, nextModelHash, nextGridFingerprint) {
   const path = `${repositoryRoot}/src/power/generatedDragonPowerModel.ts`;
   let source = await readFile(path, 'utf8');
   source = source
-    .replace(/Legendary: -?[\d.]+,/, `Legendary: ${coefficients.rarityIntercept.Legendary},`)
-    .replace(/Epic: -?[\d.]+,/, `Epic: ${coefficients.rarityIntercept.Epic},`)
-    .replace(/Rare: -?[\d.]+,/, `Rare: ${coefficients.rarityIntercept.Rare},`)
-    .replace(/(rarityLevelSlope: \{[\s\S]*?Legendary:) -?[\d.]+,/, `$1 ${coefficients.rarityLevelSlope.Legendary},`)
-    .replace(/(rarityLevelSlope: \{[\s\S]*?Epic:) -?[\d.]+,/, `$1 ${coefficients.rarityLevelSlope.Epic},`)
-    .replace(/(rarityLevelSlope: \{[\s\S]*?Rare:) -?[\d.]+,/, `$1 ${coefficients.rarityLevelSlope.Rare},`)
-    .replace(/sharedStarRankSlope: -?[\d.]+,/, `sharedStarRankSlope: ${coefficients.sharedStarRankSlope},`)
     .replace(/ESTIMATED_POWER_OBSERVATION_HASH = '[^']+'/, `ESTIMATED_POWER_OBSERVATION_HASH = '${nextObservationHash}'`)
-    .replace(/ESTIMATED_POWER_MODEL_HASH = '[^']+'/, `ESTIMATED_POWER_MODEL_HASH = '${nextModelHash}'`);
+    .replace(/ESTIMATED_POWER_MODEL_HASH = '[^']+'/, `ESTIMATED_POWER_MODEL_HASH = '${nextModelHash}'`)
+    .replace(/ESTIMATED_POWER_NUMERICAL_GRID_FINGERPRINT = '[^']+'/, `ESTIMATED_POWER_NUMERICAL_GRID_FINGERPRINT = '${nextGridFingerprint}'`);
   await writeFile(path, source);
 }
 
-function renderMarkdown(auditReport) {
-  const selected = auditReport.selectedModel;
-  const observationRows = auditReport.observations.map((row) => `| ${row.rarity} | ${row.starRank} | ${row.dragonLevel} | ${row.displayedPower} | ${row.provenance.join(', ')} | ${row.sampleCount} | ${row.fittedPower} | ${row.residual} | ${row.percentageError}% |`).join('\n');
-  const candidateRows = auditReport.candidateModels.map((candidate) => `| ${candidate.id} | ${candidate.parameterCount} | ${candidate.trainingMetrics.mapePercent}% | ${candidate.trainingMetrics.maximumAbsolutePercentageErrorPercent}% | ${candidate.leaveOneOutMetrics.mapePercent}% | ${candidate.gridChecks.monotonicityViolations} | ${candidate.gridChecks.rarityOrderViolations} | ${candidate.selected ? 'Selected' : 'Not selected'} |`).join('\n');
-  const confidenceRows = auditReport.confidenceExamples.map((example) => `| ${example.rarity} | ${example.starRank} | ${example.dragonLevel} | ${example.confidence} | ${example.basis} |`).join('\n');
-  return `# Estimated Dragon Power v1 audit\n\n> Estimated Power is an unofficial empirical approximation based on observed game values. It is separate from Formation Rating and is not combat simulation.\n\n- Model version: \`${auditReport.modelVersion}\`\n- Observation hash: \`${auditReport.observationHash}\`\n- Model hash: \`${auditReport.modelHash}\`\n- Raw samples: ${auditReport.rawSampleCount}\n- Unique fitting combinations: ${auditReport.uniqueObservationCount}\n- Deduplicated samples: ${auditReport.duplicateSampleCount}\n\n## Candidate selection\n\n| Candidate | Parameters | Training MAPE | Training max APE | LOO MAPE | Monotonicity violations | Rarity-order violations | Decision |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |\n${candidateRows}\n\nThe selected family is the simplest candidate meeting the training guardrails after a transparent monotone runtime envelope. The shared power law misses the maximum-error guardrail; independent rarity power laws create rarity-order crossings. The selected model's leave-one-out prediction refits without the held-out unique combination and excludes that combination from the empirical envelope.\n\n## Frozen formula\n\n${selected.formula}\n\n- Low-level rule: ${selected.lowLevelExtrapolation}\n- Runtime guardrails: ${selected.runtimeGuardrails}\n- Coefficients: \`${JSON.stringify(selected.coefficients)}\`\n- Training metrics: \`${JSON.stringify(selected.trainingMetrics)}\`\n- Leave-one-unique-combination-out metrics: \`${JSON.stringify(selected.leaveOneOutMetrics)}\`\n\n## Observations and residuals\n\n| Rarity | Stars | Level | Observed | Provenance | Samples | Base fit | Residual | Absolute % error |\n| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: |\n${observationRows}\n\n## Structural checks\n\n- Checked estimates: ${auditReport.gridChecks.checkedEstimateCount}\n- Invalid/nonpositive estimates: ${auditReport.gridChecks.invalidEstimateCount}\n- Monotonicity violations: ${auditReport.gridChecks.monotonicityViolations}\n- Rarity-order violations: ${auditReport.gridChecks.rarityOrderViolations}\n- Exact-observation mismatches: ${auditReport.gridChecks.exactObservationMismatches}\n- Observation-order reversal: ${auditReport.validationChecks.observationOrderReversalMatches ? 'PASS' : 'FAIL'}\n- Invalid input rejection: ${auditReport.validationChecks.invalidInputCasesRejected ? 'PASS' : 'FAIL'}\n- Extension proof: ${auditReport.gridChecks.analyticalExtension}\n\n## Confidence contract\n\nExact observed rarity/Star Rank/Dragon Level tuples are \`observed\`. Non-exact tuples inside that rarity's deduplicated observed Star Rank and Dragon Level envelope are \`modeled\`; values outside either boundary are low-confidence \`extrapolation\`. Envelopes: \`${JSON.stringify(auditReport.confidenceContract.observedEnvelopes)}\`. Habit Levels, notes, and dragon identity are not model inputs.\n\n| Rarity | Stars | Level | Confidence | Basis |\n| --- | ---: | ---: | --- | --- |\n${confidenceRows}\n`;
+function renderMarkdown(report) {
+  const metrics = (value) => `MAE ${value.meanAbsoluteError}; MAPE ${value.mapePercent}%; max APE ${value.maximumAbsolutePercentageErrorPercent}%; RMSE ${value.rootMeanSquaredError}`;
+  const components = rarities.flatMap((rarity) => report.supportGraph[rarity].components.map((component) =>
+    `| ${rarity} | ${component.id} | ${component.starRanks.join(', ')} | ${component.dragonLevels.join(', ')} | ${component.edgeCount} | ${component.maximumAbsoluteResidual} | ${component.uniquelyIdentifiableAfterGauge ? 'Yes' : 'No'} |`,
+  )).join('\n');
+  const observations = report.observations.map((row) =>
+    `| ${row.rarity} | ${row.starRank} | ${row.dragonLevel} | ${row.displayedPower} | ${row.provenance.join(', ')} | ${row.sampleCount} | ${row.fittedPower} | ${row.residual} |`,
+  ).join('\n');
+  return `# Estimated Dragon Power v2 audit
+
+> Estimated Power is an unofficial empirical approximation. It is separate from Formation Rating and is not combat simulation.
+
+- Model version: \`${report.modelVersion}\`
+- Observation hash: \`${report.observationHash}\`
+- Model hash: \`${report.modelHash}\`
+- Numerical grid fingerprint: \`${report.numericalGridFingerprint}\`
+- Observations: ${report.rawSampleCount} raw provenance samples; ${report.uniqueObservationCount} unique progression tuples.
+
+## Candidate comparison
+
+- Frozen v1 historical holdout (${report.historicalV1Benchmark.genuinelyNewUniqueCombinationCount} genuinely new tuples): ${metrics(report.historicalV1Benchmark.holdoutMetrics)}.
+- Rarity-specific linear additive training: ${metrics(report.candidateModels[1].trainingMetrics)}; leave-one-unique-out: ${metrics(report.candidateModels[1].leaveOneUniqueCombinationOutMetrics)}.
+- Selected rarity-specific additive curves training before exact override: ${metrics(report.selectedModel.trainingMetrics)}.
+- Selected leave-one-unique-out: ${metrics(report.selectedModel.leaveOneUniqueCombinationOutMetrics)}.
+- Selected leave-one-level-anchor-out: ${metrics(report.selectedModel.leaveOneLevelAnchorOutMetrics)}.
+- Selected leave-one-Star-anchor-out: ${metrics(report.selectedModel.leaveOneStarAnchorOutMetrics)}.
+- Selected leave-one-upgrade-endpoint-out: ${metrics(report.selectedModel.leaveOneUpgradeEndpointOutMetrics)}.
+
+The additive curve family is selected because the support graph demonstrates exact Star-plus-Level structure while the linear candidate smooths away observed plateaus and nonuniform increments. Zero training error is structural fit, not evidence of generalization; the held-out metrics above are reported separately.
+
+## Support graph and identifiability
+
+| Rarity | Component | Stars | Levels | Edges | Max cycle residual | Unique after gauge |
+| --- | --- | --- | --- | ---: | ---: | --- |
+${components}
+
+Legendary and Rare each form one connected component. Epic Star 1 at Levels 20-21 is disconnected from Epic Stars 2, 3, 4, and 6 at Levels 25-38. Therefore the absolute Epic Star 1 to Star 2 difference is not identified. The Tairax Star 1 Level 20 to Star 2 Level 25 change alters both variables and is not treated as an independent Star or Level rule.
+
+## Frozen model
+
+- Star curves: \`${JSON.stringify(report.selectedModel.starCurves)}\`
+- Level curves: \`${JSON.stringify(report.selectedModel.levelCurves)}\`
+- Epic bridge: infer +${report.selectedModel.completionRule.epicBridge.inferredStarRankGain} by copying the nearest directly identified adjacent Epic Star increment (Star 2 to 3). This implies +${report.selectedModel.completionRule.epicBridge.impliedLevel21To25Gain} across Levels 21 to 25 and is modeled inference, not an observed game rule.
+- Bridge sensitivity: \`${JSON.stringify(report.selectedModel.completionRule.epicBridge.sensitivityAlternatives)}\`.
+- Interpolation: deterministic piecewise-linear interpolation between frozen anchors.
+- Extrapolation: below Level 20 scale the Level-20 total by \`max(1, level) / 20\`; otherwise use the smallest positive observed per-unit slope for that rarity and axis.
+- Exact tuples: return observed Power with \`observed\` confidence.
+- Confidence: non-exact tuples inside one connected support component are \`modeled\`; bridges and out-of-range values are \`low\`.
+- Rounding and guards: nearest 10, positive monotone curves, then project Legendary >= Epic >= Rare.
+
+## Structural validation
+
+- Maximum additive residual: ${report.additiveChecks.maximumAdditiveResidual}.
+- Transition deltas: ${report.transitionDeltaMetrics.transitionCount}; mean absolute error ${report.transitionDeltaMetrics.meanAbsoluteDeltaError}; maximum ${report.transitionDeltaMetrics.maximumAbsoluteDeltaError}.
+- Full grid: ${report.gridChecks.checkedEstimateCount} estimates through Level 1000; ${report.gridChecks.invalidEstimateCount} invalid; ${report.gridChecks.monotonicityViolations} monotonicity violations; ${report.gridChecks.rarityOrderViolations} rarity-order violations.
+- Exact observation mismatches: ${report.gridChecks.exactObservationMismatches}.
+- Observation/model order reversal: ${report.validationChecks.observationOrderReversalMatches && report.validationChecks.modelOrderReversalMatches ? 'PASS' : 'FAIL'}.
+
+## Observations and provenance
+
+| Rarity | Stars | Level | Observed | Provenance | Samples | Raw curve | Residual |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: |
+${observations}
+`;
 }
 
-function rarityIndicators(rarity) { return rarities.map((candidate) => candidate === rarity ? 1 : 0); }
+function rejectsEstimate(input) { return !isValidProgression(input); }
 function isValidProgression(input) { return rarities.includes(input.rarity) && Number.isInteger(input.starRank) && input.starRank >= 1 && input.starRank <= 10 && Number.isInteger(input.dragonLevel) && input.dragonLevel >= 0; }
-function dot(left, right) { return left.reduce((total, value, index) => total + value * right[index], 0); }
+function fnv1a64(value) { let hash = 0xcbf29ce484222325n; const prime = 0x100000001b3n; for (let index = 0; index < value.length; index += 1) { hash ^= BigInt(value.charCodeAt(index)); hash = BigInt.asUintN(64, hash * prime); } return `fnv1a64:${hash.toString(16).padStart(16, '0')}`; }
+function roundPower(value) { return Math.round(value / 10) * 10; }
 function mean(values) { return values.reduce((total, value) => total + value, 0) / values.length; }
 function median(values) { const sorted = [...values].sort((a, b) => a - b); return sorted.length % 2 === 1 ? sorted[(sorted.length - 1) / 2] : mean(sorted.slice(sorted.length / 2 - 1, sorted.length / 2 + 1)); }
 function round(value, digits) { return Number(value.toFixed(digits)); }
-function assertNear(left, right, label) { if (Math.abs(left - right) > 1e-8) throw new Error(`Frozen ${label} ${right} does not match fitted ${left}.`); }
-function fnv1a64(value) { let hash = 0xcbf29ce484222325n; const prime = 0x100000001b3n; for (let index = 0; index < value.length; index += 1) { hash ^= BigInt(value.charCodeAt(index)); hash = BigInt.asUintN(64, hash * prime); } return `fnv1a64:${hash.toString(16).padStart(16, '0')}`; }

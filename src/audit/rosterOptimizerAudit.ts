@@ -1,5 +1,11 @@
 import { dragons } from '../data/dragons';
 import type { OwnedDragon } from '../models/dragon';
+import type { DragonRarity } from '../models/dragon';
+import {
+  DRAGON_POWER_OBSERVATIONS,
+  deduplicateDragonPowerObservations,
+} from '../power/dragonPowerObservations';
+import { estimateDragonPower } from '../power/estimatedDragonPower';
 import { ROSTER_OPTIMIZER_MIP_GAP_OPTIONS } from '../optimizer/highsExactOptions';
 import { optimizeCurrentRoster } from '../optimizer/rosterOptimizer';
 import type {
@@ -61,7 +67,7 @@ export async function runRosterOptimizerAudit() {
     }
   }
   return {
-    auditVersion: '0.16.0',
+    auditVersion: '0.17.0',
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     fixtures: reports,
     checks: {
@@ -100,11 +106,40 @@ export async function runPowerAwareRosterOptimizerAudit(fixture: PowerAwareAudit
     throw new Error(`${fixture} Power-Aware audit did not produce a complete result.`);
   }
   validatePowerAwareResult(result);
+  const estimatedPowerComparison = dragons.map((dragon) => {
+    const progression = roster[dragon.id]!;
+    const input = {
+      rarity: dragon.rarity,
+      starRank: progression.starRank!,
+      dragonLevel: progression.reignLevel!,
+    };
+    const beforeV2 = frozenV1Estimate(input);
+    const afterV2 = estimateDragonPower(input);
+    return {
+      dragonId: dragon.id,
+      rarity: dragon.rarity,
+      starRank: input.starRank,
+      dragonLevel: input.dragonLevel,
+      beforeV2,
+      afterV2,
+      powerDelta: afterV2.power - beforeV2.power,
+      confidenceChanged: beforeV2.confidence !== afterV2.confidence,
+    };
+  });
   return {
-    auditVersion: '0.16.0',
+    auditVersion: '0.17.0',
     fixture,
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     mipGaps: ROSTER_OPTIMIZER_MIP_GAP_OPTIONS,
+    estimatedPowerComparison,
+    primaryPowerCutoffBeforeV2: powerCutoff(estimatedPowerComparison.map((row) => ({
+      dragonId: row.dragonId,
+      power: row.beforeV2.power,
+    }))),
+    primaryPowerCutoffAfterV2: powerCutoff(estimatedPowerComparison.map((row) => ({
+      dragonId: row.dragonId,
+      power: row.afterV2.power,
+    }))),
     result: fixtureReport(fixture, result),
   };
 }
@@ -285,5 +320,85 @@ function addRarityCounts(left: Record<string, number>, right: Record<string, num
     Legendary: left.Legendary! + right.Legendary!,
     Epic: left.Epic! + right.Epic!,
     Rare: left.Rare! + right.Rare!,
+  };
+}
+
+const frozenV1UniqueObservations = deduplicateDragonPowerObservations(
+  DRAGON_POWER_OBSERVATIONS.slice(0, 31),
+);
+
+function frozenV1Estimate(input: {
+  rarity: DragonRarity;
+  starRank: number;
+  dragonLevel: number;
+}): { power: number; confidence: 'observed' | 'modeled' | 'low' } {
+  const coefficients = {
+    rarityIntercept: {
+      Legendary: -5345.526402998704,
+      Epic: -3518.798289613967,
+      Rare: -8030.898292604834,
+    },
+    rarityLevelSlope: {
+      Legendary: 712.604230387158,
+      Epic: 491.403841476919,
+      Rare: 395.629654678922,
+    },
+    sharedStarRankSlope: 2434.713675015537,
+  } as const;
+  const within = (rarity: DragonRarity) => {
+    const atLevel20 = coefficients.rarityIntercept[rarity]
+      + coefficients.rarityLevelSlope[rarity] * 20
+      + coefficients.sharedStarRankSlope * input.starRank;
+    const modeled = input.dragonLevel < 20
+      ? atLevel20 * Math.max(1, input.dragonLevel) / 20
+      : coefficients.rarityIntercept[rarity]
+        + coefficients.rarityLevelSlope[rarity] * input.dragonLevel
+        + coefficients.sharedStarRankSlope * input.starRank;
+    const sameRarity = frozenV1UniqueObservations.filter((row) => row.rarity === rarity);
+    const lower = Math.max(10, ...sameRarity
+      .filter((row) => row.starRank <= input.starRank && row.dragonLevel <= input.dragonLevel)
+      .map((row) => row.displayedPower));
+    const upperValues = sameRarity
+      .filter((row) => row.starRank >= input.starRank && row.dragonLevel >= input.dragonLevel)
+      .map((row) => row.displayedPower);
+    const upper = upperValues.length > 0 ? Math.min(...upperValues) : Number.POSITIVE_INFINITY;
+    return Math.round(Math.max(lower, Math.min(modeled, upper)) / 10) * 10;
+  };
+  const exact = frozenV1UniqueObservations.find((row) =>
+    row.rarity === input.rarity
+      && row.starRank === input.starRank
+      && row.dragonLevel === input.dragonLevel,
+  );
+  const rare = within('Rare');
+  const epic = Math.max(within('Epic'), rare);
+  const legendary = Math.max(within('Legendary'), epic);
+  const power = exact?.displayedPower ?? (input.rarity === 'Legendary'
+    ? legendary
+    : input.rarity === 'Epic'
+      ? epic
+      : rare);
+  const envelope = input.rarity === 'Rare'
+    ? { stars: [3, 7], levels: [20, 30] }
+    : input.rarity === 'Epic'
+      ? { stars: [1, 6], levels: [20, 36] }
+      : { stars: [1, 4], levels: [20, 36] };
+  const low = input.starRank < envelope.stars[0]!
+    || input.starRank > envelope.stars[1]!
+    || input.dragonLevel < envelope.levels[0]!
+    || input.dragonLevel > envelope.levels[1]!;
+  return { power, confidence: exact ? 'observed' : low ? 'low' : 'modeled' };
+}
+
+function powerCutoff(rows: { dragonId: string; power: number }[]) {
+  const ranked = [...rows].sort((left, right) =>
+    right.power - left.power || left.dragonId.localeCompare(right.dragonId),
+  );
+  const cutoffPower = ranked[14]!.power;
+  return {
+    cutoffPower,
+    aboveCutoffDragonIds: ranked.filter((row) => row.power > cutoffPower).map((row) => row.dragonId).sort(),
+    cutoffTiedDragonIds: ranked.filter((row) => row.power === cutoffPower).map((row) => row.dragonId).sort(),
+    belowCutoffDragonIds: ranked.filter((row) => row.power < cutoffPower).map((row) => row.dragonId).sort(),
+    requiredCutoffTieCount: 15 - ranked.filter((row) => row.power > cutoffPower).length,
   };
 }

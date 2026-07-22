@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.17.0 - 2026-07-22
+
+- Expanded Estimated Power from 31 to 59 provenance observations and from 25 to 42 unique progression tuples, preserving duplicate provenance/sample counts, normalizing Sunfyre, and recording Dawnseeker at Star 4 Level 29 Power 13000.
+- Replaced v1's linear fit with frozen rarity-specific additive Star and Level curves. The support-graph audit proves exact additive consistency, preserves observed plateaus and nonuniform increments, and explicitly documents the disconnected Epic Star 1 component and inferred +1600 bridge.
+- Added support-aware confidence, piecewise-linear interpolation, conservative positive-slope extrapolation, full Level 0-1000 monotonicity/rarity-order validation, historical v1 holdouts, v2 cross-validation, transition-delta metrics, new observation/model/grid identities, and preserved v1 audit artifacts.
+- Updated Power-Aware fingerprints and forward-only mixed, maxed, and all-one comparisons. Optimizer objectives, cutoff and Backup phases, MILP constraints, stable keys, zero-gap behavior, strategy/default values, contract 3, Formation Rating v2, canonical data, schemas, persistence, Supabase migrations, and Habit Level behavior are unchanged.
+
 ## 0.16.0 - 2026-07-22
 
 - Added the experimental Power-Aware 5 + Backup 5 strategy. Estimated Power chooses the maximum-power 15-dragon Primary pool, then unchanged Formation Rating v2 organizes that pool; rarity and confidence remain diagnostics only.
