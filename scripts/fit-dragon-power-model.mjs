@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import {
   DRAGON_POWER_OBSERVATIONS,
   deduplicateDragonPowerObservations,
+  deriveEstimatedPowerObservedEnvelopes,
   hashDragonPowerObservations,
 } from '../src/power/dragonPowerObservations.ts';
 import {
@@ -18,6 +19,7 @@ const writeArtifacts = process.argv.includes('--write');
 const rarities = ['Legendary', 'Epic', 'Rare'];
 const uniqueObservations = deduplicateDragonPowerObservations();
 const observationHash = hashDragonPowerObservations();
+const observedEnvelopes = deriveEstimatedPowerObservedEnvelopes();
 const supportedGrid = { starRankMinimum: 1, starRankMaximum: 10, dragonLevelMinimum: 0, dragonLevelAuditMaximum: 1000 };
 
 const candidateDefinitions = [
@@ -61,6 +63,11 @@ const modelHash = fnv1a64(JSON.stringify({
   coefficients: fittedCoefficients,
   lowLevelRule: 'scale-level-20-estimate-by-max(1,level)/20',
   monotoneRule: 'empirical-lower-upper-envelope-then-rare-epic-legendary-projection',
+  exactObservationRule: 'return-deduplicated-displayed-power',
+  roundingRule: 'nearest-10',
+  confidenceRule: 'exact-observation-otherwise-per-rarity-star-and-level-envelope',
+  empiricalEnvelopeDerivation: 'derived-from-deduplicated-observations',
+  observedEnvelopes,
 }));
 const gridChecks = auditRuntimeGrid(fittedCoefficients);
 const validationChecks = {
@@ -114,16 +121,26 @@ const audit = {
   supportedProgression: {
     starRanks: '1-10',
     dragonLevels: 'all nonnegative integers; exhaustive audit through 1000 plus monotone construction',
-    observedStarRanks: '1-7',
-    observedDragonLevels: '20-36',
+  },
+  confidenceContract: {
+    roundingRule: 'nearest-10',
+    confidenceRule: 'exact-observation-otherwise-per-rarity-star-and-level-envelope',
+    empiricalEnvelopeDerivation: 'derived-from-deduplicated-observations',
+    observedEnvelopes,
   },
   gridChecks,
   validationChecks,
   confidenceExamples: [
-    { rarity: 'Legendary', starRank: 4, dragonLevel: 36, confidence: 'observed', basis: 'exact-observation' },
-    { rarity: 'Epic', starRank: 3, dragonLevel: 34, confidence: 'modeled', basis: 'interpolation' },
-    { rarity: 'Rare', starRank: 10, dragonLevel: 1, confidence: 'low', basis: 'extrapolation' },
-  ],
+    { rarity: 'Legendary', starRank: 4, dragonLevel: 35 },
+    { rarity: 'Legendary', starRank: 5, dragonLevel: 35 },
+    { rarity: 'Epic', starRank: 6, dragonLevel: 35 },
+    { rarity: 'Epic', starRank: 7, dragonLevel: 35 },
+    { rarity: 'Rare', starRank: 4, dragonLevel: 29 },
+    { rarity: 'Rare', starRank: 2, dragonLevel: 29 },
+    { rarity: 'Rare', starRank: 4, dragonLevel: 30 },
+    { rarity: 'Rare', starRank: 4, dragonLevel: 31 },
+    { rarity: 'Epic', starRank: 3, dragonLevel: 34 },
+  ].map((input) => ({ ...input, ...classifyConfidence(input) })),
 };
 
 if (writeArtifacts) {
@@ -236,6 +253,21 @@ function runtimeEstimate(coefficients, input, observations = uniqueObservations)
   const epic = Math.max(within('Epic'), rare);
   const legendary = Math.max(within('Legendary'), epic);
   return input.rarity === 'Legendary' ? legendary : input.rarity === 'Epic' ? epic : rare;
+}
+
+function classifyConfidence(input) {
+  const exact = uniqueObservations.some((observation) => observation.rarity === input.rarity
+    && observation.starRank === input.starRank
+    && observation.dragonLevel === input.dragonLevel);
+  if (exact) return { confidence: 'observed', basis: 'exact-observation' };
+  const envelope = observedEnvelopes[input.rarity];
+  const outsideEnvelope = input.starRank < envelope.starRank.minimum
+    || input.starRank > envelope.starRank.maximum
+    || input.dragonLevel < envelope.dragonLevel.minimum
+    || input.dragonLevel > envelope.dragonLevel.maximum;
+  return outsideEnvelope
+    ? { confidence: 'low', basis: 'extrapolation' }
+    : { confidence: 'modeled', basis: 'interpolation' };
 }
 
 function auditRuntimeGrid(coefficients) {
@@ -360,7 +392,8 @@ function renderMarkdown(auditReport) {
   const selected = auditReport.selectedModel;
   const observationRows = auditReport.observations.map((row) => `| ${row.rarity} | ${row.starRank} | ${row.dragonLevel} | ${row.displayedPower} | ${row.provenance.join(', ')} | ${row.sampleCount} | ${row.fittedPower} | ${row.residual} | ${row.percentageError}% |`).join('\n');
   const candidateRows = auditReport.candidateModels.map((candidate) => `| ${candidate.id} | ${candidate.parameterCount} | ${candidate.trainingMetrics.mapePercent}% | ${candidate.trainingMetrics.maximumAbsolutePercentageErrorPercent}% | ${candidate.leaveOneOutMetrics.mapePercent}% | ${candidate.gridChecks.monotonicityViolations} | ${candidate.gridChecks.rarityOrderViolations} | ${candidate.selected ? 'Selected' : 'Not selected'} |`).join('\n');
-  return `# Estimated Dragon Power v1 audit\n\n> Estimated Power is an unofficial empirical approximation based on observed game values. It is separate from Formation Rating and is not combat simulation.\n\n- Model version: \`${auditReport.modelVersion}\`\n- Observation hash: \`${auditReport.observationHash}\`\n- Model hash: \`${auditReport.modelHash}\`\n- Raw samples: ${auditReport.rawSampleCount}\n- Unique fitting combinations: ${auditReport.uniqueObservationCount}\n- Deduplicated samples: ${auditReport.duplicateSampleCount}\n\n## Candidate selection\n\n| Candidate | Parameters | Training MAPE | Training max APE | LOO MAPE | Monotonicity violations | Rarity-order violations | Decision |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |\n${candidateRows}\n\nThe selected family is the simplest candidate meeting the training guardrails after a transparent monotone runtime envelope. The shared power law misses the maximum-error guardrail; independent rarity power laws create rarity-order crossings. The selected model's leave-one-out prediction refits without the held-out unique combination and excludes that combination from the empirical envelope.\n\n## Frozen formula\n\n${selected.formula}\n\n- Low-level rule: ${selected.lowLevelExtrapolation}\n- Runtime guardrails: ${selected.runtimeGuardrails}\n- Coefficients: \`${JSON.stringify(selected.coefficients)}\`\n- Training metrics: \`${JSON.stringify(selected.trainingMetrics)}\`\n- Leave-one-unique-combination-out metrics: \`${JSON.stringify(selected.leaveOneOutMetrics)}\`\n\n## Observations and residuals\n\n| Rarity | Stars | Level | Observed | Provenance | Samples | Base fit | Residual | Absolute % error |\n| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: |\n${observationRows}\n\n## Structural checks\n\n- Checked estimates: ${auditReport.gridChecks.checkedEstimateCount}\n- Invalid/nonpositive estimates: ${auditReport.gridChecks.invalidEstimateCount}\n- Monotonicity violations: ${auditReport.gridChecks.monotonicityViolations}\n- Rarity-order violations: ${auditReport.gridChecks.rarityOrderViolations}\n- Exact-observation mismatches: ${auditReport.gridChecks.exactObservationMismatches}\n- Observation-order reversal: ${auditReport.validationChecks.observationOrderReversalMatches ? 'PASS' : 'FAIL'}\n- Invalid input rejection: ${auditReport.validationChecks.invalidInputCasesRejected ? 'PASS' : 'FAIL'}\n- Extension proof: ${auditReport.gridChecks.analyticalExtension}\n\n## Confidence contract\n\nExact observed rarity/Star Rank/Dragon Level tuples are \`observed\`. Non-exact tuples inside the observed global 1-7 Star Rank and 20-36 Dragon Level envelope are \`modeled\`. Values outside either range are low-confidence \`extrapolation\`. Habit Levels, notes, and dragon identity are not model inputs.\n`;
+  const confidenceRows = auditReport.confidenceExamples.map((example) => `| ${example.rarity} | ${example.starRank} | ${example.dragonLevel} | ${example.confidence} | ${example.basis} |`).join('\n');
+  return `# Estimated Dragon Power v1 audit\n\n> Estimated Power is an unofficial empirical approximation based on observed game values. It is separate from Formation Rating and is not combat simulation.\n\n- Model version: \`${auditReport.modelVersion}\`\n- Observation hash: \`${auditReport.observationHash}\`\n- Model hash: \`${auditReport.modelHash}\`\n- Raw samples: ${auditReport.rawSampleCount}\n- Unique fitting combinations: ${auditReport.uniqueObservationCount}\n- Deduplicated samples: ${auditReport.duplicateSampleCount}\n\n## Candidate selection\n\n| Candidate | Parameters | Training MAPE | Training max APE | LOO MAPE | Monotonicity violations | Rarity-order violations | Decision |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |\n${candidateRows}\n\nThe selected family is the simplest candidate meeting the training guardrails after a transparent monotone runtime envelope. The shared power law misses the maximum-error guardrail; independent rarity power laws create rarity-order crossings. The selected model's leave-one-out prediction refits without the held-out unique combination and excludes that combination from the empirical envelope.\n\n## Frozen formula\n\n${selected.formula}\n\n- Low-level rule: ${selected.lowLevelExtrapolation}\n- Runtime guardrails: ${selected.runtimeGuardrails}\n- Coefficients: \`${JSON.stringify(selected.coefficients)}\`\n- Training metrics: \`${JSON.stringify(selected.trainingMetrics)}\`\n- Leave-one-unique-combination-out metrics: \`${JSON.stringify(selected.leaveOneOutMetrics)}\`\n\n## Observations and residuals\n\n| Rarity | Stars | Level | Observed | Provenance | Samples | Base fit | Residual | Absolute % error |\n| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: |\n${observationRows}\n\n## Structural checks\n\n- Checked estimates: ${auditReport.gridChecks.checkedEstimateCount}\n- Invalid/nonpositive estimates: ${auditReport.gridChecks.invalidEstimateCount}\n- Monotonicity violations: ${auditReport.gridChecks.monotonicityViolations}\n- Rarity-order violations: ${auditReport.gridChecks.rarityOrderViolations}\n- Exact-observation mismatches: ${auditReport.gridChecks.exactObservationMismatches}\n- Observation-order reversal: ${auditReport.validationChecks.observationOrderReversalMatches ? 'PASS' : 'FAIL'}\n- Invalid input rejection: ${auditReport.validationChecks.invalidInputCasesRejected ? 'PASS' : 'FAIL'}\n- Extension proof: ${auditReport.gridChecks.analyticalExtension}\n\n## Confidence contract\n\nExact observed rarity/Star Rank/Dragon Level tuples are \`observed\`. Non-exact tuples inside that rarity's deduplicated observed Star Rank and Dragon Level envelope are \`modeled\`; values outside either boundary are low-confidence \`extrapolation\`. Envelopes: \`${JSON.stringify(auditReport.confidenceContract.observedEnvelopes)}\`. Habit Levels, notes, and dragon identity are not model inputs.\n\n| Rarity | Stars | Level | Confidence | Basis |\n| --- | ---: | ---: | --- | --- |\n${confidenceRows}\n`;
 }
 
 function rarityIndicators(rarity) { return rarities.map((candidate) => candidate === rarity ? 1 : 0); }

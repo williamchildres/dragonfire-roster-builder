@@ -4,7 +4,7 @@
   "modelVersion": "estimated-power-v1",
   "modelFamily": "rarity-level-additive-with-shared-star-contribution-and-monotone-envelope",
   "observationHash": "fnv1a64:57268e00007bfab8",
-  "modelHash": "fnv1a64:0b65e3eac0902891",
+  "modelHash": "fnv1a64:5bf2cc559f2fd940",
   "rawSampleCount": 31,
   "uniqueObservationCount": 25,
   "duplicateSampleCount": 6,
@@ -644,9 +644,44 @@
   },
   "supportedProgression": {
     "starRanks": "1-10",
-    "dragonLevels": "all nonnegative integers; exhaustive audit through 1000 plus monotone construction",
-    "observedStarRanks": "1-7",
-    "observedDragonLevels": "20-36"
+    "dragonLevels": "all nonnegative integers; exhaustive audit through 1000 plus monotone construction"
+  },
+  "confidenceContract": {
+    "roundingRule": "nearest-10",
+    "confidenceRule": "exact-observation-otherwise-per-rarity-star-and-level-envelope",
+    "empiricalEnvelopeDerivation": "derived-from-deduplicated-observations",
+    "observedEnvelopes": {
+      "Legendary": {
+        "starRank": {
+          "minimum": 1,
+          "maximum": 4
+        },
+        "dragonLevel": {
+          "minimum": 20,
+          "maximum": 36
+        }
+      },
+      "Epic": {
+        "starRank": {
+          "minimum": 1,
+          "maximum": 6
+        },
+        "dragonLevel": {
+          "minimum": 20,
+          "maximum": 36
+        }
+      },
+      "Rare": {
+        "starRank": {
+          "minimum": 3,
+          "maximum": 7
+        },
+        "dragonLevel": {
+          "minimum": 20,
+          "maximum": 30
+        }
+      }
+    }
   },
   "gridChecks": {
     "starRankMinimum": 1,
@@ -668,9 +703,58 @@
     {
       "rarity": "Legendary",
       "starRank": 4,
-      "dragonLevel": 36,
+      "dragonLevel": 35,
+      "confidence": "modeled",
+      "basis": "interpolation"
+    },
+    {
+      "rarity": "Legendary",
+      "starRank": 5,
+      "dragonLevel": 35,
+      "confidence": "low",
+      "basis": "extrapolation"
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 6,
+      "dragonLevel": 35,
+      "confidence": "modeled",
+      "basis": "interpolation"
+    },
+    {
+      "rarity": "Epic",
+      "starRank": 7,
+      "dragonLevel": 35,
+      "confidence": "low",
+      "basis": "extrapolation"
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 29,
       "confidence": "observed",
       "basis": "exact-observation"
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 2,
+      "dragonLevel": 29,
+      "confidence": "low",
+      "basis": "extrapolation"
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 30,
+      "confidence": "observed",
+      "basis": "exact-observation"
+    },
+    {
+      "rarity": "Rare",
+      "starRank": 4,
+      "dragonLevel": 31,
+      "confidence": "low",
+      "basis": "extrapolation"
     },
     {
       "rarity": "Epic",
@@ -678,13 +762,6 @@
       "dragonLevel": 34,
       "confidence": "modeled",
       "basis": "interpolation"
-    },
-    {
-      "rarity": "Rare",
-      "starRank": 10,
-      "dragonLevel": 1,
-      "confidence": "low",
-      "basis": "extrapolation"
     }
   ]
 }

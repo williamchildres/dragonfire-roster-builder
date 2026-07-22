@@ -1,6 +1,7 @@
 import type { DragonRarity } from '../models/dragon';
 import {
   deduplicateDragonPowerObservations,
+  ESTIMATED_POWER_OBSERVED_ENVELOPES,
   type UniqueDragonPowerObservation,
 } from './dragonPowerObservations';
 import {
@@ -28,8 +29,7 @@ export interface EstimateDragonPowerInput {
 }
 
 export const ESTIMATED_POWER_SUPPORTED_STAR_RANK = { minimum: 1, maximum: 10 } as const;
-export const ESTIMATED_POWER_OBSERVED_STAR_RANK = { minimum: 1, maximum: 7 } as const;
-export const ESTIMATED_POWER_OBSERVED_DRAGON_LEVEL = { minimum: 20, maximum: 36 } as const;
+export { ESTIMATED_POWER_OBSERVED_ENVELOPES } from './dragonPowerObservations';
 
 const uniqueObservations = deduplicateDragonPowerObservations();
 const observationsByRarity = new Map<DragonRarity, UniqueDragonPowerObservation[]>(
@@ -60,10 +60,11 @@ export function estimateDragonPower(input: EstimateDragonPowerInput): EstimatedD
       && observation.starRank === input.starRank
       && observation.dragonLevel === input.dragonLevel,
   );
-  const outsideEnvelope = input.starRank < ESTIMATED_POWER_OBSERVED_STAR_RANK.minimum
-    || input.starRank > ESTIMATED_POWER_OBSERVED_STAR_RANK.maximum
-    || input.dragonLevel < ESTIMATED_POWER_OBSERVED_DRAGON_LEVEL.minimum
-    || input.dragonLevel > ESTIMATED_POWER_OBSERVED_DRAGON_LEVEL.maximum;
+  const envelope = ESTIMATED_POWER_OBSERVED_ENVELOPES[input.rarity];
+  const outsideEnvelope = input.starRank < envelope.starRank.minimum
+    || input.starRank > envelope.starRank.maximum
+    || input.dragonLevel < envelope.dragonLevel.minimum
+    || input.dragonLevel > envelope.dragonLevel.maximum;
   return {
     power,
     confidence: exact ? 'observed' : outsideEnvelope ? 'low' : 'modeled',

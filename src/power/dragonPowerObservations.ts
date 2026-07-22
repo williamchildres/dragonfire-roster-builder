@@ -17,6 +17,11 @@ export interface UniqueDragonPowerObservation {
   sampleCount: number;
 }
 
+export interface EstimatedPowerObservedEnvelope {
+  starRank: Readonly<{ minimum: number; maximum: number }>;
+  dragonLevel: Readonly<{ minimum: number; maximum: number }>;
+}
+
 export const DRAGON_POWER_OBSERVATIONS: readonly DragonPowerObservation[] = [
   { rarity: 'Legendary', starRank: 4, dragonLevel: 36, displayedPower: 31040, provenance: 'Vhagar' },
   { rarity: 'Legendary', starRank: 3, dragonLevel: 36, displayedPower: 27020, provenance: 'Kalspire' },
@@ -92,6 +97,30 @@ export function deduplicateDragonPowerObservations(
     }))
     .sort(compareObservations);
 }
+
+export function deriveEstimatedPowerObservedEnvelopes(
+  observations: readonly DragonPowerObservation[] = DRAGON_POWER_OBSERVATIONS,
+): Readonly<Record<DragonRarity, EstimatedPowerObservedEnvelope>> {
+  const uniqueObservations = deduplicateDragonPowerObservations(observations);
+  return Object.freeze(Object.fromEntries((['Legendary', 'Epic', 'Rare'] as const).map((rarity) => {
+    const rarityObservations = uniqueObservations.filter((observation) => observation.rarity === rarity);
+    if (rarityObservations.length === 0) {
+      throw new Error(`Estimated Power observations must include at least one ${rarity} tuple.`);
+    }
+    return [rarity, Object.freeze({
+      starRank: Object.freeze({
+        minimum: Math.min(...rarityObservations.map((observation) => observation.starRank)),
+        maximum: Math.max(...rarityObservations.map((observation) => observation.starRank)),
+      }),
+      dragonLevel: Object.freeze({
+        minimum: Math.min(...rarityObservations.map((observation) => observation.dragonLevel)),
+        maximum: Math.max(...rarityObservations.map((observation) => observation.dragonLevel)),
+      }),
+    })] as const;
+  }))) as Readonly<Record<DragonRarity, EstimatedPowerObservedEnvelope>>;
+}
+
+export const ESTIMATED_POWER_OBSERVED_ENVELOPES = deriveEstimatedPowerObservedEnvelopes();
 
 export function hashDragonPowerObservations(
   observations: readonly DragonPowerObservation[] = DRAGON_POWER_OBSERVATIONS,

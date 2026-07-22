@@ -27,4 +27,4 @@ export const ESTIMATED_POWER_MODEL_COEFFICIENTS: Readonly<{
 
 // Generated and validated by scripts/fit-dragon-power-model.mjs.
 export const ESTIMATED_POWER_OBSERVATION_HASH = 'fnv1a64:57268e00007bfab8' as const;
-export const ESTIMATED_POWER_MODEL_HASH = 'fnv1a64:0b65e3eac0902891' as const;
+export const ESTIMATED_POWER_MODEL_HASH = 'fnv1a64:5bf2cc559f2fd940' as const;

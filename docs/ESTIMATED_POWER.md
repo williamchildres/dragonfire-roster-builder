@@ -29,8 +29,10 @@ For Dragon Levels below 20, the level-20 estimate is scaled by `max(1, level) / 
 ## Confidence
 
 - `Observed`: the exact rarity/Star Rank/Dragon Level combination exists in the observation dataset.
-- `Modeled`: the combination is not observed but lies inside the global observed Star Rank 1-7 and Dragon Level 20-36 envelope.
-- `Low`: either input lies outside that observed envelope and the value is extrapolated.
+- `Modeled`: the combination is not observed but lies inside its rarity's observed Star Rank and Dragon Level envelope.
+- `Low`: either input lies outside that rarity-specific envelope and the value is extrapolated.
+
+The envelopes are derived deterministically from deduplicated observations: Legendary Star Rank 1-4 and Dragon Level 20-36; Epic Star Rank 1-6 and Dragon Level 20-36; Rare Star Rank 3-7 and Dragon Level 20-30.
 
 Confidence describes empirical coverage, not combat effectiveness or the reliability of a specific dragon.
 
@@ -40,7 +42,7 @@ The source contains 31 raw observations and 25 unique progression combinations. 
 
 - Model version: `estimated-power-v1`
 - Observation hash: `fnv1a64:57268e00007bfab8`
-- Model hash: `fnv1a64:0b65e3eac0902891`
+- Model hash: `fnv1a64:5bf2cc559f2fd940`
 
 The hashes and generated coefficients are verified by `npm run fit:power`. `npm run audit:power` performs the same bounded deterministic fit plus observation deduplication, training and leave-one-unique-combination-out errors, exact-observation checks, invalid-value checks, observation-order reversal, and grid validation. No optimizer or solver is loaded.
 

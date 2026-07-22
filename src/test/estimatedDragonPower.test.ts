@@ -4,9 +4,13 @@ import { dragons } from '../data/dragons';
 import {
   DRAGON_POWER_OBSERVATIONS,
   deduplicateDragonPowerObservations,
+  deriveEstimatedPowerObservedEnvelopes,
   hashDragonPowerObservations,
 } from '../power/dragonPowerObservations';
-import { estimateDragonPower } from '../power/estimatedDragonPower';
+import {
+  ESTIMATED_POWER_OBSERVED_ENVELOPES,
+  estimateDragonPower,
+} from '../power/estimatedDragonPower';
 import { estimateFormationPower } from '../power/estimatedFormationPower';
 import {
   ESTIMATED_POWER_MODEL_HASH,
@@ -20,6 +24,7 @@ import { simpleSynergyProfiles } from '../synergy/profiles';
 import { buildSemanticRelationships } from '../synergy/semanticRelationships';
 
 describe('Estimated Dragon Power v1', () => {
+  const numericalPowerAuditGridHash = 'fnv1a64:3043ae55f372a7c4';
   it('preserves every supplied observation and exact tuples are observed', () => {
     for (const observation of DRAGON_POWER_OBSERVATIONS) {
       expect(estimateDragonPower(observation)).toMatchObject({
@@ -43,6 +48,16 @@ describe('Estimated Dragon Power v1', () => {
     expect(epicFourAt35?.provenance).toEqual(['Rhysarion', 'Tashix', 'Velar']);
   });
 
+  it('derives deterministic rarity-specific observed envelopes from unique observations', () => {
+    expect(ESTIMATED_POWER_OBSERVED_ENVELOPES).toEqual({
+      Legendary: { starRank: { minimum: 1, maximum: 4 }, dragonLevel: { minimum: 20, maximum: 36 } },
+      Epic: { starRank: { minimum: 1, maximum: 6 }, dragonLevel: { minimum: 20, maximum: 36 } },
+      Rare: { starRank: { minimum: 3, maximum: 7 }, dragonLevel: { minimum: 20, maximum: 30 } },
+    });
+    expect(deriveEstimatedPowerObservedEnvelopes([...DRAGON_POWER_OBSERVATIONS].reverse()))
+      .toEqual(ESTIMATED_POWER_OBSERVED_ENVELOPES);
+  });
+
   it('rejects conflicting displayed values for the same progression combination', () => {
     expect(() => deduplicateDragonPowerObservations([
       { rarity: 'Epic', starRank: 2, dragonLevel: 31, displayedPower: 16540, provenance: 'A' },
@@ -51,8 +66,12 @@ describe('Estimated Dragon Power v1', () => {
   });
 
   it('returns positive integer modeled values rounded to the nearest 10', () => {
-    for (const rarity of ['Legendary', 'Epic', 'Rare'] as const) {
-      const estimate = estimateDragonPower({ rarity, starRank: 5, dragonLevel: 33 });
+    for (const [rarity, starRank, dragonLevel] of [
+      ['Legendary', 4, 35],
+      ['Epic', 5, 33],
+      ['Rare', 5, 29],
+    ] as const) {
+      const estimate = estimateDragonPower({ rarity, starRank, dragonLevel });
       expect(estimate.confidence).toBe('modeled');
       expect(estimate.power).toBeGreaterThan(0);
       expect(Number.isInteger(estimate.power)).toBe(true);
@@ -136,13 +155,37 @@ describe('Estimated Dragon Power v1', () => {
     expect(ESTIMATED_POWER_MODEL_HASH).toMatch(/^fnv1a64:[0-9a-f]{16}$/);
   });
 
-  it('classifies out-of-envelope estimates as low-confidence extrapolation', () => {
-    expect(estimateDragonPower({ rarity: 'Legendary', starRank: 8, dragonLevel: 30 }))
-      .toMatchObject({ confidence: 'low', basis: 'extrapolation' });
-    expect(estimateDragonPower({ rarity: 'Rare', starRank: 4, dragonLevel: 19 }))
-      .toMatchObject({ confidence: 'low', basis: 'extrapolation' });
+  it('classifies confidence against each rarity-specific envelope', () => {
+    expect(estimateDragonPower({ rarity: 'Legendary', starRank: 4, dragonLevel: 35 }))
+      .toMatchObject({ power: 29330, confidence: 'modeled', basis: 'interpolation' });
+    expect(estimateDragonPower({ rarity: 'Legendary', starRank: 5, dragonLevel: 35 }))
+      .toMatchObject({ power: 31770, confidence: 'low', basis: 'extrapolation' });
+    expect(estimateDragonPower({ rarity: 'Epic', starRank: 6, dragonLevel: 35 }))
+      .toMatchObject({ power: 28290, confidence: 'modeled', basis: 'interpolation' });
+    expect(estimateDragonPower({ rarity: 'Epic', starRank: 7, dragonLevel: 35 }))
+      .toMatchObject({ power: 30720, confidence: 'low', basis: 'extrapolation' });
+    expect(estimateDragonPower({ rarity: 'Rare', starRank: 4, dragonLevel: 29 }))
+      .toMatchObject({ power: 13000, confidence: 'observed', basis: 'exact-observation' });
+    expect(estimateDragonPower({ rarity: 'Rare', starRank: 2, dragonLevel: 29 }))
+      .toMatchObject({ power: 8310, confidence: 'low', basis: 'extrapolation' });
+    expect(estimateDragonPower({ rarity: 'Rare', starRank: 4, dragonLevel: 30 }))
+      .toMatchObject({ power: 13400, confidence: 'observed', basis: 'exact-observation' });
+    expect(estimateDragonPower({ rarity: 'Rare', starRank: 4, dragonLevel: 31 }))
+      .toMatchObject({ power: 13970, confidence: 'low', basis: 'extrapolation' });
     expect(estimateDragonPower({ rarity: 'Epic', starRank: 3, dragonLevel: 34 }))
-      .toMatchObject({ confidence: 'modeled', basis: 'interpolation' });
+      .toMatchObject({ power: 20140, confidence: 'modeled', basis: 'interpolation' });
+  });
+
+  it('keeps every numerical estimate on the audited grid unchanged by confidence classification', () => {
+    const powers: number[] = [];
+    for (const rarity of ['Legendary', 'Epic', 'Rare'] as const) {
+      for (let starRank = 1; starRank <= 10; starRank += 1) {
+        for (let dragonLevel = 0; dragonLevel <= 1000; dragonLevel += 1) {
+          powers.push(estimateDragonPower({ rarity, starRank, dragonLevel }).power);
+        }
+      }
+    }
+    expect(fnv1a64(JSON.stringify(powers))).toBe(numericalPowerAuditGridHash);
   });
 
   it('sums exactly three individual estimates and leaves Formation Rating unchanged', () => {
@@ -163,3 +206,13 @@ describe('Estimated Dragon Power v1', () => {
     expect(ratingAfter).toEqual(ratingBefore);
   });
 });
+
+function fnv1a64(value: string): string {
+  let hash = 0xcbf29ce484222325n;
+  const prime = 0x100000001b3n;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= BigInt(value.charCodeAt(index));
+    hash = BigInt.asUintN(64, hash * prime);
+  }
+  return `fnv1a64:${hash.toString(16).padStart(16, '0')}`;
+}

@@ -4,7 +4,7 @@
 
 - Model version: `estimated-power-v1`
 - Observation hash: `fnv1a64:57268e00007bfab8`
-- Model hash: `fnv1a64:0b65e3eac0902891`
+- Model hash: `fnv1a64:5bf2cc559f2fd940`
 - Raw samples: 31
 - Unique fitting combinations: 25
 - Deduplicated samples: 6
@@ -72,4 +72,16 @@ base(rarity, stars, level>=20) = intercept[rarity] + levelSlope[rarity] * level 
 
 ## Confidence contract
 
-Exact observed rarity/Star Rank/Dragon Level tuples are `observed`. Non-exact tuples inside the observed global 1-7 Star Rank and 20-36 Dragon Level envelope are `modeled`. Values outside either range are low-confidence `extrapolation`. Habit Levels, notes, and dragon identity are not model inputs.
+Exact observed rarity/Star Rank/Dragon Level tuples are `observed`. Non-exact tuples inside that rarity's deduplicated observed Star Rank and Dragon Level envelope are `modeled`; values outside either boundary are low-confidence `extrapolation`. Envelopes: `{"Legendary":{"starRank":{"minimum":1,"maximum":4},"dragonLevel":{"minimum":20,"maximum":36}},"Epic":{"starRank":{"minimum":1,"maximum":6},"dragonLevel":{"minimum":20,"maximum":36}},"Rare":{"starRank":{"minimum":3,"maximum":7},"dragonLevel":{"minimum":20,"maximum":30}}}`. Habit Levels, notes, and dragon identity are not model inputs.
+
+| Rarity | Stars | Level | Confidence | Basis |
+| --- | ---: | ---: | --- | --- |
+| Legendary | 4 | 35 | modeled | interpolation |
+| Legendary | 5 | 35 | low | extrapolation |
+| Epic | 6 | 35 | modeled | interpolation |
+| Epic | 7 | 35 | low | extrapolation |
+| Rare | 4 | 29 | observed | exact-observation |
+| Rare | 2 | 29 | low | extrapolation |
+| Rare | 4 | 30 | observed | exact-observation |
+| Rare | 4 | 31 | low | extrapolation |
+| Epic | 3 | 34 | modeled | interpolation |
