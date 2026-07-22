@@ -46,10 +46,10 @@ describe('Dragonfire Lab app', () => {
     render(<App />);
 
     await openAddDragon(user);
-    expect(screen.getByText(/showing 31 of 31 dragons/i)).toBeInTheDocument();
+    expect(screen.getByText(/showing 33 of 33 dragons/i)).toBeInTheDocument();
 
     await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
-    expect(screen.getByText(/showing 1 of 31 dragons/i)).toBeInTheDocument();
+    expect(screen.getByText(/showing 1 of 33 dragons/i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
   });
 
@@ -237,7 +237,7 @@ describe('Dragonfire Lab app', () => {
     const mappedDragonCount = dragons.filter(
       (dragon) => Boolean(dragon.command && dragon.trait && dragon.habits.length > 0),
     ).length;
-    expect(simpleSynergyAbilityReviews).toHaveLength(217);
+    expect(simpleSynergyAbilityReviews).toHaveLength(231);
     const datasetStatus = screen.getByLabelText('Dataset status');
     expect(datasetStatus).toHaveTextContent(`${mappedDragonCount} / ${dragons.length}`);
     expect(datasetStatus).toHaveTextContent('dragons mapped');
@@ -252,7 +252,7 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.18\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.19\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Power-Aware 5 + Backup 5');
     expect(latestUpdate).toHaveTextContent('empirical, unofficial');

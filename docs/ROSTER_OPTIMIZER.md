@@ -4,7 +4,7 @@ Roster Optimizer builds an exact allocation from current My Roster data. All thr
 
 ## Strategies
 
-`Power-Aware 5 + Backup 5` is the default in 0.18.0. Estimated Power selects which 15 dragons belong in Primary, then Formation Rating organizes that pool into five formations. Rarity-Priority 5 + Backup 5 and Best 10 Overall remain selectable with their unchanged behavior.
+`Power-Aware 5 + Backup 5` remains the default in 0.19.0. Estimated Power selects which 15 dragons belong in Primary, then Formation Rating organizes that pool into five formations. Rarity-Priority 5 + Backup 5 and Best 10 Overall remain selectable with their unchanged behavior.
 
 `Power-Aware 5 + Backup 5` is Estimated / Experimental. Estimated Power selects which 15 dragons belong in Primary. Formation Rating then organizes that equally powerful pool into five formations. The exact hierarchy is:
 
@@ -54,7 +54,7 @@ Estimated Power metadata is not added to either legacy strategy's semantic solut
 
 ## Candidate generation and exact joint MILP
 
-Every unique unordered trio is generated once. With 31 eligible dragons this is `C(31,3) = 4,495` candidates. Existing placement comparison evaluates all six position assignments, retains tied-best assignments, and chooses the stable first arrangement for display. Candidate ratings, semantic relationships, recommendations, and findings all reuse Formation Builder services unchanged. Every retained placement must score 20/20 Placement Effectiveness.
+Every unique unordered trio is generated once. With the complete 33-dragon roster this is `C(33,3) = 5,456` candidates. Existing placement comparison evaluates all six position assignments, retains tied-best assignments, and chooses the stable first arrangement for display. Candidate ratings, semantic relationships, recommendations, and findings all reuse Formation Builder services unchanged. Every retained placement must score 20/20 Placement Effectiveness.
 
 For every trio candidate `i`, Primary + Backup creates binary variables `primary_i` and `backup_i`. Constraints require five variables in each wave, prevent one candidate from entering both waves, and limit every dragon to one selected variable across both waves. This guarantees 5 + 5 formations, 15 + 15 dragons, and zero cross-wave reuse.
 
@@ -76,4 +76,4 @@ npm run audit:optimizer:power-aware -- --fixture maxed
 npm run audit:optimizer:power-aware -- --fixture all-one
 ```
 
-Optimization is local-only and makes no network call. In 0.18.0, the selected strategy and last successfully completed optimal result remain in the mounted app session while navigating between sections. A relevant roster or strategy change leaves that result visible with the existing stale warning; successful reruns replace it, while failed, unavailable, cancelled, and obsolete runs do not. The workspace result is not written to browser storage, cloud storage, roster exports, or schemas, so it clears on browser reload. Optimizer algorithms, objective hierarchy, Primary cutoff math, Backup phase, integer Power units, MILP constraints, stable keys, zero-gap settings, and confidence-as-diagnostic behavior are unchanged. Formation Rating v2, tier thresholds, dragon data, all 224 curated profile signals, source schema 13, local/cloud roster schemas 5, Habit Level behavior, and Supabase migrations remain unchanged. No manual Power, weighted Power/Rating formula, formation-power balancing, combat simulation, locks, exclusions, alternate solutions, or auto-run is introduced.
+Optimization is local-only and makes no network call. In 0.19.0, the selected strategy and last successfully completed optimal result remain in the mounted app session while navigating between sections. A relevant roster or strategy change leaves that result visible with the existing stale warning; successful reruns replace it, while failed, unavailable, cancelled, and obsolete runs do not. The workspace result is not written to browser storage, cloud storage, roster exports, or schemas, so it clears on browser reload. The full 33-dragon roster still returns ten formations using 30 unique dragons and reports exactly three unused dragons. Optimizer algorithms, objective hierarchy, Primary cutoff math, Backup phase, integer Power units, MILP constraints, stable keys, zero-gap settings, confidence-as-diagnostic behavior, Formation Rating v2, tier thresholds, source schema 13, local/cloud roster schemas 5, Habit Level behavior, and Supabase migrations are unchanged. The canonical data now contains 33 dragons and 239 curated scoring signals. No manual Power, weighted Power/Rating formula, formation-power balancing, combat simulation, locks, exclusions, alternate solutions, or auto-run is introduced.

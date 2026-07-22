@@ -86,8 +86,8 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
     const profile = (id: string) => simpleSynergyProfiles.find((candidate) => candidate.dragonId === id)!;
     expect(profile('vhagar').outputs.map((signal) => signal.id)).toEqual(['vhagar-fiery-bonds-taunt', 'vhagar-fiery-bonds-physical', 'vhagar-skyward-titan-physical']);
     expect(profile('caraxes').outputs.map((signal) => signal.id)).toEqual(['caraxes-infernal-burst-fire', 'caraxes-crippling-inferno-slow', 'caraxes-crippling-inferno-burn', 'caraxes-crippling-inferno-fire']);
-    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(224);
-    expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(217);
+    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(239);
+    expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(231);
   });
 
   it('keeps summaries readable and excludes Power and generic upgrade boilerplate', () => {
@@ -102,7 +102,9 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
   });
 
   it('reports the exhaustive rating delta caused only by the corrected Syrax scaling tag', () => {
-    const priorProfiles: DragonSynergyProfile[] = simpleSynergyProfiles.map((profile) =>
+    const archivedDragons = dragons.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.id));
+    const archivedProfiles = simpleSynergyProfiles.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.dragonId));
+    const priorProfiles: DragonSynergyProfile[] = archivedProfiles.map((profile) =>
       profile.dragonId !== 'syrax'
         ? profile
         : {
@@ -122,10 +124,10 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
       return { rating: rateFormation({ formation, dragons, profiles, relationships, placementComparison }), results };
     };
     const rows: Array<{ formation: string[]; before: ReturnType<typeof rating>; after: ReturnType<typeof rating> }> = [];
-    for (const left of dragons) for (const vanguard of dragons) if (vanguard.id !== left.id) for (const right of dragons) if (right.id !== left.id && right.id !== vanguard.id) {
+    for (const left of archivedDragons) for (const vanguard of archivedDragons) if (vanguard.id !== left.id) for (const right of archivedDragons) if (right.id !== left.id && right.id !== vanguard.id) {
       const formation = { 'left-flank': left.id, vanguard: vanguard.id, 'right-flank': right.id };
       const before = rating(formation, priorProfiles);
-      const after = rating(formation, simpleSynergyProfiles);
+      const after = rating(formation, archivedProfiles);
       rows.push({ formation: [left.id, vanguard.id, right.id], before, after });
     }
     const changed = rows.filter((row) => row.before.rating.score !== row.after.rating.score || row.before.rating.tier !== row.after.rating.tier);

@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeMarkdown = process.argv.includes('--write');
 const writeDiagnosticJson = process.argv.includes('--write-json');
 const baselinePath = path.join(root, 'docs', 'audits', 'full-roster-rating-baseline-0.10.5.json');
-const startingMainSha = 'd485c602bac8998e2fca4e67941e79d620a29b12';
+const startingMainSha = '4eb4fbf6e23605266d41c4b3949bf30b31bbc103';
 const baselineSourceCommit = 'a5c4bc2c05850210a64652921021bba1783e6eb1';
 const expectedOldHash = 'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48';
 const baselineRuntimeMs = 12838;
@@ -47,7 +47,7 @@ try {
     sourceOfTruth: {
       startingMainSha,
       baselineSourceCommit,
-      branch: 'feature/optimizer-default-and-result-retention',
+      branch: 'feature/add-sunfyre-tairax',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
@@ -109,11 +109,12 @@ try {
   } else {
     const committedMarkdown = await readFile(markdownPath, 'utf8');
     const stableFieldsMatch =
-      auditVersion === '0.18.0' &&
+      auditVersion === '0.19.0' &&
       report.formationSweep.deterministicFullResultHash ===
-        '12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9' &&
-      report.formationSweep.actualCount === 26970 &&
-      comparison.formationMigrations.length === report.formationSweep.actualCount &&
+        '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf' &&
+      report.formationSweep.actualCount === 32736 &&
+      comparison.formationMigrations.length === 26970 &&
+      comparison.newFormationCount === 5766 &&
       report.totals.failedChecks === 0 &&
       committedMarkdown.includes(`Current: ${auditVersion}`) &&
       committedMarkdown.includes(report.formationSweep.deterministicFullResultHash);
@@ -153,10 +154,10 @@ function validateBaseline(baseline) {
 function compareRatings(oldRows, newRows) {
   const oldByFormation = new Map(oldRows.map((row) => [formationKey(row.formation), row]));
   const newByFormation = new Map(newRows.map((row) => [formationKey(row.formation), row]));
-  const formationMigrations = newRows.map((row) => {
+  const formationMigrations = newRows.flatMap((row) => {
     const old = oldByFormation.get(formationKey(row.formation));
-    if (!old) throw new Error(`Missing old baseline row for ${formationKey(row.formation)}.`);
-    return {
+    if (!old) return [];
+    return [{
       formation: row.formation,
       oldScore: old.score,
       newScore: row.score,
@@ -174,8 +175,9 @@ function compareRatings(oldRows, newRows) {
       redundancyRanks: row.redundancyRanks,
       gainedRelationshipIds: row.gainedRelationshipIds,
       lostRelationshipIds: row.lostRelationshipIds,
-    };
+    }];
   });
+  const newFormationCount = newRows.length - formationMigrations.length;
   const tierMigrationMatrix = {};
   for (const row of formationMigrations) {
     const key = `${row.oldTier} -> ${row.newTier}`;
@@ -193,7 +195,7 @@ function compareRatings(oldRows, newRows) {
   const topKeys = new Set([
     ...oldRanked.slice(0, 100).map((row) => formationKey(row.formation)),
     ...newRanked.slice(0, 100).map((row) => formationKey(row.formation)),
-  ]);
+  ].filter((key) => oldByFormation.has(key) && newByFormation.has(key)));
   const topRankMovement = [...topKeys]
     .map((key) => {
       const old = oldByFormation.get(key);
@@ -218,6 +220,7 @@ function compareRatings(oldRows, newRows) {
     oldTop100: oldRanked.slice(0, 100),
     newTop100: newRanked.slice(0, 100),
     topRankMovement,
+    newFormationCount,
     formationMigrations,
   };
 }
@@ -245,14 +248,15 @@ function renderMarkdown(report) {
   const lines = [
     `# Full-roster Formation Rating v2 audit — ${report.auditVersion}`,
     '',
-    '> Formation Rating v2 intentionally replaces the prior public contract. Canonical semantic relationships score active synergy once; placement compares all six feasible arrangements; kit gaps and ordinary Vanguard alternatives are diagnostic only.',
+    '> Formation Rating v2 scoring is unchanged. This release expands only canonical roster data, profile evidence, and the resulting evaluated formation space.',
     '',
     '## Executive summary',
     '',
     `- Baseline: ${report.comparison.baselineVersion} at \`${report.sourceOfTruth.baselineSourceCommit}\`; old hash \`${report.comparison.baselineDeterministicFullResultHash}\`.`,
     `- Release branch starts from \`${report.sourceOfTruth.startingMainSha}\`.`,
     `- Current: ${report.auditVersion}; new hash \`${report.comparison.currentDeterministicFullResultHash}\`.`,
-    `- Coverage unchanged: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.profileSignals} curated signals, ${report.totals.orderedFormationsEvaluated} ordered formations, ${report.totals.providerPayoffPairsEvaluated} provider/payoff pairs.`,
+    `- Coverage expanded: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.profileSignals} curated signals, ${report.totals.orderedFormationsEvaluated} ordered formations, ${report.totals.providerPayoffPairsEvaluated} provider/payoff pairs.`,
+    `- Baseline comparison covers ${report.comparison.formationMigrations.length} formations composed only of the prior 31 dragons; ${report.comparison.newFormationCount} formations include Sunfyre or Tairax and have no prior-row counterpart.`,
     `- Validation: ${report.totals.passChecks} PASS checks, ${report.totals.failedChecks} failed checks, ${report.findings.length} informational/unresolved findings.`,
     `- Runtime: ${report.recordedAuditRuntimeMs} ms; prior audit ${report.performance.baselineRuntimeMs} ms; delta ${signed(report.performance.deltaMs)} ms.`,
     '',
@@ -316,8 +320,8 @@ function renderMarkdown(report) {
     '## Compatibility and release',
     '',
     '- Source schema remains 13; local and cloud roster schemas remain 5; no Supabase migration was added.',
-    '- Dragon source data, curated profiles, and all 224 curated signals are unchanged.',
-    '- The old hash is not preserved; the new hash is a reviewed baseline for the replacement public contract.',
+    `- Sunfyre and Tairax add 14 canonical abilities and 15 curated signals; the scoring formula and thresholds are unchanged.`,
+    '- The old 31-dragon hash is preserved by the archived optimizer fixtures; the new full-roster hash is the reviewed 33-dragon baseline.',
     '- The complete old/new comparison is validated in memory. An ignored full diagnostic JSON can be generated explicitly with `npm run audit:full-roster:write-json`.',
     '',
     '## Rerun',

@@ -34,12 +34,12 @@ function chipsFor(dragonId: string, starRank: number) {
 
 describe('third Rare dragon batch', () => {
   it('upgrades one canonical Rare record each and advances only release coverage metadata', () => {
-    expect(dragons).toHaveLength(31);
-    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(31);
-    expect(simpleSynergyProfiles).toHaveLength(31);
+    expect(dragons).toHaveLength(33);
+    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(33);
+    expect(simpleSynergyProfiles).toHaveLength(33);
     expect(metadataOnlyDragonIds).toHaveLength(0);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.18.0', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.19.0', schemaVersion: 13 });
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
 
     const breeds = { bevlorin: 'Champion', shadowrend: 'Warrior', thunderstrike: 'Warrior' } as const;

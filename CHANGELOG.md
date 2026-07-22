@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.19.0 - 2026-07-22
+
+- Added Sunfyre and Tairax as fully curated, screenshot-verified canonical dragons with complete identity, affinity, Command, Trait, five-Habit, unlock, progression, evidence, and manual-review records.
+- Expanded the canonical roster to 33 dragons, 231 abilities, 33 simple-synergy profiles, 239 scoring signals, and 231 explicit ability dispositions. Sunfyre contributes conditional Tactical/Fire/Burn output and Left Flank support; Tairax contributes Fire/Burn/Control paths, Control and Burn payoffs, and Right Flank support.
+- Expanded full-roster validation to 32,736 ordered placements and optimizer candidate generation to 5,456 unordered trios. Added current 33-dragon legacy and PowerAware audits while preserving archived 31-dragon allocation and semantic solution hashes.
+- Kept source schema 13, local/cloud roster schemas 5, optimizer contract 3, Formation Rating v2 logic, Estimated Power v2 identities, persistence, Habit Level behavior, and Supabase migrations unchanged.
+
 ## 0.18.0 - 2026-07-22
 
 - Made `Power-Aware 5 + Backup 5` the new Optimizer default. Rarity-Priority 5 + Backup 5 and Best 10 Overall remain available without changes to their strategies or algorithms.

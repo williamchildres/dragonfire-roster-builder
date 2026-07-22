@@ -40,13 +40,13 @@ function chipsFor(dragonId: string, starRank: number, selected = formation(null,
 
 describe('second Rare dragon batch', () => {
   it('upgrades exactly one canonical record for each requested Rare and advances coverage/version only', () => {
-    expect(dragons).toHaveLength(31);
-    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(31);
-    expect(simpleSynergyProfiles).toHaveLength(31);
+    expect(dragons).toHaveLength(33);
+    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(33);
+    expect(simpleSynergyProfiles).toHaveLength(33);
     expect(metadataOnlyDragonIds).toHaveLength(0);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.18.0', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.19.0', schemaVersion: 13 });
 
     const breeds = { solstryker: 'Champion', shimmer: 'Sentinel', jagadrix: 'Hunter' } as const;
     for (const dragonId of rareIds) {
@@ -225,7 +225,7 @@ describe('second Rare dragon batch', () => {
       .filter((profile) => profile.outputs.some((signal) => signal.tag === 'status:panic'))
       .map((profile) => profile.dragonId)
       .sort();
-    expect(resistanceProviders).toEqual(['rhysarion', 'seasmoke', 'syrax', 'vesper']);
+    expect(resistanceProviders).toEqual(['rhysarion', 'seasmoke', 'syrax', 'tairax', 'vesper']);
     expect(panicProviders).toEqual(['daemoros', 'kalspire', 'shadowrend', 'zivern']);
     expect(resistanceProviders).not.toEqual(expect.arrayContaining(['vhagar', 'vermax']));
   });

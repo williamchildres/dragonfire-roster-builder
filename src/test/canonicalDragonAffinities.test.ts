@@ -50,7 +50,9 @@ describe('canonical dragon affinities', () => {
       expect(dragon.fieldVerification.affinities?.reviewedManually).toBe(true);
     }
 
-    expect(dragons.every((dragon) => (Object.values(dragon.affinities) as string[]).every((value) => value !== 'unknown'))).toBe(true);
+    expect(dragons.filter((dragon) => !['sunfyre', 'tairax'].includes(dragon.id)).every((dragon) => (Object.values(dragon.affinities) as string[]).every((value) => value !== 'unknown'))).toBe(true);
+    expect(dragons.find((dragon) => dragon.id === 'sunfyre')?.affinities).toEqual({ Cavalry: 'positive', Shieldbearers: 'unknown', Archers: 'unknown', Spearmen: 'positive', Siege: 'unknown' });
+    expect(dragons.find((dragon) => dragon.id === 'tairax')?.affinities).toEqual({ Cavalry: 'positive', Shieldbearers: 'positive', Archers: 'unknown', Spearmen: 'unknown', Siege: 'positive' });
   });
 
   it('removes obsolete affinity caveats while preserving independent canonical note content', () => {

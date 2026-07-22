@@ -5,8 +5,8 @@ import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeReports = process.argv.includes('--write');
-const jsonPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.18.0.json');
-const markdownPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.18.0.md');
+const jsonPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.19.0.json');
+const markdownPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.19.0.md');
 const server = await createServer({
   root,
   appType: 'custom',
@@ -24,13 +24,13 @@ try {
     console.log(`Wrote ${path.relative(root, jsonPath)} and ${path.relative(root, markdownPath)}.`);
   } else {
     const committed = JSON.parse(await readFile(jsonPath, 'utf8'));
-    const actualHashes = report.fixtures.map((fixture) => ({
+    const actualHashes = [...report.archivedFixtures, ...report.archivedPowerAwareFixtures, ...report.fixtures].map((fixture) => ({
       name: fixture.name,
       strategy: fixture.strategy,
       solution: fixture.optimizerSolutionHash,
       result: fixture.optimizerResultHash,
     }));
-    const committedHashes = committed.fixtures.map((fixture) => ({
+    const committedHashes = [...committed.archivedFixtures, ...committed.archivedPowerAwareFixtures, ...committed.fixtures].map((fixture) => ({
       name: fixture.name,
       strategy: fixture.strategy,
       solution: fixture.optimizerSolutionHash,
@@ -60,7 +60,7 @@ function renderMarkdown(report) {
     `Strict HiGHS gaps: \`mip_rel_gap=${report.checks.strictMipGaps.mip_rel_gap}\`, \`mip_abs_gap=${report.checks.strictMipGaps.mip_abs_gap}\`, accepted through \`${report.checks.strictMipGaps.configuredThrough}\` status ${report.checks.strictMipGaps.acceptedStatus}. Zero-gap refinement independently confirmed the existing allocations and hashes.`,
     '',
   ];
-  for (const fixture of report.fixtures) {
+  for (const fixture of [...report.archivedFixtures, ...report.archivedPowerAwareFixtures, ...report.fixtures]) {
     lines.push(
       `## ${fixture.name} · ${fixture.strategy}`,
       '',

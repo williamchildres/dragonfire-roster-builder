@@ -13,7 +13,7 @@ import {
   type RosterOptimizerObjective,
 } from '../optimizer/rosterOptimizerTypes';
 
-const ids = 'abcdefghijklmnopqrstuvwxyzABCDE'.split('');
+const ids = 'abcdefghijklmnopqrstuvwxyzABCDEFG'.split('');
 
 describe('exact roster optimizer solver', () => {
   it.each([
@@ -35,15 +35,16 @@ describe('exact roster optimizer solver', () => {
     expect(new Set(used).size).toBe(dragonCount);
   });
 
-  it('selects 30 of 31 dragons and leaves a Rare unused', () => {
-    const dragons = makeDragons(31, (index) => index < 10 ? 'Legendary' : index < 20 ? 'Epic' : 'Rare');
+  it('selects 30 of 33 dragons and leaves three Rare dragons unused', () => {
+    const dragons = makeDragons(33, (index) => index < 10 ? 'Legendary' : index < 21 ? 'Epic' : 'Rare');
     const candidates = Array.from({ length: 10 }, (_, index) =>
       candidate(ids.slice(index * 3, index * 3 + 3) as [string, string, string], 70),
     );
     const result = solveRosterOptimizerCandidates(candidates, dragons);
     const used = new Set(result!.selectedCandidates.flatMap((entry) => entry.dragonIds));
     const unused = dragons.filter((dragon) => !used.has(dragon.dragonId));
-    expect(unused).toEqual([expect.objectContaining({ rarity: 'Rare' })]);
+    expect(unused).toHaveLength(3);
+    expect(unused.every((dragon) => dragon.rarity === 'Rare')).toBe(true);
     expect(used.size).toBe(30);
   });
 

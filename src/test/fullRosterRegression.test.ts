@@ -50,24 +50,26 @@ describe('full-roster regression audit', () => {
 
     expect(result.reliable).toBe(true);
     expect(result.generatedFrom).toEqual({
-      databaseVersion: '0.18.0',
+      databaseVersion: '0.19.0',
       dataSchemaVersion: 13,
       localRosterSchemaVersion: 5,
     });
-    expect(result.rarityCoverage).toEqual({ Epic: 10, Legendary: 9, Rare: 12 });
+    expect(result.rarityCoverage).toEqual({ Epic: 11, Legendary: 10, Rare: 12 });
     expect(result.totals).toMatchObject({
-      dragons: 31,
-      abilities: 217,
-      auditDispositions: 217,
-      progressionStatesEvaluated: 15_300,
-      providerPayoffPairsEvaluated: 4_023,
-      orderedFormationsEvaluated: 26_970,
+      dragons: 33,
+      abilities: 231,
+      profileSignals: 239,
+      positionClaims: 33,
+      auditDispositions: 231,
+      progressionStatesEvaluated: 16_320,
+      providerPayoffPairsEvaluated: 4_563,
+      orderedFormationsEvaluated: 32_736,
       passChecks: 32,
       failedChecks: 0,
     });
     expect(result.checks.find((check) => check.id === 'FRR-C030')?.status).toBe('PASS');
     expect(result.findings.map((finding) => finding.id)).toEqual(['FRR-F001', 'FRR-F002']);
-    expect(result.perDragon).toHaveLength(31);
+    expect(result.perDragon).toHaveLength(33);
     expect(result.perDragon.every((row) => row.status === 'PASS')).toBe(true);
   }, 120_000);
 
@@ -187,20 +189,20 @@ describe('full-roster regression audit', () => {
     expect(sweep.invariantViolationCount).toBe(0);
     expect(sweep.inactiveAbilityReferenceExamples).toEqual([]);
     expect(sweep.deterministicFullResultHash).toBe(
-      '12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9',
+      '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf',
     );
     expect(sweep.rating).toMatchObject({
       minimum: 0,
       maximum: 100,
-      median: 49,
+      median: 50,
       percentile90: 67,
       percentile99: 80,
       byTier: {
-        Developing: 11_581,
-        Excellent: 281,
-        Solid: 10_825,
-        Strong: 2_558,
-        Weak: 1_725,
+        Developing: 13_404,
+        Excellent: 421,
+        Solid: 13_366,
+        Strong: 3_481,
+        Weak: 2_064,
       },
     });
   }, 120_000);
@@ -209,12 +211,12 @@ describe('full-roster regression audit', () => {
     const distribution = report().formationSweep.recommendationSuppressionReasonDistribution;
 
     expect(distribution).toEqual({
-      'action:swap': 13_923,
-      'below-meaningful-threshold': 4_298,
-      'current-best': 2_286,
-      'tied-best': 6_463,
+      'action:swap': 17_113,
+      'below-meaningful-threshold': 5_175,
+      'current-best': 2_790,
+      'tied-best': 7_658,
     });
-    expect(Object.values(distribution).reduce((total, count) => total + count, 0)).toBe(26_970);
+    expect(Object.values(distribution).reduce((total, count) => total + count, 0)).toBe(32_736);
   }, 120_000);
 
   it('FRR-F004: qualifies future Details signals at their Star and Dragon Level boundaries', () => {

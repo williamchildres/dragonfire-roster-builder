@@ -14,6 +14,8 @@ export const projectContextFormat = 'dragonfire-lab-project-context' as const;
 export const contextVersion = 2;
 export const projectContextSizeLimitBytes = 2_000_000;
 export const populatedDragonIds = [
+  'sunfyre',
+  'tairax',
   'syrax',
   'vhagar',
   'caraxes',
