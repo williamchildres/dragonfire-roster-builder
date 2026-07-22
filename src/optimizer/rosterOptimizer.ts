@@ -3,6 +3,12 @@ import type { DragonRarity, OwnedDragon } from '../models/dragon';
 import type { FormationRatingTier } from '../services/formationRating';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import {
+  ESTIMATED_POWER_MODEL_HASH,
+  ESTIMATED_POWER_MODEL_VERSION,
+  ESTIMATED_POWER_OBSERVATION_HASH,
+} from '../power/generatedDragonPowerModel';
+import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
+import {
   buildOptimizerRosterSnapshot,
   createRosterOptimizerFingerprint,
   createRosterOptimizerRequestFingerprint,
@@ -11,6 +17,12 @@ import {
 } from './rosterOptimizerCandidates';
 import { solveRosterOptimizerMip } from './rosterOptimizerMipSolver';
 import { solvePrimaryBackupRosterOptimizerMip } from './rosterOptimizerPrimaryBackupMipSolver';
+import {
+  buildEstimatedPowerCache,
+  candidatePowerUnits,
+  determinePrimaryPowerCutoff,
+  powerConfidenceCounts,
+} from './rosterOptimizerPower';
 import {
   OPTIMIZER_DRAGON_COUNT,
   OPTIMIZER_FORMATION_COUNT,
@@ -24,6 +36,9 @@ import {
   type OptimizerWave,
   type OptimizerWaveResult,
   type PrimaryBackupOptimizationResult,
+  type PowerAwareOptimizedFormation,
+  type PowerAwareOptimizerWaveResult,
+  type PowerAwarePrimaryBackupOptimizationResult,
   type RarityCountRecord,
   type RosterOptimizerResponse,
   type RosterOptimizerStrategy,
@@ -63,6 +78,21 @@ export async function optimizeCurrentRoster(
   });
   const candidateGenerationMs = performance.now() - candidateStartedAt;
   if (shouldCancel?.()) throw new RosterOptimizerCancelledError();
+  if (strategy === 'power-aware-primary-five-backup-five') {
+    const estimatesByDragonId = buildEstimatedPowerCache(snapshot);
+    const powerCandidates = candidates.map((candidate) => ({
+      ...candidate,
+      estimatedPowerUnits: candidatePowerUnits(candidate, estimatesByDragonId),
+    }));
+    return optimizePowerAwarePrimaryBackup({
+      candidates: powerCandidates,
+      snapshot,
+      rosterFingerprint,
+      requestFingerprint,
+      candidateGenerationMs,
+      totalStartedAt,
+    }, estimatesByDragonId);
+  }
   return strategy === 'best-ten-overall'
     ? optimizeBestTen({
         candidates,
@@ -80,6 +110,120 @@ export async function optimizeCurrentRoster(
         candidateGenerationMs,
         totalStartedAt,
       });
+}
+
+async function optimizePowerAwarePrimaryBackup(
+  context: OptimizationContext,
+  estimatesByDragonId: ReadonlyMap<string, EstimatedDragonPower>,
+): Promise<PowerAwarePrimaryBackupOptimizationResult> {
+  const {
+    candidates,
+    snapshot,
+    rosterFingerprint,
+    requestFingerprint,
+    candidateGenerationMs,
+    totalStartedAt,
+  } = context;
+  const cutoff = determinePrimaryPowerCutoff(estimatesByDragonId, 15);
+  const solverStartedAt = performance.now();
+  const solver = await solvePrimaryBackupRosterOptimizerMip(candidates, snapshot, 5, {
+    primaryCutoff: cutoff,
+    estimatesByDragonId,
+  });
+  const solverMs = performance.now() - solverStartedAt;
+  const rarityById = new Map(snapshot.map((dragon) => [dragon.dragonId, dragon.rarity]));
+  const primaryFormations = publicPowerFormations(
+    solver.primaryCandidates,
+    'primary',
+    estimatesByDragonId,
+  );
+  const backupFormations = publicPowerFormations(
+    solver.backupCandidates,
+    'backup',
+    estimatesByDragonId,
+  );
+  const primary = powerWaveResult(
+    'primary',
+    primaryFormations,
+    solver.objective.primary,
+    rarityById,
+    estimatesByDragonId,
+  );
+  const backup = powerWaveResult(
+    'backup',
+    backupFormations,
+    solver.objective.backup,
+    rarityById,
+    estimatesByDragonId,
+  );
+  const formations = [...primaryFormations, ...backupFormations];
+  const partition = dragonPartition(formations, snapshot);
+  const unusedRarityCounts = rarityCounts(partition.unusedDragonIds, rarityById);
+  const combinedRarityCounts = rarityCounts(partition.usedDragonIds, rarityById);
+  const combined = {
+    totalRating: solver.objective.combinedTotalRating,
+    averageRating: solver.objective.combinedTotalRating / OPTIMIZER_FORMATION_COUNT,
+    minimumRating: Math.min(primary.minimumRating, backup.minimumRating),
+    rarityCounts: combinedRarityCounts,
+    tierDistribution: tierDistributionFor(formations),
+    totalRelationshipValue: solver.objective.combinedRelationshipValue,
+    totalActiveRelationships: solver.objective.combinedActiveRelationships,
+    totalEstimatedPower: solver.objective.combinedEstimatedPower,
+    powerConfidenceCounts: powerConfidenceCounts(partition.usedDragonIds, estimatesByDragonId),
+  };
+  const semanticIdentity = {
+    strategy: 'power-aware-primary-five-backup-five' as const,
+    rosterFingerprint,
+    estimatedPowerModelVersion: ESTIMATED_POWER_MODEL_VERSION,
+    estimatedPowerModelHash: ESTIMATED_POWER_MODEL_HASH,
+    estimatedPowerObservationHash: ESTIMATED_POWER_OBSERVATION_HASH,
+    primary: formationIdentity(primaryFormations),
+    backup: formationIdentity(backupFormations),
+    objective: solver.objective,
+    unusedDragonIds: partition.unusedDragonIds,
+  };
+  const optimizerSolutionHash = stableHash(JSON.stringify(semanticIdentity));
+  const resultIdentity = {
+    contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    strategy: 'power-aware-primary-five-backup-five' as const,
+    requestFingerprint,
+    optimizerSolutionHash,
+  };
+  return {
+    contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    strategy: 'power-aware-primary-five-backup-five',
+    optimal: true,
+    rosterFingerprint,
+    requestFingerprint,
+    estimatedPowerModelVersion: ESTIMATED_POWER_MODEL_VERSION,
+    estimatedPowerModelHash: ESTIMATED_POWER_MODEL_HASH,
+    estimatedPowerObservationHash: ESTIMATED_POWER_OBSERVATION_HASH,
+    estimatedPowerByDragonId: Object.fromEntries(estimatesByDragonId),
+    primary,
+    backup,
+    formations,
+    usedDragonIds: partition.usedDragonIds,
+    unusedDragonIds: partition.unusedDragonIds,
+    unusedRarityCounts,
+    combined,
+    objective: solver.objective,
+    diagnostics: {
+      optimal: true,
+      eligibleDragonCount: snapshot.length,
+      candidateCount: candidates.length,
+      selectedFormationCount: formations.length,
+      nodesVisited: solver.nodesVisited,
+      branchesPruned: solver.branchesPruned,
+      cacheEntries: solver.cacheEntries,
+      solverPasses: solver.solverPasses,
+      candidateGenerationMs,
+      solverMs,
+      totalMs: performance.now() - totalStartedAt,
+      phaseTimings: solver.phaseTimings,
+    },
+    optimizerSolutionHash,
+    optimizerResultHash: stableHash(JSON.stringify(resultIdentity)),
+  };
 }
 
 async function optimizeBestTen({
@@ -251,12 +395,66 @@ function publicFormations(
   return [...candidates].sort(displayCandidateOrder).map((candidate, index) => {
     const publicCandidate = { ...candidate };
     delete (publicCandidate as Partial<OptimizerFormationCandidate>).dragonMask;
+    delete (publicCandidate as Partial<OptimizerFormationCandidate>).estimatedPowerUnits;
     return {
       ...publicCandidate,
       rank: index + 1,
       ...(wave ? { wave, waveRank: index + 1 } : {}),
     };
   });
+}
+
+function publicPowerFormations(
+  candidates: OptimizerFormationCandidate[],
+  wave: OptimizerWave,
+  estimatesByDragonId: ReadonlyMap<string, EstimatedDragonPower>,
+): PowerAwareOptimizedFormation[] {
+  return publicFormations(candidates, wave).map((formation) => {
+    const dragonPowerEstimates = Object.fromEntries(formation.dragonIds.map((dragonId) => [
+      dragonId,
+      estimatesByDragonId.get(dragonId)!,
+    ]));
+    return {
+      ...formation,
+      estimatedPower: formation.dragonIds.reduce(
+        (total, dragonId) => total + estimatesByDragonId.get(dragonId)!.power,
+        0,
+      ),
+      dragonPowerEstimates,
+      powerConfidenceCounts: powerConfidenceCounts(formation.dragonIds, estimatesByDragonId),
+    };
+  });
+}
+
+function powerWaveResult(
+  kind: OptimizerWave,
+  formations: PowerAwareOptimizedFormation[],
+  objective: PowerAwarePrimaryBackupOptimizationResult['objective']['primary'],
+  rarityById: ReadonlyMap<string, DragonRarity>,
+  estimatesByDragonId: ReadonlyMap<string, EstimatedDragonPower>,
+): PowerAwareOptimizerWaveResult {
+  const usedDragonIds = [...new Set(formations.flatMap((formation) => formation.dragonIds))]
+    .sort();
+  const formationPowers = formations.map((formation) => formation.estimatedPower);
+  return {
+    kind,
+    label: kind === 'primary' ? 'Primary' : 'Backup',
+    formations,
+    usedDragonIds,
+    rarityCounts: rarityCounts(usedDragonIds, rarityById),
+    totalRating: objective.totalRating,
+    averageRating: objective.totalRating / formations.length,
+    minimumRating: objective.minimumRating,
+    totalRelationshipValue: objective.totalRelationshipValue,
+    totalActiveRelationships: objective.totalActiveRelationships,
+    tierDistribution: tierDistributionFor(formations),
+    totalEstimatedPower: objective.totalEstimatedPower,
+    averageEstimatedPowerPerDragon: objective.totalEstimatedPower / usedDragonIds.length,
+    minimumFormationEstimatedPower: Math.min(...formationPowers),
+    maximumFormationEstimatedPower: Math.max(...formationPowers),
+    powerConfidenceCounts: powerConfidenceCounts(usedDragonIds, estimatesByDragonId),
+    objective,
+  };
 }
 
 function waveResult(

@@ -52,7 +52,7 @@ The complete model audit is committed as [`audits/estimated-power-v1.md`](audits
 
 My Roster shows each owned dragon's read-only estimate and confidence basis. Formation Builder sums the three current dragon estimates into Estimated Formation Power and shows each component. Missing progression produces no estimate.
 
-There is no manual Power field, local roster field, cloud roster field, Supabase migration, optimizer objective, or optimizer strategy. Formation Rating v2 remains unchanged.
+There is no manual Power field, local roster field, cloud roster field, Supabase migration, or Habit Level Power effect. The experimental Power-Aware optimizer uses the unchanged runtime estimate only as a lexicographically separate pool-selection objective; it never adds Power to Formation Rating. Formation Rating v2 remains unchanged.
 
 ## Limitations
 

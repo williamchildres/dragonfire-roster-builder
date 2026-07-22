@@ -798,7 +798,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>My Roster and Formation Builder now show read-only Estimated Power diagnostics from an empirical, unofficial rarity, Star Rank, and Dragon Level model. Roster Optimizer strategies are unchanged. Formation Rating v2 is unchanged.</p>
+          <p>Power-Aware 5 + Backup 5 can now use empirical, unofficial Estimated Power to select Primary dragons while unchanged Formation Rating v2 organizes their formations. Rarity-Priority remains the default.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

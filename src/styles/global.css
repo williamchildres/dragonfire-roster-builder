@@ -3565,7 +3565,7 @@ th {
   border: 0;
   display: grid;
   gap: 0.75rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 1.25rem 0;
   padding: 0;
 }
@@ -3642,6 +3642,22 @@ th {
   border-radius: var(--radius);
   margin: 1.25rem 0;
   padding: 1rem;
+}
+
+.optimizer-strategy .optimizer-experimental-badge {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  justify-self: start;
+  padding: 0.2rem 0.5rem;
+}
+
+.optimizer-power-warning {
+  background: rgba(242, 138, 46, 0.1);
+  border: 1px solid rgba(242, 138, 46, 0.45);
+  border-radius: var(--radius);
+  color: #ffd7a8;
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
 }
 
 .optimizer-unavailable p,
@@ -3833,6 +3849,27 @@ th {
   gap: 0.5rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 1rem 0;
+}
+
+.optimizer-formation-power {
+  align-items: baseline;
+  background: rgba(122, 161, 184, 0.08);
+  border: 1px solid rgba(122, 161, 184, 0.35);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.7rem;
+  margin-top: 0.9rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.optimizer-formation-power span,
+.optimizer-formation-power small {
+  color: var(--muted);
+}
+
+.optimizer-formation-power strong {
+  color: var(--blue);
 }
 
 .optimizer-positions > div {

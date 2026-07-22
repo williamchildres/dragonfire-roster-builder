@@ -22,9 +22,10 @@ import type { FormationArrangement } from '../services/formationPlacementCompari
 import { createEmptyRoster } from '../services/rosterStorage';
 
 describe('Roster Optimizer workspace', () => {
-  it('defaults to Strongest 5 + Backup 5 and exposes an accessible strategy selector', () => {
+  it('defaults to Rarity-Priority 5 + Backup 5 and exposes all public strategy choices', () => {
     renderOptimizer({ roster: ownedRoster(30) });
-    expect(screen.getByRole('radio', { name: /Strongest 5 \+ Backup 5/i })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /Power-Aware 5 \+ Backup 5/i })).not.toBeChecked();
     expect(screen.getByRole('radio', { name: /Best 10 Overall/i })).not.toBeChecked();
     expect(screen.getByRole('button', { name: /Find My Primary & Backup Formations/i })).toBeInTheDocument();
   });
@@ -56,7 +57,7 @@ describe('Roster Optimizer workspace', () => {
     await userEvent.setup().click(screen.getByRole('button', { name: /Find My Best 10 Overall/i }));
     await screen.findByRole('heading', { name: 'Exact optimal result' });
     expect(run).toHaveBeenCalledWith(roster, 'best-ten-overall');
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Strongest 5 \+ Backup 5/i }));
+    await userEvent.setup().click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
     expect(screen.getByText(/progression or optimization strategy changed/i)).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /Open in Formation Builder/i })[0]).toBeDisabled();
   });
@@ -183,7 +184,7 @@ function makeBestTenResult(
   const unusedRarityCounts = countRarities(snapshot.filter((dragon) => unusedDragonIds.includes(dragon.dragonId)).map((dragon) => dragon.rarity));
   const tierDistribution = { Excellent: 0, Strong: 10, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 };
   return {
-    contractVersion: 2,
+    contractVersion: 3,
     strategy: 'best-ten-overall',
     optimal: true,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
@@ -235,7 +236,7 @@ function makePrimaryBackupResult(
     stableSolutionKey: `primary:${primary.objective.stableSolutionKey}||backup:${backup.objective.stableSolutionKey}`,
   };
   return {
-    contractVersion: 2,
+    contractVersion: 3,
     strategy: 'primary-five-backup-five',
     optimal: true,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),

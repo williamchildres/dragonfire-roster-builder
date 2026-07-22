@@ -16,6 +16,9 @@ import {
   type OptimizerRosterDragon,
   type OptimizerWaveResult,
   type PrimaryBackupOptimizationResult,
+  type PowerAwareOptimizedFormation,
+  type PowerAwareOptimizerWaveResult,
+  type PowerAwarePrimaryBackupOptimizationResult,
   type RosterOptimizationResult,
   type RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
@@ -119,6 +122,20 @@ export function RosterOptimizer({
 
       <fieldset className="optimizer-strategy" disabled={status === 'running'}>
         <legend>Optimization Strategy</legend>
+        <label className={strategy === 'power-aware-primary-five-backup-five' ? 'is-selected' : undefined}>
+          <input
+            type="radio"
+            name="optimizer-strategy"
+            value="power-aware-primary-five-backup-five"
+            checked={strategy === 'power-aware-primary-five-backup-five'}
+            onChange={() => setStrategy('power-aware-primary-five-backup-five')}
+          />
+          <span>
+            <strong>Power-Aware 5 + Backup 5</strong>
+            <small>Use Estimated Power to choose the strongest 15 Primary dragons, then arrange them into five formations using Formation Rating.</small>
+            <em className="optimizer-experimental-badge">Estimated / Experimental</em>
+          </span>
+        </label>
         <label className={strategy === 'primary-five-backup-five' ? 'is-selected' : undefined}>
           <input
             type="radio"
@@ -128,7 +145,7 @@ export function RosterOptimizer({
             onChange={() => setStrategy('primary-five-backup-five')}
           />
           <span>
-            <strong>Strongest 5 + Backup 5</strong>
+            <strong>Rarity-Priority 5 + Backup 5</strong>
             <small>Prioritize your five active formations first, then optimize five Backup formations from the remaining dragons.</small>
             <em>Legendary dragons are prioritized into Primary before Epic and Rare.</em>
           </span>
@@ -164,9 +181,9 @@ export function RosterOptimizer({
             onClick={() => void run()}
           >
             <Sparkles size={18} aria-hidden="true" />
-            {strategy === 'primary-five-backup-five'
-              ? 'Find My Primary & Backup Formations'
-              : 'Find My Best 10 Overall'}
+            {strategy === 'best-ten-overall'
+              ? 'Find My Best 10 Overall'
+              : 'Find My Primary & Backup Formations'}
           </button>
           {status === 'running' ? (
             <button type="button" className="secondary-button" onClick={cancel}>
@@ -231,15 +248,17 @@ function OptimizerResultView({
       <header className="optimizer-result-header">
         <div>
           <p className="eyebrow">
-            {result.strategy === 'primary-five-backup-five'
-              ? 'Strongest 5 + Backup 5'
-              : 'Best 10 Overall'}
+            {result.strategy === 'power-aware-primary-five-backup-five'
+              ? 'Power-Aware 5 + Backup 5'
+              : result.strategy === 'primary-five-backup-five'
+                ? 'Rarity-Priority 5 + Backup 5'
+                : 'Best 10 Overall'}
           </p>
           <h3>Exact optimal result</h3>
         </div>
         <span className="optimizer-optimal-badge"><CircleCheck size={17} aria-hidden="true" /> Proven optimal</span>
       </header>
-      {result.strategy === 'primary-five-backup-five' ? (
+      {result.strategy !== 'best-ten-overall' ? (
         <PrimaryBackupResult
           result={result}
           dragonsById={dragonsById}
@@ -306,15 +325,24 @@ function PrimaryBackupResult({
   stale,
   onOpenFormation,
 }: {
-  result: PrimaryBackupOptimizationResult;
+  result: PrimaryBackupOptimizationResult | PowerAwarePrimaryBackupOptimizationResult;
   dragonsById: Map<string, Dragon>;
   stale: boolean;
   onOpenFormation: (arrangement: FormationArrangement) => void;
 }) {
+  const powerAware = result.strategy === 'power-aware-primary-five-backup-five';
+  const hasLowConfidence = powerAware && result.combined.powerConfidenceCounts.low > 0;
   return <>
+    {hasLowConfidence ? (
+      <p className="optimizer-power-warning" role="status">
+        Some selected dragons have low-confidence Estimated Power extrapolations. Confidence is a warning only and never changes objective priority.
+      </p>
+    ) : null}
     <WaveSection
       wave={result.primary}
-      description="Your strongest five active formations. Rarity and formation quality are prioritized here before the Backup set."
+      description={powerAware
+        ? 'Estimated Power selects the Primary dragon pool; Formation Rating organizes that pool into five formations.'
+        : 'Your strongest five active formations. Rarity and formation quality are prioritized here before the Backup set.'}
       dragonsById={dragonsById}
       stale={stale}
       onOpenFormation={onOpenFormation}
@@ -345,7 +373,7 @@ function WaveSection({
   stale,
   onOpenFormation,
 }: {
-  wave: OptimizerWaveResult;
+  wave: OptimizerWaveResult | PowerAwareOptimizerWaveResult;
   description: string;
   dragonsById: Map<string, Dragon>;
   stale: boolean;
@@ -362,6 +390,11 @@ function WaveSection({
         </div>
       </header>
       <div className="optimizer-result-metrics optimizer-wave-metrics">
+        {'totalEstimatedPower' in wave ? <>
+          <Metric label="Total Estimated Power" value={wave.totalEstimatedPower.toLocaleString()} />
+          <Metric label="Average Power / dragon" value={Math.round(wave.averageEstimatedPowerPerDragon).toLocaleString()} />
+          <Metric label="Formation Power range" value={`${wave.minimumFormationEstimatedPower.toLocaleString()}–${wave.maximumFormationEstimatedPower.toLocaleString()}`} />
+        </> : null}
         <Metric label="Formations" value={wave.formations.length} />
         <Metric label="Total rating" value={wave.totalRating} />
         <Metric label="Average" value={wave.averageRating.toFixed(1)} />
@@ -369,7 +402,13 @@ function WaveSection({
         <Metric label="Legendary" value={wave.rarityCounts.Legendary} />
         <Metric label="Epic" value={wave.rarityCounts.Epic} />
         <Metric label="Rare" value={wave.rarityCounts.Rare} />
+        <Metric label="Relationship value" value={wave.totalRelationshipValue} />
         <Metric label="Active relationships" value={wave.totalActiveRelationships} />
+        {'powerConfidenceCounts' in wave ? <>
+          <Metric label="Observed Power" value={wave.powerConfidenceCounts.observed} />
+          <Metric label="Modeled Power" value={wave.powerConfidenceCounts.modeled} />
+          <Metric label="Low-confidence Power" value={wave.powerConfidenceCounts.low} />
+        </> : null}
       </div>
       <p className="optimizer-tier-summary"><strong>Rating tiers:</strong> {tierSummary(wave.tierDistribution)}</p>
       <div className="optimizer-formation-grid">
@@ -432,6 +471,11 @@ function TechnicalDetails({ result }: { result: RosterOptimizationResult }) {
         <div><dt>Total</dt><dd>{formatMs(result.diagnostics.totalMs)}</dd></div>
         <div><dt>Solution hash</dt><dd><code>{result.optimizerSolutionHash}</code></dd></div>
         <div><dt>Result hash</dt><dd><code>{result.optimizerResultHash}</code></dd></div>
+        {result.strategy === 'power-aware-primary-five-backup-five' ? <>
+          <div><dt>Power model</dt><dd><code>{result.estimatedPowerModelVersion}</code></dd></div>
+          <div><dt>Power model hash</dt><dd><code>{result.estimatedPowerModelHash}</code></dd></div>
+          <div><dt>Power observation hash</dt><dd><code>{result.estimatedPowerObservationHash}</code></dd></div>
+        </> : null}
       </dl>
     </details>
   );
@@ -443,7 +487,7 @@ function OptimizerFormationCard({
   disabled,
   onOpen,
 }: {
-  formation: OptimizedFormation;
+  formation: OptimizedFormation | PowerAwareOptimizedFormation;
   dragonsById: Map<string, Dragon>;
   disabled: boolean;
   onOpen: () => void;
@@ -465,6 +509,13 @@ function OptimizerFormationCard({
           <span>Placement {formation.placementScore}/20</span>
         </div>
       </header>
+      {'estimatedPower' in formation ? (
+        <div className="optimizer-formation-power">
+          <span>Estimated Formation Power</span>
+          <strong>{formation.estimatedPower.toLocaleString()}</strong>
+          <small>Separate from Formation Rating {formation.rating}</small>
+        </div>
+      ) : null}
       <dl className="optimizer-positions">
         {(['left-flank', 'vanguard', 'right-flank'] as const).map((position) => {
           const dragon = dragonsById.get(formation.arrangement[position]);
@@ -507,7 +558,15 @@ function Methodology({ strategy }: { strategy: RosterOptimizerStrategy }) {
       <summary>How this was chosen</summary>
       <div>
         <p>The optimizer uses eligible dragons from My Roster and requires at least 30.</p>
-        {strategy === 'primary-five-backup-five' ? (
+        {strategy === 'power-aware-primary-five-backup-five' ? (
+          <ul>
+            <li>Estimated Power chooses the Primary dragon pool. Formation Rating organizes equally powerful choices into formations.</li>
+            <li>Estimated Power is empirical and unofficial. It is not combat simulation or an official game formula.</li>
+            <li>Backup Estimated Power is optimized only after every Primary numeric quality objective is fixed.</li>
+            <li>Power and the 0–100 Formation Rating remain separate; no weighted blend is used.</li>
+            <li>Rarity and confidence are diagnostics only. Habit Levels are not used.</li>
+          </ul>
+        ) : strategy === 'primary-five-backup-five' ? (
           <ul>
             <li>Only five formations may be active at once, so the Primary five are optimized first.</li>
             <li>Primary Legendary inclusion is prioritized before Epic and Rare, then Primary formation quality is optimized.</li>

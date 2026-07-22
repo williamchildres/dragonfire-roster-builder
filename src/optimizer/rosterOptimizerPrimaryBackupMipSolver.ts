@@ -1,12 +1,18 @@
 import { HiGHS, Model, Solution, sum, type LinExpr, type Var } from '@bubblyworld/highs-ts';
 import { applyRosterOptimizerExactGapOptions } from './highsExactOptions';
-import { primaryBackupObjectiveForCandidates } from './rosterOptimizerObjective';
+import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
+import {
+  powerAwarePrimaryBackupObjectiveForCandidates,
+  primaryBackupObjectiveForCandidates,
+} from './rosterOptimizerObjective';
+import type { PrimaryPowerCutoff } from './rosterOptimizerPower';
 import type {
   OptimizerFormationCandidate,
   OptimizerPhaseTimings,
   OptimizerRosterDragon,
   OptimizerWave,
   PrimaryBackupOptimizerSolverResult,
+  PowerAwarePrimaryBackupOptimizerSolverResult,
 } from './rosterOptimizerTypes';
 
 type PhaseCategory = Exclude<keyof OptimizerPhaseTimings, 'modelConstructionMs'>;
@@ -15,6 +21,7 @@ interface WaveExpressions {
   variables: Var[];
   legendaryCount: LinExpr;
   epicCount: LinExpr;
+  totalPowerUnits: LinExpr;
   totalRating: LinExpr;
   minimumRating: Var;
   totalRelationshipValueDoubled: LinExpr;
@@ -42,11 +49,14 @@ interface SolverSession {
 type FixedPhase =
   | { kind: 'scalar'; wave: OptimizerWave; field: ScalarField; value: number }
   | { kind: 'histogram'; wave: OptimizerWave; levels: number[]; value: number }
-  | { kind: 'stable'; wave: OptimizerWave; indices: number[]; value: number };
+  | { kind: 'stable'; wave: OptimizerWave; indices: number[]; value: number }
+  | { kind: 'dragon-inclusion'; wave: OptimizerWave; dragonId: string; value: number }
+  | { kind: 'cutoff-ties'; wave: OptimizerWave; dragonIds: string[]; value: number };
 
 type ScalarField =
   | 'legendaryCount'
   | 'epicCount'
+  | 'totalPowerUnits'
   | 'totalRating'
   | 'minimumRating'
   | 'totalRelationshipValueDoubled'
@@ -55,13 +65,30 @@ type ScalarField =
 const histogramChunkSize = 9;
 const stableChunkSize = 49;
 
+export interface PowerAwarePrimaryBackupMipOptions {
+  primaryCutoff: PrimaryPowerCutoff;
+  estimatesByDragonId: ReadonlyMap<string, EstimatedDragonPower>;
+}
+
 /** Exact joint two-wave MILP. Every lexicographic optimum is fixed before the
  * next phase and every HiGHS parse uses zero absolute and relative MIP gaps. */
+export function solvePrimaryBackupRosterOptimizerMip(
+  inputCandidates: OptimizerFormationCandidate[],
+  eligibleDragons: OptimizerRosterDragon[],
+  formationsPerWave?: number,
+): Promise<PrimaryBackupOptimizerSolverResult>;
+export function solvePrimaryBackupRosterOptimizerMip(
+  inputCandidates: OptimizerFormationCandidate[],
+  eligibleDragons: OptimizerRosterDragon[],
+  formationsPerWave: number | undefined,
+  powerAware: PowerAwarePrimaryBackupMipOptions,
+): Promise<PowerAwarePrimaryBackupOptimizerSolverResult>;
 export async function solvePrimaryBackupRosterOptimizerMip(
   inputCandidates: OptimizerFormationCandidate[],
   eligibleDragons: OptimizerRosterDragon[],
   formationsPerWave = 5,
-): Promise<PrimaryBackupOptimizerSolverResult> {
+  powerAware?: PowerAwarePrimaryBackupMipOptions,
+): Promise<PrimaryBackupOptimizerSolverResult | PowerAwarePrimaryBackupOptimizerSolverResult> {
   const candidates = [...inputCandidates].sort((left, right) =>
     left.stableCandidateKey.localeCompare(right.stableCandidateKey),
   );
@@ -71,8 +98,10 @@ export async function solvePrimaryBackupRosterOptimizerMip(
     branchesPruned: 0,
     phaseTimings: {
       modelConstructionMs: 0,
+      primaryPowerMs: 0,
       primaryRarityMs: 0,
       primaryQualityMs: 0,
+      backupPowerMs: 0,
       backupRarityMs: 0,
       backupQualityMs: 0,
       stableKeyMs: 0,
@@ -98,10 +127,16 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       telemetry,
     );
 
-    await maximizeAndFix(context, session, fixed, 'primary', 'legendaryCount',
-      'Primary Legendary inclusion', 'primaryRarityMs');
-    await maximizeAndFix(context, session, fixed, 'primary', 'epicCount',
-      'Primary Epic inclusion', 'primaryRarityMs');
+    if (powerAware) {
+      addPrimaryPowerCutoffConstraints(context, candidates, powerAware.primaryCutoff, fixed);
+    }
+
+    if (!powerAware) {
+      await maximizeAndFix(context, session, fixed, 'primary', 'legendaryCount',
+        'Primary Legendary inclusion', 'primaryRarityMs');
+      await maximizeAndFix(context, session, fixed, 'primary', 'epicCount',
+        'Primary Epic inclusion', 'primaryRarityMs');
+    }
     await maximizeAndFix(context, session, fixed, 'primary', 'totalRating',
       'Primary total Formation Rating', 'primaryQualityMs');
     await maximizeAndFix(context, session, fixed, 'primary', 'minimumRating',
@@ -119,10 +154,15 @@ export async function solvePrimaryBackupRosterOptimizerMip(
     await maximizeAndFix(context, session, fixed, 'primary', 'totalActiveRelationships',
       'Primary active relationship count', 'primaryQualityMs');
 
-    await maximizeAndFix(context, session, fixed, 'backup', 'legendaryCount',
-      'Backup Legendary inclusion', 'backupRarityMs');
-    await maximizeAndFix(context, session, fixed, 'backup', 'epicCount',
-      'Backup Epic inclusion', 'backupRarityMs');
+    if (powerAware) {
+      await maximizeAndFix(context, session, fixed, 'backup', 'totalPowerUnits',
+        'Backup total Estimated Power', 'backupPowerMs');
+    } else {
+      await maximizeAndFix(context, session, fixed, 'backup', 'legendaryCount',
+        'Backup Legendary inclusion', 'backupRarityMs');
+      await maximizeAndFix(context, session, fixed, 'backup', 'epicCount',
+        'Backup Epic inclusion', 'backupRarityMs');
+    }
     await maximizeAndFix(context, session, fixed, 'backup', 'totalRating',
       'Backup total Formation Rating', 'backupQualityMs');
     await maximizeAndFix(context, session, fixed, 'backup', 'minimumRating',
@@ -208,20 +248,39 @@ export async function solvePrimaryBackupRosterOptimizerMip(
     const rarityByDragonId = new Map(
       eligibleDragons.map((dragon) => [dragon.dragonId, dragon.rarity]),
     );
-    return {
+    const common = {
       optimal: true,
       primaryCandidates,
       backupCandidates,
-      objective: primaryBackupObjectiveForCandidates(
-        primaryCandidates,
-        backupCandidates,
-        rarityByDragonId,
-      ),
       nodesVisited: telemetry.nodesVisited,
       branchesPruned: telemetry.branchesPruned,
       cacheEntries: 0,
       solverPasses: telemetry.passes,
       phaseTimings: telemetry.phaseTimings,
+    } as const;
+    if (powerAware) {
+      const objective = powerAwarePrimaryBackupObjectiveForCandidates(
+        primaryCandidates,
+        backupCandidates,
+        rarityByDragonId,
+        powerAware.estimatesByDragonId,
+      );
+      if (objective.primary.totalEstimatedPower / 10
+        !== powerAware.primaryCutoff.exactPrimaryTotalPowerUnits) {
+        throw new Error('Primary cutoff constraints did not retain the exact maximum Power pool.');
+      }
+      return {
+        ...common,
+        objective,
+      };
+    }
+    return {
+      ...common,
+      objective: primaryBackupObjectiveForCandidates(
+        primaryCandidates,
+        backupCandidates,
+        rarityByDragonId,
+      ),
     };
   } finally {
     session.highs.free();
@@ -318,6 +377,11 @@ function buildWaveExpressions(
     variables,
     legendaryCount: rarityExpression('Legendary'),
     epicCount: rarityExpression('Epic'),
+    totalPowerUnits: sum(
+      ...variables.map((variable, index) =>
+        variable.times(candidates[index]!.estimatedPowerUnits ?? 0),
+      ),
+    ),
     totalRating: sum(
       ...variables.map((variable, index) => variable.times(candidates[index]!.rating)),
     ),
@@ -462,9 +526,68 @@ function applyFixedPhases(
       ? context[phase.wave][phase.field]
       : phase.kind === 'histogram'
         ? histogramExpression(candidates, context[phase.wave].variables, phase.levels)
-        : stableExpression(context[phase.wave].variables, phase.indices);
+        : phase.kind === 'stable'
+          ? stableExpression(context[phase.wave].variables, phase.indices)
+          : phase.kind === 'dragon-inclusion'
+            ? dragonInclusionExpression(candidates, context[phase.wave].variables, phase.dragonId)
+            : dragonSetInclusionExpression(candidates, context[phase.wave].variables, phase.dragonIds);
     context.model.addConstraint(expression.eq(phase.value), `replay_fix_${index}`);
   });
+}
+
+function addPrimaryPowerCutoffConstraints(
+  context: ModelContext,
+  candidates: OptimizerFormationCandidate[],
+  cutoff: PrimaryPowerCutoff,
+  fixed: FixedPhase[],
+): void {
+  for (const dragonId of cutoff.aboveCutoffDragonIds) {
+    const expression = dragonInclusionExpression(candidates, context.primary.variables, dragonId);
+    context.model.addConstraint(expression.eq(1), `power_above_${dragonId}`);
+    fixed.push({ kind: 'dragon-inclusion', wave: 'primary', dragonId, value: 1 });
+  }
+  for (const dragonId of cutoff.belowCutoffDragonIds) {
+    const expression = dragonInclusionExpression(candidates, context.primary.variables, dragonId);
+    context.model.addConstraint(expression.eq(0), `power_below_${dragonId}`);
+    fixed.push({ kind: 'dragon-inclusion', wave: 'primary', dragonId, value: 0 });
+  }
+  const tieExpression = dragonSetInclusionExpression(
+    candidates,
+    context.primary.variables,
+    cutoff.cutoffTiedDragonIds,
+  );
+  context.model.addConstraint(
+    tieExpression.eq(cutoff.requiredCutoffTieCount),
+    'power_cutoff_ties',
+  );
+  fixed.push({
+    kind: 'cutoff-ties',
+    wave: 'primary',
+    dragonIds: cutoff.cutoffTiedDragonIds,
+    value: cutoff.requiredCutoffTieCount,
+  });
+}
+
+function dragonInclusionExpression(
+  candidates: OptimizerFormationCandidate[],
+  variables: Var[],
+  dragonId: string,
+): LinExpr {
+  return sum(...candidates.flatMap((candidate, index) =>
+    candidate.dragonIds.includes(dragonId) ? [variables[index]!] : [],
+  ));
+}
+
+function dragonSetInclusionExpression(
+  candidates: OptimizerFormationCandidate[],
+  variables: Var[],
+  dragonIds: string[],
+): LinExpr {
+  const included = new Set(dragonIds);
+  return sum(...candidates.flatMap((candidate, index) => {
+    const count = candidate.dragonIds.filter((dragonId) => included.has(dragonId)).length;
+    return count > 0 ? [variables[index]!.times(count)] : [];
+  }));
 }
 
 function histogramExpression(

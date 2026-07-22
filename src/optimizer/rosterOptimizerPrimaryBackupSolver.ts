@@ -1,12 +1,17 @@
 import {
+  comparePowerAwarePrimaryBackupOptimizerObjectives,
   comparePrimaryBackupOptimizerObjectives,
+  powerAwarePrimaryBackupObjectiveForCandidates,
   primaryBackupObjectiveForCandidates,
 } from './rosterOptimizerObjective';
+import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
+import { determinePrimaryPowerCutoff } from './rosterOptimizerPower';
 import {
   RosterOptimizerCancelledError,
   type OptimizerFormationCandidate,
   type OptimizerRosterDragon,
   type PrimaryBackupOptimizerSolverResult,
+  type PowerAwarePrimaryBackupOptimizerSolverResult,
 } from './rosterOptimizerTypes';
 
 export interface PrimaryBackupExactSolverOptions {
@@ -91,12 +96,107 @@ export function solvePrimaryBackupCandidates(
     solverPasses: 1,
     phaseTimings: {
       modelConstructionMs: 0,
+      primaryPowerMs: 0,
       primaryRarityMs: 0,
       primaryQualityMs: 0,
+      backupPowerMs: 0,
       backupRarityMs: 0,
       backupQualityMs: 0,
       stableKeyMs: 0,
     },
+  };
+}
+
+/** Independent exhaustive oracle for bounded Power-Aware fixtures. */
+export function solvePowerAwarePrimaryBackupCandidates(
+  inputCandidates: OptimizerFormationCandidate[],
+  eligibleDragons: OptimizerRosterDragon[],
+  estimatesByDragonId: ReadonlyMap<string, EstimatedDragonPower>,
+  options: PrimaryBackupExactSolverOptions = {},
+): PowerAwarePrimaryBackupOptimizerSolverResult | null {
+  const formationsPerWave = options.formationsPerWave ?? 5;
+  const cutoff = determinePrimaryPowerCutoff(estimatesByDragonId, formationsPerWave * 3);
+  const mandatory = new Set(cutoff.aboveCutoffDragonIds);
+  const excluded = new Set(cutoff.belowCutoffDragonIds);
+  const cutoffTies = new Set(cutoff.cutoffTiedDragonIds);
+  const candidates = [...inputCandidates].sort((left, right) =>
+    left.stableCandidateKey.localeCompare(right.stableCandidateKey),
+  );
+  const rarityByDragonId = new Map(
+    eligibleDragons.map((dragon) => [dragon.dragonId, dragon.rarity]),
+  );
+  const allocations: WaveAllocation[] = [];
+  let nodesVisited = 0;
+  const selected: OptimizerFormationCandidate[] = [];
+  const used = new Set<string>();
+  const enumerate = (start: number): void => {
+    nodesVisited += 1;
+    if (options.shouldCancel?.()) throw new RosterOptimizerCancelledError();
+    if (selected.length === formationsPerWave) {
+      allocations.push({ candidates: [...selected], dragonIds: new Set(used) });
+      return;
+    }
+    for (let index = start; index < candidates.length; index += 1) {
+      const candidate = candidates[index]!;
+      if (candidate.dragonIds.some((dragonId) => used.has(dragonId))) continue;
+      candidate.dragonIds.forEach((dragonId) => used.add(dragonId));
+      selected.push(candidate);
+      enumerate(index + 1);
+      selected.pop();
+      candidate.dragonIds.forEach((dragonId) => used.delete(dragonId));
+    }
+  };
+  enumerate(0);
+
+  let best: PowerAwarePrimaryBackupOptimizerSolverResult['objective'] | null = null;
+  let bestPrimary: OptimizerFormationCandidate[] = [];
+  let bestBackup: OptimizerFormationCandidate[] = [];
+  for (const primary of allocations) {
+    if ([...mandatory].some((dragonId) => !primary.dragonIds.has(dragonId))) continue;
+    if ([...excluded].some((dragonId) => primary.dragonIds.has(dragonId))) continue;
+    if ([...primary.dragonIds].filter((dragonId) => cutoffTies.has(dragonId)).length
+      !== cutoff.requiredCutoffTieCount) continue;
+    for (const backup of allocations) {
+      nodesVisited += 1;
+      if (options.shouldCancel?.()) throw new RosterOptimizerCancelledError();
+      if ([...backup.dragonIds].some((dragonId) => primary.dragonIds.has(dragonId))) continue;
+      const objective = powerAwarePrimaryBackupObjectiveForCandidates(
+        primary.candidates,
+        backup.candidates,
+        rarityByDragonId,
+        estimatesByDragonId,
+      );
+      if (!best || comparePowerAwarePrimaryBackupOptimizerObjectives(objective, best) > 0) {
+        best = objective;
+        bestPrimary = primary.candidates;
+        bestBackup = backup.candidates;
+      }
+    }
+  }
+  if (!best) return null;
+  return {
+    optimal: true,
+    primaryCandidates: bestPrimary,
+    backupCandidates: bestBackup,
+    objective: best,
+    nodesVisited,
+    branchesPruned: 0,
+    cacheEntries: allocations.length,
+    solverPasses: 1,
+    phaseTimings: emptyPhaseTimings(),
+  };
+}
+
+function emptyPhaseTimings() {
+  return {
+    modelConstructionMs: 0,
+    primaryPowerMs: 0,
+    primaryRarityMs: 0,
+    primaryQualityMs: 0,
+    backupPowerMs: 0,
+    backupRarityMs: 0,
+    backupQualityMs: 0,
+    stableKeyMs: 0,
   };
 }
 

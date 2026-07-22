@@ -1,6 +1,9 @@
 import type { DragonRarity } from '../models/dragon';
+import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
+import { candidatePowerUnits } from './rosterOptimizerPower';
 import type {
   OptimizerFormationCandidate,
+  PowerAwarePrimaryBackupOptimizerObjective,
   PrimaryBackupOptimizerObjective,
   RosterOptimizerObjective,
   RosterRarityPriority,
@@ -56,6 +59,22 @@ export function comparePrimaryBackupOptimizerObjectives(
   );
 }
 
+/** Positive means `left` is better under the exact Power-Aware hierarchy. */
+export function comparePowerAwarePrimaryBackupOptimizerObjectives(
+  left: PowerAwarePrimaryBackupOptimizerObjective,
+  right: PowerAwarePrimaryBackupOptimizerObjective,
+): number {
+  return (
+    left.primary.totalEstimatedPower - right.primary.totalEstimatedPower ||
+    compareWaveQuality(left.primary, right.primary) ||
+    left.backup.totalEstimatedPower - right.backup.totalEstimatedPower ||
+    compareWaveQuality(left.backup, right.backup) ||
+    right.primary.stableSolutionKey.localeCompare(left.primary.stableSolutionKey) ||
+    right.backup.stableSolutionKey.localeCompare(left.backup.stableSolutionKey) ||
+    right.stableSolutionKey.localeCompare(left.stableSolutionKey)
+  );
+}
+
 export function primaryBackupObjectiveForCandidates(
   primaryCandidates: OptimizerFormationCandidate[],
   backupCandidates: OptimizerFormationCandidate[],
@@ -68,6 +87,42 @@ export function primaryBackupObjectiveForCandidates(
     primary,
     backup,
     combinedTotalRating: primary.totalRating + backup.totalRating,
+    combinedRelationshipValue:
+      primary.totalRelationshipValue + backup.totalRelationshipValue,
+    combinedActiveRelationships:
+      primary.totalActiveRelationships + backup.totalActiveRelationships,
+    stableSolutionKey: `primary:${primary.stableSolutionKey}||backup:${backup.stableSolutionKey}`,
+  };
+}
+
+export function powerAwarePrimaryBackupObjectiveForCandidates(
+  primaryCandidates: OptimizerFormationCandidate[],
+  backupCandidates: OptimizerFormationCandidate[],
+  rarityByDragonId: ReadonlyMap<string, DragonRarity>,
+  estimatesByDragonId: ReadonlyMap<string, EstimatedDragonPower>,
+): PowerAwarePrimaryBackupOptimizerObjective {
+  const primaryBase = objectiveForCandidates(primaryCandidates, rarityByDragonId);
+  const backupBase = objectiveForCandidates(backupCandidates, rarityByDragonId);
+  const primary = {
+    ...primaryBase,
+    totalEstimatedPower: primaryCandidates.reduce(
+      (total, candidate) => total + candidatePowerUnits(candidate, estimatesByDragonId) * 10,
+      0,
+    ),
+  };
+  const backup = {
+    ...backupBase,
+    totalEstimatedPower: backupCandidates.reduce(
+      (total, candidate) => total + candidatePowerUnits(candidate, estimatesByDragonId) * 10,
+      0,
+    ),
+  };
+  return {
+    strategy: 'power-aware-primary-five-backup-five',
+    primary,
+    backup,
+    combinedTotalRating: primary.totalRating + backup.totalRating,
+    combinedEstimatedPower: primary.totalEstimatedPower + backup.totalEstimatedPower,
     combinedRelationshipValue:
       primary.totalRelationshipValue + backup.totalRelationshipValue,
     combinedActiveRelationships:

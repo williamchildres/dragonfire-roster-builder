@@ -16,7 +16,7 @@ Public site: https://dragonfirelab.com
 - Read-only Estimated Power v1 diagnostics for roster dragons and complete formations, using an empirical, unofficial rarity/progression model.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
-- Roster Optimizer with exact Strongest 5 + Backup 5 and Best 10 Overall strategies over current My Roster progression.
+- Roster Optimizer with exact Power-Aware 5 + Backup 5, Rarity-Priority 5 + Backup 5, and Best 10 Overall strategies over current My Roster progression.
 - Formation share links and roster JSON import/export.
 - Lightweight project-context export for handoffs.
 
@@ -52,11 +52,13 @@ Typed defensive and Recovery Received support may be presented through explicitl
 
 Roster Optimizer uses the same current My Roster eligibility and progression resolution as Formation Builder. At least 30 owned dragons are required. It evaluates every unique three-dragon combination, keeps the best or tied-best of all six Left Flank/Vanguard/Right Flank assignments, and selects exactly 10 formations with 30 unique dragons.
 
-Strongest 5 + Backup 5 is the default because players can activate only five formations at once. Primary first maximizes Legendary and then Epic inclusion, followed by total Formation Rating, weakest formation, the complete ascending five-rating vector, relationship value, and relationship count. Backup is optimized from the 16 remaining eligible dragons only after every Primary numeric objective is fixed. Exactly tied Primary solutions are resolved by the strongest possible Backup before stable keys.
+Rarity-Priority 5 + Backup 5 remains the default for this first experimental release. Primary first maximizes Legendary and then Epic inclusion, followed by total Formation Rating, weakest formation, the complete ascending five-rating vector, relationship value, and relationship count.
+
+Power-Aware 5 + Backup 5 uses Estimated Power to choose the strongest 15 Primary dragons, then Formation Rating organizes them into five formations. Primary Power is fixed exactly at the individual-dragon 15th-place cutoff, including the required number of tied cutoff dragons rather than an arbitrary first 15. Only after all Primary numeric quality objectives are fixed does Backup maximize its total Estimated Power. Power and Formation Rating remain separate; rarity and Power confidence are diagnostics only.
 
 Best 10 Overall remains available with its v0.12.0 behavior and deterministic allocations unchanged. It optimizes all ten formations as one equally weighted collection.
 
-Both strategies are exact, joint, zero-gap MILP allocations rather than greedy lists. Star Rank and Dragon Level control unlocks and current ratings. Habit Levels remain stored and are preserved in Formation Builder handoff but are unweighted. Formation Rating v2 is unchanged, no dragon repeats, no combat simulation occurs, results remain local, and no migration is required. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md) and the deterministic audit under [`docs/audits/`](docs/audits/).
+All strategies are exact, joint, zero-gap MILP allocations rather than greedy lists. Star Rank and Dragon Level control unlocks, ratings, and Estimated Power. Habit Levels remain stored and are preserved in Formation Builder handoff but are unweighted. Formation Rating v2 is unchanged, no dragon repeats, no combat simulation occurs, results remain local, and no migration is required. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md) and the deterministic audits under [`docs/audits/`](docs/audits/).
 
 ## Development
 
@@ -68,6 +70,9 @@ npm run test
 npm run build
 npm run audit:full-roster
 npm run audit:optimizer
+npm run audit:optimizer:power-aware -- --fixture mixed
+npm run audit:optimizer:power-aware -- --fixture maxed
+npm run audit:optimizer:power-aware -- --fixture all-one
 npm run fit:power
 npm run audit:power
 npm run export:context
@@ -105,4 +110,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.15.0`. Source data schema: `13`. Local and cloud roster schemas: `5`; optimizer contract: `2`. Estimated Power is a read-only runtime diagnostic with no manual entry, persistence field, optimizer strategy, SQL migration, or change to Formation Rating v2. The canonical dragon count remains 31, with Sunfyre and Tairax used only as observation provenance and absent from the canonical dragon database. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`). Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.
+Current release: `0.16.0`. Source data schema: `13`. Local and cloud roster schemas: `5`; optimizer contract: `3`. Estimated Power remains runtime-only with no manual entry, persistence field, SQL migration, Habit Level effect, or change to Formation Rating v2. The canonical dragon count remains 31, with Sunfyre and Tairax used only as observation provenance and absent from the canonical dragon database. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`). Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.

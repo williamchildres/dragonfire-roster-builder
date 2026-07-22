@@ -2,7 +2,7 @@
 
 Dragonfire Lab 0.9.1 presents owned dragons as a compact roster-management workspace. The authoritative roster remains owned by `App.tsx`; workspace components receive the current roster and the existing update callback. They do not create another roster store, debounce, or cloud client.
 
-Roster Optimizer and Formation Builder My Roster mode share the same authoritative owned/hatched eligibility helper. Optimizer roster snapshots use stable dragon ID, rarity, Star Rank, and Dragon Level; notes, Habit Levels, filters, sorting, responsive mode, and selection never affect ranking. The separate request fingerprint also includes strategy, optimizer contract version, and Formation Rating contract so switching between Strongest 5 + Backup 5 and Best 10 Overall stales an existing result.
+Roster Optimizer and Formation Builder My Roster mode share the same authoritative owned/hatched eligibility helper. Optimizer roster snapshots use stable dragon ID, rarity, Star Rank, and Dragon Level; notes, Habit Levels, filters, sorting, responsive mode, and selection never affect ranking. The separate request fingerprint also includes strategy, optimizer contract version, and Formation Rating contract. Power-Aware fingerprints additionally include Estimated Power version, model hash, and observation hash.
 
 ## Interaction model
 
@@ -13,7 +13,7 @@ Roster Optimizer and Formation Builder My Roster mode share the same authoritati
 - Add All Dragons derives missing IDs from the complete canonical collection, never from the current filters, sorting, visible rows, or optimizer candidates. It confirms the current missing count before committing one immutable roster snapshot. `All Dragons Added` is disabled when no canonical dragon is missing.
 - Removing selects the next visible row, then the previous row, then the empty state.
 - Star Rank, Dragon Level (`reignLevel` in stored JSON), named Habit Levels, and notes save immediately through the existing local snapshot and optional account-sync path.
-- Estimated Power is derived read-only from rarity, Star Rank, and Dragon Level. It has no editor control or persistence field and does not participate in roster synchronization or optimizer ranking.
+- Estimated Power is derived read-only from rarity, Star Rank, and Dragon Level. It has no editor control or persistence field and does not participate in roster synchronization. Only the explicit Power-Aware optimizer strategy uses it for Primary/Backup pool selection.
 - Habit controls appear only when every canonical `unlockStarRank` and `minimumDragonLevel` requirement is satisfied. An unlocked habit begins at Level 1 and can be set only to 1 through 5. A relocked habit disappears and its saved key is deleted; re-unlocking starts again at Level 1.
 - Removing ownership does not change progression, notes, or valid unlocked Habit Levels. Re-adding the dragon restores those retained values unless progression itself crossed below an unlock threshold.
 - The shared ownership transition preserves valid Star Rank, Dragon Level, notes, and Habit Levels on re-add; only absent or invalid Star Rank and Dragon Level receive the 1/1 defaults. Existing browser persistence and the single debounced account save path remain authoritative; a failed cloud save leaves the complete local snapshot available for the existing retry flow.
