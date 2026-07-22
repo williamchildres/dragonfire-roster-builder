@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.19.1 - 2026-07-22
+
+- Fixed a release-blocking Power-Aware optimizer failure exposed by a real 33-dragon progression roster during exact stable-key refinement. HiGHS returned an optimal integral assignment but a contaminated fractional aggregate objective.
+- Fixed every scalar, rating-histogram, and stable-key phase from exact safe-integer reconstruction of strictly validated Boolean and integer variable values. Materially fractional assignments remain errors; the integrality tolerance is a strict `1e-7` and was not widened.
+- Certified materially contaminated reconstructed phase values with a fresh zero-objective feasibility probe that replays every prior exact phase and attempts a one-integer improvement. The live Backup stable chunk value `0` is fixed only after the `>= 1` probe proves infeasible.
+- Added a sanitized progression-only regression fixture, forward/reversed deterministic audits, exact fixed-phase revalidation, and focused contaminated-objective/fractional-assignment coverage. Zero-gap solving, stable-key ordering, objective hierarchy, scoring, Estimated Power, dragon data, persistence, and schemas are unchanged.
+
 ## 0.19.0 - 2026-07-22
 
 - Added Sunfyre and Tairax as fully curated, screenshot-verified canonical dragons with complete identity, affinity, Command, Trait, five-Habit, unlock, progression, evidence, and manual-review records.

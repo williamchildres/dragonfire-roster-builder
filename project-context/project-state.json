@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-22T19:03:47.762Z",
+  "generatedAt": "2026-07-22T21:31:22.897Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/add-sunfyre-tairax",
-    "commit": "6da10598d697e2a5c168b0f346e80cd1e123f72b",
-    "databaseVersion": "0.19.0",
+    "branch": "hotfix/optimizer-nonintegral-objective",
+    "commit": "207396d8e773c22205735d0e1ecf4d8a3becd03e",
+    "databaseVersion": "0.19.1",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 52,
-    "testCaseCount": 451,
+    "testFileCount": 53,
+    "testCaseCount": 458,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

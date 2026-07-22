@@ -252,7 +252,7 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.19\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.19\.1/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
     expect(latestUpdate).toHaveTextContent('Power-Aware 5 + Backup 5');
     expect(latestUpdate).toHaveTextContent('empirical, unofficial');

@@ -8,6 +8,7 @@ import {
 import { estimateDragonPower } from '../power/estimatedDragonPower';
 import { ROSTER_OPTIMIZER_MIP_GAP_OPTIONS } from '../optimizer/highsExactOptions';
 import { optimizeCurrentRoster } from '../optimizer/rosterOptimizer';
+import { live33ProgressionRegressionRoster } from './live33ProgressionRegression';
 import type {
   BestTenOverallOptimizationResult,
   PrimaryBackupOptimizationResult,
@@ -99,7 +100,7 @@ export async function runRosterOptimizerAudit() {
     archivedPowerAwareFixtures.push(await runArchivedPowerAwareRosterOptimizerAudit(fixture));
   }
   return {
-    auditVersion: '0.19.0',
+    auditVersion: '0.19.1',
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     archivedFormationRatingV2Hash: ARCHIVED_FORMATION_RATING_V2_HASH,
     archivedFixtures: archivedReports,
@@ -127,19 +128,28 @@ export async function runRosterOptimizerAudit() {
   };
 }
 
-export type PowerAwareAuditFixture = 'mixed' | 'maxed' | 'all-one';
+export type PowerAwareAuditFixture = 'mixed' | 'maxed' | 'all-one' | 'live-regression';
 
-export async function runPowerAwareRosterOptimizerAudit(fixture: PowerAwareAuditFixture) {
-  const roster = fixture === 'mixed'
+export async function runPowerAwareRosterOptimizerAudit(
+  fixture: PowerAwareAuditFixture,
+  order: 'forward' | 'reversed' = 'forward',
+) {
+  const forwardRoster = fixture === 'mixed'
     ? mixedProgressionRoster()
     : fixture === 'maxed'
       ? maxedRoster()
-      : allOneRoster();
+      : fixture === 'all-one'
+        ? allOneRoster()
+        : live33ProgressionRegressionRoster();
+  const roster = order === 'forward'
+    ? forwardRoster
+    : Object.fromEntries(Object.entries(forwardRoster).reverse());
   const result = await optimizeCurrentRoster(roster, 'power-aware-primary-five-backup-five');
   if (!result.optimal || result.strategy !== 'power-aware-primary-five-backup-five') {
     throw new Error(`${fixture} Power-Aware audit did not produce a complete result.`);
   }
   validatePowerAwareResult(result);
+  if (fixture === 'live-regression') validateLiveRegressionResult(result);
   const estimatedPowerComparison = dragons.map((dragon) => {
     const progression = roster[dragon.id]!;
     const input = {
@@ -161,8 +171,9 @@ export async function runPowerAwareRosterOptimizerAudit(fixture: PowerAwareAudit
     };
   });
   return {
-    auditVersion: '0.19.0',
+    auditVersion: '0.19.1',
     fixture,
+    order,
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     mipGaps: ROSTER_OPTIMIZER_MIP_GAP_OPTIONS,
     estimatedPowerComparison,
@@ -178,7 +189,51 @@ export async function runPowerAwareRosterOptimizerAudit(fixture: PowerAwareAudit
   };
 }
 
-export async function runArchivedPowerAwareRosterOptimizerAudit(fixture: PowerAwareAuditFixture) {
+function validateLiveRegressionResult(result: PowerAwarePrimaryBackupOptimizationResult): void {
+  const primary = [
+    'vhagar', 'tessarion', 'kalspire', 'crimson', 'sheepstealer', 'caraxes', 'velar',
+    'tashix', 'rhysarion', 'venator', 'syrax', 'seasmoke', 'malachite', 'shadowsong',
+    'daemoros',
+  ].sort();
+  const backup = [
+    'jagadrix', 'sunfyre', 'vaeldra', 'zivern', 'vermax', 'feskar', 'tairax',
+    'thunderstrike', 'bevlorin', 'vesper', 'shimmer', 'nyrena', 'arulix', 'antares',
+    'dawnseeker',
+  ].sort();
+  if (JSON.stringify(result.primary.usedDragonIds) !== JSON.stringify(primary)) {
+    throw new Error('Live regression Primary Power pool changed.');
+  }
+  if (JSON.stringify(result.backup.usedDragonIds) !== JSON.stringify(backup)) {
+    throw new Error('Live regression Backup Power pool changed.');
+  }
+  if (JSON.stringify(result.unusedDragonIds) !== JSON.stringify(['arrax', 'shadowrend', 'solstryker'])) {
+    throw new Error('Live regression unused-dragon set changed.');
+  }
+  if (result.primary.totalEstimatedPower !== 375760 || result.backup.totalEstimatedPower !== 227070) {
+    throw new Error('Live regression Estimated Power totals changed.');
+  }
+  if (!result.diagnostics.numericalExactness?.fixedPhasesValidated) {
+    throw new Error('Live regression fixed phases were not exactly revalidated.');
+  }
+  const certifiedPhase = result.diagnostics.numericalExactness.phaseObjectives.find((phase) =>
+    phase.stage === 'backup stable solution key'
+    && phase.chunkStart === 0
+    && phase.chunkEnd === 48);
+  if (
+    certifiedPhase?.reconstructedObjective !== 0
+    || certifiedPhase.exactOptimumCertified !== true
+    || certifiedPhase.certificationDirection !== 'maximize'
+    || certifiedPhase.certificationBound !== 1
+    || certifiedPhase.certificationStatus !== 'infeasible'
+    || certifiedPhase.certificationSolverPass !== certifiedPhase.solverPass + 1
+  ) {
+    throw new Error('Live regression contaminated phase was not certified by an infeasible >= 1 probe.');
+  }
+}
+
+export async function runArchivedPowerAwareRosterOptimizerAudit(
+  fixture: Exclude<PowerAwareAuditFixture, 'live-regression'>,
+) {
   const roster = fixture === 'mixed'
     ? archivedMixedProgressionRoster()
     : fixture === 'maxed'

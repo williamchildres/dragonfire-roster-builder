@@ -1,4 +1,4 @@
-import { HiGHS, Model, Solution, sum, type LinExpr, type Var } from '@bubblyworld/highs-ts';
+import { HiGHS, Model, Solution, Var, sum, type LinExpr } from '@bubblyworld/highs-ts';
 import { applyRosterOptimizerExactGapOptions } from './highsExactOptions';
 import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
 import {
@@ -8,6 +8,8 @@ import {
 import type { PrimaryPowerCutoff } from './rosterOptimizerPower';
 import type {
   OptimizerFormationCandidate,
+  OptimizerNumericalExactnessDiagnostics,
+  OptimizerPhaseObjectiveDiagnostic,
   OptimizerPhaseTimings,
   OptimizerRosterDragon,
   OptimizerWave,
@@ -39,11 +41,19 @@ interface SolverTelemetry {
   nodesVisited: number;
   branchesPruned: number;
   phaseTimings: OptimizerPhaseTimings;
+  recentSolverLog: string[];
+  objectiveReconstructions: OptimizerPhaseObjectiveDiagnostic[];
+  fixedPhasesValidated: boolean;
 }
 
 interface SolverSession {
   highs: HiGHS;
   telemetry: SolverTelemetry;
+  problem: {
+    candidates: OptimizerFormationCandidate[];
+    eligibleDragons: OptimizerRosterDragon[];
+    formationsPerWave: number;
+  };
 }
 
 type FixedPhase =
@@ -64,6 +74,8 @@ type ScalarField =
 
 const histogramChunkSize = 9;
 const stableChunkSize = 49;
+export const OPTIMIZER_VARIABLE_INTEGRALITY_TOLERANCE = 1e-7;
+export const OPTIMIZER_MATERIAL_OBJECTIVE_DELTA = 1e-3;
 
 export interface PowerAwarePrimaryBackupMipOptions {
   primaryCutoff: PrimaryPowerCutoff;
@@ -106,6 +118,9 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       backupQualityMs: 0,
       stableKeyMs: 0,
     },
+    recentSolverLog: [],
+    objectiveReconstructions: [],
+    fixedPhasesValidated: false,
   };
   const session: SolverSession = {
     highs: await HiGHS.create({
@@ -115,6 +130,7 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       },
     }),
     telemetry,
+    problem: { candidates, eligibleDragons, formationsPerWave },
   };
   applyRosterOptimizerExactGapOptions(session.highs);
 
@@ -213,6 +229,11 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       'Primary stable solution key',
       'stableKeyMs',
     );
+    validateIntegralVariables(
+      afterPrimary,
+      integralModelVariables(context),
+      'Primary stable solution key replay',
+    );
     primaryIndices = selectedVariableIndices(afterPrimary, context.primary.variables);
     backupIndices = selectedVariableIndices(afterPrimary, context.backup.variables);
     if (await hasAlternateWaveSelection({
@@ -242,6 +263,8 @@ export async function solvePrimaryBackupRosterOptimizerMip(
     );
     primaryIndices = selectedVariableIndices(finalSolution, context.primary.variables);
     backupIndices = selectedVariableIndices(finalSolution, context.backup.variables);
+    validateFixedPhases(context, candidates, fixed, finalSolution);
+    telemetry.fixedPhasesValidated = true;
     const primaryCandidates = primaryIndices.map((index) => candidates[index]!);
     const backupCandidates = backupIndices.map((index) => candidates[index]!);
     validateAllocation(primaryCandidates, backupCandidates, formationsPerWave);
@@ -257,6 +280,7 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       cacheEntries: 0,
       solverPasses: telemetry.passes,
       phaseTimings: telemetry.phaseTimings,
+      numericalExactness: numericalExactnessDiagnostics(telemetry),
     } as const;
     if (powerAware) {
       const objective = powerAwarePrimaryBackupObjectiveForCandidates(
@@ -411,7 +435,20 @@ async function maximizeAndFix(
   const expression = context[wave][field];
   context.model.maximize(expression);
   const solution = await solveOptimal(context.model, session, label, category);
-  const value = roundedInteger(solution.objective);
+  const phase = { kind: 'scalar', wave, field, value: 0 } as const;
+  const value = await reconstructCertifyAndRecord({
+    context,
+    session,
+    fixed,
+    solution,
+    expression,
+    phase,
+    direction: 'maximize',
+    category,
+    stage: label,
+    wave,
+    kind: 'scalar',
+  });
   context.model.addConstraint(expression.eq(value), `fix_${wave}_${field}`);
   fixed.push({ kind: 'scalar', wave, field, value });
   return solution;
@@ -437,7 +474,22 @@ async function refineRatingVector(
       `${wave} ascending rating vector`,
       category,
     );
-    const value = roundedInteger(solution.objective);
+    const phase = { kind: 'histogram', wave, levels, value: 0 } as const;
+    const value = await reconstructCertifyAndRecord({
+      context,
+      session,
+      fixed,
+      solution,
+      expression,
+      phase,
+      direction: 'minimize',
+      category,
+      stage: `${wave} ascending rating vector`,
+      wave,
+      kind: 'histogram',
+      chunkStart: start,
+      chunkEnd: start + levels.length - 1,
+    });
     context.model.addConstraint(expression.eq(value), `fix_${wave}_histogram_${start}`);
     fixed.push({ kind: 'histogram', wave, levels, value });
   }
@@ -479,6 +531,11 @@ async function hasAlternateWaveSelection({
   if (solution.status !== 'optimal') {
     throw new Error(`Exact optimizer ${wave} stable-key probe ended with ${solution.status}.`);
   }
+  validateIntegralVariables(
+    solution,
+    integralModelVariables(probe),
+    `${wave} stable-key alternate-selection probe`,
+  );
   return true;
 }
 
@@ -504,7 +561,22 @@ async function refineStableWaveKey(
       `${wave} stable solution key`,
       'stableKeyMs',
     );
-    const value = roundedInteger(solution.objective);
+    const phase = { kind: 'stable', wave, indices, value: 0 } as const;
+    const value = await reconstructCertifyAndRecord({
+      context,
+      session,
+      fixed,
+      solution,
+      expression,
+      phase,
+      direction: 'maximize',
+      category: 'stableKeyMs',
+      stage: `${wave} stable solution key`,
+      wave,
+      kind: 'stable',
+      chunkStart: start,
+      chunkEnd: indices.at(-1)!,
+    });
     context.model.addConstraint(expression.eq(value), `fix_${wave}_stable_${start}`);
     fixed.push({ kind: 'stable', wave, indices, value });
     latestSelected = selectedVariableIndices(solution, context[wave].variables);
@@ -522,17 +594,25 @@ function applyFixedPhases(
   fixed: FixedPhase[],
 ): void {
   fixed.forEach((phase, index) => {
-    const expression = phase.kind === 'scalar'
-      ? context[phase.wave][phase.field]
-      : phase.kind === 'histogram'
-        ? histogramExpression(candidates, context[phase.wave].variables, phase.levels)
-        : phase.kind === 'stable'
-          ? stableExpression(context[phase.wave].variables, phase.indices)
-          : phase.kind === 'dragon-inclusion'
-            ? dragonInclusionExpression(candidates, context[phase.wave].variables, phase.dragonId)
-            : dragonSetInclusionExpression(candidates, context[phase.wave].variables, phase.dragonIds);
+    const expression = fixedPhaseExpression(context, candidates, phase);
     context.model.addConstraint(expression.eq(phase.value), `replay_fix_${index}`);
   });
+}
+
+function fixedPhaseExpression(
+  context: ModelContext,
+  candidates: OptimizerFormationCandidate[],
+  phase: FixedPhase,
+): LinExpr | Var {
+  return phase.kind === 'scalar'
+    ? context[phase.wave][phase.field]
+    : phase.kind === 'histogram'
+      ? histogramExpression(candidates, context[phase.wave].variables, phase.levels)
+      : phase.kind === 'stable'
+        ? stableExpression(context[phase.wave].variables, phase.indices)
+        : phase.kind === 'dragon-inclusion'
+          ? dragonInclusionExpression(candidates, context[phase.wave].variables, phase.dragonId)
+          : dragonSetInclusionExpression(candidates, context[phase.wave].variables, phase.dragonIds);
 }
 
 function addPrimaryPowerCutoffConstraints(
@@ -645,6 +725,7 @@ async function solveAllowInfeasible(
   category: PhaseCategory,
 ) {
   session.telemetry.passes += 1;
+  session.telemetry.recentSolverLog = [];
   const startedAt = performance.now();
   await session.highs.parse(model.print('lp'), 'lp');
   const solution = new Solution(await session.highs.solve());
@@ -681,6 +762,7 @@ function validateAllocation(
 }
 
 function recordSolverLog(line: string, telemetry: SolverTelemetry): void {
+  telemetry.recentSolverLog.push(line);
   const match = line.match(/Nodes\s+(\d+)/i) ?? line.match(/(\d+)\s+nodes/i);
   if (match) telemetry.nodesVisited += Number(match[1]);
   const pruned =
@@ -688,15 +770,373 @@ function recordSolverLog(line: string, telemetry: SolverTelemetry): void {
   if (pruned) telemetry.branchesPruned += Number(pruned[1]);
 }
 
-function roundedInteger(value: number | undefined): number {
-  if (value === undefined || !Number.isFinite(value)) {
-    throw new Error('Exact optimizer did not return a finite objective.');
+async function reconstructCertifyAndRecord({
+  context,
+  session,
+  fixed,
+  solution,
+  expression,
+  phase,
+  direction,
+  category,
+  stage,
+  wave,
+  kind,
+  chunkStart,
+  chunkEnd,
+}: {
+  context: ModelContext;
+  session: SolverSession;
+  fixed: FixedPhase[];
+  solution: Solution;
+  expression: LinExpr | Var;
+  phase: FixedPhase;
+  direction: 'maximize' | 'minimize';
+  category: PhaseCategory;
+  stage: string;
+  wave: OptimizerWave;
+  kind: OptimizerPhaseObjectiveDiagnostic['kind'];
+  chunkStart?: number;
+  chunkEnd?: number;
+}): Promise<number> {
+  const reconstruction = reconstructExactIntegerObjective({
+    solution,
+    expression,
+    integerVariables: integralModelVariables(context),
+    stage,
+  });
+  const diagnostic: OptimizerPhaseObjectiveDiagnostic = {
+    stage,
+    wave,
+    kind,
+    solverPass: session.telemetry.passes,
+    status: 'optimal',
+    ...(chunkStart === undefined ? {} : { chunkStart }),
+    ...(chunkEnd === undefined ? {} : { chunkEnd }),
+    rawObjective: reconstruction.rawObjective,
+    reconstructedObjective: reconstruction.value,
+    rawObjectiveDelta: reconstruction.rawObjectiveDelta,
+    maximumIntegralityResidual: reconstruction.maximumIntegralityResidual,
+    maximumConstraintResidual: maximumConstraintViolation(context.model, solution),
+    mipGap: mipGapFromSolverLog(session.telemetry.recentSolverLog),
+    exactOptimumCertified: false,
+    certificationDirection: null,
+    certificationBound: null,
+    certificationStatus: 'not-required',
+    certificationSolverPass: null,
+  };
+  if (reconstruction.rawObjectiveDelta > OPTIMIZER_MATERIAL_OBJECTIVE_DELTA) {
+    Object.assign(diagnostic, await certifyExactIntegerOptimum({
+      session,
+      fixed,
+      phase: { ...phase, value: reconstruction.value },
+      direction,
+      reconstructedValue: reconstruction.value,
+      stage,
+      category,
+    }));
   }
-  const rounded = Math.round(value);
-  if (Math.abs(value - rounded) > 1e-3) {
-    throw new Error(`Exact optimizer returned non-integral objective ${value}.`);
+  session.telemetry.objectiveReconstructions.push(diagnostic);
+  return reconstruction.value;
+}
+
+async function certifyExactIntegerOptimum({
+  session,
+  fixed,
+  phase,
+  direction,
+  reconstructedValue,
+  stage,
+  category,
+}: {
+  session: SolverSession;
+  fixed: FixedPhase[];
+  phase: FixedPhase;
+  direction: 'maximize' | 'minimize';
+  reconstructedValue: number;
+  stage: string;
+  category: PhaseCategory;
+}): Promise<Pick<OptimizerPhaseObjectiveDiagnostic,
+  'exactOptimumCertified' | 'certificationDirection' | 'certificationBound'
+  | 'certificationStatus' | 'certificationSolverPass'>> {
+  const { candidates, eligibleDragons, formationsPerWave } = session.problem;
+  const probe = measuredBuildModel(
+    candidates,
+    eligibleDragons,
+    formationsPerWave,
+    session.telemetry,
+  );
+  applyFixedPhases(probe, candidates, fixed);
+  const expression = fixedPhaseExpression(probe, candidates, phase);
+  const certificationBound = exactAdjacentInteger(reconstructedValue, direction, stage);
+  probe.model.addConstraint(
+    direction === 'maximize'
+      ? expression.geq(certificationBound)
+      : expression.leq(certificationBound),
+    `certify_${phase.wave}_${phase.kind}_${session.telemetry.passes + 1}`,
+  );
+  probe.model.minimize(sum(0));
+  const certificationSolution = await solveAllowInfeasible(probe.model, session, category);
+  return evaluateExactOptimumCertification({
+    solution: certificationSolution,
+    expression,
+    integerVariables: integralModelVariables(probe),
+    direction,
+    reconstructedValue,
+    stage,
+    solverPass: session.telemetry.passes,
+  });
+}
+
+export function evaluateExactOptimumCertification({
+  solution,
+  expression,
+  integerVariables,
+  direction,
+  reconstructedValue,
+  stage,
+  solverPass,
+}: {
+  solution: Pick<Solution, 'status' | 'getValue'>;
+  expression: LinExpr | Var;
+  integerVariables: Var[];
+  direction: 'maximize' | 'minimize';
+  reconstructedValue: number;
+  stage: string;
+  solverPass: number;
+}): Pick<OptimizerPhaseObjectiveDiagnostic,
+  'exactOptimumCertified' | 'certificationDirection' | 'certificationBound'
+  | 'certificationStatus' | 'certificationSolverPass'> {
+  const certificationBound = exactAdjacentInteger(reconstructedValue, direction, stage);
+  if (solution.status === 'infeasible') {
+    return {
+      exactOptimumCertified: true,
+      certificationDirection: direction,
+      certificationBound,
+      certificationStatus: 'infeasible',
+      certificationSolverPass: solverPass,
+    };
   }
-  return rounded;
+  if (solution.status !== 'optimal') {
+    throw new Error(
+      `Exact optimizer ${stage} exact-optimum certification ended with ${solution.status}.`,
+    );
+  }
+  const validation = validateIntegralVariables(
+    solution,
+    integerVariables,
+    `${stage} exact-optimum certification`,
+  );
+  const exactProbeValue = exactExpressionValue(
+    expression instanceof Var ? expression.times(1) : expression,
+    validation.roundedValues,
+    `${stage} exact-optimum certification`,
+  );
+  const improves = direction === 'maximize'
+    ? exactProbeValue >= certificationBound
+    : exactProbeValue <= certificationBound;
+  if (!improves) {
+    throw new Error(
+      `Exact optimizer ${stage} exact-optimum certification returned an optimal assignment `
+      + `with exact objective ${exactProbeValue}, outside the required ${direction} bound `
+      + `${certificationBound}.`,
+    );
+  }
+  throw new Error(
+    `Exact optimizer ${stage} found a feasible exact ${direction} improvement `
+    + `${exactProbeValue} at bound ${certificationBound}; refusing to fix reconstructed `
+    + `objective ${reconstructedValue}.`,
+  );
+}
+
+function exactAdjacentInteger(
+  reconstructedValue: number,
+  direction: 'maximize' | 'minimize',
+  stage: string,
+): number {
+  if (!Number.isSafeInteger(reconstructedValue)) {
+    throw new Error(
+      `Exact optimizer ${stage} cannot certify non-safe integer ${reconstructedValue}.`,
+    );
+  }
+  const bound = reconstructedValue + (direction === 'maximize' ? 1 : -1);
+  if (!Number.isSafeInteger(bound)) {
+    throw new Error(`Exact optimizer ${stage} exact-optimum bound is not a safe integer.`);
+  }
+  return bound;
+}
+
+export function reconstructExactIntegerObjective({
+  solution,
+  expression,
+  integerVariables,
+  stage,
+}: {
+  solution: Pick<Solution, 'objective' | 'getValue'>;
+  expression: LinExpr | Var;
+  integerVariables: Var[];
+  stage: string;
+}): {
+  value: number;
+  rawObjective: number;
+  rawObjectiveDelta: number;
+  maximumIntegralityResidual: number;
+} {
+  if (solution.objective === undefined || !Number.isFinite(solution.objective)) {
+    throw new Error(`Exact optimizer ${stage} did not return a finite objective.`);
+  }
+  const validation = validateIntegralVariables(solution, integerVariables, stage);
+  const value = exactExpressionValue(
+    expression instanceof Var ? expression.times(1) : expression,
+    validation.roundedValues,
+    stage,
+  );
+  return {
+    value,
+    rawObjective: solution.objective,
+    rawObjectiveDelta: Math.abs(solution.objective - value),
+    maximumIntegralityResidual: validation.maximumResidual,
+  };
+}
+
+function validateIntegralVariables(
+  solution: Pick<Solution, 'getValue'>,
+  variables: Var[],
+  stage: string,
+): { roundedValues: ReadonlyMap<Var, number>; maximumResidual: number } {
+  const roundedValues = new Map<Var, number>();
+  let maximumResidual = 0;
+  for (const variable of variables) {
+    const value = solution.getValue(variable);
+    if (value === undefined || !Number.isFinite(value)) {
+      throw new Error(`Exact optimizer ${stage} returned no finite value for ${variable.name}.`);
+    }
+    const rounded = Math.round(value);
+    const residual = Math.abs(value - rounded);
+    maximumResidual = Math.max(maximumResidual, residual);
+    if (residual > OPTIMIZER_VARIABLE_INTEGRALITY_TOLERANCE) {
+      throw new Error(
+        `Exact optimizer ${stage} returned fractional ${variable.type} variable `
+        + `${variable.name}=${value} (integrality residual ${residual}).`,
+      );
+    }
+    if (variable.type === 'binary' && rounded !== 0 && rounded !== 1) {
+      throw new Error(`Exact optimizer ${stage} returned out-of-domain binary ${variable.name}=${value}.`);
+    }
+    roundedValues.set(variable, rounded);
+  }
+  return { roundedValues, maximumResidual };
+}
+
+function exactExpressionValue(
+  expression: LinExpr,
+  roundedValues: ReadonlyMap<Var, number>,
+  stage: string,
+): number {
+  if (!Number.isSafeInteger(expression.constant)) {
+    throw new Error(`Exact optimizer ${stage} has a non-safe-integer objective constant.`);
+  }
+  let exact = BigInt(expression.constant);
+  for (const term of expression.terms) {
+    if (!Number.isSafeInteger(term.coeff)) {
+      throw new Error(
+        `Exact optimizer ${stage} has non-safe-integer coefficient ${term.coeff} for ${term.var.name}.`,
+      );
+    }
+    const value = roundedValues.get(term.var);
+    if (value === undefined || !Number.isSafeInteger(value)) {
+      throw new Error(`Exact optimizer ${stage} did not validate objective variable ${term.var.name}.`);
+    }
+    exact += BigInt(term.coeff) * BigInt(value);
+  }
+  const maximum = BigInt(Number.MAX_SAFE_INTEGER);
+  if (exact > maximum || exact < -maximum) {
+    throw new Error(`Exact optimizer ${stage} reconstructed an unsafe integer objective ${exact}.`);
+  }
+  return Number(exact);
+}
+
+function integralModelVariables(context: ModelContext): Var[] {
+  return [
+    ...context.primary.variables,
+    ...context.backup.variables,
+    context.primary.minimumRating,
+    context.backup.minimumRating,
+  ];
+}
+
+function validateFixedPhases(
+  context: ModelContext,
+  candidates: OptimizerFormationCandidate[],
+  fixed: FixedPhase[],
+  solution: Solution,
+): void {
+  const validation = validateIntegralVariables(
+    solution,
+    integralModelVariables(context),
+    'final fixed-phase validation',
+  );
+  for (const [index, phase] of fixed.entries()) {
+    const expression = fixedPhaseExpression(context, candidates, phase);
+    const actual = exactExpressionValue(
+      expression instanceof Var ? expression.times(1) : expression,
+      validation.roundedValues,
+      `final fixed phase ${index}`,
+    );
+    if (actual !== phase.value) {
+      throw new Error(
+        `Exact optimizer final fixed phase ${index} (${phase.kind}/${phase.wave}) `
+        + `recomputed ${actual}, expected ${phase.value}.`,
+      );
+    }
+  }
+}
+
+function numericalExactnessDiagnostics(
+  telemetry: SolverTelemetry,
+): OptimizerNumericalExactnessDiagnostics {
+  return {
+    integralityTolerance: OPTIMIZER_VARIABLE_INTEGRALITY_TOLERANCE,
+    maximumIntegralityResidual: Math.max(
+      0,
+      ...telemetry.objectiveReconstructions.map((entry) => entry.maximumIntegralityResidual),
+    ),
+    maximumConstraintResidual: Math.max(
+      0,
+      ...telemetry.objectiveReconstructions.map((entry) => entry.maximumConstraintResidual),
+    ),
+    maximumRawObjectiveDelta: Math.max(
+      0,
+      ...telemetry.objectiveReconstructions.map((entry) => entry.rawObjectiveDelta),
+    ),
+    phaseObjectives: telemetry.objectiveReconstructions,
+    fixedPhasesValidated: telemetry.fixedPhasesValidated,
+  };
+}
+
+function mipGapFromSolverLog(lines: string[]): number | null {
+  for (const line of [...lines].reverse()) {
+    const match = line.match(/^\s*Gap\s+([0-9.]+)%/i);
+    if (match?.[1] !== undefined) return Number(match[1]) / 100;
+  }
+  return null;
+}
+
+function maximumConstraintViolation(model: Model, solution: Solution): number {
+  const constraints = (model as unknown as {
+    constraints: Array<{ expr: LinExpr; sense: '<=' | '>=' | '='; rhs: number }>;
+  }).constraints;
+  return Math.max(0, ...constraints.map((constraint) => {
+    const actual = constraint.expr.constant + constraint.expr.terms.reduce(
+      (total, term) => total + term.coeff * (solution.getValue(term.var) ?? 0),
+      0,
+    );
+    return constraint.sense === '<='
+      ? Math.max(0, actual - constraint.rhs)
+      : constraint.sense === '>='
+        ? Math.max(0, constraint.rhs - actual)
+        : Math.abs(actual - constraint.rhs);
+  }));
 }
 
 function integerRange(start: number, end: number): number[] {
