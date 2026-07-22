@@ -602,6 +602,11 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(panel).toHaveTextContent(/Strong|Solid|Developing|Weak|Excellent/);
     expect(panel).toHaveTextContent('Active Synergy');
     expect(panel).toHaveTextContent('Placement Effectiveness');
+    expect(within(panel).getByRole('heading', { name: 'Estimated Formation Power' })).toBeInTheDocument();
+    expect(panel).toHaveTextContent('Syrax');
+    expect(panel).toHaveTextContent('Vhagar');
+    expect(panel).toHaveTextContent('Caraxes');
+    expect(panel).toHaveTextContent(/unofficial diagnostic/i);
     expect(panel).not.toHaveTextContent('Realized synergy payoff');
     expect(panel).not.toHaveTextContent('Support usefulness');
     expect(panel).not.toHaveTextContent('Kit utilization');
@@ -630,6 +635,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await clearPosition(user, 'Right Flank');
     expect(ratingPanel()).toHaveTextContent('Incomplete');
     expect(ratingPanel()).toHaveTextContent('Assign all three positions');
+    expect(ratingPanel()).toHaveTextContent(/Record Star Rank and Dragon Level for all three dragons/i);
 
     await chooseDragonForPosition(user, 'right-flank', 'shadowsong');
     const updatedLabel = within(ratingPanel()).getByLabelText(/Formation rating .* out of 100/i).getAttribute('aria-label');

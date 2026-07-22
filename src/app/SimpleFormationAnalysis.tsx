@@ -2,16 +2,21 @@ import type { FormationFindingSet } from '../services/formationFindings';
 import type { FormationPlacementComparison } from '../services/formationPlacementComparison';
 import type { FormationRatingResult } from '../services/formationRating';
 import type { FormationRecommendationResult } from '../services/formationRecommendation';
+import type { EstimatedFormationPower } from '../power/estimatedFormationPower';
 import type { SemanticRelationship } from '../synergy/semanticRelationships';
 
 export function SimpleFormationAnalysis({
   rating,
+  estimatedPower,
+  dragonNamesById,
   relationships,
   findings,
   recommendation,
   placementComparison,
 }: {
   rating: FormationRatingResult;
+  estimatedPower: EstimatedFormationPower | null;
+  dragonNamesById: ReadonlyMap<string, string>;
   relationships: SemanticRelationship[];
   findings: FormationFindingSet;
   recommendation: FormationRecommendationResult;
@@ -36,6 +41,35 @@ export function SimpleFormationAnalysis({
           <p>{rating.summary}</p>
         </div>
       </div>
+
+      <section className="formation-power-diagnostic" aria-labelledby="estimated-formation-power-title">
+        <div>
+          <p className="eyebrow">Separate progression diagnostic</p>
+          <h4 id="estimated-formation-power-title">Estimated Formation Power</h4>
+          {estimatedPower ? (
+            <p className="formation-power-total">
+              <strong>{formatPower(estimatedPower.totalPower)}</strong>
+              <span>{confidenceLabel(estimatedPower.confidence)} confidence</span>
+            </p>
+          ) : (
+            <p className="empty-card-note">Record Star Rank and Dragon Level for all three dragons to estimate formation power.</p>
+          )}
+        </div>
+        {estimatedPower ? (
+          <dl className="formation-power-dragons" aria-label="Estimated Power by dragon">
+            {Object.entries(estimatedPower.dragonPower).map(([dragonId, estimate]) => (
+              <div key={dragonId}>
+                <dt>{dragonNamesById.get(dragonId) ?? dragonId}</dt>
+                <dd>{formatPower(estimate.power)} · {confidenceLabel(estimate.confidence)}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
+        <p className="formation-power-methodology">
+          Estimated from rarity, Star Rank, and Dragon Level using empirical Power Model v1. This is an unofficial diagnostic, not the game&apos;s formula, and it does not simulate combat.
+          {estimatedPower ? ` Model: ${estimatedPower.modelVersion}.` : ''}
+        </p>
+      </section>
 
       {rating.confidence.status === 'limited' ? (
         <div className="formation-confidence-warning" role="status">
@@ -174,4 +208,12 @@ function ratingAriaLabel(rating: FormationRatingResult): string {
 
 function formatValue(value: number): string {
   return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+function formatPower(value: number): string {
+  return new Intl.NumberFormat('en-US').format(value);
+}
+
+function confidenceLabel(confidence: 'observed' | 'modeled' | 'low'): string {
+  return confidence === 'observed' ? 'Observed' : confidence === 'modeled' ? 'Modeled' : 'Low';
 }

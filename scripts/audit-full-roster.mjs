@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeMarkdown = process.argv.includes('--write');
 const writeDiagnosticJson = process.argv.includes('--write-json');
 const baselinePath = path.join(root, 'docs', 'audits', 'full-roster-rating-baseline-0.10.5.json');
-const startingMainSha = '80c3c13261c48f7e18b6044d09dd9b74371451c4';
+const startingMainSha = 'a2caf8d2931d495d5624a21efc7e5b95fa8f1873';
 const baselineSourceCommit = 'a5c4bc2c05850210a64652921021bba1783e6eb1';
 const expectedOldHash = 'ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48';
 const baselineRuntimeMs = 12838;
@@ -46,7 +46,8 @@ try {
     ...report,
     sourceOfTruth: {
       startingMainSha,
-      branch: 'feature/add-all-dragons-roster-defaults',
+      baselineSourceCommit,
+      branch: 'feature/estimated-power-v1',
       worktree: root,
     },
     recordedAuditRuntimeMs: runtimeMs,
@@ -108,7 +109,7 @@ try {
   } else {
     const committedMarkdown = await readFile(markdownPath, 'utf8');
     const stableFieldsMatch =
-      auditVersion === '0.14.0' &&
+      auditVersion === '0.15.0' &&
       report.formationSweep.deterministicFullResultHash ===
         '12ee9dc58012cd4edd14ea3d095da32e2db6bf5cca6a1f8d77c24be8506eded9' &&
       report.formationSweep.actualCount === 26970 &&
@@ -248,7 +249,8 @@ function renderMarkdown(report) {
     '',
     '## Executive summary',
     '',
-    `- Baseline: ${report.comparison.baselineVersion} at \`${report.sourceOfTruth.startingMainSha}\`; old hash \`${report.comparison.baselineDeterministicFullResultHash}\`.`,
+    `- Baseline: ${report.comparison.baselineVersion} at \`${report.sourceOfTruth.baselineSourceCommit}\`; old hash \`${report.comparison.baselineDeterministicFullResultHash}\`.`,
+    `- Release branch starts from \`${report.sourceOfTruth.startingMainSha}\`.`,
     `- Current: ${report.auditVersion}; new hash \`${report.comparison.currentDeterministicFullResultHash}\`.`,
     `- Coverage unchanged: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.profileSignals} curated signals, ${report.totals.orderedFormationsEvaluated} ordered formations, ${report.totals.providerPayoffPairsEvaluated} provider/payoff pairs.`,
     `- Validation: ${report.totals.passChecks} PASS checks, ${report.totals.failedChecks} failed checks, ${report.findings.length} informational/unresolved findings.`,

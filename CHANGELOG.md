@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.15.0 - 2026-07-21
+
+- Added Estimated Dragon Power v1 as a deterministic, positive, monotone runtime diagnostic fitted from 31 empirical samples covering 25 unique rarity/Star Rank/Dragon Level combinations. Exact observed combinations retain their displayed values; modeled values are rounded to the nearest 10.
+- Added model and observation identities, observed/modeled/low confidence classification, bounded leave-one-combination-out validation, supported-grid monotonicity and rarity-order checks, and committed Markdown/JSON audit artifacts.
+- Added read-only Estimated Power to My Roster and Estimated Formation Power to Formation Builder. The diagnostic is explicitly empirical and unofficial, uses only rarity, Star Rank, and Dragon Level, and is not persisted or manually editable.
+- Preserved both optimizer strategies byte-for-byte from 0.14.0, including optimizer contract 2, exact MILP phase order, stable keys, semantic hashes, worker contracts, and the existing two-strategy audit. Formation Rating v2, source schema 13, local/cloud roster schemas 5, canonical dragon count 31, and Supabase migrations are unchanged.
+
 ## 0.14.0 - 2026-07-21
 
 - Added the My Roster **Add All Dragons** action. It derives missing dragons from the complete canonical collection, so filters, sort order, visible cards, and future dragon additions never limit the bulk result.

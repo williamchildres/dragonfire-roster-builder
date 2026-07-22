@@ -90,6 +90,18 @@ describe('RosterWorkspace', () => {
     expect(screen.getByRole('heading', { name: 'My Roster' }).parentElement).toHaveClass('roster-workspace-header');
   });
 
+  it('presents Estimated Power as a read-only empirical diagnostic', async () => {
+    const user = userEvent.setup();
+    render(<WorkspaceHarness />);
+
+    const caraxesRow = screen.getByRole('button', { name: /Caraxes.*Estimated Power [\d,]+/i });
+    expect(caraxesRow).toHaveTextContent(/Est\. Power [\d,]+/i);
+    await user.click(caraxesRow);
+    expect(screen.getByText('Estimated Power')).toBeInTheDocument();
+    expect(screen.getByText(/Unofficial empirical estimate from current rarity/i)).toBeInTheDocument();
+    expect(screen.queryByRole('spinbutton', { name: /power/i })).not.toBeInTheDocument();
+  });
+
   it('offers canonical bulk addition with confirmation and a disabled completed state', async () => {
     const user = userEvent.setup();
     const onAddAllDragons = vi.fn();

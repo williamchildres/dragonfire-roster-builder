@@ -35,6 +35,8 @@ The formation analysis panel groups simple evaluator results into:
 
 Single selected dragons do not show missing-enabler warnings. Repeated ability paths are aggregated by semantic relationship, and active paths suppress duplicate locked or blocked variants of the same relationship.
 
+Estimated Formation Power is a separate read-only progression diagnostic. It sums the three current rarity/Star Rank/Dragon Level estimates, exposes each dragon's confidence classification, and remains visually and semantically separate from Formation Rating. It is empirical and unofficial, does not alter recommendations or scoring, and is unavailable until all three dragons have recorded progression.
+
 ## Progression Mapping
 
 - `OwnedDragon.starRank` becomes simple `starRank`.
@@ -54,4 +56,4 @@ Placement requirements are evaluated before progression. A relationship that is 
 
 ## Non-Goals
 
-The Formation Builder does not calculate exact combat rounds, proc timing, activation percentages, target probability, stack behavior, damage formulas, expected damage, or win probability. Both Roster Optimizer strategies reuse Formation Builder's current My Roster progression, semantic relationships, six-placement comparison, and Formation Rating v2; opening a Primary, Backup, or Best 10 Overall card applies the exact retained arrangement without changing Star Rank, Dragon Level, or Habit Levels.
+The Formation Builder does not calculate exact combat rounds, proc timing, activation percentages, target probability, stack behavior, damage formulas, expected damage, or win probability. Estimated Formation Power is an empirical display diagnostic, not combat simulation. Both Roster Optimizer strategies reuse Formation Builder's current My Roster progression, semantic relationships, six-placement comparison, and Formation Rating v2; opening a Primary, Backup, or Best 10 Overall card applies the exact retained arrangement without changing Star Rank, Dragon Level, or Habit Levels.

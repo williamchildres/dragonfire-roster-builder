@@ -13,6 +13,7 @@ Public site: https://dragonfirelab.com
 - Curated simple synergy profiles for all 31 known dragons.
 - Complete Legendary (9 / 9), Epic (10 / 10), and Rare (12 / 12) coverage.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
+- Read-only Estimated Power v1 diagnostics for roster dragons and complete formations, using an empirical, unofficial rarity/progression model.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
 - Roster Optimizer with exact Strongest 5 + Backup 5 and Best 10 Overall strategies over current My Roster progression.
@@ -26,6 +27,8 @@ Canonical abilities use a minimal descriptive shape: stable ID, dragon ID, kind,
 The repository does not store execution-level schedules, rolls, attempts, target-selection groups, structured effects, ranked battle values, capability dependencies, traces, expected interactions, or unresolved-mechanics exports. Raw ability wording may still mention rounds, chances, targets, durations, and percentages because players need the source text.
 
 Account synchronization stores one RLS-protected normalized roster row per authenticated user. It synchronizes ownership, Star Rank, `reignLevel` (shown as Dragon Level), Habit Levels, and dragon notes. Formations remain browser-local. See [`docs/setup/supabase-account-roster.md`](docs/setup/supabase-account-roster.md) for migration, environment, and security setup.
+
+Estimated Power is computed at runtime and is never entered manually or persisted locally or in the cloud. It uses only rarity, Star Rank, and Dragon Level; dragon identity, notes, and Habit Levels are not model inputs. See [`docs/ESTIMATED_POWER.md`](docs/ESTIMATED_POWER.md) for the confidence contract, coefficients, validation, and limitations.
 
 The Roster workspace keeps search, rarity, breed, details filters, sorting, and row selection as ephemeral UI state. Individual additions and Add All Dragons use one ownership transition: new dragons begin at Star 1 and Dragon Level 1, while re-added dragons retain saved valid progression, notes, and Habit Levels. Add All Dragons uses the full canonical collection, ignores filters, and commits one roster snapshot through the existing browser/account synchronization path. See [`docs/roster-workspace.md`](docs/roster-workspace.md) for interaction and filter definitions.
 
@@ -65,6 +68,8 @@ npm run test
 npm run build
 npm run audit:full-roster
 npm run audit:optimizer
+npm run fit:power
+npm run audit:power
 npm run export:context
 npm run validate:context
 npm run package:context
@@ -100,4 +105,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.14.0`. Source data schema: `13`. Local and cloud roster schemas: `5`. New owned dragons default to Star 1 and Dragon Level 1; re-adding a removed dragon preserves valid saved progression. Schema 5 stores Habit Levels sparsely: locked habits have no key, unlocked habits always have a value from 1 through 5, and lowering progression below an unlock threshold deletes the saved level. Legacy unlocked null/zero values migrate to Level 1; locked and unknown legacy values are discarded. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`); optimizer strategy choice adds no SQL migration. Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.
+Current release: `0.15.0`. Source data schema: `13`. Local and cloud roster schemas: `5`; optimizer contract: `2`. Estimated Power is a read-only runtime diagnostic with no manual entry, persistence field, optimizer strategy, SQL migration, or change to Formation Rating v2. The canonical dragon count remains 31, with Sunfyre and Tairax used only as observation provenance and absent from the canonical dragon database. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`). Google OAuth, email/password, password recovery, magic links, and custom SMTP are production configured externally. Production authentication email is sent through Resend using `auth.dragonfirelab.com`; no SMTP credential, OAuth secret, API key, or Supabase secret is stored in this repository. Other environments must supply their own provider and SMTP configuration. Same-email Google acceptance testing must confirm the existing Supabase user UUID and cloud roster are preserved.
