@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.18.0 - 2026-07-22
+
+- Made `Power-Aware 5 + Backup 5` the new Optimizer default. Rarity-Priority 5 + Backup 5 and Best 10 Overall remain available without changes to their strategies or algorithms.
+- Retained the last successfully completed optimal Optimizer result and selected strategy while navigating between application sections. Progression, ownership, and strategy changes retain the result with the existing stale-result warning; a successful rerun replaces it.
+- Navigation or cancellation during an active run now invalidates that run and disposes its worker lifecycle without retaining partial or late responses. Failed and unavailable runs preserve the prior completed result.
+- Optimizer workspace state is in-memory for the mounted app session only: no browser storage, cloud storage, export, roster schema, or database contract was added. Optimizer contract 3, Formation Rating v2, Estimated Power v2, source schema 13, and local/cloud roster schemas 5 are unchanged.
+
 ## 0.17.0 - 2026-07-22
 
 - Expanded Estimated Power from 31 to 59 provenance observations and from 25 to 42 unique progression tuples, preserving duplicate provenance/sample counts, normalizing Sunfyre, and recording Dawnseeker at Star 4 Level 29 Power 13000.

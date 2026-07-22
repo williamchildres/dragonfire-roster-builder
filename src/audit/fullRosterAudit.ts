@@ -251,7 +251,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const rarityCoverage = countBy(dragons, (dragon) => dragon.rarity);
   addCheck(
     'FRR-C001',
-    databaseMetadata.databaseVersion === '0.17.0',
+    databaseMetadata.databaseVersion === '0.18.0',
     `Database version is ${databaseMetadata.databaseVersion}.`,
   );
   addCheck(

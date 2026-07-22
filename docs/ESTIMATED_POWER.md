@@ -66,7 +66,7 @@ My Roster shows each owned dragon's read-only estimate and confidence. Formation
 
 There is no manual Power field, persistence field, Supabase migration, Habit Level Power effect, damage estimate, combat simulation, or win probability. Formation Rating v2 is unchanged.
 
-Power-Aware optimizer requests include the Estimated Power version, observation hash, and model hash. The v2 identity therefore makes stored v1 Power-Aware results stale and recomputes them through the existing objective hierarchy. Solver phases, Primary cutoff logic, Backup phase order, stable keys, zero-gap settings, optimizer contract 3, legacy strategies, and the default strategy are unchanged.
+Power-Aware optimizer requests include the Estimated Power version, observation hash, and model hash. The v2 identity therefore makes prior Power-Aware results stale and recomputes them through the existing objective hierarchy. Solver phases, Primary cutoff logic, Backup phase order, stable keys, zero-gap settings, optimizer contract 3, and legacy strategies are unchanged. In 0.18.0, Power-Aware 5 + Backup 5 becomes the UI default without changing its algorithm or scoring.
 
 ## Limitations
 

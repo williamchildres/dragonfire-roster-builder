@@ -5,8 +5,8 @@ import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeReports = process.argv.includes('--write');
-const jsonPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.17.0.json');
-const markdownPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.17.0.md');
+const jsonPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.18.0.json');
+const markdownPath = path.join(root, 'docs', 'audits', 'roster-optimizer-0.18.0.md');
 const server = await createServer({
   root,
   appType: 'custom',

@@ -28,7 +28,10 @@ import {
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
 import { RosterWorkspace } from './RosterWorkspace';
-import { RosterOptimizer } from './RosterOptimizer';
+import {
+  DEFAULT_ROSTER_OPTIMIZER_STRATEGY,
+  RosterOptimizer,
+} from './RosterOptimizer';
 import {
   clearConsumedSelectionRequest,
   type RosterSelectionRequest,
@@ -96,6 +99,10 @@ import { buildAuthRedirectUrl, getProductionAccountServices } from '../cloud/sup
 import { useAccountSession } from '../hooks/useAccountSession';
 import { useRosterSync, type RosterSyncStatus } from '../hooks/useRosterSync';
 import type { RosterOptimizerRunner } from '../optimizer/rosterOptimizerClient';
+import type {
+  RosterOptimizationResult,
+  RosterOptimizerStrategy,
+} from '../optimizer/rosterOptimizerTypes';
 export { RawWordingDisclosure } from './DragonDetailModal';
 
 const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
@@ -156,6 +163,10 @@ export function App({
     [providedAccountServices],
   );
   const [activeSection, setActiveSection] = useState<Section>(getInitialSection);
+  const [optimizerStrategy, setOptimizerStrategy] = useState<RosterOptimizerStrategy>(
+    DEFAULT_ROSTER_OPTIMIZER_STRATEGY,
+  );
+  const [optimizerResult, setOptimizerResult] = useState<RosterOptimizationResult | null>(null);
   const [rosterSnapshot, setRosterSnapshot] = useState<StoredRosterSnapshot>(() =>
     typeof window === 'undefined'
       ? { roster: createEmptyRoster(dragons), updatedAt: null }
@@ -575,6 +586,10 @@ export function App({
           <RosterOptimizer
             allDragons={dragons}
             roster={roster}
+            strategy={optimizerStrategy}
+            onStrategyChange={setOptimizerStrategy}
+            result={optimizerResult}
+            onResultChange={setOptimizerResult}
             runner={optimizerRunner}
             onOpenFormation={openOptimizedFormation}
             onOpenRoster={() => selectSection('roster')}
@@ -798,7 +813,7 @@ function HomeSection({
         <div className="latest-update-panel panel readable">
           <p className="eyebrow">Current data</p>
           <h3>Latest release — {versionLabel}</h3>
-          <p>Estimated Power v2 now uses expanded observations and support-aware Star-plus-Level curves for its empirical, unofficial diagnostic. Power-Aware 5 + Backup 5 consumes the new model automatically; Formation Rating v2 is unchanged, and Rarity-Priority remains the default.</p>
+          <p>Estimated Power v2 uses expanded observations and support-aware Star-plus-Level curves for its empirical, unofficial diagnostic. Power-Aware 5 + Backup 5 is the default; Formation Rating v2 is unchanged.</p>
         </div>
         <div className="notice-panel trust-note readable">
           <p className="eyebrow">Local first</p>

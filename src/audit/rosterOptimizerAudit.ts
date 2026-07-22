@@ -67,7 +67,7 @@ export async function runRosterOptimizerAudit() {
     }
   }
   return {
-    auditVersion: '0.17.0',
+    auditVersion: '0.18.0',
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     fixtures: reports,
     checks: {
@@ -127,7 +127,7 @@ export async function runPowerAwareRosterOptimizerAudit(fixture: PowerAwareAudit
     };
   });
   return {
-    auditVersion: '0.17.0',
+    auditVersion: '0.18.0',
     fixture,
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     mipGaps: ROSTER_OPTIMIZER_MIP_GAP_OPTIONS,

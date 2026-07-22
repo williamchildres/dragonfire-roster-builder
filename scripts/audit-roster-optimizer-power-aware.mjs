@@ -30,7 +30,7 @@ try {
   report.beforeV2 = summarizeResult(previous.result);
   report.comparison = compareResults(previous.result, report.result, report.estimatedPowerComparison);
   if (writeReport) {
-    const base = path.join(root, 'docs', 'audits', `roster-optimizer-power-aware-0.17.0-${fixture}`);
+    const base = path.join(root, 'docs', 'audits', `roster-optimizer-power-aware-0.18.0-${fixture}`);
     await mkdir(path.dirname(base), { recursive: true });
     await writeFile(`${base}.json`, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
     await writeFile(`${base}.md`, renderMarkdown(report), 'utf8');

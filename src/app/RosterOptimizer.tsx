@@ -24,17 +24,26 @@ import {
 } from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationPlacementComparison';
 
-const defaultStrategy: RosterOptimizerStrategy = 'primary-five-backup-five';
+export const DEFAULT_ROSTER_OPTIMIZER_STRATEGY: RosterOptimizerStrategy =
+  'power-aware-primary-five-backup-five';
 
 export function RosterOptimizer({
   allDragons,
   roster,
+  strategy,
+  onStrategyChange,
+  result,
+  onResultChange,
   runner: suppliedRunner,
   onOpenFormation,
   onOpenRoster,
 }: {
   allDragons: Dragon[];
   roster: Record<string, OwnedDragon>;
+  strategy: RosterOptimizerStrategy;
+  onStrategyChange: (strategy: RosterOptimizerStrategy) => void;
+  result: RosterOptimizationResult | null;
+  onResultChange: (result: RosterOptimizationResult) => void;
   runner?: RosterOptimizerRunner;
   onOpenFormation: (arrangement: FormationArrangement) => void;
   onOpenRoster: () => void;
@@ -43,7 +52,6 @@ export function RosterOptimizer({
     suppliedRunner ? null : new RosterOptimizerClient(),
   );
   const runner = suppliedRunner ?? ownedRunner!;
-  const [strategy, setStrategy] = useState<RosterOptimizerStrategy>(defaultStrategy);
   const snapshot = useMemo(
     () => buildOptimizerRosterSnapshot(allDragons, roster),
     [allDragons, roster],
@@ -53,15 +61,22 @@ export function RosterOptimizer({
     [snapshot, strategy],
   );
   const latestRequestFingerprint = useRef(requestFingerprint);
+  const activeRunId = useRef(0);
+  const isMounted = useRef(true);
   const [status, setStatus] = useState<'idle' | 'running' | 'success' | 'error'>('idle');
-  const [result, setResult] = useState<RosterOptimizationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const eligibleCounts = rarityCounts(snapshot.map((dragon) => dragon.rarity));
   const isStale = Boolean(result && result.requestFingerprint !== requestFingerprint);
 
-  useEffect(() => () => {
-    if (!suppliedRunner) ownedRunner?.dispose();
-  }, [ownedRunner, suppliedRunner]);
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+      activeRunId.current += 1;
+      runner.cancel();
+      if (!suppliedRunner) ownedRunner?.dispose();
+    };
+  }, [ownedRunner, runner, suppliedRunner]);
 
   useEffect(() => {
     latestRequestFingerprint.current = requestFingerprint;
@@ -69,11 +84,15 @@ export function RosterOptimizer({
 
   const run = async () => {
     const activeFingerprint = requestFingerprint;
+    const runId = activeRunId.current + 1;
+    activeRunId.current = runId;
     setStatus('running');
     setError(null);
     try {
       const response = await runner.run(roster, strategy);
       if (
+        !isMounted.current ||
+        activeRunId.current !== runId ||
         latestRequestFingerprint.current !== activeFingerprint ||
         response.requestFingerprint !== activeFingerprint
       ) {
@@ -84,9 +103,12 @@ export function RosterOptimizer({
         setStatus('idle');
         return;
       }
-      setResult(response);
+      onResultChange(response);
       setStatus('success');
     } catch (runError) {
+      if (!isMounted.current || activeRunId.current !== runId) {
+        return;
+      }
       if (runError instanceof RosterOptimizerCancelledError) {
         setStatus('idle');
         return;
@@ -97,6 +119,7 @@ export function RosterOptimizer({
   };
 
   const cancel = () => {
+    activeRunId.current += 1;
     runner.cancel();
     setStatus('idle');
   };
@@ -128,7 +151,7 @@ export function RosterOptimizer({
             name="optimizer-strategy"
             value="power-aware-primary-five-backup-five"
             checked={strategy === 'power-aware-primary-five-backup-five'}
-            onChange={() => setStrategy('power-aware-primary-five-backup-five')}
+            onChange={() => onStrategyChange('power-aware-primary-five-backup-five')}
           />
           <span>
             <strong>Power-Aware 5 + Backup 5</strong>
@@ -142,7 +165,7 @@ export function RosterOptimizer({
             name="optimizer-strategy"
             value="primary-five-backup-five"
             checked={strategy === 'primary-five-backup-five'}
-            onChange={() => setStrategy('primary-five-backup-five')}
+            onChange={() => onStrategyChange('primary-five-backup-five')}
           />
           <span>
             <strong>Rarity-Priority 5 + Backup 5</strong>
@@ -156,7 +179,7 @@ export function RosterOptimizer({
             name="optimizer-strategy"
             value="best-ten-overall"
             checked={strategy === 'best-ten-overall'}
-            onChange={() => setStrategy('best-ten-overall')}
+            onChange={() => onStrategyChange('best-ten-overall')}
           />
           <span>
             <strong>Best 10 Overall</strong>
