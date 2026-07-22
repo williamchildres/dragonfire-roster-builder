@@ -127,6 +127,11 @@ export interface OptimizerPhaseObjectiveDiagnostic {
   maximumIntegralityResidual: number;
   maximumConstraintResidual: number;
   mipGap: number | null;
+  exactOptimumCertified: boolean;
+  certificationDirection: 'maximize' | 'minimize' | null;
+  certificationBound: number | null;
+  certificationStatus: 'not-required' | 'infeasible';
+  certificationSolverPass: number | null;
 }
 
 export interface OptimizerNumericalExactnessDiagnostics {

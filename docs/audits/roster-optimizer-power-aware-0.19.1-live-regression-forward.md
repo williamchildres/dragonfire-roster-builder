@@ -3,9 +3,9 @@
 - Audit version: 0.19.1
 - Roster insertion order: forward
 - Formation Rating v2 hash: `5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf`
-- Command runtime: 58601.3 ms
-- Solver passes: 134
-- Phase timings: `{"modelConstructionMs":1143.8142000000025,"primaryPowerMs":0,"primaryRarityMs":0,"primaryQualityMs":10738.620399999998,"backupPowerMs":339.9653000000035,"backupRarityMs":0,"backupQualityMs":2343.8127999999924,"stableKeyMs":32230.38379999995}`
+- Command runtime: 52161.6 ms
+- Solver passes: 135
+- Phase timings: `{"modelConstructionMs":1373.9761000000035,"primaryPowerMs":0,"primaryRarityMs":0,"primaryQualityMs":9540.9519,"backupPowerMs":310.14080000000104,"backupRarityMs":0,"backupQualityMs":2214.9166000000005,"stableKeyMs":27532.111899999993}`
 - Unused dragons: arrax, shadowrend, solstryker
 - Solution hash: `fnv1a64:9bdfa210548f107d`
 - Result hash: `fnv1a64:e4477552a15d4696`
@@ -22,7 +22,8 @@
 - Raw / reconstructed objective: 0.8403320312499968 / 0; absolute delta 0.8403320312499968.
 - Solver status / MIP gap: optimal / 0.
 - Integrality / constraint residual: 2.042810365310288e-14 / 4.3655745685100555e-11.
-- Fix: reconstruct exact safe-integer phase values from strictly validated Boolean/integer variables; zero-gap solving and lexicographic stable-key semantics are unchanged.
+- Exact-optimum certification: PASS; maximize bound 1; status infeasible; solver pass 24.
+- Fix: reconstruct exact safe-integer phase values from strictly validated Boolean/integer variables, then certify materially contaminated values with a fresh one-integer improvement feasibility probe before fixation. Zero-gap solving and lexicographic stable-key semantics are unchanged.
 
 ## Per-dragon Estimated Power
 

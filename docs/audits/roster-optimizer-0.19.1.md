@@ -10,7 +10,7 @@ Strict HiGHS gaps: `mip_rel_gap=0`, `mip_abs_gap=0`, accepted through `Highs_set
 - Trio candidates: 4495
 - Used: antares, arrax, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, jagadrix, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, solstryker, syrax, tashix, tessarion, thunderstrike, vaeldra, velar, venator, vermax, vesper, vhagar, zivern
 - Unused: arulix
-- Runtime (candidate / solver / total): 2374.2 / 3904.1 / 6280.5 ms
+- Runtime (candidate / solver / total): 2273.0 / 4120.9 / 6395.9 ms
 - Solver passes / nodes: 15 / 13
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:49b0498718c54d6a`
@@ -37,7 +37,7 @@ Strict HiGHS gaps: `mip_rel_gap=0`, `mip_abs_gap=0`, accepted through `Highs_set
 - Trio candidates: 4495
 - Used: antares, arrax, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, jagadrix, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, solstryker, syrax, tashix, tessarion, thunderstrike, vaeldra, velar, venator, vermax, vesper, vhagar, zivern
 - Unused: arulix
-- Runtime (candidate / solver / total): 2092.1 / 38405.3 / 40498.6 ms
+- Runtime (candidate / solver / total): 1904.0 / 37477.9 / 39383.1 ms
 - Solver passes / nodes: 32 / 23
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:01c8a6531720fc7e`
@@ -75,7 +75,7 @@ Combined total / average: 725 / 72.5
 - Trio candidates: 4495
 - Used: antares, arrax, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, jagadrix, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, solstryker, syrax, tashix, tessarion, thunderstrike, vaeldra, velar, venator, vermax, vesper, vhagar, zivern
 - Unused: arulix
-- Runtime (candidate / solver / total): 1953.1 / 4155.8 / 6109.5 ms
+- Runtime (candidate / solver / total): 1785.3 / 4061.1 / 5846.9 ms
 - Solver passes / nodes: 13 / 8
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:fc0005be3f0af3ed`
@@ -102,7 +102,7 @@ Combined total / average: 725 / 72.5
 - Trio candidates: 4495
 - Used: antares, arrax, arulix, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, solstryker, syrax, tashix, tessarion, thunderstrike, vaeldra, velar, venator, vermax, vesper, vhagar, zivern
 - Unused: jagadrix
-- Runtime (candidate / solver / total): 2078.8 / 52024.3 / 54103.5 ms
+- Runtime (candidate / solver / total): 1700.0 / 49186.2 / 50886.7 ms
 - Solver passes / nodes: 28 / 28
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:03625b38711584a7`
@@ -140,7 +140,7 @@ Combined total / average: 525 / 52.5
 - Trio candidates: 4495
 - Used: arrax, arulix, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, jagadrix, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, solstryker, syrax, tashix, tessarion, thunderstrike, vaeldra, velar, venator, vermax, vesper, vhagar, zivern
 - Unused: antares
-- Runtime (candidate / solver / total): 1786.9 / 28810.3 / 30599.8 ms
+- Runtime (candidate / solver / total): 1665.0 / 28499.1 / 30166.6 ms
 - Solver passes / nodes: 104 / 21
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:d4825beceda28c08`
@@ -178,7 +178,7 @@ Combined total / average: 499 / 49.9
 - Trio candidates: 4495
 - Used: antares, arrax, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, jagadrix, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, solstryker, syrax, tashix, tessarion, thunderstrike, vaeldra, velar, venator, vermax, vesper, vhagar, zivern
 - Unused: arulix
-- Runtime (candidate / solver / total): 2118.8 / 14895.7 / 17017.0 ms
+- Runtime (candidate / solver / total): 1900.8 / 14747.7 / 16650.0 ms
 - Solver passes / nodes: 29 / 19
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:dac72be1907be1fa`
@@ -216,7 +216,7 @@ Combined total / average: 725 / 72.5
 - Trio candidates: 4495
 - Used: antares, arrax, arulix, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, jagadrix, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, solstryker, syrax, tashix, tessarion, thunderstrike, vaeldra, velar, venator, vermax, vhagar, zivern
 - Unused: vesper
-- Runtime (candidate / solver / total): 1801.2 / 57898.5 / 59701.3 ms
+- Runtime (candidate / solver / total): 1484.4 / 56979.2 / 58465.2 ms
 - Solver passes / nodes: 198 / 188
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:ac1d8d6d903c412b`
@@ -254,7 +254,7 @@ Combined total / average: 321 / 32.1
 - Trio candidates: 5456
 - Used: antares, arrax, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, solstryker, sunfyre, syrax, tairax, tashix, tessarion, vaeldra, velar, venator, vermax, vesper, vhagar, zivern
 - Unused: arulix, jagadrix, thunderstrike
-- Runtime (candidate / solver / total): 2706.1 / 3185.4 / 5891.8 ms
+- Runtime (candidate / solver / total): 2303.0 / 3277.6 / 5580.9 ms
 - Solver passes / nodes: 15 / 15
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:113ff28410a75d4d`
@@ -281,7 +281,7 @@ Combined total / average: 321 / 32.1
 - Trio candidates: 5456
 - Used: antares, arrax, bevlorin, caraxes, crimson, daemoros, dawnseeker, feskar, kalspire, malachite, nyrena, rhysarion, seasmoke, shadowrend, shadowsong, sheepstealer, shimmer, sunfyre, syrax, tairax, tashix, tessarion, thunderstrike, vaeldra, velar, venator, vermax, vesper, vhagar, zivern
 - Unused: arulix, jagadrix, solstryker
-- Runtime (candidate / solver / total): 2580.1 / 47425.1 / 50005.4 ms
+- Runtime (candidate / solver / total): 2315.0 / 45247.6 / 47562.9 ms
 - Solver passes / nodes: 32 / 31
 - Exact optimality: PASS
 - Solution hash: `fnv1a64:b130b15bc02de861`

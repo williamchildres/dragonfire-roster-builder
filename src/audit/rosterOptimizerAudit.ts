@@ -215,6 +215,20 @@ function validateLiveRegressionResult(result: PowerAwarePrimaryBackupOptimizatio
   if (!result.diagnostics.numericalExactness?.fixedPhasesValidated) {
     throw new Error('Live regression fixed phases were not exactly revalidated.');
   }
+  const certifiedPhase = result.diagnostics.numericalExactness.phaseObjectives.find((phase) =>
+    phase.stage === 'backup stable solution key'
+    && phase.chunkStart === 0
+    && phase.chunkEnd === 48);
+  if (
+    certifiedPhase?.reconstructedObjective !== 0
+    || certifiedPhase.exactOptimumCertified !== true
+    || certifiedPhase.certificationDirection !== 'maximize'
+    || certifiedPhase.certificationBound !== 1
+    || certifiedPhase.certificationStatus !== 'infeasible'
+    || certifiedPhase.certificationSolverPass !== certifiedPhase.solverPass + 1
+  ) {
+    throw new Error('Live regression contaminated phase was not certified by an infeasible >= 1 probe.');
+  }
 }
 
 export async function runArchivedPowerAwareRosterOptimizerAudit(

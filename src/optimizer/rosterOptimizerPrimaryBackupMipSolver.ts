@@ -49,6 +49,11 @@ interface SolverTelemetry {
 interface SolverSession {
   highs: HiGHS;
   telemetry: SolverTelemetry;
+  problem: {
+    candidates: OptimizerFormationCandidate[];
+    eligibleDragons: OptimizerRosterDragon[];
+    formationsPerWave: number;
+  };
 }
 
 type FixedPhase =
@@ -70,6 +75,7 @@ type ScalarField =
 const histogramChunkSize = 9;
 const stableChunkSize = 49;
 export const OPTIMIZER_VARIABLE_INTEGRALITY_TOLERANCE = 1e-7;
+export const OPTIMIZER_MATERIAL_OBJECTIVE_DELTA = 1e-3;
 
 export interface PowerAwarePrimaryBackupMipOptions {
   primaryCutoff: PrimaryPowerCutoff;
@@ -124,6 +130,7 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       },
     }),
     telemetry,
+    problem: { candidates, eligibleDragons, formationsPerWave },
   };
   applyRosterOptimizerExactGapOptions(session.highs);
 
@@ -428,11 +435,16 @@ async function maximizeAndFix(
   const expression = context[wave][field];
   context.model.maximize(expression);
   const solution = await solveOptimal(context.model, session, label, category);
-  const value = reconstructAndRecord({
+  const phase = { kind: 'scalar', wave, field, value: 0 } as const;
+  const value = await reconstructCertifyAndRecord({
     context,
     session,
+    fixed,
     solution,
     expression,
+    phase,
+    direction: 'maximize',
+    category,
     stage: label,
     wave,
     kind: 'scalar',
@@ -462,11 +474,16 @@ async function refineRatingVector(
       `${wave} ascending rating vector`,
       category,
     );
-    const value = reconstructAndRecord({
+    const phase = { kind: 'histogram', wave, levels, value: 0 } as const;
+    const value = await reconstructCertifyAndRecord({
       context,
       session,
+      fixed,
       solution,
       expression,
+      phase,
+      direction: 'minimize',
+      category,
       stage: `${wave} ascending rating vector`,
       wave,
       kind: 'histogram',
@@ -544,11 +561,16 @@ async function refineStableWaveKey(
       `${wave} stable solution key`,
       'stableKeyMs',
     );
-    const value = reconstructAndRecord({
+    const phase = { kind: 'stable', wave, indices, value: 0 } as const;
+    const value = await reconstructCertifyAndRecord({
       context,
       session,
+      fixed,
       solution,
       expression,
+      phase,
+      direction: 'maximize',
+      category: 'stableKeyMs',
       stage: `${wave} stable solution key`,
       wave,
       kind: 'stable',
@@ -748,11 +770,15 @@ function recordSolverLog(line: string, telemetry: SolverTelemetry): void {
   if (pruned) telemetry.branchesPruned += Number(pruned[1]);
 }
 
-function reconstructAndRecord({
+async function reconstructCertifyAndRecord({
   context,
   session,
+  fixed,
   solution,
   expression,
+  phase,
+  direction,
+  category,
   stage,
   wave,
   kind,
@@ -761,21 +787,25 @@ function reconstructAndRecord({
 }: {
   context: ModelContext;
   session: SolverSession;
+  fixed: FixedPhase[];
   solution: Solution;
   expression: LinExpr | Var;
+  phase: FixedPhase;
+  direction: 'maximize' | 'minimize';
+  category: PhaseCategory;
   stage: string;
   wave: OptimizerWave;
   kind: OptimizerPhaseObjectiveDiagnostic['kind'];
   chunkStart?: number;
   chunkEnd?: number;
-}): number {
+}): Promise<number> {
   const reconstruction = reconstructExactIntegerObjective({
     solution,
     expression,
     integerVariables: integralModelVariables(context),
     stage,
   });
-  session.telemetry.objectiveReconstructions.push({
+  const diagnostic: OptimizerPhaseObjectiveDiagnostic = {
     stage,
     wave,
     kind,
@@ -789,8 +819,151 @@ function reconstructAndRecord({
     maximumIntegralityResidual: reconstruction.maximumIntegralityResidual,
     maximumConstraintResidual: maximumConstraintViolation(context.model, solution),
     mipGap: mipGapFromSolverLog(session.telemetry.recentSolverLog),
-  });
+    exactOptimumCertified: false,
+    certificationDirection: null,
+    certificationBound: null,
+    certificationStatus: 'not-required',
+    certificationSolverPass: null,
+  };
+  if (reconstruction.rawObjectiveDelta > OPTIMIZER_MATERIAL_OBJECTIVE_DELTA) {
+    Object.assign(diagnostic, await certifyExactIntegerOptimum({
+      session,
+      fixed,
+      phase: { ...phase, value: reconstruction.value },
+      direction,
+      reconstructedValue: reconstruction.value,
+      stage,
+      category,
+    }));
+  }
+  session.telemetry.objectiveReconstructions.push(diagnostic);
   return reconstruction.value;
+}
+
+async function certifyExactIntegerOptimum({
+  session,
+  fixed,
+  phase,
+  direction,
+  reconstructedValue,
+  stage,
+  category,
+}: {
+  session: SolverSession;
+  fixed: FixedPhase[];
+  phase: FixedPhase;
+  direction: 'maximize' | 'minimize';
+  reconstructedValue: number;
+  stage: string;
+  category: PhaseCategory;
+}): Promise<Pick<OptimizerPhaseObjectiveDiagnostic,
+  'exactOptimumCertified' | 'certificationDirection' | 'certificationBound'
+  | 'certificationStatus' | 'certificationSolverPass'>> {
+  const { candidates, eligibleDragons, formationsPerWave } = session.problem;
+  const probe = measuredBuildModel(
+    candidates,
+    eligibleDragons,
+    formationsPerWave,
+    session.telemetry,
+  );
+  applyFixedPhases(probe, candidates, fixed);
+  const expression = fixedPhaseExpression(probe, candidates, phase);
+  const certificationBound = exactAdjacentInteger(reconstructedValue, direction, stage);
+  probe.model.addConstraint(
+    direction === 'maximize'
+      ? expression.geq(certificationBound)
+      : expression.leq(certificationBound),
+    `certify_${phase.wave}_${phase.kind}_${session.telemetry.passes + 1}`,
+  );
+  probe.model.minimize(sum(0));
+  const certificationSolution = await solveAllowInfeasible(probe.model, session, category);
+  return evaluateExactOptimumCertification({
+    solution: certificationSolution,
+    expression,
+    integerVariables: integralModelVariables(probe),
+    direction,
+    reconstructedValue,
+    stage,
+    solverPass: session.telemetry.passes,
+  });
+}
+
+export function evaluateExactOptimumCertification({
+  solution,
+  expression,
+  integerVariables,
+  direction,
+  reconstructedValue,
+  stage,
+  solverPass,
+}: {
+  solution: Pick<Solution, 'status' | 'getValue'>;
+  expression: LinExpr | Var;
+  integerVariables: Var[];
+  direction: 'maximize' | 'minimize';
+  reconstructedValue: number;
+  stage: string;
+  solverPass: number;
+}): Pick<OptimizerPhaseObjectiveDiagnostic,
+  'exactOptimumCertified' | 'certificationDirection' | 'certificationBound'
+  | 'certificationStatus' | 'certificationSolverPass'> {
+  const certificationBound = exactAdjacentInteger(reconstructedValue, direction, stage);
+  if (solution.status === 'infeasible') {
+    return {
+      exactOptimumCertified: true,
+      certificationDirection: direction,
+      certificationBound,
+      certificationStatus: 'infeasible',
+      certificationSolverPass: solverPass,
+    };
+  }
+  if (solution.status !== 'optimal') {
+    throw new Error(
+      `Exact optimizer ${stage} exact-optimum certification ended with ${solution.status}.`,
+    );
+  }
+  const validation = validateIntegralVariables(
+    solution,
+    integerVariables,
+    `${stage} exact-optimum certification`,
+  );
+  const exactProbeValue = exactExpressionValue(
+    expression instanceof Var ? expression.times(1) : expression,
+    validation.roundedValues,
+    `${stage} exact-optimum certification`,
+  );
+  const improves = direction === 'maximize'
+    ? exactProbeValue >= certificationBound
+    : exactProbeValue <= certificationBound;
+  if (!improves) {
+    throw new Error(
+      `Exact optimizer ${stage} exact-optimum certification returned an optimal assignment `
+      + `with exact objective ${exactProbeValue}, outside the required ${direction} bound `
+      + `${certificationBound}.`,
+    );
+  }
+  throw new Error(
+    `Exact optimizer ${stage} found a feasible exact ${direction} improvement `
+    + `${exactProbeValue} at bound ${certificationBound}; refusing to fix reconstructed `
+    + `objective ${reconstructedValue}.`,
+  );
+}
+
+function exactAdjacentInteger(
+  reconstructedValue: number,
+  direction: 'maximize' | 'minimize',
+  stage: string,
+): number {
+  if (!Number.isSafeInteger(reconstructedValue)) {
+    throw new Error(
+      `Exact optimizer ${stage} cannot certify non-safe integer ${reconstructedValue}.`,
+    );
+  }
+  const bound = reconstructedValue + (direction === 'maximize' ? 1 : -1);
+  if (!Number.isSafeInteger(bound)) {
+    throw new Error(`Exact optimizer ${stage} exact-optimum bound is not a safe integer.`);
+  }
+  return bound;
 }
 
 export function reconstructExactIntegerObjective({

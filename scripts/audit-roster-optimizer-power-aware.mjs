@@ -108,7 +108,8 @@ function renderMarkdown(report) {
       `- Raw / reconstructed objective: ${contaminated.rawObjective} / ${contaminated.reconstructedObjective}; absolute delta ${contaminated.rawObjectiveDelta}.`,
       `- Solver status / MIP gap: ${contaminated.status} / ${contaminated.mipGap}.`,
       `- Integrality / constraint residual: ${contaminated.maximumIntegralityResidual} / ${contaminated.maximumConstraintResidual}.`,
-      '- Fix: reconstruct exact safe-integer phase values from strictly validated Boolean/integer variables; zero-gap solving and lexicographic stable-key semantics are unchanged.',
+      `- Exact-optimum certification: ${contaminated.exactOptimumCertified ? 'PASS' : 'FAIL'}; ${contaminated.certificationDirection} bound ${contaminated.certificationBound}; status ${contaminated.certificationStatus}; solver pass ${contaminated.certificationSolverPass}.`,
+      '- Fix: reconstruct exact safe-integer phase values from strictly validated Boolean/integer variables, then certify materially contaminated values with a fresh one-integer improvement feasibility probe before fixation. Zero-gap solving and lexicographic stable-key semantics are unchanged.',
       '',
     ] : []),
     ...(comparison ? [

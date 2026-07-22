@@ -8,6 +8,8 @@ import {
 import { estimateDragonPower } from '../power/estimatedDragonPower';
 import { optimizeCurrentRoster } from '../optimizer/rosterOptimizer';
 import {
+  evaluateExactOptimumCertification,
+  OPTIMIZER_MATERIAL_OBJECTIVE_DELTA,
   OPTIMIZER_VARIABLE_INTEGRALITY_TOLERANCE,
   reconstructExactIntegerObjective,
 } from '../optimizer/rosterOptimizerPrimaryBackupMipSolver';
@@ -94,20 +96,32 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
       expect(result.primary.totalEstimatedPower).toBe(375760);
       expect(result.backup.totalEstimatedPower).toBe(227070);
       expect(result.diagnostics.candidateCount).toBe(5456);
+      expect(result.diagnostics.solverPasses).toBe(135);
       const exactness = result.diagnostics.numericalExactness!;
       expect(exactness.integralityTolerance).toBe(1e-7);
       expect(exactness.maximumIntegralityResidual).toBeLessThanOrEqual(1e-7);
       expect(exactness.fixedPhasesValidated).toBe(true);
       expect(exactness.phaseObjectives.every((phase) =>
         Number.isSafeInteger(phase.reconstructedObjective))).toBe(true);
-      expect(exactness.phaseObjectives).toContainEqual(expect.objectContaining({
+      const contaminatedPhase = exactness.phaseObjectives.find((phase) =>
+        phase.stage === 'backup stable solution key'
+        && phase.kind === 'stable'
+        && phase.chunkStart === 0
+        && phase.chunkEnd === 48);
+      expect(contaminatedPhase).toEqual(expect.objectContaining({
         stage: 'backup stable solution key',
         kind: 'stable',
         chunkStart: 0,
         chunkEnd: 48,
         reconstructedObjective: 0,
         mipGap: 0,
+        exactOptimumCertified: true,
+        certificationDirection: 'maximize',
+        certificationBound: 1,
+        certificationStatus: 'infeasible',
       }));
+      expect(contaminatedPhase?.certificationSolverPass)
+        .toBe((contaminatedPhase?.solverPass ?? 0) + 1);
     }
     if (!forward.optimal || !reversed.optimal || !repeated.optimal) return;
     expect(reversed.optimizerSolutionHash).toBe(forward.optimizerSolutionHash);
@@ -149,6 +163,56 @@ describe('exact integer phase reconstruction', () => {
     });
   });
 
+  it('rejects a reconstructed value when a fresh probe finds an exact improvement', () => {
+    const model = new Model();
+    const selected = model.boolVar('selected');
+    const contaminatedSolution = new Solution({
+      status: 'optimal',
+      objective: 0.8403320312499968,
+      solution: new Map([['selected', 0]]),
+    });
+    const reconstruction = reconstructExactIntegerObjective({
+      solution: contaminatedSolution,
+      expression: selected,
+      integerVariables: [selected],
+      stage: 'synthetic contaminated objective',
+    });
+    expect(reconstruction.value).toBe(0);
+    const certificationSolution = new Solution({
+      status: 'optimal',
+      objective: 0,
+      solution: new Map([['selected', 1]]),
+    });
+    expect(() => evaluateExactOptimumCertification({
+      solution: certificationSolution,
+      expression: selected,
+      integerVariables: [selected],
+      direction: 'maximize',
+      reconstructedValue: reconstruction.value,
+      stage: 'synthetic contaminated objective',
+      solverPass: 2,
+    })).toThrow(/feasible exact maximize improvement 1 at bound 1; refusing to fix/);
+  });
+
+  it('rejects a fractional assignment returned by an exact-optimum probe', () => {
+    const model = new Model();
+    const selected = model.boolVar('selected');
+    const certificationSolution = new Solution({
+      status: 'optimal',
+      objective: 0,
+      solution: new Map([['selected', 0.25]]),
+    });
+    expect(() => evaluateExactOptimumCertification({
+      solution: certificationSolution,
+      expression: selected,
+      integerVariables: [selected],
+      direction: 'maximize',
+      reconstructedValue: 0,
+      stage: 'synthetic fractional certification',
+      solverPass: 2,
+    })).toThrow(/fractional binary variable selected=0\.25/);
+  });
+
   it('rejects a genuinely fractional Boolean assignment under the strict tolerance', () => {
     const model = new Model();
     const selected = model.boolVar('selected');
@@ -164,5 +228,6 @@ describe('exact integer phase reconstruction', () => {
       stage: 'synthetic fractional assignment',
     })).toThrow(/fractional binary variable selected=0\.25/);
     expect(OPTIMIZER_VARIABLE_INTEGRALITY_TOLERANCE).toBe(1e-7);
+    expect(OPTIMIZER_MATERIAL_OBJECTIVE_DELTA).toBe(1e-3);
   });
 });

@@ -850,22 +850,22 @@
       "eligibleDragonCount": 33,
       "candidateCount": 5456,
       "selectedFormationCount": 10,
-      "nodesVisited": 44,
+      "nodesVisited": 45,
       "branchesPruned": 0,
       "cacheEntries": 0,
-      "solverPasses": 134,
-      "candidateGenerationMs": 2791.3562,
-      "solverMs": 48002.1817,
-      "totalMs": 50799.0668,
+      "solverPasses": 135,
+      "candidateGenerationMs": 2395.688800000001,
+      "solverMs": 42036.3584,
+      "totalMs": 44437.1127,
       "phaseTimings": {
-        "modelConstructionMs": 1143.8142000000025,
+        "modelConstructionMs": 1373.9761000000035,
         "primaryPowerMs": 0,
         "primaryRarityMs": 0,
-        "primaryQualityMs": 10738.620399999998,
-        "backupPowerMs": 339.9653000000035,
+        "primaryQualityMs": 9540.9519,
+        "backupPowerMs": 310.14080000000104,
         "backupRarityMs": 0,
-        "backupQualityMs": 2343.8127999999924,
-        "stableKeyMs": 32230.38379999995
+        "backupQualityMs": 2214.9166000000005,
+        "stableKeyMs": 27532.111899999993
       },
       "numericalExactness": {
         "integralityTolerance": 1e-7,
@@ -884,7 +884,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "Primary minimum Formation Rating",
@@ -897,7 +902,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "primary ascending rating vector",
@@ -912,7 +922,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "primary ascending rating vector",
@@ -927,7 +942,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "primary ascending rating vector",
@@ -942,7 +962,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "primary ascending rating vector",
@@ -957,7 +982,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "primary ascending rating vector",
@@ -972,7 +1002,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "Primary active relationship value",
@@ -985,7 +1020,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "Primary active relationship count",
@@ -998,7 +1038,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "Backup total Estimated Power",
@@ -1011,7 +1056,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "Backup total Formation Rating",
@@ -1024,7 +1074,12 @@
             "rawObjectiveDelta": 5.684341886080801e-13,
             "maximumIntegralityResidual": 4.436728762158427e-14,
             "maximumConstraintResidual": 9.822542779147625e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "Backup minimum Formation Rating",
@@ -1037,7 +1092,12 @@
             "rawObjectiveDelta": 6.679101716144942e-13,
             "maximumIntegralityResidual": 6.679101716144942e-13,
             "maximumConstraintResidual": 2.9831426218152046e-9,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup ascending rating vector",
@@ -1052,7 +1112,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 1.2434497875801753e-14,
             "maximumConstraintResidual": 2.1827872842550278e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup ascending rating vector",
@@ -1067,7 +1132,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup ascending rating vector",
@@ -1082,7 +1152,12 @@
             "rawObjectiveDelta": 6.250047590583563e-9,
             "maximumIntegralityResidual": 2.3159252293680765e-13,
             "maximumConstraintResidual": 4.729372449219227e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup ascending rating vector",
@@ -1097,7 +1172,12 @@
             "rawObjectiveDelta": 1.173903001472354e-7,
             "maximumIntegralityResidual": 1.1169512427218937e-11,
             "maximumConstraintResidual": 3.7834979593753815e-10,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup ascending rating vector",
@@ -1112,7 +1192,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.9976021664879227e-15,
             "maximumConstraintResidual": 4.3655745685100555e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "Backup active relationship value",
@@ -1125,7 +1210,12 @@
             "rawObjectiveDelta": 2.842170943040401e-14,
             "maximumIntegralityResidual": 3.1086244689504383e-15,
             "maximumConstraintResidual": 6.548361852765083e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "Backup active relationship count",
@@ -1138,7 +1228,12 @@
             "rawObjectiveDelta": 3.552713678800501e-15,
             "maximumIntegralityResidual": 6.439293542825908e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
@@ -1153,13 +1248,18 @@
             "rawObjectiveDelta": 0.8403320312499968,
             "maximumIntegralityResidual": 2.042810365310288e-14,
             "maximumConstraintResidual": 4.3655745685100555e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": true,
+            "certificationDirection": "maximize",
+            "certificationBound": 1,
+            "certificationStatus": "infeasible",
+            "certificationSolverPass": 24
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 24,
+            "solverPass": 25,
             "status": "optimal",
             "chunkStart": 49,
             "chunkEnd": 97,
@@ -1168,13 +1268,18 @@
             "rawObjectiveDelta": 0.00003695487976074219,
             "maximumIntegralityResidual": 3.4005589038905305e-14,
             "maximumConstraintResidual": 5.093170329928398e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 25,
+            "solverPass": 26,
             "status": "optimal",
             "chunkStart": 98,
             "chunkEnd": 146,
@@ -1183,13 +1288,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 26,
+            "solverPass": 27,
             "status": "optimal",
             "chunkStart": 147,
             "chunkEnd": 195,
@@ -1198,13 +1308,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 27,
+            "solverPass": 28,
             "status": "optimal",
             "chunkStart": 196,
             "chunkEnd": 244,
@@ -1213,13 +1328,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 28,
+            "solverPass": 29,
             "status": "optimal",
             "chunkStart": 245,
             "chunkEnd": 293,
@@ -1228,13 +1348,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 29,
+            "solverPass": 30,
             "status": "optimal",
             "chunkStart": 294,
             "chunkEnd": 342,
@@ -1243,13 +1368,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 30,
+            "solverPass": 31,
             "status": "optimal",
             "chunkStart": 343,
             "chunkEnd": 391,
@@ -1258,13 +1388,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 31,
+            "solverPass": 32,
             "status": "optimal",
             "chunkStart": 392,
             "chunkEnd": 440,
@@ -1273,13 +1408,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 32,
+            "solverPass": 33,
             "status": "optimal",
             "chunkStart": 441,
             "chunkEnd": 489,
@@ -1288,13 +1428,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 5.820766091346741e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 33,
+            "solverPass": 34,
             "status": "optimal",
             "chunkStart": 490,
             "chunkEnd": 538,
@@ -1303,13 +1448,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 4.440892098500626e-16,
             "maximumConstraintResidual": 1.4551915228366852e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 34,
+            "solverPass": 35,
             "status": "optimal",
             "chunkStart": 539,
             "chunkEnd": 587,
@@ -1318,13 +1468,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.2606692662986262e-15,
             "maximumConstraintResidual": 7.275957614183426e-12,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 35,
+            "solverPass": 36,
             "status": "optimal",
             "chunkStart": 588,
             "chunkEnd": 636,
@@ -1333,13 +1488,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.2606692662986262e-15,
             "maximumConstraintResidual": 7.275957614183426e-12,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 36,
+            "solverPass": 37,
             "status": "optimal",
             "chunkStart": 637,
             "chunkEnd": 685,
@@ -1348,13 +1508,18 @@
             "rawObjectiveDelta": 1.5591188027482131e-15,
             "maximumIntegralityResidual": 1.1102230246251565e-15,
             "maximumConstraintResidual": 5.093170329928398e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 37,
+            "solverPass": 38,
             "status": "optimal",
             "chunkStart": 686,
             "chunkEnd": 734,
@@ -1363,13 +1528,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 4.884981308350689e-15,
             "maximumConstraintResidual": 7.275957614183426e-12,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 38,
+            "solverPass": 39,
             "status": "optimal",
             "chunkStart": 735,
             "chunkEnd": 783,
@@ -1378,13 +1548,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 8.881784197001252e-16,
             "maximumConstraintResidual": 1.4551915228366852e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 39,
+            "solverPass": 40,
             "status": "optimal",
             "chunkStart": 784,
             "chunkEnd": 832,
@@ -1393,13 +1568,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 1.3322676295501878e-15,
             "maximumConstraintResidual": 1.4551915228366852e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 40,
+            "solverPass": 41,
             "status": "optimal",
             "chunkStart": 833,
             "chunkEnd": 881,
@@ -1408,13 +1588,18 @@
             "rawObjectiveDelta": 2.1904321363179613e-11,
             "maximumIntegralityResidual": 1.3369336769518806e-15,
             "maximumConstraintResidual": 7.275957614183426e-12,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 41,
+            "solverPass": 42,
             "status": "optimal",
             "chunkStart": 882,
             "chunkEnd": 930,
@@ -1423,13 +1608,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 1.3322676295501878e-15,
             "maximumConstraintResidual": 1.4551915228366852e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 42,
+            "solverPass": 43,
             "status": "optimal",
             "chunkStart": 931,
             "chunkEnd": 979,
@@ -1438,13 +1628,18 @@
             "rawObjectiveDelta": 0.0008654571860573238,
             "maximumIntegralityResidual": 2.220446049250313e-15,
             "maximumConstraintResidual": 7.275957614183426e-12,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 43,
+            "solverPass": 44,
             "status": "optimal",
             "chunkStart": 980,
             "chunkEnd": 1028,
@@ -1453,13 +1648,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 4.250168646915147e-15,
             "maximumConstraintResidual": 4.3655745685100555e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 44,
+            "solverPass": 45,
             "status": "optimal",
             "chunkStart": 1029,
             "chunkEnd": 1077,
@@ -1468,13 +1668,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 4.250168646915147e-15,
             "maximumConstraintResidual": 4.3655745685100555e-11,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 45,
+            "solverPass": 46,
             "status": "optimal",
             "chunkStart": 1078,
             "chunkEnd": 1126,
@@ -1483,13 +1688,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 2.220446049250313e-16,
             "maximumConstraintResidual": 7.275957614183426e-12,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 46,
+            "solverPass": 47,
             "status": "optimal",
             "chunkStart": 1127,
             "chunkEnd": 1175,
@@ -1498,13 +1708,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 47,
+            "solverPass": 48,
             "status": "optimal",
             "chunkStart": 1176,
             "chunkEnd": 1224,
@@ -1513,13 +1728,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 48,
+            "solverPass": 49,
             "status": "optimal",
             "chunkStart": 1225,
             "chunkEnd": 1273,
@@ -1528,13 +1748,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 49,
+            "solverPass": 50,
             "status": "optimal",
             "chunkStart": 1274,
             "chunkEnd": 1322,
@@ -1543,13 +1768,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 50,
+            "solverPass": 51,
             "status": "optimal",
             "chunkStart": 1323,
             "chunkEnd": 1371,
@@ -1558,13 +1788,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 51,
+            "solverPass": 52,
             "status": "optimal",
             "chunkStart": 1372,
             "chunkEnd": 1420,
@@ -1573,13 +1808,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 52,
+            "solverPass": 53,
             "status": "optimal",
             "chunkStart": 1421,
             "chunkEnd": 1469,
@@ -1588,13 +1828,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 53,
+            "solverPass": 54,
             "status": "optimal",
             "chunkStart": 1470,
             "chunkEnd": 1518,
@@ -1603,13 +1848,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 54,
+            "solverPass": 55,
             "status": "optimal",
             "chunkStart": 1519,
             "chunkEnd": 1567,
@@ -1618,13 +1868,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 55,
+            "solverPass": 56,
             "status": "optimal",
             "chunkStart": 1568,
             "chunkEnd": 1616,
@@ -1633,13 +1888,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 56,
+            "solverPass": 57,
             "status": "optimal",
             "chunkStart": 1617,
             "chunkEnd": 1665,
@@ -1648,13 +1908,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 57,
+            "solverPass": 58,
             "status": "optimal",
             "chunkStart": 1666,
             "chunkEnd": 1714,
@@ -1663,13 +1928,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 58,
+            "solverPass": 59,
             "status": "optimal",
             "chunkStart": 1715,
             "chunkEnd": 1763,
@@ -1678,13 +1948,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 59,
+            "solverPass": 60,
             "status": "optimal",
             "chunkStart": 1764,
             "chunkEnd": 1812,
@@ -1693,13 +1968,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 60,
+            "solverPass": 61,
             "status": "optimal",
             "chunkStart": 1813,
             "chunkEnd": 1861,
@@ -1708,13 +1988,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 61,
+            "solverPass": 62,
             "status": "optimal",
             "chunkStart": 1862,
             "chunkEnd": 1910,
@@ -1723,13 +2008,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 62,
+            "solverPass": 63,
             "status": "optimal",
             "chunkStart": 1911,
             "chunkEnd": 1959,
@@ -1738,13 +2028,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 63,
+            "solverPass": 64,
             "status": "optimal",
             "chunkStart": 1960,
             "chunkEnd": 2008,
@@ -1753,13 +2048,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 64,
+            "solverPass": 65,
             "status": "optimal",
             "chunkStart": 2009,
             "chunkEnd": 2057,
@@ -1768,13 +2068,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 65,
+            "solverPass": 66,
             "status": "optimal",
             "chunkStart": 2058,
             "chunkEnd": 2106,
@@ -1783,13 +2088,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 66,
+            "solverPass": 67,
             "status": "optimal",
             "chunkStart": 2107,
             "chunkEnd": 2155,
@@ -1798,13 +2108,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 67,
+            "solverPass": 68,
             "status": "optimal",
             "chunkStart": 2156,
             "chunkEnd": 2204,
@@ -1813,13 +2128,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 68,
+            "solverPass": 69,
             "status": "optimal",
             "chunkStart": 2205,
             "chunkEnd": 2253,
@@ -1828,13 +2148,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 69,
+            "solverPass": 70,
             "status": "optimal",
             "chunkStart": 2254,
             "chunkEnd": 2302,
@@ -1843,13 +2168,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 70,
+            "solverPass": 71,
             "status": "optimal",
             "chunkStart": 2303,
             "chunkEnd": 2351,
@@ -1858,13 +2188,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 71,
+            "solverPass": 72,
             "status": "optimal",
             "chunkStart": 2352,
             "chunkEnd": 2400,
@@ -1873,13 +2208,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 72,
+            "solverPass": 73,
             "status": "optimal",
             "chunkStart": 2401,
             "chunkEnd": 2449,
@@ -1888,13 +2228,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 73,
+            "solverPass": 74,
             "status": "optimal",
             "chunkStart": 2450,
             "chunkEnd": 2498,
@@ -1903,13 +2248,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 74,
+            "solverPass": 75,
             "status": "optimal",
             "chunkStart": 2499,
             "chunkEnd": 2547,
@@ -1918,13 +2268,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 75,
+            "solverPass": 76,
             "status": "optimal",
             "chunkStart": 2548,
             "chunkEnd": 2596,
@@ -1933,13 +2288,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 76,
+            "solverPass": 77,
             "status": "optimal",
             "chunkStart": 2597,
             "chunkEnd": 2645,
@@ -1948,13 +2308,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 77,
+            "solverPass": 78,
             "status": "optimal",
             "chunkStart": 2646,
             "chunkEnd": 2694,
@@ -1963,13 +2328,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 78,
+            "solverPass": 79,
             "status": "optimal",
             "chunkStart": 2695,
             "chunkEnd": 2743,
@@ -1978,13 +2348,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 79,
+            "solverPass": 80,
             "status": "optimal",
             "chunkStart": 2744,
             "chunkEnd": 2792,
@@ -1993,13 +2368,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 80,
+            "solverPass": 81,
             "status": "optimal",
             "chunkStart": 2793,
             "chunkEnd": 2841,
@@ -2008,13 +2388,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 81,
+            "solverPass": 82,
             "status": "optimal",
             "chunkStart": 2842,
             "chunkEnd": 2890,
@@ -2023,13 +2408,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 82,
+            "solverPass": 83,
             "status": "optimal",
             "chunkStart": 2891,
             "chunkEnd": 2939,
@@ -2038,13 +2428,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 83,
+            "solverPass": 84,
             "status": "optimal",
             "chunkStart": 2940,
             "chunkEnd": 2988,
@@ -2053,13 +2448,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 84,
+            "solverPass": 85,
             "status": "optimal",
             "chunkStart": 2989,
             "chunkEnd": 3037,
@@ -2068,13 +2468,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 85,
+            "solverPass": 86,
             "status": "optimal",
             "chunkStart": 3038,
             "chunkEnd": 3086,
@@ -2083,13 +2488,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 86,
+            "solverPass": 87,
             "status": "optimal",
             "chunkStart": 3087,
             "chunkEnd": 3135,
@@ -2098,13 +2508,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 87,
+            "solverPass": 88,
             "status": "optimal",
             "chunkStart": 3136,
             "chunkEnd": 3184,
@@ -2113,13 +2528,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 88,
+            "solverPass": 89,
             "status": "optimal",
             "chunkStart": 3185,
             "chunkEnd": 3233,
@@ -2128,13 +2548,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 89,
+            "solverPass": 90,
             "status": "optimal",
             "chunkStart": 3234,
             "chunkEnd": 3282,
@@ -2143,13 +2568,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 90,
+            "solverPass": 91,
             "status": "optimal",
             "chunkStart": 3283,
             "chunkEnd": 3331,
@@ -2158,13 +2588,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 91,
+            "solverPass": 92,
             "status": "optimal",
             "chunkStart": 3332,
             "chunkEnd": 3380,
@@ -2173,13 +2608,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 92,
+            "solverPass": 93,
             "status": "optimal",
             "chunkStart": 3381,
             "chunkEnd": 3429,
@@ -2188,13 +2628,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 93,
+            "solverPass": 94,
             "status": "optimal",
             "chunkStart": 3430,
             "chunkEnd": 3478,
@@ -2203,13 +2648,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 94,
+            "solverPass": 95,
             "status": "optimal",
             "chunkStart": 3479,
             "chunkEnd": 3527,
@@ -2218,13 +2668,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 95,
+            "solverPass": 96,
             "status": "optimal",
             "chunkStart": 3528,
             "chunkEnd": 3576,
@@ -2233,13 +2688,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 96,
+            "solverPass": 97,
             "status": "optimal",
             "chunkStart": 3577,
             "chunkEnd": 3625,
@@ -2248,13 +2708,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 97,
+            "solverPass": 98,
             "status": "optimal",
             "chunkStart": 3626,
             "chunkEnd": 3674,
@@ -2263,13 +2728,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 98,
+            "solverPass": 99,
             "status": "optimal",
             "chunkStart": 3675,
             "chunkEnd": 3723,
@@ -2278,13 +2748,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 99,
+            "solverPass": 100,
             "status": "optimal",
             "chunkStart": 3724,
             "chunkEnd": 3772,
@@ -2293,13 +2768,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 100,
+            "solverPass": 101,
             "status": "optimal",
             "chunkStart": 3773,
             "chunkEnd": 3821,
@@ -2308,13 +2788,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 101,
+            "solverPass": 102,
             "status": "optimal",
             "chunkStart": 3822,
             "chunkEnd": 3870,
@@ -2323,13 +2808,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 102,
+            "solverPass": 103,
             "status": "optimal",
             "chunkStart": 3871,
             "chunkEnd": 3919,
@@ -2338,13 +2828,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 103,
+            "solverPass": 104,
             "status": "optimal",
             "chunkStart": 3920,
             "chunkEnd": 3968,
@@ -2353,13 +2848,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 104,
+            "solverPass": 105,
             "status": "optimal",
             "chunkStart": 3969,
             "chunkEnd": 4017,
@@ -2368,13 +2868,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 105,
+            "solverPass": 106,
             "status": "optimal",
             "chunkStart": 4018,
             "chunkEnd": 4066,
@@ -2383,13 +2888,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 106,
+            "solverPass": 107,
             "status": "optimal",
             "chunkStart": 4067,
             "chunkEnd": 4115,
@@ -2398,13 +2908,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 107,
+            "solverPass": 108,
             "status": "optimal",
             "chunkStart": 4116,
             "chunkEnd": 4164,
@@ -2413,13 +2928,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 108,
+            "solverPass": 109,
             "status": "optimal",
             "chunkStart": 4165,
             "chunkEnd": 4213,
@@ -2428,13 +2948,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 109,
+            "solverPass": 110,
             "status": "optimal",
             "chunkStart": 4214,
             "chunkEnd": 4262,
@@ -2443,13 +2968,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 110,
+            "solverPass": 111,
             "status": "optimal",
             "chunkStart": 4263,
             "chunkEnd": 4311,
@@ -2458,13 +2988,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 111,
+            "solverPass": 112,
             "status": "optimal",
             "chunkStart": 4312,
             "chunkEnd": 4360,
@@ -2473,13 +3008,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 112,
+            "solverPass": 113,
             "status": "optimal",
             "chunkStart": 4361,
             "chunkEnd": 4409,
@@ -2488,13 +3028,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 113,
+            "solverPass": 114,
             "status": "optimal",
             "chunkStart": 4410,
             "chunkEnd": 4458,
@@ -2503,13 +3048,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 114,
+            "solverPass": 115,
             "status": "optimal",
             "chunkStart": 4459,
             "chunkEnd": 4507,
@@ -2518,13 +3068,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 115,
+            "solverPass": 116,
             "status": "optimal",
             "chunkStart": 4508,
             "chunkEnd": 4556,
@@ -2533,13 +3088,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 116,
+            "solverPass": 117,
             "status": "optimal",
             "chunkStart": 4557,
             "chunkEnd": 4605,
@@ -2548,13 +3108,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 117,
+            "solverPass": 118,
             "status": "optimal",
             "chunkStart": 4606,
             "chunkEnd": 4654,
@@ -2563,13 +3128,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 118,
+            "solverPass": 119,
             "status": "optimal",
             "chunkStart": 4655,
             "chunkEnd": 4703,
@@ -2578,13 +3148,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 119,
+            "solverPass": 120,
             "status": "optimal",
             "chunkStart": 4704,
             "chunkEnd": 4752,
@@ -2593,13 +3168,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 120,
+            "solverPass": 121,
             "status": "optimal",
             "chunkStart": 4753,
             "chunkEnd": 4801,
@@ -2608,13 +3188,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 121,
+            "solverPass": 122,
             "status": "optimal",
             "chunkStart": 4802,
             "chunkEnd": 4850,
@@ -2623,13 +3208,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 122,
+            "solverPass": 123,
             "status": "optimal",
             "chunkStart": 4851,
             "chunkEnd": 4899,
@@ -2638,13 +3228,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 123,
+            "solverPass": 124,
             "status": "optimal",
             "chunkStart": 4900,
             "chunkEnd": 4948,
@@ -2653,13 +3248,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 124,
+            "solverPass": 125,
             "status": "optimal",
             "chunkStart": 4949,
             "chunkEnd": 4997,
@@ -2668,13 +3268,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 125,
+            "solverPass": 126,
             "status": "optimal",
             "chunkStart": 4998,
             "chunkEnd": 5046,
@@ -2683,13 +3288,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 126,
+            "solverPass": 127,
             "status": "optimal",
             "chunkStart": 5047,
             "chunkEnd": 5095,
@@ -2698,13 +3308,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 127,
+            "solverPass": 128,
             "status": "optimal",
             "chunkStart": 5096,
             "chunkEnd": 5144,
@@ -2713,13 +3328,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 128,
+            "solverPass": 129,
             "status": "optimal",
             "chunkStart": 5145,
             "chunkEnd": 5193,
@@ -2728,13 +3348,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 129,
+            "solverPass": 130,
             "status": "optimal",
             "chunkStart": 5194,
             "chunkEnd": 5242,
@@ -2743,13 +3368,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 130,
+            "solverPass": 131,
             "status": "optimal",
             "chunkStart": 5243,
             "chunkEnd": 5291,
@@ -2758,13 +3388,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 131,
+            "solverPass": 132,
             "status": "optimal",
             "chunkStart": 5292,
             "chunkEnd": 5340,
@@ -2773,13 +3408,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 132,
+            "solverPass": 133,
             "status": "optimal",
             "chunkStart": 5341,
             "chunkEnd": 5389,
@@ -2788,13 +3428,18 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           },
           {
             "stage": "backup stable solution key",
             "wave": "backup",
             "kind": "stable",
-            "solverPass": 133,
+            "solverPass": 134,
             "status": "optimal",
             "chunkStart": 5390,
             "chunkEnd": 5438,
@@ -2803,7 +3448,12 @@
             "rawObjectiveDelta": 0,
             "maximumIntegralityResidual": 0,
             "maximumConstraintResidual": 0,
-            "mipGap": 0
+            "mipGap": 0,
+            "exactOptimumCertified": false,
+            "certificationDirection": null,
+            "certificationBound": null,
+            "certificationStatus": "not-required",
+            "certificationSolverPass": null
           }
         ],
         "fixedPhasesValidated": true
@@ -3224,5 +3874,5 @@
       }
     }
   },
-  "commandRuntimeMs": 58601.3238
+  "commandRuntimeMs": 52161.5596
 }
