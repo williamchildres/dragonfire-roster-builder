@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-22T21:31:22.897Z",
+  "generatedAt": "2026-07-22T23:20:25.537Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "hotfix/optimizer-nonintegral-objective",
-    "commit": "207396d8e773c22205735d0e1ecf4d8a3becd03e",
-    "databaseVersion": "0.19.1",
+    "branch": "feature/ui-polish-clean-routes-and-updates",
+    "commit": "f1226084a59720ffd98606bfbe23b32524d8c7c7",
+    "databaseVersion": "0.20.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 53,
-    "testCaseCount": 458,
+    "testFileCount": 55,
+    "testCaseCount": 465,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
