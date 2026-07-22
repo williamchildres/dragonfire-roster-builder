@@ -13,6 +13,11 @@ import {
   eligibleRosterDragons,
 } from '../services/rosterEligibility';
 import { evaluateFormation } from '../synergy/evaluateFormation';
+import {
+  ESTIMATED_POWER_MODEL_HASH,
+  ESTIMATED_POWER_MODEL_VERSION,
+  ESTIMATED_POWER_OBSERVATION_HASH,
+} from '../power/generatedDragonPowerModel';
 import { buildSemanticRelationships, relationshipValue } from '../synergy/semanticRelationships';
 import type {
   DragonSynergyProfile,
@@ -66,12 +71,29 @@ export function createRosterOptimizerFingerprint(
 export function createRosterOptimizerRequestFingerprint(
   snapshot: OptimizerRosterDragon[],
   strategy: RosterOptimizerStrategy,
+  estimatedPowerContract: {
+    version: string;
+    modelHash: string;
+    observationHash: string;
+  } = {
+    version: ESTIMATED_POWER_MODEL_VERSION,
+    modelHash: ESTIMATED_POWER_MODEL_HASH,
+    observationHash: ESTIMATED_POWER_OBSERVATION_HASH,
+  },
 ): string {
+  const powerAwareContract = strategy === 'power-aware-primary-five-backup-five'
+    ? {
+        estimatedPowerVersion: estimatedPowerContract.version,
+        estimatedPowerModelHash: estimatedPowerContract.modelHash,
+        estimatedPowerObservationHash: estimatedPowerContract.observationHash,
+      }
+    : {};
   return stableHash(JSON.stringify({
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
     ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     strategy,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
+    ...powerAwareContract,
   }));
 }
 

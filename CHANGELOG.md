@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.16.0 - 2026-07-22
+
+- Added the experimental Power-Aware 5 + Backup 5 strategy. Estimated Power chooses the maximum-power 15-dragon Primary pool, then unchanged Formation Rating v2 organizes that pool; rarity and confidence remain diagnostics only.
+- Fixed Primary Power exactly with individual-dragon 15th-place cutoff constraints, including all above-cutoff dragons, no below-cutoff dragons, and the exact required number tied at the cutoff. Backup Estimated Power is then maximized in integer units only after all Primary numeric quality objectives are fixed.
+- Added one-estimate-per-eligible-dragon request caching, Power-Aware result summaries/fingerprints, per-formation and per-dragon Power diagnostics, low-confidence warnings, reduced HiGHS/oracle parity fixtures, and three separate forward-only full-size audit artifacts.
+- Bumped the optimizer contract to 3 while preserving the two legacy allocations and semantic solution hashes. Stable-key functions, Formation Rating v2, Estimated Power v1 formula/observations, canonical data, source schema 13, local/cloud roster schemas 5, Supabase migrations, and Habit Level behavior are unchanged.
+
 ## 0.15.0 - 2026-07-21
 
 - Added Estimated Dragon Power v1 as a deterministic, positive, monotone runtime diagnostic fitted from 31 empirical samples covering 25 unique rarity/Star Rank/Dragon Level combinations. Exact observed combinations retain their displayed values; modeled values are rounded to the nearest 10.

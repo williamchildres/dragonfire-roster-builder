@@ -252,12 +252,12 @@ describe('Dragonfire Lab app', () => {
     expect(document.querySelector('.combined-coverage-bar')).not.toBeInTheDocument();
     expect(document.querySelector('.coverage-marker')).not.toBeInTheDocument();
 
-    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.15\.0/i }).closest('.latest-update-panel');
+    const latestUpdate = screen.getByRole('heading', { name: /latest release.*v0\.16\.0/i }).closest('.latest-update-panel');
     expect(latestUpdate).not.toBeNull();
-    expect(latestUpdate).toHaveTextContent('Estimated Power diagnostics');
+    expect(latestUpdate).toHaveTextContent('Power-Aware 5 + Backup 5');
     expect(latestUpdate).toHaveTextContent('empirical, unofficial');
-    expect(latestUpdate).toHaveTextContent('Roster Optimizer strategies');
-    expect(latestUpdate).toHaveTextContent('Formation Rating v2 is unchanged');
+    expect(latestUpdate).toHaveTextContent('Rarity-Priority remains the default');
+    expect(latestUpdate).toHaveTextContent('Formation Rating v2');
 
     expect(screen.getByText(/Works without an account\./i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Private by design' })).toBeInTheDocument();

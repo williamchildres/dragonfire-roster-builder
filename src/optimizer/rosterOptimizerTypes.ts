@@ -3,8 +3,12 @@ import type { FormationFinding } from '../services/formationFindings';
 import type { FormationArrangement } from '../services/formationPlacementComparison';
 import type { FormationRatingTier } from '../services/formationRating';
 import type { SemanticRelationship } from '../synergy/semanticRelationships';
+import type {
+  EstimatedDragonPower,
+  EstimatedPowerConfidence,
+} from '../power/estimatedDragonPower';
 
-export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 2 as const;
+export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 3 as const;
 export const ROSTER_OPTIMIZER_RATING_CONTRACT = 'formation-rating-v2' as const;
 export const OPTIMIZER_FORMATION_COUNT = 10;
 export const OPTIMIZER_DRAGON_COUNT = 30;
@@ -12,6 +16,7 @@ export const OPTIMIZER_WAVE_FORMATION_COUNT = 5;
 export const OPTIMIZER_WAVE_DRAGON_COUNT = 15;
 
 export type RosterOptimizerStrategy =
+  | 'power-aware-primary-five-backup-five'
   | 'primary-five-backup-five'
   | 'best-ten-overall';
 
@@ -52,6 +57,21 @@ export interface PrimaryBackupOptimizerObjective {
   stableSolutionKey: string;
 }
 
+export interface PowerAwareWaveObjective extends RosterOptimizerObjective {
+  totalEstimatedPower: number;
+}
+
+export interface PowerAwarePrimaryBackupOptimizerObjective {
+  strategy: 'power-aware-primary-five-backup-five';
+  primary: PowerAwareWaveObjective;
+  backup: PowerAwareWaveObjective;
+  combinedTotalRating: number;
+  combinedEstimatedPower: number;
+  combinedRelationshipValue: number;
+  combinedActiveRelationships: number;
+  stableSolutionKey: string;
+}
+
 export interface OptimizerFormationCandidate {
   stableCandidateKey: string;
   dragonIds: [string, string, string];
@@ -72,6 +92,8 @@ export interface OptimizerFormationCandidate {
     string,
     { starRank?: number | null; dragonLevel?: number | null }
   >;
+  /** Internal integer units (Estimated Power / 10), populated once per Power-Aware request. */
+  estimatedPowerUnits?: number;
 }
 
 export interface OptimizedFormation extends Omit<OptimizerFormationCandidate, 'dragonMask'> {
@@ -82,8 +104,10 @@ export interface OptimizedFormation extends Omit<OptimizerFormationCandidate, 'd
 
 export interface OptimizerPhaseTimings {
   modelConstructionMs: number;
+  primaryPowerMs: number;
   primaryRarityMs: number;
   primaryQualityMs: number;
+  backupPowerMs: number;
   backupRarityMs: number;
   backupQualityMs: number;
   stableKeyMs: number;
@@ -118,7 +142,7 @@ export interface OptimizerCollectionSummary {
 }
 
 export interface BestTenOverallOptimizationResult {
-  contractVersion: 2;
+  contractVersion: 3;
   strategy: 'best-ten-overall';
   optimal: true;
   rosterFingerprint: string;
@@ -156,7 +180,7 @@ export interface OptimizerWaveResult {
 }
 
 export interface PrimaryBackupOptimizationResult {
-  contractVersion: 2;
+  contractVersion: 3;
   strategy: 'primary-five-backup-five';
   optimal: true;
   rosterFingerprint: string;
@@ -174,12 +198,57 @@ export interface PrimaryBackupOptimizationResult {
   optimizerResultHash: string;
 }
 
+export type PowerConfidenceCountRecord = Record<EstimatedPowerConfidence, number>;
+
+export interface PowerAwareOptimizedFormation extends OptimizedFormation {
+  estimatedPower: number;
+  dragonPowerEstimates: Record<string, EstimatedDragonPower>;
+  powerConfidenceCounts: PowerConfidenceCountRecord;
+}
+
+export interface PowerAwareOptimizerWaveResult extends Omit<OptimizerWaveResult, 'formations' | 'objective'> {
+  formations: PowerAwareOptimizedFormation[];
+  totalEstimatedPower: number;
+  averageEstimatedPowerPerDragon: number;
+  minimumFormationEstimatedPower: number;
+  maximumFormationEstimatedPower: number;
+  powerConfidenceCounts: PowerConfidenceCountRecord;
+  objective: PowerAwareWaveObjective;
+}
+
+export interface PowerAwarePrimaryBackupOptimizationResult {
+  contractVersion: 3;
+  strategy: 'power-aware-primary-five-backup-five';
+  optimal: true;
+  rosterFingerprint: string;
+  requestFingerprint: string;
+  estimatedPowerModelVersion: string;
+  estimatedPowerModelHash: string;
+  estimatedPowerObservationHash: string;
+  estimatedPowerByDragonId: Record<string, EstimatedDragonPower>;
+  primary: PowerAwareOptimizerWaveResult;
+  backup: PowerAwareOptimizerWaveResult;
+  formations: PowerAwareOptimizedFormation[];
+  usedDragonIds: string[];
+  unusedDragonIds: string[];
+  unusedRarityCounts: RarityCountRecord;
+  combined: OptimizerCollectionSummary & {
+    totalEstimatedPower: number;
+    powerConfidenceCounts: PowerConfidenceCountRecord;
+  };
+  objective: PowerAwarePrimaryBackupOptimizerObjective;
+  diagnostics: OptimizerSearchDiagnostics;
+  optimizerSolutionHash: string;
+  optimizerResultHash: string;
+}
+
 export type RosterOptimizationResult =
   | BestTenOverallOptimizationResult
-  | PrimaryBackupOptimizationResult;
+  | PrimaryBackupOptimizationResult
+  | PowerAwarePrimaryBackupOptimizationResult;
 
 export interface RosterOptimizationUnavailable {
-  contractVersion: 2;
+  contractVersion: 3;
   strategy: RosterOptimizerStrategy;
   optimal: false;
   status: 'unavailable';
@@ -214,6 +283,10 @@ export interface PrimaryBackupOptimizerSolverResult {
   cacheEntries: number;
   solverPasses: number;
   phaseTimings: OptimizerPhaseTimings;
+}
+
+export interface PowerAwarePrimaryBackupOptimizerSolverResult extends Omit<PrimaryBackupOptimizerSolverResult, 'objective'> {
+  objective: PowerAwarePrimaryBackupOptimizerObjective;
 }
 
 export class RosterOptimizerCancelledError extends Error {

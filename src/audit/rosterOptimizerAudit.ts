@@ -5,6 +5,7 @@ import { optimizeCurrentRoster } from '../optimizer/rosterOptimizer';
 import type {
   BestTenOverallOptimizationResult,
   PrimaryBackupOptimizationResult,
+  PowerAwarePrimaryBackupOptimizationResult,
   RosterOptimizationResult,
   RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
@@ -15,6 +16,11 @@ export const EXPECTED_FORMATION_RATING_V2_HASH =
 const expectedBestTen = {
   'all-31-maxed': { total: 764, average: 76.4, minimum: 62, solutionHash: 'fnv1a64:49b0498718c54d6a' },
   'mixed-progression': { total: 553, average: 55.3, minimum: 40, solutionHash: 'fnv1a64:fc0005be3f0af3ed' },
+} as const;
+
+const expectedPrimaryBackup = {
+  'all-31-maxed': 'fnv1a64:01c8a6531720fc7e',
+  'mixed-progression': 'fnv1a64:03625b38711584a7',
 } as const;
 
 export async function runRosterOptimizerAudit() {
@@ -46,13 +52,16 @@ export async function runRosterOptimizerAudit() {
       if (strategy === 'best-ten-overall') {
         validateBestTenRegression(fixture.name, first as BestTenOverallOptimizationResult);
       } else {
-        validatePrimaryBackupRarity(first as PrimaryBackupOptimizationResult);
+        validatePrimaryBackupRarity(
+          fixture.name,
+          first as PrimaryBackupOptimizationResult,
+        );
       }
       reports.push(fixtureReport(fixture.name, first));
     }
   }
   return {
-    auditVersion: '0.13.0',
+    auditVersion: '0.16.0',
     formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
     fixtures: reports,
     checks: {
@@ -75,6 +84,28 @@ export async function runRosterOptimizerAudit() {
       tiedPrimaryBetterBackupRegression: true,
       smallFixtureBruteForceMatches: true,
     },
+  };
+}
+
+export type PowerAwareAuditFixture = 'mixed' | 'maxed' | 'all-one';
+
+export async function runPowerAwareRosterOptimizerAudit(fixture: PowerAwareAuditFixture) {
+  const roster = fixture === 'mixed'
+    ? mixedProgressionRoster()
+    : fixture === 'maxed'
+      ? maxedRoster()
+      : allOneRoster();
+  const result = await optimizeCurrentRoster(roster, 'power-aware-primary-five-backup-five');
+  if (!result.optimal || result.strategy !== 'power-aware-primary-five-backup-five') {
+    throw new Error(`${fixture} Power-Aware audit did not produce a complete result.`);
+  }
+  validatePowerAwareResult(result);
+  return {
+    auditVersion: '0.16.0',
+    fixture,
+    formationRatingV2Hash: EXPECTED_FORMATION_RATING_V2_HASH,
+    mipGaps: ROSTER_OPTIMIZER_MIP_GAP_OPTIONS,
+    result: fixtureReport(fixture, result),
   };
 }
 
@@ -102,6 +133,38 @@ export function mixedProgressionRoster(): Record<string, OwnedDragon> {
       habitLevels: {},
     }]),
   );
+}
+
+export function allOneRoster(): Record<string, OwnedDragon> {
+  return Object.fromEntries(
+    dragons.map((dragon) => [dragon.id, {
+      dragonId: dragon.id,
+      owned: true,
+      starRank: 1,
+      reignLevel: 1,
+      notes: '',
+      habitLevels: {},
+    }]),
+  );
+}
+
+function validatePowerAwareResult(result: PowerAwarePrimaryBackupOptimizationResult): void {
+  if (result.primary.formations.length !== 5 || result.backup.formations.length !== 5) {
+    throw new Error('Power-Aware result did not return five formations in each wave.');
+  }
+  const primary = new Set(result.primary.usedDragonIds);
+  const combined = [...result.primary.usedDragonIds, ...result.backup.usedDragonIds];
+  if (
+    combined.length !== 30
+    || new Set(combined).size !== 30
+    || result.backup.usedDragonIds.some((dragonId) => primary.has(dragonId))
+    || result.unusedDragonIds.length !== 1
+  ) {
+    throw new Error('Power-Aware result did not produce the required 30-dragon partition.');
+  }
+  if (!result.diagnostics.optimal || result.diagnostics.selectedFormationCount !== 10) {
+    throw new Error('Power-Aware result was not reported as exact optimal.');
+  }
 }
 
 function validateResult(result: RosterOptimizationResult): void {
@@ -139,7 +202,10 @@ function validateBestTenRegression(
   }
 }
 
-function validatePrimaryBackupRarity(result: PrimaryBackupOptimizationResult): void {
+function validatePrimaryBackupRarity(
+  name: keyof typeof expectedPrimaryBackup,
+  result: PrimaryBackupOptimizationResult,
+): void {
   if (result.primary.formations.length !== 5 || result.backup.formations.length !== 5) {
     throw new Error('Primary + Backup did not return five formations in each wave.');
   }
@@ -154,6 +220,9 @@ function validatePrimaryBackupRarity(result: PrimaryBackupOptimizationResult): v
     JSON.stringify(result.backup.rarityCounts) !== JSON.stringify(expectedBackup)
   ) {
     throw new Error('Primary + Backup rarity priority changed.');
+  }
+  if (result.optimizerSolutionHash !== expectedPrimaryBackup[name]) {
+    throw new Error(`${name} Primary + Backup semantic solution hash changed.`);
   }
 }
 
@@ -204,6 +273,10 @@ function formationReport(formation: RosterOptimizationResult['formations'][numbe
     rating: formation.rating,
     tier: formation.tier,
     placementScore: formation.placementScore,
+    ...('estimatedPower' in formation ? {
+      estimatedPower: formation.estimatedPower,
+      powerConfidenceCounts: formation.powerConfidenceCounts,
+    } : {}),
   };
 }
 

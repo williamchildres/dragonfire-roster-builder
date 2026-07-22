@@ -16,7 +16,7 @@ describe('RosterOptimizerClient worker boundary', () => {
       type: 'result',
       requestId: request.requestId,
       result: {
-        contractVersion: 2,
+        contractVersion: 3,
         strategy: 'primary-five-backup-five',
         optimal: false,
         status: 'unavailable',
