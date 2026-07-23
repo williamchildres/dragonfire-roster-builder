@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.2 - 2026-07-22
+
+- Changed the footer Support options action to open a focused support dialog with Buy Me a Coffee and PayPal choices instead of navigating users to the top of the About page.
+- Preserved the About support section, feedback email link, routes, roster, formations, optimizer, scoring, account synchronization, and schemas.
+
 ## 0.20.1 - 2026-07-22
 
 - Added PayPal as a second optional support method alongside Buy Me a Coffee, using PayPal's hosted Dragonfire Lab payment page without embedding payment processing or credentials in the application.

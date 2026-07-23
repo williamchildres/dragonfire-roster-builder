@@ -138,7 +138,7 @@ describe('optional account authentication UI', () => {
     const user = userEvent.setup();
     render(<App accountServices={null} />);
     expect(screen.queryByRole('button', { name: /sign in/i })).not.toBeInTheDocument();
-    expect(screen.queryByText(/account synchronization/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^account/i })).not.toBeInTheDocument();
     await user.click(screen.getByRole('link', { name: 'Roster' }));
     expect(screen.getByText('Track ownership, progression, Habit Levels, and notes.')).toBeInTheDocument();
     expect(screen.queryByText(/Roster storage/i)).not.toBeInTheDocument();
