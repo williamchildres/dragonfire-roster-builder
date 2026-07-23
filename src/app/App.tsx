@@ -59,6 +59,7 @@ import { repository } from '../data/databaseMetadata';
 import { dragons } from '../data/dragons';
 import { productMetrics } from '../data/productMetrics';
 import { releaseHistory } from '../data/releaseHistory';
+import { supportLinks } from '../data/supportLinks';
 import { estimateFormationPower } from '../power/estimatedFormationPower';
 import {
   BREEDS,
@@ -112,8 +113,6 @@ import type {
   RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
 export { RawWordingDisclosure } from './DragonDetailModal';
-
-const buyMeACoffeeUrl = 'https://buymeacoffee.com/williamchildres';
 
 type Section = AppRoute;
 type StatusMessage = { kind: 'success' | 'error' | 'info'; text: string };
@@ -638,18 +637,16 @@ export function App({
               : 'Roster data stays in your browser.'}{' '}
             Public verification wording is summarized from official roster pages, screenshot evidence, and curated community review.
           </p>
-          {activeSection !== 'about' ? (
-            <p className="site-footer-support">
-              <a
-                className="secondary-button support-link"
-                href={buyMeACoffeeUrl}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Support the project <ExternalLink size={16} aria-hidden="true" />
-              </a>
-            </p>
-          ) : null}
+          <div className="site-footer-actions" aria-label="Feedback and support">
+            <a className="secondary-button support-link" href={supportLinks.emailHref}>
+              Feedback &amp; support
+            </a>
+            {activeSection !== 'about' ? (
+              <AppLink className="secondary-button support-link" navigate={selectSection} route="about">
+                Support options
+              </AppLink>
+            ) : null}
+          </div>
         </div>
       </footer>
 
@@ -1833,6 +1830,10 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
         <section className="panel readable">
           <h3>Community data and contributions</h3>
           <p>Sourced corrections are welcome. Never submit credentials, private profile information, or confidential material.</p>
+          <p>
+            Have feedback, found a data issue, or need help using Dragonfire Lab? Email{' '}
+            <a aria-label="Email Dragonfire Lab support" href={supportLinks.emailHref}>{supportLinks.email}</a>.
+          </p>
         </section>
         <section className="panel readable">
           <h3>Unofficial and open source</h3>
@@ -1848,17 +1849,26 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
           Dragonfire Lab is free to use. Optional support helps cover hosting, ongoing dragon
           research, and continued development.
         </p>
-        <p>
+        <div className="support-actions">
           <a
             className="primary-button support-link"
-            href={buyMeACoffeeUrl}
+            href={supportLinks.buyMeACoffee}
             rel="noopener noreferrer"
             target="_blank"
           >
             <Flame size={16} aria-hidden="true" /> Buy me a dragon{' '}
             <ExternalLink size={16} aria-hidden="true" />
           </a>
-        </p>
+          <a
+            className="secondary-button support-link"
+            href={supportLinks.paypal}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Support with PayPal <ExternalLink size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <p className="support-disclaimer">Optional support is not a tax-deductible charitable contribution.</p>
       </section>
     </section>
   );

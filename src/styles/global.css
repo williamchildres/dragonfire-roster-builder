@@ -406,6 +406,19 @@ main {
   max-width: none;
 }
 
+.support-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 1rem 0 0;
+}
+
+.support-disclaimer {
+  font-size: 0.9rem;
+  margin: 0.8rem 0 0;
+}
+
 .feature-card {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
   border: 1px solid var(--line-soft);
@@ -3337,12 +3350,17 @@ th {
   margin-bottom: 0.5rem;
 }
 
-.site-footer-support {
-  margin-bottom: 0;
+.site-footer-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  margin-top: 0.25rem;
 }
 
-.site-footer-support .support-link {
-  margin: 0 auto;
+.site-footer-actions .support-link {
+  margin: 0;
 }
 
 .header-account-area {
@@ -4219,6 +4237,10 @@ th {
     grid-template-columns: 1fr;
   }
 
+  .support-actions {
+    align-items: stretch;
+  }
+
   .methodology-layout,
   .about-trust-grid,
   .latest-update-panel {
@@ -4268,6 +4290,17 @@ th {
 }
 
 @media (max-width: 560px) {
+  .support-actions,
+  .site-footer-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .support-actions .support-link,
+  .site-footer-actions .support-link {
+    width: 100%;
+  }
+
   .formation-rating-summary-card {
     align-items: start;
     grid-template-columns: minmax(0, 1fr);
