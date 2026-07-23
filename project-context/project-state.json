@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-22T23:20:25.537Z",
+  "generatedAt": "2026-07-23T01:17:44.840Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/ui-polish-clean-routes-and-updates",
-    "commit": "f1226084a59720ffd98606bfbe23b32524d8c7c7",
-    "databaseVersion": "0.20.0",
+    "branch": "feature/paypal-support-and-contact",
+    "commit": "ff96bfaa92d0e1c3c66440bdf0e5c8e180712d6d",
+    "databaseVersion": "0.20.1",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 55,
-    "testCaseCount": 465,
+    "testFileCount": 56,
+    "testCaseCount": 467,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },
