@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.3 - 2026-07-23
+
+- Added a visible Formation Builder notice explaining that Formation Rating currently measures ability compatibility and placement without weighting relationships by activation chance, number of rolls, duration, target count, or exact effect magnitude.
+- Preserved all Formation Rating, Estimated Power, optimizer, roster, persistence, account synchronization, route, and schema behavior.
+
 ## 0.20.2 - 2026-07-22
 
 - Changed the footer Support options action to open a focused support dialog with Buy Me a Coffee and PayPal choices instead of navigating users to the top of the About page.
