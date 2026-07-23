@@ -2589,6 +2589,16 @@ dd {
   line-height: 1.45;
 }
 
+.formation-rating-limitations {
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--line-soft);
+  border-radius: 0.45rem;
+  color: var(--muted);
+  line-height: 1.45;
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+}
+
 .formation-analysis-metrics {
   display: grid;
   gap: 0.5rem;

@@ -15,6 +15,9 @@ import type {
 } from '../optimizer/rosterOptimizerTypes';
 import { createEmptyRoster, saveRoster } from '../services/rosterStorage';
 
+const formationRatingLimitationNotice =
+  'Formation Rating measures ability compatibility and placement. It does not currently weight relationships by activation chance, number of rolls, duration, target count, or exact effect magnitude.';
+
 describe('Optimizer workspace retention', () => {
   afterEach(() => {
     window.localStorage.clear();
@@ -56,6 +59,9 @@ describe('Optimizer workspace retention', () => {
 
     await user.click(screen.getAllByRole('button', { name: /open in formation builder/i })[0]!);
     expect(screen.getByRole('heading', { name: /formation builder/i })).toBeInTheDocument();
+    expect(screen.getByRole('note', { name: 'Formation Rating limitations' })).toHaveTextContent(
+      formationRatingLimitationNotice,
+    );
     await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     expect(screen.getAllByText('700').length).toBeGreaterThan(0);
     expect(run).toHaveBeenCalledTimes(1);

@@ -10,6 +10,8 @@ import { createFormationShareHash } from '../services/teamShare';
 type ProgressionSeed = Record<string, { starRank?: number | null; reignLevel?: number | null; owned?: boolean }>;
 const incompleteMissingEnablerNotice =
   'Missing-enabler checks are incomplete until all selected dragons have curated profiles.';
+const formationRatingLimitationNotice =
+  'Formation Rating measures ability compatibility and placement. It does not currently weight relationships by activation chance, number of rolls, duration, target count, or exact effect magnitude.';
 
 describe('Formation Builder simple synergy cutover', () => {
   afterEach(() => {
@@ -213,7 +215,16 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(summary).toHaveTextContent('Participating dragons');
     expect(summary).toHaveTextContent('Key gaps');
     expect(summary).toHaveTextContent('Placement status');
-    expect(within(summary).getByLabelText('Formation rating breakdown')).toBeInTheDocument();
+    const ratingHeading = within(summary).getByRole('heading', { name: 'Formation Rating' });
+    const limitationNotice = within(summary).getByRole('note', { name: 'Formation Rating limitations' });
+    const breakdown = within(summary).getByLabelText('Formation rating breakdown');
+    expect(limitationNotice).toHaveTextContent(formationRatingLimitationNotice);
+    expect(ratingHeading.compareDocumentPosition(limitationNotice) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(limitationNotice.compareDocumentPosition(breakdown) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(within(limitationNotice).queryByRole('button')).not.toBeInTheDocument();
+    expect(within(limitationNotice).queryByRole('link')).not.toBeInTheDocument();
+    expect(screen.queryByRole('dialog', { name: 'Formation Rating limitations' })).not.toBeInTheDocument();
+    expect(window.location.pathname).toBe('/formations');
   });
 
   it('keeps cards collapsed by default and expands Command and Vanguard Trait wording independently', async () => {
@@ -600,8 +611,11 @@ describe('Formation Builder simple synergy cutover', () => {
     const panel = ratingPanel();
     expect(panel).toHaveTextContent(/\/ 100/);
     expect(panel).toHaveTextContent(/Strong|Solid|Developing|Weak|Excellent/);
+    expect(within(panel).getByLabelText('Formation rating 75 out of 100, Strong')).toBeInTheDocument();
     expect(panel).toHaveTextContent('Active Synergy');
     expect(panel).toHaveTextContent('Placement Effectiveness');
+    expect(panel).toHaveTextContent('55 / 80');
+    expect(panel).toHaveTextContent('20 / 20');
     expect(within(panel).getByRole('heading', { name: 'Estimated Formation Power' })).toBeInTheDocument();
     expect(panel).toHaveTextContent('Syrax');
     expect(panel).toHaveTextContent('Vhagar');
@@ -636,6 +650,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(ratingPanel()).toHaveTextContent('Incomplete');
     expect(ratingPanel()).toHaveTextContent('Assign all three positions');
     expect(ratingPanel()).toHaveTextContent(/Record Star Rank and Dragon Level for all three dragons/i);
+    expect(within(ratingPanel()).queryByRole('note', { name: 'Formation Rating limitations' })).not.toBeInTheDocument();
 
     await chooseDragonForPosition(user, 'right-flank', 'shadowsong');
     const updatedLabel = within(ratingPanel()).getByLabelText(/Formation rating .* out of 100/i).getAttribute('aria-label');
@@ -651,6 +666,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     expect(ratingPanel()).toHaveTextContent('Incomplete');
     expect(ratingPanel()).toHaveTextContent('Assign all three positions');
+    expect(within(ratingPanel()).queryByRole('note', { name: 'Formation Rating limitations' })).not.toBeInTheDocument();
   });
 
   it('renders Formation Rating for share-link-loaded formations', () => {

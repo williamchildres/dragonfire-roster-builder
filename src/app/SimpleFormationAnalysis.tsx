@@ -43,6 +43,12 @@ export function SimpleFormationAnalysis({
         </div>
       </div>
 
+      {rating.score !== null ? (
+        <p className="formation-rating-limitations" role="note" aria-label="Formation Rating limitations">
+          Formation Rating measures ability compatibility and placement. It does not currently weight relationships by activation chance, number of rolls, duration, target count, or exact effect magnitude.
+        </p>
+      ) : null}
+
       <section className="formation-power-diagnostic" aria-labelledby="estimated-formation-power-title">
         <div>
           <p className="eyebrow">Separate progression diagnostic</p>
