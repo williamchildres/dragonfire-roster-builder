@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { DragonDetailsDialog } from './DragonDetailModal';
+import { SupportOptionsDialog } from './SupportOptionsDialog';
 import {
   AccountDialog,
   HeaderAccountAction,
@@ -174,6 +175,7 @@ export function App({
     [providedAccountServices],
   );
   const [activeSection, setActiveSection] = useState<Section>(getInitialSection);
+  const [isSupportOptionsOpen, setIsSupportOptionsOpen] = useState(false);
   const [optimizerStrategy, setOptimizerStrategy] = useState<RosterOptimizerStrategy>(
     DEFAULT_ROSTER_OPTIMIZER_STRATEGY,
   );
@@ -642,9 +644,15 @@ export function App({
               Feedback &amp; support
             </a>
             {activeSection !== 'about' ? (
-              <AppLink className="secondary-button support-link" navigate={selectSection} route="about">
+              <button
+                aria-expanded={isSupportOptionsOpen}
+                aria-haspopup="dialog"
+                className="secondary-button support-link"
+                onClick={() => setIsSupportOptionsOpen(true)}
+                type="button"
+              >
                 Support options
-              </AppLink>
+              </button>
             ) : null}
           </div>
         </div>
@@ -674,6 +682,8 @@ export function App({
           onShowAlreadyAddedChange={setShowAlreadyAdded}
         />
       ) : null}
+
+      {isSupportOptionsOpen ? <SupportOptionsDialog onClose={() => setIsSupportOptionsOpen(false)} /> : null}
 
       {isSignInOpen && accountServices ? (
         <SignInDialog

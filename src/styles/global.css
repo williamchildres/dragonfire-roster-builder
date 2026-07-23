@@ -3474,6 +3474,14 @@ th {
   min-width: 0;
 }
 
+.support-options-dialog {
+  inline-size: min(34rem, 100%);
+}
+
+.support-options-dialog-body .support-actions {
+  margin-top: 0.85rem;
+}
+
 .account-dialog .account-dialog-header {
   align-items: flex-start;
   display: grid;
