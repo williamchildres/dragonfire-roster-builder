@@ -143,5 +143,10 @@ describe('release readiness pages', () => {
     expect(screen.getByRole('heading', { name: 'Support Dragonfire Lab' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /buy me a dragon/i })).toHaveAttribute('href', 'https://buymeacoffee.com/williamchildres');
     expect(within(screen.getByRole('contentinfo')).queryByRole('link', { name: /support the project/i })).not.toBeInTheDocument();
+    expect(within(screen.getByRole('contentinfo')).getByRole('link', { name: 'Feedback & support' })).toHaveAttribute(
+      'href',
+      'mailto:support@dragonfirelab.com?subject=Dragonfire%20Lab%20Feedback%20or%20Support',
+    );
+    expect(within(screen.getByRole('contentinfo')).queryByRole('link', { name: 'Support options' })).not.toBeInTheDocument();
   });
 });

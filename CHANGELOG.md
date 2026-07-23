@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.20.1 - 2026-07-22
+
+- Added PayPal as a second optional support method alongside Buy Me a Coffee, using PayPal's hosted Dragonfire Lab payment page without embedding payment processing or credentials in the application.
+- Added support@dragonfirelab.com feedback and support links to About and the site footer, while keeping support optional, non-charitable, and separate from the app's local roster and account-sync behavior.
+- Preserved all routing, roster, formation, optimizer, Estimated Power, Formation Rating, schema, persistence, and Supabase behavior.
+
 ## 0.20.0 - 2026-07-22
 
 - Simplified Overview into a compact copy-first introduction, exactly three linked workflow cards, the existing dynamic dataset breadth strip, and a Recent Update panel backed directly by this CHANGELOG. Removed the hero artwork and deferred any replacement background or artwork to a future release.
