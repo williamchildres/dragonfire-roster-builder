@@ -25,6 +25,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Validate Formation Reliability registry
+        run: npm run validate:reliability-registry
+
       - name: Test
         run: npm run test
 

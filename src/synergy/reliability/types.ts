@@ -117,6 +117,7 @@ export interface ReliabilityTargetFacts {
 export interface AbilityReliabilityComponent {
   id: ReliabilityComponentId;
   sourceAbilityId: string;
+  sourceAbilityKind: AbilityKind;
   reliabilityClass: ReliabilityClass;
   probability?: ReliabilityProbability;
   opportunityPresence: OpportunityPresence;
@@ -150,13 +151,23 @@ export interface ReliabilityComponentReference {
  */
 export interface SignalReliabilityPath {
   pathId: string;
+  appliesWhen?: ReliabilityPathApplicability;
   events: readonly ReliabilityEventRequirement[];
 }
+
+export interface ReliabilityPathApplicability {
+  kind: 'relationship-use' | 'probability-context';
+  id: string;
+}
+
+export type ReliabilityBindingClass =
+  'guaranteed' | 'conditional-deterministic' | 'chance' | 'resolved-mixed';
 
 export type SignalReliabilityBinding =
   | {
       status: 'resolved';
       signalId: string;
+      bindingClass?: ReliabilityBindingClass;
       paths: readonly SignalReliabilityPath[];
     }
   | {
@@ -171,6 +182,10 @@ export type ReliabilityValidationMode = 'contract' | 'full-migration';
 export interface ReliabilityAbilityReference {
   abilityId: string;
   kind: AbilityKind;
+  dragonId: string;
+  unlockStarRank: number | null;
+  minimumDragonLevel: number | null;
+  evidenceIds: readonly string[];
 }
 
 export interface ReliabilityContractInput {

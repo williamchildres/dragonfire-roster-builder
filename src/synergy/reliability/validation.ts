@@ -15,6 +15,7 @@ import type {
 
 const COMPONENT_ID_PATTERN = /^([a-z0-9]+(?:-[a-z0-9]+)*):([a-z0-9]+(?:-[a-z0-9]+)*)$/;
 const ABILITY_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const SEMANTIC_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HABIT_LEVELS = ['1', '2', '3', '4', '5'] as const;
 
 export function createReliabilityComponentId(
@@ -75,7 +76,7 @@ export function validateReliabilityContract(
   }
 
   for (const component of input.components) {
-    validateComponent(component, abilitiesById, issues);
+    validateComponent(component, abilitiesById, mode, issues);
   }
   for (const binding of input.bindings) {
     validateBinding(
@@ -131,6 +132,7 @@ export function assertValidReliabilityContract(
 function validateComponent(
   component: AbilityReliabilityComponent,
   abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
+  mode: ReliabilityValidationMode,
   issues: ReliabilityValidationIssue[],
 ): void {
   const path = `components[${component.id || '<empty>'}]`;
@@ -150,6 +152,7 @@ function validateComponent(
       `Component ID identifies "${match[1]}" but sourceAbilityId is "${component.sourceAbilityId}".`,
     );
   }
+  validateComponentAbility(component, path, abilitiesById, mode, issues);
 
   validateClassAndOpportunitySemantics(component, path, issues);
   if (component.probability) {
@@ -159,6 +162,78 @@ function validateComponent(
   validateOpportunityCount(component, path, issues);
   validateNumericEvidenceFacts(component, path, issues);
   validateEvidence(component, path, issues);
+}
+
+function validateComponentAbility(
+  component: AbilityReliabilityComponent,
+  path: string,
+  abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
+  mode: ReliabilityValidationMode,
+  issues: ReliabilityValidationIssue[],
+): void {
+  if (!abilitiesById) return;
+  const ability = abilitiesById.get(component.sourceAbilityId);
+  if (!ability) {
+    addIssue(
+      issues,
+      'component.source-ability-missing',
+      `${path}.sourceAbilityId`,
+      `Component source ability "${component.sourceAbilityId}" is absent from the canonical ability catalog.`,
+    );
+    return;
+  }
+  if (component.sourceAbilityKind !== ability.kind) {
+    addIssue(
+      issues,
+      'component.source-ability-kind',
+      `${path}.sourceAbilityKind`,
+      `Component identifies a ${component.sourceAbilityKind}, but "${ability.abilityId}" is a ${ability.kind}.`,
+    );
+  }
+  if (mode !== 'full-migration') return;
+  validateUnlockFloor(
+    component.unlock?.minimumStarRank,
+    ability.unlockStarRank,
+    `${path}.unlock.minimumStarRank`,
+    'Star Rank',
+    issues,
+  );
+  validateUnlockFloor(
+    component.unlock?.minimumDragonLevel,
+    ability.minimumDragonLevel,
+    `${path}.unlock.minimumDragonLevel`,
+    'Dragon Level',
+    issues,
+  );
+  const canonicalEvidenceIds = new Set(ability.evidenceIds);
+  for (const evidenceId of component.evidence.evidenceIds) {
+    if (!canonicalEvidenceIds.has(evidenceId)) {
+      addIssue(
+        issues,
+        'component.evidence-id-stale',
+        `${path}.evidence.evidenceIds[${evidenceId}]`,
+        `Evidence ID "${evidenceId}" does not belong to source ability "${ability.abilityId}".`,
+      );
+    }
+  }
+}
+
+function validateUnlockFloor(
+  componentValue: number | undefined,
+  canonicalValue: number | null,
+  path: string,
+  label: string,
+  issues: ReliabilityValidationIssue[],
+): void {
+  if (canonicalValue === null) return;
+  if (componentValue === undefined || componentValue < canonicalValue) {
+    addIssue(
+      issues,
+      'component.unlock-understated',
+      path,
+      `${label} unlock must be at least the canonical value ${canonicalValue}.`,
+    );
+  }
 }
 
 function validateClassAndOpportunitySemantics(
@@ -484,6 +559,21 @@ function validateAbilityReference(
       `Canonical ability ID "${ability.abilityId}" must use kebab-case.`,
     );
   }
+  if (!ABILITY_ID_PATTERN.test(ability.dragonId)) {
+    addIssue(
+      issues,
+      'ability-catalog.malformed-dragon-id',
+      `abilityCatalog[${ability.abilityId || '<empty>'}].dragonId`,
+      `Canonical dragon ID "${ability.dragonId}" must use kebab-case.`,
+    );
+  }
+  addDuplicateIssues(
+    ability.evidenceIds ?? [],
+    'ability-catalog.duplicate-evidence-id',
+    `abilityCatalog[${ability.abilityId || '<empty>'}].evidenceIds`,
+    'Duplicate canonical evidence ID',
+    issues,
+  );
 }
 
 function validateProbabilityValue(
@@ -711,6 +801,14 @@ function validateBinding(
   }
 
   const paths = binding.status === 'resolved' ? binding.paths : binding.candidatePaths;
+  if (mode === 'full-migration' && binding.status === 'resolved' && !binding.bindingClass) {
+    addIssue(
+      issues,
+      'binding.class-missing',
+      `${path}.bindingClass`,
+      'Full migration requires an explicit binding reliability class.',
+    );
+  }
   if (paths.length === 0) {
     addIssue(
       issues,
@@ -729,6 +827,113 @@ function validateBinding(
   for (const candidate of paths) {
     validatePath(candidate, path, componentsById, referencedComponentIds, issues);
   }
+  validatePathApplicability(paths, path, issues);
+  if (binding.status === 'resolved' && binding.bindingClass) {
+    validateBindingClass(binding, paths, componentsById, path, issues);
+  }
+}
+
+function validatePathApplicability(
+  paths: readonly SignalReliabilityPath[],
+  bindingPath: string,
+  issues: ReliabilityValidationIssue[],
+): void {
+  const selectedPaths = paths.filter((path) => path.appliesWhen);
+  if (selectedPaths.length > 0 && selectedPaths.length !== paths.length) {
+    addIssue(
+      issues,
+      'binding.path-applicability-partial',
+      `${bindingPath}.paths`,
+      'Either every path or no path must define structured applicability.',
+    );
+  }
+  const applicabilityKeys = selectedPaths.map(
+    (path) => `${path.appliesWhen!.kind}:${path.appliesWhen!.id}`,
+  );
+  addDuplicateIssues(
+    applicabilityKeys,
+    'binding.path-applicability-duplicate',
+    `${bindingPath}.paths`,
+    'Duplicate path applicability',
+    issues,
+  );
+}
+
+function validateBindingClass(
+  binding: Extract<SignalReliabilityBinding, { status: 'resolved' }>,
+  paths: readonly SignalReliabilityPath[],
+  componentsById: ReadonlyMap<ReliabilityComponentId, AbilityReliabilityComponent>,
+  path: string,
+  issues: ReliabilityValidationIssue[],
+): void {
+  const classesByPath = paths.map(
+    (candidate) =>
+      new Set(
+        candidate.events.flatMap((event) =>
+          event.componentReferences
+            .map((reference) => componentsById.get(reference.componentId)?.reliabilityClass)
+            .filter((value): value is AbilityReliabilityComponent['reliabilityClass'] =>
+              Boolean(value),
+            ),
+        ),
+      ),
+  );
+  const pathHasChance = (classes: ReadonlySet<string>) =>
+    classes.has('chance') || classes.has('unknown');
+  const pathHasConditional = (classes: ReadonlySet<string>) =>
+    classes.has('conditional-deterministic');
+
+  if (
+    binding.bindingClass === 'guaranteed' &&
+    classesByPath.some((classes) => pathHasChance(classes) || pathHasConditional(classes))
+  ) {
+    addIssue(
+      issues,
+      'binding.class-contradiction',
+      `${path}.bindingClass`,
+      'Guaranteed bindings may reference only guaranteed components.',
+    );
+  }
+  if (
+    binding.bindingClass === 'conditional-deterministic' &&
+    (classesByPath.some(pathHasChance) || !classesByPath.some(pathHasConditional))
+  ) {
+    addIssue(
+      issues,
+      'binding.class-contradiction',
+      `${path}.bindingClass`,
+      'Conditional-deterministic bindings require conditional components and no chance components.',
+    );
+  }
+  if (
+    binding.bindingClass === 'chance' &&
+    classesByPath.some((classes) => !pathHasChance(classes))
+  ) {
+    addIssue(
+      issues,
+      'binding.class-contradiction',
+      `${path}.bindingClass`,
+      'Every chance binding path must include a chance component.',
+    );
+  }
+  if (binding.bindingClass === 'resolved-mixed') {
+    const uses = paths.map((candidate) => candidate.appliesWhen);
+    const allRelationshipUses = uses.every((use) => use?.kind === 'relationship-use');
+    const flattenedClasses = new Set(classesByPath.flatMap((classes) => [...classes]));
+    if (
+      paths.length < 2 ||
+      !allRelationshipUses ||
+      !pathHasChance(flattenedClasses) ||
+      (!flattenedClasses.has('guaranteed') && !flattenedClasses.has('conditional-deterministic'))
+    ) {
+      addIssue(
+        issues,
+        'binding.resolved-mixed-invalid',
+        `${path}.paths`,
+        'Resolved mixed bindings require at least two relationship-use paths spanning deterministic and chance components.',
+      );
+    }
+  }
 }
 
 function validatePath(
@@ -745,6 +950,14 @@ function validatePath(
       'binding.path-id-empty',
       `${path}.pathId`,
       'Reliability path IDs must not be empty.',
+    );
+  }
+  if (candidate.appliesWhen && !SEMANTIC_ID_PATTERN.test(candidate.appliesWhen.id)) {
+    addIssue(
+      issues,
+      'binding.path-applicability-id-malformed',
+      `${path}.appliesWhen.id`,
+      'Path applicability IDs must use non-empty kebab-case semantics.',
     );
   }
   if (candidate.events.length === 0) {
