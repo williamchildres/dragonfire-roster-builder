@@ -1,15 +1,19 @@
-import type { DragonRarity } from '../models/dragon';
+import type { DragonRarity, HabitLevel } from '../models/dragon';
 import type { FormationFinding } from '../services/formationFindings';
-import type { FormationArrangement } from '../services/formationPlacementComparison';
+import type { FormationArrangement } from '../services/formationArrangement';
 import type { FormationRatingTier } from '../services/formationRating';
-import type { SemanticRelationship } from '../synergy/semanticRelationships';
+import type {
+  FormationRelationshipV3,
+  ReliabilityCoverage,
+} from '../synergy/reliability';
 import type {
   EstimatedDragonPower,
   EstimatedPowerConfidence,
 } from '../power/estimatedDragonPower';
 
-export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 3 as const;
-export const ROSTER_OPTIMIZER_RATING_CONTRACT = 'formation-rating-v2' as const;
+export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 4 as const;
+export const ROSTER_OPTIMIZER_RATING_CONTRACT = 'formation-rating-v3' as const;
+export const OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE = 1_000_000 as const;
 export const OPTIMIZER_FORMATION_COUNT = 10;
 export const OPTIMIZER_DRAGON_COUNT = 30;
 export const OPTIMIZER_WAVE_FORMATION_COUNT = 5;
@@ -27,6 +31,8 @@ export interface OptimizerRosterDragon {
   rarity: DragonRarity;
   starRank: number | null;
   dragonLevel: number | null;
+  /** Present for production requests; omitted only by low-level synthetic solver fixtures. */
+  activeHabitLevels?: Readonly<Record<string, HabitLevel | null>>;
 }
 
 export interface RosterRarityPriority {
@@ -41,6 +47,7 @@ export interface RosterOptimizerObjective {
   minimumRating: number;
   ascendingRatingVector: number[];
   totalRelationshipValue: number;
+  totalRelationshipValueUnits: number;
   totalActiveRelationships: number;
   stableSolutionKey: string;
 }
@@ -53,6 +60,7 @@ export interface PrimaryBackupOptimizerObjective {
   backup: OptimizerWaveObjective;
   combinedTotalRating: number;
   combinedRelationshipValue: number;
+  combinedRelationshipValueUnits: number;
   combinedActiveRelationships: number;
   stableSolutionKey: string;
 }
@@ -68,11 +76,13 @@ export interface PowerAwarePrimaryBackupOptimizerObjective {
   combinedTotalRating: number;
   combinedEstimatedPower: number;
   combinedRelationshipValue: number;
+  combinedRelationshipValueUnits: number;
   combinedActiveRelationships: number;
   stableSolutionKey: string;
 }
 
 export interface OptimizerFormationCandidate {
+  ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
   stableCandidateKey: string;
   dragonIds: [string, string, string];
   dragonMask: bigint;
@@ -82,15 +92,24 @@ export interface OptimizerFormationCandidate {
   tier: FormationRatingTier;
   activeSynergyScore: number;
   placementScore: number;
-  activeRelationshipValue: number;
+  adjustedRelationshipValue: number;
+  adjustedRelationshipValueUnits: number;
   activeRelationshipCount: number;
+  quantifiedRelationshipCount: number;
+  unquantifiedRelationshipCount: number;
+  unquantifiedBasePotential: number;
+  reliabilityCoverage: ReliabilityCoverage;
   participatingDragonCount: number;
-  relationships: SemanticRelationship[];
+  relationships: FormationRelationshipV3[];
   strengths: FormationFinding[];
   gaps: FormationFinding[];
   progressionSnapshot: Record<
     string,
-    { starRank?: number | null; dragonLevel?: number | null }
+    {
+      starRank?: number | null;
+      dragonLevel?: number | null;
+      activeHabitLevels: Readonly<Record<string, HabitLevel | null>>;
+    }
   >;
   /** Internal integer units (Estimated Power / 10), populated once per Power-Aware request. */
   estimatedPowerUnits?: number;
@@ -169,11 +188,16 @@ export interface OptimizerCollectionSummary {
   rarityCounts: RarityCountRecord;
   tierDistribution: TierDistribution;
   totalRelationshipValue: number;
+  totalRelationshipValueUnits: number;
   totalActiveRelationships: number;
+  quantifiedRelationshipCount: number;
+  unquantifiedRelationshipCount: number;
+  unquantifiedBasePotential: number;
 }
 
 export interface BestTenOverallOptimizationResult {
-  contractVersion: 3;
+  contractVersion: 4;
+  ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
   strategy: 'best-ten-overall';
   optimal: true;
   rosterFingerprint: string;
@@ -189,9 +213,9 @@ export interface BestTenOverallOptimizationResult {
   minimumRating: number;
   tierDistribution: TierDistribution;
   diagnostics: OptimizerSearchDiagnostics;
-  /** Stable semantic identity retained from the v0.12.0 allocation contract. */
+  /** Stable semantic identity for the contract-4 v3 allocation. */
   optimizerSolutionHash: string;
-  /** Strategy-aware identity for the complete v2 result. */
+  /** Strategy-aware identity for the complete v3 result. */
   optimizerResultHash: string;
 }
 
@@ -205,13 +229,18 @@ export interface OptimizerWaveResult {
   averageRating: number;
   minimumRating: number;
   totalRelationshipValue: number;
+  totalRelationshipValueUnits: number;
   totalActiveRelationships: number;
+  quantifiedRelationshipCount: number;
+  unquantifiedRelationshipCount: number;
+  unquantifiedBasePotential: number;
   tierDistribution: TierDistribution;
   objective: OptimizerWaveObjective;
 }
 
 export interface PrimaryBackupOptimizationResult {
-  contractVersion: 3;
+  contractVersion: 4;
+  ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
   strategy: 'primary-five-backup-five';
   optimal: true;
   rosterFingerprint: string;
@@ -248,7 +277,8 @@ export interface PowerAwareOptimizerWaveResult extends Omit<OptimizerWaveResult,
 }
 
 export interface PowerAwarePrimaryBackupOptimizationResult {
-  contractVersion: 3;
+  contractVersion: 4;
+  ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
   strategy: 'power-aware-primary-five-backup-five';
   optimal: true;
   rosterFingerprint: string;
@@ -279,7 +309,8 @@ export type RosterOptimizationResult =
   | PowerAwarePrimaryBackupOptimizationResult;
 
 export interface RosterOptimizationUnavailable {
-  contractVersion: 3;
+  contractVersion: 4;
+  ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
   strategy: RosterOptimizerStrategy;
   optimal: false;
   status: 'unavailable';

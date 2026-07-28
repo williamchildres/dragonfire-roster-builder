@@ -6,8 +6,7 @@ import {
   createRosterOptimizerRequestFingerprint,
   generateOptimizerFormationCandidates,
 } from '../optimizer/rosterOptimizerCandidates';
-import { buildPlacementComparison, compareFormationPlacements } from '../services/formationPlacementComparison';
-import { rateFormation } from '../services/formationRating';
+import { rateFormationV3 } from '../services/formationRatingV3';
 import { createEmptyRoster } from '../services/rosterStorage';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 
@@ -52,7 +51,7 @@ describe('optimizer candidate generation and roster progression', () => {
     expect(new Set(candidate.dragonIds).size).toBe(3);
   });
 
-  it('reuses Formation Rating v2 exactly for the retained arrangement', () => {
+  it('reuses Formation Rating v3 exactly for the retained arrangement', () => {
     const snapshot = buildOptimizerRosterSnapshot(dragons, rosterFor(trioIds, 10, 16));
     const candidate = generateOptimizerFormationCandidates({
       dragons,
@@ -65,27 +64,26 @@ describe('optimizer candidate generation and roster progression', () => {
         dragonLevel: entry.dragonLevel,
       }]),
     );
-    const initialComparison = compareFormationPlacements({
-      formation: candidate.arrangement,
-      progression,
-      profiles: simpleSynergyProfiles,
-    })!;
-    const comparison = buildPlacementComparison(
-      candidate.arrangement,
-      initialComparison.candidates,
-    )!;
-    // Rebuild through the public candidate's canonical relationships. The score
-    // and tier must be identical to Formation Builder's public rating service.
-    const rating = rateFormation({
+    const reliabilityProgression = Object.fromEntries(
+      snapshot.map((entry) => [entry.dragonId, {
+        starRank: entry.starRank,
+        dragonLevel: entry.dragonLevel,
+        activeHabitLevels: entry.activeHabitLevels ?? {},
+      }]),
+    );
+    const rating = rateFormationV3({
       formation: candidate.arrangement,
       dragons,
       profiles: simpleSynergyProfiles,
-      relationships: candidate.relationships,
-      placementComparison: comparison,
+      progression,
+      reliabilityProgression,
     });
-    expect(progression).toEqual(candidate.progressionSnapshot);
+    expect(candidate.ratingContract).toBe('formation-rating-v3');
+    expect(candidate.progressionSnapshot).toEqual(reliabilityProgression);
     expect(rating.score).toBe(candidate.rating);
     expect(rating.tier).toBe(candidate.tier);
+    expect(rating.adjustedUncappedRelationshipValue)
+      .toBe(candidate.adjustedRelationshipValue);
   });
 
   it('respects current Star Rank and Dragon Level relationship unlocks', () => {
@@ -93,31 +91,60 @@ describe('optimizer candidate generation and roster progression', () => {
     const highSnapshot = buildOptimizerRosterSnapshot(dragons, rosterFor(trioIds, 10, 16));
     const low = generateOptimizerFormationCandidates({ dragons, profiles: simpleSynergyProfiles, snapshot: lowSnapshot })[0]!;
     const high = generateOptimizerFormationCandidates({ dragons, profiles: simpleSynergyProfiles, snapshot: highSnapshot })[0]!;
-    expect(high.activeRelationshipValue).toBeGreaterThanOrEqual(low.activeRelationshipValue);
+    expect(high.adjustedRelationshipValue).toBeGreaterThanOrEqual(low.adjustedRelationshipValue);
     expect(high.rating).toBeGreaterThanOrEqual(low.rating);
     expect(createRosterOptimizerFingerprint(highSnapshot)).not.toBe(
       createRosterOptimizerFingerprint(lowSnapshot),
     );
   });
 
-  it('excludes Habit Levels and notes from the ranking fingerprint', () => {
+  it('includes Habit Levels but excludes notes from the ranking fingerprint', () => {
     const first = rosterFor(trioIds, 10, 16);
     const second = structuredClone(first);
     second.syrax!.notes = 'A private note';
-    second.syrax!.habitLevels = { 'syrax-dragon-flame': 5 };
+    second.syrax!.habitLevels = { 'syrax-strategic-revival': 5 };
     const firstFingerprint = createRosterOptimizerFingerprint(
       buildOptimizerRosterSnapshot(dragons, first),
     );
     const secondFingerprint = createRosterOptimizerFingerprint(
       buildOptimizerRosterSnapshot(dragons, second),
     );
-    expect(secondFingerprint).toBe(firstFingerprint);
+    expect(secondFingerprint).not.toBe(firstFingerprint);
+    second.syrax!.habitLevels = {};
+    expect(createRosterOptimizerFingerprint(
+      buildOptimizerRosterSnapshot(dragons, second),
+    )).toBe(firstFingerprint);
+  });
+
+  it('distinguishes an active missing Habit level from an explicit level', () => {
+    const missing = rosterFor(trioIds, 6, 16);
+    const levelOne = structuredClone(missing);
+    levelOne.syrax!.habitLevels = { 'syrax-strategic-revival': 1 };
+    const missingSnapshot = buildOptimizerRosterSnapshot(dragons, missing);
+    expect(
+      missingSnapshot.find((entry) => entry.dragonId === 'syrax')
+        ?.activeHabitLevels?.['syrax-strategic-revival'],
+    ).toBeNull();
+    expect(createRosterOptimizerFingerprint(missingSnapshot)).not.toBe(
+      createRosterOptimizerFingerprint(
+        buildOptimizerRosterSnapshot(dragons, levelOne),
+      ),
+    );
   });
 
   it('includes strategy and contract metadata in the request fingerprint', () => {
     const snapshot = buildOptimizerRosterSnapshot(dragons, rosterFor(trioIds, 10, 16));
-    expect(createRosterOptimizerRequestFingerprint(snapshot, 'primary-five-backup-five'))
-      .not.toBe(createRosterOptimizerRequestFingerprint(snapshot, 'best-ten-overall'));
+    const strategyFingerprints = [
+      'best-ten-overall',
+      'primary-five-backup-five',
+      'power-aware-primary-five-backup-five',
+    ].map((strategy) =>
+      createRosterOptimizerRequestFingerprint(
+        snapshot,
+        strategy as Parameters<typeof createRosterOptimizerRequestFingerprint>[1],
+      ),
+    );
+    expect(new Set(strategyFingerprints).size).toBe(3);
     expect(createRosterOptimizerRequestFingerprint([...snapshot].reverse(), 'best-ten-overall'))
       .toBe(createRosterOptimizerRequestFingerprint(snapshot, 'best-ten-overall'));
   });

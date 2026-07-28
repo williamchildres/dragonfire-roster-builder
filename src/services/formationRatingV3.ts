@@ -13,11 +13,11 @@ import type {
 } from '../synergy/types';
 import {
   assessFormationConfidence,
-  tierForScore,
   type FormationAnalysisConfidence,
   type FormationRatingBreakdownItem,
   type FormationRatingTier,
 } from './formationRating';
+import { tierForFormationRatingV3 } from './formationRatingTierV3';
 import {
   compareFormationPlacementsV3,
   type FormationPlacementComparisonV3,
@@ -103,7 +103,7 @@ export function rateFormationV3({
   const placementScore = placementComparison?.placementScore ?? 0;
   const complete = confidence.status === 'complete' && placementComparison !== null;
   const score = complete ? clamp(active.score + placementScore, 0, 100) : null;
-  const tier = score === null ? 'Incomplete' : tierForScore(score);
+  const tier = score === null ? 'Incomplete' : tierForFormationRatingV3(score);
   return {
     contract: FORMATION_RATING_V3_CONTRACT,
     score,

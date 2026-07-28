@@ -7,6 +7,7 @@ import {
 } from './rosterOptimizerObjective';
 import {
   RosterOptimizerCancelledError,
+  OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
   type OptimizerFormationCandidate,
   type OptimizerRosterDragon,
   type RosterOptimizerObjective,
@@ -234,7 +235,7 @@ function cannotBeatIncumbent({
     insertTop(topRatings, indexed.candidate.rating, formationsRemaining);
     insertTop(
       topRelationshipValues,
-      indexed.candidate.activeRelationshipValue,
+      indexed.candidate.adjustedRelationshipValueUnits,
       formationsRemaining,
     );
     insertTop(
@@ -249,7 +250,7 @@ function cannotBeatIncumbent({
       );
       maximumRelationshipValueByDragon[index] = Math.max(
         maximumRelationshipValueByDragon[index]!,
-        indexed.candidate.activeRelationshipValue,
+        indexed.candidate.adjustedRelationshipValueUnits,
       );
       maximumRelationshipCountByDragon[index] = Math.max(
         maximumRelationshipCountByDragon[index]!,
@@ -281,6 +282,15 @@ function cannotBeatIncumbent({
     ascendingRatingVector: optimisticRatings,
     totalRelationshipValue:
       partial.totalRelationshipValue + Math.min(
+        topRelationshipValues.reduce(sum, 0) / OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
+        perDragonUpperBound(
+          maximumRelationshipValueByDragon,
+          remainingMask,
+          formationsRemaining,
+        ) / OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
+      ),
+    totalRelationshipValueUnits:
+      partial.totalRelationshipValueUnits + Math.min(
         topRelationshipValues.reduce(sum, 0),
         perDragonUpperBound(
           maximumRelationshipValueByDragon,
@@ -427,7 +437,8 @@ function addRarityPriority(
 function compareIndexedCandidates(left: IndexedCandidate, right: IndexedCandidate): number {
   return (
     right.candidate.rating - left.candidate.rating ||
-    right.candidate.activeRelationshipValue - left.candidate.activeRelationshipValue ||
+    right.candidate.adjustedRelationshipValueUnits -
+      left.candidate.adjustedRelationshipValueUnits ||
     right.candidate.activeRelationshipCount - left.candidate.activeRelationshipCount ||
     left.candidate.stableCandidateKey.localeCompare(right.candidate.stableCandidateKey)
   );

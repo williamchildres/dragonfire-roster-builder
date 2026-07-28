@@ -346,6 +346,7 @@ function candidate(
   options: { relationshipValue?: number; relationshipCount?: number } = {},
 ): OptimizerFormationCandidate {
   return {
+    ratingContract: 'formation-rating-v3',
     stableCandidateKey: stableKey(dragonIds),
     dragonIds,
     dragonMask: 0n,
@@ -359,8 +360,13 @@ function candidate(
     tier: 'Solid',
     activeSynergyScore: Math.max(0, rating - 20),
     placementScore: 20,
-    activeRelationshipValue: options.relationshipValue ?? rating,
+    adjustedRelationshipValue: options.relationshipValue ?? rating,
+    adjustedRelationshipValueUnits: Math.round((options.relationshipValue ?? rating) * 1_000_000),
     activeRelationshipCount: options.relationshipCount ?? 1,
+    quantifiedRelationshipCount: options.relationshipCount ?? 1,
+    unquantifiedRelationshipCount: 0,
+    unquantifiedBasePotential: 0,
+    reliabilityCoverage: 'all-quantified',
     participatingDragonCount: 3,
     relationships: [],
     strengths: [],

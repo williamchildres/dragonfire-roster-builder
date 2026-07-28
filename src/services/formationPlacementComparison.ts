@@ -10,12 +10,14 @@ import type {
   SimpleFormation,
   SimpleProgressionByDragonId,
 } from '../synergy/types';
-
-export interface FormationArrangement {
-  'left-flank': string;
-  vanguard: string;
-  'right-flank': string;
-}
+import {
+  allFormationPermutations,
+  type FormationArrangement,
+} from './formationArrangement';
+export {
+  allFormationPermutations,
+  type FormationArrangement,
+} from './formationArrangement';
 
 export interface PlacementCandidate {
   arrangement: FormationArrangement;
@@ -118,23 +120,6 @@ export function buildPlacementComparison(
         ? 'better-available'
         : 'no-meaningful-gain',
   };
-}
-
-export function allFormationPermutations(dragonIds: string[]): FormationArrangement[] {
-  if (dragonIds.length !== 3 || new Set(dragonIds).size !== 3) {
-    return [];
-  }
-  const first = dragonIds[0]!;
-  const second = dragonIds[1]!;
-  const third = dragonIds[2]!;
-  return [
-    arrangementOf(first, second, third),
-    arrangementOf(first, third, second),
-    arrangementOf(second, first, third),
-    arrangementOf(second, third, first),
-    arrangementOf(third, first, second),
-    arrangementOf(third, second, first),
-  ];
 }
 
 export function placementScoreFor(currentValue: number, bestValue: number): number {

@@ -26,7 +26,7 @@ interface WaveExpressions {
   totalPowerUnits: LinExpr;
   totalRating: LinExpr;
   minimumRating: Var;
-  totalRelationshipValueDoubled: LinExpr;
+  totalRelationshipValueUnits: LinExpr;
   totalActiveRelationships: LinExpr;
 }
 
@@ -69,7 +69,7 @@ type ScalarField =
   | 'totalPowerUnits'
   | 'totalRating'
   | 'minimumRating'
-  | 'totalRelationshipValueDoubled'
+  | 'totalRelationshipValueUnits'
   | 'totalActiveRelationships';
 
 const histogramChunkSize = 9;
@@ -165,7 +165,7 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       'primary',
       'primaryQualityMs',
     );
-    await maximizeAndFix(context, session, fixed, 'primary', 'totalRelationshipValueDoubled',
+    await maximizeAndFix(context, session, fixed, 'primary', 'totalRelationshipValueUnits',
       'Primary active relationship value', 'primaryQualityMs');
     await maximizeAndFix(context, session, fixed, 'primary', 'totalActiveRelationships',
       'Primary active relationship count', 'primaryQualityMs');
@@ -191,7 +191,7 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       'backup',
       'backupQualityMs',
     );
-    await maximizeAndFix(context, session, fixed, 'backup', 'totalRelationshipValueDoubled',
+    await maximizeAndFix(context, session, fixed, 'backup', 'totalRelationshipValueUnits',
       'Backup active relationship value', 'backupQualityMs');
     const numericSolution = await maximizeAndFix(
       context,
@@ -410,9 +410,9 @@ function buildWaveExpressions(
       ...variables.map((variable, index) => variable.times(candidates[index]!.rating)),
     ),
     minimumRating,
-    totalRelationshipValueDoubled: sum(
+    totalRelationshipValueUnits: sum(
       ...variables.map((variable, index) =>
-        variable.times(Math.round(candidates[index]!.activeRelationshipValue * 2)),
+        variable.times(candidates[index]!.adjustedRelationshipValueUnits),
       ),
     ),
     totalActiveRelationships: sum(

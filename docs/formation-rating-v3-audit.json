@@ -8,7 +8,8 @@
     "registry": "e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c",
     "research": "f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f",
     "v2": "5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf",
-    "v3": "958cf36d329a6fb00c732ecf576d8020d10553d3585b136bda0493a7db754724"
+    "v3": "215f2c669cee0c96d584b6b3014aa2f075302c644f85ec0801c70b4a6740344f",
+    "v3Numeric": "958cf36d329a6fb00c732ecf576d8020d10553d3585b136bda0493a7db754724"
   },
   "coverage": {
     "dragons": 33,
@@ -101,31 +102,34 @@
       "20": 15208
     },
     "tierCounts": {
-      "Developing": 18747,
-      "Excellent": 8,
-      "Solid": 5626,
-      "Strong": 338,
-      "Weak": 8017
+      "Developing": 12822,
+      "Excellent": 381,
+      "Solid": 14116,
+      "Strong": 3266,
+      "Weak": 2151
     },
     "tierTransitions": {
-      "Developing->Developing": 8660,
-      "Developing->Solid": 43,
-      "Developing->Weak": 4701,
-      "Excellent->Developing": 105,
-      "Excellent->Excellent": 8,
-      "Excellent->Solid": 247,
-      "Excellent->Strong": 55,
-      "Excellent->Weak": 6,
-      "Solid->Developing": 8430,
-      "Solid->Solid": 3619,
-      "Solid->Strong": 2,
-      "Solid->Weak": 1315,
-      "Strong->Developing": 1392,
-      "Strong->Solid": 1717,
-      "Strong->Strong": 281,
-      "Strong->Weak": 91,
-      "Weak->Developing": 160,
-      "Weak->Weak": 1904
+      "Developing->Developing": 7810,
+      "Developing->Solid": 4457,
+      "Developing->Strong": 1,
+      "Developing->Weak": 1136,
+      "Excellent->Developing": 12,
+      "Excellent->Excellent": 71,
+      "Excellent->Solid": 155,
+      "Excellent->Strong": 183,
+      "Solid->Developing": 3333,
+      "Solid->Excellent": 5,
+      "Solid->Solid": 7896,
+      "Solid->Strong": 1909,
+      "Solid->Weak": 223,
+      "Strong->Developing": 386,
+      "Strong->Excellent": 305,
+      "Strong->Solid": 1600,
+      "Strong->Strong": 1173,
+      "Strong->Weak": 17,
+      "Weak->Developing": 1281,
+      "Weak->Solid": 8,
+      "Weak->Weak": 775
     },
     "scoreDeltaDistribution": {
       "0": 4956,
@@ -215,6 +219,107 @@
       "-3": 622,
       "-2": 223,
       "-1": 146
+    }
+  },
+  "tierCalibration": {
+    "oldThresholds": {
+      "Excellent": 80,
+      "Strong": 67,
+      "Solid": 49,
+      "Developing": 25
+    },
+    "targetCounts": {
+      "individual": {
+        "Excellent": 421,
+        "Strong": 3481,
+        "Solid": 13366,
+        "Developing": 13404,
+        "Weak": 2064
+      },
+      "cumulative": {
+        "Excellent": 421,
+        "Strong": 3902,
+        "Solid": 17268,
+        "Developing": 30672
+      },
+      "total": 32736
+    },
+    "selectedThresholds": {
+      "Excellent": 66,
+      "Strong": 53,
+      "Solid": 34,
+      "Developing": 5
+    },
+    "derivedThresholds": {
+      "Excellent": 66,
+      "Strong": 53,
+      "Solid": 34,
+      "Developing": 5
+    },
+    "preCalibrationCounts": {
+      "Developing": 18747,
+      "Excellent": 8,
+      "Solid": 5626,
+      "Strong": 338,
+      "Weak": 8017
+    },
+    "postCalibrationCounts": {
+      "Excellent": 381,
+      "Strong": 3266,
+      "Solid": 14116,
+      "Developing": 12822,
+      "Weak": 2151
+    },
+    "individualDeviations": {
+      "Excellent": {
+        "count": -40,
+        "percentage": -9.501188
+      },
+      "Strong": {
+        "count": -215,
+        "percentage": -6.176386
+      },
+      "Solid": {
+        "count": 750,
+        "percentage": 5.611252
+      },
+      "Developing": {
+        "count": -582,
+        "percentage": -4.341987
+      },
+      "Weak": {
+        "count": 87,
+        "percentage": 4.215116
+      }
+    },
+    "cumulativeCounts": {
+      "Excellent": 381,
+      "Strong": 3647,
+      "Solid": 17763,
+      "Developing": 30585
+    },
+    "cumulativeDeviations": {
+      "Excellent": {
+        "count": -40,
+        "percentage": -9.501188
+      },
+      "Strong": {
+        "count": -255,
+        "percentage": -6.53511
+      },
+      "Solid": {
+        "count": 495,
+        "percentage": 2.866574
+      },
+      "Developing": {
+        "count": -87,
+        "percentage": -0.283646
+      }
+    },
+    "objective": {
+      "cumulativeAbsoluteDeviation": 877,
+      "largestCumulativeDeviation": 495,
+      "individualAbsoluteDeviation": 1674
     }
   },
   "placementChanges": {
@@ -1152,7 +1257,7 @@
           "v3ActiveSynergy": 42,
           "v3Placement": 18,
           "v3Score": 60,
-          "v3Tier": "Solid",
+          "v3Tier": "Strong",
           "unquantifiedBasePotential": 26,
           "selectedContributions": [
             {
@@ -1218,7 +1323,7 @@
           "v3ActiveSynergy": 42,
           "v3Placement": 18,
           "v3Score": 60,
-          "v3Tier": "Solid",
+          "v3Tier": "Strong",
           "unquantifiedBasePotential": 26,
           "selectedContributions": [
             {
@@ -1284,7 +1389,7 @@
           "v3ActiveSynergy": 42,
           "v3Placement": 20,
           "v3Score": 62,
-          "v3Tier": "Solid",
+          "v3Tier": "Strong",
           "unquantifiedBasePotential": 26,
           "selectedContributions": [
             {
@@ -1354,7 +1459,7 @@
           "v3ActiveSynergy": 42,
           "v3Placement": 20,
           "v3Score": 62,
-          "v3Tier": "Solid",
+          "v3Tier": "Strong",
           "unquantifiedBasePotential": 26,
           "selectedContributions": [
             {
@@ -1424,7 +1529,7 @@
           "v3ActiveSynergy": 42,
           "v3Placement": 20,
           "v3Score": 62,
-          "v3Tier": "Solid",
+          "v3Tier": "Strong",
           "unquantifiedBasePotential": 26,
           "selectedContributions": [
             {
@@ -1494,7 +1599,7 @@
           "v3ActiveSynergy": 42,
           "v3Placement": 18,
           "v3Score": 60,
-          "v3Tier": "Solid",
+          "v3Tier": "Strong",
           "unquantifiedBasePotential": 26,
           "selectedContributions": [
             {
@@ -1686,7 +1791,7 @@
           "v3ActiveSynergy": 53,
           "v3Placement": 20,
           "v3Score": 73,
-          "v3Tier": "Strong",
+          "v3Tier": "Excellent",
           "unquantifiedBasePotential": 16,
           "selectedContributions": [
             {
@@ -1748,7 +1853,7 @@
           "v3ActiveSynergy": 38,
           "v3Placement": 16,
           "v3Score": 54,
-          "v3Tier": "Solid",
+          "v3Tier": "Strong",
           "unquantifiedBasePotential": 16,
           "selectedContributions": [
             {
@@ -1806,7 +1911,7 @@
           "v3ActiveSynergy": 53,
           "v3Placement": 20,
           "v3Score": 73,
-          "v3Tier": "Strong",
+          "v3Tier": "Excellent",
           "unquantifiedBasePotential": 16,
           "selectedContributions": [
             {
@@ -2337,8 +2442,8 @@
   ],
   "reviewConcerns": [
     "Unquantified opportunity and joint-event potential is intentionally visible but not scored.",
-    "Existing tier thresholds have not been retuned for the evidence-backed v3 distribution.",
-    "The live Formation Builder and optimizer remain on Formation Rating v2 pending review."
+    "V3 tier labels are separately calibrated without changing the numeric scoring engine.",
+    "The live Formation Builder and all optimizer strategies consume Formation Rating v3 together."
   ],
-  "deterministicAuditHash": "f0368979d7d407c3903ae043aeb4875549f1549d7af014043bcd88e3ba7d0b70"
+  "deterministicAuditHash": "0cd7e73c6dffe528dcb738c3eeb1f7a06bf19008c62280aa2bf9a74cdbcaf94a"
 }

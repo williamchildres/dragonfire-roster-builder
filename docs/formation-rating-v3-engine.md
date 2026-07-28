@@ -1,6 +1,6 @@
 # Formation Rating v3 engine
 
-Formation Rating v3 is an isolated production engine identified by `formation-rating-v3`. It is implemented under `src/synergy/reliability/scoring`, `src/services/formationRatingV3.ts`, and `src/services/formationPlacementComparisonV3.ts`. The current Formation Builder and optimizer continue to call the unchanged v2 services.
+Formation Rating v3 is the live production engine identified by `formation-rating-v3`. It is implemented under `src/synergy/reliability/scoring`, `src/services/formationRatingV3.ts`, and `src/services/formationPlacementComparisonV3.ts`. Formation Rating v2 remains available only for historical regression and comparison audits.
 
 ## Inputs and identity
 
@@ -46,7 +46,7 @@ Adjusted positive marginals feed the unchanged class caps of 30 conditional payo
 
 V3 evaluates all six placements using fractional adjusted uncapped relationship value. Existing absolute and relative meaningful-improvement thresholds and the 0-20 placement formula remain unchanged. All-zero arrangements are deterministic ties and receive 20 placement points.
 
-`rateFormationV3` adds the integer Active Synergy and Placement Effectiveness subtotals, clamps to 0-100, and retains the current completeness checks and tier thresholds. Reliability coverage is reported separately as all, partial, or none quantified; unquantified relationships do not make a complete formation globally incomplete.
+`rateFormationV3` adds the integer Active Synergy and Placement Effectiveness subtotals and clamps to 0-100. Its separate calibrated thresholds are Excellent 66, Strong 53, Solid 34, and Developing 5. Reliability coverage is reported separately as all, partial, or none quantified; unquantified relationships do not make a complete formation globally incomplete.
 
 ## Trace and audit
 
@@ -54,8 +54,8 @@ Structured traces retain signal, component, event, probability-variant, path, mi
 
 `pnpm run audit:formation-rating-v3` verifies `docs/formation-rating-v3-audit.json`; the write variant regenerates it intentionally. The audit compares v2 and v3 across all 32,736 ordered formations at maximum star/dragon progression with every unlocked Habit explicitly set to Level 5. It reports deterministic hashes, distributions, transitions, placement changes, method and reason counts, per-dragon changes, and the three requested Velar trios without serializing every full trace.
 
-## Isolation and adoption concerns
+## Production adoption boundaries
 
-The optimizer remains explicitly pinned to `formation-rating-v2`. V3 is not imported by the current Formation Builder, optimizer candidates or worker, persistence, cloud synchronization, routes, sharing, Estimated Power, or release metadata.
+The Formation Builder and all three optimizer strategies consume v3 together. Actual-roster evaluation uses saved Habit progression; planning mode explicitly uses Level 5 for unlocked Habits. The optimizer uses exact fixed-point adjusted relationship values and excludes unquantified potential from every objective.
 
-Before public adoption, the v3 distribution and unchanged tier thresholds need product review; unquantified potential needs an understandable UI treatment; and the optimizer requires a separate, explicitly reviewed contract migration.
+Persistence, cloud synchronization, routes, sharing, and Estimated Power remain separate from the rating cutover. V2 source and tests are retained unchanged as historical evidence.

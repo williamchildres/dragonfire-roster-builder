@@ -16,7 +16,7 @@ import type {
 import { createEmptyRoster, saveRoster } from '../services/rosterStorage';
 
 const formationRatingLimitationNotice =
-  'Formation Rating measures ability compatibility and placement. It does not currently weight relationships by activation chance, number of rolls, duration, target count, or exact effect magnitude.';
+  'Formation Rating weights mapped relationships by documented activation reliability. Unquantified potential remains visible but is not added to the score.';
 
 describe('Optimizer workspace retention', () => {
   afterEach(() => {
@@ -150,7 +150,13 @@ describe('Optimizer workspace retention', () => {
 function renderApp(runner: RosterOptimizerRunner) {
   const roster = createEmptyRoster(dragons);
   dragons.forEach((dragon) => {
-    roster[dragon.id] = { ...roster[dragon.id]!, owned: true, starRank: 10, reignLevel: 16 };
+    roster[dragon.id] = {
+      ...roster[dragon.id]!,
+      owned: true,
+      starRank: 10,
+      reignLevel: 16,
+      habitLevels: Object.fromEntries(dragon.habits.map((habit) => [habit.id, 1])),
+    };
   });
   saveRoster(window.localStorage, roster);
   return render(<App accountServices={null} optimizerRunner={runner} />);
@@ -169,7 +175,13 @@ function resolvedRunner(result: RosterOptimizationResult): RosterOptimizerRunner
 function powerAwareResult(totalPower: number): RosterOptimizationResult {
   const roster = createEmptyRoster(dragons);
   dragons.forEach((dragon) => {
-    roster[dragon.id] = { ...roster[dragon.id]!, owned: true, starRank: 10, reignLevel: 16 };
+    roster[dragon.id] = {
+      ...roster[dragon.id]!,
+      owned: true,
+      starRank: 10,
+      reignLevel: 16,
+      habitLevels: Object.fromEntries(dragon.habits.map((habit) => [habit.id, 1])),
+    };
   });
   const snapshot = buildOptimizerRosterSnapshot(dragons, roster);
   const selected = snapshot.slice(0, 30);
@@ -178,6 +190,7 @@ function powerAwareResult(totalPower: number): RosterOptimizationResult {
     const dragonIds = trio.map((dragon) => dragon.dragonId) as [string, string, string];
     const arrangement = { 'left-flank': dragonIds[0], vanguard: dragonIds[1], 'right-flank': dragonIds[2] };
     return {
+      ratingContract: 'formation-rating-v3',
       rank: index + 1,
       wave: index < 5 ? 'primary' : 'backup',
       waveRank: (index % 5) + 1,
@@ -189,11 +202,20 @@ function powerAwareResult(totalPower: number): RosterOptimizationResult {
       tier: 'Strong',
       activeSynergyScore: 60 - index,
       placementScore: 20,
-      activeRelationshipValue: 20 - index,
+      adjustedRelationshipValue: 20 - index,
+      adjustedRelationshipValueUnits: (20 - index) * 1_000_000,
       activeRelationshipCount: 3,
+      quantifiedRelationshipCount: 3,
+      unquantifiedRelationshipCount: 0,
+      unquantifiedBasePotential: 0,
+      reliabilityCoverage: 'all-quantified',
       participatingDragonCount: 3,
       relationships: [], strengths: [], gaps: [],
-      progressionSnapshot: Object.fromEntries(trio.map((dragon) => [dragon.dragonId, { starRank: 10, dragonLevel: 16 }])),
+      progressionSnapshot: Object.fromEntries(trio.map((dragon) => [dragon.dragonId, {
+        starRank: 10,
+        dragonLevel: 16,
+        activeHabitLevels: dragon.activeHabitLevels ?? {},
+      }])),
       estimatedPower: Math.round(totalPower / 10),
       powerConfidenceCounts: { observed: 3, modeled: 0, low: 0 },
     };
@@ -211,9 +233,13 @@ function powerAwareResult(totalPower: number): RosterOptimizationResult {
       averageRating: 78,
       minimumRating: waveFormations[4]!.rating,
       totalRelationshipValue: 90,
+      totalRelationshipValueUnits: 90_000_000,
       totalActiveRelationships: 15,
+      quantifiedRelationshipCount: 15,
+      unquantifiedRelationshipCount: 0,
+      unquantifiedBasePotential: 0,
       tierDistribution: { Excellent: 0, Strong: 5, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 },
-      objective: { totalRating: 390, minimumRating: 76, ascendingRatingVector: [76, 77, 78, 79, 80], totalRelationshipValue: 90, totalActiveRelationships: 15, stableSolutionKey: kind },
+      objective: { totalRating: 390, minimumRating: 76, ascendingRatingVector: [76, 77, 78, 79, 80], totalRelationshipValue: 90, totalRelationshipValueUnits: 90_000_000, totalActiveRelationships: 15, stableSolutionKey: kind },
       totalEstimatedPower: totalPower,
       averageEstimatedPowerPerDragon: Math.round(totalPower / 15),
       minimumFormationEstimatedPower: Math.round(totalPower / 5),
@@ -224,7 +250,8 @@ function powerAwareResult(totalPower: number): RosterOptimizationResult {
   const primary = wave('primary');
   const backup = wave('backup');
   return {
-    contractVersion: 3,
+    contractVersion: 4,
+    ratingContract: 'formation-rating-v3',
     strategy: 'power-aware-primary-five-backup-five',
     optimal: true,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
@@ -235,8 +262,8 @@ function powerAwareResult(totalPower: number): RosterOptimizationResult {
     usedDragonIds: selected.map((dragon) => dragon.dragonId).sort(),
     unusedDragonIds: [snapshot[30]!.dragonId],
     unusedRarityCounts: { Legendary: 0, Epic: 0, Rare: 1 },
-    combined: { totalRating: 755, averageRating: 75.5, minimumRating: 71, rarityCounts: { Legendary: 0, Epic: 0, Rare: 30 }, tierDistribution: { Excellent: 0, Strong: 10, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 }, totalRelationshipValue: 180, totalActiveRelationships: 30, totalEstimatedPower: totalPower * 2, averageEstimatedPowerPerDragon: Math.round(totalPower * 2 / 30), minimumFormationEstimatedPower: Math.round(totalPower / 5), maximumFormationEstimatedPower: Math.round(totalPower / 5), powerConfidenceCounts: { observed: 30, modeled: 0, low: 0 } },
-    objective: { strategy: 'power-aware-primary-five-backup-five', primary: primary.objective, backup: backup.objective, combinedTotalRating: 755, combinedRelationshipValue: 180, combinedActiveRelationships: 30, stableSolutionKey: `power-${totalPower}` },
+    combined: { totalRating: 755, averageRating: 75.5, minimumRating: 71, rarityCounts: { Legendary: 0, Epic: 0, Rare: 30 }, tierDistribution: { Excellent: 0, Strong: 10, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 }, totalRelationshipValue: 180, totalRelationshipValueUnits: 180_000_000, totalActiveRelationships: 30, quantifiedRelationshipCount: 30, unquantifiedRelationshipCount: 0, unquantifiedBasePotential: 0, totalEstimatedPower: totalPower * 2, averageEstimatedPowerPerDragon: Math.round(totalPower * 2 / 30), minimumFormationEstimatedPower: Math.round(totalPower / 5), maximumFormationEstimatedPower: Math.round(totalPower / 5), powerConfidenceCounts: { observed: 30, modeled: 0, low: 0 } },
+    objective: { strategy: 'power-aware-primary-five-backup-five', primary: primary.objective, backup: backup.objective, combinedTotalRating: 755, combinedRelationshipValue: 180, combinedRelationshipValueUnits: 180_000_000, combinedActiveRelationships: 30, stableSolutionKey: `power-${totalPower}` },
     diagnostics: { optimal: true, eligibleDragonCount: 31, candidateCount: 4495, selectedFormationCount: 10, nodesVisited: 1, branchesPruned: 0, cacheEntries: 0, solverPasses: 1, candidateGenerationMs: 1, solverMs: 1, totalMs: 2 },
     optimizerSolutionHash: `fnv1a64:test-${totalPower}`,
     optimizerResultHash: `fnv1a64:test-result-${totalPower}`,

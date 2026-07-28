@@ -1,6 +1,6 @@
 {
   "name": "dragonfire-roster-builder",
-  "version": "0.20.3",
+  "version": "0.21.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,6 +14,8 @@
     "audit:full-roster:write-json": "node scripts/audit-full-roster.mjs --write-json",
     "audit:optimizer": "node scripts/audit-roster-optimizer.mjs",
     "audit:optimizer:write": "node scripts/audit-roster-optimizer.mjs --write",
+    "audit:optimizer:v3": "node scripts/audit-roster-optimizer-v3.mjs",
+    "audit:optimizer:v3:write": "node scripts/audit-roster-optimizer-v3.mjs --write",
     "audit:optimizer:power-aware": "node scripts/audit-roster-optimizer-power-aware.mjs",
     "audit:reliability": "node scripts/audit-formation-reliability.mjs",
     "audit:reliability:write": "node scripts/audit-formation-reliability.mjs --write",

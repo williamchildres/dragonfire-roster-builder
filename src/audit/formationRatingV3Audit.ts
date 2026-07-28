@@ -17,6 +17,10 @@ import {
   type PlacementCandidateV3,
 } from '../services/formationPlacementComparisonV3';
 import { scoreActiveSynergyV3 } from '../services/formationRatingV3';
+import {
+  FORMATION_RATING_V3_TIER_THRESHOLDS,
+  tierForFormationRatingV3,
+} from '../services/formationRatingTierV3';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import {
   FORMATION_RATING_V3_CONTRACT,
@@ -31,6 +35,10 @@ import type {
 } from '../synergy/types';
 import { runFormationReliabilityAudit } from './formationReliabilityAudit';
 import { runFormationReliabilityRegistryAudit } from './formationReliabilityRegistryAudit';
+import {
+  calibrateFormationRatingV3Tiers,
+  FORMATION_RATING_V3_TIER_TARGETS,
+} from './formationRatingV3TierCalibration';
 
 export const FORMATION_RATING_V3_AUDIT_VERSION = 'formation-rating-v3-audit-v1' as const;
 export const EXPECTED_FORMATION_RATING_V2_HASH =
@@ -39,10 +47,12 @@ export const EXPECTED_FORMATION_RELIABILITY_REGISTRY_HASH =
   'e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c';
 export const EXPECTED_FORMATION_RELIABILITY_RESEARCH_HASH =
   'f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f';
-export const EXPECTED_FORMATION_RATING_V3_HASH =
+export const EXPECTED_FORMATION_RATING_V3_NUMERIC_HASH =
   '958cf36d329a6fb00c732ecf576d8020d10553d3585b136bda0493a7db754724';
+export const EXPECTED_FORMATION_RATING_V3_HASH =
+  '215f2c669cee0c96d584b6b3014aa2f075302c644f85ec0801c70b4a6740344f';
 export const EXPECTED_FORMATION_RATING_V3_AUDIT_HASH =
-  'f0368979d7d407c3903ae043aeb4875549f1549d7af014043bcd88e3ba7d0b70';
+  '0cd7e73c6dffe528dcb738c3eeb1f7a06bf19008c62280aa2bf9a74cdbcaf94a';
 
 interface CompactFormationComparison {
   formation: [string, string, string];
@@ -69,6 +79,7 @@ export function runFormationRatingV3Audit() {
   const activeSynergyDistribution: Record<string, number> = {};
   const placementDistribution: Record<string, number> = {};
   const tierCounts: Record<string, number> = {};
+  const preCalibrationTierCounts: Record<string, number> = {};
   const tierTransitions: Record<string, number> = {};
   const scoreDeltaDistribution: Record<string, number> = {};
   const quantificationMethodCounts: Record<string, number> = {};
@@ -142,7 +153,8 @@ export function runFormationRatingV3Audit() {
         });
         const activeV3 = scoreActiveSynergyV3(v3Relationships);
         const v3Score = activeV3.score + v3Placement.placementScore;
-        const v3Tier = tierForScore(v3Score);
+        const preCalibrationV3Tier = tierForScore(v3Score);
+        const v3Tier = tierForFormationRatingV3(v3Score);
         const v2Score = v2Rating.score!;
         const delta = v3Score - v2Score;
         const bestChanged =
@@ -153,6 +165,7 @@ export function runFormationRatingV3Audit() {
         increment(activeSynergyDistribution, String(activeV3.score));
         increment(placementDistribution, String(v3Placement.placementScore));
         increment(tierCounts, v3Tier);
+        increment(preCalibrationTierCounts, preCalibrationV3Tier);
         increment(tierTransitions, `${v2Rating.tier}->${v3Tier}`);
         increment(scoreDeltaDistribution, String(delta));
         for (const dragonId of [left.id, vanguard.id, right.id]) {
@@ -218,7 +231,17 @@ export function runFormationRatingV3Audit() {
   }
 
   v3Scores.sort((left, right) => left - right);
-  const deterministicV3Hash = v3Hash.digest('hex');
+  const tierCalibration = calibrateFormationRatingV3Tiers(v3Scores);
+  const deterministicV3NumericHash = v3Hash.digest('hex');
+  const deterministicV3Hash = createHash('sha256')
+    .update(
+      stableStringify({
+        contract: FORMATION_RATING_V3_CONTRACT,
+        numericScoringHash: deterministicV3NumericHash,
+        tierThresholds: FORMATION_RATING_V3_TIER_THRESHOLDS,
+      }),
+    )
+    .digest('hex');
   const sortedComparisons = [...comparisons].sort(
     (left, right) =>
       left.delta - right.delta ||
@@ -250,6 +273,7 @@ export function runFormationRatingV3Audit() {
       research: researchAudit.deterministicHash,
       v2: EXPECTED_FORMATION_RATING_V2_HASH,
       v3: deterministicV3Hash,
+      v3Numeric: deterministicV3NumericHash,
     },
     coverage: {
       dragons: dragons.length,
@@ -268,6 +292,51 @@ export function runFormationRatingV3Audit() {
       tierCounts: sortedRecord(tierCounts),
       tierTransitions: sortedRecord(tierTransitions),
       scoreDeltaDistribution: numericRecord(scoreDeltaDistribution),
+    },
+    tierCalibration: {
+      oldThresholds: {
+        Excellent: 80,
+        Strong: 67,
+        Solid: 49,
+        Developing: 25,
+      },
+      targetCounts: FORMATION_RATING_V3_TIER_TARGETS,
+      selectedThresholds: FORMATION_RATING_V3_TIER_THRESHOLDS,
+      derivedThresholds: tierCalibration.thresholds,
+      preCalibrationCounts: sortedRecord(preCalibrationTierCounts),
+      postCalibrationCounts: tierCalibration.counts,
+      individualDeviations: Object.fromEntries(
+        Object.entries(tierCalibration.counts).map(([tier, count]) => {
+          const target =
+            FORMATION_RATING_V3_TIER_TARGETS.individual[
+              tier as keyof typeof tierCalibration.counts
+            ];
+          return [
+            tier,
+            {
+              count: count - target,
+              percentage: round(((count - target) / target) * 100, 6),
+            },
+          ];
+        }),
+      ),
+      cumulativeCounts: tierCalibration.cumulativeCounts,
+      cumulativeDeviations: Object.fromEntries(
+        Object.entries(tierCalibration.cumulativeCounts).map(([tier, count]) => {
+          const target =
+            FORMATION_RATING_V3_TIER_TARGETS.cumulative[
+              tier as keyof typeof tierCalibration.cumulativeCounts
+            ];
+          return [
+            tier,
+            {
+              count: count - target,
+              percentage: round(((count - target) / target) * 100, 6),
+            },
+          ];
+        }),
+      ),
+      objective: tierCalibration.objective,
     },
     placementChanges: {
       orderedFormations: formationsWhoseBestArrangementChanges,
@@ -315,8 +384,8 @@ export function runFormationRatingV3Audit() {
     ],
     reviewConcerns: [
       'Unquantified opportunity and joint-event potential is intentionally visible but not scored.',
-      'Existing tier thresholds have not been retuned for the evidence-backed v3 distribution.',
-      'The live Formation Builder and optimizer remain on Formation Rating v2 pending review.',
+      'V3 tier labels are separately calibrated without changing the numeric scoring engine.',
+      'The live Formation Builder and all optimizer strategies consume Formation Rating v3 together.',
     ],
   };
   const deterministicAuditHash = createHash('sha256')
@@ -533,7 +602,7 @@ function summarizeTrio(
         v3ActiveSynergy: active.score,
         v3Placement: comparison.placementScore,
         v3Score: score,
-        v3Tier: tierForScore(score),
+        v3Tier: tierForFormationRatingV3(score),
         unquantifiedBasePotential: candidate.unquantifiedBasePotential,
         selectedContributions: candidate.relationships
           .filter((relationship) => relationship.adjustedMarginalValue > 0)

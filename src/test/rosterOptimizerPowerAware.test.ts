@@ -118,6 +118,7 @@ describe('Power-Aware Primary + Backup exact optimizer', () => {
   it('continues through relationship value, relationship count, and existing stable-key order', () => {
     const relationshipValue = objective();
     relationshipValue.primary.totalRelationshipValue = 2;
+    relationshipValue.primary.totalRelationshipValueUnits = 2_000_000;
     expect(comparePowerAwarePrimaryBackupOptimizerObjectives(relationshipValue, objective()))
       .toBeGreaterThan(0);
     const relationshipCount = objective();
@@ -269,6 +270,7 @@ function objective(overrides: {
     minimumRating: Math.min(...ratings),
     ascendingRatingVector: [...ratings].sort((left, right) => left - right),
     totalRelationshipValue: 1,
+    totalRelationshipValueUnits: 1_000_000,
     totalActiveRelationships: 1,
     stableSolutionKey: key,
   });
@@ -281,6 +283,7 @@ function objective(overrides: {
     combinedTotalRating: primary.totalRating + backup.totalRating,
     combinedEstimatedPower: primary.totalEstimatedPower + backup.totalEstimatedPower,
     combinedRelationshipValue: 2,
+    combinedRelationshipValueUnits: 2_000_000,
     combinedActiveRelationships: 2,
     stableSolutionKey: `primary:${primary.stableSolutionKey}||backup:${backup.stableSolutionKey}`,
   };
@@ -333,6 +336,7 @@ function candidate(
   rating: number,
 ): OptimizerFormationCandidate {
   return {
+    ratingContract: 'formation-rating-v3',
     stableCandidateKey: [...dragonIds].sort().join(':'),
     dragonIds,
     dragonMask: 0n,
@@ -342,8 +346,13 @@ function candidate(
     tier: 'Solid',
     activeSynergyScore: Math.max(0, rating - 20),
     placementScore: 20,
-    activeRelationshipValue: rating,
+    adjustedRelationshipValue: rating,
+    adjustedRelationshipValueUnits: rating * 1_000_000,
     activeRelationshipCount: 1,
+    quantifiedRelationshipCount: 1,
+    unquantifiedRelationshipCount: 0,
+    unquantifiedBasePotential: 0,
+    reliabilityCoverage: 'all-quantified',
     participatingDragonCount: 3,
     relationships: [],
     strengths: [],

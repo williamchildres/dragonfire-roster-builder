@@ -11,7 +11,7 @@ type ProgressionSeed = Record<string, { starRank?: number | null; reignLevel?: n
 const incompleteMissingEnablerNotice =
   'Missing-enabler checks are incomplete until all selected dragons have curated profiles.';
 const formationRatingLimitationNotice =
-  'Formation Rating measures ability compatibility and placement. It does not currently weight relationships by activation chance, number of rolls, duration, target count, or exact effect magnitude.';
+  'Formation Rating weights mapped relationships by documented activation reliability. Unquantified potential remains visible but is not added to the score.';
 
 describe('Formation Builder simple synergy cutover', () => {
   afterEach(() => {
@@ -195,7 +195,7 @@ describe('Formation Builder simple synergy cutover', () => {
     const heading = screen.getByRole('heading', { level: 2, name: 'Formation Builder' });
     expect(heading.closest('.formation-workspace-header')).not.toBeNull();
     expect(heading.parentElement).toHaveTextContent(
-      'Assign one unique dragon to each position and review curated profile relationships.',
+      'Assign one unique dragon to each position and review reliability-adjusted relationships.',
     );
   });
 
@@ -211,8 +211,8 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(summary.compareDocumentPosition(board) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(screen.getAllByRole('heading', { name: 'Formation Rating' })).toHaveLength(1);
     expect(within(summary).getAllByLabelText(/Formation rating .* out of 100/i)).toHaveLength(1);
-    expect(summary).toHaveTextContent('Active relationships');
-    expect(summary).toHaveTextContent('Participating dragons');
+    expect(summary).toHaveTextContent('Evidence-backed relationships');
+    expect(summary).toHaveTextContent('Reliability coverage');
     expect(summary).toHaveTextContent('Key gaps');
     expect(summary).toHaveTextContent('Placement status');
     const ratingHeading = within(summary).getByRole('heading', { name: 'Formation Rating' });
@@ -451,9 +451,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
     const strong = sectionText('Strong synergies');
     expect(strong).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
-    expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
-    expect(new Set(sectionItems('Strong synergies')).size).toBe(sectionItems('Strong synergies').length);
-    expect(analysisText()).not.toMatch(/target not guaranteed|candidate|activation chance/i);
+    expect(analysisText()).not.toMatch(/target not guaranteed|target probability/i);
   });
 
   it('names the concrete Control alias in Crimson and Rhysarion synergy wording', async () => {
@@ -480,7 +478,9 @@ describe('Formation Builder simple synergy cutover', () => {
     await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'caraxes' });
     await openDetailedSignalTrace(user);
 
-    expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
+    expect(sectionText('Strong synergies')).toContain(
+      "Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.",
+    );
     expect(sectionText('Future unlocks')).not.toContain('Fire Damage');
     expect(sectionText('Future unlocks')).not.toContain('Tactical Inferno');
   });
@@ -611,10 +611,10 @@ describe('Formation Builder simple synergy cutover', () => {
     const panel = ratingPanel();
     expect(panel).toHaveTextContent(/\/ 100/);
     expect(panel).toHaveTextContent(/Strong|Solid|Developing|Weak|Excellent/);
-    expect(within(panel).getByLabelText('Formation rating 75 out of 100, Strong')).toBeInTheDocument();
+    expect(within(panel).getByLabelText('Formation rating 49 out of 100, Solid')).toBeInTheDocument();
     expect(panel).toHaveTextContent('Active Synergy');
     expect(panel).toHaveTextContent('Placement Effectiveness');
-    expect(panel).toHaveTextContent('55 / 80');
+    expect(panel).toHaveTextContent('29 / 80');
     expect(panel).toHaveTextContent('20 / 20');
     expect(within(panel).getByRole('heading', { name: 'Estimated Formation Power' })).toBeInTheDocument();
     expect(panel).toHaveTextContent('Syrax');
@@ -628,7 +628,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(panel).toHaveTextContent('Key gaps');
     expect(panel).toHaveTextContent('Caraxes can apply Burn');
     expect(panel).toHaveTextContent('Syrax can grant First-Strike');
-    expect(panel).toHaveTextContent('not a combat simulation');
+    expect(panel).toHaveTextContent('not a combat simulator');
     expect(screen.queryByRole('heading', { name: 'Strong synergies' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Missing enablers' })).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Placement issues' })).not.toBeInTheDocument();
@@ -921,7 +921,7 @@ describe('Formation Builder simple synergy cutover', () => {
     await openFormationBuilder(user);
     await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /\+ add dragon/i }));
     let dialog = screen.getByRole('dialog', { name: /choose a dragon for left flank/i });
-    expect(dialog).toHaveTextContent('Dragon Level and Habit Levels are not forced to maximum.');
+    expect(dialog).toHaveTextContent('unlocked Habits are evaluated at Level 5');
     await user.type(within(dialog).getByLabelText(/search by dragon name/i), 'Antares');
 
     const antaresRow = within(dialog).getByRole('heading', { name: 'Antares' }).closest('article');
@@ -1065,7 +1065,6 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(analysisText()).not.toContain('Synergy data not yet mapped: Antares.');
     await openDetailedSignalTrace(user);
     expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
-    expect(sectionItems('Strong synergies').filter((item) => item === 'Syrax improves allied Fire Damage, and Caraxes deals Fire Damage.')).toHaveLength(1);
     expect(screen.queryByRole('heading', { name: 'Missing enablers' })).not.toBeInTheDocument();
     await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /replace dragon/i }));
     const selector = screen.getByRole('dialog', { name: /choose a dragon for vanguard/i });

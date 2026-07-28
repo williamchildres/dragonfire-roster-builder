@@ -182,6 +182,7 @@ function candidate(
   relationshipCount = 1,
 ): OptimizerFormationCandidate {
   return {
+    ratingContract: 'formation-rating-v3',
     stableCandidateKey: [...dragonIds].sort().join(''),
     dragonIds,
     dragonMask: 0n,
@@ -191,8 +192,13 @@ function candidate(
     tier: 'Solid',
     activeSynergyScore: Math.max(0, rating - 20),
     placementScore: 20,
-    activeRelationshipValue: relationshipValue,
+    adjustedRelationshipValue: relationshipValue,
+    adjustedRelationshipValueUnits: Math.round(relationshipValue * 1_000_000),
     activeRelationshipCount: relationshipCount,
+    quantifiedRelationshipCount: relationshipCount,
+    unquantifiedRelationshipCount: 0,
+    unquantifiedBasePotential: 0,
+    reliabilityCoverage: 'all-quantified',
     participatingDragonCount: 3,
     relationships: [],
     strengths: [],
@@ -254,6 +260,7 @@ function objective({
     minimumRating: 40,
     ascendingRatingVector: [40, 60],
     totalRelationshipValue: relationshipValue,
+    totalRelationshipValueUnits: Math.round(relationshipValue * 1_000_000),
     totalActiveRelationships: relationships,
     stableSolutionKey: key,
   };

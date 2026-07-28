@@ -33,7 +33,7 @@ export function compareRosterOptimizerObjectives(
     left.totalRating - right.totalRating ||
     left.minimumRating - right.minimumRating ||
     compareNumberVectors(left.ascendingRatingVector, right.ascendingRatingVector) ||
-    left.totalRelationshipValue - right.totalRelationshipValue ||
+    left.totalRelationshipValueUnits - right.totalRelationshipValueUnits ||
     left.totalActiveRelationships - right.totalActiveRelationships ||
     right.stableSolutionKey.localeCompare(left.stableSolutionKey)
   );
@@ -89,6 +89,8 @@ export function primaryBackupObjectiveForCandidates(
     combinedTotalRating: primary.totalRating + backup.totalRating,
     combinedRelationshipValue:
       primary.totalRelationshipValue + backup.totalRelationshipValue,
+    combinedRelationshipValueUnits:
+      primary.totalRelationshipValueUnits + backup.totalRelationshipValueUnits,
     combinedActiveRelationships:
       primary.totalActiveRelationships + backup.totalActiveRelationships,
     stableSolutionKey: `primary:${primary.stableSolutionKey}||backup:${backup.stableSolutionKey}`,
@@ -125,6 +127,8 @@ export function powerAwarePrimaryBackupObjectiveForCandidates(
     combinedEstimatedPower: primary.totalEstimatedPower + backup.totalEstimatedPower,
     combinedRelationshipValue:
       primary.totalRelationshipValue + backup.totalRelationshipValue,
+    combinedRelationshipValueUnits:
+      primary.totalRelationshipValueUnits + backup.totalRelationshipValueUnits,
     combinedActiveRelationships:
       primary.totalActiveRelationships + backup.totalActiveRelationships,
     stableSolutionKey: `primary:${primary.stableSolutionKey}||backup:${backup.stableSolutionKey}`,
@@ -144,7 +148,11 @@ export function objectiveForCandidates(
     minimumRating: ratings[0] ?? 0,
     ascendingRatingVector: ratings,
     totalRelationshipValue: candidates.reduce(
-      (total, candidate) => total + candidate.activeRelationshipValue,
+      (total, candidate) => total + candidate.adjustedRelationshipValue,
+      0,
+    ),
+    totalRelationshipValueUnits: candidates.reduce(
+      (total, candidate) => total + candidate.adjustedRelationshipValueUnits,
       0,
     ),
     totalActiveRelationships: candidates.reduce(
@@ -193,7 +201,7 @@ function compareWaveQuality(
     left.totalRating - right.totalRating ||
     left.minimumRating - right.minimumRating ||
     compareNumberVectors(left.ascendingRatingVector, right.ascendingRatingVector) ||
-    left.totalRelationshipValue - right.totalRelationshipValue ||
+    left.totalRelationshipValueUnits - right.totalRelationshipValueUnits ||
     left.totalActiveRelationships - right.totalActiveRelationships
   );
 }

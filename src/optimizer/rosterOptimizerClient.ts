@@ -1,5 +1,7 @@
 import type { OwnedDragon } from '../models/dragon';
 import {
+  ROSTER_OPTIMIZER_CONTRACT_VERSION,
+  ROSTER_OPTIMIZER_RATING_CONTRACT,
   RosterOptimizerCancelledError,
   type RosterOptimizerResponse,
   type RosterOptimizerStrategy,
@@ -46,8 +48,16 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
       worker.addEventListener('message', (event: MessageEvent<RosterOptimizerWorkerResponse>) => {
         if (event.data.requestId !== requestId || this.active?.worker !== worker) return;
         this.finish(worker);
-        if (event.data.type === 'result') resolve(event.data.result);
-        else reject(new Error(event.data.message));
+        if (event.data.type === 'result') {
+          if (
+            event.data.result.contractVersion !== ROSTER_OPTIMIZER_CONTRACT_VERSION ||
+            event.data.result.ratingContract !== ROSTER_OPTIMIZER_RATING_CONTRACT
+          ) {
+            reject(new Error('The optimizer response contract is stale. Refresh and try again.'));
+          } else {
+            resolve(event.data.result);
+          }
+        } else reject(new Error(event.data.message));
       });
       worker.addEventListener('error', () => {
         if (this.active?.worker !== worker) return;
@@ -56,6 +66,8 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
       });
       worker.postMessage({
         type: 'optimize',
+        contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+        ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
         requestId,
         strategy,
         roster: structuredClone(roster),

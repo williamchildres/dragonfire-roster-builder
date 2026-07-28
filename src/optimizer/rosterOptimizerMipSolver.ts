@@ -12,7 +12,7 @@ interface ModelContext {
   model: Model;
   variables: Var[];
   totalRating: LinExpr;
-  totalRelationshipValueDoubled: LinExpr;
+  totalRelationshipValueUnits: LinExpr;
   totalActiveRelationships: LinExpr;
 }
 
@@ -85,15 +85,15 @@ export async function solveRosterOptimizerMip(
       histogramFixes.push({ levels, value });
     }
 
-    context.model.maximize(context.totalRelationshipValueDoubled);
+    context.model.maximize(context.totalRelationshipValueUnits);
     const relationshipSolution = await solveOptimal(
       context.model,
       session,
       'active relationship value',
     );
-    const optimalRelationshipValueDoubled = roundedInteger(relationshipSolution.objective);
+    const optimalRelationshipValueUnits = roundedInteger(relationshipSolution.objective);
     context.model.addConstraint(
-      context.totalRelationshipValueDoubled.eq(optimalRelationshipValueDoubled),
+      context.totalRelationshipValueUnits.eq(optimalRelationshipValueUnits),
       'fix_relationship_value',
     );
 
@@ -129,7 +129,7 @@ export async function solveRosterOptimizerMip(
         );
       });
       context.model.addConstraint(
-        context.totalRelationshipValueDoubled.eq(optimalRelationshipValueDoubled),
+        context.totalRelationshipValueUnits.eq(optimalRelationshipValueUnits),
         'fix_relationship_value',
       );
       context.model.addConstraint(
@@ -200,9 +200,9 @@ function buildModel(
     totalRating: sum(
       ...variables.map((variable, index) => variable.times(candidates[index]!.rating)),
     ),
-    totalRelationshipValueDoubled: sum(
+    totalRelationshipValueUnits: sum(
       ...variables.map((variable, index) =>
-        variable.times(Math.round(candidates[index]!.activeRelationshipValue * 2)),
+        variable.times(candidates[index]!.adjustedRelationshipValueUnits),
       ),
     ),
     totalActiveRelationships: sum(

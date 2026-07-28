@@ -37,6 +37,14 @@ try {
       `Formation Rating v3 hash changed: ${report.sourceHashes.v3}. Review and update only for an intentional v3 contract change.`,
     );
   }
+  if (
+    report.sourceHashes.v3Numeric !==
+    module.EXPECTED_FORMATION_RATING_V3_NUMERIC_HASH
+  ) {
+    throw new Error(
+      `Formation Rating v3 numeric hash changed: ${report.sourceHashes.v3Numeric}. Numeric scoring changes require explicit review.`,
+    );
+  }
   if (report.deterministicAuditHash !== module.EXPECTED_FORMATION_RATING_V3_AUDIT_HASH) {
     throw new Error(
       `Formation Rating v3 audit hash changed: ${report.deterministicAuditHash}. Review and update only for an intentional audit change.`,
@@ -46,6 +54,7 @@ try {
     `Formation Rating v3 verified: ${report.coverage.orderedFormations} ordered formations, ${report.coverage.unorderedTrios} trios.`,
   );
   console.log(`Formation Rating v3 hash: ${report.sourceHashes.v3}`);
+  console.log(`Formation Rating v3 numeric hash: ${report.sourceHashes.v3Numeric}`);
   console.log(`Formation Rating v3 audit hash: ${report.deterministicAuditHash}`);
 } finally {
   await server.close();

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.21.0 - 2026-07-28
+
+- Adopted Formation Rating v3 across the live Formation Builder and all three exact Roster Optimizer strategies. Documented activation reliability now weights supported relationships; unresolved potential remains visible without entering the numeric score.
+- Added separate calibrated v3 tiers, reliability-aware relationship and placement detail, actual saved Habit progression in production analysis, and explicit Level 5 Habit assumptions in all-dragons planning mode.
+- Bumped the optimizer contract to 4 with `formation-rating-v3`, exact audited fixed-point relationship objectives, Habit-sensitive request identity, and an 18-execution forward/reverse adoption audit.
+- Preserved Formation Rating v2 as a historical regression baseline, Estimated Power v2, source schema 13, roster schemas 5, persistence, synchronization, routes, sharing, and Supabase migrations.
+
 ## 0.20.3 - 2026-07-23
 
 - Added a visible Formation Builder notice explaining that Formation Rating currently measures ability compatibility and placement without weighting relationships by activation chance, number of rolls, duration, target count, or exact effect magnitude.
