@@ -54,6 +54,7 @@ export interface ComponentReliabilityTrace {
   componentId: string;
   eventId?: string;
   probabilityVariantId?: string;
+  conditionProven: boolean;
   opportunityPresence: OpportunityPresence;
   opportunityCount: OpportunityCount;
   rollScope: ReliabilityRollScope;
@@ -68,12 +69,14 @@ export interface BindingReliabilityTrace {
   bindingClass?: string;
   selectedPathId?: string;
   selectedUseId?: string;
+  selectedProbabilityContextId?: string;
   pathIds: readonly string[];
   useIds: readonly string[];
   componentIds: readonly string[];
   eventIds: readonly string[];
   probabilityVariantIds: readonly string[];
   componentTraces: readonly ComponentReliabilityTrace[];
+  selectedComponentTraces: readonly ComponentReliabilityTrace[];
   alternativeQuantifications: readonly ReliabilityQuantification[];
   quantification: ReliabilityQuantification;
 }
@@ -85,6 +88,7 @@ export interface RelationshipCandidateTrace {
   componentIds: readonly string[];
   eventIds: readonly string[];
   probabilityVariantIds: readonly string[];
+  sharedRequirementIds: readonly string[];
   quantification: ReliabilityQuantification;
   selectionReason?: string;
 }

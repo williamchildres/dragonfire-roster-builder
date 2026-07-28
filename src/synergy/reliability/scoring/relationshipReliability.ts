@@ -5,19 +5,17 @@ import {
   type SemanticRelationshipClass,
 } from '../../semanticRelationships';
 import type { DragonSynergyProfile, EnrichedRelationshipCandidate } from '../../types';
-import {
-  formationReliabilityBindings,
-  formationReliabilityComponents,
-} from '../registry';
+import { formationReliabilityBindings, formationReliabilityComponents } from '../registry';
 import { reliabilityBindingPathVisits } from '../traversal';
 import type {
   AbilityReliabilityComponent,
   ReliabilityProgression,
   SignalReliabilityBinding,
 } from '../types';
-import { evaluateBindingReliability } from './bindingReliability';
+import { evaluateBindingReliability, reliabilityRequirementId } from './bindingReliability';
 import type {
   BindingReliabilityTrace,
+  ComponentReliabilityTrace,
   EvaluateFormationV3Input,
   FormationRelationshipV3,
   RelationshipCandidateTrace,
@@ -98,8 +96,7 @@ export function evaluateFormationRelationshipsV3({
       adjustedBaseValue: selected.adjustedBaseValue,
       adjustedMarginalValue: selected.adjustedBaseValue,
       redundancyRank: 1,
-      unquantifiedBasePotential:
-        quantification.status === 'unquantified' ? selected.baseValue : 0,
+      unquantifiedBasePotential: quantification.status === 'unquantified' ? selected.baseValue : 0,
       componentIds: selected.trace.componentIds,
       eventIds: selected.trace.eventIds,
       probabilityVariantIds: selected.trace.probabilityVariantIds,
@@ -119,38 +116,42 @@ export function selectRelationshipCandidateV3(
     quantification: ReliabilityQuantification;
   }[],
 ): string | null {
-  const comparable = candidates.map((candidate) => ({
-    relationshipId: candidate.id,
-    relationshipClass: 'conditional-payoff' as const,
-    baseValue: candidate.baseValue,
-    adjustedBaseValue:
-      candidate.quantification.status === 'quantified'
-        ? candidate.baseValue * candidate.quantification.reliability
-        : 0,
-    trace: {
-      candidate: {
-        id: candidate.id,
-        resultKind: 'setup-payoff',
-        providerDragonId: '',
-        providerSignalId: '',
-        providerSignalCategory: 'output',
-        providerAbilityId: '',
-        beneficiaryDragonId: '',
-        beneficiarySignalId: '',
-        beneficiarySignalCategory: 'benefits-from',
-        beneficiaryAbilityId: '',
-        semanticTag: 'status:control',
-        abilityIds: [],
-        explanation: '',
-      },
-      provider: emptyBindingTrace(''),
-      beneficiary: emptyBindingTrace(''),
-      componentIds: [],
-      eventIds: [],
-      probabilityVariantIds: [],
-      quantification: candidate.quantification,
-    },
-  } satisfies EvaluatedCandidate));
+  const comparable = candidates.map(
+    (candidate) =>
+      ({
+        relationshipId: candidate.id,
+        relationshipClass: 'conditional-payoff' as const,
+        baseValue: candidate.baseValue,
+        adjustedBaseValue:
+          candidate.quantification.status === 'quantified'
+            ? candidate.baseValue * candidate.quantification.reliability
+            : 0,
+        trace: {
+          candidate: {
+            id: candidate.id,
+            resultKind: 'setup-payoff',
+            providerDragonId: '',
+            providerSignalId: '',
+            providerSignalCategory: 'output',
+            providerAbilityId: '',
+            beneficiaryDragonId: '',
+            beneficiarySignalId: '',
+            beneficiarySignalCategory: 'benefits-from',
+            beneficiaryAbilityId: '',
+            semanticTag: 'status:control',
+            abilityIds: [],
+            explanation: '',
+          },
+          provider: emptyBindingTrace(''),
+          beneficiary: emptyBindingTrace(''),
+          componentIds: [],
+          eventIds: [],
+          probabilityVariantIds: [],
+          sharedRequirementIds: [],
+          quantification: candidate.quantification,
+        },
+      }) satisfies EvaluatedCandidate,
+  );
   return [...comparable].sort(compareRelationshipCandidates)[0]?.relationshipId ?? null;
 }
 
@@ -190,19 +191,32 @@ function evaluateRelationshipCandidate({
         progression: progressionFor(reliabilityProgression, candidate.providerDragonId),
       })
     : emptyBindingTrace(candidate.providerSignalId);
-  const beneficiaryProofIds =
-    candidate.resultKind === 'setup-payoff' && beneficiaryBinding
-      ? conditionalDeterministicComponentIds(beneficiaryBinding, componentsById)
-      : new Set<string>();
-  const beneficiary = beneficiaryBinding
+  const preliminaryBeneficiary = beneficiaryBinding
     ? evaluateBindingReliability({
         binding: beneficiaryBinding,
         componentsById,
         progression: progressionFor(reliabilityProgression, candidate.beneficiaryDragonId),
-        conditionProvenComponentIds: beneficiaryProofIds,
       })
     : emptyBindingTrace(candidate.beneficiarySignalId);
-  const quantification = combineProviderBeneficiaryReliability(provider, beneficiary);
+  const beneficiaryProofIds = beneficiaryBinding
+    ? setupPayoffConditionProofRequirementIds(
+        candidate,
+        beneficiaryBinding,
+        componentsById,
+        preliminaryBeneficiary,
+      )
+    : new Set<string>();
+  const beneficiary =
+    beneficiaryBinding && beneficiaryProofIds.size > 0
+      ? evaluateBindingReliability({
+          binding: beneficiaryBinding,
+          componentsById,
+          progression: progressionFor(reliabilityProgression, candidate.beneficiaryDragonId),
+          conditionProvenRequirementIds: beneficiaryProofIds,
+        })
+      : preliminaryBeneficiary;
+  const combined = combineProviderBeneficiaryRequirements(provider, beneficiary);
+  const quantification = combined.quantification;
   const relationshipClass = classifyRelationship(candidate);
   const baseValue = baseValues[relationshipClass];
   return {
@@ -214,9 +228,7 @@ function evaluateRelationshipCandidate({
     relationshipClass,
     baseValue,
     adjustedBaseValue:
-      quantification.status === 'quantified'
-        ? baseValue * quantification.reliability
-        : 0,
+      quantification.status === 'quantified' ? baseValue * quantification.reliability : 0,
     trace: {
       candidate,
       provider,
@@ -227,6 +239,7 @@ function evaluateRelationshipCandidate({
         ...provider.probabilityVariantIds,
         ...beneficiary.probabilityVariantIds,
       ]),
+      sharedRequirementIds: combined.sharedRequirementIds,
       quantification,
     },
   };
@@ -236,42 +249,118 @@ export function combineProviderBeneficiaryReliability(
   provider: BindingReliabilityTrace,
   beneficiary: BindingReliabilityTrace,
 ): ReliabilityQuantification {
-  const shared =
-    intersects(provider.componentIds, beneficiary.componentIds) ||
-    intersects(provider.eventIds, beneficiary.eventIds);
+  return combineProviderBeneficiaryRequirements(provider, beneficiary).quantification;
+}
+
+function combineProviderBeneficiaryRequirements(
+  provider: BindingReliabilityTrace,
+  beneficiary: BindingReliabilityTrace,
+): {
+  quantification: ReliabilityQuantification;
+  sharedRequirementIds: string[];
+} {
+  const providerRequirements = requirementMap(provider.selectedComponentTraces);
+  const beneficiaryRequirements = requirementMap(beneficiary.selectedComponentTraces);
+  const sharedRequirementIds = [...providerRequirements.keys()]
+    .filter((id) => beneficiaryRequirements.has(id))
+    .sort();
+  if (sharedRequirementIds.length === 0) {
+    return {
+      quantification: combineDistinctBindingReliability(provider, beneficiary),
+      sharedRequirementIds,
+    };
+  }
+
+  const requirements = new Map(providerRequirements);
+  for (const [id, beneficiaryTrace] of beneficiaryRequirements) {
+    const providerTrace = requirements.get(id);
+    if (!providerTrace) {
+      requirements.set(id, beneficiaryTrace);
+      continue;
+    }
+    if (
+      providerTrace.quantification.status === 'quantified' &&
+      beneficiaryTrace.quantification.status === 'quantified' &&
+      Math.abs(
+        providerTrace.quantification.reliability - beneficiaryTrace.quantification.reliability,
+      ) > 1e-12
+    ) {
+      return {
+        quantification: unquantified(
+          'conflicting-shared-event-probabilities',
+          'Provider and beneficiary describe one shared requirement with conflicting probabilities.',
+          [providerTrace.quantification.reliability, beneficiaryTrace.quantification.reliability],
+        ),
+        sharedRequirementIds,
+      };
+    }
+    if (
+      providerTrace.quantification.status === 'quantified' &&
+      beneficiaryTrace.quantification.status === 'unquantified'
+    ) {
+      requirements.set(id, beneficiaryTrace);
+    }
+  }
+
+  const eventRequirements = new Map<string, ComponentReliabilityTrace[]>();
+  for (const trace of requirements.values()) {
+    const eventId = trace.eventId ?? `component:${trace.componentId}`;
+    const group = eventRequirements.get(eventId) ?? [];
+    group.push(trace);
+    eventRequirements.set(eventId, group);
+  }
+
+  const eventQuantifications = [...eventRequirements.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([, traces]) => evaluateJointEventRequirements(traces));
+  const unresolved = eventQuantifications.find(
+    (quantification) => quantification.status === 'unquantified',
+  );
+  if (unresolved) {
+    return { quantification: unresolved, sharedRequirementIds };
+  }
+  const chanceEvents = eventQuantifications.filter(
+    (
+      quantification,
+    ): quantification is Extract<ReliabilityQuantification, { status: 'quantified' }> =>
+      quantification.status === 'quantified' && quantification.reliability < 1,
+  );
+  if (chanceEvents.length > 1) {
+    return {
+      quantification: unquantified(
+        'joint-chance-behavior-unresolved',
+        'Distinct jointly required chance events have no supported joint activation model.',
+        chanceEvents.map((event) => event.reliability),
+      ),
+      sharedRequirementIds,
+    };
+  }
+  if (chanceEvents.length === 1) {
+    return {
+      quantification: quantified(
+        chanceEvents[0]!.reliability,
+        'shared-event',
+        'Exact shared activation requirements are discounted once; all other requirements remain supported.',
+      ),
+      sharedRequirementIds,
+    };
+  }
+  return {
+    quantification: quantified(
+      1,
+      'shared-event',
+      'Exact shared activation requirements and all additional requirements are deterministic.',
+    ),
+    sharedRequirementIds,
+  };
+}
+
+function combineDistinctBindingReliability(
+  provider: BindingReliabilityTrace,
+  beneficiary: BindingReliabilityTrace,
+): ReliabilityQuantification {
   const left = provider.quantification;
   const right = beneficiary.quantification;
-  if (shared) {
-    if (left.status === 'quantified' && right.status === 'unquantified') {
-      return quantified(
-        left.reliability,
-        'shared-event',
-        'The selected provider branch resolves the shared activation once.',
-      );
-    }
-    if (left.status === 'unquantified' && right.status === 'quantified') {
-      return quantified(
-        right.reliability,
-        'shared-event',
-        'The selected beneficiary branch resolves the shared activation once.',
-      );
-    }
-    if (left.status === 'unquantified' || right.status === 'unquantified') {
-      return left.status === 'unquantified' ? left : right;
-    }
-    if (Math.abs(left.reliability - right.reliability) > 1e-12) {
-      return unquantified(
-        'conflicting-shared-event-probabilities',
-        'Provider and beneficiary describe one shared event with conflicting probabilities.',
-        [left.reliability, right.reliability],
-      );
-    }
-    return quantified(
-      left.reliability,
-      'shared-event',
-      'Provider and beneficiary reference one shared activation event.',
-    );
-  }
   if (left.status === 'unquantified') return left;
   if (right.status === 'unquantified') return right;
   if (left.reliability === 1) return right;
@@ -283,23 +372,101 @@ export function combineProviderBeneficiaryReliability(
   );
 }
 
-function conditionalDeterministicComponentIds(
+export function setupPayoffConditionProofRequirementIds(
+  candidate: EnrichedRelationshipCandidate,
   binding: SignalReliabilityBinding,
   componentsById: ReadonlyMap<string, AbilityReliabilityComponent>,
+  selectedBindingTrace?: BindingReliabilityTrace,
 ): Set<string> {
-  return new Set(
-    reliabilityBindingPathVisits(binding)
-      .flatMap(({ path }) =>
-        path.events.flatMap((event) =>
-          event.componentReferences.map((reference) => reference.componentId),
-        ),
-      )
-      .filter(
-        (componentId) =>
-          componentsById.get(componentId)?.reliabilityClass ===
-          'conditional-deterministic',
-      ),
+  if (
+    candidate.resultKind !== 'setup-payoff' ||
+    candidate.beneficiarySignalCategory !== 'benefits-from'
+  ) {
+    return new Set();
+  }
+  const visits = reliabilityBindingPathVisits(binding);
+  const conditionalRequirementIds = conditionalRequirementIdsInVisits(visits, componentsById);
+  if (conditionalRequirementIds.length === 1) {
+    return new Set(conditionalRequirementIds);
+  }
+  if (!selectedBindingTrace?.selectedPathId) return new Set();
+  const selectedVisits = visits.filter(
+    ({ path, useId }) =>
+      path.pathId === selectedBindingTrace.selectedPathId &&
+      (selectedBindingTrace.selectedUseId === undefined ||
+        useId === selectedBindingTrace.selectedUseId),
   );
+  const selectedConditionalRequirementIds = conditionalRequirementIdsInVisits(
+    selectedVisits,
+    componentsById,
+  );
+  return selectedConditionalRequirementIds.length === 1
+    ? new Set(selectedConditionalRequirementIds)
+    : new Set();
+}
+
+function conditionalRequirementIdsInVisits(
+  visits: ReturnType<typeof reliabilityBindingPathVisits>,
+  componentsById: ReadonlyMap<string, AbilityReliabilityComponent>,
+): string[] {
+  return unique(
+    visits.flatMap(({ path }) =>
+      path.events.flatMap((event) =>
+        event.componentReferences.flatMap((reference) =>
+          componentsById.get(reference.componentId)?.reliabilityClass ===
+          'conditional-deterministic'
+            ? [reliabilityRequirementId(event, reference)]
+            : [],
+        ),
+      ),
+    ),
+  );
+}
+
+function requirementMap(
+  traces: readonly ComponentReliabilityTrace[],
+): Map<string, ComponentReliabilityTrace> {
+  return new Map(
+    [...traces]
+      .sort((left, right) => requirementId(left).localeCompare(requirementId(right)))
+      .map((trace) => [requirementId(trace), trace]),
+  );
+}
+
+function requirementId(trace: ComponentReliabilityTrace): string {
+  return [trace.eventId ?? '', trace.componentId, trace.probabilityVariantId ?? ''].join('|');
+}
+
+function evaluateJointEventRequirements(
+  traces: readonly ComponentReliabilityTrace[],
+): ReliabilityQuantification {
+  const unresolved = traces.find((trace) => trace.quantification.status === 'unquantified');
+  if (unresolved) return unresolved.quantification;
+  const chanceProbabilities = uniqueNumbers(
+    traces.flatMap((trace) =>
+      trace.quantification.status === 'quantified' && trace.quantification.reliability < 1
+        ? [trace.quantification.reliability]
+        : [],
+    ),
+  );
+  if (chanceProbabilities.length > 1) {
+    return unquantified(
+      'conflicting-shared-event-probabilities',
+      'One activation event has conflicting documented probabilities.',
+      chanceProbabilities,
+    );
+  }
+  return chanceProbabilities.length === 1
+    ? quantified(
+        chanceProbabilities[0]!,
+        'shared-event',
+        'Components in the event share one activation identity.',
+      )
+    : quantified(
+        1,
+        'guaranteed',
+        'Every requirement in the event is deterministic or condition-proven.',
+      );
 }
 
 function compareRelationshipCandidates(
@@ -309,9 +476,7 @@ function compareRelationshipCandidates(
   const leftQuantified = left.trace.quantification.status === 'quantified';
   const rightQuantified = right.trace.quantification.status === 'quantified';
   const leftReliability =
-    left.trace.quantification.status === 'quantified'
-      ? left.trace.quantification.reliability
-      : -1;
+    left.trace.quantification.status === 'quantified' ? left.trace.quantification.reliability : -1;
   const rightReliability =
     right.trace.quantification.status === 'quantified'
       ? right.trace.quantification.reliability
@@ -323,9 +488,7 @@ function compareRelationshipCandidates(
     rightReliability - leftReliability ||
     right.baseValue - left.baseValue ||
     left.relationshipClass.localeCompare(right.relationshipClass) ||
-    left.trace.candidate.providerSignalId.localeCompare(
-      right.trace.candidate.providerSignalId,
-    ) ||
+    left.trace.candidate.providerSignalId.localeCompare(right.trace.candidate.providerSignalId) ||
     left.trace.candidate.beneficiarySignalId.localeCompare(
       right.trace.candidate.beneficiarySignalId,
     ) ||
@@ -341,13 +504,9 @@ function compareAdjustedRedundancy(
   const leftQuantified = left.quantification.status === 'quantified';
   const rightQuantified = right.quantification.status === 'quantified';
   const leftReliability =
-    left.quantification.status === 'quantified'
-      ? left.quantification.reliability
-      : -1;
+    left.quantification.status === 'quantified' ? left.quantification.reliability : -1;
   const rightReliability =
-    right.quantification.status === 'quantified'
-      ? right.quantification.reliability
-      : -1;
+    right.quantification.status === 'quantified' ? right.quantification.reliability : -1;
   return (
     right.adjustedBaseValue - left.adjustedBaseValue ||
     Number(rightQuantified) - Number(leftQuantified) ||
@@ -396,9 +555,7 @@ function relationshipGroups(
   return groups;
 }
 
-function classifyRelationship(
-  candidate: EnrichedRelationshipCandidate,
-): SemanticRelationshipClass {
+function classifyRelationship(candidate: EnrichedRelationshipCandidate): SemanticRelationshipClass {
   if (candidate.resultKind === 'setup-payoff') return 'conditional-payoff';
   return candidate.semanticTag.startsWith('stat:') ? 'stat-support' : 'output-amplification';
 }
@@ -424,11 +581,13 @@ function progressionFor(
   progression: Readonly<Record<string, ReliabilityProgression | undefined>>,
   dragonId: string,
 ): ReliabilityProgression {
-  return progression[dragonId] ?? {
-    starRank: null,
-    dragonLevel: null,
-    activeHabitLevels: {},
-  };
+  return (
+    progression[dragonId] ?? {
+      starRank: null,
+      dragonLevel: null,
+      activeHabitLevels: {},
+    }
+  );
 }
 
 function emptyBindingTrace(signalId: string): BindingReliabilityTrace {
@@ -444,18 +603,18 @@ function emptyBindingTrace(signalId: string): BindingReliabilityTrace {
     eventIds: [],
     probabilityVariantIds: [],
     componentTraces: [],
+    selectedComponentTraces: [],
     alternativeQuantifications: [],
     quantification,
   };
 }
 
-function intersects(left: readonly string[], right: readonly string[]): boolean {
-  const values = new Set(left);
-  return right.some((value) => values.has(value));
-}
-
 function unique(values: readonly string[]): string[] {
   return [...new Set(values)].sort();
+}
+
+function uniqueNumbers(values: readonly number[]): number[] {
+  return [...new Set(values)].sort((left, right) => left - right);
 }
 
 function quantified(

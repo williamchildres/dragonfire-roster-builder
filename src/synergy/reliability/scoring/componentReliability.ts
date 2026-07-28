@@ -9,10 +9,7 @@ import type {
   ReliabilityComponentReference,
   ReliabilityProgression,
 } from '../types';
-import type {
-  ComponentReliabilityTrace,
-  ReliabilityQuantification,
-} from './types';
+import type { ComponentReliabilityTrace, ReliabilityQuantification } from './types';
 
 export interface EvaluateComponentReliabilityInput {
   component: AbilityReliabilityComponent;
@@ -37,12 +34,12 @@ export function evaluateComponentReliability({
   progression,
   conditionProven = false,
 }: EvaluateComponentReliabilityInput): ComponentReliabilityTrace {
-  const scheduledRounds = component.timing.kind === 'scheduled-rounds'
-    ? [...component.timing.rounds]
-    : [];
+  const scheduledRounds =
+    component.timing.kind === 'scheduled-rounds' ? [...component.timing.rounds] : [];
   const baseTrace = {
     componentId: component.id,
     probabilityVariantId: reference.probabilityVariantId,
+    conditionProven,
     opportunityPresence: component.opportunityPresence,
     opportunityCount: component.opportunityCount,
     rollScope: component.rollScope,
@@ -82,20 +79,14 @@ export function evaluateComponentReliability({
 
   const selectedProbability = selectedConcreteProbability(component, reference);
   const contexts = probabilityContexts(component, selectedProbability);
-  const resolvedProbabilities = contexts
-    .map((round) =>
-      resolveComponentProbability(
-        component,
-        reference,
-        progression,
-        round === null ? {} : { round },
-      ),
-    )
-    .filter((value): value is number => value !== null);
-  const habitLevelMissing = probabilityHasMissingActiveHabitLevel(
-    selectedProbability,
-    progression,
-    contexts[0] ?? null,
+  const resolvedByContext = contexts.map((round) =>
+    resolveComponentProbability(component, reference, progression, round === null ? {} : { round }),
+  );
+  const resolvedProbabilities = resolvedByContext.filter(
+    (value): value is number => value !== null,
+  );
+  const habitLevelMissing = contexts.some((round) =>
+    probabilityHasMissingActiveHabitLevel(selectedProbability, progression, round),
   );
 
   if (habitLevelMissing) {
@@ -126,10 +117,7 @@ export function evaluateComponentReliability({
 
   const firstScheduledRound = scheduledRounds[0];
   const isBattleReachConditional = firstScheduledRound !== undefined && firstScheduledRound >= 2;
-  if (
-    component.opportunityPresence === 'conditional' ||
-    isBattleReachConditional
-  ) {
+  if (component.opportunityPresence === 'conditional' || isBattleReachConditional) {
     return {
       ...baseTrace,
       resolvedProbabilities,
@@ -157,9 +145,8 @@ export function evaluateComponentReliability({
     };
   }
 
-  const exactCount = component.opportunityCount.kind === 'exact'
-    ? component.opportunityCount.value
-    : null;
+  const exactCount =
+    component.opportunityCount.kind === 'exact' ? component.opportunityCount.value : null;
   const firstProbability = resolvedProbabilities[0]!;
   if (
     exactCount !== null &&
@@ -167,9 +154,26 @@ export function evaluateComponentReliability({
     component.independence === 'confirmed' &&
     component.rollScope !== 'unresolved'
   ) {
-    const probabilities = resolvedProbabilities.length === exactCount
-      ? resolvedProbabilities
-      : Array.from({ length: exactCount }, () => firstProbability);
+    if (
+      selectedProbability.kind === 'round-specific' &&
+      (contexts.length !== exactCount ||
+        resolvedByContext.length !== exactCount ||
+        resolvedByContext.some((probability) => probability === null))
+    ) {
+      return {
+        ...baseTrace,
+        resolvedProbabilities,
+        quantification: unquantified(
+          'round-context-unresolved',
+          'Every exact opportunity requires a supported round-specific probability.',
+          resolvedProbabilities,
+        ),
+      };
+    }
+    const probabilities =
+      selectedProbability.kind === 'round-specific'
+        ? (resolvedByContext as number[])
+        : Array.from({ length: exactCount }, () => firstProbability);
     const reliability = probabilities.every((probability) => probability === firstProbability)
       ? cumulativeIndependentActivationProbability(firstProbability, exactCount)
       : cumulativeIndependentVaryingActivationProbability(probabilities);
@@ -218,7 +222,7 @@ function probabilityContexts(
 ): readonly (number | null)[] {
   if (probability.kind !== 'round-specific') return [null];
   if (component.timing.kind === 'scheduled-rounds') {
-    return component.timing.rounds.filter((round) => probability.byRound[round] !== undefined);
+    return component.timing.rounds;
   }
   return Object.keys(probability.byRound)
     .map(Number)
@@ -231,9 +235,12 @@ function probabilityHasMissingActiveHabitLevel(
   progression: ReliabilityProgression,
   round: number | null,
 ): boolean {
-  const selected = probability.kind === 'round-specific'
-    ? (round === null ? undefined : probability.byRound[round])
-    : probability;
+  const selected =
+    probability.kind === 'round-specific'
+      ? round === null
+        ? undefined
+        : probability.byRound[round]
+      : probability;
   if (!selected || selected.kind === 'fixed' || selected.kind === 'unknown') return false;
   const hasHabit = Object.prototype.hasOwnProperty.call(
     progression.activeHabitLevels,

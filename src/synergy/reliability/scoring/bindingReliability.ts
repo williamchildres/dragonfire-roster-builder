@@ -16,7 +16,7 @@ export interface EvaluateBindingReliabilityInput {
   binding: SignalReliabilityBinding;
   componentsById: ReadonlyMap<string, AbilityReliabilityComponent>;
   progression: ReliabilityProgression;
-  conditionProvenComponentIds?: ReadonlySet<string>;
+  conditionProvenRequirementIds?: ReadonlySet<string>;
   probabilityContextId?: string;
 }
 
@@ -31,7 +31,7 @@ export function evaluateBindingReliability({
   binding,
   componentsById,
   progression,
-  conditionProvenComponentIds = new Set(),
+  conditionProvenRequirementIds = new Set(),
   probabilityContextId,
 }: EvaluateBindingReliabilityInput): BindingReliabilityTrace {
   if (binding.status === 'unresolved-mixed') {
@@ -45,17 +45,21 @@ export function evaluateBindingReliability({
       [],
       [],
       [],
+      [],
       unquantified(
         'no-supported-path',
         binding.unresolvedReason || 'The mixed binding remains unresolved.',
       ),
+      undefined,
+      undefined,
+      probabilityContextId,
     );
   }
 
   if (binding.bindingClass === 'resolved-mixed') {
     const evaluatedUses = binding.uses.map((use) => {
       const paths = use.paths.map((path) =>
-        evaluatePath(path, componentsById, progression, conditionProvenComponentIds),
+        evaluatePath(path, componentsById, progression, conditionProvenRequirementIds),
       );
       return {
         useId: use.useId,
@@ -64,7 +68,9 @@ export function evaluateBindingReliability({
       };
     });
     const quantifiedUses = evaluatedUses.filter(
-      (use): use is typeof use & {
+      (
+        use,
+      ): use is typeof use & {
         quantification: Extract<ReliabilityQuantification, { status: 'quantified' }>;
       } => use.quantification.status === 'quantified',
     );
@@ -86,6 +92,7 @@ export function evaluateBindingReliability({
           'No mixed use has a supported unconditional reliability.',
         );
     const paths = evaluatedUses.flatMap((use) => use.paths);
+    const selectedPath = bestUse ? selectBestPath(bestUse.paths, probabilityContextId) : undefined;
     return bindingTrace(
       binding.signalId,
       binding.bindingClass,
@@ -96,13 +103,16 @@ export function evaluateBindingReliability({
       eventIds(paths),
       probabilityVariantIds(paths),
       evaluatedUses.map((use) => use.quantification),
+      selectedPath?.componentTraces ?? [],
       quantification,
       bestUse?.useId,
+      selectedPath?.path.pathId,
+      probabilityContextId,
     );
   }
 
   const paths = binding.paths.map((path) =>
-    evaluatePath(path, componentsById, progression, conditionProvenComponentIds),
+    evaluatePath(path, componentsById, progression, conditionProvenRequirementIds),
   );
   const quantification = evaluateAlternatives(paths, probabilityContextId);
   const selectedPath = selectBestPath(paths, probabilityContextId);
@@ -116,9 +126,11 @@ export function evaluateBindingReliability({
     eventIds(paths),
     probabilityVariantIds(paths),
     paths.map((path) => path.quantification),
+    selectedPath?.componentTraces ?? [],
     quantification,
     undefined,
     selectedPath?.path.pathId,
+    probabilityContextId,
   );
 }
 
@@ -126,46 +138,45 @@ export function evaluateReliabilityPath(
   path: SignalReliabilityPath,
   componentsById: ReadonlyMap<string, AbilityReliabilityComponent>,
   progression: ReliabilityProgression,
-  conditionProvenComponentIds: ReadonlySet<string> = new Set(),
+  conditionProvenRequirementIds: ReadonlySet<string> = new Set(),
 ): ReliabilityQuantification {
-  return evaluatePath(
-    path,
-    componentsById,
-    progression,
-    conditionProvenComponentIds,
-  ).quantification;
+  return evaluatePath(path, componentsById, progression, conditionProvenRequirementIds)
+    .quantification;
 }
 
 function evaluatePath(
   path: SignalReliabilityPath,
   componentsById: ReadonlyMap<string, AbilityReliabilityComponent>,
   progression: ReliabilityProgression,
-  conditionProvenComponentIds: ReadonlySet<string>,
+  conditionProvenRequirementIds: ReadonlySet<string>,
 ): EvaluatedPath {
-  const hasChancePrerequisite = path.events.some((event) =>
-    event.componentReferences.some((reference) => {
-      const component = componentsById.get(reference.componentId);
-      return component?.reliabilityClass === 'chance';
-    }),
-  );
-  const eventResults = path.events.map((event) =>
-    evaluateEvent(
+  const precedingChanceEventIds = new Set<string>();
+  const eventResults = path.events.map((event) => {
+    const result = evaluateEvent(
       event,
       componentsById,
       progression,
-      conditionProvenComponentIds,
-      hasChancePrerequisite,
-    ),
-  );
+      conditionProvenRequirementIds,
+      precedingChanceEventIds,
+    );
+    if (
+      event.componentReferences.some(
+        (reference) => componentsById.get(reference.componentId)?.reliabilityClass === 'chance',
+      )
+    ) {
+      precedingChanceEventIds.add(event.eventId);
+    }
+    return result;
+  });
   const unquantifiedEvent = eventResults.find(
     (event) => event.quantification.status === 'unquantified',
   );
   const chanceEvents = eventResults.filter(
-    (event): event is typeof event & {
+    (
+      event,
+    ): event is typeof event & {
       quantification: Extract<ReliabilityQuantification, { status: 'quantified' }>;
-    } =>
-      event.quantification.status === 'quantified' &&
-      event.quantification.reliability < 1,
+    } => event.quantification.status === 'quantified' && event.quantification.reliability < 1,
   );
   let quantification: ReliabilityQuantification;
   if (unquantifiedEvent) {
@@ -197,8 +208,8 @@ function evaluateEvent(
   event: ReliabilityEventRequirement,
   componentsById: ReadonlyMap<string, AbilityReliabilityComponent>,
   progression: ReliabilityProgression,
-  conditionProvenComponentIds: ReadonlySet<string>,
-  hasChancePrerequisite: boolean,
+  conditionProvenRequirementIds: ReadonlySet<string>,
+  precedingChanceEventIds: ReadonlySet<string>,
 ): {
   eventId: string;
   componentTraces: ComponentReliabilityTrace[];
@@ -212,30 +223,31 @@ function evaluateEvent(
     const component = componentsById.get(reference.componentId);
     if (!component) return [];
     const conditionProven =
-      conditionProvenComponentIds.has(component.id) ||
-      (
-        hasChancePrerequisite &&
-        component.reliabilityClass === 'conditional-deterministic'
-      );
-    return [{
-      ...evaluateComponentReliability({
-        component,
-        reference,
-        progression,
-        conditionProven,
-      }),
-      eventId: event.eventId,
-    }];
+      conditionProvenRequirementIds.has(reliabilityRequirementId(event, reference)) ||
+      (component.reliabilityClass === 'conditional-deterministic' &&
+        component.timing.kind === 'after-event' &&
+        precedingChanceEventIds.has(component.timing.sourceEvent));
+    return [
+      {
+        ...evaluateComponentReliability({
+          component,
+          reference,
+          progression,
+          conditionProven,
+        }),
+        eventId: event.eventId,
+      },
+    ];
   });
   const unquantifiedTrace = componentTraces.find(
     (trace) => trace.quantification.status === 'unquantified',
   );
   const chanceTraces = componentTraces.filter(
-    (trace): trace is typeof trace & {
+    (
+      trace,
+    ): trace is typeof trace & {
       quantification: Extract<ReliabilityQuantification, { status: 'quantified' }>;
-    } =>
-      trace.quantification.status === 'quantified' &&
-      trace.quantification.reliability < 1,
+    } => trace.quantification.status === 'quantified' && trace.quantification.reliability < 1,
   );
   let quantification: ReliabilityQuantification;
   if (unquantifiedTrace) {
@@ -247,22 +259,35 @@ function evaluateEvent(
       'The shared activation event is guaranteed or proven.',
     );
   } else {
-    const probabilities = [...new Set(chanceTraces.map((trace) => trace.quantification.reliability))];
-    quantification = chanceTraces.length === 1
-      ? chanceTraces[0]!.quantification
-      : probabilities.length === 1
-      ? quantified(
-          probabilities[0]!,
-          'shared-event',
-          'All effects in the event share one activation identity.',
-        )
-      : unquantified(
-          'conflicting-shared-event-probabilities',
-          'One shared event has conflicting documented activation probabilities.',
-          probabilities,
-        );
+    const probabilities = [
+      ...new Set(chanceTraces.map((trace) => trace.quantification.reliability)),
+    ];
+    quantification =
+      chanceTraces.length === 1
+        ? chanceTraces[0]!.quantification
+        : probabilities.length === 1
+          ? quantified(
+              probabilities[0]!,
+              'shared-event',
+              'All effects in the event share one activation identity.',
+            )
+          : unquantified(
+              'conflicting-shared-event-probabilities',
+              'One shared event has conflicting documented activation probabilities.',
+              probabilities,
+            );
   }
   return { eventId: event.eventId, componentTraces, quantification };
+}
+
+export function reliabilityRequirementId(
+  event: Pick<ReliabilityEventRequirement, 'eventId'>,
+  reference: {
+    componentId: string;
+    probabilityVariantId?: string;
+  },
+): string {
+  return [event.eventId, reference.componentId, reference.probabilityVariantId ?? ''].join('|');
 }
 
 function evaluateAlternatives(
@@ -272,29 +297,25 @@ function evaluateAlternatives(
   if (paths.length === 0) {
     return unquantified('no-supported-path', 'The binding has no evaluable path.');
   }
-  const applicablePaths = probabilityContextId
-    ? paths.filter(
-        (path) =>
-          path.path.appliesWhen?.kind !== 'probability-context' ||
-          path.path.appliesWhen.id === probabilityContextId,
-      )
-    : paths;
-  const contextPaths = applicablePaths.filter(
-    (path) => path.path.appliesWhen?.kind === 'probability-context',
-  );
-  if (!probabilityContextId && contextPaths.length > 1 && contextsShareComponents(contextPaths)) {
+  const applicablePaths = applicableAlternativePaths(paths, probabilityContextId);
+  const contextPaths = applicablePaths
+    .filter((path) => path.path.appliesWhen?.kind === 'probability-context')
+    .sort((left, right) => left.path.pathId.localeCompare(right.path.pathId));
+  if (!probabilityContextId && contextPaths.length > 1) {
     return unquantified(
       'probability-context-unresolved',
       'Several documented probability contexts apply and none was selected.',
       contextPaths.flatMap((path) =>
         path.quantification.status === 'quantified'
           ? [path.quantification.reliability]
-          : path.quantification.conditionalProbabilities ?? [],
+          : (path.quantification.conditionalProbabilities ?? []),
       ),
     );
   }
   const quantifiedPaths = applicablePaths.filter(
-    (path): path is EvaluatedPath & {
+    (
+      path,
+    ): path is EvaluatedPath & {
       quantification: Extract<ReliabilityQuantification, { status: 'quantified' }>;
     } => path.quantification.status === 'quantified',
   );
@@ -304,7 +325,7 @@ function evaluateAlternatives(
       left.path.pathId.localeCompare(right.path.pathId),
   )[0];
   if (best) {
-    return paths.length === 1
+    return applicablePaths.length === 1
       ? best.quantification
       : quantified(
           best.quantification.reliability,
@@ -322,42 +343,32 @@ function selectBestPath(
   paths: readonly EvaluatedPath[],
   probabilityContextId?: string,
 ): EvaluatedPath | undefined {
-  const applicable = probabilityContextId
-    ? paths.filter(
-        (path) =>
-          path.path.appliesWhen?.kind !== 'probability-context' ||
-          path.path.appliesWhen.id === probabilityContextId,
-      )
-    : paths;
+  const applicable = applicableAlternativePaths(paths, probabilityContextId);
   if (
     !probabilityContextId &&
-    contextsShareComponents(
-      applicable.filter((path) => path.path.appliesWhen?.kind === 'probability-context'),
-    )
+    applicable.filter((path) => path.path.appliesWhen?.kind === 'probability-context').length > 1
   ) {
     return undefined;
   }
   return [...applicable].sort((left, right) => {
-    const leftValue = left.quantification.status === 'quantified'
-      ? left.quantification.reliability
-      : -1;
-    const rightValue = right.quantification.status === 'quantified'
-      ? right.quantification.reliability
-      : -1;
+    const leftValue =
+      left.quantification.status === 'quantified' ? left.quantification.reliability : -1;
+    const rightValue =
+      right.quantification.status === 'quantified' ? right.quantification.reliability : -1;
     return rightValue - leftValue || left.path.pathId.localeCompare(right.path.pathId);
   })[0];
 }
 
-function contextsShareComponents(paths: readonly EvaluatedPath[]): boolean {
-  const seen = new Set<string>();
-  for (const path of paths) {
-    for (const trace of path.componentTraces) {
-      if (!trace.probabilityVariantId) continue;
-      if (seen.has(trace.componentId)) return true;
-      seen.add(trace.componentId);
-    }
-  }
-  return false;
+function applicableAlternativePaths(
+  paths: readonly EvaluatedPath[],
+  probabilityContextId?: string,
+): readonly EvaluatedPath[] {
+  if (!probabilityContextId) return paths;
+  const contextualPaths = paths.filter(
+    (path) => path.path.appliesWhen?.kind === 'probability-context',
+  );
+  if (contextualPaths.length === 0) return paths;
+  return contextualPaths.filter((path) => path.path.appliesWhen?.id === probabilityContextId);
 }
 
 function bindingTrace(
@@ -370,15 +381,18 @@ function bindingTrace(
   referencedEventIds: readonly string[],
   referencedProbabilityVariantIds: readonly string[],
   alternativeQuantifications: readonly ReliabilityQuantification[],
+  selectedComponentTraces: readonly ComponentReliabilityTrace[],
   quantification: ReliabilityQuantification,
   selectedUseId?: string,
   selectedPathId?: string,
+  selectedProbabilityContextId?: string,
 ): BindingReliabilityTrace {
   return {
     signalId,
     bindingClass,
     selectedPathId,
     selectedUseId,
+    selectedProbabilityContextId,
     pathIds: [...pathIds].sort(),
     useIds: [...useIds].sort(),
     componentIds: [...referencedComponentIds].sort(),
@@ -391,6 +405,12 @@ function bindingTrace(
           left.componentId.localeCompare(right.componentId) ||
           (left.eventId ?? '').localeCompare(right.eventId ?? ''),
       ),
+    selectedComponentTraces: [...selectedComponentTraces].sort(
+      (left, right) =>
+        (left.eventId ?? '').localeCompare(right.eventId ?? '') ||
+        left.componentId.localeCompare(right.componentId) ||
+        (left.probabilityVariantId ?? '').localeCompare(right.probabilityVariantId ?? ''),
+    ),
     alternativeQuantifications,
     quantification,
   };
@@ -422,9 +442,10 @@ function firstUnquantified(
   quantifications: readonly ReliabilityQuantification[],
   fallbackExplanation: string,
 ): ReliabilityQuantification {
-  return quantifications.find(
-    (candidate) => candidate.status === 'unquantified',
-  ) ?? unquantified('no-supported-path', fallbackExplanation);
+  return (
+    quantifications.find((candidate) => candidate.status === 'unquantified') ??
+    unquantified('no-supported-path', fallbackExplanation)
+  );
 }
 
 function quantified(
