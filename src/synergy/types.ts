@@ -111,3 +111,25 @@ export interface EvaluateFormationInput {
 export interface EvaluateFormationResult {
   results: SimpleSynergyResult[];
 }
+
+export type SynergySignalCategory = 'output' | 'support' | 'benefits-from';
+
+export interface EnrichedRelationshipCandidate {
+  id: string;
+  resultKind: 'setup-payoff' | 'amplifier-output';
+  providerDragonId: string;
+  providerSignalId: string;
+  providerSignalCategory: SynergySignalCategory;
+  providerAbilityId: string;
+  beneficiaryDragonId: string;
+  beneficiarySignalId: string;
+  beneficiarySignalCategory: SynergySignalCategory;
+  beneficiaryAbilityId: string;
+  semanticTag: SynergyTag;
+  abilityIds: string[];
+  explanation: string;
+}
+
+export interface EvaluateFormationCandidatesResult {
+  candidates: EnrichedRelationshipCandidate[];
+}

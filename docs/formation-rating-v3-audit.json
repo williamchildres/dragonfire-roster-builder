@@ -1,0 +1,2344 @@
+{
+  "auditVersion": "formation-rating-v3-audit-v1",
+  "contracts": {
+    "v2": "formation-rating-v2",
+    "v3": "formation-rating-v3"
+  },
+  "sourceHashes": {
+    "registry": "e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c",
+    "research": "f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f",
+    "v2": "5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf",
+    "v3": "958cf36d329a6fb00c732ecf576d8020d10553d3585b136bda0493a7db754724"
+  },
+  "coverage": {
+    "dragons": 33,
+    "unorderedTrios": 5456,
+    "orderedFormations": 32736,
+    "failedChecks": 0,
+    "failedCheckExamples": []
+  },
+  "scoreStatistics": {
+    "minimum": 0,
+    "maximum": 80,
+    "mean": 34.190035,
+    "median": 35,
+    "activeSynergyDistribution": {
+      "0": 3211,
+      "3": 138,
+      "4": 360,
+      "5": 229,
+      "6": 20,
+      "7": 2094,
+      "8": 2687,
+      "9": 253,
+      "10": 186,
+      "11": 114,
+      "12": 778,
+      "13": 1486,
+      "14": 1270,
+      "15": 682,
+      "16": 929,
+      "17": 1302,
+      "18": 859,
+      "19": 817,
+      "20": 1273,
+      "21": 887,
+      "22": 885,
+      "23": 854,
+      "24": 504,
+      "25": 588,
+      "26": 1820,
+      "27": 779,
+      "28": 589,
+      "29": 667,
+      "30": 425,
+      "31": 537,
+      "32": 1233,
+      "33": 331,
+      "34": 371,
+      "35": 521,
+      "36": 363,
+      "37": 235,
+      "38": 668,
+      "39": 157,
+      "40": 198,
+      "41": 389,
+      "42": 182,
+      "43": 68,
+      "44": 249,
+      "45": 126,
+      "46": 34,
+      "47": 176,
+      "48": 38,
+      "49": 20,
+      "50": 108,
+      "51": 12,
+      "52": 4,
+      "53": 11,
+      "54": 7,
+      "56": 4,
+      "60": 8
+    },
+    "placementEffectivenessDistribution": {
+      "0": 2151,
+      "2": 38,
+      "3": 95,
+      "4": 113,
+      "5": 130,
+      "6": 440,
+      "7": 369,
+      "8": 439,
+      "9": 623,
+      "10": 1629,
+      "11": 1419,
+      "12": 863,
+      "13": 1967,
+      "14": 1858,
+      "15": 1801,
+      "16": 1987,
+      "17": 1250,
+      "18": 356,
+      "20": 15208
+    },
+    "tierCounts": {
+      "Developing": 18747,
+      "Excellent": 8,
+      "Solid": 5626,
+      "Strong": 338,
+      "Weak": 8017
+    },
+    "tierTransitions": {
+      "Developing->Developing": 8660,
+      "Developing->Solid": 43,
+      "Developing->Weak": 4701,
+      "Excellent->Developing": 105,
+      "Excellent->Excellent": 8,
+      "Excellent->Solid": 247,
+      "Excellent->Strong": 55,
+      "Excellent->Weak": 6,
+      "Solid->Developing": 8430,
+      "Solid->Solid": 3619,
+      "Solid->Strong": 2,
+      "Solid->Weak": 1315,
+      "Strong->Developing": 1392,
+      "Strong->Solid": 1717,
+      "Strong->Strong": 281,
+      "Strong->Weak": 91,
+      "Weak->Developing": 160,
+      "Weak->Weak": 1904
+    },
+    "scoreDeltaDistribution": {
+      "0": 4956,
+      "1": 259,
+      "2": 175,
+      "3": 171,
+      "4": 131,
+      "5": 61,
+      "6": 23,
+      "7": 34,
+      "8": 8,
+      "9": 8,
+      "10": 53,
+      "11": 51,
+      "12": 7,
+      "13": 3,
+      "20": 103,
+      "-78": 1,
+      "-75": 4,
+      "-74": 1,
+      "-69": 5,
+      "-68": 1,
+      "-67": 5,
+      "-66": 3,
+      "-65": 1,
+      "-64": 1,
+      "-63": 14,
+      "-62": 8,
+      "-61": 18,
+      "-60": 6,
+      "-59": 7,
+      "-58": 7,
+      "-57": 19,
+      "-56": 9,
+      "-55": 17,
+      "-54": 27,
+      "-53": 48,
+      "-52": 31,
+      "-51": 34,
+      "-50": 50,
+      "-49": 58,
+      "-48": 54,
+      "-47": 66,
+      "-46": 58,
+      "-45": 88,
+      "-44": 92,
+      "-43": 148,
+      "-42": 213,
+      "-41": 100,
+      "-40": 141,
+      "-39": 139,
+      "-38": 203,
+      "-37": 230,
+      "-36": 216,
+      "-35": 250,
+      "-34": 223,
+      "-33": 326,
+      "-32": 363,
+      "-31": 455,
+      "-30": 371,
+      "-29": 329,
+      "-28": 457,
+      "-27": 383,
+      "-26": 408,
+      "-25": 561,
+      "-24": 651,
+      "-23": 614,
+      "-22": 765,
+      "-21": 718,
+      "-20": 730,
+      "-19": 947,
+      "-18": 929,
+      "-17": 671,
+      "-16": 932,
+      "-15": 1140,
+      "-14": 809,
+      "-13": 1013,
+      "-12": 1670,
+      "-11": 1019,
+      "-10": 964,
+      "-9": 1287,
+      "-8": 1006,
+      "-7": 745,
+      "-6": 1845,
+      "-5": 524,
+      "-4": 474,
+      "-3": 622,
+      "-2": 223,
+      "-1": 146
+    }
+  },
+  "placementChanges": {
+    "orderedFormations": 11418,
+    "unorderedTrios": 1903
+  },
+  "reliabilitySummary": {
+    "quantifiedRelationshipCount": 109554,
+    "unquantifiedRelationshipCount": 55583,
+    "quantifiedBaseValue": 635376,
+    "unquantifiedBasePotential": 353059,
+    "fullRelationshipCount": 94519,
+    "directOneOpportunityRelationshipCount": 15035,
+    "confirmedCumulativeRelationshipCount": 0,
+    "conditionalOpportunityRelationshipCount": 12834,
+    "unresolvedJointChanceRelationshipCount": 868,
+    "adjustedRedundancyOrderDifferenceCount": 2412,
+    "quantificationMethodCounts": {
+      "guaranteed": 93589,
+      "mixed-use-lower-bound": 930,
+      "one-supported-opportunity": 15035
+    },
+    "unquantifiedReasonCounts": {
+      "conditional-deterministic-unproven": 37603,
+      "conditional-opportunity": 12834,
+      "joint-chance-behavior-unresolved": 868,
+      "probability-context-unresolved": 4278
+    }
+  },
+  "behaviorAnalysis": {
+    "perDragonAverageDelta": {
+      "tairax": -28.761761,
+      "kalspire": -22.855175,
+      "velar": -21.640457,
+      "shadowsong": -20.026546,
+      "malachite": -18.986223,
+      "crimson": -18.902218,
+      "arrax": -17.68078,
+      "arulix": -17.422043,
+      "solstryker": -17.224798,
+      "venator": -17.090054,
+      "feskar": -16.839382,
+      "zivern": -16.74328,
+      "thunderstrike": -16.524866,
+      "sunfyre": -16.389449,
+      "vhagar": -13.775202,
+      "rhysarion": -13.398522,
+      "vermax": -12.775874,
+      "shadowrend": -12.689852,
+      "antares": -12.239583,
+      "caraxes": -12.039987,
+      "vaeldra": -11.69422,
+      "syrax": -11.574597,
+      "shimmer": -11.10047,
+      "daemoros": -10.933804,
+      "seasmoke": -10.915995,
+      "vesper": -10.552419,
+      "tashix": -10.373656,
+      "jagadrix": -10.239919,
+      "nyrena": -9.137433,
+      "bevlorin": -8.517137,
+      "tessarion": -8.324261,
+      "dawnseeker": -8.236223,
+      "sheepstealer": -7.591398
+    },
+    "scoreDistributionCollapsed": false,
+    "scoreIncreaseCount": 1087,
+    "allIncreasesExplainable": true,
+    "increasesCausedSolelyByAdjustedRedundancy": 0,
+    "largestAverageDragonChanges": {
+      "tairax": -28.761761,
+      "kalspire": -22.855175,
+      "velar": -21.640457,
+      "shadowsong": -20.026546,
+      "malachite": -18.986223,
+      "crimson": -18.902218,
+      "arrax": -17.68078,
+      "arulix": -17.422043,
+      "solstryker": -17.224798,
+      "venator": -17.090054,
+      "feskar": -16.839382,
+      "zivern": -16.74328,
+      "thunderstrike": -16.524866,
+      "sunfyre": -16.389449,
+      "vhagar": -13.775202,
+      "rhysarion": -13.398522,
+      "vermax": -12.775874,
+      "shadowrend": -12.689852,
+      "antares": -12.239583,
+      "caraxes": -12.039987,
+      "vaeldra": -11.69422,
+      "syrax": -11.574597,
+      "shimmer": -11.10047,
+      "daemoros": -10.933804,
+      "seasmoke": -10.915995,
+      "vesper": -10.552419,
+      "tashix": -10.373656,
+      "jagadrix": -10.239919,
+      "nyrena": -9.137433,
+      "bevlorin": -8.517137,
+      "tessarion": -8.324261,
+      "dawnseeker": -8.236223,
+      "sheepstealer": -7.591398
+    }
+  },
+  "largestScoreDecreases": [
+    {
+      "formation": [
+        "velar",
+        "shadowsong",
+        "kalspire"
+      ],
+      "v2Score": 78,
+      "v3Score": 0,
+      "delta": -78,
+      "v2ActiveSynergy": 58,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 61,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "kalspire",
+        "velar",
+        "shadowsong"
+      ],
+      "v2Score": 75,
+      "v3Score": 0,
+      "delta": -75,
+      "v2ActiveSynergy": 55,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 56,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "shadowsong",
+        "kalspire",
+        "velar"
+      ],
+      "v2Score": 75,
+      "v3Score": 0,
+      "delta": -75,
+      "v2ActiveSynergy": 55,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 56,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "shadowsong",
+        "velar",
+        "kalspire"
+      ],
+      "v2Score": 75,
+      "v3Score": 0,
+      "delta": -75,
+      "v2ActiveSynergy": 55,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 56,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "velar",
+        "kalspire",
+        "shadowsong"
+      ],
+      "v2Score": 75,
+      "v3Score": 0,
+      "delta": -75,
+      "v2ActiveSynergy": 55,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 56,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "kalspire",
+        "arrax",
+        "velar"
+      ],
+      "v2Score": 74,
+      "v3Score": 0,
+      "delta": -74,
+      "v2ActiveSynergy": 54,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 55,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "kalspire",
+        "velar"
+      ],
+      "v2Score": 69,
+      "v3Score": 0,
+      "delta": -69,
+      "v2ActiveSynergy": 51,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 18,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 49,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "velar",
+        "kalspire"
+      ],
+      "v2Score": 69,
+      "v3Score": 0,
+      "delta": -69,
+      "v2ActiveSynergy": 51,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 18,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 49,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "kalspire",
+        "arrax",
+        "malachite"
+      ],
+      "v2Score": 69,
+      "v3Score": 0,
+      "delta": -69,
+      "v2ActiveSynergy": 49,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 50,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "kalspire",
+        "velar",
+        "arrax"
+      ],
+      "v2Score": 69,
+      "v3Score": 0,
+      "delta": -69,
+      "v2ActiveSynergy": 51,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 18,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 49,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "velar",
+        "kalspire",
+        "arrax"
+      ],
+      "v2Score": 69,
+      "v3Score": 0,
+      "delta": -69,
+      "v2ActiveSynergy": 51,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 18,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 49,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "velar",
+        "tairax",
+        "kalspire"
+      ],
+      "v2Score": 68,
+      "v3Score": 0,
+      "delta": -68,
+      "v2ActiveSynergy": 48,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 45,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "caraxes",
+        "velar",
+        "tairax"
+      ],
+      "v2Score": 67,
+      "v3Score": 0,
+      "delta": -67,
+      "v2ActiveSynergy": 49,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 18,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 44,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "tairax",
+        "velar",
+        "caraxes"
+      ],
+      "v2Score": 67,
+      "v3Score": 0,
+      "delta": -67,
+      "v2ActiveSynergy": 49,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 18,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 44,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "thunderstrike",
+        "shadowsong",
+        "arrax"
+      ],
+      "v2Score": 67,
+      "v3Score": 0,
+      "delta": -67,
+      "v2ActiveSynergy": 47,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 51,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "velar",
+        "caraxes",
+        "tairax"
+      ],
+      "v2Score": 67,
+      "v3Score": 0,
+      "delta": -67,
+      "v2ActiveSynergy": 49,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 18,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 44,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "velar",
+        "tairax",
+        "caraxes"
+      ],
+      "v2Score": 67,
+      "v3Score": 0,
+      "delta": -67,
+      "v2ActiveSynergy": 49,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 18,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 44,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "velar",
+        "antares",
+        "kalspire"
+      ],
+      "v2Score": 66,
+      "v3Score": 0,
+      "delta": -66,
+      "v2ActiveSynergy": 46,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 43,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "velar",
+        "caraxes",
+        "kalspire"
+      ],
+      "v2Score": 66,
+      "v3Score": 0,
+      "delta": -66,
+      "v2ActiveSynergy": 46,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 43,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "velar",
+        "jagadrix",
+        "kalspire"
+      ],
+      "v2Score": 66,
+      "v3Score": 0,
+      "delta": -66,
+      "v2ActiveSynergy": 46,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 43,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    }
+  ],
+  "scoreIncreases": [
+    {
+      "formation": [
+        "arrax",
+        "caraxes",
+        "sheepstealer"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "jagadrix",
+        "caraxes"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "jagadrix",
+        "sheepstealer"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "sheepstealer",
+        "caraxes"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "sheepstealer",
+        "jagadrix"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "caraxes",
+        "sheepstealer"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "jagadrix",
+        "caraxes"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "jagadrix",
+        "sheepstealer"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "kalspire",
+        "bevlorin"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "kalspire",
+        "caraxes"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "kalspire",
+        "sheepstealer"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "sheepstealer",
+        "caraxes"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "sheepstealer",
+        "jagadrix"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "solstryker",
+        "bevlorin"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arulix",
+        "solstryker",
+        "sheepstealer"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "bevlorin",
+        "arulix",
+        "kalspire"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "bevlorin",
+        "arulix",
+        "solstryker"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "bevlorin",
+        "kalspire",
+        "arulix"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "bevlorin",
+        "kalspire",
+        "solstryker"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "bevlorin",
+        "solstryker",
+        "arulix"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    }
+  ],
+  "representativeVelarCases": [
+    {
+      "trio": [
+        "caraxes",
+        "syrax",
+        "velar"
+      ],
+      "v2BestArrangements": [
+        "syrax/velar/caraxes",
+        "velar/caraxes/syrax"
+      ],
+      "v3BestArrangements": [
+        "syrax/velar/caraxes",
+        "velar/caraxes/syrax"
+      ],
+      "bestArrangementChanged": false,
+      "placements": [
+        {
+          "arrangement": "caraxes/syrax/velar",
+          "v2BaseRelationshipValue": 71,
+          "v2ActiveSynergy": 71,
+          "v2Placement": 20,
+          "v2Score": 91,
+          "v2Tier": "Excellent",
+          "v3AdjustedRelationshipValue": 42,
+          "v3ActiveSynergy": 42,
+          "v3Placement": 18,
+          "v3Score": 60,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 26,
+          "selectedContributions": [
+            {
+              "id": "relationship:caraxes:status:slow:syrax",
+              "value": 2
+            },
+            {
+              "id": "relationship:syrax:damage:fire:caraxes",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:caraxes",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:status:first-strike:caraxes",
+              "value": 2
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:first-strike:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "caraxes/velar/syrax",
+          "v2BaseRelationshipValue": 71,
+          "v2ActiveSynergy": 71,
+          "v2Placement": 20,
+          "v2Score": 91,
+          "v2Tier": "Excellent",
+          "v3AdjustedRelationshipValue": 42,
+          "v3ActiveSynergy": 42,
+          "v3Placement": 18,
+          "v3Score": 60,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 26,
+          "selectedContributions": [
+            {
+              "id": "relationship:caraxes:status:slow:syrax",
+              "value": 2
+            },
+            {
+              "id": "relationship:syrax:damage:fire:caraxes",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:caraxes",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:status:first-strike:caraxes",
+              "value": 2
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:first-strike:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "syrax/caraxes/velar",
+          "v2BaseRelationshipValue": 73.5,
+          "v2ActiveSynergy": 71,
+          "v2Placement": 20,
+          "v2Score": 91,
+          "v2Tier": "Excellent",
+          "v3AdjustedRelationshipValue": 44.5,
+          "v3ActiveSynergy": 42,
+          "v3Placement": 20,
+          "v3Score": 62,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 26,
+          "selectedContributions": [
+            {
+              "id": "relationship:caraxes:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:caraxes:status:slow:syrax",
+              "value": 2
+            },
+            {
+              "id": "relationship:syrax:damage:fire:caraxes",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 2.5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:caraxes",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:status:first-strike:caraxes",
+              "value": 2
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:first-strike:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "syrax/velar/caraxes",
+          "v2BaseRelationshipValue": 76,
+          "v2ActiveSynergy": 71,
+          "v2Placement": 20,
+          "v2Score": 91,
+          "v2Tier": "Excellent",
+          "v3AdjustedRelationshipValue": 47,
+          "v3ActiveSynergy": 42,
+          "v3Placement": 20,
+          "v3Score": 62,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 26,
+          "selectedContributions": [
+            {
+              "id": "relationship:caraxes:status:slow:syrax",
+              "value": 2
+            },
+            {
+              "id": "relationship:syrax:damage:fire:caraxes",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:caraxes",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:status:first-strike:caraxes",
+              "value": 2
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:initiative:syrax",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:first-strike:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "velar/caraxes/syrax",
+          "v2BaseRelationshipValue": 76,
+          "v2ActiveSynergy": 71,
+          "v2Placement": 20,
+          "v2Score": 91,
+          "v2Tier": "Excellent",
+          "v3AdjustedRelationshipValue": 47,
+          "v3ActiveSynergy": 42,
+          "v3Placement": 20,
+          "v3Score": 62,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 26,
+          "selectedContributions": [
+            {
+              "id": "relationship:caraxes:stat:initiative:syrax",
+              "value": 5
+            },
+            {
+              "id": "relationship:caraxes:status:slow:syrax",
+              "value": 2
+            },
+            {
+              "id": "relationship:syrax:damage:fire:caraxes",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:caraxes",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:status:first-strike:caraxes",
+              "value": 2
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:first-strike:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "velar/syrax/caraxes",
+          "v2BaseRelationshipValue": 71,
+          "v2ActiveSynergy": 71,
+          "v2Placement": 20,
+          "v2Score": 91,
+          "v2Tier": "Excellent",
+          "v3AdjustedRelationshipValue": 42,
+          "v3ActiveSynergy": 42,
+          "v3Placement": 18,
+          "v3Score": 60,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 26,
+          "selectedContributions": [
+            {
+              "id": "relationship:caraxes:status:slow:syrax",
+              "value": 2
+            },
+            {
+              "id": "relationship:syrax:damage:fire:caraxes",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:caraxes",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:status:first-strike:caraxes",
+              "value": 2
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:first-strike:caraxes",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "trio": [
+        "sheepstealer",
+        "syrax",
+        "velar"
+      ],
+      "v2BestArrangements": [
+        "syrax/sheepstealer/velar",
+        "velar/sheepstealer/syrax"
+      ],
+      "v3BestArrangements": [
+        "syrax/sheepstealer/velar",
+        "velar/sheepstealer/syrax"
+      ],
+      "bestArrangementChanged": false,
+      "placements": [
+        {
+          "arrangement": "sheepstealer/syrax/velar",
+          "v2BaseRelationshipValue": 51,
+          "v2ActiveSynergy": 51,
+          "v2Placement": 15,
+          "v2Score": 66,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 38,
+          "v3ActiveSynergy": 38,
+          "v3Placement": 14,
+          "v3Score": 52,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 16,
+          "selectedContributions": [
+            {
+              "id": "relationship:syrax:damage:fire:sheepstealer",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:sheepstealer",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:sheepstealer",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "sheepstealer/velar/syrax",
+          "v2BaseRelationshipValue": 51,
+          "v2ActiveSynergy": 51,
+          "v2Placement": 15,
+          "v2Score": 66,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 38,
+          "v3ActiveSynergy": 38,
+          "v3Placement": 14,
+          "v3Score": 52,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 16,
+          "selectedContributions": [
+            {
+              "id": "relationship:syrax:damage:fire:sheepstealer",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:sheepstealer",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:sheepstealer",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "syrax/sheepstealer/velar",
+          "v2BaseRelationshipValue": 66,
+          "v2ActiveSynergy": 66,
+          "v2Placement": 20,
+          "v2Score": 86,
+          "v2Tier": "Excellent",
+          "v3AdjustedRelationshipValue": 53,
+          "v3ActiveSynergy": 53,
+          "v3Placement": 20,
+          "v3Score": 73,
+          "v3Tier": "Strong",
+          "unquantifiedBasePotential": 16,
+          "selectedContributions": [
+            {
+              "id": "relationship:syrax:damage:fire:sheepstealer",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:effect:recovery:sheepstealer",
+              "value": 10
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:sheepstealer",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:effect:recovery:sheepstealer",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:sheepstealer",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "syrax/velar/sheepstealer",
+          "v2BaseRelationshipValue": 56,
+          "v2ActiveSynergy": 51,
+          "v2Placement": 17,
+          "v2Score": 68,
+          "v2Tier": "Strong",
+          "v3AdjustedRelationshipValue": 43,
+          "v3ActiveSynergy": 38,
+          "v3Placement": 16,
+          "v3Score": 54,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 16,
+          "selectedContributions": [
+            {
+              "id": "relationship:syrax:damage:fire:sheepstealer",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:sheepstealer",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:initiative:syrax",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:sheepstealer",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "velar/sheepstealer/syrax",
+          "v2BaseRelationshipValue": 66,
+          "v2ActiveSynergy": 66,
+          "v2Placement": 20,
+          "v2Score": 86,
+          "v2Tier": "Excellent",
+          "v3AdjustedRelationshipValue": 53,
+          "v3ActiveSynergy": 53,
+          "v3Placement": 20,
+          "v3Score": 73,
+          "v3Tier": "Strong",
+          "unquantifiedBasePotential": 16,
+          "selectedContributions": [
+            {
+              "id": "relationship:syrax:damage:fire:sheepstealer",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:effect:recovery:sheepstealer",
+              "value": 10
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:sheepstealer",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:effect:recovery:sheepstealer",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:sheepstealer",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        },
+        {
+          "arrangement": "velar/syrax/sheepstealer",
+          "v2BaseRelationshipValue": 51,
+          "v2ActiveSynergy": 51,
+          "v2Placement": 15,
+          "v2Score": 66,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 38,
+          "v3ActiveSynergy": 38,
+          "v3Placement": 14,
+          "v3Score": 52,
+          "v3Tier": "Solid",
+          "unquantifiedBasePotential": 16,
+          "selectedContributions": [
+            {
+              "id": "relationship:syrax:damage:fire:sheepstealer",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:damage:tactical:velar",
+              "value": 6
+            },
+            {
+              "id": "relationship:syrax:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:instinct:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:syrax:stat:intelligence:sheepstealer",
+              "value": 5
+            },
+            {
+              "id": "relationship:velar:damage:tactical:syrax",
+              "value": 6
+            },
+            {
+              "id": "relationship:velar:stat:instinct:syrax",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:fire:sheepstealer",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:status:slow:syrax",
+              "reason": "conditional-opportunity"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "trio": [
+        "kalspire",
+        "velar",
+        "venator"
+      ],
+      "v2BestArrangements": [
+        "velar/venator/kalspire"
+      ],
+      "v3BestArrangements": [
+        "velar/venator/kalspire"
+      ],
+      "bestArrangementChanged": false,
+      "placements": [
+        {
+          "arrangement": "kalspire/velar/venator",
+          "v2BaseRelationshipValue": 36,
+          "v2ActiveSynergy": 41,
+          "v2Placement": 16,
+          "v2Score": 57,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 0,
+          "v3ActiveSynergy": 0,
+          "v3Placement": 0,
+          "v3Score": 0,
+          "v3Tier": "Weak",
+          "unquantifiedBasePotential": 39,
+          "selectedContributions": [],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:physical:kalspire",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:physical:venator",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:tactical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:instinct:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:venator",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:venator:damage:physical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            }
+          ]
+        },
+        {
+          "arrangement": "kalspire/venator/velar",
+          "v2BaseRelationshipValue": 38.5,
+          "v2ActiveSynergy": 41,
+          "v2Placement": 17,
+          "v2Score": 58,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 0,
+          "v3ActiveSynergy": 0,
+          "v3Placement": 0,
+          "v3Score": 0,
+          "v3Tier": "Weak",
+          "unquantifiedBasePotential": 44,
+          "selectedContributions": [],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:physical:kalspire",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:physical:venator",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:tactical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:instinct:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:venator",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:venator:damage:physical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:venator:stat:instinct:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            }
+          ]
+        },
+        {
+          "arrangement": "velar/kalspire/venator",
+          "v2BaseRelationshipValue": 36,
+          "v2ActiveSynergy": 41,
+          "v2Placement": 16,
+          "v2Score": 57,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 0,
+          "v3ActiveSynergy": 0,
+          "v3Placement": 0,
+          "v3Score": 0,
+          "v3Tier": "Weak",
+          "unquantifiedBasePotential": 39,
+          "selectedContributions": [],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:physical:kalspire",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:physical:venator",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:tactical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:instinct:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:venator",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:venator:damage:physical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            }
+          ]
+        },
+        {
+          "arrangement": "velar/venator/kalspire",
+          "v2BaseRelationshipValue": 46,
+          "v2ActiveSynergy": 41,
+          "v2Placement": 20,
+          "v2Score": 61,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 10,
+          "v3ActiveSynergy": 12,
+          "v3Placement": 20,
+          "v3Score": 32,
+          "v3Tier": "Developing",
+          "unquantifiedBasePotential": 39,
+          "selectedContributions": [
+            {
+              "id": "relationship:venator:stat:initiative:velar",
+              "value": 5
+            },
+            {
+              "id": "relationship:venator:stat:instinct:velar",
+              "value": 5
+            }
+          ],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:physical:kalspire",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:physical:venator",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:tactical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:instinct:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:venator",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:venator:damage:physical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            }
+          ]
+        },
+        {
+          "arrangement": "venator/kalspire/velar",
+          "v2BaseRelationshipValue": 36,
+          "v2ActiveSynergy": 41,
+          "v2Placement": 16,
+          "v2Score": 57,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 0,
+          "v3ActiveSynergy": 0,
+          "v3Placement": 0,
+          "v3Score": 0,
+          "v3Tier": "Weak",
+          "unquantifiedBasePotential": 39,
+          "selectedContributions": [],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:physical:kalspire",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:physical:venator",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:tactical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:instinct:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:venator",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:venator:damage:physical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            }
+          ]
+        },
+        {
+          "arrangement": "venator/velar/kalspire",
+          "v2BaseRelationshipValue": 36,
+          "v2ActiveSynergy": 41,
+          "v2Placement": 16,
+          "v2Score": 57,
+          "v2Tier": "Solid",
+          "v3AdjustedRelationshipValue": 0,
+          "v3ActiveSynergy": 0,
+          "v3Placement": 0,
+          "v3Score": 0,
+          "v3Tier": "Weak",
+          "unquantifiedBasePotential": 39,
+          "selectedContributions": [],
+          "unquantifiedRelationships": [
+            {
+              "id": "relationship:velar:damage:physical:kalspire",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:physical:venator",
+              "reason": "conditional-opportunity"
+            },
+            {
+              "id": "relationship:velar:damage:tactical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:instinct:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:velar:stat:strength:venator",
+              "reason": "conditional-deterministic-unproven"
+            },
+            {
+              "id": "relationship:venator:damage:physical:kalspire",
+              "reason": "conditional-deterministic-unproven"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "representativeNonVelarCases": [
+    {
+      "formation": [
+        "kalspire",
+        "arrax",
+        "malachite"
+      ],
+      "v2Score": 69,
+      "v3Score": 0,
+      "delta": -69,
+      "v2ActiveSynergy": 49,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 50,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "thunderstrike",
+        "shadowsong",
+        "arrax"
+      ],
+      "v2Score": 67,
+      "v3Score": 0,
+      "delta": -67,
+      "v2ActiveSynergy": 47,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 51,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "shadowsong",
+        "arrax",
+        "thunderstrike"
+      ],
+      "v2Score": 65,
+      "v3Score": 0,
+      "delta": -65,
+      "v2ActiveSynergy": 45,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 20,
+      "v3Placement": 0,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 52,
+      "explanation": [
+        "reliability-adjusted-active-synergy",
+        "reliability-adjusted-placement",
+        "unquantified-potential-excluded"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "caraxes",
+        "sheepstealer"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "jagadrix",
+        "caraxes"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    },
+    {
+      "formation": [
+        "arrax",
+        "jagadrix",
+        "sheepstealer"
+      ],
+      "v2Score": 0,
+      "v3Score": 20,
+      "delta": 20,
+      "v2ActiveSynergy": 0,
+      "v3ActiveSynergy": 0,
+      "v2Placement": 0,
+      "v3Placement": 20,
+      "adjustedUncappedValue": 0,
+      "unquantifiedBasePotential": 0,
+      "explanation": [
+        "reliability-adjusted-placement"
+      ]
+    }
+  ],
+  "reviewConcerns": [
+    "Unquantified opportunity and joint-event potential is intentionally visible but not scored.",
+    "Existing tier thresholds have not been retuned for the evidence-backed v3 distribution.",
+    "The live Formation Builder and optimizer remain on Formation Rating v2 pending review."
+  ],
+  "deterministicAuditHash": "f0368979d7d407c3903ae043aeb4875549f1549d7af014043bcd88e3ba7d0b70"
+}

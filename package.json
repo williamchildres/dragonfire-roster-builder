@@ -19,6 +19,8 @@
     "audit:reliability:write": "node scripts/audit-formation-reliability.mjs --write",
     "audit:reliability-registry": "node scripts/audit-formation-reliability-registry.mjs",
     "audit:reliability-registry:write": "node scripts/audit-formation-reliability-registry.mjs --write",
+    "audit:formation-rating-v3": "node scripts/audit-formation-rating-v3.mjs",
+    "audit:formation-rating-v3:write": "node scripts/audit-formation-rating-v3.mjs --write",
     "validate:reliability-registry": "node scripts/validate-formation-reliability-registry.mjs",
     "fit:power": "node scripts/fit-dragon-power-model.mjs",
     "audit:power": "node scripts/fit-dragon-power-model.mjs",
