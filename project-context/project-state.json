@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-28T18:32:51.841Z",
+  "generatedAt": "2026-07-28T20:49:46.599Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "feature/adopt-formation-rating-v3",
-    "commit": "de81a0c031950108b46e2d8882d0becf778a36dd",
+    "commit": "e3f1ebd239a8f254d5179e03f5ce6b99957b8ff6",
     "databaseVersion": "0.21.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
