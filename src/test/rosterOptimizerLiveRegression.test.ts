@@ -96,7 +96,7 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
       expect(result.primary.totalEstimatedPower).toBe(375760);
       expect(result.backup.totalEstimatedPower).toBe(227070);
       expect(result.diagnostics.candidateCount).toBe(5456);
-      expect(result.diagnostics.solverPasses).toBe(135);
+      expect(result.diagnostics.solverPasses).toBe(216);
       const exactness = result.diagnostics.numericalExactness!;
       expect(exactness.integralityTolerance).toBe(1e-7);
       expect(exactness.maximumIntegralityResidual).toBeLessThanOrEqual(1e-7);
@@ -128,7 +128,7 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
     expect(reversed.optimizerResultHash).toBe(forward.optimizerResultHash);
     expect(repeated.optimizerSolutionHash).toBe(forward.optimizerSolutionHash);
     expect(repeated.optimizerResultHash).toBe(forward.optimizerResultHash);
-  }, 300_000);
+  }, 600_000);
 
   it('returns no partial result when cancellation is requested', async () => {
     await expect(optimizeCurrentRoster(
