@@ -232,7 +232,7 @@
         "shimmer-unbreakable-loyalty-instinct-payoff",
         "zivern-battle-mastery-intelligence-payoff"
       ],
-      "explanation": "Each formerly mixed signal now has relationship-use-qualified deterministic and chance paths."
+      "explanation": "Each formerly mixed signal now has simultaneous semantic uses; paths remain alternatives only within each use."
     },
     {
       "kind": "round-specific-habit-override",
@@ -244,5 +244,5 @@
     }
   ],
   "researchParityIssues": [],
-  "deterministicRegistryHash": "b876ed7e803fcf2294e955cfec5a0ffadd3bb40b5b83decba07d9c72a70de8a9"
+  "deterministicRegistryHash": "e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c"
 }

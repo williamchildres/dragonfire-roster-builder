@@ -390,53 +390,57 @@ export const shimmerReliabilityRegistry = defineDragonReliabilityRegistry({
       status: 'resolved',
       signalId: 'shimmer-unbreakable-loyalty-instinct-payoff',
       bindingClass: 'resolved-mixed',
-      paths: [
+      uses: [
         {
-          pathId: 'command-buffs',
-          appliesWhen: {
-            kind: 'relationship-use',
-            id: 'command-buffs',
-          },
-          events: [
+          useId: 'command-buffs',
+          paths: [
             {
-              eventId: 'shimmer-unbreakable-loyalty:strength-and-initiative',
-              componentReferences: [
+              pathId: 'activation',
+              events: [
                 {
-                  componentId: 'shimmer-unbreakable-loyalty:strength-and-initiative',
+                  eventId: 'shimmer-unbreakable-loyalty:strength-and-initiative',
+                  componentReferences: [
+                    {
+                      componentId: 'shimmer-unbreakable-loyalty:strength-and-initiative',
+                    },
+                  ],
                 },
               ],
             },
           ],
         },
         {
-          pathId: 'tactical-damage',
-          appliesWhen: {
-            kind: 'relationship-use',
-            id: 'tactical-damage',
-          },
-          events: [
+          useId: 'tactical-damage',
+          paths: [
             {
-              eventId: 'shimmer-unbreakable-loyalty:shimmer-unbreakable-loyalty-tactical',
-              componentReferences: [
+              pathId: 'activation',
+              events: [
                 {
-                  componentId: 'shimmer-unbreakable-loyalty:shimmer-unbreakable-loyalty-tactical',
+                  eventId: 'shimmer-unbreakable-loyalty:shimmer-unbreakable-loyalty-tactical',
+                  componentReferences: [
+                    {
+                      componentId:
+                        'shimmer-unbreakable-loyalty:shimmer-unbreakable-loyalty-tactical',
+                    },
+                  ],
                 },
               ],
             },
           ],
         },
         {
-          pathId: 'recovery',
-          appliesWhen: {
-            kind: 'relationship-use',
-            id: 'recovery',
-          },
-          events: [
+          useId: 'recovery',
+          paths: [
             {
-              eventId: 'shimmer-unbreakable-loyalty:scheduled-recovery',
-              componentReferences: [
+              pathId: 'activation',
+              events: [
                 {
-                  componentId: 'shimmer-unbreakable-loyalty:scheduled-recovery',
+                  eventId: 'shimmer-unbreakable-loyalty:scheduled-recovery',
+                  componentReferences: [
+                    {
+                      componentId: 'shimmer-unbreakable-loyalty:scheduled-recovery',
+                    },
+                  ],
                 },
               ],
             },

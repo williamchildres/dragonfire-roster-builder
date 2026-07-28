@@ -338,37 +338,43 @@ export const shadowsongReliabilityRegistry = defineDragonReliabilityRegistry({
       status: 'resolved',
       signalId: 'shadowsong-panic-payoff',
       bindingClass: 'resolved-mixed',
-      paths: [
+      uses: [
         {
-          pathId: 'breath-of-fire-damage',
-          appliesWhen: {
-            kind: 'relationship-use',
-            id: 'breath-of-fire-damage',
-          },
-          events: [
+          useId: 'breath-of-fire-damage',
+          paths: [
             {
-              eventId: 'shadowsong-breath-of-fire:panic-damage-payoff',
-              componentReferences: [
+              pathId: 'activation',
+              events: [
                 {
-                  componentId: 'shadowsong-breath-of-fire:panic-damage-payoff',
+                  eventId: 'shadowsong-breath-of-fire:panic-damage-payoff',
+                  componentReferences: [
+                    {
+                      componentId: 'shadowsong-breath-of-fire:panic-damage-payoff',
+                    },
+                  ],
                 },
               ],
             },
           ],
         },
         {
-          pathId: 'scorched-earth-application',
-          appliesWhen: {
-            kind: 'relationship-use',
-            id: 'scorched-earth-application',
-          },
-          events: [
+          useId: 'scorched-earth-application',
+          paths: [
             {
-              eventId: 'shadowsong-scorched-earth:vulnerable',
-              componentReferences: [
+              pathId: 'panic-afflicted-target',
+              appliesWhen: {
+                kind: 'probability-context',
+                id: 'panic-afflicted-target',
+              },
+              events: [
                 {
-                  componentId: 'shadowsong-scorched-earth:vulnerable',
-                  probabilityVariantId: 'panic-afflicted-target',
+                  eventId: 'shadowsong-scorched-earth:vulnerable',
+                  componentReferences: [
+                    {
+                      componentId: 'shadowsong-scorched-earth:vulnerable',
+                      probabilityVariantId: 'panic-afflicted-target',
+                    },
+                  ],
                 },
               ],
             },

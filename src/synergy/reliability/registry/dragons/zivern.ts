@@ -227,36 +227,38 @@ export const zivernReliabilityRegistry = defineDragonReliabilityRegistry({
       status: 'resolved',
       signalId: 'zivern-battle-mastery-intelligence-payoff',
       bindingClass: 'resolved-mixed',
-      paths: [
+      uses: [
         {
-          pathId: 'battle-mastery',
-          appliesWhen: {
-            kind: 'relationship-use',
-            id: 'battle-mastery',
-          },
-          events: [
+          useId: 'battle-mastery',
+          paths: [
             {
-              eventId: 'zivern-battle-mastery:deterministic-battle-mastery',
-              componentReferences: [
+              pathId: 'activation',
+              events: [
                 {
-                  componentId: 'zivern-battle-mastery:deterministic-battle-mastery',
+                  eventId: 'zivern-battle-mastery:deterministic-battle-mastery',
+                  componentReferences: [
+                    {
+                      componentId: 'zivern-battle-mastery:deterministic-battle-mastery',
+                    },
+                  ],
                 },
               ],
             },
           ],
         },
         {
-          pathId: 'fearsome-reach',
-          appliesWhen: {
-            kind: 'relationship-use',
-            id: 'fearsome-reach',
-          },
-          events: [
+          useId: 'fearsome-reach',
+          paths: [
             {
-              eventId: 'zivern-fearsome-reach:panic',
-              componentReferences: [
+              pathId: 'activation',
+              events: [
                 {
-                  componentId: 'zivern-fearsome-reach:panic',
+                  eventId: 'zivern-fearsome-reach:panic',
+                  componentReferences: [
+                    {
+                      componentId: 'zivern-fearsome-reach:panic',
+                    },
+                  ],
                 },
               ],
             },

@@ -6,6 +6,7 @@ import {
 } from './formationReliabilityAudit';
 import {
   FORMATION_RELIABILITY_CONTRACT_VERSION,
+  collectReliabilityProbabilityHabitAbilityIds,
   formationReliabilityAbilityCatalog,
   formationReliabilityBindings,
   formationReliabilityComponents,
@@ -13,6 +14,7 @@ import {
   formationReliabilityNonScoringSignalIds,
   formationReliabilityPositionClaimIds,
   formationReliabilityScoringSignalIds,
+  reliabilityBindingPathVisits,
   validateReliabilityContract,
   type AbilityReliabilityComponent,
   type ReliabilityProbability,
@@ -381,7 +383,7 @@ function reconcileResearch(
       kind: 'resolved-mixed-signal-uses',
       signalIds: resolvedMixedSignalIds,
       explanation:
-        'Each formerly mixed signal now has relationship-use-qualified deterministic and chance paths.',
+        'Each formerly mixed signal now has simultaneous semantic uses; paths remain alternatives only within each use.',
     },
     {
       kind: 'composite-taunt-event-graph',
@@ -469,7 +471,9 @@ function compareEvidenceFacts(
         'crimson-bloodscale-terror-stun': 'crimson-vermins-bane',
         'tairax-burning-ward-stagger': 'tairax-gleamstrike',
       }[research.signalId] ?? research.sourceAbilityId;
-    if (!habitAbilityIds(component.probability).has(expectedHabitAbilityId)) {
+    if (!collectReliabilityProbabilityHabitAbilityIds(component.probability).has(
+      expectedHabitAbilityId,
+    )) {
       issues.push(
         `${research.signalId}: missing explicit probability-source Habit ${expectedHabitAbilityId}.`,
       );
@@ -491,8 +495,7 @@ function expectedBindingClass(
 }
 
 function bindingComponentIds(binding: SignalReliabilityBinding): string[] {
-  const paths = binding.status === 'resolved' ? binding.paths : binding.candidatePaths;
-  return paths.flatMap((path) =>
+  return reliabilityBindingPathVisits(binding).flatMap(({ path }) =>
     path.events.flatMap((event) =>
       event.componentReferences.map((reference) => reference.componentId),
     ),
@@ -610,26 +613,5 @@ function productionProbabilityValues(probability: ReliabilityProbability | undef
       return;
     }
     for (const variant of candidate.variants) visit(variant.probability);
-  }
-}
-
-function habitAbilityIds(probability: ReliabilityProbability | undefined): Set<string> {
-  const ids = new Set<string>();
-  visit(probability);
-  return ids;
-
-  function visit(candidate: ReliabilityProbability | undefined): void {
-    if (!candidate) return;
-    if (candidate.kind === 'habit-level' || candidate.kind === 'habit-override') {
-      ids.add(candidate.habitAbilityId);
-    }
-    if (candidate.kind === 'round-specific') {
-      for (const roundProbability of Object.values(candidate.byRound)) {
-        visit(roundProbability);
-      }
-    }
-    if (candidate.kind === 'variants') {
-      for (const variant of candidate.variants) visit(variant.probability);
-    }
   }
 }

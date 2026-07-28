@@ -156,19 +156,34 @@ export interface SignalReliabilityPath {
 }
 
 export interface ReliabilityPathApplicability {
-  kind: 'relationship-use' | 'probability-context';
+  kind: 'probability-context';
   id: string;
 }
 
 export type ReliabilityBindingClass =
   'guaranteed' | 'conditional-deterministic' | 'chance' | 'resolved-mixed';
 
+/**
+ * Uses on a resolved mixed binding are simultaneous semantic uses of the
+ * matched relationship. Paths inside one use remain alternatives.
+ */
+export interface SignalReliabilityUse {
+  useId: string;
+  paths: readonly SignalReliabilityPath[];
+}
+
 export type SignalReliabilityBinding =
   | {
       status: 'resolved';
       signalId: string;
-      bindingClass?: ReliabilityBindingClass;
+      bindingClass?: Exclude<ReliabilityBindingClass, 'resolved-mixed'>;
       paths: readonly SignalReliabilityPath[];
+    }
+  | {
+      status: 'resolved';
+      signalId: string;
+      bindingClass: 'resolved-mixed';
+      uses: readonly SignalReliabilityUse[];
     }
   | {
       status: 'unresolved-mixed';

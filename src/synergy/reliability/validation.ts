@@ -1,4 +1,8 @@
-import { isReliabilityProbabilityValue } from './probability';
+import {
+  collectReliabilityProbabilityHabitAbilityIds,
+  isReliabilityProbabilityValue,
+} from './probability';
+import { reliabilityBindingPathVisits } from './traversal';
 import type {
   AbilityReliabilityComponent,
   ConcreteReliabilityProbability,
@@ -11,6 +15,7 @@ import type {
   ReliabilityValidationMode,
   SignalReliabilityBinding,
   SignalReliabilityPath,
+  SignalReliabilityUse,
 } from './types';
 
 const COMPONENT_ID_PATTERN = /^([a-z0-9]+(?:-[a-z0-9]+)*):([a-z0-9]+(?:-[a-z0-9]+)*)$/;
@@ -156,7 +161,13 @@ function validateComponent(
 
   validateClassAndOpportunitySemantics(component, path, issues);
   if (component.probability) {
-    validateProbability(component.probability, `${path}.probability`, abilitiesById, issues);
+    validateProbability(
+      component.probability,
+      `${path}.probability`,
+      component,
+      abilitiesById,
+      issues,
+    );
   }
   validateTiming(component, path, issues);
   validateOpportunityCount(component, path, issues);
@@ -205,14 +216,51 @@ function validateComponentAbility(
     'Dragon Level',
     issues,
   );
-  const canonicalEvidenceIds = new Set(ability.evidenceIds);
+  const componentEvidenceIds = new Set(component.evidence.evidenceIds);
+  const allowedEvidenceIds = new Set(ability.evidenceIds);
+  if (
+    ability.evidenceIds.length > 0 &&
+    !ability.evidenceIds.some((evidenceId) => componentEvidenceIds.has(evidenceId))
+  ) {
+    addIssue(
+      issues,
+      'component.source-evidence-missing',
+      `${path}.evidence.evidenceIds`,
+      `Component requires canonical evidence from source ability "${ability.abilityId}".`,
+    );
+  }
+  for (const habitAbilityId of collectReliabilityProbabilityHabitAbilityIds(
+    component.probability,
+  )) {
+    if (habitAbilityId === ability.abilityId) continue;
+    const habitAbility = abilitiesById.get(habitAbilityId);
+    if (
+      !habitAbility ||
+      habitAbility.kind !== 'habit' ||
+      habitAbility.dragonId !== ability.dragonId
+    ) {
+      continue;
+    }
+    for (const evidenceId of habitAbility.evidenceIds) allowedEvidenceIds.add(evidenceId);
+    if (
+      habitAbility.evidenceIds.length > 0 &&
+      !habitAbility.evidenceIds.some((evidenceId) => componentEvidenceIds.has(evidenceId))
+    ) {
+      addIssue(
+        issues,
+        'component.probability-source-evidence-missing',
+        `${path}.evidence.evidenceIds`,
+        `Component requires canonical evidence from external probability-source Habit "${habitAbilityId}".`,
+      );
+    }
+  }
   for (const evidenceId of component.evidence.evidenceIds) {
-    if (!canonicalEvidenceIds.has(evidenceId)) {
+    if (!allowedEvidenceIds.has(evidenceId)) {
       addIssue(
         issues,
         'component.evidence-id-stale',
         `${path}.evidence.evidenceIds[${evidenceId}]`,
-        `Evidence ID "${evidenceId}" does not belong to source ability "${ability.abilityId}".`,
+        `Evidence ID "${evidenceId}" does not belong to the source ability or a valid external probability-source Habit.`,
       );
     }
   }
@@ -368,6 +416,7 @@ function timingSupportsGuaranteedOpportunity(component: AbilityReliabilityCompon
 function validateProbability(
   probability: ReliabilityProbability,
   path: string,
+  component: AbilityReliabilityComponent,
   abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
   issues: ReliabilityValidationIssue[],
 ): void {
@@ -410,18 +459,20 @@ function validateProbability(
       validateConcreteProbability(
         variant.probability,
         `${path}.variants[${variant.id || '<empty>'}].probability`,
+        component,
         abilitiesById,
         issues,
       );
     }
     return;
   }
-  validateConcreteProbability(probability, path, abilitiesById, issues);
+  validateConcreteProbability(probability, path, component, abilitiesById, issues);
 }
 
 function validateConcreteProbability(
   probability: ConcreteReliabilityProbability,
   path: string,
+  component: AbilityReliabilityComponent,
   abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
   issues: ReliabilityValidationIssue[],
 ): void {
@@ -441,7 +492,7 @@ function validateConcreteProbability(
     return;
   }
   if (probability.kind === 'habit-level' || probability.kind === 'habit-override') {
-    validateHabitAbilityId(probability.habitAbilityId, path, abilitiesById, issues);
+    validateHabitAbilityId(probability.habitAbilityId, path, component, abilitiesById, issues);
     if (probability.kind === 'habit-override') {
       validateProbabilityValue(probability.base, `${path}.base`, issues);
     }
@@ -472,6 +523,7 @@ function validateConcreteProbability(
     validateConcreteProbability(
       roundProbability,
       `${path}.byRound[${round}]`,
+      component,
       abilitiesById,
       issues,
     );
@@ -481,6 +533,7 @@ function validateConcreteProbability(
 function validateHabitAbilityId(
   habitAbilityId: string,
   path: string,
+  component: AbilityReliabilityComponent,
   abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
   issues: ReliabilityValidationIssue[],
 ): void {
@@ -510,6 +563,16 @@ function validateHabitAbilityId(
       idPath,
       `Probability source "${habitAbilityId}" is a ${ability.kind}, not a Habit.`,
     );
+  } else {
+    const sourceAbility = abilitiesById.get(component.sourceAbilityId);
+    if (sourceAbility && ability.dragonId !== sourceAbility.dragonId) {
+      addIssue(
+        issues,
+        'probability.habit-ability-dragon-mismatch',
+        idPath,
+        `Probability source "${habitAbilityId}" belongs to "${ability.dragonId}", not source dragon "${sourceAbility.dragonId}".`,
+      );
+    }
   }
 }
 
@@ -800,7 +863,6 @@ function validateBinding(
     }
   }
 
-  const paths = binding.status === 'resolved' ? binding.paths : binding.candidatePaths;
   if (mode === 'full-migration' && binding.status === 'resolved' && !binding.bindingClass) {
     addIssue(
       issues,
@@ -809,6 +871,21 @@ function validateBinding(
       'Full migration requires an explicit binding reliability class.',
     );
   }
+  if (binding.status === 'resolved' && binding.bindingClass === 'resolved-mixed') {
+    validateMixedBinding(
+      binding,
+      path,
+      componentsById,
+      referencedComponentIds,
+      issues,
+    );
+    return;
+  }
+
+  const paths: readonly SignalReliabilityPath[] =
+    binding.status === 'unresolved-mixed'
+      ? binding.candidatePaths
+      : binding.paths;
   if (paths.length === 0) {
     addIssue(
       issues,
@@ -829,8 +906,100 @@ function validateBinding(
   }
   validatePathApplicability(paths, path, issues);
   if (binding.status === 'resolved' && binding.bindingClass) {
-    validateBindingClass(binding, paths, componentsById, path, issues);
+    validateSingleBindingClass(binding, paths, componentsById, path, issues);
   }
+}
+
+function validateMixedBinding(
+  binding: Extract<SignalReliabilityBinding, { bindingClass: 'resolved-mixed' }>,
+  path: string,
+  componentsById: ReadonlyMap<ReliabilityComponentId, AbilityReliabilityComponent>,
+  referencedComponentIds: Set<ReliabilityComponentId>,
+  issues: ReliabilityValidationIssue[],
+): void {
+  const candidateUses: unknown = binding.uses;
+  const uses: readonly SignalReliabilityUse[] = Array.isArray(candidateUses)
+    ? (candidateUses as SignalReliabilityUse[])
+    : [];
+  if (uses.length < 2) {
+    addIssue(
+      issues,
+      'binding.resolved-mixed-uses-invalid',
+      `${path}.uses`,
+      'Resolved mixed bindings require at least two simultaneous semantic uses.',
+    );
+  }
+  addDuplicateIssues(
+    uses.map((use) => use.useId),
+    'binding.use-duplicate',
+    `${path}.uses`,
+    'Duplicate mixed-use ID',
+    issues,
+  );
+  for (const use of uses) {
+    validateMixedUse(use, path, componentsById, referencedComponentIds, issues);
+  }
+
+  const classes = new Set(
+    reliabilityBindingPathVisits(binding).flatMap(({ path: candidate }) =>
+      candidate.events.flatMap((event) =>
+        event.componentReferences
+          .map((reference) => componentsById.get(reference.componentId)?.reliabilityClass)
+          .filter((value): value is AbilityReliabilityComponent['reliabilityClass'] =>
+            Boolean(value),
+          ),
+      ),
+    ),
+  );
+  const hasChance = classes.has('chance') || classes.has('unknown');
+  const hasDeterministic =
+    classes.has('guaranteed') || classes.has('conditional-deterministic');
+  if (!hasChance || !hasDeterministic) {
+    addIssue(
+      issues,
+      'binding.resolved-mixed-class-invalid',
+      `${path}.uses`,
+      'Resolved mixed uses must span deterministic and chance components.',
+    );
+  }
+}
+
+function validateMixedUse(
+  use: SignalReliabilityUse,
+  bindingPath: string,
+  componentsById: ReadonlyMap<ReliabilityComponentId, AbilityReliabilityComponent>,
+  referencedComponentIds: Set<ReliabilityComponentId>,
+  issues: ReliabilityValidationIssue[],
+): void {
+  const usePath = `${bindingPath}.uses[${use.useId || '<empty>'}]`;
+  if (!SEMANTIC_ID_PATTERN.test(use.useId)) {
+    addIssue(
+      issues,
+      'binding.use-id-malformed',
+      `${usePath}.useId`,
+      'Mixed-use IDs must use non-empty kebab-case semantics.',
+    );
+  }
+  const paths: readonly SignalReliabilityPath[] = use.paths;
+  if (paths.length === 0) {
+    addIssue(
+      issues,
+      'binding.use-paths-empty',
+      `${usePath}.paths`,
+      'Each simultaneous mixed use requires at least one alternative path.',
+    );
+  }
+  addDuplicateIssues(
+    paths.map((candidate) => candidate.pathId),
+    'binding.path-duplicate',
+    `${usePath}.paths`,
+    'Duplicate reliability path',
+    issues,
+  );
+  for (const candidate of paths) {
+    validatePath(candidate, usePath, componentsById, referencedComponentIds, issues);
+  }
+  validatePathApplicability(paths, usePath, issues);
 }
 
 function validatePathApplicability(
@@ -859,8 +1028,11 @@ function validatePathApplicability(
   );
 }
 
-function validateBindingClass(
-  binding: Extract<SignalReliabilityBinding, { status: 'resolved' }>,
+function validateSingleBindingClass(
+  binding: Extract<
+    SignalReliabilityBinding,
+    { status: 'resolved'; paths: readonly SignalReliabilityPath[] }
+  >,
   paths: readonly SignalReliabilityPath[],
   componentsById: ReadonlyMap<ReliabilityComponentId, AbilityReliabilityComponent>,
   path: string,
@@ -915,24 +1087,6 @@ function validateBindingClass(
       `${path}.bindingClass`,
       'Every chance binding path must include a chance component.',
     );
-  }
-  if (binding.bindingClass === 'resolved-mixed') {
-    const uses = paths.map((candidate) => candidate.appliesWhen);
-    const allRelationshipUses = uses.every((use) => use?.kind === 'relationship-use');
-    const flattenedClasses = new Set(classesByPath.flatMap((classes) => [...classes]));
-    if (
-      paths.length < 2 ||
-      !allRelationshipUses ||
-      !pathHasChance(flattenedClasses) ||
-      (!flattenedClasses.has('guaranteed') && !flattenedClasses.has('conditional-deterministic'))
-    ) {
-      addIssue(
-        issues,
-        'binding.resolved-mixed-invalid',
-        `${path}.paths`,
-        'Resolved mixed bindings require at least two relationship-use paths spanning deterministic and chance components.',
-      );
-    }
   }
 }
 

@@ -2,6 +2,7 @@ import type {
   ConcreteReliabilityProbability,
   ProbabilityResolutionContext,
   ReliabilityProgression,
+  ReliabilityProbability,
   RoundReliabilityProbability,
 } from './types';
 
@@ -15,6 +16,31 @@ export function assertReliabilityProbabilityValue(
 ): asserts value is number {
   if (!isReliabilityProbabilityValue(value)) {
     throw new RangeError(`${label} must be a finite number from 0 through 1.`);
+  }
+}
+
+export function collectReliabilityProbabilityHabitAbilityIds(
+  probability: ReliabilityProbability | undefined,
+): ReadonlySet<string> {
+  const habitAbilityIds = new Set<string>();
+  visit(probability);
+  return habitAbilityIds;
+
+  function visit(candidate: ReliabilityProbability | undefined): void {
+    if (!candidate) return;
+    if (candidate.kind === 'habit-level' || candidate.kind === 'habit-override') {
+      habitAbilityIds.add(candidate.habitAbilityId);
+      return;
+    }
+    if (candidate.kind === 'round-specific') {
+      for (const roundProbability of Object.values(candidate.byRound)) {
+        visit(roundProbability);
+      }
+      return;
+    }
+    if (candidate.kind === 'variants') {
+      for (const variant of candidate.variants) visit(variant.probability);
+    }
   }
 }
 

@@ -534,21 +534,21 @@ describe('production Formation Reliability contract', () => {
     );
 
     expect(alternatives?.status).toBe('resolved');
-    if (alternatives?.status === 'resolved') {
+    if (alternatives?.status === 'resolved' && alternatives.bindingClass !== 'resolved-mixed') {
       expect(alternatives.paths.map((candidate) => candidate.pathId)).toEqual([
         'guaranteed-recovery-path',
         'chance-first-strike-path',
       ]);
     }
     expect(shared?.status).toBe('resolved');
-    if (shared?.status === 'resolved') {
+    if (shared?.status === 'resolved' && shared.bindingClass !== 'resolved-mixed') {
       expect(shared.paths[0]?.events[0]?.componentReferences).toEqual([
         { componentId: velarFirstStrike.id },
         { componentId: velarSlow.id },
       ]);
     }
     expect(joint?.status).toBe('resolved');
-    if (joint?.status === 'resolved') {
+    if (joint?.status === 'resolved' && joint.bindingClass !== 'resolved-mixed') {
       expect(joint.paths[0]?.events.map((event) => event.eventId)).toEqual([
         'burn-setup',
         'gift-payoff',
@@ -784,7 +784,12 @@ describe('production Formation Reliability contract', () => {
     const instinctBinding = representativeBindings.find(
       (binding) => binding.signalId === 'shimmer-instinct-variant',
     );
-    if (strengthBinding?.status !== 'resolved' || instinctBinding?.status !== 'resolved') {
+    if (
+      strengthBinding?.status !== 'resolved' ||
+      strengthBinding.bindingClass === 'resolved-mixed' ||
+      instinctBinding?.status !== 'resolved' ||
+      instinctBinding.bindingClass === 'resolved-mixed'
+    ) {
       throw new Error('Expected resolved variant bindings.');
     }
     expect(strengthBinding.paths[0]?.events[0]?.componentReferences[0]).toEqual(strengthReference);
@@ -898,7 +903,7 @@ function abilityKindFor(sourceAbilityId: string) {
 function resolvedBinding(
   signalId: string,
   paths: ReturnType<typeof path>[],
-): Extract<SignalReliabilityBinding, { status: 'resolved' }> {
+): Extract<SignalReliabilityBinding, { paths: readonly unknown[] }> {
   return { status: 'resolved', signalId, paths };
 }
 

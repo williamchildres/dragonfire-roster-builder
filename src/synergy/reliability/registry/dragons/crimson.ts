@@ -144,7 +144,10 @@ export const crimsonReliabilityRegistry = defineDragonReliabilityRegistry({
       durationRounds: 2,
       evidence: {
         verificationStatus: 'verified',
-        evidenceIds: ['crimson-bloodscale-terror-summary-2026-06-25'],
+        evidenceIds: [
+          'crimson-bloodscale-terror-summary-2026-06-25',
+          'crimson-vermins-bane-2026-06-25',
+        ],
         unresolvedQuestions: [
           'Whether Stun checks on separate odd-numbered rounds are independent.',
         ],

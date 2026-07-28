@@ -138,6 +138,7 @@ export const tairaxReliabilityRegistry = defineDragonReliabilityRegistry({
           'tairax-burning-ward-2-2026-07-22',
           'tairax-burning-ward-3-2026-07-22',
           'tairax-burning-ward-4-2026-07-22',
+          'tairax-gleamstrike-2026-07-22',
         ],
         unresolvedQuestions: [
           'Whether checks on different odd-numbered rounds are statistically independent.',
