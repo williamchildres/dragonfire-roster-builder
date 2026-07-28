@@ -13,7 +13,9 @@ import {
 import type {
   DragonProgression,
   DragonSynergyProfile,
+  EnrichedRelationshipCandidate,
   EvaluateFormationInput,
+  EvaluateFormationCandidatesResult,
   EvaluateFormationResult,
   ProgressionRequirement,
   SimpleSynergyResult,
@@ -58,19 +60,53 @@ const resultKindOrder: Record<SimpleSynergyResultKind, number> = {
 };
 
 export function evaluateFormation(input: EvaluateFormationInput): EvaluateFormationResult {
+  return evaluateFormationInternal(input, false).legacy;
+}
+
+export function evaluateFormationCandidates(
+  input: EvaluateFormationInput,
+): EvaluateFormationCandidatesResult {
+  return {
+    candidates: evaluateFormationInternal(input, true).candidates.sort((left, right) =>
+      left.id.localeCompare(right.id),
+    ),
+  };
+}
+
+function evaluateFormationInternal(input: EvaluateFormationInput, collectEnriched: boolean): {
+  legacy: EvaluateFormationResult;
+  candidates: EnrichedRelationshipCandidate[];
+} {
   const selected = selectedProfiles(input);
   const results = new Map<string, SimpleSynergyResult>();
   const relationshipCandidates = new Map<string, RelationshipCandidate>();
+  const enrichedCandidates: EnrichedRelationshipCandidate[] | undefined =
+    collectEnriched ? [] : undefined;
 
   for (const beneficiary of selected) {
     for (const benefit of beneficiary.profile.benefitsFrom) {
-      addSetupPayoffResults(results, relationshipCandidates, input, selected, beneficiary, benefit);
+      addSetupPayoffResults(
+        results,
+        relationshipCandidates,
+        enrichedCandidates,
+        input,
+        selected,
+        beneficiary,
+        benefit,
+      );
     }
   }
 
   for (const supporter of selected) {
     for (const support of supporter.profile.supports) {
-      addAmplifierOutputResults(relationshipCandidates, input, selected, supporter, support);
+      addAmplifierOutputResults(
+        relationshipCandidates,
+        enrichedCandidates,
+        input,
+        selected,
+        supporter,
+        support,
+      );
     }
   }
 
@@ -79,7 +115,10 @@ export function evaluateFormation(input: EvaluateFormationInput): EvaluateFormat
   }
 
   return {
-    results: [...results.values()].sort(compareResults),
+    legacy: {
+      results: [...results.values()].sort(compareResults),
+    },
+    candidates: enrichedCandidates ?? [],
   };
 }
 
@@ -96,6 +135,7 @@ function selectedProfiles(input: EvaluateFormationInput): SelectedProfile[] {
 function addSetupPayoffResults(
   results: Map<string, SimpleSynergyResult>,
   relationshipCandidates: Map<string, RelationshipCandidate>,
+  enrichedCandidates: EnrichedRelationshipCandidate[] | undefined,
   input: EvaluateFormationInput,
   selected: SelectedProfile[],
   beneficiary: SelectedProfile,
@@ -142,6 +182,7 @@ function addSetupPayoffResults(
       if (tagMatch) {
         addRelationshipCandidate(
           relationshipCandidates,
+          enrichedCandidates,
           input,
           'setup-payoff',
           provider,
@@ -157,6 +198,7 @@ function addSetupPayoffResults(
 
 function addAmplifierOutputResults(
   relationshipCandidates: Map<string, RelationshipCandidate>,
+  enrichedCandidates: EnrichedRelationshipCandidate[] | undefined,
   input: EvaluateFormationInput,
   selected: SelectedProfile[],
   supporter: SelectedProfile,
@@ -176,6 +218,7 @@ function addAmplifierOutputResults(
       if (tagMatch && targetsBeneficiary(input, selected, supporter, support, producer)) {
         addRelationshipCandidate(
           relationshipCandidates,
+          enrichedCandidates,
           input,
           'amplifier-output',
           supporter,
@@ -192,6 +235,7 @@ function addAmplifierOutputResults(
       if (tagMatch && targetsBeneficiary(input, selected, supporter, support, producer)) {
         addRelationshipCandidate(
           relationshipCandidates,
+          enrichedCandidates,
           input,
           'amplifier-output',
           supporter,
@@ -223,6 +267,7 @@ function targetsBeneficiary(
 
 function addRelationshipCandidate(
   relationshipCandidates: Map<string, RelationshipCandidate>,
+  enrichedCandidates: EnrichedRelationshipCandidate[] | undefined,
   input: EvaluateFormationInput,
   activeKind: 'setup-payoff' | 'amplifier-output',
   provider: SelectedProfile,
@@ -288,6 +333,22 @@ function addRelationshipCandidate(
     return;
   }
 
+  const explanation =
+    activeKind === 'setup-payoff'
+      ? explainSetupPayoff(
+          provider.profile,
+          providerSignal,
+          beneficiary.profile,
+          beneficiarySignal,
+          tagMatch,
+        )
+      : explainAmplifierOutput(
+          provider.profile,
+          providerSignal,
+          beneficiary.profile,
+          beneficiarySignal,
+          tag,
+        );
   addCandidate(relationshipCandidates, semanticId, {
     rank: 3,
     result: {
@@ -296,11 +357,30 @@ function addRelationshipCandidate(
       tag,
       dragonIds: [provider.profile.dragonId, beneficiary.profile.dragonId],
       abilityIds: [providerSignal.abilityId, beneficiarySignal.abilityId],
-      explanation:
-        activeKind === 'setup-payoff'
-          ? explainSetupPayoff(provider.profile, providerSignal, beneficiary.profile, beneficiarySignal, tagMatch)
-          : explainAmplifierOutput(provider.profile, providerSignal, beneficiary.profile, beneficiarySignal, tag),
+      explanation,
     },
+  });
+  enrichedCandidates?.push({
+    id: [
+      semanticId,
+      providerSignal.id,
+      beneficiarySignal.id,
+    ].join(':'),
+    resultKind: activeKind,
+    providerDragonId: provider.profile.dragonId,
+    providerSignalId: providerSignal.id,
+    providerSignalCategory: activeKind === 'setup-payoff' ? 'output' : 'support',
+    providerAbilityId: providerSignal.abilityId,
+    beneficiaryDragonId: beneficiary.profile.dragonId,
+    beneficiarySignalId: beneficiarySignal.id,
+    beneficiarySignalCategory:
+      activeKind === 'setup-payoff' || beneficiary.profile.benefitsFrom.includes(beneficiarySignal)
+        ? 'benefits-from'
+        : 'output',
+    beneficiaryAbilityId: beneficiarySignal.abilityId,
+    semanticTag: tag,
+    abilityIds: uniqueSorted([providerSignal.abilityId, beneficiarySignal.abilityId]),
+    explanation,
   });
 }
 

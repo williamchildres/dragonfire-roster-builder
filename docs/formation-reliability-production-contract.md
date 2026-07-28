@@ -2,7 +2,7 @@
 
 ## Ownership and scope
 
-`src/synergy/reliability` owns Formation Reliability types, pure validation, progression adaptation, probability helpers, and the production metadata registry. The registry remains disconnected from Formation Rating v2, relationship construction, placement comparison, optimizer behavior, Estimated Power, persistence, and UI, so this migration cannot change current scoring.
+`src/synergy/reliability` owns Formation Reliability types, pure validation, progression adaptation, probability helpers, the production metadata registry, and the isolated Formation Rating v3 scoring consumer. Formation Rating v2, the live Formation Builder, optimizer behavior, Estimated Power, persistence, and UI remain disconnected from v3, so current scoring does not change.
 
 ## Registry organization and coverage
 
@@ -44,4 +44,4 @@ Vaeldra's composite follow-on uses two explicit alternative joint paths: Lure Ta
 
 `pnpm run validate:reliability-registry` executes the full-migration gate. GitHub CI runs it as a dedicated step without replacing lint, tests, or build. `pnpm run audit:reliability-registry` verifies the committed deterministic registry audit and hash.
 
-The historical research hash remains independent. A future Formation Rating v3 engine may consume these registry surfaces, but it must decide how one current base relationship value is allocated or combined across simultaneous uses. This metadata PR makes no scoring allocation decision, and no v2 evaluator imports the registry today.
+The historical research hash remains independent. Formation Rating v3 is the registry's first scoring consumer. It evaluates simultaneous uses independently, keeps one base relationship value, and uses a fully supported use or the strongest quantified lower bound without adding, averaging, or multiplying uses. No v2 evaluator imports the registry.
