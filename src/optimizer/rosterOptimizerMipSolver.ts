@@ -2,6 +2,11 @@ import { HiGHS, Model, Solution, sum, type LinExpr, type Var } from '@bubblyworl
 import type { DragonRarity } from '../models/dragon';
 import { applyRosterOptimizerExactGapOptions } from './highsExactOptions';
 import { objectiveForCandidates } from './rosterOptimizerObjective';
+import {
+  evaluateExactOptimumCertification,
+  OPTIMIZER_MATERIAL_OBJECTIVE_DELTA,
+  reconstructExactIntegerObjective,
+} from './rosterOptimizerPrimaryBackupMipSolver';
 import type {
   OptimizerFormationCandidate,
   OptimizerRosterDragon,
@@ -26,6 +31,14 @@ interface SolverTelemetry {
 interface SolverSession {
   highs: HiGHS;
   telemetry: SolverTelemetry;
+}
+
+interface BestTenFixedObjectives {
+  totalRating: number;
+  histogramFixes: Array<{ levels: number[]; value: number }>;
+  relationshipValueUnits: number;
+  relationshipCount: number;
+  stableFixes: Array<{ indices: number[]; value: number }>;
 }
 
 const histogramChunkSize = 8;
@@ -136,7 +149,20 @@ export async function solveRosterOptimizerMip(
         context.totalActiveRelationships.eq(optimalRelationshipCount),
         'fix_relationship_count',
       );
-      selectedIndices = await refineStableSolutionKey(context, session, targetFormationCount);
+      selectedIndices = await refineStableSolutionKey({
+        context,
+        session,
+        candidates,
+        eligibleDragons,
+        targetFormationCount,
+        fixed: {
+          totalRating: optimalTotalRating,
+          histogramFixes,
+          relationshipValueUnits: optimalRelationshipValueUnits,
+          relationshipCount: optimalRelationshipCount,
+          stableFixes: [],
+        },
+      });
     }
 
     const selectedCandidates = selectedIndices.map((index) => candidates[index]!);
@@ -213,11 +239,21 @@ function buildModel(
   };
 }
 
-async function refineStableSolutionKey(
-  context: ModelContext,
-  session: SolverSession,
-  targetFormationCount: number,
-): Promise<number[]> {
+async function refineStableSolutionKey({
+  context,
+  session,
+  candidates,
+  eligibleDragons,
+  targetFormationCount,
+  fixed,
+}: {
+  context: ModelContext;
+  session: SolverSession;
+  candidates: OptimizerFormationCandidate[];
+  eligibleDragons: OptimizerRosterDragon[];
+  targetFormationCount: number;
+  fixed: BestTenFixedObjectives;
+}): Promise<number[]> {
   const fixedSelected = new Set<number>();
   let latestSelected: number[] = [];
   for (let start = 0; start < context.variables.length; start += stableChunkSize) {
@@ -232,8 +268,27 @@ async function refineStableSolutionKey(
     );
     context.model.maximize(expression);
     const solution = await solveOptimal(context.model, session, 'stable solution key');
-    const value = roundedInteger(solution.objective);
+    const reconstruction = reconstructExactIntegerObjective({
+      solution,
+      expression,
+      integerVariables: context.variables,
+      stage: 'Best Ten stable solution key',
+    });
+    if (reconstruction.rawObjectiveDelta > OPTIMIZER_MATERIAL_OBJECTIVE_DELTA) {
+      await certifyBestTenStableOptimum({
+        session,
+        candidates,
+        eligibleDragons,
+        targetFormationCount,
+        fixed,
+        indices,
+        reconstructedValue: reconstruction.value,
+        start,
+      });
+    }
+    const value = reconstruction.value;
     context.model.addConstraint(expression.eq(value), `fix_stable_${start}`);
+    fixed.stableFixes.push({ indices, value });
     latestSelected = selectedVariableIndices(solution, context.variables);
     latestSelected
       .filter((index) => index <= indices.at(-1)!)
@@ -241,6 +296,84 @@ async function refineStableSolutionKey(
     if (fixedSelected.size === targetFormationCount) break;
   }
   return latestSelected;
+}
+
+async function certifyBestTenStableOptimum({
+  session,
+  candidates,
+  eligibleDragons,
+  targetFormationCount,
+  fixed,
+  indices,
+  reconstructedValue,
+  start,
+}: {
+  session: SolverSession;
+  candidates: OptimizerFormationCandidate[];
+  eligibleDragons: OptimizerRosterDragon[];
+  targetFormationCount: number;
+  fixed: BestTenFixedObjectives;
+  indices: number[];
+  reconstructedValue: number;
+  start: number;
+}): Promise<void> {
+  const probe = buildModel(candidates, eligibleDragons, targetFormationCount);
+  applyBestTenFixedObjectives(probe, candidates, fixed);
+  const expression = sum(
+    ...indices.map((index, offset) =>
+      probe.variables[index]!.times(2 ** (indices.length - offset - 1)),
+    ),
+  );
+  probe.model.addConstraint(
+    expression.geq(reconstructedValue + 1),
+    `certify_stable_${start}`,
+  );
+  probe.model.minimize(sum(0));
+  const solution = await solveAllowInfeasible(probe.model, session);
+  evaluateExactOptimumCertification({
+    solution,
+    expression,
+    integerVariables: probe.variables,
+    direction: 'maximize',
+    reconstructedValue,
+    stage: 'Best Ten stable solution key',
+    solverPass: session.telemetry.passes,
+  });
+}
+
+function applyBestTenFixedObjectives(
+  context: ModelContext,
+  candidates: OptimizerFormationCandidate[],
+  fixed: BestTenFixedObjectives,
+): void {
+  context.model.addConstraint(
+    context.totalRating.eq(fixed.totalRating),
+    'probe_fix_total_rating',
+  );
+  fixed.histogramFixes.forEach((fix, index) => {
+    context.model.addConstraint(
+      histogramExpression(candidates, context.variables, fix.levels).eq(fix.value),
+      `probe_fix_rating_histogram_${index}`,
+    );
+  });
+  context.model.addConstraint(
+    context.totalRelationshipValueUnits.eq(fixed.relationshipValueUnits),
+    'probe_fix_relationship_value',
+  );
+  context.model.addConstraint(
+    context.totalActiveRelationships.eq(fixed.relationshipCount),
+    'probe_fix_relationship_count',
+  );
+  fixed.stableFixes.forEach((fix, index) => {
+    const expression = sum(
+      ...fix.indices.map((candidateIndex, offset) =>
+        context.variables[candidateIndex]!.times(
+          2 ** (fix.indices.length - offset - 1),
+        ),
+      ),
+    );
+    context.model.addConstraint(expression.eq(fix.value), `probe_fix_stable_${index}`);
+  });
 }
 
 function histogramExpression(
