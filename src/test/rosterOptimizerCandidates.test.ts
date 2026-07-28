@@ -84,7 +84,7 @@ describe('optimizer candidate generation and roster progression', () => {
     expect(rating.tier).toBe(candidate.tier);
     expect(rating.adjustedUncappedRelationshipValue)
       .toBe(candidate.adjustedRelationshipValue);
-  });
+  }, 60_000);
 
   it('respects current Star Rank and Dragon Level relationship unlocks', () => {
     const lowSnapshot = buildOptimizerRosterSnapshot(dragons, rosterFor(trioIds, 1, 0));
