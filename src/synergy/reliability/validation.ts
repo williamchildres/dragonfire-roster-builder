@@ -2,7 +2,9 @@ import { isReliabilityProbabilityValue } from './probability';
 import type {
   AbilityReliabilityComponent,
   ConcreteReliabilityProbability,
+  ReliabilityAbilityReference,
   ReliabilityComponentId,
+  ReliabilityComponentReference,
   ReliabilityContractInput,
   ReliabilityProbability,
   ReliabilityValidationIssue,
@@ -12,6 +14,7 @@ import type {
 } from './types';
 
 const COMPONENT_ID_PATTERN = /^([a-z0-9]+(?:-[a-z0-9]+)*):([a-z0-9]+(?:-[a-z0-9]+)*)$/;
+const ABILITY_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HABIT_LEVELS = ['1', '2', '3', '4', '5'] as const;
 
 export function createReliabilityComponentId(
@@ -32,7 +35,10 @@ export function validateReliabilityContract(
   mode: ReliabilityValidationMode,
 ): ReliabilityValidationIssue[] {
   const issues: ReliabilityValidationIssue[] = [];
-  const componentIds = new Set(input.components.map((component) => component.id));
+  const componentsById = new Map(input.components.map((component) => [component.id, component]));
+  const abilitiesById = input.abilityCatalog
+    ? new Map(input.abilityCatalog.map((ability) => [ability.abilityId, ability]))
+    : undefined;
   const scoringSignalIds = new Set(input.scoringSignalIds);
   const referencedComponentIds = new Set<ReliabilityComponentId>();
 
@@ -57,12 +63,29 @@ export function validateReliabilityContract(
     'Duplicate scoring signal ID',
     issues,
   );
+  if (input.abilityCatalog) {
+    addDuplicateIssues(
+      input.abilityCatalog.map((ability) => ability.abilityId),
+      'ability-catalog.duplicate-id',
+      'abilityCatalog',
+      'Duplicate canonical ability ID',
+      issues,
+    );
+    for (const ability of input.abilityCatalog) validateAbilityReference(ability, issues);
+  }
 
   for (const component of input.components) {
-    validateComponent(component, issues);
+    validateComponent(component, abilitiesById, issues);
   }
   for (const binding of input.bindings) {
-    validateBinding(binding, componentIds, scoringSignalIds, referencedComponentIds, mode, issues);
+    validateBinding(
+      binding,
+      componentsById,
+      scoringSignalIds,
+      referencedComponentIds,
+      mode,
+      issues,
+    );
   }
 
   if (mode === 'full-migration') {
@@ -77,7 +100,7 @@ export function validateReliabilityContract(
         );
       }
     }
-    for (const componentId of componentIds) {
+    for (const componentId of componentsById.keys()) {
       if (!referencedComponentIds.has(componentId)) {
         addIssue(
           issues,
@@ -107,6 +130,7 @@ export function assertValidReliabilityContract(
 
 function validateComponent(
   component: AbilityReliabilityComponent,
+  abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
   issues: ReliabilityValidationIssue[],
 ): void {
   const path = `components[${component.id || '<empty>'}]`;
@@ -129,7 +153,7 @@ function validateComponent(
 
   validateClassAndOpportunitySemantics(component, path, issues);
   if (component.probability) {
-    validateProbability(component.probability, `${path}.probability`, issues);
+    validateProbability(component.probability, `${path}.probability`, abilitiesById, issues);
   }
   validateTiming(component, path, issues);
   validateOpportunityCount(component, path, issues);
@@ -269,6 +293,7 @@ function timingSupportsGuaranteedOpportunity(component: AbilityReliabilityCompon
 function validateProbability(
   probability: ReliabilityProbability,
   path: string,
+  abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
   issues: ReliabilityValidationIssue[],
 ): void {
   if (probability.kind === 'unknown') {
@@ -310,51 +335,42 @@ function validateProbability(
       validateConcreteProbability(
         variant.probability,
         `${path}.variants[${variant.id || '<empty>'}].probability`,
+        abilitiesById,
         issues,
       );
     }
     return;
   }
-  validateConcreteProbability(probability, path, issues);
+  validateConcreteProbability(probability, path, abilitiesById, issues);
 }
 
 function validateConcreteProbability(
   probability: ConcreteReliabilityProbability,
   path: string,
+  abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
   issues: ReliabilityValidationIssue[],
 ): void {
+  if (probability.kind === 'unknown') {
+    if (!probability.reason.trim()) {
+      addIssue(
+        issues,
+        'probability.unknown-reason-missing',
+        `${path}.reason`,
+        'Unknown probability requires a reason.',
+      );
+    }
+    return;
+  }
   if (probability.kind === 'fixed') {
     validateProbabilityValue(probability.value, `${path}.value`, issues);
     return;
   }
-  if (probability.kind === 'habit-level') {
-    const levels = Object.keys(probability.byLevel).sort();
-    for (const level of HABIT_LEVELS) {
-      if (!levels.includes(level)) {
-        addIssue(
-          issues,
-          'probability.habit-level-missing',
-          `${path}.byLevel[${level}]`,
-          `Habit Level ${level} probability is missing.`,
-        );
-      } else {
-        validateProbabilityValue(
-          probability.byLevel[Number(level) as 1 | 2 | 3 | 4 | 5],
-          `${path}.byLevel[${level}]`,
-          issues,
-        );
-      }
+  if (probability.kind === 'habit-level' || probability.kind === 'habit-override') {
+    validateHabitAbilityId(probability.habitAbilityId, path, abilitiesById, issues);
+    if (probability.kind === 'habit-override') {
+      validateProbabilityValue(probability.base, `${path}.base`, issues);
     }
-    for (const level of levels.filter(
-      (candidate) => !HABIT_LEVELS.includes(candidate as (typeof HABIT_LEVELS)[number]),
-    )) {
-      addIssue(
-        issues,
-        'probability.habit-level-unsupported',
-        `${path}.byLevel[${level}]`,
-        `Habit Level key "${level}" is outside levels 1 through 5.`,
-      );
-    }
+    validateHabitLevels(probability.byLevel, path, issues);
     return;
   }
 
@@ -369,7 +385,7 @@ function validateConcreteProbability(
       'Round-specific probability requires at least one round.',
     );
   }
-  for (const [round, value] of entries) {
+  for (const [round, roundProbability] of entries) {
     if (!Number.isInteger(Number(round)) || Number(round) < 1) {
       addIssue(
         issues,
@@ -378,7 +394,95 @@ function validateConcreteProbability(
         `Round key "${round}" must be a positive integer.`,
       );
     }
-    validateProbabilityValue(value, `${path}.byRound[${round}]`, issues);
+    validateConcreteProbability(
+      roundProbability,
+      `${path}.byRound[${round}]`,
+      abilitiesById,
+      issues,
+    );
+  }
+}
+
+function validateHabitAbilityId(
+  habitAbilityId: string,
+  path: string,
+  abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
+  issues: ReliabilityValidationIssue[],
+): void {
+  const idPath = `${path}.habitAbilityId`;
+  if (!ABILITY_ID_PATTERN.test(habitAbilityId)) {
+    addIssue(
+      issues,
+      'probability.habit-ability-id-malformed',
+      idPath,
+      'Habit probability source must be a non-empty kebab-case ability ID.',
+    );
+    return;
+  }
+  if (!abilitiesById) return;
+  const ability = abilitiesById.get(habitAbilityId);
+  if (!ability) {
+    addIssue(
+      issues,
+      'probability.habit-ability-missing',
+      idPath,
+      `Habit probability source "${habitAbilityId}" is absent from the canonical ability catalog.`,
+    );
+  } else if (ability.kind !== 'habit') {
+    addIssue(
+      issues,
+      'probability.habit-ability-kind',
+      idPath,
+      `Probability source "${habitAbilityId}" is a ${ability.kind}, not a Habit.`,
+    );
+  }
+}
+
+function validateHabitLevels(
+  byLevel: Record<1 | 2 | 3 | 4 | 5, number>,
+  path: string,
+  issues: ReliabilityValidationIssue[],
+): void {
+  const levels = Object.keys(byLevel).sort();
+  for (const level of HABIT_LEVELS) {
+    if (!levels.includes(level)) {
+      addIssue(
+        issues,
+        'probability.habit-level-missing',
+        `${path}.byLevel[${level}]`,
+        `Habit Level ${level} probability is missing.`,
+      );
+    } else {
+      validateProbabilityValue(
+        byLevel[Number(level) as 1 | 2 | 3 | 4 | 5],
+        `${path}.byLevel[${level}]`,
+        issues,
+      );
+    }
+  }
+  for (const level of levels.filter(
+    (candidate) => !HABIT_LEVELS.includes(candidate as (typeof HABIT_LEVELS)[number]),
+  )) {
+    addIssue(
+      issues,
+      'probability.habit-level-unsupported',
+      `${path}.byLevel[${level}]`,
+      `Habit Level key "${level}" is outside levels 1 through 5.`,
+    );
+  }
+}
+
+function validateAbilityReference(
+  ability: ReliabilityAbilityReference,
+  issues: ReliabilityValidationIssue[],
+): void {
+  if (!ABILITY_ID_PATTERN.test(ability.abilityId)) {
+    addIssue(
+      issues,
+      'ability-catalog.malformed-id',
+      `abilityCatalog[${ability.abilityId || '<empty>'}].abilityId`,
+      `Canonical ability ID "${ability.abilityId}" must use kebab-case.`,
+    );
   }
 }
 
@@ -571,7 +675,7 @@ function validateEvidence(
 
 function validateBinding(
   binding: SignalReliabilityBinding,
-  componentIds: ReadonlySet<ReliabilityComponentId>,
+  componentsById: ReadonlyMap<ReliabilityComponentId, AbilityReliabilityComponent>,
   scoringSignalIds: ReadonlySet<string>,
   referencedComponentIds: Set<ReliabilityComponentId>,
   mode: ReliabilityValidationMode,
@@ -623,14 +727,14 @@ function validateBinding(
     issues,
   );
   for (const candidate of paths) {
-    validatePath(candidate, path, componentIds, referencedComponentIds, issues);
+    validatePath(candidate, path, componentsById, referencedComponentIds, issues);
   }
 }
 
 function validatePath(
   candidate: SignalReliabilityPath,
   bindingPath: string,
-  componentIds: ReadonlySet<ReliabilityComponentId>,
+  componentsById: ReadonlyMap<ReliabilityComponentId, AbilityReliabilityComponent>,
   referencedComponentIds: Set<ReliabilityComponentId>,
   issues: ReliabilityValidationIssue[],
 ): void {
@@ -670,32 +774,36 @@ function validatePath(
         'Reliability event IDs must not be empty.',
       );
     }
-    if (event.componentIds.length === 0) {
+    if (event.componentReferences.length === 0) {
       addIssue(
         issues,
         'binding.event-components-empty',
-        `${eventPath}.componentIds`,
+        `${eventPath}.componentReferences`,
         'A reliability event requires at least one component.',
       );
     }
     addDuplicateIssues(
-      event.componentIds,
+      event.componentReferences.map((reference) => reference.componentId),
       'binding.event-component-duplicate',
-      `${eventPath}.componentIds`,
+      `${eventPath}.componentReferences`,
       'Duplicate component within shared event',
       issues,
     );
-    for (const componentId of event.componentIds) {
+    for (const reference of event.componentReferences) {
+      const componentId = reference.componentId;
       pathComponentIds.push(componentId);
       referencedComponentIds.add(componentId);
-      if (!componentIds.has(componentId)) {
+      const component = componentsById.get(componentId);
+      if (!component) {
         addIssue(
           issues,
           'binding.component-missing',
-          `${eventPath}.componentIds[${componentId}]`,
+          `${eventPath}.componentReferences[${componentId}]`,
           `Binding references missing component "${componentId}".`,
         );
+        continue;
       }
+      validateComponentReference(reference, component, eventPath, issues);
     }
   }
   addDuplicateIssues(
@@ -705,6 +813,47 @@ function validatePath(
     'Component appears in more than one jointly required event',
     issues,
   );
+}
+
+function validateComponentReference(
+  reference: ReliabilityComponentReference,
+  component: AbilityReliabilityComponent,
+  eventPath: string,
+  issues: ReliabilityValidationIssue[],
+): void {
+  const path = `${eventPath}.componentReferences[${reference.componentId}]`;
+  if (component.probability?.kind === 'variants') {
+    if (!reference.probabilityVariantId) {
+      addIssue(
+        issues,
+        'binding.probability-variant-missing',
+        `${path}.probabilityVariantId`,
+        `Component "${reference.componentId}" requires an explicit probability variant.`,
+      );
+      return;
+    }
+    if (
+      !component.probability.variants.some(
+        (variant) => variant.id === reference.probabilityVariantId,
+      )
+    ) {
+      addIssue(
+        issues,
+        'binding.probability-variant-unknown',
+        `${path}.probabilityVariantId`,
+        `Component "${reference.componentId}" has no probability variant "${reference.probabilityVariantId}".`,
+      );
+    }
+    return;
+  }
+  if (reference.probabilityVariantId !== undefined) {
+    addIssue(
+      issues,
+      'binding.probability-variant-unexpected',
+      `${path}.probabilityVariantId`,
+      `Component "${reference.componentId}" does not define probability variants.`,
+    );
+  }
 }
 
 function addDuplicateIssues(

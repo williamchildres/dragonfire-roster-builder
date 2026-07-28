@@ -4,6 +4,7 @@ import { resolveReliabilityProbability } from './probability';
 import type {
   AbilityReliabilityComponent,
   ProbabilityResolutionContext,
+  ReliabilityComponentReference,
   ReliabilityProgression,
 } from './types';
 
@@ -25,12 +26,34 @@ export function reliabilityProgressionFromOwnedDragon(
 
 export function resolveComponentProbability(
   component: AbilityReliabilityComponent,
+  reference: ReliabilityComponentReference,
   progression: ReliabilityProgression,
-  context: Omit<ProbabilityResolutionContext, 'habitLevel'> = {},
+  context: ProbabilityResolutionContext = {},
 ): number | null {
   if (!component.probability) return null;
-  return resolveReliabilityProbability(component.probability, {
-    ...context,
-    habitLevel: progression.activeHabitLevels[component.sourceAbilityId] ?? null,
-  });
+  if (reference.componentId !== component.id) {
+    throw new Error(
+      `Component reference "${reference.componentId}" does not match component "${component.id}".`,
+    );
+  }
+
+  const probability = component.probability;
+  if (probability.kind === 'variants') {
+    if (!reference.probabilityVariantId) {
+      throw new Error(`Component "${component.id}" requires a probability variant selection.`);
+    }
+    const variant = probability.variants.find(
+      (candidate) => candidate.id === reference.probabilityVariantId,
+    );
+    if (!variant) {
+      throw new Error(
+        `Component "${component.id}" has no probability variant "${reference.probabilityVariantId}".`,
+      );
+    }
+    return resolveReliabilityProbability(variant.probability, progression, context);
+  }
+  if (reference.probabilityVariantId !== undefined) {
+    throw new Error(`Component "${component.id}" does not define probability variants.`);
+  }
+  return resolveReliabilityProbability(probability, progression, context);
 }

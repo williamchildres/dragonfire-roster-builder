@@ -1,4 +1,4 @@
-import type { HabitLevel } from '../../models/dragon';
+import type { AbilityKind, HabitLevel } from '../../models/dragon';
 
 export const FORMATION_RELIABILITY_CONTRACT_VERSION = 1 as const;
 
@@ -13,18 +13,34 @@ export type FixedReliabilityProbability = {
 
 export type HabitLevelReliabilityProbability = {
   kind: 'habit-level';
+  habitAbilityId: string;
   byLevel: Record<HabitLevel, number>;
 };
 
+export type HabitOverrideReliabilityProbability = {
+  kind: 'habit-override';
+  habitAbilityId: string;
+  base: number;
+  byLevel: Record<HabitLevel, number>;
+};
+
+export type RoundReliabilityProbability =
+  | FixedReliabilityProbability
+  | HabitLevelReliabilityProbability
+  | HabitOverrideReliabilityProbability
+  | UnknownReliabilityProbability;
+
 export type RoundSpecificReliabilityProbability = {
   kind: 'round-specific';
-  byRound: Record<number, number>;
+  byRound: Readonly<Record<number, RoundReliabilityProbability>>;
 };
 
 export type ConcreteReliabilityProbability =
   | FixedReliabilityProbability
   | HabitLevelReliabilityProbability
-  | RoundSpecificReliabilityProbability;
+  | HabitOverrideReliabilityProbability
+  | RoundSpecificReliabilityProbability
+  | UnknownReliabilityProbability;
 
 export type MultipleReliabilityProbability = {
   kind: 'variants';
@@ -40,7 +56,7 @@ export type UnknownReliabilityProbability = {
 };
 
 export type ReliabilityProbability =
-  ConcreteReliabilityProbability | MultipleReliabilityProbability | UnknownReliabilityProbability;
+  ConcreteReliabilityProbability | MultipleReliabilityProbability;
 
 export type OpportunityPresence =
   'guaranteed-at-least-one' | 'conditional' | 'unknown' | 'not-applicable';
@@ -120,7 +136,12 @@ export interface AbilityReliabilityComponent {
  */
 export interface ReliabilityEventRequirement {
   eventId: string;
-  componentIds: readonly ReliabilityComponentId[];
+  componentReferences: readonly ReliabilityComponentReference[];
+}
+
+export interface ReliabilityComponentReference {
+  componentId: ReliabilityComponentId;
+  probabilityVariantId?: string;
 }
 
 /**
@@ -147,10 +168,20 @@ export type SignalReliabilityBinding =
 
 export type ReliabilityValidationMode = 'contract' | 'full-migration';
 
+export interface ReliabilityAbilityReference {
+  abilityId: string;
+  kind: AbilityKind;
+}
+
 export interface ReliabilityContractInput {
   components: readonly AbilityReliabilityComponent[];
   bindings: readonly SignalReliabilityBinding[];
   scoringSignalIds: readonly string[];
+  /**
+   * Optional canonical ability facts let pure validation confirm that a
+   * probability source exists and is a Habit.
+   */
+  abilityCatalog?: readonly ReliabilityAbilityReference[];
 }
 
 export interface ReliabilityValidationIssue {
@@ -170,7 +201,5 @@ export interface ReliabilityProgression {
 }
 
 export interface ProbabilityResolutionContext {
-  habitLevel?: HabitLevel | null;
   round?: number | null;
-  variantId?: string | null;
 }

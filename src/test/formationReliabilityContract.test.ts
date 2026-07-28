@@ -11,16 +11,37 @@ import {
   resolveReliabilityProbability,
   validateReliabilityContract,
   type AbilityReliabilityComponent,
+  type HabitOverrideReliabilityProbability,
   type HabitLevelReliabilityProbability,
   type ReliabilityComponentId,
+  type ReliabilityComponentReference,
   type ReliabilityContractInput,
   type SignalReliabilityBinding,
 } from '../synergy/reliability';
 
 const habitProbability = (
+  habitAbilityId: string,
   values: [number, number, number, number, number],
 ): HabitLevelReliabilityProbability => ({
   kind: 'habit-level',
+  habitAbilityId,
+  byLevel: {
+    1: values[0],
+    2: values[1],
+    3: values[2],
+    4: values[3],
+    5: values[4],
+  },
+});
+
+const habitOverride = (
+  habitAbilityId: string,
+  base: number,
+  values: [number, number, number, number, number],
+): HabitOverrideReliabilityProbability => ({
+  kind: 'habit-override',
+  habitAbilityId,
+  base,
   byLevel: {
     1: values[0],
     2: values[1],
@@ -42,10 +63,15 @@ const unresolvedEvidence = (...questions: string[]) => ({
   unresolvedQuestions: questions,
 });
 
+const velarFirstStrikeProbability = habitProbability(
+  'velar-gales-of-power',
+  [0.12, 0.144, 0.168, 0.204, 0.24],
+);
+
 const velarFirstStrike = chanceComponent({
   id: 'velar-gales-of-power:first-strike',
   sourceAbilityId: 'velar-gales-of-power',
-  probability: habitProbability([0.12, 0.144, 0.168, 0.204, 0.24]),
+  probability: velarFirstStrikeProbability,
   opportunityPresence: 'conditional',
   timing: { kind: 'scheduled-rounds', rounds: [2, 4, 6, 8] },
   opportunityCount: { kind: 'scheduled-maximum', maximum: 4 },
@@ -76,7 +102,7 @@ const velarRecovery: AbilityReliabilityComponent = {
 const velarCleanse = chanceComponent({
   id: 'velar-breath-of-renewal:cleanse',
   sourceAbilityId: 'velar-breath-of-renewal',
-  probability: habitProbability([0.12, 0.16, 0.19, 0.24, 0.3]),
+  probability: habitProbability('velar-breath-of-renewal', [0.12, 0.16, 0.19, 0.24, 0.3]),
   opportunityPresence: 'guaranteed-at-least-one',
   timing: { kind: 'each-round' },
   opportunityCount: { kind: 'battle-length-dependent' },
@@ -89,7 +115,7 @@ const velarCleanse = chanceComponent({
 const malachiteLightning = chanceComponent({
   id: 'malachite-lightning-strike:first-strike',
   sourceAbilityId: 'malachite-lightning-strike',
-  probability: habitProbability([0.4, 0.55, 0.7, 0.85, 1]),
+  probability: habitProbability('malachite-lightning-strike', [0.4, 0.55, 0.7, 0.85, 1]),
   opportunityPresence: 'guaranteed-at-least-one',
   timing: { kind: 'start-of-combat' },
   opportunityCount: { kind: 'exact', value: 1 },
@@ -101,7 +127,7 @@ const malachiteLightning = chanceComponent({
 const tairaxGift = chanceComponent({
   id: 'tairax-gift-of-fire:resistance',
   sourceAbilityId: 'tairax-gift-of-fire',
-  probability: habitProbability([0.175, 0.21, 0.245, 0.2975, 0.35]),
+  probability: habitProbability('tairax-gift-of-fire', [0.175, 0.21, 0.245, 0.2975, 0.35]),
   opportunityPresence: 'conditional',
   timing: { kind: 'conditional-event', condition: 'An Enemy is afflicted with Burn.' },
   opportunityCount: {
@@ -147,6 +173,82 @@ const tairaxBurn = chanceComponent({
   evidence: unresolvedEvidence('Battle reach and temporal independence are unresolved.'),
 });
 
+const tairaxStagger = chanceComponent({
+  id: 'tairax-burning-ward:stagger',
+  sourceAbilityId: 'tairax-burning-ward',
+  probability: {
+    kind: 'round-specific',
+    byRound: Object.fromEntries(
+      [1, 3, 5, 7, 9].map((round) => [
+        round,
+        habitOverride('tairax-gleamstrike', 0.25, [0.375, 0.4, 0.425, 0.4625, 0.5]),
+      ]),
+    ),
+  },
+  opportunityPresence: 'guaranteed-at-least-one',
+  timing: { kind: 'scheduled-rounds', rounds: [1, 3, 5, 7, 9] },
+  opportunityCount: { kind: 'scheduled-maximum', maximum: 5 },
+  rollScope: 'shared',
+  independence: 'unknown',
+  durationRounds: 2,
+  evidence: unresolvedEvidence('Battle reach and temporal independence are unresolved.'),
+});
+
+const crimsonStun = chanceComponent({
+  id: 'crimson-bloodscale-terror:stun',
+  sourceAbilityId: 'crimson-bloodscale-terror',
+  probability: {
+    kind: 'round-specific',
+    byRound: {
+      1: habitOverride('crimson-vermins-bane', 0.2, [0.4, 0.52, 0.64, 0.8, 1]),
+      3: { kind: 'fixed', value: 0.2 },
+      5: { kind: 'fixed', value: 0.2 },
+      7: { kind: 'fixed', value: 0.2 },
+      9: { kind: 'fixed', value: 0.2 },
+    },
+  },
+  opportunityPresence: 'guaranteed-at-least-one',
+  timing: { kind: 'scheduled-rounds', rounds: [1, 3, 5, 7, 9] },
+  opportunityCount: { kind: 'scheduled-maximum', maximum: 5 },
+  rollScope: 'shared',
+  independence: 'unknown',
+  durationRounds: 2,
+  evidence: unresolvedEvidence('Battle reach and temporal independence are unresolved.'),
+});
+
+const venatorDoubleStrike = chanceComponent({
+  id: 'venator-feral-strike:double-strike',
+  sourceAbilityId: 'venator-feral-strike',
+  probability: {
+    kind: 'round-specific',
+    byRound: Object.fromEntries(
+      [4, 6, 8].map((round) => [
+        round,
+        habitOverride('venator-feral-precision', 0.3, [0.4, 0.42, 0.44, 0.47, 0.5]),
+      ]),
+    ),
+  },
+  opportunityPresence: 'conditional',
+  timing: { kind: 'scheduled-rounds', rounds: [4, 6, 8] },
+  opportunityCount: { kind: 'scheduled-maximum', maximum: 3 },
+  rollScope: 'shared',
+  independence: 'unknown',
+  durationRounds: 2,
+  evidence: unresolvedEvidence('Battle reach and temporal independence are unresolved.'),
+});
+
+const variantChance = chanceComponent({
+  ...shimmerChanceBuff,
+  id: 'shimmer-unbreakable-loyalty:targeted-command-buffs',
+  probability: {
+    kind: 'variants',
+    variants: [
+      { id: 'highest-strength', probability: { kind: 'fixed', value: 0.2 } },
+      { id: 'highest-instinct', probability: { kind: 'fixed', value: 0.35 } },
+    ],
+  },
+});
+
 const representativeComponents = [
   velarFirstStrike,
   velarSlow,
@@ -158,6 +260,9 @@ const representativeComponents = [
   shimmerTactical,
   shimmerRecovery,
   tairaxBurn,
+  tairaxStagger,
+  crimsonStun,
+  variantChance,
 ] as const;
 
 const representativeBindings: SignalReliabilityBinding[] = [
@@ -182,6 +287,22 @@ const representativeBindings: SignalReliabilityBinding[] = [
       ['gift-payoff', [tairaxGift.id]],
     ]),
   ]),
+  resolvedBinding('tairax-burning-ward-stagger', [
+    path('stagger', [['stagger-roll', [tairaxStagger.id]]]),
+  ]),
+  resolvedBinding('crimson-bloodscale-terror-stun', [
+    path('stun', [['stun-roll', [crimsonStun.id]]]),
+  ]),
+  resolvedBinding('shimmer-strength-variant', [
+    path('strength-target', [
+      ['command-buff', [componentReference(variantChance.id, 'highest-strength')]],
+    ]),
+  ]),
+  resolvedBinding('shimmer-instinct-variant', [
+    path('instinct-target', [
+      ['command-buff', [componentReference(variantChance.id, 'highest-instinct')]],
+    ]),
+  ]),
   {
     status: 'unresolved-mixed',
     signalId: 'shimmer-instinct-payoff',
@@ -198,6 +319,11 @@ const representativeInput: ReliabilityContractInput = {
   components: representativeComponents,
   bindings: representativeBindings,
   scoringSignalIds: representativeBindings.map((binding) => binding.signalId),
+  abilityCatalog: dragons.flatMap((dragon) => [
+    { abilityId: dragon.command.id, kind: dragon.command.kind },
+    { abilityId: dragon.trait.id, kind: dragon.trait.kind },
+    ...dragon.habits.map((habit) => ({ abilityId: habit.id, kind: habit.kind })),
+  ]),
 };
 
 describe('production Formation Reliability contract', () => {
@@ -252,13 +378,58 @@ describe('production Formation Reliability contract', () => {
       ...velarFirstStrike,
       probability: {
         kind: 'habit-level' as const,
+        habitAbilityId: 'velar-gales-of-power',
         byLevel: { 1: 0.1, 2: 0.2, 3: 0.3, 4: 0.4 },
+      } as HabitLevelReliabilityProbability,
+    };
+    const unsupportedLevel = {
+      ...velarFirstStrike,
+      probability: {
+        kind: 'habit-level',
+        habitAbilityId: 'velar-gales-of-power',
+        byLevel: { 1: 0.1, 2: 0.2, 3: 0.3, 4: 0.4, 5: 0.5, 6: 0.9 },
       } as HabitLevelReliabilityProbability,
     };
     expect(issueCodes(componentOnly(invalidFixed))).toContain('probability.value-out-of-range');
     expect(issueCodes(componentOnly(missingLevel))).toContain('probability.habit-level-missing');
+    expect(issueCodes(componentOnly(unsupportedLevel))).toContain(
+      'probability.habit-level-unsupported',
+    );
     expect(issueCodes(componentOnly(velarFirstStrike))).not.toContain(
       'probability.habit-level-missing',
+    );
+  });
+
+  it('validates explicit Habit probability sources against canonical ability facts', () => {
+    const malformed = {
+      ...velarFirstStrike,
+      probability: {
+        ...velarFirstStrike.probability!,
+        habitAbilityId: '',
+      } as HabitLevelReliabilityProbability,
+    };
+    const commandSource = {
+      ...velarFirstStrike,
+      probability: {
+        ...velarFirstStrike.probability!,
+        habitAbilityId: 'tairax-burning-ward',
+      } as HabitLevelReliabilityProbability,
+    };
+    const missingSource = {
+      ...velarFirstStrike,
+      probability: {
+        ...velarFirstStrike.probability!,
+        habitAbilityId: 'missing-habit',
+      } as HabitLevelReliabilityProbability,
+    };
+    expect(issueCodes(componentOnly(malformed, representativeInput.abilityCatalog))).toContain(
+      'probability.habit-ability-id-malformed',
+    );
+    expect(issueCodes(componentOnly(commandSource, representativeInput.abilityCatalog))).toContain(
+      'probability.habit-ability-kind',
+    );
+    expect(issueCodes(componentOnly(missingSource, representativeInput.abilityCatalog))).toContain(
+      'probability.habit-ability-missing',
     );
   });
 
@@ -349,7 +520,10 @@ describe('production Formation Reliability contract', () => {
     }
     expect(shared?.status).toBe('resolved');
     if (shared?.status === 'resolved') {
-      expect(shared.paths[0]?.events[0]?.componentIds).toEqual([velarFirstStrike.id, velarSlow.id]);
+      expect(shared.paths[0]?.events[0]?.componentReferences).toEqual([
+        { componentId: velarFirstStrike.id },
+        { componentId: velarSlow.id },
+      ]);
     }
     expect(joint?.status).toBe('resolved');
     if (joint?.status === 'resolved') {
@@ -421,14 +595,26 @@ describe('production Formation Reliability contract', () => {
     };
     const active = reliabilityProgressionFromOwnedDragon(velar, entry);
     expect(active.activeHabitLevels['velar-gales-of-power']).toBe(4);
-    expect(resolveComponentProbability(velarFirstStrike, active)).toBe(0.204);
+    expect(
+      resolveComponentProbability(
+        velarFirstStrike,
+        componentReference(velarFirstStrike.id),
+        active,
+      ),
+    ).toBe(0.204);
 
     const missing = reliabilityProgressionFromOwnedDragon(velar, {
       ...entry,
       habitLevels: {},
     });
     expect(missing.activeHabitLevels['velar-gales-of-power']).toBeNull();
-    expect(resolveComponentProbability(velarFirstStrike, missing)).toBeNull();
+    expect(
+      resolveComponentProbability(
+        velarFirstStrike,
+        componentReference(velarFirstStrike.id),
+        missing,
+      ),
+    ).toBeNull();
 
     const locked = reliabilityProgressionFromOwnedDragon(velar, {
       ...entry,
@@ -440,13 +626,173 @@ describe('production Formation Reliability contract', () => {
 
   it('resolves fixed and Habit-Level probability without inventing missing context', () => {
     expect(resolveReliabilityProbability({ kind: 'fixed', value: 0.2 })).toBe(0.2);
-    expect(resolveReliabilityProbability(velarFirstStrike.probability!, { habitLevel: 5 })).toBe(
-      0.24,
-    );
-    expect(resolveReliabilityProbability(velarFirstStrike.probability!)).toBeNull();
+    expect(
+      resolveReliabilityProbability(velarFirstStrikeProbability, {
+        activeHabitLevels: { 'velar-gales-of-power': 5 },
+      }),
+    ).toBe(0.24);
+    expect(resolveReliabilityProbability(velarFirstStrikeProbability)).toBeNull();
     expect(
       resolveReliabilityProbability({ kind: 'unknown', reason: 'Not documented.' }),
     ).toBeNull();
+  });
+
+  it('resolves Tairax Burning Ward from its separate Gleamstrike probability source', () => {
+    const tairax = dragons.find((dragon) => dragon.id === 'tairax')!;
+    const reference = componentReference(tairaxStagger.id);
+    const beforeUnlock = reliabilityProgressionFromOwnedDragon(
+      tairax,
+      ownedDragon(tairax.id, 5, {}),
+    );
+    expect(tairaxStagger.sourceAbilityId).toBe('tairax-burning-ward');
+    if (tairaxStagger.probability?.kind !== 'round-specific') {
+      throw new Error('Expected Tairax round-specific probability.');
+    }
+    expect(tairaxStagger.probability.byRound[1]).toMatchObject({
+      kind: 'habit-override',
+      habitAbilityId: 'tairax-gleamstrike',
+      base: 0.25,
+    });
+    expect(resolveComponentProbability(tairaxStagger, reference, beforeUnlock, { round: 1 })).toBe(
+      0.25,
+    );
+
+    const replacements = [0.375, 0.4, 0.425, 0.4625, 0.5];
+    replacements.forEach((expected, index) => {
+      const progression = reliabilityProgressionFromOwnedDragon(
+        tairax,
+        ownedDragon(tairax.id, 6, { 'tairax-gleamstrike': (index + 1) as 1 | 2 | 3 | 4 | 5 }),
+      );
+      expect(resolveComponentProbability(tairaxStagger, reference, progression, { round: 3 })).toBe(
+        expected,
+      );
+    });
+
+    const missingLevel = reliabilityProgressionFromOwnedDragon(
+      tairax,
+      ownedDragon(tairax.id, 6, {}),
+    );
+    expect(
+      resolveComponentProbability(tairaxStagger, reference, missingLevel, { round: 1 }),
+    ).toBeNull();
+    expect(
+      resolveComponentProbability(tairaxStagger, reference, missingLevel, { round: 2 }),
+    ).toBeNull();
+  });
+
+  it('replaces only Crimson Round 1 and preserves later odd-round base probability', () => {
+    const crimson = dragons.find((dragon) => dragon.id === 'crimson')!;
+    const reference = componentReference(crimsonStun.id);
+    const beforeUnlock = reliabilityProgressionFromOwnedDragon(
+      crimson,
+      ownedDragon(crimson.id, 9, {}),
+    );
+    expect(resolveComponentProbability(crimsonStun, reference, beforeUnlock, { round: 1 })).toBe(
+      0.2,
+    );
+
+    const replacements = [0.4, 0.52, 0.64, 0.8, 1];
+    replacements.forEach((expected, index) => {
+      const progression = reliabilityProgressionFromOwnedDragon(
+        crimson,
+        ownedDragon(crimson.id, 10, {
+          'crimson-vermins-bane': (index + 1) as 1 | 2 | 3 | 4 | 5,
+        }),
+      );
+      expect(resolveComponentProbability(crimsonStun, reference, progression, { round: 1 })).toBe(
+        expected,
+      );
+      expect(resolveComponentProbability(crimsonStun, reference, progression, { round: 3 })).toBe(
+        0.2,
+      );
+    });
+
+    const missingLevel = reliabilityProgressionFromOwnedDragon(
+      crimson,
+      ownedDragon(crimson.id, 10, {}),
+    );
+    expect(
+      resolveComponentProbability(crimsonStun, reference, missingLevel, { round: 1 }),
+    ).toBeNull();
+    expect(resolveComponentProbability(crimsonStun, reference, missingLevel, { round: 5 })).toBe(
+      0.2,
+    );
+    expect(
+      resolveComponentProbability(crimsonStun, reference, missingLevel, { round: 2 }),
+    ).toBeNull();
+  });
+
+  it('represents Venator Feral Precision as the same explicit round replacement pattern', () => {
+    expect(
+      issueCodes(componentOnly(venatorDoubleStrike, representativeInput.abilityCatalog)),
+    ).toEqual([]);
+    const venator = dragons.find((dragon) => dragon.id === 'venator')!;
+    const reference = componentReference(venatorDoubleStrike.id);
+    const locked = reliabilityProgressionFromOwnedDragon(venator, ownedDragon(venator.id, 5, {}));
+    const active = reliabilityProgressionFromOwnedDragon(
+      venator,
+      ownedDragon(venator.id, 6, { 'venator-feral-precision': 3 }),
+    );
+    expect(resolveComponentProbability(venatorDoubleStrike, reference, locked, { round: 4 })).toBe(
+      0.3,
+    );
+    expect(resolveComponentProbability(venatorDoubleStrike, reference, active, { round: 8 })).toBe(
+      0.44,
+    );
+    expect(
+      resolveComponentProbability(venatorDoubleStrike, reference, active, { round: 5 }),
+    ).toBeNull();
+  });
+
+  it('carries and validates probability variant selection in binding references', () => {
+    const strengthReference = componentReference(variantChance.id, 'highest-strength');
+    const instinctReference = componentReference(variantChance.id, 'highest-instinct');
+    const progression = { starRank: null, dragonLevel: null, activeHabitLevels: {} };
+    expect(resolveComponentProbability(variantChance, strengthReference, progression)).toBe(0.2);
+    expect(resolveComponentProbability(variantChance, instinctReference, progression)).toBe(0.35);
+
+    const strengthBinding = representativeBindings.find(
+      (binding) => binding.signalId === 'shimmer-strength-variant',
+    );
+    const instinctBinding = representativeBindings.find(
+      (binding) => binding.signalId === 'shimmer-instinct-variant',
+    );
+    if (strengthBinding?.status !== 'resolved' || instinctBinding?.status !== 'resolved') {
+      throw new Error('Expected resolved variant bindings.');
+    }
+    expect(strengthBinding.paths[0]?.events[0]?.componentReferences[0]).toEqual(strengthReference);
+    expect(instinctBinding.paths[0]?.events[0]?.componentReferences[0]).toEqual(instinctReference);
+
+    const missingVariant = resolvedBinding('variant-signal', [
+      path('variant', [['event', [componentReference(variantChance.id)]]]),
+    ]);
+    const staleVariant = resolvedBinding('variant-signal', [
+      path('variant', [['event', [componentReference(variantChance.id, 'removed-branch')]]]),
+    ]);
+    const unexpectedVariant = resolvedBinding('fixed-signal', [
+      path('fixed', [['event', [componentReference(shimmerChanceBuff.id, 'highest-strength')]]]),
+    ]);
+    expect(bindingIssueCodes(variantChance, missingVariant)).toContain(
+      'binding.probability-variant-missing',
+    );
+    expect(bindingIssueCodes(variantChance, staleVariant)).toContain(
+      'binding.probability-variant-unknown',
+    );
+    expect(bindingIssueCodes(shimmerChanceBuff, unexpectedVariant)).toContain(
+      'binding.probability-variant-unexpected',
+    );
+
+    const duplicateBranches = {
+      ...variantChance,
+      probability: {
+        kind: 'variants' as const,
+        variants: [
+          { id: 'same', probability: { kind: 'fixed' as const, value: 0.2 } },
+          { id: 'same', probability: { kind: 'fixed' as const, value: 0.3 } },
+        ],
+      },
+    };
+    expect(issueCodes(componentOnly(duplicateBranches))).toContain('probability.variant-duplicate');
   });
 
   it('calculates cumulative independent activation without deciding evidence eligibility', () => {
@@ -516,18 +862,64 @@ function resolvedBinding(
 
 function path(
   pathId: string,
-  events: Array<[eventId: string, componentIds: ReliabilityComponentId[]]>,
+  events: Array<
+    [
+      eventId: string,
+      componentReferences: Array<ReliabilityComponentId | ReliabilityComponentReference>,
+    ]
+  >,
 ) {
   return {
     pathId,
-    events: events.map(([eventId, componentIds]) => ({ eventId, componentIds })),
+    events: events.map(([eventId, references]) => ({
+      eventId,
+      componentReferences: references.map((reference) =>
+        typeof reference === 'string' ? componentReference(reference) : reference,
+      ),
+    })),
   };
 }
 
-function componentOnly(component: AbilityReliabilityComponent): ReliabilityContractInput {
-  return { components: [component], bindings: [], scoringSignalIds: [] };
+function componentReference(
+  componentId: ReliabilityComponentId,
+  probabilityVariantId?: string,
+): ReliabilityComponentReference {
+  return probabilityVariantId ? { componentId, probabilityVariantId } : { componentId };
+}
+
+function componentOnly(
+  component: AbilityReliabilityComponent,
+  abilityCatalog?: ReliabilityContractInput['abilityCatalog'],
+): ReliabilityContractInput {
+  return { components: [component], bindings: [], scoringSignalIds: [], abilityCatalog };
 }
 
 function issueCodes(input: ReliabilityContractInput): string[] {
   return validateReliabilityContract(input, 'contract').map((issue) => issue.code);
+}
+
+function bindingIssueCodes(
+  component: AbilityReliabilityComponent,
+  binding: SignalReliabilityBinding,
+): string[] {
+  return issueCodes({
+    components: [component],
+    bindings: [binding],
+    scoringSignalIds: [binding.signalId],
+  });
+}
+
+function ownedDragon(
+  dragonId: string,
+  starRank: number,
+  habitLevels: OwnedDragon['habitLevels'],
+): OwnedDragon {
+  return {
+    dragonId,
+    owned: false,
+    starRank,
+    reignLevel: 1,
+    notes: '',
+    habitLevels,
+  };
 }

@@ -1,7 +1,8 @@
 import type {
   ConcreteReliabilityProbability,
   ProbabilityResolutionContext,
-  ReliabilityProbability,
+  ReliabilityProgression,
+  RoundReliabilityProbability,
 } from './types';
 
 export function isReliabilityProbabilityValue(value: unknown): value is number {
@@ -18,16 +19,24 @@ export function assertReliabilityProbabilityValue(
 }
 
 export function resolveReliabilityProbability(
-  probability: ReliabilityProbability,
+  probability: ConcreteReliabilityProbability,
+  progression: Pick<ReliabilityProgression, 'activeHabitLevels'> = { activeHabitLevels: {} },
   context: ProbabilityResolutionContext = {},
 ): number | null {
   if (probability.kind === 'unknown') return null;
-  if (probability.kind === 'variants') {
-    if (!context.variantId) return null;
-    const variant = probability.variants.find((candidate) => candidate.id === context.variantId);
-    return variant ? resolveConcreteReliabilityProbability(variant.probability, context) : null;
+  if (probability.kind === 'fixed') return probability.value;
+  if (probability.kind === 'habit-level') {
+    return resolveHabitLevelProbability(probability, progression);
   }
-  return resolveConcreteReliabilityProbability(probability, context);
+  if (probability.kind === 'habit-override') {
+    if (!hasActiveHabit(progression, probability.habitAbilityId)) return probability.base;
+    return resolveHabitLevelProbability(probability, progression);
+  }
+  if (!context.round) return null;
+  const roundProbability = probability.byRound[context.round];
+  return roundProbability
+    ? resolveRoundReliabilityProbability(roundProbability, progression)
+    : null;
 }
 
 export function cumulativeIndependentActivationProbability(
@@ -41,14 +50,33 @@ export function cumulativeIndependentActivationProbability(
   return 1 - (1 - probability) ** opportunityCount;
 }
 
-function resolveConcreteReliabilityProbability(
-  probability: ConcreteReliabilityProbability,
-  context: ProbabilityResolutionContext,
+function resolveHabitLevelProbability(
+  probability: {
+    habitAbilityId: string;
+    byLevel: Record<1 | 2 | 3 | 4 | 5, number>;
+  },
+  progression: Pick<ReliabilityProgression, 'activeHabitLevels'>,
 ): number | null {
+  const level = progression.activeHabitLevels[probability.habitAbilityId];
+  return level ? probability.byLevel[level] : null;
+}
+
+function resolveRoundReliabilityProbability(
+  probability: RoundReliabilityProbability,
+  progression: Pick<ReliabilityProgression, 'activeHabitLevels'>,
+): number | null {
+  if (probability.kind === 'unknown') return null;
   if (probability.kind === 'fixed') return probability.value;
   if (probability.kind === 'habit-level') {
-    return context.habitLevel ? probability.byLevel[context.habitLevel] : null;
+    return resolveHabitLevelProbability(probability, progression);
   }
-  if (!context.round) return null;
-  return probability.byRound[context.round] ?? null;
+  if (!hasActiveHabit(progression, probability.habitAbilityId)) return probability.base;
+  return resolveHabitLevelProbability(probability, progression);
+}
+
+function hasActiveHabit(
+  progression: Pick<ReliabilityProgression, 'activeHabitLevels'>,
+  habitAbilityId: string,
+): boolean {
+  return Object.prototype.hasOwnProperty.call(progression.activeHabitLevels, habitAbilityId);
 }

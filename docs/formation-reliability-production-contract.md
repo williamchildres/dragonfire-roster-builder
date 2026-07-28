@@ -2,64 +2,40 @@
 
 ## Ownership and scope
 
-`src/synergy/reliability` owns the reusable production contracts and pure utilities for Formation Reliability:
+`src/synergy/reliability` owns reusable Formation Reliability types, pure validation, roster-progression adaptation, and probability helpers. It remains disconnected from Formation Rating v2, relationship construction, six-placement comparison, optimizer behavior, Estimated Power, persistence, and UI. Partial metadata therefore cannot change production scoring.
 
-- `types.ts` defines component facts, event-graph bindings, validation modes, and progression input;
-- `validation.ts` validates components and bindings and returns stable structured issues;
-- `progression.ts` adapts existing roster progression without changing storage;
-- `probability.ts` resolves documented probability and provides the approved cumulative formula;
-- `index.ts` is the public module boundary.
+## Components and probability sources
 
-This infrastructure is intentionally disconnected from Formation Rating v2, relationship construction, placement comparison, optimizer code, and UI rendering. Supplying partial metadata cannot affect current scoring because no current evaluator imports or consumes this module.
+A component ID uses `ability-id:component-slug`. `sourceAbilityId` is the semantic owner of that component and must match the ability segment of its ID.
 
-## Component identifiers
+Habit-dependent probability separately carries `habitAbilityId`. The two IDs may be the same for a Habit’s own effect, or different when a Habit augments a Command. Validation requires a well-formed Habit ID and complete levels 1–5 with no extra keys. When a canonical ability catalog is supplied, validation also requires the ID to exist and identify a Habit.
 
-A component ID uses `ability-id:component-slug`, such as:
+Direct `habit-level` probability exists only while that Habit is active and has a recorded level. `habit-override` records both a base probability and the replacing Habit progression:
 
-- `velar-gales-of-power:first-strike`;
-- `velar-gales-of-power:slow`;
-- `velar-breath-of-renewal:cleanse`;
-- `velar-breath-of-renewal:recovery`.
+- locked or inactive Habit: resolve the base;
+- active Habit with level 1–5: resolve that level’s replacement;
+- active Habit with a missing level: resolve `null`, never the base or Level 1.
 
-Both segments use stable kebab-case semantics rather than display text. Validation rejects malformed or duplicate IDs and rejects a component whose ID names a different source ability.
+Ownership is not a progression gate, and the adapter makes no persistence changes.
 
-## Signal binding paths
+## Round-specific replacement
 
-Production uses a separate binding registry rather than a temporary optional `SynergySignal` field. Each binding contains alternative paths. Events within one path are jointly required. Components grouped within one event share activation identity, preventing duplicate credit when one roll supplies several tags.
+`round-specific` maps supported rounds to structured probability expressions. Each entry may be fixed, direct Habit-Level, Habit override, or explicitly unknown. An unsupported round or missing round context resolves to `null`.
 
-This structure represents:
+This represents Tairax Burning Ward as a 25% Gleamstrike override on each odd round, while Crimson Bloodscale Terror uses a Vermin’s Bane override only on Round 1 and fixed 20% entries on later odd rounds. The same structure supports Feral Precision replacing Feral Strike’s chance only on rounds 4, 6, and 8. No resolver parses prose or contains dragon-specific branches.
 
-- one component through one path/event/component;
-- alternatives through several paths;
-- chance setup plus chance payoff through two jointly required events;
-- several components from one roll through one shared event;
-- unresolved mixed behavior through `status: 'unresolved-mixed'` and candidate paths.
+## Signal bindings and variants
+
+Bindings contain alternative paths; events in one path are jointly required. Components grouped in one event retain shared activation identity.
+
+Every event carries typed component references. A reference to a variant probability must select `probabilityVariantId`; validation rejects missing or stale selections, selections on non-variant probabilities, and duplicate branch definitions. Different signal bindings may select different documented variants of the same component.
+
+The component resolver accepts that binding reference and validates it against the component before resolving. Probability branch choice is therefore part of the binding contract, not a free-form scorer argument, and no branch is selected by value.
 
 ## Validation modes
 
-`contract` mode validates every supplied component and binding, including stale references, but does not require every current scoring signal to be present. This is the mode for this infrastructure PR.
+`contract` mode validates supplied metadata without requiring all current scoring signals. `full-migration` additionally requires complete signal coverage, referenced components, and no unresolved mixed bindings. Issues have stable codes, paths, and messages and are sorted deterministically.
 
-`full-migration` mode additionally requires every supplied scoring signal ID to have a resolved binding and every component to be referenced. It rejects unresolved mixed bindings. Tests demonstrate that incomplete coverage fails, but this mode is not enabled against the current 234 production scoring signals yet.
+The cumulative helper computes `1 - (1 - p)^n` only after validating `p` and `n`; callers must still establish opportunity count and independence. The historical research audit remains independent and retains its approved hash.
 
-Validation issues contain a stable code, path, and message and are sorted deterministically. The assertion wrapper reports all collected issues rather than stopping at the first one.
-
-## Progression and probability
-
-The standalone progression adapter reads current `OwnedDragon` values and existing Habit unlock rules. It exposes only unlocked Habit IDs. Levels remain 1–5; a missing unlocked level is represented as `null`, never defaulted to 1. The adapter does not mutate storage, gate on ownership, enter Estimated Power, or change current Formation Rating progression.
-
-Fixed and Habit-Level probability can be resolved without scoring. Unknown or context-missing probability resolves to `null`. The cumulative helper computes `1 - (1 - p)^n` after validating `p` and `n`; the caller remains responsible for proving that repeated opportunities and independence are supported.
-
-## Production naming differences
-
-The production contract uses concise semantic names:
-
-- research `single-shared-roll` becomes `shared`;
-- research `known-*` inventory classifications become the stable component class `chance`;
-- timing after an ability becomes `after-event`, allowing an explicit ability or non-ability event;
-- probability branches use `variants`, rather than the research report’s serialization-oriented `multiple`.
-
-The historical research audit remains independent and retains its approved deterministic hash.
-
-## PR B boundary
-
-The next PR must create the curated production component and signal-binding registries, split or resolve the three mixed signals, bind all 234 scoring signals, and enable `full-migration` validation in CI. Only later behavior-changing work may connect complete metadata to Formation Rating v3, placement comparison, optimizer candidates, and explanations.
+The follow-up registry migration must populate all 234 scoring signals and enable full-migration validation. Only later behavior-changing work may connect complete metadata to a new Formation Rating version.
