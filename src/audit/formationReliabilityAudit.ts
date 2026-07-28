@@ -10,9 +10,9 @@ import type {
   SynergySignal,
 } from '../synergy/types';
 
-export const FORMATION_RELIABILITY_AUDIT_CONTRACT = 'formation-reliability-audit-v1' as const;
+export const FORMATION_RELIABILITY_AUDIT_CONTRACT = 'formation-reliability-audit-v2' as const;
 export const PROPOSED_FORMATION_RELIABILITY_CONTRACT =
-  'formation-signal-reliability-v1-proposal' as const;
+  'formation-signal-reliability-v2-proposal' as const;
 
 export type ReliabilityClassification =
   | 'guaranteed'
@@ -26,11 +26,10 @@ export type ReliabilityClassification =
   | 'not-applicable-to-activation-reliability';
 
 export type ReliabilityIndependence =
-  | 'confirmed'
-  | 'reasonable-model-assumption'
-  | 'unknown'
-  | 'contradicted'
-  | 'not-applicable';
+  'confirmed' | 'reasonable-model-assumption' | 'unknown' | 'contradicted' | 'not-applicable';
+
+export type OpportunityPresence =
+  'guaranteed-at-least-one' | 'conditional' | 'unknown' | 'not-applicable';
 
 export type ReliabilityRollScope =
   | 'single-shared-roll'
@@ -107,6 +106,7 @@ export interface FormationReliabilityAuditSignal {
   reliabilityComponentIds: string[];
   classification: ReliabilityClassification;
   probability: ReliabilityProbability;
+  opportunityPresence: OpportunityPresence;
   rollTiming: string;
   rollScope: ReliabilityRollScope;
   opportunityCount: ReliabilityOpportunityCount;
@@ -142,8 +142,8 @@ export interface FormationReliabilityAuditReport {
   auditContract: typeof FORMATION_RELIABILITY_AUDIT_CONTRACT;
   proposedContract: typeof PROPOSED_FORMATION_RELIABILITY_CONTRACT;
   source: {
-    release: '0.20.3';
-    startingOriginMainSha: '010555fd8f79268a60a805e2ed296a8d6cc322fc';
+    researchBaselineRelease: '0.20.3';
+    researchBaselineSha: '010555fd8f79268a60a805e2ed296a8d6cc322fc';
     profileFile: 'src/synergy/profiles.ts';
     canonicalAbilityFiles: ['src/data/dragons.ts', 'src/data/sunfyreTairax.ts'];
   };
@@ -166,8 +166,13 @@ export interface FormationReliabilityAuditReport {
     signalsWithUnresolvedIndependence: number;
     signalsWithUnknownProbability: number;
     signalsWithCompleteSupportedProbabilityOpportunityScopeAndIndependence: number;
-    signalsMissingProposedReliabilityCoverage: 0;
+    signalsMissingProposedReliabilityCoverage: number;
+    signalsWithGuaranteedAtLeastOneOpportunity: number;
+    signalsWithConditionalOpportunityPresence: number;
+    signalsWithUnknownOpportunityPresence: number;
+    signalsWithNotApplicableOpportunityPresence: number;
   };
+  missingProposedReliabilitySignalIds: string[];
   classificationCounts: Record<ReliabilityClassification, number>;
   breakdownByDragon: Array<{
     dragonId: string;
@@ -261,7 +266,9 @@ registerChance(['tairax-burning-ward-burn'], {
   separatePerEffect: false,
   durationRounds: 2,
   independence: 'unknown',
-  unresolvedQuestions: ['Whether checks on different scheduled rounds are statistically independent.'],
+  unresolvedQuestions: [
+    'Whether checks on different scheduled rounds are statistically independent.',
+  ],
   componentSuffix: 'burn',
 });
 
@@ -280,32 +287,31 @@ registerChance(['tairax-burning-ward-stagger'], {
   separatePerEffect: false,
   durationRounds: 2,
   independence: 'unknown',
-  unresolvedQuestions: ['Whether checks on different odd-numbered rounds are statistically independent.'],
+  unresolvedQuestions: [
+    'Whether checks on different odd-numbered rounds are statistically independent.',
+  ],
   componentSuffix: 'stagger',
 });
 
-registerChance(
-  ['tairax-gift-of-fire-resistance', 'tairax-gift-of-fire-burn-payoff'],
-  {
-    probability: habit([0.175, 0.21, 0.245, 0.2975, 0.35]),
-    rollTiming: 'Start of each round, once for each Enemy afflicted with Burn.',
-    rollScope: 'unresolved',
-    opportunityCount: {
-      kind: 'condition-count-dependent',
-      note: 'Opportunities depend on battle length and the number of Burn-afflicted Enemies each round.',
-    },
-    targetCount: 1,
-    separatePerTarget: null,
-    separatePerEffect: false,
-    durationRounds: 2,
-    independence: 'unknown',
-    unresolvedQuestions: [
-      'Whether separate Burn-conditioned checks are independent.',
-      'How target selection behaves when no Ally lacks Resistance.',
-    ],
-    componentSuffix: 'burn-conditioned-resistance',
+registerChance(['tairax-gift-of-fire-resistance', 'tairax-gift-of-fire-burn-payoff'], {
+  probability: habit([0.175, 0.21, 0.245, 0.2975, 0.35]),
+  rollTiming: 'Start of each round, once for each Enemy afflicted with Burn.',
+  rollScope: 'unresolved',
+  opportunityCount: {
+    kind: 'condition-count-dependent',
+    note: 'Opportunities depend on battle length and the number of Burn-afflicted Enemies each round.',
   },
-);
+  targetCount: 1,
+  separatePerTarget: null,
+  separatePerEffect: false,
+  durationRounds: 2,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'Whether separate Burn-conditioned checks are independent.',
+    'How target selection behaves when no Ally lacks Resistance.',
+  ],
+  componentSuffix: 'burn-conditioned-resistance',
+});
 
 registerChance(['syrax-blazing-fury-first-strike', 'syrax-blazing-fury-fire-support'], {
   probability: fixed(0.2),
@@ -368,7 +374,9 @@ registerChance(['vhagar-skyward-titan-physical'], {
   ),
   rollTiming: 'Each round until the third Bulwark stack is gained.',
   rollScope: 'single-shared-roll',
-  opportunityCount: eachRound('Actual opportunities depend on battle length and the five-stack cap.'),
+  opportunityCount: eachRound(
+    'Actual opportunities depend on battle length and the five-stack cap.',
+  ),
   targetCount: 1,
   separatePerTarget: false,
   separatePerEffect: false,
@@ -523,24 +531,21 @@ registerChance(['malachite-thunderous-roar-damage'], {
   componentSuffix: 'advantage',
 });
 
-registerChance(
-  ['malachite-lightning-strike-first-strike', 'malachite-lightning-strike-strength'],
-  {
-    probability: habit([0.4, 0.52, 0.64, 0.8, 1]),
-    rollTiming: 'Start of Round 1.',
-    rollScope: 'single-shared-roll',
-    opportunityCount: { kind: 'exact', value: 1 },
-    targetCount: 1,
-    separatePerTarget: false,
-    separatePerEffect: false,
-    durationRounds: 3,
-    independence: 'not-applicable',
-    unresolvedQuestions: [
-      'First-Strike, Double-Strike, and Strength share one roll and must not receive duplicate relationship credit.',
-    ],
-    componentSuffix: 'shared-first-strike-double-strike-strength',
-  },
-);
+registerChance(['malachite-lightning-strike-first-strike', 'malachite-lightning-strike-strength'], {
+  probability: habit([0.4, 0.52, 0.64, 0.8, 1]),
+  rollTiming: 'Start of Round 1.',
+  rollScope: 'single-shared-roll',
+  opportunityCount: { kind: 'exact', value: 1 },
+  targetCount: 1,
+  separatePerTarget: false,
+  separatePerEffect: false,
+  durationRounds: 3,
+  independence: 'not-applicable',
+  unresolvedQuestions: [
+    'First-Strike, Double-Strike, and Strength share one roll and must not receive duplicate relationship credit.',
+  ],
+  componentSuffix: 'shared-first-strike-double-strike-strength',
+});
 
 registerChance(['venator-desperate-ambush-overwhelm'], {
   probability: habit([0.12, 0.156, 0.192, 0.24, 0.3]),
@@ -552,7 +557,9 @@ registerChance(['venator-desperate-ambush-overwhelm'], {
   separatePerEffect: true,
   durationRounds: 2,
   independence: 'unknown',
-  unresolvedQuestions: ['Battle length, condition duration, and temporal independence are unresolved.'],
+  unresolvedQuestions: [
+    'Battle length, condition duration, and temporal independence are unresolved.',
+  ],
   componentSuffix: 'overwhelm',
 });
 
@@ -594,7 +601,9 @@ registerChance(['daemoros-shroud-of-shadows-confusion'], {
   separatePerEffect: false,
   durationRounds: 2,
   independence: 'unknown',
-  unresolvedQuestions: ['Whether Confusion checks on separate odd-numbered rounds are independent.'],
+  unresolvedQuestions: [
+    'Whether Confusion checks on separate odd-numbered rounds are independent.',
+  ],
   componentSuffix: 'confusion',
 });
 
@@ -612,25 +621,22 @@ registerChance(['feskar-unyielding-grasp-stagger'], {
   componentSuffix: 'stagger',
 });
 
-registerChance(
-  ['rhysarion-inspiring-melody-resistance', 'rhysarion-inspiring-melody-initiative'],
-  {
-    probability: habit([0.2, 0.26, 0.32, 0.4, 0.5]),
-    rollTiming: 'Each round.',
-    rollScope: 'single-shared-roll',
-    opportunityCount: eachRound(),
-    targetCount: 1,
-    separatePerTarget: false,
-    separatePerEffect: false,
-    durationRounds: 3,
-    independence: 'unknown',
-    unresolvedQuestions: [
-      'Initiative and Resistance share one activation and must not be double-discounted.',
-      'Battle length and temporal independence are unresolved.',
-    ],
-    componentSuffix: 'shared-initiative-resistance',
-  },
-);
+registerChance(['rhysarion-inspiring-melody-resistance', 'rhysarion-inspiring-melody-initiative'], {
+  probability: habit([0.2, 0.26, 0.32, 0.4, 0.5]),
+  rollTiming: 'Each round.',
+  rollScope: 'single-shared-roll',
+  opportunityCount: eachRound(),
+  targetCount: 1,
+  separatePerTarget: false,
+  separatePerEffect: false,
+  durationRounds: 3,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'Initiative and Resistance share one activation and must not be double-discounted.',
+    'Battle length and temporal independence are unresolved.',
+  ],
+  componentSuffix: 'shared-initiative-resistance',
+});
 
 registerChance(['shadowsong-blazing-conductor-burn'], {
   probability: {
@@ -659,10 +665,7 @@ registerChance(['shadowsong-blazing-conductor-burn'], {
 });
 
 registerChance(
-  [
-    'shadowsong-scorched-earth-vulnerable',
-    'shadowsong-scorched-earth-vulnerable-status',
-  ],
+  ['shadowsong-scorched-earth-vulnerable', 'shadowsong-scorched-earth-vulnerable-status'],
   {
     probability: {
       kind: 'multiple',
@@ -800,25 +803,22 @@ registerChance(['velar-whirlwind-advantage-damage'], {
   componentSuffix: 'advantage',
 });
 
-registerChance(
-  ['velar-gales-of-power-first-strike', 'velar-gales-of-power-slow'],
-  {
-    probability: habit([0.12, 0.144, 0.168, 0.204, 0.24]),
-    rollTiming: 'Rounds 2, 4, 6, and 8.',
-    rollScope: 'separate-per-target-and-effect',
-    opportunityCount: scheduled([2, 4, 6, 8]),
-    targetCount: 3,
-    separatePerTarget: true,
-    separatePerEffect: true,
-    durationRounds: 2,
-    independence: 'unknown',
-    unresolvedQuestions: [
-      'Wording confirms separate checks per target and effect, but not statistical independence.',
-      'Actual valid-target count and whether battle reaches all four rounds are unresolved.',
-    ],
-    componentSuffix: 'first-strike-or-slow',
-  },
-);
+registerChance(['velar-gales-of-power-first-strike', 'velar-gales-of-power-slow'], {
+  probability: habit([0.12, 0.144, 0.168, 0.204, 0.24]),
+  rollTiming: 'Rounds 2, 4, 6, and 8.',
+  rollScope: 'separate-per-target-and-effect',
+  opportunityCount: scheduled([2, 4, 6, 8]),
+  targetCount: 3,
+  separatePerTarget: true,
+  separatePerEffect: true,
+  durationRounds: 2,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'Wording confirms separate checks per target and effect, but not statistical independence.',
+    'Actual valid-target count and whether battle reaches all four rounds are unresolved.',
+  ],
+  componentSuffix: 'first-strike-or-slow',
+});
 
 registerChance(['zivern-silent-shade-tactical-vulnerability'], {
   probability: fixed(0.4),
@@ -851,31 +851,28 @@ registerChance(['zivern-fearsome-reach-panic'], {
   componentSuffix: 'panic',
 });
 
-registerChance(
-  ['zivern-cloak-of-terror-overwhelm', 'zivern-cloak-of-terror-vulnerable-payoff'],
-  {
-    probability: {
-      kind: 'multiple',
-      variants: [
-        { label: 'ordinary target', byHabitLevel: [0.1, 0.13, 0.16, 0.2, 0.25] },
-        { label: 'Vulnerable target', byHabitLevel: [0.2, 0.26, 0.32, 0.4, 0.5] },
-      ],
-    },
-    rollTiming: 'Odd-numbered rounds.',
-    rollScope: 'unresolved',
-    opportunityCount: scheduled([1, 3, 5, 7, 9]),
-    targetCount: 2,
-    separatePerTarget: null,
-    separatePerEffect: false,
-    durationRounds: 2,
-    independence: 'unknown',
-    unresolvedQuestions: [
-      'Whether Cloak of Terror uses one group roll or separate target rolls.',
-      'Whether checks on separate odd-numbered rounds are independent.',
+registerChance(['zivern-cloak-of-terror-overwhelm', 'zivern-cloak-of-terror-vulnerable-payoff'], {
+  probability: {
+    kind: 'multiple',
+    variants: [
+      { label: 'ordinary target', byHabitLevel: [0.1, 0.13, 0.16, 0.2, 0.25] },
+      { label: 'Vulnerable target', byHabitLevel: [0.2, 0.26, 0.32, 0.4, 0.5] },
     ],
-    componentSuffix: 'overwhelm',
   },
-);
+  rollTiming: 'Odd-numbered rounds.',
+  rollScope: 'unresolved',
+  opportunityCount: scheduled([1, 3, 5, 7, 9]),
+  targetCount: 2,
+  separatePerTarget: null,
+  separatePerEffect: false,
+  durationRounds: 2,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'Whether Cloak of Terror uses one group roll or separate target rolls.',
+    'Whether checks on separate odd-numbered rounds are independent.',
+  ],
+  componentSuffix: 'overwhelm',
+});
 
 registerChance(['antares-relentless-pursuit-vulnerable'], {
   probability: fixed(0.2),
@@ -1089,10 +1086,7 @@ registerChance(['thunderstrike-barbed-lash-bleed'], {
 });
 
 registerChance(
-  [
-    'thunderstrike-staggering-assault-stagger',
-    'thunderstrike-staggering-assault-advantage-payoff',
-  ],
+  ['thunderstrike-staggering-assault-stagger', 'thunderstrike-staggering-assault-advantage-payoff'],
   {
     probability: habit([0.1, 0.13, 0.16, 0.2, 0.25]),
     rollTiming: 'Each round.',
@@ -1210,6 +1204,142 @@ const mixedBySignalId = new Map<string, MixedSpec>([
   ],
 ]);
 
+const guaranteedSignalIds = new Set([
+  'antares-blazing-onslaught-fire-vulnerability',
+  'antares-blazing-onslaught-non-basic-physical-vulnerability',
+  'antares-hunters-wrath-right-stats',
+  'antares-relentless-pursuit-fire',
+  'arrax-turn-the-line-physical',
+  'arrax-warriors-resilience-left-tactical',
+  'arulix-battle-cunning-instinct-payoff',
+  'bevlorin-champions-vigor-right-damage',
+  'bevlorin-natures-reckoning-fire',
+  'bevlorin-natures-reckoning-intelligence-payoff',
+  'bevlorin-natures-reckoning-physical',
+  'bevlorin-natures-reckoning-strength-payoff',
+  'bevlorin-renewal-recovery',
+  'caraxes-hunters-wrath-right-stats',
+  'caraxes-infernal-burst-fire',
+  'crimson-bloodscale-terror-fire',
+  'crimson-hunters-cunning-right-physical',
+  'daemoros-shadowflame-physical',
+  'daemoros-warriors-zeal-left-stats',
+  'dawnseeker-first-light-stats',
+  'dawnseeker-initiative-payoff',
+  'dawnseeker-instinct-payoff',
+  'dawnseeker-radiant-wings-recovery',
+  'dawnseeker-radiant-wings-tactical',
+  'dawnseeker-sentinels-presence-left-fire',
+  'dawnseeker-tactical-inferno-fire',
+  'dawnseeker-tactical-inferno-tactical',
+  'dawnseeker-tactical-payoff',
+  'dawnseeker-winds-favor-initiative',
+  'feskar-calculated-assault-tactical',
+  'feskar-insightful-allies-instinct',
+  'jagadrix-cunning-whispers-fire',
+  'jagadrix-cunning-whispers-intelligence-payoff',
+  'jagadrix-echoes-of-deceit-fire',
+  'jagadrix-hunters-wrath-right-stats',
+  'malachite-collective-might-strength',
+  'malachite-sentinels-presence-left-fire',
+  'malachite-wardens-rally-recovery',
+  'malachite-wardens-rally-tactical',
+  'nyrena-fire-payoff',
+  'nyrena-initiative-payoff',
+  'nyrena-instinct-payoff',
+  'nyrena-intelligence-payoff',
+  'nyrena-mindful-synergy-stats',
+  'nyrena-tactical-payoff',
+  'nyrena-undermine-fire',
+  'nyrena-undermine-tactical',
+  'rhysarion-champions-vigor-right-damage',
+  'rhysarion-dawnsong-fire',
+  'rhysarion-dawnsong-physical',
+  'rhysarion-ebbing-fury-recovery',
+  'rhysarion-echoing-melody-recovery',
+  'seasmoke-cleansing-wrath-fire',
+  'seasmoke-clever-maneuver-stats',
+  'seasmoke-cunning-ferocity-fire-intelligence',
+  'seasmoke-infectious-wrath-physical',
+  'seasmoke-winds-favor-initiative',
+  'shadowrend-eclipse-fervor-physical',
+  'shadowrend-event-horizon-physical',
+  'shadowrend-event-horizon-tactical',
+  'shadowrend-initiative-payoff',
+  'shadowrend-instinct-payoff',
+  'shadowrend-midnight-aura-instinct',
+  'shadowrend-midnight-aura-strength',
+  'shadowrend-midnight-mastery-physical',
+  'shadowrend-midnight-mastery-tactical',
+  'shadowrend-strength-payoff',
+  'shadowrend-warriors-zeal-left-stats',
+  'shadowsong-blazing-onslaught-vulnerability',
+  'shadowsong-breath-of-fire-fire',
+  'shadowsong-hunters-wrath-right-stats',
+  'sheepstealer-hunters-cunning-recovery-payoff',
+  'sheepstealer-hunters-cunning-right-physical',
+  'sheepstealer-wild-hunt-fire',
+  'shimmer-crushing-force-physical',
+  'shimmer-crushing-force-tactical',
+  'shimmer-loyal-shield-recovery',
+  'shimmer-loyal-shield-resistance-payoff',
+  'shimmer-sentinels-presence-left-fire',
+  'shimmer-unbreakable-loyalty-tactical',
+  'solstryker-tactical-onslaught-instinct-payoff',
+  'solstryker-tactical-onslaught-strength-payoff',
+  'sunfyre-golden-wrath-tactical',
+  'sunfyre-radiant-majesty-damage',
+  'sunfyre-sentinels-wit-left-stats',
+  'syrax-blazing-fury-tactical',
+  'syrax-flight-mastery-initiative',
+  'syrax-mindful-synergy-stats',
+  'syrax-sentinels-wit-left-stats',
+  'syrax-strategic-revival-recovery',
+  'syrax-tactical-inferno-damage-support',
+  'tairax-burning-ward-fire',
+  'tairax-hunters-wrath-right-stats',
+  'tashix-battle-guile-fire',
+  'tashix-dragons-cunning-initiative-payoff',
+  'tashix-dragons-cunning-physical',
+  'tashix-hunters-cunning-recovery-payoff',
+  'tashix-hunters-cunning-right-physical',
+  'tashix-shimmering-mirage-fire',
+  'tessarion-blazing-leader-fire',
+  'tessarion-clever-maneuver-stats',
+  'tessarion-cobalt-flame-fire',
+  'tessarion-cobalt-flame-physical',
+  'thunderstrike-armor-break-physical',
+  'thunderstrike-strength-payoff',
+  'thunderstrike-warriors-zeal-left-stats',
+  'vaeldra-infernal-force-damage',
+  'vaeldra-lure-physical',
+  'vaeldra-warriors-resilience-left-tactical',
+  'velar-breath-of-renewal-recovery',
+  'velar-fierce-unity-initiative-payoff',
+  'velar-fierce-unity-stats',
+  'velar-sentinels-wit-left-stats',
+  'velar-strategic-leader-tactical',
+  'velar-whirlwind-tactical',
+  'venator-armor-break-physical',
+  'venator-warriors-zeal-left-stats',
+  'vermax-reactive-instincts-stats',
+  'vermax-spreading-blaze-physical',
+  'vermax-warriors-zeal-left-stats',
+  'vesper-eventide-strike-tactical',
+  'vesper-insightful-allies-instinct',
+  'vesper-instinct-payoff',
+  'vesper-sentinels-wit-left-stats',
+  'vesper-strategic-leader-tactical',
+  'vesper-tactical-payoff',
+  'vhagar-battle-leader-physical',
+  'vhagar-blazing-onslaught-vulnerability',
+  'vhagar-fiery-bonds-physical',
+  'vhagar-warriors-resilience-left-tactical',
+  'zivern-battle-mastery-physical',
+  'zivern-sentinels-wit-left-stats',
+  'zivern-silent-shade-tactical',
+]);
+
 const conditionalDeterministicSignalIds = new Set([
   'sunfyre-golden-wrath-fire',
   'sunfyre-adaptive-glory-damage',
@@ -1241,15 +1371,163 @@ const conditionalDeterministicSignalIds = new Set([
   'nyrena-deepen-the-breach-fire',
 ]);
 
+const guaranteedAtLeastOneOpportunitySignalIds = new Set([
+  'antares-relentless-pursuit-vulnerable',
+  'arulix-hypnotic-helix-overwhelm',
+  'caraxes-crippling-inferno-burn',
+  'caraxes-crippling-inferno-fire',
+  'caraxes-crippling-inferno-slow',
+  'crimson-bloodscale-fury-taunt-payoff',
+  'crimson-bloodscale-terror-stun',
+  'daemoros-instill-fear-panic',
+  'daemoros-shadowflame-burn',
+  'daemoros-shroud-of-shadows-confusion',
+  'dawnseeker-first-light-first-strike',
+  'feskar-unyielding-grasp-stagger',
+  'jagadrix-cunning-whispers-initiative-payoff',
+  'jagadrix-whispering-sabotage-weakened',
+  'malachite-forests-instinct-physical',
+  'malachite-lightning-strike-first-strike',
+  'malachite-lightning-strike-strength',
+  'malachite-thunderous-roar-damage',
+  'rhysarion-inspiring-melody-initiative',
+  'rhysarion-inspiring-melody-resistance',
+  'shadowrend-eclipse-fervor-panic',
+  'shadowrend-eclipse-fervor-tactical',
+  'shadowrend-fueled-by-darkness-advantage',
+  'shadowsong-scorched-earth-vulnerable',
+  'shadowsong-scorched-earth-vulnerable-status',
+  'shimmer-sneak-attack-first-strike',
+  'shimmer-sneak-attack-physical',
+  'shimmer-unbreakable-loyalty-stats',
+  'solstryker-oppressive-onslaught-overwhelm',
+  'syrax-blazing-fury-fire-support',
+  'syrax-blazing-fury-first-strike',
+  'tairax-burning-ward-stagger',
+  'thunderstrike-staggering-assault-advantage-payoff',
+  'thunderstrike-staggering-assault-stagger',
+  'vaeldra-lure-taunt',
+  'vesper-eventide-strike-slow',
+  'vesper-saviors-waltz-resistance',
+  'vhagar-fiery-bonds-burn-payoff',
+  'vhagar-fiery-bonds-taunt',
+  'zivern-cloak-of-terror-overwhelm',
+  'zivern-cloak-of-terror-vulnerable-payoff',
+  'zivern-fearsome-reach-panic',
+  'zivern-silent-shade-tactical-vulnerability',
+]);
+
+const conditionalOpportunitySignalIds = new Set([
+  'arrax-sudden-strike-bleed-payoff',
+  'arrax-sudden-strike-weakened',
+  'arulix-hypnotic-helix-stagger',
+  'bevlorin-bountiful-gifts-initiative',
+  'bevlorin-bountiful-gifts-instinct',
+  'bevlorin-bountiful-gifts-intelligence',
+  'bevlorin-bountiful-gifts-strength',
+  'kalspire-tactical-assault-panic',
+  'kalspire-tactical-strike-bleed',
+  'seasmoke-loyal-bond-resistance',
+  'shadowsong-blazing-conductor-burn',
+  'sunfyre-golden-wrath-burn',
+  'syrax-strategic-revival-resistance',
+  'tairax-burning-ward-burn',
+  'tairax-gift-of-fire-burn-payoff',
+  'tairax-gift-of-fire-resistance',
+  'thunderstrike-barbed-lash-bleed',
+  'vaeldra-sirens-call-stagger',
+  'vaeldra-tempting-distraction-vulnerability',
+  'velar-gales-of-power-first-strike',
+  'velar-gales-of-power-slow',
+  'velar-whirlwind-advantage-damage',
+  'venator-desperate-ambush-overwhelm',
+  'vermax-rallying-flame-tactical',
+  'vermax-spreading-blaze-tactical',
+  'vesper-midnight-onslaught-confusion',
+  'vhagar-skyward-titan-physical',
+]);
+
+const unknownOpportunitySignalIds = new Set([
+  'shadowsong-panic-payoff',
+  'shimmer-unbreakable-loyalty-instinct-payoff',
+  'zivern-battle-mastery-intelligence-payoff',
+]);
+
 const genericConditionalQuestions = [
   'Activation is deterministic once the documented battle-state or action condition is satisfied.',
   'The first reliability layer should preserve the condition explicitly rather than fabricate a probability.',
 ];
 
+export type ExplicitReliabilityFamily =
+  'guaranteed' | 'conditional-deterministic' | 'chance-bearing' | 'mixed-guaranteed/chance';
+
+export function getExplicitScoringReliabilityClassifications(): ReadonlyMap<
+  string,
+  ExplicitReliabilityFamily
+> {
+  const classifications = new Map<string, ExplicitReliabilityFamily>();
+  const add = (signalIds: Iterable<string>, family: ExplicitReliabilityFamily): void => {
+    for (const signalId of signalIds) {
+      if (classifications.has(signalId)) {
+        throw new Error(`Duplicate explicit reliability classification for ${signalId}.`);
+      }
+      classifications.set(signalId, family);
+    }
+  };
+
+  add(guaranteedSignalIds, 'guaranteed');
+  add(conditionalDeterministicSignalIds, 'conditional-deterministic');
+  add(chanceBySignalId.keys(), 'chance-bearing');
+  add(mixedBySignalId.keys(), 'mixed-guaranteed/chance');
+  return classifications;
+}
+
+export function getMissingExplicitReliabilityClassificationIds(
+  scoringSignalIds: Iterable<string>,
+  classifications: ReadonlyMap<
+    string,
+    ExplicitReliabilityFamily
+  > = getExplicitScoringReliabilityClassifications(),
+): string[] {
+  return [...new Set(scoringSignalIds)]
+    .filter((signalId) => !classifications.has(signalId))
+    .sort((left, right) => left.localeCompare(right));
+}
+
+export function assertExplicitReliabilityClassificationCoverage(
+  scoringSignalIds: Iterable<string>,
+  classifications: ReadonlyMap<
+    string,
+    ExplicitReliabilityFamily
+  > = getExplicitScoringReliabilityClassifications(),
+): void {
+  const missingSignalIds = getMissingExplicitReliabilityClassificationIds(
+    scoringSignalIds,
+    classifications,
+  );
+  if (missingSignalIds.length > 0) {
+    throw new Error(
+      `Scoring signals missing explicit reliability classification: ${missingSignalIds.join(', ')}.`,
+    );
+  }
+}
+
 export function runFormationReliabilityAudit(): FormationReliabilityAuditReport {
   const abilities = abilityMap();
+  const classifications = getExplicitScoringReliabilityClassifications();
+  const scoringSignalIds = simpleSynergyProfiles.flatMap((profile) =>
+    [...profile.outputs, ...profile.supports, ...profile.benefitsFrom]
+      .filter((signal) => signal.nonScoring !== true)
+      .map((signal) => signal.id),
+  );
+  const missingProposedReliabilitySignalIds = getMissingExplicitReliabilityClassificationIds(
+    scoringSignalIds,
+    classifications,
+  );
+  assertExplicitReliabilityClassificationCoverage(scoringSignalIds, classifications);
+  validateOpportunityPresenceRegistry();
   const signals = simpleSynergyProfiles
-    .flatMap((profile) => auditProfileSignals(profile, abilities))
+    .flatMap((profile) => auditProfileSignals(profile, abilities, classifications))
     .sort((left, right) => left.signalId.localeCompare(right.signalId));
   const scoringSignals = signals.filter(
     (signal) => signal.classification !== 'not-applicable-to-activation-reliability',
@@ -1270,13 +1548,13 @@ export function runFormationReliabilityAudit(): FormationReliabilityAuditReport 
     auditContract: FORMATION_RELIABILITY_AUDIT_CONTRACT,
     proposedContract: PROPOSED_FORMATION_RELIABILITY_CONTRACT,
     source: {
-      release: '0.20.3' as const,
-      startingOriginMainSha: '010555fd8f79268a60a805e2ed296a8d6cc322fc' as const,
+      researchBaselineRelease: '0.20.3' as const,
+      researchBaselineSha: '010555fd8f79268a60a805e2ed296a8d6cc322fc' as const,
       profileFile: 'src/synergy/profiles.ts' as const,
-      canonicalAbilityFiles: [
+      canonicalAbilityFiles: ['src/data/dragons.ts', 'src/data/sunfyreTairax.ts'] as [
         'src/data/dragons.ts',
         'src/data/sunfyreTairax.ts',
-      ] as ['src/data/dragons.ts', 'src/data/sunfyreTairax.ts'],
+      ],
     },
     totals: {
       dragons: simpleSynergyProfiles.length,
@@ -1289,15 +1567,13 @@ export function runFormationReliabilityAudit(): FormationReliabilityAuditReport 
       chanceBearingSignals: chanceBearing.length,
       mixedSignals: classificationCounts['mixed-guaranteed-and-chance-based-ability'],
       signalsWithExplicitProbability: chanceBearing.filter(hasExplicitProbability).length,
-      signalsWithHabitLevelProbabilityProgression: chanceBearing.filter(
-        hasHabitLevelProbability,
-      ).length,
+      signalsWithHabitLevelProbabilityProgression:
+        chanceBearing.filter(hasHabitLevelProbability).length,
       signalsWithKnownOpportunityCount: chanceBearing.filter(
         (signal) => signal.opportunityCount.kind === 'exact',
       ).length,
       signalsWithKnownRollScope: chanceBearing.filter(
-        (signal) =>
-          signal.rollScope !== 'unresolved' && signal.rollScope !== 'not-applicable',
+        (signal) => signal.rollScope !== 'unresolved' && signal.rollScope !== 'not-applicable',
       ).length,
       signalsWithConfirmedSeparatePerTargetChecks: chanceBearing.filter(
         (signal) => signal.separatePerTarget === true,
@@ -1313,10 +1589,24 @@ export function runFormationReliabilityAudit(): FormationReliabilityAuditReport 
       signalsWithUnknownProbability: chanceBearing.filter(
         (signal) => signal.probability.kind === 'unknown',
       ).length,
-      signalsWithCompleteSupportedProbabilityOpportunityScopeAndIndependence:
-        chanceBearing.filter(hasCompleteSupportedReliability).length,
-      signalsMissingProposedReliabilityCoverage: 0 as const,
+      signalsWithCompleteSupportedProbabilityOpportunityScopeAndIndependence: chanceBearing.filter(
+        hasCompleteSupportedReliability,
+      ).length,
+      signalsMissingProposedReliabilityCoverage: missingProposedReliabilitySignalIds.length,
+      signalsWithGuaranteedAtLeastOneOpportunity: scoringSignals.filter(
+        (signal) => signal.opportunityPresence === 'guaranteed-at-least-one',
+      ).length,
+      signalsWithConditionalOpportunityPresence: scoringSignals.filter(
+        (signal) => signal.opportunityPresence === 'conditional',
+      ).length,
+      signalsWithUnknownOpportunityPresence: scoringSignals.filter(
+        (signal) => signal.opportunityPresence === 'unknown',
+      ).length,
+      signalsWithNotApplicableOpportunityPresence: scoringSignals.filter(
+        (signal) => signal.opportunityPresence === 'not-applicable',
+      ).length,
     },
+    missingProposedReliabilitySignalIds,
     classificationCounts,
     breakdownByDragon: simpleSynergyProfiles
       .map((profile) => {
@@ -1327,40 +1617,35 @@ export function runFormationReliabilityAudit(): FormationReliabilityAuditReport 
           scoringSignals: rows.length,
           chanceBearingSignals: rows.filter(isChanceBearing).length,
           mixedSignals: rows.filter(
-            (signal) =>
-              signal.classification === 'mixed-guaranteed-and-chance-based-ability',
+            (signal) => signal.classification === 'mixed-guaranteed-and-chance-based-ability',
           ).length,
           conditionalDeterministicSignals: rows.filter(
             (signal) => signal.classification === 'conditional-deterministic',
           ).length,
-          unknownProbabilitySignals: rows.filter(
-            (signal) => signal.probability.kind === 'unknown',
-          ).length,
+          unknownProbabilitySignals: rows.filter((signal) => signal.probability.kind === 'unknown')
+            .length,
         };
       })
       .sort((left, right) => left.dragonId.localeCompare(right.dragonId)),
-    breakdownBySignalCategory: (
-      ['output', 'support', 'benefitsFrom'] as const
-    ).map((signalCategory) => {
-      const rows = scoringSignals.filter((signal) => signal.signalCategory === signalCategory);
-      return {
-        signalCategory,
-        scoringSignals: rows.length,
-        chanceBearingSignals: rows.filter(isChanceBearing).length,
-        mixedSignals: rows.filter(
-          (signal) =>
-            signal.classification === 'mixed-guaranteed-and-chance-based-ability',
-        ).length,
-      };
-    }),
+    breakdownBySignalCategory: (['output', 'support', 'benefitsFrom'] as const).map(
+      (signalCategory) => {
+        const rows = scoringSignals.filter((signal) => signal.signalCategory === signalCategory);
+        return {
+          signalCategory,
+          scoringSignals: rows.length,
+          chanceBearingSignals: rows.filter(isChanceBearing).length,
+          mixedSignals: rows.filter(
+            (signal) => signal.classification === 'mixed-guaranteed-and-chance-based-ability',
+          ).length,
+        };
+      },
+    ),
     positionClaims,
     signals,
   };
   return {
     ...reportWithoutHash,
-    deterministicHash: createHash('sha256')
-      .update(JSON.stringify(reportWithoutHash))
-      .digest('hex'),
+    deterministicHash: createHash('sha256').update(JSON.stringify(reportWithoutHash)).digest('hex'),
   };
 }
 
@@ -1394,12 +1679,17 @@ function abilityMap(): Map<string, AbilityDefinition> {
 function auditProfileSignals(
   profile: DragonSynergyProfile,
   abilities: Map<string, AbilityDefinition>,
+  classifications: ReadonlyMap<string, ExplicitReliabilityFamily>,
 ): FormationReliabilityAuditSignal[] {
   return [
-    ...profile.outputs.map((signal) => auditSignal(profile, 'output', signal, abilities)),
-    ...profile.supports.map((signal) => auditSignal(profile, 'support', signal, abilities)),
+    ...profile.outputs.map((signal) =>
+      auditSignal(profile, 'output', signal, abilities, classifications),
+    ),
+    ...profile.supports.map((signal) =>
+      auditSignal(profile, 'support', signal, abilities, classifications),
+    ),
     ...profile.benefitsFrom.map((signal) =>
-      auditSignal(profile, 'benefitsFrom', signal, abilities),
+      auditSignal(profile, 'benefitsFrom', signal, abilities, classifications),
     ),
   ];
 }
@@ -1409,6 +1699,7 @@ function auditSignal(
   signalCategory: FormationReliabilityAuditSignal['signalCategory'],
   signal: SynergySignal,
   abilities: Map<string, AbilityDefinition>,
+  classifications: ReadonlyMap<string, ExplicitReliabilityFamily>,
 ): FormationReliabilityAuditSignal {
   const ability = abilities.get(signal.abilityId);
   if (!ability) {
@@ -1417,16 +1708,26 @@ function auditSignal(
   const chance = chanceBySignalId.get(signal.id);
   const mixed = mixedBySignalId.get(signal.id);
   const nonScoring = signal.nonScoring === true;
-  const conditional = conditionalDeterministicSignalIds.has(signal.id);
+  const explicitFamily = classifications.get(signal.id);
+  if (!nonScoring && !explicitFamily) {
+    throw new Error(`Scoring signal ${signal.id} has no explicit reliability classification.`);
+  }
+  const conditional = explicitFamily === 'conditional-deterministic';
   const classification = nonScoring
     ? 'not-applicable-to-activation-reliability'
-    : mixed
+    : explicitFamily === 'mixed-guaranteed/chance'
       ? 'mixed-guaranteed-and-chance-based-ability'
-      : chance
+      : explicitFamily === 'chance-bearing' && chance
         ? (chance.classification ?? chanceClassification(chance.opportunityCount))
-        : conditional
+        : explicitFamily === 'conditional-deterministic'
           ? 'conditional-deterministic'
-          : 'guaranteed';
+          : explicitFamily === 'guaranteed'
+            ? 'guaranteed'
+            : (() => {
+                throw new Error(
+                  `Explicit reliability classification for ${signal.id} has no matching registry data.`,
+                );
+              })();
   const componentIds = mixed
     ? mixed.componentSuffixes.map((suffix) => `${ability.id}:${suffix}`)
     : [`${chance?.sourceAbilityOverride ?? ability.id}:${chance?.componentSuffix ?? signal.id}`];
@@ -1442,15 +1743,27 @@ function auditSignal(
     abilityKind: ability.kind,
     unlockStarRank: signal.unlock?.minimumStarRank ?? ability.unlockStarRank,
     minimumDragonLevel: signal.unlock?.minimumDragonLevel ?? ability.minimumDragonLevel,
-    habitLevelDependent:
-      chance ? hasHabitLevelProbabilityValue(chance.probability) : ability.kind === 'habit',
+    habitLevelDependent: chance
+      ? hasHabitLevelProbabilityValue(chance.probability)
+      : ability.kind === 'habit',
     currentCuratedDescription: signal.description,
     currentConfidence: signal.confidence,
     currentRelationshipTypesOrValuesAffected: relationshipEffects(signalCategory, signal),
     reliabilityComponentIds: componentIds,
     classification,
-    probability: chance?.probability ?? (mixed ? { kind: 'multiple', note: mixed.note } : noProbability),
-    rollTiming: chance?.rollTiming ?? (conditional ? 'Documented condition or trigger.' : 'Deterministic once unlocked and position-valid.'),
+    probability:
+      chance?.probability ?? (mixed ? { kind: 'multiple', note: mixed.note } : noProbability),
+    opportunityPresence:
+      nonScoring ||
+      explicitFamily === 'guaranteed' ||
+      explicitFamily === 'conditional-deterministic'
+        ? 'not-applicable'
+        : opportunityPresenceForSignal(signal.id),
+    rollTiming:
+      chance?.rollTiming ??
+      (conditional
+        ? 'Documented condition or trigger.'
+        : 'Deterministic once unlocked and position-valid.'),
     rollScope: chance?.rollScope ?? 'not-applicable',
     opportunityCount:
       chance?.opportunityCount ??
@@ -1510,6 +1823,43 @@ function chanceClassification(
   return 'known-chance-with-unresolved-opportunity-count';
 }
 
+function opportunityPresenceForSignal(signalId: string): OpportunityPresence {
+  if (guaranteedAtLeastOneOpportunitySignalIds.has(signalId)) {
+    return 'guaranteed-at-least-one';
+  }
+  if (conditionalOpportunitySignalIds.has(signalId)) {
+    return 'conditional';
+  }
+  if (unknownOpportunitySignalIds.has(signalId)) {
+    return 'unknown';
+  }
+  throw new Error(`Chance-bearing signal ${signalId} has no explicit opportunity presence.`);
+}
+
+function validateOpportunityPresenceRegistry(): void {
+  const chanceBearingSignalIds = new Set([...chanceBySignalId.keys(), ...mixedBySignalId.keys()]);
+  const presenceSignalIds = [
+    ...guaranteedAtLeastOneOpportunitySignalIds,
+    ...conditionalOpportunitySignalIds,
+    ...unknownOpportunitySignalIds,
+  ];
+  const duplicatePresenceIds = presenceSignalIds
+    .filter((signalId, index) => presenceSignalIds.indexOf(signalId) !== index)
+    .sort((left, right) => left.localeCompare(right));
+  const missingPresenceIds = [...chanceBearingSignalIds]
+    .filter((signalId) => !presenceSignalIds.includes(signalId))
+    .sort((left, right) => left.localeCompare(right));
+  const unknownPresenceIds = presenceSignalIds
+    .filter((signalId) => !chanceBearingSignalIds.has(signalId))
+    .sort((left, right) => left.localeCompare(right));
+  if (duplicatePresenceIds.length || missingPresenceIds.length || unknownPresenceIds.length) {
+    throw new Error(
+      `Invalid opportunity-presence registry: duplicates [${duplicatePresenceIds.join(', ')}]; ` +
+        `missing [${missingPresenceIds.join(', ')}]; unknown [${unknownPresenceIds.join(', ')}].`,
+    );
+  }
+}
+
 function relationshipEffects(
   category: FormationReliabilityAuditSignal['signalCategory'],
   signal: SynergySignal,
@@ -1544,20 +1894,7 @@ function isChanceBearing(signal: FormationReliabilityAuditSignal): boolean {
 }
 
 function hasExplicitProbability(signal: FormationReliabilityAuditSignal): boolean {
-  if (signal.probability.kind === 'fixed' || signal.probability.kind === 'habit-level') {
-    return true;
-  }
-  if (signal.probability.kind === 'round-and-habit') {
-    return signal.probability.fixed !== undefined || signal.probability.byHabitLevel !== undefined;
-  }
-  if (signal.probability.kind === 'multiple') {
-    return Boolean(
-      signal.probability.variants?.some(
-        (variant) => variant.fixed !== undefined || variant.byHabitLevel !== undefined,
-      ),
-    );
-  }
-  return false;
+  return hasExplicitProbabilityValue(signal.probability);
 }
 
 function hasHabitLevelProbability(signal: FormationReliabilityAuditSignal): boolean {
@@ -1567,18 +1904,52 @@ function hasHabitLevelProbability(signal: FormationReliabilityAuditSignal): bool
 function hasHabitLevelProbabilityValue(probability: ReliabilityProbability): boolean {
   return Boolean(
     probability.byHabitLevel ??
-      probability.variants?.some((variant) => variant.byHabitLevel !== undefined),
+    probability.variants?.some((variant) => variant.byHabitLevel !== undefined),
   );
 }
 
+export function isCompleteSupportedReliabilityEvidence(
+  signal: Pick<
+    FormationReliabilityAuditSignal,
+    'probability' | 'opportunityPresence' | 'opportunityCount' | 'rollScope' | 'independence'
+  >,
+): boolean {
+  const opportunityCount = signal.opportunityCount;
+  if (
+    !hasExplicitProbabilityValue(signal.probability) ||
+    signal.opportunityPresence !== 'guaranteed-at-least-one' ||
+    opportunityCount.kind !== 'exact' ||
+    opportunityCount.value === undefined ||
+    opportunityCount.value < 1 ||
+    signal.rollScope === 'unresolved' ||
+    signal.rollScope === 'not-applicable'
+  ) {
+    return false;
+  }
+  return opportunityCount.value === 1
+    ? signal.independence === 'not-applicable'
+    : signal.independence === 'confirmed';
+}
+
 function hasCompleteSupportedReliability(signal: FormationReliabilityAuditSignal): boolean {
-  return (
-    hasExplicitProbability(signal) &&
-    signal.opportunityCount.kind === 'exact' &&
-    signal.rollScope !== 'unresolved' &&
-    signal.rollScope !== 'not-applicable' &&
-    signal.independence === 'not-applicable'
-  );
+  return isCompleteSupportedReliabilityEvidence(signal);
+}
+
+function hasExplicitProbabilityValue(probability: ReliabilityProbability): boolean {
+  if (probability.kind === 'fixed' || probability.kind === 'habit-level') {
+    return true;
+  }
+  if (probability.kind === 'round-and-habit') {
+    return probability.fixed !== undefined || probability.byHabitLevel !== undefined;
+  }
+  if (probability.kind === 'multiple') {
+    return Boolean(
+      probability.variants?.some(
+        (variant) => variant.fixed !== undefined || variant.byHabitLevel !== undefined,
+      ),
+    );
+  }
+  return false;
 }
 
 function validateCoverage(
@@ -1595,18 +1966,14 @@ function validateCoverage(
     throw new Error(`Expected 234 scoring signals, found ${scoringSignals.length}.`);
   }
   const signalIds = new Set(signals.map((signal) => signal.signalId));
-  const unknownChanceIds = [...chanceBySignalId.keys()].filter((id) => !signalIds.has(id));
-  const unknownMixedIds = [...mixedBySignalId.keys()].filter((id) => !signalIds.has(id));
-  const unknownConditionalIds = [...conditionalDeterministicSignalIds].filter(
-    (id) => !signalIds.has(id),
-  );
-  if (unknownChanceIds.length || unknownMixedIds.length || unknownConditionalIds.length) {
+  const unknownExplicitClassificationIds = [
+    ...getExplicitScoringReliabilityClassifications().keys(),
+  ]
+    .filter((id) => !signalIds.has(id))
+    .sort((left, right) => left.localeCompare(right));
+  if (unknownExplicitClassificationIds.length) {
     throw new Error(
-      `Reliability inventory references missing signals: ${[
-        ...unknownChanceIds,
-        ...unknownMixedIds,
-        ...unknownConditionalIds,
-      ].join(', ')}.`,
+      `Reliability inventory references missing signals: ${unknownExplicitClassificationIds.join(', ')}.`,
     );
   }
   if (new Set(signals.map((signal) => signal.signalId)).size !== signals.length) {

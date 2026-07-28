@@ -1,9 +1,9 @@
 {
-  "auditContract": "formation-reliability-audit-v1",
-  "proposedContract": "formation-signal-reliability-v1-proposal",
+  "auditContract": "formation-reliability-audit-v2",
+  "proposedContract": "formation-signal-reliability-v2-proposal",
   "source": {
-    "release": "0.20.3",
-    "startingOriginMainSha": "010555fd8f79268a60a805e2ed296a8d6cc322fc",
+    "researchBaselineRelease": "0.20.3",
+    "researchBaselineSha": "010555fd8f79268a60a805e2ed296a8d6cc322fc",
     "profileFile": "src/synergy/profiles.ts",
     "canonicalAbilityFiles": [
       "src/data/dragons.ts",
@@ -29,8 +29,13 @@
     "signalsWithUnresolvedIndependence": 68,
     "signalsWithUnknownProbability": 0,
     "signalsWithCompleteSupportedProbabilityOpportunityScopeAndIndependence": 2,
-    "signalsMissingProposedReliabilityCoverage": 0
+    "signalsMissingProposedReliabilityCoverage": 0,
+    "signalsWithGuaranteedAtLeastOneOpportunity": 43,
+    "signalsWithConditionalOpportunityPresence": 27,
+    "signalsWithUnknownOpportunityPresence": 3,
+    "signalsWithNotApplicableOpportunityPresence": 161
   },
+  "missingProposedReliabilitySignalIds": [],
   "classificationCounts": {
     "guaranteed": 133,
     "conditional-deterministic": 28,
@@ -786,6 +791,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -833,6 +839,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -880,6 +887,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -931,6 +939,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -979,6 +988,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1028,6 +1038,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -1088,6 +1099,7 @@
           }
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 2, 4, 6, and 8.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -1147,6 +1159,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1208,6 +1221,7 @@
           }
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 2, 4, 6, and 8.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -1266,6 +1280,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1313,6 +1328,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1360,6 +1376,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1408,6 +1425,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1459,6 +1477,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1517,6 +1536,7 @@
           0.25
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Overwhelm on rounds 1, 3, 6, 8; Stagger on rounds 2, 4, 7, 9.",
       "rollScope": "separate-per-effect",
       "opportunityCount": {
@@ -1582,6 +1602,7 @@
           0.25
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Overwhelm on rounds 1, 3, 6, 8; Stagger on rounds 2, 4, 7, 9.",
       "rollScope": "separate-per-effect",
       "opportunityCount": {
@@ -1640,6 +1661,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Each round.",
       "rollScope": "separate-stat-checks",
       "opportunityCount": {
@@ -1692,6 +1714,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Each round.",
       "rollScope": "separate-stat-checks",
       "opportunityCount": {
@@ -1744,6 +1767,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Each round.",
       "rollScope": "separate-stat-checks",
       "opportunityCount": {
@@ -1796,6 +1820,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Each round.",
       "rollScope": "separate-stat-checks",
       "opportunityCount": {
@@ -1847,6 +1872,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1895,6 +1921,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1942,6 +1969,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -1990,6 +2018,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2037,6 +2066,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2085,6 +2115,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2140,6 +2171,7 @@
           0.2
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "separate-per-target-and-effect",
       "opportunityCount": {
@@ -2199,6 +2231,7 @@
           0.2
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "separate-per-target-and-effect",
       "opportunityCount": {
@@ -2258,6 +2291,7 @@
           0.2
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "separate-per-target-and-effect",
       "opportunityCount": {
@@ -2310,6 +2344,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2358,6 +2393,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2405,6 +2441,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2477,6 +2514,7 @@
           }
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -2528,6 +2566,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2585,6 +2624,7 @@
         ],
         "note": "At 10 Stars Vermin’s Bane replaces only the Round 1 chance; later odd rounds remain 20%."
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Odd-numbered rounds; the Habit Level value applies only on Round 1 at 10 Stars.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -2643,6 +2683,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2691,6 +2732,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2749,6 +2791,7 @@
           0.5
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -2801,6 +2844,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Odd-numbered rounds after the direct Physical attack.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -2860,6 +2904,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -2915,6 +2960,7 @@
           0.3
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Odd-numbered rounds.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -2974,6 +3020,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3029,6 +3076,7 @@
           0.5
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Start of rounds 1, 2, and 3.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -3087,6 +3135,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3134,6 +3183,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3181,6 +3231,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3229,6 +3280,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3277,6 +3329,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3324,6 +3377,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3371,6 +3425,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3418,6 +3473,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3465,6 +3521,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3512,6 +3569,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3559,6 +3617,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3607,6 +3666,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3654,6 +3714,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3705,6 +3766,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3755,6 +3817,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3810,6 +3873,7 @@
           0.25
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -3861,6 +3925,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -3909,6 +3974,7 @@
         "kind": "fixed",
         "fixed": 0.3
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -3960,6 +4026,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4008,6 +4075,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4055,6 +4123,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4106,6 +4175,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4161,6 +4231,7 @@
           0.5
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -4219,6 +4290,7 @@
           0.3
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "After each Basic Attack at 6+ Stars.",
       "rollScope": "separate-per-target",
       "opportunityCount": {
@@ -4271,6 +4343,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4323,6 +4396,7 @@
         "kind": "fixed",
         "fixed": 0.3
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "After each Basic Attack.",
       "rollScope": "separate-per-target",
       "opportunityCount": {
@@ -4375,6 +4449,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4425,6 +4500,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4473,6 +4549,7 @@
         "kind": "fixed",
         "fixed": 0.35
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -4531,6 +4608,7 @@
           1
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Start of Round 1.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -4588,6 +4666,7 @@
           1
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Start of Round 1.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -4638,6 +4717,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4694,6 +4774,7 @@
           0.2
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -4745,6 +4826,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4794,6 +4876,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4842,6 +4925,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4889,6 +4973,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4939,6 +5024,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -4986,6 +5072,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5033,6 +5120,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5080,6 +5168,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5128,6 +5217,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5175,6 +5265,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5222,6 +5313,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5270,6 +5362,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5318,6 +5411,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5367,6 +5461,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5414,6 +5509,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5465,6 +5561,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5513,6 +5610,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5561,6 +5659,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5609,6 +5708,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5663,6 +5763,7 @@
           0.5
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -5722,6 +5823,7 @@
           0.5
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -5773,6 +5875,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5821,6 +5924,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5870,6 +5974,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5918,6 +6023,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -5965,6 +6071,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6016,6 +6123,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6071,6 +6179,7 @@
           0.25
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Each round for the below-50% Troop Capacity Resistance clause.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -6122,6 +6231,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6171,6 +6281,7 @@
         "kind": "fixed",
         "fixed": 0.25
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -6223,6 +6334,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6272,6 +6384,7 @@
         "kind": "fixed",
         "fixed": 0.25
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -6324,6 +6437,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6372,6 +6486,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6442,6 +6557,7 @@
           }
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round, with doubled chance during rounds 7–10.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -6492,6 +6608,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6539,6 +6656,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6586,6 +6704,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6633,6 +6752,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6680,6 +6800,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6727,6 +6848,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6774,6 +6896,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6822,6 +6945,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6892,6 +7016,7 @@
           }
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 2, 5, and 8, once for each of two added attacks.",
       "rollScope": "separate-per-target",
       "opportunityCount": {
@@ -6950,6 +7075,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -6998,6 +7124,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7046,6 +7173,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7095,6 +7223,7 @@
         "kind": "multiple",
         "note": "One signal combines a deterministic damage multiplier with a doubled chance for Scorched Earth."
       },
+      "opportunityPresence": "unknown",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7169,6 +7298,7 @@
           }
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -7243,6 +7373,7 @@
           }
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -7294,6 +7425,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7341,6 +7473,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7389,6 +7522,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7440,6 +7574,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7489,6 +7624,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7536,6 +7672,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7584,6 +7721,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7631,6 +7769,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7678,6 +7817,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7733,6 +7873,7 @@
           0.35
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -7791,6 +7932,7 @@
           0.35
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -7845,6 +7987,7 @@
         "kind": "multiple",
         "note": "One Instinct payoff summarizes chance-based Command buffs plus guaranteed scheduled Tactical Damage and Recovery."
       },
+      "opportunityPresence": "unknown",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7896,6 +8039,7 @@
         "kind": "fixed",
         "fixed": 0.3
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -7948,6 +8092,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -7995,6 +8140,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8050,6 +8196,7 @@
           0.2
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -8100,6 +8247,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8148,6 +8296,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8198,6 +8347,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8246,6 +8396,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8296,6 +8447,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8346,6 +8498,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8398,6 +8551,7 @@
         "kind": "fixed",
         "fixed": 0.5
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 1, 4, 7, and 10 after the below-50% Troop Capacity branch applies.",
       "rollScope": "separate-per-target",
       "opportunityCount": {
@@ -8459,6 +8613,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8512,6 +8667,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8561,6 +8717,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8609,6 +8766,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8657,6 +8815,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -8711,6 +8870,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -8764,6 +8924,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8812,6 +8973,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8860,6 +9022,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8908,6 +9071,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -8956,6 +9120,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9011,6 +9176,7 @@
           1
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 2, 5, and 8 after guaranteed Recovery is applied.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -9067,6 +9233,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9118,6 +9285,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9167,6 +9335,7 @@
         "kind": "fixed",
         "fixed": 0.5
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 2, 5, and 8 after the direct Fire attack.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -9227,6 +9396,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9287,6 +9457,7 @@
         ],
         "note": "Base command is 25%; unlocked Gleamstrike replaces the odd-round chance using its active Habit Level."
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Odd-numbered rounds.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -9355,6 +9526,7 @@
           0.35
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Start of each round, once for each Enemy afflicted with Burn.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -9414,6 +9586,7 @@
           0.35
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Start of each round, once for each Enemy afflicted with Burn.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -9466,6 +9639,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9517,6 +9691,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9564,6 +9739,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9614,6 +9790,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9664,6 +9841,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9711,6 +9889,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9758,6 +9937,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9805,6 +9985,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9852,6 +10033,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9900,6 +10082,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9947,6 +10130,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -9995,6 +10179,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10043,6 +10228,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10093,6 +10279,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10142,6 +10329,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10197,6 +10385,7 @@
           0.5
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Even-numbered rounds after the direct Physical strike.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -10256,6 +10445,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10313,6 +10503,7 @@
           0.25
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -10372,6 +10563,7 @@
           0.25
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -10423,6 +10615,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10471,6 +10664,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10522,6 +10716,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10570,6 +10765,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10618,6 +10814,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10667,6 +10864,7 @@
         "kind": "fixed",
         "fixed": 0.25
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -10726,6 +10924,7 @@
           1
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Start of rounds 1, 2, and 3; Stagger replaces Taunt for already-Taunted targets.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -10785,6 +10984,7 @@
         "kind": "multiple",
         "note": "This deterministic follow-on requires a successful Taunt from one of multiple chance-bearing Vaeldra sources."
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Whenever Vaeldra successfully afflicts an Enemy with Taunt.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -10835,6 +11035,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10883,6 +11084,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10930,6 +11132,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -10978,6 +11181,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11033,6 +11237,7 @@
           0.24
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 2, 4, 6, and 8.",
       "rollScope": "separate-per-target-and-effect",
       "opportunityCount": {
@@ -11099,6 +11304,7 @@
           0.24
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 2, 4, 6, and 8.",
       "rollScope": "separate-per-target-and-effect",
       "opportunityCount": {
@@ -11158,6 +11364,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11205,6 +11412,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11255,6 +11463,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Rounds 2, 4, 6, and 8.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -11314,6 +11523,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11361,6 +11571,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11416,6 +11627,7 @@
           0.3
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Each round while Venator is strictly below 50% Troop Capacity.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -11467,6 +11679,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11518,6 +11731,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Documented condition or trigger.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11569,6 +11783,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11623,6 +11838,7 @@
           1
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Start of combat, repeated for each Enemy that deals Fire Damage.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -11675,6 +11891,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11723,6 +11940,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11772,6 +11990,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "After each Basic Attack, repeated once when any Enemy deals Fire Damage.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -11824,6 +12043,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11874,6 +12094,7 @@
         "kind": "fixed",
         "fixed": 0.2
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -11925,6 +12146,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -11972,6 +12194,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12019,6 +12242,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12074,6 +12298,7 @@
           0.6
         ]
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Start of rounds 6, 7, 8, 9, and 10.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -12140,6 +12365,7 @@
           0.25
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -12192,6 +12418,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12239,6 +12466,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12286,6 +12514,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12333,6 +12562,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12381,6 +12611,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12438,6 +12669,7 @@
           }
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -12490,6 +12722,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12548,6 +12781,7 @@
           }
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Each round.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -12602,6 +12836,7 @@
         "fixed": 0.3,
         "note": "Underlying per-round Bulwark-stack chance; the scoring signal activates only after the third successful stack."
       },
+      "opportunityPresence": "conditional",
       "rollTiming": "Each round until the third Bulwark stack is gained.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -12652,6 +12887,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12701,6 +12937,7 @@
         "kind": "multiple",
         "note": "One Intelligence payoff spans deterministic Battle Mastery and chance-based Fearsome Reach."
       },
+      "opportunityPresence": "unknown",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12750,6 +12987,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -12820,6 +13058,7 @@
           }
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Odd-numbered rounds.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -12901,6 +13140,7 @@
           }
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Odd-numbered rounds.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -12968,6 +13208,7 @@
           0.6
         ]
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Odd-numbered rounds.",
       "rollScope": "unresolved",
       "opportunityCount": {
@@ -13028,6 +13269,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -13076,6 +13318,7 @@
       "probability": {
         "kind": "none"
       },
+      "opportunityPresence": "not-applicable",
       "rollTiming": "Deterministic once unlocked and position-valid.",
       "rollScope": "not-applicable",
       "opportunityCount": {
@@ -13124,6 +13367,7 @@
         "kind": "fixed",
         "fixed": 0.4
       },
+      "opportunityPresence": "guaranteed-at-least-one",
       "rollTiming": "Rounds 1, 4, 6, and 9.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
@@ -13156,5 +13400,5 @@
       "coverageStatus": "covered"
     }
   ],
-  "deterministicHash": "5b8a3efc31414c58da68738996870a7f7a14746ba2d0c238b9a5f3f9dcede5a1"
+  "deterministicHash": "f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f"
 }
