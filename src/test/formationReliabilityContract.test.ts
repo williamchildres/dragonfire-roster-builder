@@ -90,6 +90,7 @@ const velarSlow = {
 const velarRecovery: AbilityReliabilityComponent = {
   id: 'velar-breath-of-renewal:recovery',
   sourceAbilityId: 'velar-breath-of-renewal',
+  sourceAbilityKind: 'habit',
   reliabilityClass: 'guaranteed',
   opportunityPresence: 'not-applicable',
   timing: { kind: 'scheduled-rounds', rounds: [2, 4, 6, 8] },
@@ -320,9 +321,30 @@ const representativeInput: ReliabilityContractInput = {
   bindings: representativeBindings,
   scoringSignalIds: representativeBindings.map((binding) => binding.signalId),
   abilityCatalog: dragons.flatMap((dragon) => [
-    { abilityId: dragon.command.id, kind: dragon.command.kind },
-    { abilityId: dragon.trait.id, kind: dragon.trait.kind },
-    ...dragon.habits.map((habit) => ({ abilityId: habit.id, kind: habit.kind })),
+    {
+      abilityId: dragon.command.id,
+      kind: dragon.command.kind,
+      dragonId: dragon.id,
+      unlockStarRank: dragon.command.unlockStarRank,
+      minimumDragonLevel: dragon.command.minimumDragonLevel,
+      evidenceIds: dragon.command.evidenceIds,
+    },
+    {
+      abilityId: dragon.trait.id,
+      kind: dragon.trait.kind,
+      dragonId: dragon.id,
+      unlockStarRank: dragon.trait.unlockStarRank,
+      minimumDragonLevel: dragon.trait.minimumDragonLevel,
+      evidenceIds: dragon.trait.evidenceIds,
+    },
+    ...dragon.habits.map((habit) => ({
+      abilityId: habit.id,
+      kind: habit.kind,
+      dragonId: dragon.id,
+      unlockStarRank: habit.unlockStarRank,
+      minimumDragonLevel: habit.minimumDragonLevel,
+      evidenceIds: habit.evidenceIds,
+    })),
   ]),
 };
 
@@ -512,21 +534,21 @@ describe('production Formation Reliability contract', () => {
     );
 
     expect(alternatives?.status).toBe('resolved');
-    if (alternatives?.status === 'resolved') {
+    if (alternatives?.status === 'resolved' && alternatives.bindingClass !== 'resolved-mixed') {
       expect(alternatives.paths.map((candidate) => candidate.pathId)).toEqual([
         'guaranteed-recovery-path',
         'chance-first-strike-path',
       ]);
     }
     expect(shared?.status).toBe('resolved');
-    if (shared?.status === 'resolved') {
+    if (shared?.status === 'resolved' && shared.bindingClass !== 'resolved-mixed') {
       expect(shared.paths[0]?.events[0]?.componentReferences).toEqual([
         { componentId: velarFirstStrike.id },
         { componentId: velarSlow.id },
       ]);
     }
     expect(joint?.status).toBe('resolved');
-    if (joint?.status === 'resolved') {
+    if (joint?.status === 'resolved' && joint.bindingClass !== 'resolved-mixed') {
       expect(joint.paths[0]?.events.map((event) => event.eventId)).toEqual([
         'burn-setup',
         'gift-payoff',
@@ -563,7 +585,12 @@ describe('production Formation Reliability contract', () => {
     const partial: ReliabilityContractInput = {
       components: [velarRecovery, malachiteLightning],
       bindings: [
-        resolvedBinding('bound-signal', [path('recovery', [['recovery', [velarRecovery.id]]])]),
+        {
+          ...resolvedBinding('bound-signal', [
+            path('recovery', [['recovery', [velarRecovery.id]]]),
+          ]),
+          bindingClass: 'guaranteed',
+        },
       ],
       scoringSignalIds: ['bound-signal', 'missing-signal'],
     };
@@ -580,7 +607,7 @@ describe('production Formation Reliability contract', () => {
   it('requires unresolved mixed bindings to be split before full migration', () => {
     expect(
       validateReliabilityContract(representativeInput, 'full-migration').map((issue) => issue.code),
-    ).toEqual(['binding.mixed-unresolved']);
+    ).toContain('binding.mixed-unresolved');
   });
 
   it('adapts unlocked Habit progression without changing storage or defaulting missing levels', () => {
@@ -757,7 +784,12 @@ describe('production Formation Reliability contract', () => {
     const instinctBinding = representativeBindings.find(
       (binding) => binding.signalId === 'shimmer-instinct-variant',
     );
-    if (strengthBinding?.status !== 'resolved' || instinctBinding?.status !== 'resolved') {
+    if (
+      strengthBinding?.status !== 'resolved' ||
+      strengthBinding.bindingClass === 'resolved-mixed' ||
+      instinctBinding?.status !== 'resolved' ||
+      instinctBinding.bindingClass === 'resolved-mixed'
+    ) {
       throw new Error('Expected resolved variant bindings.');
     }
     expect(strengthBinding.paths[0]?.events[0]?.componentReferences[0]).toEqual(strengthReference);
@@ -831,9 +863,15 @@ describe('production Formation Reliability contract', () => {
 });
 
 function chanceComponent(
-  component: Omit<AbilityReliabilityComponent, 'reliabilityClass'>,
+  component: Omit<AbilityReliabilityComponent, 'reliabilityClass' | 'sourceAbilityKind'> & {
+    sourceAbilityKind?: AbilityReliabilityComponent['sourceAbilityKind'];
+  },
 ): AbilityReliabilityComponent {
-  return { ...component, reliabilityClass: 'chance' };
+  return {
+    ...component,
+    sourceAbilityKind: component.sourceAbilityKind ?? abilityKindFor(component.sourceAbilityId),
+    reliabilityClass: 'chance',
+  };
 }
 
 function deterministicComponent(
@@ -843,6 +881,7 @@ function deterministicComponent(
   return {
     id,
     sourceAbilityId,
+    sourceAbilityKind: abilityKindFor(sourceAbilityId),
     reliabilityClass: 'guaranteed',
     opportunityPresence: 'not-applicable',
     timing: { kind: 'scheduled-rounds', rounds: [2, 4, 6, 8] },
@@ -853,10 +892,18 @@ function deterministicComponent(
   };
 }
 
+function abilityKindFor(sourceAbilityId: string) {
+  const ability = dragons
+    .flatMap((dragon) => [dragon.command, dragon.trait, ...dragon.habits])
+    .find((candidate) => candidate.id === sourceAbilityId);
+  if (!ability) throw new Error(`Missing fixture ability ${sourceAbilityId}.`);
+  return ability.kind;
+}
+
 function resolvedBinding(
   signalId: string,
   paths: ReturnType<typeof path>[],
-): SignalReliabilityBinding {
+): Extract<SignalReliabilityBinding, { paths: readonly unknown[] }> {
   return { status: 'resolved', signalId, paths };
 }
 

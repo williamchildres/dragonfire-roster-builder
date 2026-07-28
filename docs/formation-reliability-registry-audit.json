@@ -1,0 +1,248 @@
+{
+  "auditVersion": "formation-reliability-registry-audit-v1",
+  "contractVersion": 1,
+  "counts": {
+    "dragonsCovered": 33,
+    "currentScoringSignals": 234,
+    "currentNonScoringSignals": 5,
+    "positionClaimsExcluded": 33,
+    "components": 221,
+    "bindings": 234,
+    "guaranteedBindings": 133,
+    "conditionalDeterministicBindings": 28,
+    "chanceBindings": 70,
+    "resolvedMixedBindings": 3,
+    "componentsWithFixedProbability": 23,
+    "componentsWithDirectHabitProbability": 33,
+    "componentsWithHabitOverride": 2,
+    "componentsWithRoundSpecificProbability": 2,
+    "componentsWithVariantProbability": 7,
+    "bindingsWithFixedProbability": 22,
+    "bindingsWithDirectHabitProbability": 34,
+    "bindingsWithHabitOverride": 2,
+    "bindingsWithRoundSpecificProbability": 2,
+    "bindingsWithVariantProbability": 11,
+    "guaranteedOpportunityPresence": 43,
+    "conditionalOpportunityPresence": 27,
+    "unknownOpportunityPresence": 3,
+    "unresolvedOpportunityCounts": 68,
+    "unresolvedIndependence": 68,
+    "missingBindings": 0,
+    "staleBindings": 0,
+    "duplicateBindings": 0,
+    "unreferencedComponents": 0,
+    "unresolvedMixedBindings": 0,
+    "researchParityDifferences": 21,
+    "researchParityIssues": 0
+  },
+  "missingBindingIds": [],
+  "staleBindingIds": [],
+  "unreferencedComponentIds": [],
+  "unresolvedMixedBindingIds": [],
+  "researchParityDifferences": [
+    {
+      "kind": "binding-selected-probability-variants",
+      "signalIds": [
+        "arrax-sudden-strike-bleed-payoff",
+        "arrax-sudden-strike-weakened",
+        "crimson-bloodscale-fury-taunt-payoff",
+        "shadowrend-fueled-by-darkness-advantage",
+        "shadowsong-blazing-conductor-burn",
+        "shadowsong-scorched-earth-vulnerable",
+        "shadowsong-scorched-earth-vulnerable-status",
+        "vhagar-fiery-bonds-burn-payoff",
+        "vhagar-fiery-bonds-taunt",
+        "zivern-cloak-of-terror-overwhelm",
+        "zivern-cloak-of-terror-vulnerable-payoff"
+      ],
+      "explanation": "Research variant labels are normalized to stable IDs and selected by typed binding path references."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "arulix-hypnotic-helix-overwhelm"
+      ],
+      "explanation": "arulix-hypnotic-helix:overwhelm-or-stagger -> arulix-hypnotic-helix:overwhelm; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "arulix-hypnotic-helix-stagger"
+      ],
+      "explanation": "arulix-hypnotic-helix:overwhelm-or-stagger -> arulix-hypnotic-helix:stagger; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "bevlorin-bountiful-gifts-initiative"
+      ],
+      "explanation": "bevlorin-bountiful-gifts:independent-stat-buff -> bevlorin-bountiful-gifts:initiative; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "bevlorin-bountiful-gifts-instinct"
+      ],
+      "explanation": "bevlorin-bountiful-gifts:independent-stat-buff -> bevlorin-bountiful-gifts:instinct; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "bevlorin-bountiful-gifts-intelligence"
+      ],
+      "explanation": "bevlorin-bountiful-gifts:independent-stat-buff -> bevlorin-bountiful-gifts:intelligence; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "bevlorin-bountiful-gifts-strength"
+      ],
+      "explanation": "bevlorin-bountiful-gifts:independent-stat-buff -> bevlorin-bountiful-gifts:strength; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "caraxes-crippling-inferno-burn"
+      ],
+      "explanation": "caraxes-crippling-inferno:slow-or-burn -> caraxes-crippling-inferno:burn; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "caraxes-crippling-inferno-fire"
+      ],
+      "explanation": "caraxes-crippling-inferno:slow-or-burn -> caraxes-crippling-inferno:burn; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "caraxes-crippling-inferno-slow"
+      ],
+      "explanation": "caraxes-crippling-inferno:slow-or-burn -> caraxes-crippling-inferno:slow; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "shadowsong-panic-payoff"
+      ],
+      "explanation": "shadowsong-breath-of-fire:panic-damage-payoff, shadowsong-breath-of-fire:panic-vulnerable-chance-payoff -> shadowsong-breath-of-fire:panic-damage-payoff, shadowsong-scorched-earth:vulnerable; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "shimmer-unbreakable-loyalty-instinct-payoff"
+      ],
+      "explanation": "shimmer-unbreakable-loyalty:chance-command-buffs, shimmer-unbreakable-loyalty:scheduled-recovery, shimmer-unbreakable-loyalty:scheduled-tactical-damage -> shimmer-unbreakable-loyalty:scheduled-recovery, shimmer-unbreakable-loyalty:shimmer-unbreakable-loyalty-tactical, shimmer-unbreakable-loyalty:strength-and-initiative; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "vaeldra-tempting-distraction-vulnerability"
+      ],
+      "explanation": "vaeldra-tempting-distraction:successful-taunt-follow-on -> vaeldra-lure:taunt, vaeldra-sirens-call:taunt-to-stagger, vaeldra-tempting-distraction:successful-taunt-follow-on; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "velar-gales-of-power-first-strike"
+      ],
+      "explanation": "velar-gales-of-power:first-strike-or-slow -> velar-gales-of-power:first-strike; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "velar-gales-of-power-slow"
+      ],
+      "explanation": "velar-gales-of-power:first-strike-or-slow -> velar-gales-of-power:slow; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "zivern-battle-mastery-intelligence-payoff"
+      ],
+      "explanation": "zivern-battle-mastery:chance-fearsome-reach, zivern-battle-mastery:deterministic-battle-mastery -> zivern-battle-mastery:deterministic-battle-mastery, zivern-fearsome-reach:panic; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "zivern-battle-mastery-physical"
+      ],
+      "explanation": "zivern-battle-mastery:zivern-battle-mastery-physical -> zivern-battle-mastery:deterministic-battle-mastery; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "composite-taunt-event-graph",
+      "signalIds": [
+        "vaeldra-tempting-distraction-vulnerability"
+      ],
+      "explanation": "The unresolved composite probability is replaced by explicit Lure and Siren’s Call setup paths joined to the deterministic follow-on."
+    },
+    {
+      "kind": "explicit-habit-probability-source",
+      "signalIds": [
+        "arulix-hypnotic-helix-overwhelm",
+        "arulix-hypnotic-helix-stagger",
+        "caraxes-crippling-inferno-burn",
+        "caraxes-crippling-inferno-fire",
+        "caraxes-crippling-inferno-slow",
+        "crimson-bloodscale-fury-taunt-payoff",
+        "crimson-bloodscale-terror-stun",
+        "daemoros-instill-fear-panic",
+        "daemoros-shroud-of-shadows-confusion",
+        "dawnseeker-first-light-first-strike",
+        "feskar-unyielding-grasp-stagger",
+        "jagadrix-whispering-sabotage-weakened",
+        "kalspire-tactical-assault-panic",
+        "malachite-lightning-strike-first-strike",
+        "malachite-lightning-strike-strength",
+        "malachite-thunderous-roar-damage",
+        "rhysarion-inspiring-melody-initiative",
+        "rhysarion-inspiring-melody-resistance",
+        "seasmoke-loyal-bond-resistance",
+        "shadowrend-fueled-by-darkness-advantage",
+        "shadowsong-blazing-conductor-burn",
+        "shadowsong-scorched-earth-vulnerable",
+        "shadowsong-scorched-earth-vulnerable-status",
+        "shimmer-sneak-attack-first-strike",
+        "shimmer-sneak-attack-physical",
+        "solstryker-oppressive-onslaught-overwhelm",
+        "syrax-strategic-revival-resistance",
+        "tairax-burning-ward-stagger",
+        "tairax-gift-of-fire-burn-payoff",
+        "tairax-gift-of-fire-resistance",
+        "thunderstrike-barbed-lash-bleed",
+        "thunderstrike-staggering-assault-advantage-payoff",
+        "thunderstrike-staggering-assault-stagger",
+        "vaeldra-sirens-call-stagger",
+        "velar-gales-of-power-first-strike",
+        "velar-gales-of-power-slow",
+        "venator-desperate-ambush-overwhelm",
+        "vermax-rallying-flame-tactical",
+        "vesper-midnight-onslaught-confusion",
+        "vesper-saviors-waltz-resistance",
+        "zivern-cloak-of-terror-overwhelm",
+        "zivern-cloak-of-terror-vulnerable-payoff",
+        "zivern-fearsome-reach-panic"
+      ],
+      "explanation": "Production names each probability-source Habit explicitly; the research shape carried only level values."
+    },
+    {
+      "kind": "resolved-mixed-signal-uses",
+      "signalIds": [
+        "shadowsong-panic-payoff",
+        "shimmer-unbreakable-loyalty-instinct-payoff",
+        "zivern-battle-mastery-intelligence-payoff"
+      ],
+      "explanation": "Each formerly mixed signal now has simultaneous semantic uses; paths remain alternatives only within each use."
+    },
+    {
+      "kind": "round-specific-habit-override",
+      "signalIds": [
+        "crimson-bloodscale-terror-stun",
+        "tairax-burning-ward-stagger"
+      ],
+      "explanation": "Research round-and-habit summaries are represented by explicit per-round Habit override expressions."
+    }
+  ],
+  "researchParityIssues": [],
+  "deterministicRegistryHash": "e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c"
+}

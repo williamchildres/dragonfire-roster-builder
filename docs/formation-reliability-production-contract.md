@@ -2,40 +2,46 @@
 
 ## Ownership and scope
 
-`src/synergy/reliability` owns reusable Formation Reliability types, pure validation, roster-progression adaptation, and probability helpers. It remains disconnected from Formation Rating v2, relationship construction, six-placement comparison, optimizer behavior, Estimated Power, persistence, and UI. Partial metadata therefore cannot change production scoring.
+`src/synergy/reliability` owns Formation Reliability types, pure validation, progression adaptation, probability helpers, and the production metadata registry. The registry remains disconnected from Formation Rating v2, relationship construction, placement comparison, optimizer behavior, Estimated Power, persistence, and UI, so this migration cannot change current scoring.
+
+## Registry organization and coverage
+
+`registry/catalog.ts` derives canonical abilities and current scoring IDs from dragon data and `simpleSynergyProfiles`. `registry/dragons/` contains one reviewable module per dragon, while `registry/index.ts` exports the sorted aggregate components, bindings, ability catalog, scoring IDs, and complete contract input.
+
+The registry covers all 33 dragons and all 234 current scoring signals. Five explicitly non-scoring signals and 33 position claims are identified but excluded from binding coverage. Every component is referenced and every scoring signal has exactly one resolved binding.
+
+The production audit in `src/audit/formationReliabilityRegistryAudit.ts` reconciles registry facts with the historical research inventory. Intentional structural differences - including split independent rolls, explicit Habit sources, round-specific overrides, binding-selected variants, and resolved mixed uses - are reported deterministically. Production does not import or parse the research report at runtime.
 
 ## Components and probability sources
 
-A component ID uses `ability-id:component-slug`. `sourceAbilityId` is the semantic owner of that component and must match the ability segment of its ID.
+A component ID uses `ability-id:component-slug`. `sourceAbilityId` and `sourceAbilityKind` identify its canonical semantic owner and are checked against the derived ability catalog, including unlock floors and evidence ownership.
 
-Habit-dependent probability separately carries `habitAbilityId`. The two IDs may be the same for a Habit’s own effect, or different when a Habit augments a Command. Validation requires a well-formed Habit ID and complete levels 1–5 with no extra keys. When a canonical ability catalog is supplied, validation also requires the ID to exist and identify a Habit.
+Habit-dependent probability separately carries `habitAbilityId`. It may match the component owner or identify an augmenting Habit. Validation recursively checks round and variant branches, requires a canonical same-dragon Habit, and requires complete levels 1-5 with no extra keys. Component evidence remains limited to its source ability plus recursively referenced same-dragon probability-source Habits; every external Habit source must contribute canonical evidence.
 
-Direct `habit-level` probability exists only while that Habit is active and has a recorded level. `habit-override` records both a base probability and the replacing Habit progression:
+Direct `habit-level` probability exists only while that Habit is active with a recorded level. `habit-override` resolves:
 
-- locked or inactive Habit: resolve the base;
-- active Habit with level 1–5: resolve that level’s replacement;
-- active Habit with a missing level: resolve `null`, never the base or Level 1.
+- locked or inactive Habit: documented base;
+- active Habit with level 1-5: corresponding replacement;
+- active Habit with a missing level: `null`, never the base or a default level.
 
-Ownership is not a progression gate, and the adapter makes no persistence changes.
+`round-specific` entries may be fixed, direct Habit-Level, Habit override, or unknown. This represents Tairax's Gleamstrike replacement on every odd round and Crimson's Vermin's Bane replacement only on Round 1.
 
-## Round-specific replacement
+## Binding paths, variants, and mixed uses
 
-`round-specific` maps supported rounds to structured probability expressions. Each entry may be fixed, direct Habit-Level, Habit override, or explicitly unknown. An unsupported round or missing round context resolves to `null`.
+Ordinary resolved bindings carry alternative `paths`. Events inside one path are jointly required, and components inside one event share activation identity. Variant components require a branch ID on every binding reference.
 
-This represents Tairax Burning Ward as a 25% Gleamstrike override on each odd round, while Crimson Bloodscale Terror uses a Vermin’s Bane override only on Round 1 and fixed 20% entries on later odd rounds. The same structure supports Feral Precision replacing Feral Strike’s chance only on rounds 4, 6, and 8. No resolver parses prose or contains dragon-specific branches.
+Resolved-mixed bindings instead carry simultaneous semantic `uses`. Each use has its own alternative paths and may select a documented probability context, but a use ID never selects one use instead of another. This represents every effect improved by the one matched relationship:
 
-## Signal bindings and variants
+- Shadowsong: deterministic Breath of Fire damage and Panic-enhanced Scorched Earth application;
+- Shimmer: chance Command buffs, deterministic Tactical Damage, and deterministic Recovery;
+- Zivern: deterministic Battle Mastery and chance-based Fearsome Reach.
 
-Bindings contain alternative paths; events in one path are jointly required. Components grouped in one event retain shared activation identity.
+Vaeldra's composite follow-on uses two explicit alternative joint paths: Lure Taunt plus the deterministic follow-on, or Siren's Call Taunt plus that follow-on. No branch depends on display parsing or dragon-specific scorer logic.
 
-Every event carries typed component references. A reference to a variant probability must select `probabilityVariantId`; validation rejects missing or stale selections, selections on non-variant probabilities, and duplicate branch definitions. Different signal bindings may select different documented variants of the same component.
+## Validation and CI
 
-The component resolver accepts that binding reference and validates it against the component before resolving. Probability branch choice is therefore part of the binding contract, not a free-form scorer argument, and no branch is selected by value.
+`contract` mode validates partial metadata. `full-migration` requires explicit binding classes, complete scoring coverage, canonical component and same-dragon Habit sources, required external-Habit evidence, valid variants, referenced components, and zero unresolved mixed bindings.
 
-## Validation modes
+`pnpm run validate:reliability-registry` executes the full-migration gate. GitHub CI runs it as a dedicated step without replacing lint, tests, or build. `pnpm run audit:reliability-registry` verifies the committed deterministic registry audit and hash.
 
-`contract` mode validates supplied metadata without requiring all current scoring signals. `full-migration` additionally requires complete signal coverage, referenced components, and no unresolved mixed bindings. Issues have stable codes, paths, and messages and are sorted deterministically.
-
-The cumulative helper computes `1 - (1 - p)^n` only after validating `p` and `n`; callers must still establish opportunity count and independence. The historical research audit remains independent and retains its approved hash.
-
-The follow-up registry migration must populate all 234 scoring signals and enable full-migration validation. Only later behavior-changing work may connect complete metadata to a new Formation Rating version.
+The historical research hash remains independent. A future Formation Rating v3 engine may consume these registry surfaces, but it must decide how one current base relationship value is allocated or combined across simultaneous uses. This metadata PR makes no scoring allocation decision, and no v2 evaluator imports the registry today.

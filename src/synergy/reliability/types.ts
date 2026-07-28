@@ -117,6 +117,7 @@ export interface ReliabilityTargetFacts {
 export interface AbilityReliabilityComponent {
   id: ReliabilityComponentId;
   sourceAbilityId: string;
+  sourceAbilityKind: AbilityKind;
   reliabilityClass: ReliabilityClass;
   probability?: ReliabilityProbability;
   opportunityPresence: OpportunityPresence;
@@ -150,14 +151,39 @@ export interface ReliabilityComponentReference {
  */
 export interface SignalReliabilityPath {
   pathId: string;
+  appliesWhen?: ReliabilityPathApplicability;
   events: readonly ReliabilityEventRequirement[];
+}
+
+export interface ReliabilityPathApplicability {
+  kind: 'probability-context';
+  id: string;
+}
+
+export type ReliabilityBindingClass =
+  'guaranteed' | 'conditional-deterministic' | 'chance' | 'resolved-mixed';
+
+/**
+ * Uses on a resolved mixed binding are simultaneous semantic uses of the
+ * matched relationship. Paths inside one use remain alternatives.
+ */
+export interface SignalReliabilityUse {
+  useId: string;
+  paths: readonly SignalReliabilityPath[];
 }
 
 export type SignalReliabilityBinding =
   | {
       status: 'resolved';
       signalId: string;
+      bindingClass?: Exclude<ReliabilityBindingClass, 'resolved-mixed'>;
       paths: readonly SignalReliabilityPath[];
+    }
+  | {
+      status: 'resolved';
+      signalId: string;
+      bindingClass: 'resolved-mixed';
+      uses: readonly SignalReliabilityUse[];
     }
   | {
       status: 'unresolved-mixed';
@@ -171,6 +197,10 @@ export type ReliabilityValidationMode = 'contract' | 'full-migration';
 export interface ReliabilityAbilityReference {
   abilityId: string;
   kind: AbilityKind;
+  dragonId: string;
+  unlockStarRank: number | null;
+  minimumDragonLevel: number | null;
+  evidenceIds: readonly string[];
 }
 
 export interface ReliabilityContractInput {
