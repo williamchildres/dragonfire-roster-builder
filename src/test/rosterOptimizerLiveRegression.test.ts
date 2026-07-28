@@ -103,25 +103,26 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
       expect(exactness.fixedPhasesValidated).toBe(true);
       expect(exactness.phaseObjectives.every((phase) =>
         Number.isSafeInteger(phase.reconstructedObjective))).toBe(true);
-      const contaminatedPhase = exactness.phaseObjectives.find((phase) =>
+      const backupStablePhase = exactness.phaseObjectives.find((phase) =>
         phase.stage === 'backup stable solution key'
         && phase.kind === 'stable'
         && phase.chunkStart === 0
         && phase.chunkEnd === 48);
-      expect(contaminatedPhase).toEqual(expect.objectContaining({
+      expect(backupStablePhase).toEqual(expect.objectContaining({
         stage: 'backup stable solution key',
         kind: 'stable',
         chunkStart: 0,
         chunkEnd: 48,
+        rawObjective: 0,
+        rawObjectiveDelta: 0,
         reconstructedObjective: 0,
         mipGap: 0,
-        exactOptimumCertified: true,
-        certificationDirection: 'maximize',
-        certificationBound: 1,
-        certificationStatus: 'infeasible',
+        exactOptimumCertified: false,
+        certificationDirection: null,
+        certificationBound: null,
+        certificationStatus: 'not-required',
+        certificationSolverPass: null,
       }));
-      expect(contaminatedPhase?.certificationSolverPass)
-        .toBe((contaminatedPhase?.solverPass ?? 0) + 1);
     }
     if (!forward.optimal || !reversed.optimal || !repeated.optimal) return;
     expect(reversed.optimizerSolutionHash).toBe(forward.optimizerSolutionHash);
