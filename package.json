@@ -15,6 +15,8 @@
     "audit:optimizer": "node scripts/audit-roster-optimizer.mjs",
     "audit:optimizer:write": "node scripts/audit-roster-optimizer.mjs --write",
     "audit:optimizer:power-aware": "node scripts/audit-roster-optimizer-power-aware.mjs",
+    "audit:reliability": "node scripts/audit-formation-reliability.mjs",
+    "audit:reliability:write": "node scripts/audit-formation-reliability.mjs --write",
     "fit:power": "node scripts/fit-dragon-power-model.mjs",
     "audit:power": "node scripts/fit-dragon-power-model.mjs",
     "preview": "vite preview --host 127.0.0.1",
