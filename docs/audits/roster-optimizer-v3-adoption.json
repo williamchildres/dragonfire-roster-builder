@@ -27,11 +27,64 @@
     "auditedDistinctValueCount": 617,
     "powerOfTenScaleAudit": [
       {
+        "scale": 1,
+        "collisionCount": 62,
+        "maximumCandidateUnits": 75,
+        "maximumTenFormationUnits": 750,
+        "safeTenFormationTotal": true,
+        "highsCoefficientSafe": true
+      },
+      {
+        "scale": 10,
+        "collisionCount": 129,
+        "maximumCandidateUnits": 745,
+        "maximumTenFormationUnits": 7450,
+        "safeTenFormationTotal": true,
+        "highsCoefficientSafe": true
+      },
+      {
+        "scale": 100,
+        "collisionCount": 0,
+        "maximumCandidateUnits": 7450,
+        "maximumTenFormationUnits": 74500,
+        "safeTenFormationTotal": true,
+        "highsCoefficientSafe": true
+      },
+      {
+        "scale": 1000,
+        "collisionCount": 0,
+        "maximumCandidateUnits": 74500,
+        "maximumTenFormationUnits": 745000,
+        "safeTenFormationTotal": true,
+        "highsCoefficientSafe": true
+      },
+      {
+        "scale": 10000,
+        "collisionCount": 0,
+        "maximumCandidateUnits": 745000,
+        "maximumTenFormationUnits": 7450000,
+        "safeTenFormationTotal": true,
+        "highsCoefficientSafe": true
+      },
+      {
+        "scale": 100000,
+        "collisionCount": 0,
+        "maximumCandidateUnits": 7450000,
+        "maximumTenFormationUnits": 74500000,
+        "safeTenFormationTotal": true,
+        "highsCoefficientSafe": true
+      },
+      {
         "scale": 1000000,
-        "collisionCount": 0
+        "collisionCount": 0,
+        "maximumCandidateUnits": 74500000,
+        "maximumTenFormationUnits": 745000000,
+        "safeTenFormationTotal": true,
+        "highsCoefficientSafe": true
       }
     ],
-    "smallestCollisionFreeScale": 1000000,
+    "selectedProductionScale": 1000000,
+    "smallestAuditedCollisionFreeScale": 100,
     "distinctUnitCount": 617,
     "collisions": [],
     "maximumCandidateUnits": 74500000,
@@ -271,9 +324,9 @@
       "exactReconstruction": true,
       "solverPasses": 122,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 7131.866,
-        "solverMs": 96965.944,
-        "totalMs": 104100.723
+        "candidateGenerationMs": 3440.77,
+        "solverMs": 88709.645,
+        "totalMs": 92152.734
       }
     },
     {
@@ -507,9 +560,9 @@
       "exactReconstruction": true,
       "solverPasses": 122,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 7201.112,
-        "solverMs": 97702.195,
-        "totalMs": 104905.338
+        "candidateGenerationMs": 3487.386,
+        "solverMs": 88781.901,
+        "totalMs": 92270.598
       }
     },
     {
@@ -764,11 +817,11 @@
         "stableSolutionKey": "primary:caraxes+kalspire+venator@left-flank:caraxes|vanguard:kalspire|right-flank:venator||crimson+seasmoke+tashix@left-flank:crimson|vanguard:seasmoke|right-flank:tashix||malachite+vhagar+zivern@left-flank:malachite|vanguard:vhagar|right-flank:zivern||shadowsong+sheepstealer+tessarion@left-flank:shadowsong|vanguard:sheepstealer|right-flank:tessarion||sunfyre+syrax+velar@left-flank:syrax|vanguard:sunfyre|right-flank:velar||backup:antares+bevlorin+tairax@left-flank:antares|vanguard:tairax|right-flank:bevlorin||daemoros+rhysarion+vaeldra@left-flank:daemoros|vanguard:rhysarion|right-flank:vaeldra||dawnseeker+jagadrix+nyrena@left-flank:nyrena|vanguard:dawnseeker|right-flank:jagadrix||feskar+shimmer+vesper@left-flank:feskar|vanguard:shimmer|right-flank:vesper||shadowrend+solstryker+vermax@left-flank:shadowrend|vanguard:solstryker|right-flank:vermax"
       },
       "exactReconstruction": true,
-      "solverPasses": 241,
+      "solverPasses": 22,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 7372.394,
-        "solverMs": 369756.357,
-        "totalMs": 377130.926
+        "candidateGenerationMs": 4742.211,
+        "solverMs": 87076.077,
+        "totalMs": 91823.404
       }
     },
     {
@@ -1023,11 +1076,11 @@
         "stableSolutionKey": "primary:caraxes+kalspire+venator@left-flank:caraxes|vanguard:kalspire|right-flank:venator||crimson+seasmoke+tashix@left-flank:crimson|vanguard:seasmoke|right-flank:tashix||malachite+vhagar+zivern@left-flank:malachite|vanguard:vhagar|right-flank:zivern||shadowsong+sheepstealer+tessarion@left-flank:shadowsong|vanguard:sheepstealer|right-flank:tessarion||sunfyre+syrax+velar@left-flank:syrax|vanguard:sunfyre|right-flank:velar||backup:antares+bevlorin+tairax@left-flank:antares|vanguard:tairax|right-flank:bevlorin||daemoros+rhysarion+vaeldra@left-flank:daemoros|vanguard:rhysarion|right-flank:vaeldra||dawnseeker+jagadrix+nyrena@left-flank:nyrena|vanguard:dawnseeker|right-flank:jagadrix||feskar+shimmer+vesper@left-flank:feskar|vanguard:shimmer|right-flank:vesper||shadowrend+solstryker+vermax@left-flank:shadowrend|vanguard:solstryker|right-flank:vermax"
       },
       "exactReconstruction": true,
-      "solverPasses": 241,
+      "solverPasses": 22,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 7079.599,
-        "solverMs": 361039.961,
-        "totalMs": 368120.329
+        "candidateGenerationMs": 3339.651,
+        "solverMs": 88589.521,
+        "totalMs": 91929.832
       }
     },
     {
@@ -1285,11 +1338,11 @@
         "stableSolutionKey": "primary:caraxes+crimson+kalspire@left-flank:caraxes|vanguard:crimson|right-flank:kalspire||daemoros+shadowsong+tairax@left-flank:shadowsong|vanguard:tairax|right-flank:daemoros||dawnseeker+jagadrix+sunfyre@left-flank:dawnseeker|vanguard:sunfyre|right-flank:jagadrix||seasmoke+sheepstealer+tashix@left-flank:sheepstealer|vanguard:seasmoke|right-flank:tashix||velar+vesper+zivern@left-flank:vesper|vanguard:velar|right-flank:zivern||backup:arrax+feskar+venator@left-flank:feskar|vanguard:arrax|right-flank:venator||bevlorin+malachite+shimmer@left-flank:bevlorin|vanguard:shimmer|right-flank:malachite||nyrena+rhysarion+tessarion@left-flank:nyrena|vanguard:rhysarion|right-flank:tessarion||shadowrend+solstryker+thunderstrike@left-flank:shadowrend|vanguard:solstryker|right-flank:thunderstrike||vaeldra+vermax+vhagar@left-flank:vaeldra|vanguard:vermax|right-flank:vhagar"
       },
       "exactReconstruction": true,
-      "solverPasses": 135,
+      "solverPasses": 19,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 7186.977,
-        "solverMs": 49293.481,
-        "totalMs": 56484.021
+        "candidateGenerationMs": 3386.185,
+        "solverMs": 10102.829,
+        "totalMs": 13493.048
       }
     },
     {
@@ -1547,11 +1600,11 @@
         "stableSolutionKey": "primary:caraxes+crimson+kalspire@left-flank:caraxes|vanguard:crimson|right-flank:kalspire||daemoros+shadowsong+tairax@left-flank:shadowsong|vanguard:tairax|right-flank:daemoros||dawnseeker+jagadrix+sunfyre@left-flank:dawnseeker|vanguard:sunfyre|right-flank:jagadrix||seasmoke+sheepstealer+tashix@left-flank:sheepstealer|vanguard:seasmoke|right-flank:tashix||velar+vesper+zivern@left-flank:vesper|vanguard:velar|right-flank:zivern||backup:arrax+feskar+venator@left-flank:feskar|vanguard:arrax|right-flank:venator||bevlorin+malachite+shimmer@left-flank:bevlorin|vanguard:shimmer|right-flank:malachite||nyrena+rhysarion+tessarion@left-flank:nyrena|vanguard:rhysarion|right-flank:tessarion||shadowrend+solstryker+thunderstrike@left-flank:shadowrend|vanguard:solstryker|right-flank:thunderstrike||vaeldra+vermax+vhagar@left-flank:vaeldra|vanguard:vermax|right-flank:vhagar"
       },
       "exactReconstruction": true,
-      "solverPasses": 135,
+      "solverPasses": 19,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 7172.997,
-        "solverMs": 50327.425,
-        "totalMs": 57503.008
+        "candidateGenerationMs": 3608.901,
+        "solverMs": 10065.687,
+        "totalMs": 13677.273
       }
     },
     {
@@ -1785,9 +1838,9 @@
       "exactReconstruction": true,
       "solverPasses": 107,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 10938.336,
-        "solverMs": 26378.445,
-        "totalMs": 37317.456
+        "candidateGenerationMs": 5244.602,
+        "solverMs": 25864.873,
+        "totalMs": 31109.926
       }
     },
     {
@@ -2021,9 +2074,9 @@
       "exactReconstruction": true,
       "solverPasses": 107,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 11114.874,
-        "solverMs": 25600.639,
-        "totalMs": 36716.221
+        "candidateGenerationMs": 5434.114,
+        "solverMs": 25249.226,
+        "totalMs": 30683.788
       }
     },
     {
@@ -2278,11 +2331,11 @@
         "stableSolutionKey": "primary:caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+shadowsong+tessarion@left-flank:crimson|vanguard:shadowsong|right-flank:tessarion||kalspire+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:kalspire||rhysarion+seasmoke+tashix@left-flank:rhysarion|vanguard:tashix|right-flank:seasmoke||sheepstealer+syrax+velar@left-flank:syrax|vanguard:sheepstealer|right-flank:velar||backup:antares+bevlorin+vaeldra@left-flank:antares|vanguard:bevlorin|right-flank:vaeldra||arrax+shadowrend+vermax@left-flank:shadowrend|vanguard:arrax|right-flank:vermax||daemoros+jagadrix+zivern@left-flank:zivern|vanguard:daemoros|right-flank:jagadrix||dawnseeker+feskar+tairax@left-flank:feskar|vanguard:dawnseeker|right-flank:tairax||nyrena+shimmer+vesper@left-flank:nyrena|vanguard:shimmer|right-flank:vesper"
       },
       "exactReconstruction": true,
-      "solverPasses": 28,
+      "solverPasses": 24,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 11365.808,
-        "solverMs": 111671.905,
-        "totalMs": 123038.414
+        "candidateGenerationMs": 5074.049,
+        "solverMs": 93344.506,
+        "totalMs": 98419.113
       }
     },
     {
@@ -2537,11 +2590,11 @@
         "stableSolutionKey": "primary:caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+shadowsong+tessarion@left-flank:crimson|vanguard:shadowsong|right-flank:tessarion||kalspire+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:kalspire||rhysarion+seasmoke+tashix@left-flank:rhysarion|vanguard:tashix|right-flank:seasmoke||sheepstealer+syrax+velar@left-flank:syrax|vanguard:sheepstealer|right-flank:velar||backup:antares+bevlorin+vaeldra@left-flank:antares|vanguard:bevlorin|right-flank:vaeldra||arrax+shadowrend+vermax@left-flank:shadowrend|vanguard:arrax|right-flank:vermax||daemoros+jagadrix+zivern@left-flank:zivern|vanguard:daemoros|right-flank:jagadrix||dawnseeker+feskar+tairax@left-flank:feskar|vanguard:dawnseeker|right-flank:tairax||nyrena+shimmer+vesper@left-flank:nyrena|vanguard:shimmer|right-flank:vesper"
       },
       "exactReconstruction": true,
-      "solverPasses": 28,
+      "solverPasses": 24,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 11232.274,
-        "solverMs": 111112.89,
-        "totalMs": 122345.898
+        "candidateGenerationMs": 4966.312,
+        "solverMs": 93592.614,
+        "totalMs": 98559.581
       }
     },
     {
@@ -2799,11 +2852,11 @@
         "stableSolutionKey": "primary:caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+shadowsong+tessarion@left-flank:crimson|vanguard:shadowsong|right-flank:tessarion||kalspire+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:kalspire||rhysarion+seasmoke+tashix@left-flank:rhysarion|vanguard:tashix|right-flank:seasmoke||sheepstealer+syrax+velar@left-flank:syrax|vanguard:sheepstealer|right-flank:velar||backup:antares+bevlorin+vaeldra@left-flank:antares|vanguard:bevlorin|right-flank:vaeldra||arrax+shadowrend+vermax@left-flank:shadowrend|vanguard:arrax|right-flank:vermax||daemoros+jagadrix+zivern@left-flank:zivern|vanguard:daemoros|right-flank:jagadrix||dawnseeker+feskar+tairax@left-flank:feskar|vanguard:dawnseeker|right-flank:tairax||nyrena+shimmer+vesper@left-flank:nyrena|vanguard:shimmer|right-flank:vesper"
       },
       "exactReconstruction": true,
-      "solverPasses": 25,
+      "solverPasses": 21,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 11513.685,
-        "solverMs": 21891.286,
-        "totalMs": 33408.893
+        "candidateGenerationMs": 5129.362,
+        "solverMs": 12597.1,
+        "totalMs": 17730.033
       }
     },
     {
@@ -3061,11 +3114,11 @@
         "stableSolutionKey": "primary:caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+shadowsong+tessarion@left-flank:crimson|vanguard:shadowsong|right-flank:tessarion||kalspire+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:kalspire||rhysarion+seasmoke+tashix@left-flank:rhysarion|vanguard:tashix|right-flank:seasmoke||sheepstealer+syrax+velar@left-flank:syrax|vanguard:sheepstealer|right-flank:velar||backup:antares+bevlorin+vaeldra@left-flank:antares|vanguard:bevlorin|right-flank:vaeldra||arrax+shadowrend+vermax@left-flank:shadowrend|vanguard:arrax|right-flank:vermax||daemoros+jagadrix+zivern@left-flank:zivern|vanguard:daemoros|right-flank:jagadrix||dawnseeker+feskar+tairax@left-flank:feskar|vanguard:dawnseeker|right-flank:tairax||nyrena+shimmer+vesper@left-flank:nyrena|vanguard:shimmer|right-flank:vesper"
       },
       "exactReconstruction": true,
-      "solverPasses": 25,
+      "solverPasses": 21,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 11435.675,
-        "solverMs": 22026.805,
-        "totalMs": 33465.984
+        "candidateGenerationMs": 7845.821,
+        "solverMs": 13346.749,
+        "totalMs": 21197.54
       }
     },
     {
@@ -3299,9 +3352,9 @@
       "exactReconstruction": true,
       "solverPasses": 118,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 5570.404,
-        "solverMs": 83496.473,
-        "totalMs": 89067.244
+        "candidateGenerationMs": 2571.981,
+        "solverMs": 75045.844,
+        "totalMs": 77618.205
       }
     },
     {
@@ -3535,9 +3588,9 @@
       "exactReconstruction": true,
       "solverPasses": 118,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 5957.859,
-        "solverMs": 84160.368,
-        "totalMs": 90118.651
+        "candidateGenerationMs": 2937.225,
+        "solverMs": 77036.046,
+        "totalMs": 79973.561
       }
     },
     {
@@ -3792,11 +3845,11 @@
         "stableSolutionKey": "primary:caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+kalspire@left-flank:daemoros|vanguard:feskar|right-flank:kalspire||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar||backup:antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||jagadrix+nyrena+tashix@left-flank:jagadrix|vanguard:nyrena|right-flank:tashix||shadowrend+shadowsong+tessarion@left-flank:shadowrend|vanguard:shadowsong|right-flank:tessarion||vaeldra+velar+vermax@left-flank:vaeldra|vanguard:velar|right-flank:vermax"
       },
       "exactReconstruction": true,
-      "solverPasses": 243,
+      "solverPasses": 14,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 5589.721,
-        "solverMs": 460279.364,
-        "totalMs": 465869.734
+        "candidateGenerationMs": 2631.175,
+        "solverMs": 64922.811,
+        "totalMs": 67554.477
       }
     },
     {
@@ -4051,11 +4104,11 @@
         "stableSolutionKey": "primary:caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+kalspire@left-flank:daemoros|vanguard:feskar|right-flank:kalspire||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar||backup:antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||jagadrix+nyrena+tashix@left-flank:jagadrix|vanguard:nyrena|right-flank:tashix||shadowrend+shadowsong+tessarion@left-flank:shadowrend|vanguard:shadowsong|right-flank:tessarion||vaeldra+velar+vermax@left-flank:vaeldra|vanguard:velar|right-flank:vermax"
       },
       "exactReconstruction": true,
-      "solverPasses": 243,
+      "solverPasses": 14,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 5764.945,
-        "solverMs": 460008.718,
-        "totalMs": 465774.36
+        "candidateGenerationMs": 3182.505,
+        "solverMs": 65252.617,
+        "totalMs": 68435.631
       }
     },
     {
@@ -4313,11 +4366,11 @@
         "stableSolutionKey": "primary:caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+kalspire@left-flank:daemoros|vanguard:feskar|right-flank:kalspire||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar||backup:antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||jagadrix+nyrena+tashix@left-flank:jagadrix|vanguard:nyrena|right-flank:tashix||shadowrend+shadowsong+tessarion@left-flank:shadowrend|vanguard:shadowsong|right-flank:tessarion||vaeldra+velar+vermax@left-flank:vaeldra|vanguard:velar|right-flank:vermax"
       },
       "exactReconstruction": true,
-      "solverPasses": 230,
+      "solverPasses": 11,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 6085.551,
-        "solverMs": 165252.636,
-        "totalMs": 171340.31
+        "candidateGenerationMs": 2672.75,
+        "solverMs": 40323.429,
+        "totalMs": 42998.151
       }
     },
     {
@@ -4575,17 +4628,17 @@
         "stableSolutionKey": "primary:caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+kalspire@left-flank:daemoros|vanguard:feskar|right-flank:kalspire||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar||backup:antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||jagadrix+nyrena+tashix@left-flank:jagadrix|vanguard:nyrena|right-flank:tashix||shadowrend+shadowsong+tessarion@left-flank:shadowrend|vanguard:shadowsong|right-flank:tessarion||vaeldra+velar+vermax@left-flank:vaeldra|vanguard:velar|right-flank:vermax"
       },
       "exactReconstruction": true,
-      "solverPasses": 230,
+      "solverPasses": 11,
       "runtimeTelemetry": {
-        "candidateGenerationMs": 5894.972,
-        "solverMs": 163874.589,
-        "totalMs": 169771.831
+        "candidateGenerationMs": 2685.58,
+        "solverMs": 40403.249,
+        "totalMs": 43090.242
       }
     }
   ],
   "failedChecks": [],
   "runtimeTelemetry": {
-    "totalMs": 2906479.341
+    "totalMs": 1072717.137
   },
   "deterministicAuditHash": "9f411cf378233b3d1681087d6944486ea2118a5b9d1ee48175f607bd587d8e97"
 }

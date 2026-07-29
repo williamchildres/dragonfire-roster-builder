@@ -132,6 +132,36 @@ export interface OptimizerPhaseTimings {
   stableKeyMs: number;
 }
 
+export interface OptimizerSolvePhaseProfile {
+  stage: string;
+  category:
+    | 'rarity'
+    | 'power'
+    | 'total-rating'
+    | 'minimum-rating'
+    | 'rating-vector'
+    | 'relationship-value'
+    | 'relationship-count'
+    | 'stable-key'
+    | 'certification';
+  solverPass: number;
+  elapsedMs: number;
+  variableCount: number;
+  constraintCount: number;
+  certification: boolean;
+  /** Nodes enumerated by an exact secondary optimal-face solver, when used. */
+  exactSearchNodes?: number;
+}
+
+export interface OptimizerPerformanceProfile {
+  modelBuilds: number;
+  modelConstructionMs: number;
+  certificationPasses: number;
+  skippedPhases: number;
+  prunedVariables: number;
+  phases: OptimizerSolvePhaseProfile[];
+}
+
 export interface OptimizerPhaseObjectiveDiagnostic {
   stage: string;
   wave: OptimizerWave;
@@ -175,6 +205,7 @@ export interface OptimizerSearchDiagnostics {
   solverMs: number;
   totalMs: number;
   phaseTimings?: OptimizerPhaseTimings;
+  performanceProfile?: OptimizerPerformanceProfile;
   numericalExactness?: OptimizerNumericalExactnessDiagnostics;
 }
 
@@ -345,6 +376,7 @@ export interface PrimaryBackupOptimizerSolverResult {
   cacheEntries: number;
   solverPasses: number;
   phaseTimings: OptimizerPhaseTimings;
+  performanceProfile?: OptimizerPerformanceProfile;
   numericalExactness?: OptimizerNumericalExactnessDiagnostics;
 }
 

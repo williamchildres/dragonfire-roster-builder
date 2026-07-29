@@ -25,10 +25,19 @@ import {
 import type { FormationArrangement } from '../services/formationArrangement';
 import type {
   FormationRelationshipV3,
-  ReliabilityCalculationMethod,
-  ReliabilityUnquantifiedReason,
 } from '../synergy/reliability';
 import { AppLink, type NavigateToRoute } from './appRouter';
+import {
+  candidateAbilityLabels,
+  candidateAdjustedValue,
+  mixedUseLabels,
+  nonSharedRequirementLabels,
+  relationshipClassLabel,
+  reliabilityMethodLabels,
+  reliabilityReasonLabels,
+  semanticTagLabel,
+  signalLabel,
+} from './relationshipReliabilityPresentation';
 
 export const DEFAULT_ROSTER_OPTIMIZER_STRATEGY: RosterOptimizerStrategy =
   'power-aware-primary-five-backup-five';
@@ -607,7 +616,7 @@ function OptimizerFormationCard({
   );
 }
 
-function OptimizerRelationshipDetail({
+export function OptimizerRelationshipDetail({
   relationship,
   dragonsById,
 }: {
@@ -618,15 +627,18 @@ function OptimizerRelationshipDetail({
     (trace) => trace.candidate.id === relationship.selectedCandidateId,
   );
   const simultaneousUses = [
-    ...(selectedTrace?.provider.useIds ?? []),
-    ...(selectedTrace?.beneficiary.useIds ?? []),
+    ...(selectedTrace ? mixedUseLabels(selectedTrace.provider, dragonsById) : []),
+    ...(selectedTrace ? mixedUseLabels(selectedTrace.beneficiary, dragonsById) : []),
   ];
+  const nonSharedRequirements = selectedTrace
+    ? nonSharedRequirementLabels(selectedTrace, dragonsById)
+    : [];
   return (
     <>
       <p>
-        <strong>{humanizeTag(relationship.semanticTag)}</strong>
+        <strong>{semanticTagLabel(relationship)}</strong>
         {' · '}
-        {humanizeCode(relationship.relationshipClass)}
+        {relationshipClassLabel(relationship)}
         {' · '}
         {relationship.quantification.status === 'quantified'
           ? `${formatPercent(relationship.quantification.reliability)} reliability`
@@ -649,7 +661,7 @@ function OptimizerRelationshipDetail({
       </dl>
       {relationship.quantification.status === 'quantified' ? (
         <p>
-          {optimizerMethodLabels[relationship.quantification.method]}:{' '}
+          {reliabilityMethodLabels[relationship.quantification.method]}:{' '}
           {relationship.quantification.explanation}
         </p>
       ) : (
@@ -657,7 +669,7 @@ function OptimizerRelationshipDetail({
           <p>
             Base potential {formatRelationshipValue(relationship.unquantifiedBasePotential)};
             numeric contribution 0. Unconditional reliability is unresolved:{' '}
-            {optimizerReasonLabels[relationship.quantification.reason]}.
+            {reliabilityReasonLabels[relationship.quantification.reason]}.
           </p>
           {relationship.quantification.conditionalProbabilities?.length ? (
             <p>
@@ -671,22 +683,65 @@ function OptimizerRelationshipDetail({
         </>
       )}
       {simultaneousUses.length > 0 ? (
-        <p>
-          Simultaneous uses: {simultaneousUses.map(humanizeCode).join(', ')}.
-          One relationship base value is used; the supported lower-bound use is{' '}
-          {humanizeCode(
-            selectedTrace?.provider.selectedUseId ??
-              selectedTrace?.beneficiary.selectedUseId ??
-              'unresolved',
-          )}.
-        </p>
+        <>
+          <p>Simultaneous uses:</p>
+          <ul>
+            {simultaneousUses.map((use, index) => (
+              <li key={`${use.label}:${index}`}>
+                {use.label}{use.selected ? ' — supplied the supported lower bound' : ''}
+              </li>
+            ))}
+          </ul>
+          <p>
+            One relationship base value is used. Use probabilities are not added or averaged.
+          </p>
+        </>
       ) : null}
       {(selectedTrace?.sharedRequirementIds.length ?? 0) > 0 ? (
         <p>
           Shared activation counted once; distinct provider and beneficiary
-          requirements remain required.
+          requirements remain required
+          {nonSharedRequirements.length > 0
+            ? ` (${nonSharedRequirements.join(', ')})`
+            : ''}.
         </p>
       ) : null}
+      {selectedTrace ? (
+        <p>
+          Selected signals: {signalLabel(selectedTrace, 'provider', dragonsById)}
+          {' → '}
+          {signalLabel(selectedTrace, 'beneficiary', dragonsById)}.
+        </p>
+      ) : null}
+      <details>
+        <summary>Retained alternatives ({relationship.candidateTraces.length})</summary>
+        <ol className="optimizer-retained-alternatives">
+          {relationship.candidateTraces.map((trace) => {
+            const selected = trace.candidate.id === relationship.selectedCandidateId;
+            return (
+              <li key={trace.candidate.id}>
+                <strong>
+                  {candidateAbilityLabels(trace, 'provider', dragonsById).join(' + ')}
+                  {' → '}
+                  {candidateAbilityLabels(trace, 'beneficiary', dragonsById).join(' + ')}
+                </strong>
+                {' · '}
+                {trace.candidate.resultKind === 'setup-payoff'
+                  ? 'Setup payoff'
+                  : 'Amplifier output'}
+                {' · '}
+                {trace.quantification.status === 'quantified'
+                  ? `${formatPercent(trace.quantification.reliability)} · ${reliabilityMethodLabels[trace.quantification.method]}`
+                  : `Unquantified · ${reliabilityReasonLabels[trace.quantification.reason]}`}
+                {' · adjusted value '}
+                {formatRelationshipValue(candidateAdjustedValue(relationship, trace))}
+                {' · '}
+                {selected ? 'Selected' : 'Not selected'}. {trace.selectionReason}
+              </li>
+            );
+          })}
+        </ol>
+      </details>
       <details>
         <summary>Technical trace</summary>
         <p>
@@ -695,47 +750,24 @@ function OptimizerRelationshipDetail({
         </p>
         <p>
           Selected signals: {relationship.selectedProviderSignalId} →{' '}
-          {relationship.selectedBeneficiarySignalId}. Retained alternatives:{' '}
-          {relationship.candidateTraces.length}.
+          {relationship.selectedBeneficiarySignalId}. Candidate:{' '}
+          {relationship.selectedCandidateId}. Probability variants:{' '}
+          {relationship.probabilityVariantIds.join(', ') || 'none'}.
         </p>
+        {relationship.candidateTraces.map((trace) => (
+          <p key={trace.candidate.id}>
+            Candidate {trace.candidate.id}. Provider signal {trace.provider.signalId};
+            beneficiary signal {trace.beneficiary.signalId}. Components{' '}
+            {trace.componentIds.join(', ') || 'none'}; events{' '}
+            {trace.eventIds.join(', ') || 'none'}; variants{' '}
+            {trace.probabilityVariantIds.join(', ') || 'none'}; uses{' '}
+            {[...trace.provider.useIds, ...trace.beneficiary.useIds].join(', ') || 'none'};
+            paths {[...trace.provider.pathIds, ...trace.beneficiary.pathIds].join(', ') || 'none'}.
+          </p>
+        ))}
       </details>
     </>
   );
-}
-
-const optimizerMethodLabels: Record<ReliabilityCalculationMethod, string> = {
-  guaranteed: 'Guaranteed',
-  'condition-proven': 'Condition proven',
-  'one-supported-opportunity': 'One supported opportunity',
-  'confirmed-cumulative': 'Confirmed cumulative probability',
-  'shared-event': 'Shared activation counted once',
-  'best-supported-alternative': 'Best supported alternative',
-  'mixed-use-lower-bound': 'Simultaneous-use lower bound',
-};
-
-const optimizerReasonLabels: Record<ReliabilityUnquantifiedReason, string> = {
-  'conditional-opportunity': 'conditional opportunity',
-  'unknown-opportunity': 'opportunity not established',
-  'probability-unknown': 'probability not documented',
-  'missing-habit-level': 'active Habit level is missing',
-  'round-context-unresolved': 'round context is unresolved',
-  'probability-context-unresolved': 'probability context is unresolved',
-  'conditional-deterministic-unproven': 'dynamic condition is not proven',
-  'joint-chance-behavior-unresolved': 'joint chance behavior is unresolved',
-  'conflicting-shared-event-probabilities': 'shared-event probabilities conflict',
-  'no-supported-path': 'no supported activation path',
-};
-
-function humanizeTag(value: string): string {
-  return value.split(':').map(humanizeCode).join(' · ');
-}
-
-function humanizeCode(value: string): string {
-  return value
-    .split('-')
-    .filter(Boolean)
-    .map((word) => word[0]?.toUpperCase() + word.slice(1))
-    .join(' ');
 }
 
 function formatPercent(value: number): string {

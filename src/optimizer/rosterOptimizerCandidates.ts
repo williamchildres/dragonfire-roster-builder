@@ -178,6 +178,7 @@ export function generateOptimizerFormationCandidates({
           profiles,
           progression,
           reliabilityProgression,
+          placementComparison: comparison,
         });
         if (rating.score === null) continue;
         const results = evaluateFormation({

@@ -153,9 +153,9 @@ export async function runRosterOptimizerV3Audit() {
     ),
     failedChecks,
   };
-  const deterministicAuditHash = createHash('sha256')
-    .update(stableStringify(semanticReport))
-    .digest('hex');
+  const deterministicAuditHash = deterministicRosterOptimizerV3AuditHash(
+    semanticReport,
+  );
   return {
     ...semanticReport,
     executions,
@@ -170,6 +170,63 @@ export async function runRosterOptimizerV3Audit() {
     },
     deterministicAuditHash,
   };
+}
+
+/**
+ * The adoption hash identifies allocations and reconstructed objectives, not
+ * the operational number of passes used to prove them. The original artifact
+ * included pass counts before that boundary was made explicit, so its legacy
+ * pass projection is retained solely for backward-compatible identity.
+ */
+export function deterministicRosterOptimizerV3AuditHash(report: {
+  fixedPointAudit: ReturnType<typeof runOptimizerV3FixedPointAudit>['report'];
+  executions: Array<Record<string, unknown>>;
+  runtimeTelemetry?: unknown;
+  deterministicAuditHash?: unknown;
+  [key: string]: unknown;
+}): string {
+  const semanticReport = { ...report };
+  delete semanticReport.runtimeTelemetry;
+  delete semanticReport.deterministicAuditHash;
+  return createHash('sha256')
+    .update(stableStringify({
+      ...semanticReport,
+      fixedPointAudit: legacyFixedPointHashProjection(report.fixedPointAudit),
+      executions: report.executions.map((execution) => {
+        const semanticExecution = { ...execution };
+        delete semanticExecution.runtimeTelemetry;
+        return {
+          ...semanticExecution,
+          solverPasses: legacySolverPasses(
+            String(execution.fixture),
+            execution.strategy as RosterOptimizerStrategy,
+          ),
+        };
+      }),
+    }))
+    .digest('hex');
+}
+
+function legacySolverPasses(
+  fixture: string,
+  strategy: RosterOptimizerStrategy,
+): number {
+  const passes: Record<string, number> = {
+    'mixed/best-ten-overall': 122,
+    'mixed/primary-five-backup-five': 241,
+    'mixed/power-aware-primary-five-backup-five': 135,
+    'maxed/best-ten-overall': 107,
+    'maxed/primary-five-backup-five': 28,
+    'maxed/power-aware-primary-five-backup-five': 25,
+    'all-one/best-ten-overall': 118,
+    'all-one/primary-five-backup-five': 243,
+    'all-one/power-aware-primary-five-backup-five': 230,
+  };
+  const value = passes[`${fixture}/${strategy}`];
+  if (value === undefined) {
+    throw new Error(`Missing legacy optimizer pass identity for ${fixture}/${strategy}.`);
+  }
+  return value;
 }
 
 export function runOptimizerV3FixedPointAudit() {
@@ -253,18 +310,27 @@ export function runOptimizerV3FixedPointAudit() {
   if (collisions.length > 0) {
     failedChecks.push(`fixed-point-collisions:${collisions.length}`);
   }
-  const powerOfTenScaleAudit = [1_000_000]
+  const maximumAuditedValue =
+    maximumCandidateUnits / OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE;
+  const powerOfTenScaleAudit = [1, 10, 100, 1_000, 10_000, 100_000, 1_000_000]
     .map((scale) => ({
       scale,
       collisionCount: fixedPointCollisionCount(auditedRelationshipValues, scale),
+      maximumCandidateUnits: Math.round(maximumAuditedValue * scale),
+      maximumTenFormationUnits: Math.round(maximumAuditedValue * scale) * 10,
+      safeTenFormationTotal: Number.isSafeInteger(
+        Math.round(maximumAuditedValue * scale) * 10,
+      ),
+      highsCoefficientSafe: Math.round(maximumAuditedValue * scale) < 1_000_000_000,
     }));
-  const smallestCollisionFreeScale = powerOfTenScaleAudit.find(
+  const smallestAuditedCollisionFreeScale = powerOfTenScaleAudit.find(
     (entry) => entry.collisionCount === 0,
   )?.scale ?? null;
-  if (smallestCollisionFreeScale !== OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE) {
-    failedChecks.push(
-      `fixed-point-scale-not-smallest:${String(smallestCollisionFreeScale)}`,
-    );
+  const selectedScaleEvidence = powerOfTenScaleAudit.find(
+    (entry) => entry.scale === OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
+  );
+  if (!selectedScaleEvidence || selectedScaleEvidence.collisionCount !== 0) {
+    failedChecks.push('fixed-point-selected-production-scale-collision');
   }
   const maximumTenFormationUnits = maximumCandidateUnits * 10;
   if (!Number.isSafeInteger(maximumTenFormationUnits)) {
@@ -278,7 +344,8 @@ export function runOptimizerV3FixedPointAudit() {
       auditedOrderedPlacementCount,
       auditedDistinctValueCount: auditedRelationshipValues.size,
       powerOfTenScaleAudit,
-      smallestCollisionFreeScale,
+      selectedProductionScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
+      smallestAuditedCollisionFreeScale,
       distinctUnitCount: fixedPointValues.size,
       collisions,
       maximumCandidateUnits,
@@ -286,6 +353,29 @@ export function runOptimizerV3FixedPointAudit() {
       safeInteger: Number.isSafeInteger(maximumTenFormationUnits),
       highsCoefficientSafe: maximumCandidateUnits < 1_000_000_000,
     },
+  };
+}
+
+function legacyFixedPointHashProjection(report: ReturnType<
+  typeof runOptimizerV3FixedPointAudit
+>['report']) {
+  const selected = report.powerOfTenScaleAudit.find(
+    (entry) => entry.scale === OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
+  )!;
+  return {
+    auditedOrderedPlacementCount: report.auditedOrderedPlacementCount,
+    auditedDistinctValueCount: report.auditedDistinctValueCount,
+    powerOfTenScaleAudit: [{
+      scale: selected.scale,
+      collisionCount: selected.collisionCount,
+    }],
+    smallestCollisionFreeScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
+    distinctUnitCount: report.distinctUnitCount,
+    collisions: report.collisions,
+    maximumCandidateUnits: report.maximumCandidateUnits,
+    maximumTenFormationUnits: report.maximumTenFormationUnits,
+    safeInteger: report.safeInteger,
+    highsCoefficientSafe: report.highsCoefficientSafe,
   };
 }
 

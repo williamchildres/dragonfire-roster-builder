@@ -1,4 +1,5 @@
 import type { FormationFindingSet } from '../services/formationFindings';
+import { dragons } from '../data/dragons';
 import type { FormationPlacementComparisonV3 } from '../services/formationPlacementComparisonV3';
 import type { FormationRatingV3Result } from '../services/formationRatingV3';
 import type { FormationRecommendationResult } from '../services/formationRecommendation';
@@ -6,9 +7,20 @@ import type { EstimatedFormationPower } from '../power/estimatedFormationPower';
 import { ESTIMATED_POWER_MODEL_VERSION } from '../power/generatedDragonPowerModel';
 import type {
   FormationRelationshipV3,
-  ReliabilityCalculationMethod,
-  ReliabilityUnquantifiedReason,
 } from '../synergy/reliability';
+import {
+  candidateAbilityLabels,
+  candidateAdjustedValue,
+  mixedUseLabels,
+  nonSharedRequirementLabels,
+  relationshipClassLabel,
+  reliabilityMethodLabels,
+  reliabilityReasonLabels,
+  semanticTagLabel,
+  signalLabel,
+} from './relationshipReliabilityPresentation';
+
+const canonicalDragonsById = new Map(dragons.map((dragon) => [dragon.id, dragon]));
 
 export function SimpleFormationAnalysis({
   rating,
@@ -188,14 +200,21 @@ function ReliabilityRelationship({
     (trace) => trace.candidate.id === relationship.selectedCandidateId,
   );
   const simultaneousUses = [
-    ...(selectedTrace?.provider.useIds ?? []),
-    ...(selectedTrace?.beneficiary.useIds ?? []),
+    ...(selectedTrace
+      ? mixedUseLabels(selectedTrace.provider, canonicalDragonsById)
+      : []),
+    ...(selectedTrace
+      ? mixedUseLabels(selectedTrace.beneficiary, canonicalDragonsById)
+      : []),
   ];
+  const nonSharedRequirements = selectedTrace
+    ? nonSharedRequirementLabels(selectedTrace, canonicalDragonsById)
+    : [];
   return (
     <article className="formation-relationship-item">
       <div className="formation-relationship-heading">
-        <strong>{humanizeTag(relationship.semanticTag)}</strong>
-        <span>{humanizeCode(relationship.relationshipClass)}</span>
+        <strong>{semanticTagLabel(relationship)}</strong>
+        <span>{relationshipClassLabel(relationship)}</span>
         <span>{quantified ? 'Quantified' : 'Unquantified'}</span>
         <span>{formatValue(relationship.adjustedMarginalValue)} contribution</span>
       </div>
@@ -226,14 +245,14 @@ function ReliabilityRelationship({
         </dl>
         {relationship.quantification.status === 'quantified' ? (
           <p>
-            Method: {methodLabel(relationship.quantification.method)}.{' '}
+            Method: {reliabilityMethodLabels[relationship.quantification.method]}.{' '}
             {relationship.quantification.explanation}
           </p>
         ) : (
           <>
             <p>
               Numeric contribution: 0. Unconditional reliability is unresolved:{' '}
-              {reasonLabel(relationship.quantification.reason)}.
+              {reliabilityReasonLabels[relationship.quantification.reason]}.
             </p>
             {relationship.quantification.conditionalProbabilities?.length ? (
               <p>
@@ -246,31 +265,78 @@ function ReliabilityRelationship({
             <p>{relationship.quantification.explanation}</p>
           </>
         )}
-        <p>
-          Selected signals: {humanizeCode(relationship.selectedProviderSignalId)} →{' '}
-          {humanizeCode(relationship.selectedBeneficiarySignalId)}.
-        </p>
-        {simultaneousUses.length > 0 ? (
+        {selectedTrace ? (
           <p>
-            Simultaneous uses:{' '}
-            {simultaneousUses.map(humanizeCode).join(', ')}. Supported lower bound:{' '}
-            {humanizeCode(
-              selectedTrace?.provider.selectedUseId ??
-                selectedTrace?.beneficiary.selectedUseId ??
-                'unresolved',
-            )}
-            . One relationship base value is used.
+            Selected signals:{' '}
+            {signalLabel(selectedTrace, 'provider', canonicalDragonsById)}
+            {' → '}
+            {signalLabel(selectedTrace, 'beneficiary', canonicalDragonsById)}.
           </p>
+        ) : null}
+        {simultaneousUses.length > 0 ? (
+          <>
+            <p>Simultaneous uses:</p>
+            <ul>
+              {simultaneousUses.map((use, index) => (
+                <li key={`${use.label}:${index}`}>
+                  {use.label}{use.selected ? ' — supplied the supported lower bound' : ''}
+                </li>
+              ))}
+            </ul>
+            <p>
+              One relationship base value is used. Use probabilities are not added or averaged.
+            </p>
+          </>
         ) : null}
         {(selectedTrace?.sharedRequirementIds.length ?? 0) > 0 ? (
           <p>
             Shared activation counted once; distinct provider and beneficiary requirements
-            remain required.
+            remain required
+            {nonSharedRequirements.length > 0
+              ? ` (${nonSharedRequirements.join(', ')})`
+              : ''}.
           </p>
         ) : null}
         <p>
           Candidate selection: {selectedTrace?.selectionReason ?? 'Only supported candidate.'}
         </p>
+        <details>
+          <summary>Retained alternatives ({relationship.candidateTraces.length})</summary>
+          <ol className="formation-retained-alternatives">
+            {relationship.candidateTraces.map((trace) => {
+              const selected = trace.candidate.id === relationship.selectedCandidateId;
+              return (
+                <li key={trace.candidate.id}>
+                  <strong>
+                    {candidateAbilityLabels(
+                      trace,
+                      'provider',
+                      canonicalDragonsById,
+                    ).join(' + ')}
+                    {' → '}
+                    {candidateAbilityLabels(
+                      trace,
+                      'beneficiary',
+                      canonicalDragonsById,
+                    ).join(' + ')}
+                  </strong>
+                  {' · '}
+                  {trace.candidate.resultKind === 'setup-payoff'
+                    ? 'Setup payoff'
+                    : 'Amplifier output'}
+                  {' · '}
+                  {trace.quantification.status === 'quantified'
+                    ? `${Math.round(trace.quantification.reliability * 10_000) / 100}% · ${reliabilityMethodLabels[trace.quantification.method]}`
+                    : `Unquantified · ${reliabilityReasonLabels[trace.quantification.reason]}`}
+                  {' · adjusted value '}
+                  {formatValue(candidateAdjustedValue(relationship, trace))}
+                  {' · '}
+                  {selected ? 'Selected' : 'Not selected'}. {trace.selectionReason}
+                </li>
+              );
+            })}
+          </ol>
+        </details>
         <details>
           <summary>Technical trace</summary>
           <p>
@@ -278,8 +344,22 @@ function ReliabilityRelationship({
             {relationship.eventIds.join(', ') || 'none'}.
           </p>
           <p>
-            Retained alternatives: {relationship.candidateTraces.length}.
+            Selected signals: {relationship.selectedProviderSignalId} →{' '}
+            {relationship.selectedBeneficiarySignalId}. Candidate:{' '}
+            {relationship.selectedCandidateId}. Probability variants:{' '}
+            {relationship.probabilityVariantIds.join(', ') || 'none'}.
           </p>
+          {relationship.candidateTraces.map((trace) => (
+            <p key={trace.candidate.id}>
+              Candidate {trace.candidate.id}. Provider signal {trace.provider.signalId};
+              beneficiary signal {trace.beneficiary.signalId}. Components{' '}
+              {trace.componentIds.join(', ') || 'none'}; events{' '}
+              {trace.eventIds.join(', ') || 'none'}; variants{' '}
+              {trace.probabilityVariantIds.join(', ') || 'none'}; uses{' '}
+              {[...trace.provider.useIds, ...trace.beneficiary.useIds].join(', ') || 'none'};
+              paths {[...trace.provider.pathIds, ...trace.beneficiary.pathIds].join(', ') || 'none'}.
+            </p>
+          ))}
         </details>
       </details>
     </article>
@@ -335,51 +415,6 @@ function coverageLabel(coverage: FormationRatingV3Result['reliabilityCoverage'])
   return 'No quantified relationships';
 }
 
-const methodLabels: Record<ReliabilityCalculationMethod, string> = {
-  guaranteed: 'Guaranteed',
-  'condition-proven': 'Condition proven',
-  'one-supported-opportunity': 'One supported opportunity',
-  'confirmed-cumulative': 'Confirmed cumulative probability',
-  'shared-event': 'Shared activation counted once',
-  'best-supported-alternative': 'Best supported alternative',
-  'mixed-use-lower-bound': 'Simultaneous-use lower bound',
-};
-
-const reasonLabels: Record<ReliabilityUnquantifiedReason, string> = {
-  'conditional-opportunity': 'Conditional opportunity',
-  'unknown-opportunity': 'Opportunity not established',
-  'probability-unknown': 'Probability not documented',
-  'missing-habit-level': 'Active Habit level is missing',
-  'round-context-unresolved': 'Round context is unresolved',
-  'probability-context-unresolved': 'Probability context is unresolved',
-  'conditional-deterministic-unproven': 'Dynamic condition is not proven',
-  'joint-chance-behavior-unresolved': 'Joint chance behavior is unresolved',
-  'conflicting-shared-event-probabilities': 'Shared-event probabilities conflict',
-  'no-supported-path': 'No supported activation path',
-};
-
-function methodLabel(method: ReliabilityCalculationMethod): string {
-  return methodLabels[method];
-}
-
-function reasonLabel(reason: ReliabilityUnquantifiedReason): string {
-  return reasonLabels[reason];
-}
-
-function humanizeTag(value: string): string {
-  return value
-    .split(':')
-    .map(humanizeCode)
-    .join(' · ');
-}
-
-function humanizeCode(value: string): string {
-  return value
-    .split('-')
-    .filter(Boolean)
-    .map((word) => word[0]?.toUpperCase() + word.slice(1))
-    .join(' ');
-}
 
 function formatPower(value: number): string {
   return new Intl.NumberFormat('en-US').format(value);

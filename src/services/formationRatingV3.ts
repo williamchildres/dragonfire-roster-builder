@@ -73,23 +73,31 @@ export function rateFormationV3({
   profiles,
   progression,
   reliabilityProgression,
+  placementComparison: suppliedPlacementComparison,
 }: {
   formation: SimpleFormation;
   dragons: Dragon[];
   profiles: DragonSynergyProfile[];
   progression: SimpleProgressionByDragonId;
   reliabilityProgression: ReliabilityProgressionByDragonId;
+  /**
+   * Callers that already evaluated all six placements may reuse that exact
+   * result. Audits omit this value so their recomputation remains independent.
+   */
+  placementComparison?: FormationPlacementComparisonV3;
 }): FormationRatingV3Result {
-  const relationships = evaluateFormationRelationshipsV3({
-    input: { formation, progression, reliabilityProgression },
-    profiles,
-  });
-  const placementComparison = compareFormationPlacementsV3({
-    formation,
-    progression,
-    reliabilityProgression,
-    profiles,
-  });
+  const relationships = suppliedPlacementComparison?.current.relationships ??
+    evaluateFormationRelationshipsV3({
+      input: { formation, progression, reliabilityProgression },
+      profiles,
+    });
+  const placementComparison = suppliedPlacementComparison ??
+    compareFormationPlacementsV3({
+      formation,
+      progression,
+      reliabilityProgression,
+      profiles,
+    });
   const confidence = assessFormationConfidence(formation, dragons, profiles);
   const active = scoreActiveSynergyV3(relationships);
   const quantifiedRelationshipCount = relationships.filter(
