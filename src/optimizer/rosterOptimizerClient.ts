@@ -1,10 +1,18 @@
+import { dragons } from '../data/dragons';
 import type { OwnedDragon } from '../models/dragon';
+import {
+  ESTIMATED_POWER_MODEL_HASH,
+  ESTIMATED_POWER_MODEL_VERSION,
+  ESTIMATED_POWER_OBSERVATION_HASH,
+} from '../power/generatedDragonPowerModel';
+import { buildOptimizerRosterSnapshot } from './rosterOptimizerCandidates';
 import {
   ROSTER_OPTIMIZER_CONTRACT_VERSION,
   ROSTER_OPTIMIZER_RATING_CONTRACT,
   RosterOptimizerCancelledError,
+  type OptimizerAllocationMode,
+  type OptimizerRunProgress,
   type RosterOptimizerResponse,
-  type RosterOptimizerStrategy,
 } from './rosterOptimizerTypes';
 import type {
   RosterOptimizerWorkerRequest,
@@ -14,7 +22,9 @@ import type {
 export interface RosterOptimizerRunner {
   run(
     roster: Record<string, OwnedDragon>,
-    strategy: RosterOptimizerStrategy,
+    allocationMode: OptimizerAllocationMode,
+    formationCount: number,
+    onProgress?: (progress: OptimizerRunProgress) => void,
   ): Promise<RosterOptimizerResponse>;
   cancel(): void;
   dispose(): void;
@@ -32,13 +42,15 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
   constructor(
     private readonly createWorker: WorkerFactory = () => new Worker(
       new URL('./rosterOptimizerWorker.ts', import.meta.url),
-      { type: 'module', name: 'roster-optimizer' },
+      { type: 'module', name: 'roster-optimizer-v5' },
     ),
   ) {}
 
   run(
     roster: Record<string, OwnedDragon>,
-    strategy: RosterOptimizerStrategy,
+    allocationMode: OptimizerAllocationMode,
+    formationCount: number,
+    onProgress?: (progress: OptimizerRunProgress) => void,
   ): Promise<RosterOptimizerResponse> {
     this.cancel();
     const requestId = ++this.requestId;
@@ -47,11 +59,17 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
       this.active = { worker, reject };
       worker.addEventListener('message', (event: MessageEvent<RosterOptimizerWorkerResponse>) => {
         if (event.data.requestId !== requestId || this.active?.worker !== worker) return;
+        if (event.data.type === 'progress') {
+          onProgress?.(event.data.progress);
+          return;
+        }
         this.finish(worker);
         if (event.data.type === 'result') {
           if (
             event.data.result.contractVersion !== ROSTER_OPTIMIZER_CONTRACT_VERSION ||
-            event.data.result.ratingContract !== ROSTER_OPTIMIZER_RATING_CONTRACT
+            event.data.result.ratingContract !== ROSTER_OPTIMIZER_RATING_CONTRACT ||
+            event.data.result.allocationMode !== allocationMode ||
+            event.data.result.requestedFormationCount !== formationCount
           ) {
             reject(new Error('The optimizer response contract is stale. Refresh and try again.'));
           } else {
@@ -68,8 +86,13 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
         type: 'optimize',
         contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
         ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
+        estimatedPowerModelVersion: ESTIMATED_POWER_MODEL_VERSION,
+        estimatedPowerModelHash: ESTIMATED_POWER_MODEL_HASH,
+        estimatedPowerObservationHash: ESTIMATED_POWER_OBSERVATION_HASH,
         requestId,
-        strategy,
+        allocationMode,
+        formationCount,
+        rosterSnapshot: buildOptimizerRosterSnapshot(dragons, roster),
         roster: structuredClone(roster),
       } satisfies RosterOptimizerWorkerRequest);
     });

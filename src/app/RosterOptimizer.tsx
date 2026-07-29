@@ -6,26 +6,24 @@ import {
   createRosterOptimizerRequestFingerprint,
 } from '../optimizer/rosterOptimizerCandidates';
 import {
+  clampOptimizerFormationCount,
+  maximumOptimizerFormationCount,
+} from '../optimizer/rosterOptimizerCount';
+import {
   RosterOptimizerClient,
   type RosterOptimizerRunner,
 } from '../optimizer/rosterOptimizerClient';
 import {
   RosterOptimizerCancelledError,
-  type BestTenOverallOptimizationResult,
-  type OptimizedFormation,
+  type FlexiblePowerAwareOptimizationResult,
+  type OptimizerAllocationMode,
   type OptimizerRosterDragon,
-  type OptimizerWaveResult,
-  type PrimaryBackupOptimizationResult,
+  type OptimizerRunProgress,
   type PowerAwareOptimizedFormation,
-  type PowerAwareOptimizerWaveResult,
-  type PowerAwarePrimaryBackupOptimizationResult,
-  type RosterOptimizationResult,
-  type RosterOptimizerStrategy,
+  type TierDistribution,
 } from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationArrangement';
-import type {
-  FormationRelationshipV3,
-} from '../synergy/reliability';
+import type { FormationRelationshipV3 } from '../synergy/reliability';
 import { AppLink, type NavigateToRoute } from './appRouter';
 import {
   candidateAbilityLabels,
@@ -39,14 +37,17 @@ import {
   signalLabel,
 } from './relationshipReliabilityPresentation';
 
-export const DEFAULT_ROSTER_OPTIMIZER_STRATEGY: RosterOptimizerStrategy =
-  'power-aware-primary-five-backup-five';
+export const DEFAULT_OPTIMIZER_ALLOCATION_MODE: OptimizerAllocationMode = 'strongest-first';
+/** @deprecated v0.21 compatibility alias; the UI no longer exposes strategies. */
+export const DEFAULT_ROSTER_OPTIMIZER_STRATEGY = DEFAULT_OPTIMIZER_ALLOCATION_MODE;
 
 export function RosterOptimizer({
   allDragons,
   roster,
-  strategy,
-  onStrategyChange,
+  allocationMode,
+  onAllocationModeChange,
+  formationCount,
+  onFormationCountChange,
   result,
   onResultChange,
   runner: suppliedRunner,
@@ -56,10 +57,12 @@ export function RosterOptimizer({
 }: {
   allDragons: Dragon[];
   roster: Record<string, OwnedDragon>;
-  strategy: RosterOptimizerStrategy;
-  onStrategyChange: (strategy: RosterOptimizerStrategy) => void;
-  result: RosterOptimizationResult | null;
-  onResultChange: (result: RosterOptimizationResult) => void;
+  allocationMode: OptimizerAllocationMode;
+  onAllocationModeChange: (mode: OptimizerAllocationMode) => void;
+  formationCount: number;
+  onFormationCountChange: (count: number) => void;
+  result: FlexiblePowerAwareOptimizationResult | null;
+  onResultChange: (result: FlexiblePowerAwareOptimizationResult) => void;
   runner?: RosterOptimizerRunner;
   onOpenFormation: (arrangement: FormationArrangement) => void;
   onOpenRoster: () => void;
@@ -73,17 +76,25 @@ export function RosterOptimizer({
     () => buildOptimizerRosterSnapshot(allDragons, roster),
     [allDragons, roster],
   );
+  const maximumCount = maximumOptimizerFormationCount(snapshot.length);
+  const effectiveCount = clampOptimizerFormationCount(formationCount, snapshot.length);
   const requestFingerprint = useMemo(
-    () => createRosterOptimizerRequestFingerprint(snapshot, strategy),
-    [snapshot, strategy],
+    () => createRosterOptimizerRequestFingerprint(
+      snapshot,
+      allocationMode,
+      effectiveCount,
+    ),
+    [allocationMode, effectiveCount, snapshot],
   );
   const latestRequestFingerprint = useRef(requestFingerprint);
   const activeRunId = useRef(0);
   const isMounted = useRef(true);
   const [status, setStatus] = useState<'idle' | 'running' | 'success' | 'error'>('idle');
+  const [progress, setProgress] = useState<OptimizerRunProgress | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const eligibleCounts = rarityCounts(snapshot.map((dragon) => dragon.rarity));
+  const [countNotice, setCountNotice] = useState<string | null>(null);
   const isStale = Boolean(result && result.requestFingerprint !== requestFingerprint);
+  const eligibleCounts = rarityCounts(snapshot.map((dragon) => dragon.rarity));
 
   useEffect(() => {
     isMounted.current = true;
@@ -99,14 +110,36 @@ export function RosterOptimizer({
     latestRequestFingerprint.current = requestFingerprint;
   }, [requestFingerprint]);
 
+  useEffect(() => {
+    if (formationCount === effectiveCount) return;
+    onFormationCountChange(effectiveCount);
+    if (effectiveCount > 0) queueMicrotask(() => {
+      if (!isMounted.current) return;
+      setCountNotice(
+        `Your eligible roster now supports ${effectiveCount} ${armyWord(effectiveCount)}. The selected count was adjusted to ${effectiveCount}.`,
+      );
+    });
+  }, [effectiveCount, formationCount, onFormationCountChange]);
+
   const run = async () => {
+    if (effectiveCount < 1) return;
     const activeFingerprint = requestFingerprint;
     const runId = activeRunId.current + 1;
     activeRunId.current = runId;
     setStatus('running');
+    setProgress({
+      stage: 'candidate-generation',
+      allocationMode,
+      formationCount: effectiveCount,
+    });
     setError(null);
     try {
-      const response = await runner.run(roster, strategy);
+      const response = await runner.run(
+        roster,
+        allocationMode,
+        effectiveCount,
+        setProgress,
+      );
       if (
         !isMounted.current ||
         activeRunId.current !== runId ||
@@ -120,12 +153,13 @@ export function RosterOptimizer({
         setStatus('idle');
         return;
       }
+      if (!('allocationMode' in response) || response.contractVersion !== 5) {
+        throw new Error('The optimizer response contract is stale. Refresh and try again.');
+      }
       onResultChange(response);
       setStatus('success');
     } catch (runError) {
-      if (!isMounted.current || activeRunId.current !== runId) {
-        return;
-      }
+      if (!isMounted.current || activeRunId.current !== runId) return;
       if (runError instanceof RosterOptimizerCancelledError) {
         setStatus('idle');
         return;
@@ -139,76 +173,77 @@ export function RosterOptimizer({
     activeRunId.current += 1;
     runner.cancel();
     setStatus('idle');
+    setProgress(null);
+  };
+
+  const changeMode = (mode: OptimizerAllocationMode) => {
+    setCountNotice(null);
+    onAllocationModeChange(mode);
+  };
+
+  const changeCount = (count: number) => {
+    setCountNotice(null);
+    onFormationCountChange(count);
   };
 
   return (
     <section className="optimizer-workspace" aria-labelledby="optimizer-title">
       <header className="optimizer-header">
-        <p className="eyebrow">Exact global allocation</p>
+        <p className="eyebrow">Flexible Power-Aware allocation</p>
         <h2 id="optimizer-title" tabIndex={-1}>Roster Optimizer</h2>
-        <p>Build 10 non-overlapping formations from your current roster, with a strategy that reflects how you play.</p>
+        <p>Build 1–11 exact, non-overlapping armies using current progression, Estimated Power v2, and Formation Rating v3.</p>
       </header>
 
       <div className="optimizer-roster-summary" aria-label="Eligible roster summary">
         <Metric label="Eligible dragons" value={snapshot.length} />
-        <Metric label="Required" value={30} />
+        <Metric label="Available armies" value={maximumCount} />
         <Metric label="Legendary" value={eligibleCounts.Legendary} />
         <Metric label="Epic" value={eligibleCounts.Epic} />
         <Metric label="Rare" value={eligibleCounts.Rare} />
       </div>
       <p className="optimizer-policy-note">
-        Recommendations use your owned dragons, current Star Ranks, Dragon Levels, and saved Habit Levels. Missing required progression remains unquantified.{' '}
+        Recommendations use owned dragons, current Star Ranks, Dragon Levels, and active Habit Levels.{' '}
         <AppLink route="about" navigate={onNavigate}>How recommendations are built</AppLink>
       </p>
 
+      <div className="optimizer-count-control">
+        <label htmlFor="optimizer-formation-count"><strong>Number of armies</strong></label>
+        <select
+          id="optimizer-formation-count"
+          value={effectiveCount || ''}
+          disabled={status === 'running' || maximumCount < 1}
+          onChange={(event) => changeCount(Number(event.target.value))}
+        >
+          {Array.from({ length: maximumCount }, (_unused, index) => index + 1).map((count) => (
+            <option key={count} value={count}>{count}</option>
+          ))}
+        </select>
+        {effectiveCount > 0 ? (
+          <p>{effectiveCount} {armyWord(effectiveCount)} use {effectiveCount * 3} of your {snapshot.length} eligible dragons.</p>
+        ) : null}
+      </div>
+
       <fieldset className="optimizer-strategy" disabled={status === 'running'}>
-        <legend>Optimization Strategy</legend>
-        <label className={strategy === 'power-aware-primary-five-backup-five' ? 'is-selected' : undefined}>
-          <input
-            type="radio"
-            name="optimizer-strategy"
-            value="power-aware-primary-five-backup-five"
-            checked={strategy === 'power-aware-primary-five-backup-five'}
-            onChange={() => onStrategyChange('power-aware-primary-five-backup-five')}
-          />
-          <span>
-            <strong>Power-Aware 5 + Backup 5</strong>
-            <small>Use Estimated Power to choose the strongest 15 Primary dragons, then arrange them into five formations using Formation Rating.</small>
-            <em className="optimizer-experimental-badge">Estimated / Experimental</em>
-          </span>
-        </label>
-        <label className={strategy === 'primary-five-backup-five' ? 'is-selected' : undefined}>
-          <input
-            type="radio"
-            name="optimizer-strategy"
-            value="primary-five-backup-five"
-            checked={strategy === 'primary-five-backup-five'}
-            onChange={() => onStrategyChange('primary-five-backup-five')}
-          />
-          <span>
-            <strong>Rarity-Priority 5 + Backup 5</strong>
-            <small>Prioritize your five active formations first, then optimize five Backup formations from the remaining dragons.</small>
-            <em>Legendary dragons are prioritized into Primary before Epic and Rare.</em>
-          </span>
-        </label>
-        <label className={strategy === 'best-ten-overall' ? 'is-selected' : undefined}>
-          <input
-            type="radio"
-            name="optimizer-strategy"
-            value="best-ten-overall"
-            checked={strategy === 'best-ten-overall'}
-            onChange={() => onStrategyChange('best-ten-overall')}
-          />
-          <span>
-            <strong>Best 10 Overall</strong>
-            <small>Optimize all ten formations as one equally weighted collection.</small>
-          </span>
-        </label>
+        <legend>Allocation mode</legend>
+        <ModeOption
+          mode="strongest-first"
+          selected={allocationMode === 'strongest-first'}
+          label="Strongest Armies First"
+          description="Prioritizes your strongest possible first army, then uses the remaining dragons for each following army."
+          onSelect={changeMode}
+        />
+        <ModeOption
+          mode="balanced"
+          selected={allocationMode === 'balanced'}
+          label="Balance All Armies"
+          description="Builds every army together and strengthens the weakest armies first."
+          onSelect={changeMode}
+        />
       </fieldset>
 
-      {snapshot.length < 30 ? (
+      {snapshot.length < 3 ? (
         <div className="optimizer-unavailable" role="status">
-          <p>You need {30 - snapshot.length} more eligible dragons to build 10 complete formations.</p>
+          <p>You need {3 - snapshot.length} more eligible {dragonWord(3 - snapshot.length)} to build one complete army.</p>
           <button type="button" className="secondary-button" onClick={onOpenRoster}>
             Go to My Roster <ChevronRight size={16} aria-hidden="true" />
           </button>
@@ -222,9 +257,7 @@ export function RosterOptimizer({
             onClick={() => void run()}
           >
             <Sparkles size={18} aria-hidden="true" />
-            {strategy === 'best-ten-overall'
-              ? 'Find My Best 10 Overall'
-              : 'Find My Primary & Backup Formations'}
+            Build {effectiveCount} {armyWord(effectiveCount)}
           </button>
           {status === 'running' ? (
             <button type="button" className="secondary-button" onClick={cancel}>
@@ -234,24 +267,30 @@ export function RosterOptimizer({
         </div>
       )}
 
-      <div className="sr-only" role="status" aria-live="polite">
-        {status === 'running' ? 'Finding the exact optimal roster allocation.' : null}
-        {status === 'success' ? 'Exact optimal roster allocation ready.' : null}
-        {status === 'error' ? error : null}
-      </div>
+      {countNotice ? <div className="optimizer-stale" role="status">{countNotice}</div> : null}
       {status === 'running' ? (
         <div className="optimizer-running" role="status">
           <span className="optimizer-spinner" aria-hidden="true" />
           <div>
-            <strong>Finding the exact optimal allocation…</strong>
-            <p>Evaluating every trio and proving the global result. No percentage is estimated.</p>
+            <strong>
+              {progress?.stage === 'exact-solving'
+                ? 'Proving the exact allocation…'
+                : 'Generating every eligible trio…'}
+            </strong>
+            <p>
+              {effectiveCount} {armyWord(effectiveCount)} · {modeLabel(allocationMode)}. Only a fully proven exact result is returned.
+            </p>
           </div>
         </div>
       ) : null}
+      <div className="sr-only" role="status" aria-live="polite">
+        {status === 'success' ? 'Exact roster allocation ready.' : null}
+        {status === 'error' ? error : null}
+      </div>
       {error ? <div className="status-message error" role="alert">{error}</div> : null}
       {isStale ? (
         <div className="optimizer-stale" role="status">
-          Your roster progression or optimization strategy changed. Run the optimizer again to refresh this result.
+          Your roster progression, army count, or allocation mode changed. Run the optimizer again to refresh this result.
         </div>
       ) : null}
       {result ? (
@@ -263,9 +302,35 @@ export function RosterOptimizer({
           onOpenFormation={onOpenFormation}
         />
       ) : null}
-
-      <Methodology strategy={strategy} />
+      <Methodology mode={allocationMode} />
     </section>
+  );
+}
+
+function ModeOption({
+  mode,
+  selected,
+  label,
+  description,
+  onSelect,
+}: {
+  mode: OptimizerAllocationMode;
+  selected: boolean;
+  label: string;
+  description: string;
+  onSelect: (mode: OptimizerAllocationMode) => void;
+}) {
+  return (
+    <label className={selected ? 'is-selected' : undefined}>
+      <input
+        type="radio"
+        name="optimizer-allocation-mode"
+        value={mode}
+        checked={selected}
+        onChange={() => onSelect(mode)}
+      />
+      <span><strong>{label}</strong><small>{description}</small></span>
+    </label>
   );
 }
 
@@ -276,7 +341,7 @@ function OptimizerResultView({
   stale,
   onOpenFormation,
 }: {
-  result: RosterOptimizationResult;
+  result: FlexiblePowerAwareOptimizationResult;
   allDragons: Dragon[];
   snapshot: OptimizerRosterDragon[];
   stale: boolean;
@@ -284,36 +349,43 @@ function OptimizerResultView({
 }) {
   const dragonsById = new Map(allDragons.map((dragon) => [dragon.id, dragon]));
   const progressionById = new Map(snapshot.map((dragon) => [dragon.dragonId, dragon]));
+  const collection = result.collection;
   return (
     <div className={stale ? 'optimizer-result is-stale' : 'optimizer-result'}>
       <header className="optimizer-result-header">
         <div>
-          <p className="eyebrow">
-            {result.strategy === 'power-aware-primary-five-backup-five'
-              ? 'Power-Aware 5 + Backup 5'
-              : result.strategy === 'primary-five-backup-five'
-                ? 'Rarity-Priority 5 + Backup 5'
-                : 'Best 10 Overall'}
-          </p>
+          <p className="eyebrow">{modeLabel(result.allocationMode)}</p>
           <h3>Exact optimal result</h3>
         </div>
-        <span className="optimizer-optimal-badge"><CircleCheck size={17} aria-hidden="true" /> Proven optimal</span>
+        <span className="optimizer-optimal-badge"><CircleCheck size={17} aria-hidden="true" /> Proven exact</span>
       </header>
-      {result.strategy !== 'best-ten-overall' ? (
-        <PrimaryBackupResult
-          result={result}
-          dragonsById={dragonsById}
-          stale={stale}
-          onOpenFormation={onOpenFormation}
-        />
-      ) : (
-        <BestTenResult
-          result={result}
-          dragonsById={dragonsById}
-          stale={stale}
-          onOpenFormation={onOpenFormation}
-        />
-      )}
+      <div className="optimizer-result-metrics">
+        <Metric label="Armies" value={result.generatedFormationCount} />
+        <Metric label="Strongest power" value={collection.maximumFormationEstimatedPower.toLocaleString()} />
+        <Metric label="Weakest power" value={collection.minimumFormationEstimatedPower.toLocaleString()} />
+        <Metric label="Average power" value={Math.round(collection.averageEstimatedPower).toLocaleString()} />
+        <Metric label="Power spread" value={collection.estimatedPowerSpread.toLocaleString()} />
+        <Metric label="Total power" value={collection.totalEstimatedPower.toLocaleString()} />
+        <Metric label="Average Formation Rating" value={collection.averageRating.toFixed(1)} />
+        <Metric label="Minimum Formation Rating" value={collection.minimumRating} />
+      </div>
+      <p className="optimizer-allocation-note">
+        {result.allocationMode === 'strongest-first'
+          ? 'Later armies are optimized only after every earlier army has claimed its three dragons.'
+          : 'The solver prioritized the weakest army first, then the next weakest, before applying Formation Rating and relationship tie-breaks.'}
+      </p>
+      <p className="optimizer-tier-summary"><strong>Rating tiers:</strong> {tierSummary(collection.tierDistribution)}</p>
+      <div className="optimizer-formation-grid">
+        {result.formations.map((formation) => (
+          <OptimizerFormationCard
+            key={formation.stableCandidateKey}
+            formation={formation}
+            dragonsById={dragonsById}
+            disabled={stale}
+            onOpen={() => onOpenFormation(formation.arrangement)}
+          />
+        ))}
+      </div>
       <UnusedDragons
         result={result}
         dragonsById={dragonsById}
@@ -324,250 +396,37 @@ function OptimizerResultView({
   );
 }
 
-function BestTenResult({
-  result,
-  dragonsById,
-  stale,
-  onOpenFormation,
-}: {
-  result: BestTenOverallOptimizationResult;
-  dragonsById: Map<string, Dragon>;
-  stale: boolean;
-  onOpenFormation: (arrangement: FormationArrangement) => void;
-}) {
-  return <>
-    <div className="optimizer-result-metrics">
-      <Metric label="Total Formation Rating" value={result.collection.totalRating} />
-      <Metric label="Average" value={result.collection.averageRating.toFixed(1)} />
-      <Metric label="Lowest" value={result.collection.minimumRating} />
-      <Metric label="Dragons used" value={result.usedDragonIds.length} />
-      <Metric label="Legendary used" value={result.usedRarityCounts.Legendary} />
-      <Metric label="Epic used" value={result.usedRarityCounts.Epic} />
-      <Metric label="Rare used" value={result.usedRarityCounts.Rare} />
-      <Metric label="Adjusted relationship value" value={result.collection.totalRelationshipValue} />
-      <Metric label="Evidence-backed relationships" value={result.collection.totalActiveRelationships} />
-      <Metric label="Quantified relationships" value={result.collection.quantifiedRelationshipCount} />
-      <Metric label="Unquantified relationships" value={result.collection.unquantifiedRelationshipCount} />
-      <Metric label="Unquantified base potential" value={result.collection.unquantifiedBasePotential} />
-    </div>
-    <p className="optimizer-allocation-note">All ten formations are optimized as one equally weighted non-overlapping collection.</p>
-    <div className="optimizer-formation-grid">
-      {result.formations.map((formation) => (
-        <OptimizerFormationCard
-          key={formation.stableCandidateKey}
-          formation={formation}
-          dragonsById={dragonsById}
-          disabled={stale}
-          onOpen={() => onOpenFormation(formation.arrangement)}
-        />
-      ))}
-    </div>
-  </>;
-}
-
-function PrimaryBackupResult({
-  result,
-  dragonsById,
-  stale,
-  onOpenFormation,
-}: {
-  result: PrimaryBackupOptimizationResult | PowerAwarePrimaryBackupOptimizationResult;
-  dragonsById: Map<string, Dragon>;
-  stale: boolean;
-  onOpenFormation: (arrangement: FormationArrangement) => void;
-}) {
-  const powerAware = result.strategy === 'power-aware-primary-five-backup-five';
-  const hasLowConfidence = powerAware && result.combined.powerConfidenceCounts.low > 0;
-  return <>
-    {hasLowConfidence ? (
-      <p className="optimizer-power-warning" role="status">
-        Some selected dragons have low-confidence Estimated Power extrapolations. Confidence is a warning only and never changes objective priority.
-      </p>
-    ) : null}
-    <WaveSection
-      wave={result.primary}
-      description={powerAware
-        ? 'Estimated Power selects the Primary dragon pool; Formation Rating organizes that pool into five formations.'
-        : 'Your strongest five active formations. Rarity and formation quality are prioritized here before the Backup set.'}
-      dragonsById={dragonsById}
-      stale={stale}
-      onOpenFormation={onOpenFormation}
-    />
-    <WaveSection
-      wave={result.backup}
-      description="Five optimized Backup formations built from dragons not used by the Primary set."
-      dragonsById={dragonsById}
-      stale={stale}
-      onOpenFormation={onOpenFormation}
-    />
-    <section className="optimizer-combined-summary" aria-labelledby="combined-summary-title">
-      <h4 id="combined-summary-title">Combined result</h4>
-      <div className="optimizer-result-metrics">
-        <Metric label="Total rating" value={result.combined.totalRating} />
-        <Metric label="Average" value={result.combined.averageRating.toFixed(1)} />
-        <Metric label="Unique dragons" value={result.usedDragonIds.length} />
-        <Metric label="Evidence-backed relationships" value={result.combined.totalActiveRelationships} />
-        <Metric label="Quantified relationships" value={result.combined.quantifiedRelationshipCount} />
-        <Metric label="Unquantified relationships" value={result.combined.unquantifiedRelationshipCount} />
-        <Metric label="Unquantified base potential" value={result.combined.unquantifiedBasePotential} />
-      </div>
-    </section>
-  </>;
-}
-
-function WaveSection({
-  wave,
-  description,
-  dragonsById,
-  stale,
-  onOpenFormation,
-}: {
-  wave: OptimizerWaveResult | PowerAwareOptimizerWaveResult;
-  description: string;
-  dragonsById: Map<string, Dragon>;
-  stale: boolean;
-  onOpenFormation: (arrangement: FormationArrangement) => void;
-}) {
-  const headingId = `optimizer-${wave.kind}-heading`;
-  return (
-    <section className={`optimizer-wave optimizer-wave-${wave.kind}`} aria-labelledby={headingId}>
-      <header>
-        <div>
-          <p className="eyebrow">{wave.label} set</p>
-          <h4 id={headingId}>{wave.label} Formations</h4>
-          <p>{description}</p>
-        </div>
-      </header>
-      <div className="optimizer-result-metrics optimizer-wave-metrics">
-        {'totalEstimatedPower' in wave ? <>
-          <Metric label="Total Estimated Power" value={wave.totalEstimatedPower.toLocaleString()} />
-          <Metric label="Average Power / dragon" value={Math.round(wave.averageEstimatedPowerPerDragon).toLocaleString()} />
-          <Metric label="Formation Power range" value={`${wave.minimumFormationEstimatedPower.toLocaleString()}–${wave.maximumFormationEstimatedPower.toLocaleString()}`} />
-        </> : null}
-        <Metric label="Formations" value={wave.formations.length} />
-        <Metric label="Total rating" value={wave.totalRating} />
-        <Metric label="Average" value={wave.averageRating.toFixed(1)} />
-        <Metric label="Lowest" value={wave.minimumRating} />
-        <Metric label="Legendary" value={wave.rarityCounts.Legendary} />
-        <Metric label="Epic" value={wave.rarityCounts.Epic} />
-        <Metric label="Rare" value={wave.rarityCounts.Rare} />
-        <Metric label="Adjusted relationship value" value={wave.totalRelationshipValue} />
-        <Metric label="Evidence-backed relationships" value={wave.totalActiveRelationships} />
-        <Metric label="Quantified relationships" value={wave.quantifiedRelationshipCount} />
-        <Metric label="Unquantified relationships" value={wave.unquantifiedRelationshipCount} />
-        <Metric label="Unquantified base potential" value={wave.unquantifiedBasePotential} />
-        {'powerConfidenceCounts' in wave ? <>
-          <Metric label="Observed Power" value={wave.powerConfidenceCounts.observed} />
-          <Metric label="Modeled Power" value={wave.powerConfidenceCounts.modeled} />
-          <Metric label="Low-confidence Power" value={wave.powerConfidenceCounts.low} />
-        </> : null}
-      </div>
-      <p className="optimizer-tier-summary"><strong>Rating tiers:</strong> {tierSummary(wave.tierDistribution)}</p>
-      <div className="optimizer-formation-grid">
-        {wave.formations.map((formation) => (
-          <OptimizerFormationCard
-            key={`${wave.kind}-${formation.stableCandidateKey}`}
-            formation={formation}
-            dragonsById={dragonsById}
-            disabled={stale}
-            onOpen={() => onOpenFormation(formation.arrangement)}
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function UnusedDragons({
-  result,
-  dragonsById,
-  progressionById,
-}: {
-  result: RosterOptimizationResult;
-  dragonsById: Map<string, Dragon>;
-  progressionById: Map<string, OptimizerRosterDragon>;
-}) {
-  if (result.unusedDragonIds.length === 0) return null;
-  return (
-    <div className="optimizer-unused">
-      <h4>Unused eligible {result.unusedDragonIds.length === 1 ? 'dragon' : 'dragons'}</h4>
-      <p>Not used in this exact, strategy-specific allocation.</p>
-      <ul>
-        {result.unusedDragonIds.map((dragonId) => {
-          const dragon = dragonsById.get(dragonId);
-          const progression = progressionById.get(dragonId);
-          return (
-            <li key={dragonId}>
-              <strong>{dragon?.name ?? dragonId}</strong> · {dragon?.rarity ?? 'Unknown rarity'} · Star {progression?.starRank ?? '—'} · Level {progression?.dragonLevel ?? '—'}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
-function TechnicalDetails({ result }: { result: RosterOptimizationResult }) {
-  return (
-    <details className="optimizer-technical">
-      <summary>Technical details</summary>
-      <dl>
-        <div><dt>Strategy</dt><dd>{result.strategy}</dd></div>
-        <div><dt>Exactness</dt><dd>Optimal · zero gap</dd></div>
-        <div><dt>Candidates considered</dt><dd>{result.diagnostics.candidateCount.toLocaleString()}</dd></div>
-        <div><dt>Solver passes</dt><dd>{result.diagnostics.solverPasses ?? '—'}</dd></div>
-        <div><dt>Nodes visited</dt><dd>{result.diagnostics.nodesVisited.toLocaleString()}</dd></div>
-        <div><dt>Branches pruned</dt><dd>{result.diagnostics.branchesPruned.toLocaleString()}</dd></div>
-        <div><dt>Candidate generation</dt><dd>{formatMs(result.diagnostics.candidateGenerationMs)}</dd></div>
-        <div><dt>Exact solver</dt><dd>{formatMs(result.diagnostics.solverMs)}</dd></div>
-        <div><dt>Total</dt><dd>{formatMs(result.diagnostics.totalMs)}</dd></div>
-        <div><dt>Solution hash</dt><dd><code>{result.optimizerSolutionHash}</code></dd></div>
-        <div><dt>Result hash</dt><dd><code>{result.optimizerResultHash}</code></dd></div>
-        {result.strategy === 'power-aware-primary-five-backup-five' ? <>
-          <div><dt>Power model</dt><dd><code>{result.estimatedPowerModelVersion}</code></dd></div>
-          <div><dt>Power model hash</dt><dd><code>{result.estimatedPowerModelHash}</code></dd></div>
-          <div><dt>Power observation hash</dt><dd><code>{result.estimatedPowerObservationHash}</code></dd></div>
-        </> : null}
-      </dl>
-    </details>
-  );
-}
-
 function OptimizerFormationCard({
   formation,
   dragonsById,
   disabled,
   onOpen,
 }: {
-  formation: OptimizedFormation | PowerAwareOptimizedFormation;
+  formation: PowerAwareOptimizedFormation;
   dragonsById: Map<string, Dragon>;
   disabled: boolean;
   onOpen: () => void;
 }) {
-  const label = formation.wave
-    ? `${formation.wave === 'primary' ? 'Primary' : 'Backup'} ${formation.waveRank}`
-    : `Formation ${formation.rank}`;
-  const headingId = `optimizer-formation-${formation.wave ?? 'overall'}-${formation.rank}`;
+  const headingId = `optimizer-army-${formation.rank}`;
   return (
     <article className="optimizer-formation-card" aria-labelledby={headingId}>
       <header>
         <div>
-          <p className="eyebrow">{label}</p>
+          <p className="eyebrow">Army {formation.rank}</p>
           <h4 id={headingId}>{formation.rating} · {formation.tier}</h4>
         </div>
-        {formation.wave ? <span className={`optimizer-wave-badge ${formation.wave}`}>{formation.wave === 'primary' ? 'Primary' : 'Backup'}</span> : null}
         <div className="optimizer-score-pills" aria-label="Formation score breakdown">
           <span>Synergy {formation.activeSynergyScore}/80</span>
           <span>Placement {formation.placementScore}/20</span>
         </div>
       </header>
-      {'estimatedPower' in formation ? (
-        <div className="optimizer-formation-power">
-          <span>Estimated Formation Power</span>
-          <strong>{formation.estimatedPower.toLocaleString()}</strong>
-          <small>Separate from Formation Rating {formation.rating}</small>
-        </div>
-      ) : null}
+      <div className="optimizer-formation-power">
+        <span>Estimated Formation Power</span>
+        <strong>{formation.estimatedPower.toLocaleString()}</strong>
+        <small>
+          Confidence: {powerConfidenceSummary(formation)} · Formation Rating v3 {formation.rating}
+        </small>
+      </div>
       <dl className="optimizer-positions">
         {(['left-flank', 'vanguard', 'right-flank'] as const).map((position) => {
           const dragon = dragonsById.get(formation.arrangement[position]);
@@ -580,9 +439,8 @@ function OptimizerFormationCard({
         })}
       </dl>
       <p className="optimizer-relationship-count">
-        {formation.activeRelationshipCount} evidence-backed {formation.activeRelationshipCount === 1 ? 'relationship' : 'relationships'}
-        {' · '}
-        {formation.quantifiedRelationshipCount} quantified
+        Reliability coverage: {formation.reliabilityCoverage.replaceAll('-', ' ')} ·{' '}
+        {formation.activeRelationshipCount} active · {formation.quantifiedRelationshipCount} quantified
         {formation.unquantifiedRelationshipCount > 0
           ? ` · ${formation.unquantifiedRelationshipCount} unquantified`
           : ''}
@@ -594,7 +452,7 @@ function OptimizerFormationCard({
         </ul>
       ) : null}
       {formation.tiedBestArrangements.length > 1 ? (
-        <p className="optimizer-tie-note">{formation.tiedBestArrangements.length} position assignments tie for best; the stable first is shown.</p>
+        <p className="optimizer-tie-note">{formation.tiedBestArrangements.length} placements tie for best; the deterministic first is shown.</p>
       ) : null}
       <details>
         <summary>Relationship details</summary>
@@ -613,6 +471,66 @@ function OptimizerFormationCard({
         Open in Formation Builder <ChevronRight size={16} aria-hidden="true" />
       </button>
     </article>
+  );
+}
+
+function UnusedDragons({
+  result,
+  dragonsById,
+  progressionById,
+}: {
+  result: FlexiblePowerAwareOptimizationResult;
+  dragonsById: Map<string, Dragon>;
+  progressionById: Map<string, OptimizerRosterDragon>;
+}) {
+  if (result.unusedDragonIds.length === 0) return null;
+  return (
+    <div className="optimizer-unused">
+      <h4>Unused eligible {result.unusedDragonIds.length === 1 ? 'dragon' : 'dragons'}</h4>
+      <p>Not used in this exact {modeLabel(result.allocationMode)} allocation.</p>
+      <ul>
+        {result.unusedDragonIds.map((dragonId) => {
+          const dragon = dragonsById.get(dragonId);
+          const progression = progressionById.get(dragonId);
+          return (
+            <li key={dragonId}>
+              <strong>{dragon?.name ?? dragonId}</strong> · {dragon?.rarity ?? 'Unknown rarity'} · Star {progression?.starRank ?? '—'} · Level {progression?.dragonLevel ?? '—'}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function TechnicalDetails({ result }: { result: FlexiblePowerAwareOptimizationResult }) {
+  const profile = result.diagnostics.performanceProfile;
+  return (
+    <details className="optimizer-technical">
+      <summary>Technical trace</summary>
+      <dl>
+        <div><dt>Contract</dt><dd>v{result.contractVersion}</dd></div>
+        <div><dt>Allocation mode</dt><dd>{result.allocationMode}</dd></div>
+        <div><dt>Requested / generated</dt><dd>{result.requestedFormationCount} / {result.generatedFormationCount}</dd></div>
+        <div><dt>Exactness</dt><dd>Optimal · zero MIP gap</dd></div>
+        <div><dt>Candidates</dt><dd>{result.diagnostics.candidateCount.toLocaleString()}</dd></div>
+        <div><dt>Solver passes</dt><dd>{result.diagnostics.solverPasses ?? 0}</dd></div>
+        <div><dt>Exact-search nodes</dt><dd>{result.diagnostics.nodesVisited.toLocaleString()}</dd></div>
+        <div><dt>Model builds</dt><dd>{profile?.modelBuilds ?? 0}</dd></div>
+        <div><dt>Variables</dt><dd>{maximumPhaseValue(profile, 'variableCount').toLocaleString()}</dd></div>
+        <div><dt>Constraints</dt><dd>{maximumPhaseValue(profile, 'constraintCount').toLocaleString()}</dd></div>
+        <div><dt>Skipped phases</dt><dd>{profile?.skippedPhases ?? 0}</dd></div>
+        <div><dt>Certification passes</dt><dd>{profile?.certificationPasses ?? 0}</dd></div>
+        <div><dt>Candidate generation</dt><dd>{formatMs(result.diagnostics.candidateGenerationMs)}</dd></div>
+        <div><dt>Exact solver</dt><dd>{formatMs(result.diagnostics.solverMs)}</dd></div>
+        <div><dt>Total</dt><dd>{formatMs(result.diagnostics.totalMs)}</dd></div>
+        <div><dt>Power model</dt><dd><code>{result.estimatedPowerModelVersion}</code></dd></div>
+        <div><dt>Power model hash</dt><dd><code>{result.estimatedPowerModelHash}</code></dd></div>
+        <div><dt>Power observation hash</dt><dd><code>{result.estimatedPowerObservationHash}</code></dd></div>
+        <div><dt>Solution hash</dt><dd><code>{result.optimizerSolutionHash}</code></dd></div>
+        <div><dt>Result hash</dt><dd><code>{result.optimizerResultHash}</code></dd></div>
+      </dl>
+    </details>
   );
 }
 
@@ -636,49 +554,30 @@ export function OptimizerRelationshipDetail({
   return (
     <>
       <p>
-        <strong>{semanticTagLabel(relationship)}</strong>
-        {' · '}
-        {relationshipClassLabel(relationship)}
-        {' · '}
+        <strong>{semanticTagLabel(relationship)}</strong> ·{' '}
+        {relationshipClassLabel(relationship)} ·{' '}
         {relationship.quantification.status === 'quantified'
           ? `${formatPercent(relationship.quantification.reliability)} reliability`
           : 'Unquantified'}
       </p>
       <p>
-        {dragonsById.get(relationship.providerDragonId)?.name ??
-          relationship.providerDragonId}
+        {dragonsById.get(relationship.providerDragonId)?.name ?? relationship.providerDragonId}
         {' → '}
-        {dragonsById.get(relationship.beneficiaryDragonId)?.name ??
-          relationship.beneficiaryDragonId}
+        {dragonsById.get(relationship.beneficiaryDragonId)?.name ?? relationship.beneficiaryDragonId}
       </p>
       <dl className="optimizer-relationship-metrics">
         <div><dt>Base value</dt><dd>{formatRelationshipValue(relationship.baseValue)}</dd></div>
-        <div>
-          <dt>Final contribution</dt>
-          <dd>{formatRelationshipValue(relationship.adjustedMarginalValue)}</dd>
-        </div>
+        <div><dt>Final contribution</dt><dd>{formatRelationshipValue(relationship.adjustedMarginalValue)}</dd></div>
         <div><dt>Redundancy rank</dt><dd>{relationship.redundancyRank}</dd></div>
       </dl>
       {relationship.quantification.status === 'quantified' ? (
-        <p>
-          {reliabilityMethodLabels[relationship.quantification.method]}:{' '}
-          {relationship.quantification.explanation}
-        </p>
+        <p>{reliabilityMethodLabels[relationship.quantification.method]}: {relationship.quantification.explanation}</p>
       ) : (
         <>
           <p>
             Base potential {formatRelationshipValue(relationship.unquantifiedBasePotential)};
-            numeric contribution 0. Unconditional reliability is unresolved:{' '}
-            {reliabilityReasonLabels[relationship.quantification.reason]}.
+            numeric contribution 0. {reliabilityReasonLabels[relationship.quantification.reason]}.
           </p>
-          {relationship.quantification.conditionalProbabilities?.length ? (
-            <p>
-              Conditional per-opportunity probability:{' '}
-              {relationship.quantification.conditionalProbabilities
-                .map(formatPercent)
-                .join(', ')}.
-            </p>
-          ) : null}
           <p>{relationship.quantification.explanation}</p>
         </>
       )}
@@ -687,23 +586,16 @@ export function OptimizerRelationshipDetail({
           <p>Simultaneous uses:</p>
           <ul>
             {simultaneousUses.map((use, index) => (
-              <li key={`${use.label}:${index}`}>
-                {use.label}{use.selected ? ' — supplied the supported lower bound' : ''}
-              </li>
+              <li key={`${use.label}:${index}`}>{use.label}{use.selected ? ' — selected lower bound' : ''}</li>
             ))}
           </ul>
-          <p>
-            One relationship base value is used. Use probabilities are not added or averaged.
-          </p>
+          <p>One relationship base value is used. Use probabilities are not added or averaged.</p>
         </>
       ) : null}
       {(selectedTrace?.sharedRequirementIds.length ?? 0) > 0 ? (
         <p>
-          Shared activation counted once; distinct provider and beneficiary
-          requirements remain required
-          {nonSharedRequirements.length > 0
-            ? ` (${nonSharedRequirements.join(', ')})`
-            : ''}.
+          Shared activation counted once
+          {nonSharedRequirements.length > 0 ? `; distinct requirements: ${nonSharedRequirements.join(', ')}` : ''}.
         </p>
       ) : null}
       {selectedTrace ? (
@@ -716,101 +608,56 @@ export function OptimizerRelationshipDetail({
       <details>
         <summary>Retained alternatives ({relationship.candidateTraces.length})</summary>
         <ol className="optimizer-retained-alternatives">
-          {relationship.candidateTraces.map((trace) => {
-            const selected = trace.candidate.id === relationship.selectedCandidateId;
-            return (
-              <li key={trace.candidate.id}>
-                <strong>
-                  {candidateAbilityLabels(trace, 'provider', dragonsById).join(' + ')}
-                  {' → '}
-                  {candidateAbilityLabels(trace, 'beneficiary', dragonsById).join(' + ')}
-                </strong>
-                {' · '}
-                {trace.candidate.resultKind === 'setup-payoff'
-                  ? 'Setup payoff'
-                  : 'Amplifier output'}
-                {' · '}
-                {trace.quantification.status === 'quantified'
-                  ? `${formatPercent(trace.quantification.reliability)} · ${reliabilityMethodLabels[trace.quantification.method]}`
-                  : `Unquantified · ${reliabilityReasonLabels[trace.quantification.reason]}`}
-                {' · adjusted value '}
-                {formatRelationshipValue(candidateAdjustedValue(relationship, trace))}
-                {' · '}
-                {selected ? 'Selected' : 'Not selected'}. {trace.selectionReason}
-              </li>
-            );
-          })}
+          {relationship.candidateTraces.map((trace) => (
+            <li key={trace.candidate.id}>
+              <strong>
+                {candidateAbilityLabels(trace, 'provider', dragonsById).join(' + ')}
+                {' → '}
+                {candidateAbilityLabels(trace, 'beneficiary', dragonsById).join(' + ')}
+              </strong>
+              {' · '}
+              {trace.quantification.status === 'quantified'
+                ? `${formatPercent(trace.quantification.reliability)} · ${reliabilityMethodLabels[trace.quantification.method]}`
+                : `Unquantified · ${reliabilityReasonLabels[trace.quantification.reason]}`}
+              {' · adjusted value '}
+              {formatRelationshipValue(candidateAdjustedValue(relationship, trace))}
+              {' · '}
+              {trace.candidate.id === relationship.selectedCandidateId ? 'Selected' : 'Not selected'}. {trace.selectionReason}
+            </li>
+          ))}
         </ol>
       </details>
       <details>
         <summary>Technical trace</summary>
         <p>
-          Components: {relationship.componentIds.join(', ') || 'none'}. Events:{' '}
-          {relationship.eventIds.join(', ') || 'none'}.
+          Components: {relationship.componentIds.join(', ') || 'none'}. Events: {relationship.eventIds.join(', ') || 'none'}.
         </p>
         <p>
-          Selected signals: {relationship.selectedProviderSignalId} →{' '}
-          {relationship.selectedBeneficiarySignalId}. Candidate:{' '}
-          {relationship.selectedCandidateId}. Probability variants:{' '}
-          {relationship.probabilityVariantIds.join(', ') || 'none'}.
+          Signals: {relationship.selectedProviderSignalId} → {relationship.selectedBeneficiarySignalId}.
+          Candidate: {relationship.selectedCandidateId}. Variants: {relationship.probabilityVariantIds.join(', ') || 'none'}.
         </p>
-        {relationship.candidateTraces.map((trace) => (
-          <p key={trace.candidate.id}>
-            Candidate {trace.candidate.id}. Provider signal {trace.provider.signalId};
-            beneficiary signal {trace.beneficiary.signalId}. Components{' '}
-            {trace.componentIds.join(', ') || 'none'}; events{' '}
-            {trace.eventIds.join(', ') || 'none'}; variants{' '}
-            {trace.probabilityVariantIds.join(', ') || 'none'}; uses{' '}
-            {[...trace.provider.useIds, ...trace.beneficiary.useIds].join(', ') || 'none'};
-            paths {[...trace.provider.pathIds, ...trace.beneficiary.pathIds].join(', ') || 'none'}.
-          </p>
-        ))}
       </details>
     </>
   );
 }
 
-function formatPercent(value: number): string {
-  return `${Math.round(value * 10_000) / 100}%`;
-}
-
-function formatRelationshipValue(value: number): string {
-  return Number.isInteger(value) ? String(value) : value.toFixed(3);
-}
-
-function Methodology({ strategy }: { strategy: RosterOptimizerStrategy }) {
+function Methodology({ mode }: { mode: OptimizerAllocationMode }) {
   return (
     <details className="optimizer-methodology">
       <summary>How this was chosen</summary>
       <div>
-        <p>The optimizer uses eligible dragons from My Roster and requires at least 30.</p>
-        {strategy === 'power-aware-primary-five-backup-five' ? (
-          <ul>
-            <li>Estimated Power chooses the Primary dragon pool. Formation Rating organizes equally powerful choices into formations.</li>
-            <li>Estimated Power is empirical and unofficial. It is not combat simulation or an official game formula.</li>
-            <li>Backup Estimated Power is optimized only after every Primary numeric quality objective is fixed.</li>
-            <li>Power and the 0–100 Formation Rating remain separate; no weighted blend is used.</li>
-            <li>Rarity and power confidence are diagnostics only. Formation reliability uses the saved Habit Levels from My Roster.</li>
-          </ul>
-        ) : strategy === 'primary-five-backup-five' ? (
-          <ul>
-            <li>Only five formations may be active at once, so the Primary five are optimized first.</li>
-            <li>Primary Legendary inclusion is prioritized before Epic and Rare, then Primary formation quality is optimized.</li>
-            <li>Backup uses dragons not used by Primary. Exactly tied Primary results are decided by the strongest possible Backup set.</li>
-            <li>No dragon is repeated across the five Primary and five Backup formations.</li>
-            <li>Every trio checks all six placements with Formation Rating v3 reliability-adjusted value.</li>
-            <li>Star Rank, Dragon Level, and saved Habit Levels are respected.</li>
-            <li>No combat simulation occurs.</li>
-          </ul>
-        ) : (
-          <ul>
-            <li>All ten formations are optimized together as one collection with no dragon reuse.</li>
-            <li>Legendary inclusion is prioritized over Epic; Epic is prioritized over Rare.</li>
-            <li>Every trio checks all six placements with Formation Rating v3 reliability-adjusted value.</li>
-            <li>Star Rank, Dragon Level, and saved Habit Levels are respected.</li>
-            <li>No combat simulation occurs.</li>
-          </ul>
-        )}
+        <ul>
+          <li>Each eligible trio is generated once. All six placements are compared with Formation Rating v3 and the exact best arrangement is retained.</li>
+          <li>Estimated Power v2 uses each dragon’s current Star Rank and Dragon Level. Formation reliability uses current active Habit Levels.</li>
+          <li>Power, rating, and relationship values remain separate integer lexicographic objectives; no weighted floating-point blend or rarity priority is used.</li>
+          <li>No dragon appears in more than one generated army.</li>
+          {mode === 'strongest-first' ? (
+            <li>Each Army K is the highest-ranked remaining candidate after Armies 1 through K−1 claim their dragons.</li>
+          ) : (
+            <li>The complete ascending power vector is maximized first, then the ascending rating vector, relationship value, relationship count, and stable key.</li>
+          )}
+          <li>Estimated Power is unofficial and does not simulate combat or guarantee a real-game outcome.</li>
+        </ul>
       </div>
     </details>
   );
@@ -827,13 +674,47 @@ function rarityCounts(rarities: DragonRarity[]) {
   );
 }
 
-function tierSummary(distribution: OptimizerWaveResult['tierDistribution']): string {
+function tierSummary(distribution: TierDistribution): string {
   return Object.entries(distribution)
     .filter(([, count]) => count > 0)
     .map(([tier, count]) => `${tier} ${count}`)
     .join(' · ');
 }
 
+function powerConfidenceSummary(formation: PowerAwareOptimizedFormation): string {
+  return (['observed', 'modeled', 'low'] as const)
+    .filter((confidence) => formation.powerConfidenceCounts[confidence] > 0)
+    .map((confidence) => `${confidence} ${formation.powerConfidenceCounts[confidence]}`)
+    .join(', ');
+}
+
+function maximumPhaseValue(
+  profile: FlexiblePowerAwareOptimizationResult['diagnostics']['performanceProfile'],
+  field: 'variableCount' | 'constraintCount',
+): number {
+  return Math.max(0, ...(profile?.phases.map((phase) => phase[field]) ?? []));
+}
+
+function formatPercent(value: number): string {
+  return `${Math.round(value * 10_000) / 100}%`;
+}
+
+function formatRelationshipValue(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(3);
+}
+
 function formatMs(milliseconds: number): string {
   return `${(milliseconds / 1000).toFixed(2)}s`;
+}
+
+function armyWord(count: number): string {
+  return count === 1 ? 'army' : 'armies';
+}
+
+function dragonWord(count: number): string {
+  return count === 1 ? 'dragon' : 'dragons';
+}
+
+function modeLabel(mode: OptimizerAllocationMode): string {
+  return mode === 'strongest-first' ? 'Strongest Armies First' : 'Balance All Armies';
 }

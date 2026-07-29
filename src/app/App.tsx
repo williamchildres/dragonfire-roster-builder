@@ -38,7 +38,7 @@ import {
   type NavigateToRoute,
 } from './appRouter';
 import {
-  DEFAULT_ROSTER_OPTIMIZER_STRATEGY,
+  DEFAULT_OPTIMIZER_ALLOCATION_MODE,
   RosterOptimizer,
 } from './RosterOptimizer';
 import {
@@ -111,8 +111,8 @@ import { useAccountSession } from '../hooks/useAccountSession';
 import { useRosterSync, type RosterSyncStatus } from '../hooks/useRosterSync';
 import type { RosterOptimizerRunner } from '../optimizer/rosterOptimizerClient';
 import type {
-  RosterOptimizationResult,
-  RosterOptimizerStrategy,
+  FlexiblePowerAwareOptimizationResult,
+  OptimizerAllocationMode,
 } from '../optimizer/rosterOptimizerTypes';
 export { RawWordingDisclosure } from './DragonDetailModal';
 
@@ -177,10 +177,12 @@ export function App({
   );
   const [activeSection, setActiveSection] = useState<Section>(getInitialSection);
   const [isSupportOptionsOpen, setIsSupportOptionsOpen] = useState(false);
-  const [optimizerStrategy, setOptimizerStrategy] = useState<RosterOptimizerStrategy>(
-    DEFAULT_ROSTER_OPTIMIZER_STRATEGY,
+  const [optimizerAllocationMode, setOptimizerAllocationMode] = useState<OptimizerAllocationMode>(
+    DEFAULT_OPTIMIZER_ALLOCATION_MODE,
   );
-  const [optimizerResult, setOptimizerResult] = useState<RosterOptimizationResult | null>(null);
+  const [optimizerFormationCount, setOptimizerFormationCount] = useState(10);
+  const [optimizerResult, setOptimizerResult] =
+    useState<FlexiblePowerAwareOptimizationResult | null>(null);
   const [rosterSnapshot, setRosterSnapshot] = useState<StoredRosterSnapshot>(() =>
     typeof window === 'undefined'
       ? { roster: createEmptyRoster(dragons), updatedAt: null }
@@ -612,8 +614,10 @@ export function App({
           <RosterOptimizer
             allDragons={dragons}
             roster={roster}
-            strategy={optimizerStrategy}
-            onStrategyChange={setOptimizerStrategy}
+            allocationMode={optimizerAllocationMode}
+            onAllocationModeChange={setOptimizerAllocationMode}
+            formationCount={optimizerFormationCount}
+            onFormationCountChange={setOptimizerFormationCount}
             result={optimizerResult}
             onResultChange={setOptimizerResult}
             runner={optimizerRunner}
@@ -793,7 +797,7 @@ function HomeSection({ navigate }: { navigate: NavigateToRoute }) {
         <FeatureCard
           icon={Sparkles}
           title="Optimize Your Roster"
-          description="Generate ten exact non-overlapping formations using your current roster and selected optimization strategy."
+          description="Choose 1–11 exact non-overlapping armies, then prioritize the strongest first army or balance the full collection."
           route="optimizer"
           navigate={navigate}
         />
@@ -1827,7 +1831,7 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
             HiGHS solves the defined lexicographic objectives. Every production phase requires optimal status with zero configured MIP gap, and deterministic stable ordering resolves exact ties. No greedy or approximate result is labeled “Proven optimal.”
           </p>
           <p>
-            For Power-Aware, Estimated Power chooses the exact strongest 15-dragon Primary pool and Formation Rating arranges it into five formations. Backup Power is optimized only after every Primary numeric objective is fixed, then Formation Rating arranges the Backup pool.
+            The Power-Aware optimizer can build 1–11 armies. Strongest Armies First claims the strongest remaining exact trio at each rank; Balance All Armies maximizes the weakest integer-power position first, then every next position before Formation Rating and relationship tie-breaks.
           </p>
           <details>
             <summary>Technical details</summary>

@@ -1,5 +1,7 @@
 # Formation Rating v3 optimizer performance
 
+> Historical v0.21 / PR #211 artifact. The public optimizer strategies described here were retired in v0.22.
+
 This audit covers the exact production optimizer in PR #211. Numeric objectives
 remain HiGHS-proven with zero MIP gap. Primary/Backup stable ordering is then
 solved on the fully fixed numeric-optimal face by an exact ordered search: it

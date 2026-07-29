@@ -3683,11 +3683,40 @@ th {
   padding-left: 0.85rem;
 }
 
+.optimizer-count-control {
+  align-items: center;
+  background: var(--panel);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 0.45rem 1rem;
+  grid-template-columns: minmax(9rem, 1fr) minmax(5rem, 8rem);
+  margin: 1.25rem 0;
+  max-width: 34rem;
+  padding: 1rem;
+}
+
+.optimizer-count-control label {
+  color: var(--gold);
+}
+
+.optimizer-count-control select {
+  margin: 0;
+  min-height: 2.75rem;
+  width: 100%;
+}
+
+.optimizer-count-control p {
+  color: var(--muted);
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
 .optimizer-strategy {
   border: 0;
   display: grid;
   gap: 0.75rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 1.25rem 0;
   padding: 0;
 }

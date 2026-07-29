@@ -214,7 +214,7 @@ describe('Power-Aware Primary + Backup exact optimizer', () => {
     expect(cache.get('b')?.power).toBe(200);
   });
 
-  it('changes only the Power-Aware request fingerprint from Estimated Power v1 to v2', () => {
+  it('changes every v5 allocation request fingerprint from Estimated Power v1 to v2', () => {
     const snapshot = [rosterDragon('a', 'Rare')];
     const first = {
       version: 'estimated-power-v1',
@@ -228,15 +228,17 @@ describe('Power-Aware Primary + Backup exact optimizer', () => {
     };
     expect(createRosterOptimizerRequestFingerprint(
       snapshot,
-      'power-aware-primary-five-backup-five',
+      'strongest-first',
+      10,
       first,
     )).not.toBe(createRosterOptimizerRequestFingerprint(
       snapshot,
-      'power-aware-primary-five-backup-five',
+      'strongest-first',
+      10,
       second,
     ));
-    expect(createRosterOptimizerRequestFingerprint(snapshot, 'best-ten-overall', first))
-      .toBe(createRosterOptimizerRequestFingerprint(snapshot, 'best-ten-overall', second));
+    expect(createRosterOptimizerRequestFingerprint(snapshot, 'balanced', 10, first))
+      .not.toBe(createRosterOptimizerRequestFingerprint(snapshot, 'balanced', 10, second));
   });
 });
 

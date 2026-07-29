@@ -3,11 +3,88 @@ import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
 import { candidatePowerUnits } from './rosterOptimizerPower';
 import type {
   OptimizerFormationCandidate,
+  FlexiblePowerAwareObjective,
+  OptimizerAllocationMode,
   PowerAwarePrimaryBackupOptimizerObjective,
   PrimaryBackupOptimizerObjective,
   RosterOptimizerObjective,
   RosterRarityPriority,
 } from './rosterOptimizerTypes';
+
+/** Negative means `left` is preferred, matching Array#sort. */
+export function compareStrongestFirstCandidates(
+  left: OptimizerFormationCandidate,
+  right: OptimizerFormationCandidate,
+): number {
+  return (
+    requiredPowerUnits(right) - requiredPowerUnits(left) ||
+    right.rating - left.rating ||
+    right.adjustedRelationshipValueUnits - left.adjustedRelationshipValueUnits ||
+    right.activeRelationshipCount - left.activeRelationshipCount ||
+    left.stableCandidateKey.localeCompare(right.stableCandidateKey)
+  );
+}
+
+/** Positive means `left` is better under the unified v5 objective. */
+export function compareFlexiblePowerAwareObjectives(
+  left: FlexiblePowerAwareObjective,
+  right: FlexiblePowerAwareObjective,
+): number {
+  return (
+    compareNumberVectors(
+      left.ascendingEstimatedPowerUnits,
+      right.ascendingEstimatedPowerUnits,
+    ) ||
+    compareNumberVectors(left.ascendingRatingVector, right.ascendingRatingVector) ||
+    left.totalRelationshipValueUnits - right.totalRelationshipValueUnits ||
+    left.totalActiveRelationships - right.totalActiveRelationships ||
+    right.stableSolutionKey.localeCompare(left.stableSolutionKey)
+  );
+}
+
+export function flexiblePowerAwareObjectiveForCandidates(
+  candidates: OptimizerFormationCandidate[],
+  allocationMode: OptimizerAllocationMode,
+): FlexiblePowerAwareObjective {
+  const ascendingEstimatedPowerUnits = candidates
+    .map(requiredPowerUnits)
+    .sort((left, right) => left - right);
+  const ascendingRatingVector = candidates
+    .map((candidate) => candidate.rating)
+    .sort((left, right) => left - right);
+  const totalRelationshipValueUnits = candidates.reduce(
+    (total, candidate) => total + candidate.adjustedRelationshipValueUnits,
+    0,
+  );
+  return {
+    allocationMode,
+    ascendingEstimatedPowerUnits,
+    ascendingEstimatedPowerVector: ascendingEstimatedPowerUnits.map(
+      (powerUnits) => powerUnits * 10,
+    ),
+    ascendingRatingVector,
+    totalRelationshipValue: candidates.reduce(
+      (total, candidate) => total + candidate.adjustedRelationshipValue,
+      0,
+    ),
+    totalRelationshipValueUnits,
+    totalActiveRelationships: candidates.reduce(
+      (total, candidate) => total + candidate.activeRelationshipCount,
+      0,
+    ),
+    stableSolutionKey: candidates
+      .map((candidate) => candidate.stableCandidateKey)
+      .sort()
+      .join('||'),
+  };
+}
+
+function requiredPowerUnits(candidate: OptimizerFormationCandidate): number {
+  if (!Number.isSafeInteger(candidate.estimatedPowerUnits)) {
+    throw new Error(`Candidate ${candidate.stableCandidateKey} is missing Estimated Power units.`);
+  }
+  return candidate.estimatedPowerUnits!;
+}
 
 export function compareRarityPriority(
   left: RosterRarityPriority,

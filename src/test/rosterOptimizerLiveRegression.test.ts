@@ -26,8 +26,6 @@ const expectedBackup = [
   'thunderstrike', 'bevlorin', 'vesper', 'shimmer', 'nyrena', 'arulix', 'antares',
   'dawnseeker',
 ].sort();
-const expectedUnused = ['arrax', 'shadowrend', 'solstryker'];
-
 describe('Power-Aware live 33-dragon numerical regression', () => {
   it('independently reproduces the exact Power partitions without cutoff ties', () => {
     const rarityById = new Map(dragons.map((dragon) => [dragon.id, dragon.rarity]));
@@ -67,55 +65,41 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
     });
   });
 
-  it('finishes optimally and remains deterministic in forward, reversed, and repeated order', async () => {
+  it('finishes contract-v5 Strongest First and remains deterministic in forward, reversed, and repeated order', async () => {
     const forwardRoster = live33ProgressionRegressionRoster();
     const reversedRoster = Object.fromEntries(Object.entries(forwardRoster).reverse());
     const forward = await optimizeCurrentRoster(
       forwardRoster,
-      'power-aware-primary-five-backup-five',
+      'strongest-first',
+      10,
     );
     const reversed = await optimizeCurrentRoster(
       reversedRoster,
-      'power-aware-primary-five-backup-five',
+      'strongest-first',
+      10,
     );
     const repeated = await optimizeCurrentRoster(
       forwardRoster,
-      'power-aware-primary-five-backup-five',
+      'strongest-first',
+      10,
     );
 
     for (const result of [forward, reversed, repeated]) {
       expect(result.optimal).toBe(true);
-      if (!result.optimal || result.strategy !== 'power-aware-primary-five-backup-five') continue;
-      expect(result.primary.formations).toHaveLength(5);
-      expect(result.backup.formations).toHaveLength(5);
+      if (!result.optimal || !('allocationMode' in result)) continue;
+      expect(result.contractVersion).toBe(5);
+      expect(result.allocationMode).toBe('strongest-first');
+      expect(result.requestedFormationCount).toBe(10);
+      expect(result.generatedFormationCount).toBe(10);
+      expect(result.formations).toHaveLength(10);
       expect(result.usedDragonIds).toHaveLength(30);
       expect(new Set(result.usedDragonIds)).toHaveProperty('size', 30);
-      expect(result.primary.usedDragonIds).toEqual(expectedPrimary);
-      expect(result.backup.usedDragonIds).toEqual(expectedBackup);
-      expect(result.unusedDragonIds).toEqual(expectedUnused);
-      expect(result.primary.totalEstimatedPower).toBe(375760);
-      expect(result.backup.totalEstimatedPower).toBe(227070);
+      expect(new Set(result.formations.flatMap((formation) => formation.dragonIds)).size)
+        .toBe(30);
+      expect(result.unusedDragonIds).toHaveLength(3);
       expect(result.diagnostics.candidateCount).toBe(5456);
-      expect(result.diagnostics.solverPasses).toBe(19);
-      const exactness = result.diagnostics.numericalExactness!;
-      expect(exactness.integralityTolerance).toBe(1e-7);
-      expect(exactness.maximumIntegralityResidual).toBeLessThanOrEqual(1e-7);
-      expect(exactness.fixedPhasesValidated).toBe(true);
-      expect(exactness.phaseObjectives.every((phase) =>
-        Number.isSafeInteger(phase.reconstructedObjective))).toBe(true);
-      expect(exactness.phaseObjectives.some((phase) => phase.kind === 'stable'))
-        .toBe(false);
-      const stableFacePhase = result.diagnostics.performanceProfile?.phases.find(
-        (phase) => phase.stage === 'Primary/Backup exact optimal-face stable key',
-      );
-      expect(stableFacePhase).toEqual(expect.objectContaining({
-        category: 'stable-key',
-        solverPass: 0,
-        variableCount: 0,
-        constraintCount: 0,
-        certification: false,
-      }));
-      expect(stableFacePhase?.exactSearchNodes).toBeGreaterThan(0);
+      expect(result.diagnostics.solverPasses).toBe(10);
+      expect(result.diagnostics.performanceProfile?.modelBuilds).toBe(0);
       expect(result.diagnostics.performanceProfile?.certificationPasses).toBe(0);
     }
     if (!forward.optimal || !reversed.optimal || !repeated.optimal) return;
@@ -128,7 +112,8 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
   it('returns no partial result when cancellation is requested', async () => {
     await expect(optimizeCurrentRoster(
       live33ProgressionRegressionRoster(),
-      'power-aware-primary-five-backup-five',
+      'strongest-first',
+      10,
       () => true,
     )).rejects.toBeInstanceOf(RosterOptimizerCancelledError);
   });

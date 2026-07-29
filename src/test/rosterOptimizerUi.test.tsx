@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/require-await, @typescript-eslint/unbound-method */
 import { render, screen, waitFor, within } from '@testing-library/react';
-import { useState } from 'react';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import {
-  DEFAULT_ROSTER_OPTIMIZER_STRATEGY,
+  DEFAULT_OPTIMIZER_ALLOCATION_MODE,
   RosterOptimizer,
 } from '../app/RosterOptimizer';
 import { dragons } from '../data/dragons';
@@ -14,135 +15,145 @@ import {
 } from '../optimizer/rosterOptimizerCandidates';
 import type { RosterOptimizerRunner } from '../optimizer/rosterOptimizerClient';
 import type {
-  BestTenOverallOptimizationResult,
-  OptimizedFormation,
-  OptimizerWaveResult,
-  PrimaryBackupOptimizationResult,
+  FlexiblePowerAwareOptimizationResult,
+  OptimizerAllocationMode,
+  OptimizerPerformanceProfile,
+  PowerAwareOptimizedFormation,
   RarityCountRecord,
-  RosterOptimizerObjective,
   RosterOptimizerResponse,
-  RosterOptimizationResult,
-  RosterOptimizerStrategy,
+  TierDistribution,
 } from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationArrangement';
 import { createEmptyRoster } from '../services/rosterStorage';
 
-describe('Roster Optimizer workspace', () => {
-  it('defaults to Power-Aware 5 + Backup 5 and exposes all public strategy choices', () => {
-    renderOptimizer({ roster: ownedRoster(30) });
-    expect(screen.getByRole('radio', { name: /Power-Aware 5 \+ Backup 5/i })).toBeChecked();
-    expect(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i })).not.toBeChecked();
-    expect(screen.getByRole('radio', { name: /Best 10 Overall/i })).not.toBeChecked();
-    expect(screen.getByRole('button', { name: /Find My Primary & Backup Formations/i })).toBeInTheDocument();
+describe('Roster Optimizer v5 workspace', () => {
+  it('defaults to 10 Strongest Armies First and exposes only the two v5 modes', () => {
+    renderOptimizer({ roster: ownedRoster(33) });
+    expect(screen.getByRole('radio', { name: /Strongest Armies First/i })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /Balance All Armies/i })).not.toBeChecked();
+    expect(screen.queryByText(/Primary|Backup|Best 10|Rarity-Priority/i)).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Number of armies')).toHaveValue('10');
+    expect(screen.getByText('10 armies use 30 of your 33 eligible dragons.')).toBeInTheDocument();
   });
 
-  it('includes the selected strategy in the run and disables strategy controls while active', async () => {
-    const run = vi.fn(() => new Promise<RosterOptimizerResponse>(() => undefined));
-    const cancel = vi.fn();
-    const runner: RosterOptimizerRunner = {
-      run,
-      cancel,
-      dispose: vi.fn(),
-    };
-    renderOptimizer({ roster: ownedRoster(30), runner });
-    await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
-    expect(run).toHaveBeenCalledWith(expect.any(Object), 'power-aware-primary-five-backup-five');
-    expect(screen.getByRole('radio', { name: /Best 10 Overall/i })).toBeDisabled();
-    expect(screen.queryByText(/%/)).not.toBeInTheDocument();
-    await userEvent.setup().click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(cancel).toHaveBeenCalledOnce();
-  });
-
-  it('changes strategy before running and marks an existing result stale after strategy changes', async () => {
-    const roster = ownedRoster(31);
-    const result = makeBestTenResult(roster, 'arulix');
-    const run = vi.fn().mockResolvedValue(result);
-    const runner: RosterOptimizerRunner = { run, cancel: vi.fn(), dispose: vi.fn() };
-    renderOptimizer({ roster, runner });
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Best 10 Overall/i }));
-    await userEvent.setup().click(screen.getByRole('button', { name: /Find My Best 10 Overall/i }));
+  it('offers every count through the dynamic maximum and passes count/mode to the Worker runner', async () => {
+    const runner = dynamicRunner();
+    renderOptimizer({ roster: ownedRoster(33), runner });
+    const select = screen.getByLabelText('Number of armies');
+    expect(within(select).getAllByRole('option')).toHaveLength(11);
+    await userEvent.setup().selectOptions(select, '11');
+    await userEvent.setup().click(screen.getByRole('radio', { name: /Balance All Armies/i }));
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 11 armies/i }));
     await screen.findByRole('heading', { name: 'Exact optimal result' });
-    expect(run).toHaveBeenCalledWith(roster, 'best-ten-overall');
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
-    expect(screen.getByText(/progression or optimization strategy changed/i)).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /Open in Formation Builder/i })[0]).toBeDisabled();
+    expect(runner.run).toHaveBeenCalledWith(
+      expect.any(Object),
+      'balanced',
+      11,
+      expect.any(Function),
+    );
+    expect(screen.getAllByRole('article')).toHaveLength(11);
   });
 
-  it('renders five Primary and five Backup cards with separate and combined summaries', async () => {
-    const roster = ownedRoster(31);
-    const result = makePrimaryBackupResult(roster, 'arulix');
-    renderOptimizer({ roster, runner: resolvedRunner(result) });
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
-    await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
-    expect(await screen.findByRole('heading', { name: 'Primary Formations' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Backup Formations' })).toBeInTheDocument();
-    expect(screen.getAllByRole('article')).toHaveLength(10);
-    expect(screen.getAllByText('Primary')).toHaveLength(5);
-    expect(screen.getAllByText('Backup')).toHaveLength(5);
-    expect(screen.getByRole('heading', { name: 'Combined result' })).toBeInTheDocument();
-    const primaryCards = result.primary.formations.flatMap((formation) => formation.dragonIds);
-    const backupCards = result.backup.formations.flatMap((formation) => formation.dragonIds);
-    expect(new Set([...primaryCards, ...backupCards]).size).toBe(30);
+  it('clamps a now-invalid count after roster changes and explains the adjustment', async () => {
+    renderOptimizer({ roster: ownedRoster(27) });
+    await waitFor(() => expect(screen.getByLabelText('Number of armies')).toHaveValue('9'));
+    expect(screen.getByText(/supports 9 armies.*adjusted to 9/i)).toBeInTheDocument();
+    expect(screen.getByText('9 armies use 27 of your 27 eligible dragons.')).toBeInTheDocument();
   });
 
-  it('retains one ten-card collection for Best 10 Overall and opens the exact arrangement', async () => {
-    const roster = ownedRoster(30);
-    const result = makeBestTenResult(roster);
-    const onOpenFormation = vi.fn();
-    renderOptimizer({ roster, runner: resolvedRunner(result), onOpenFormation });
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Best 10 Overall/i }));
-    await userEvent.setup().click(screen.getByRole('button', { name: /Find My Best 10 Overall/i }));
-    expect(await screen.findByText(/equally weighted non-overlapping collection/i)).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Primary Formations' })).not.toBeInTheDocument();
-    const firstCard = screen.getAllByRole('article')[0]!;
-    await userEvent.setup().click(within(firstCard).getByRole('button', { name: /open in formation builder/i }));
-    expect(onOpenFormation).toHaveBeenCalledWith(result.formations[0]!.arrangement);
-  });
-
-  it('explains the shortfall and routes back to My Roster below 30 eligible dragons', async () => {
+  it('does not start the Worker below three eligible dragons and states the exact shortfall', async () => {
+    const runner = dynamicRunner();
     const onOpenRoster = vi.fn();
-    renderOptimizer({ roster: ownedRoster(29), onOpenRoster });
-    expect(screen.getByText(/more eligible dragons to build 10 complete formations/i)).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Find My Primary/i })).not.toBeInTheDocument();
-    await userEvent.setup().click(screen.getByRole('button', { name: /go to my roster/i }));
+    renderOptimizer({ roster: ownedRoster(1), runner, onOpenRoster });
+    expect(screen.getByText('You need 2 more eligible dragons to build one complete army.')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Build/i })).not.toBeInTheDocument();
+    await userEvent.setup().click(screen.getByRole('button', { name: /Go to My Roster/i }));
     expect(onOpenRoster).toHaveBeenCalledOnce();
+    expect(runner.run).not.toHaveBeenCalled();
   });
 
-  it('marks the retained result stale after a saved Habit Level changes', async () => {
-    const roster = ownedRoster(30);
-    const result = makePrimaryBackupResult(roster);
-    const view = renderOptimizer({ roster, runner: resolvedRunner(result) });
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
-    await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
-    await screen.findByRole('heading', { name: 'Exact optimal result' });
-    const firstId = result.usedDragonIds[0]!;
-    const habitId = dragons.find((dragon) => dragon.id === firstId)!.habits[0]!.id;
-    const habitOnly = structuredClone(roster);
-    habitOnly[firstId]!.habitLevels[habitId] = 2;
-    view.rerender(component(habitOnly, resolvedRunner(result)));
-    expect(screen.getByText(/progression or optimization strategy changed/i)).toBeInTheDocument();
-  });
-
-  it('announces worker failures and allows a rerun', async () => {
+  it('shows candidate and exact-solving states, selected count/mode, exactness, and cancellation', async () => {
+    let progressCallback: ((value: {
+      stage: 'candidate-generation' | 'exact-solving';
+      allocationMode: OptimizerAllocationMode;
+      formationCount: number;
+    }) => void) | undefined;
     const runner: RosterOptimizerRunner = {
-      run: vi.fn()
-        .mockRejectedValueOnce(new Error('Worker failed.'))
-        .mockResolvedValueOnce(makePrimaryBackupResult(ownedRoster(30))),
+      run: vi.fn((_roster, _mode, _count, onProgress) => {
+        progressCallback = onProgress;
+        return new Promise<RosterOptimizerResponse>(() => undefined);
+      }),
       cancel: vi.fn(),
       dispose: vi.fn(),
     };
-    renderOptimizer({ roster: ownedRoster(30), runner });
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Rarity-Priority 5 \+ Backup 5/i }));
-    await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
-    expect(await screen.findByRole('alert')).toHaveTextContent('Worker failed.');
-    await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
-    await waitFor(() => expect(screen.getAllByRole('article')).toHaveLength(10));
+    renderOptimizer({ roster: ownedRoster(33), runner });
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
+    expect(screen.getByText('Generating every eligible trio…')).toBeInTheDocument();
+    expect(screen.getByText(/10 armies · Strongest Armies First.*fully proven exact/i)).toBeInTheDocument();
+    progressCallback?.({
+      stage: 'exact-solving',
+      allocationMode: 'strongest-first',
+      formationCount: 10,
+    });
+    expect(await screen.findByText('Proving the exact allocation…')).toBeInTheDocument();
+    await userEvent.setup().click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(runner.cancel).toHaveBeenCalledOnce();
+  });
+
+  it('invalidates results after count, mode, and active Habit Level changes', async () => {
+    const roster = ownedRoster(33);
+    const runner = dynamicRunner();
+    const view = renderOptimizer({ roster, runner });
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
+    await screen.findByRole('heading', { name: 'Exact optimal result' });
+    await userEvent.setup().selectOptions(screen.getByLabelText('Number of armies'), '9');
+    expect(screen.getByText(/roster progression, army count, or allocation mode changed/i)).toBeInTheDocument();
+    await userEvent.setup().selectOptions(screen.getByLabelText('Number of armies'), '10');
+    await userEvent.setup().click(screen.getByRole('radio', { name: /Balance All Armies/i }));
+    expect(screen.getByText(/roster progression, army count, or allocation mode changed/i)).toBeInTheDocument();
+
+    const changedRoster = structuredClone(roster);
+    const firstId = buildOptimizerRosterSnapshot(dragons, roster)[0]!.dragonId;
+    const habitId = dragons.find((dragon) => dragon.id === firstId)!.habits[0]!.id;
+    changedRoster[firstId]!.habitLevels[habitId] = 2;
+    view.rerender(component(changedRoster, runner));
+    expect(screen.getByText(/roster progression, army count, or allocation mode changed/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Open in Formation Builder/i })[0]).toBeDisabled();
+  });
+
+  it('orders Balanced results strongest to weakest and hands the exact arrangement to Formation Builder', async () => {
+    const onOpenFormation = vi.fn();
+    renderOptimizer({
+      roster: ownedRoster(33),
+      runner: dynamicRunner(),
+      onOpenFormation,
+    });
+    await userEvent.setup().click(screen.getByRole('radio', { name: /Balance All Armies/i }));
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
+    const cards = await screen.findAllByRole('article');
+    const powers = cards.map((card) =>
+      Number(within(card).getByText(/Estimated Formation Power/i).nextElementSibling!.textContent!.replaceAll(',', '')),
+    );
+    expect(powers).toEqual([...powers].sort((left, right) => right - left));
+    await userEvent.setup().click(
+      within(cards[0]!).getByRole('button', { name: /Open in Formation Builder/i }),
+    );
+    const result = makeResult(ownedRoster(33), 'balanced', 10);
+    expect(onOpenFormation).toHaveBeenCalledWith(result.formations[0]!.arrangement);
+  });
+
+  it('keeps the compact count control accessible for mobile layouts', () => {
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 390 });
+    Object.defineProperty(window, 'innerHeight', { configurable: true, value: 844 });
+    renderOptimizer({ roster: ownedRoster(15) });
+    expect(screen.getByLabelText('Number of armies')).toHaveValue('5');
+    expect(screen.getByText('5 armies use 15 of your 15 eligible dragons.')).toBeInTheDocument();
   });
 });
 
 function renderOptimizer({
   roster,
-  runner = resolvedRunner(makePrimaryBackupResult(roster)),
+  runner = dynamicRunner(),
   onOpenFormation = vi.fn(),
   onOpenRoster = vi.fn(),
 }: {
@@ -160,12 +171,14 @@ function component(
   onOpenFormation: (arrangement: FormationArrangement) => void = vi.fn(),
   onOpenRoster: () => void = vi.fn(),
 ) {
-  return <OptimizerTestHarness
-    roster={roster}
-    runner={runner}
-    onOpenFormation={onOpenFormation}
-    onOpenRoster={onOpenRoster}
-  />;
+  return (
+    <OptimizerTestHarness
+      roster={roster}
+      runner={runner}
+      onOpenFormation={onOpenFormation}
+      onOpenRoster={onOpenRoster}
+    />
+  );
 }
 
 function OptimizerTestHarness({
@@ -179,247 +192,229 @@ function OptimizerTestHarness({
   onOpenFormation: (arrangement: FormationArrangement) => void;
   onOpenRoster: () => void;
 }) {
-  const [strategy, setStrategy] = useState<RosterOptimizerStrategy>(DEFAULT_ROSTER_OPTIMIZER_STRATEGY);
-  const [result, setResult] = useState<RosterOptimizationResult | null>(null);
-  return <RosterOptimizer
-    allDragons={dragons}
-    roster={roster}
-    strategy={strategy}
-    onStrategyChange={setStrategy}
-    result={result}
-    onResultChange={setResult}
-    runner={runner}
-    onOpenFormation={onOpenFormation}
-    onOpenRoster={onOpenRoster}
-  />;
+  const [allocationMode, setAllocationMode] = useState<OptimizerAllocationMode>(
+    DEFAULT_OPTIMIZER_ALLOCATION_MODE,
+  );
+  const [formationCount, setFormationCount] = useState(10);
+  const [result, setResult] = useState<FlexiblePowerAwareOptimizationResult | null>(null);
+  return (
+    <RosterOptimizer
+      allDragons={dragons}
+      roster={roster}
+      allocationMode={allocationMode}
+      onAllocationModeChange={setAllocationMode}
+      formationCount={formationCount}
+      onFormationCountChange={setFormationCount}
+      result={result}
+      onResultChange={setResult}
+      runner={runner}
+      onOpenFormation={onOpenFormation}
+      onOpenRoster={onOpenRoster}
+    />
+  );
+}
+
+function dynamicRunner(): RosterOptimizerRunner & { run: ReturnType<typeof vi.fn> } {
+  return {
+    run: vi.fn(async (roster, mode, count, onProgress) => {
+      onProgress?.({ stage: 'candidate-generation', allocationMode: mode, formationCount: count });
+      onProgress?.({ stage: 'exact-solving', allocationMode: mode, formationCount: count });
+      return makeResult(roster, mode, count);
+    }),
+    cancel: vi.fn(),
+    dispose: vi.fn(),
+  };
 }
 
 function ownedRoster(count: number) {
   const roster = createEmptyRoster(dragons);
   dragons.slice(0, count).forEach((dragon) => {
-    roster[dragon.id] = { ...roster[dragon.id]!, owned: true, starRank: 10, reignLevel: 16 };
+    roster[dragon.id] = {
+      ...roster[dragon.id]!,
+      owned: true,
+      starRank: 10,
+      reignLevel: 16,
+    };
   });
   return roster;
 }
 
-function resolvedRunner(result: BestTenOverallOptimizationResult | PrimaryBackupOptimizationResult): RosterOptimizerRunner {
-  return { run: vi.fn().mockResolvedValue(result), cancel: vi.fn(), dispose: vi.fn() };
-}
-
-function makeBestTenResult(
+function makeResult(
   roster: ReturnType<typeof ownedRoster>,
-  unusedDragonId?: string,
-): BestTenOverallOptimizationResult {
+  allocationMode: OptimizerAllocationMode,
+  formationCount: number,
+): FlexiblePowerAwareOptimizationResult {
   const snapshot = buildOptimizerRosterSnapshot(dragons, roster);
-  const selected = snapshot.filter((dragon) => dragon.dragonId !== unusedDragonId).slice(0, 30);
-  const formations = makeFormations(selected);
-  const objective = objectiveFor(formations, selected);
+  const selected = snapshot.slice(0, formationCount * 3);
+  const rawFormations = Array.from({ length: formationCount }, (_unused, index) =>
+    makeFormation(selected.slice(index * 3, index * 3 + 3), index),
+  );
+  const formations = allocationMode === 'balanced'
+    ? [...rawFormations].sort((left, right) => right.estimatedPower - left.estimatedPower)
+      .map((formation, index) => ({ ...formation, rank: index + 1 }))
+    : rawFormations;
   const usedDragonIds = selected.map((dragon) => dragon.dragonId).sort();
-  const unusedDragonIds = snapshot.map((dragon) => dragon.dragonId).filter((id) => !usedDragonIds.includes(id));
-  const usedRarityCounts = countRarities(selected.map((dragon) => dragon.rarity));
-  const unusedRarityCounts = countRarities(snapshot.filter((dragon) => unusedDragonIds.includes(dragon.dragonId)).map((dragon) => dragon.rarity));
-  const tierDistribution = { Excellent: 0, Strong: 10, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 };
+  const unusedDragonIds = snapshot
+    .map((dragon) => dragon.dragonId)
+    .filter((dragonId) => !usedDragonIds.includes(dragonId));
+  const powers = formations.map((formation) => formation.estimatedPower);
+  const ratings = formations.map((formation) => formation.rating);
+  const totalRelationshipValueUnits = formations.reduce(
+    (total, formation) => total + formation.adjustedRelationshipValueUnits,
+    0,
+  );
+  const rarityCounts = countRarities(selected.map((dragon) => dragon.rarity));
+  const tierDistribution: TierDistribution = {
+    Excellent: 0,
+    Strong: formationCount,
+    Solid: 0,
+    Developing: 0,
+    Weak: 0,
+    Incomplete: 0,
+  };
+  const performanceProfile: OptimizerPerformanceProfile = {
+    modelBuilds: allocationMode === 'balanced' ? 1 : 0,
+    modelConstructionMs: 1,
+    certificationPasses: 0,
+    skippedPhases: 0,
+    prunedVariables: 0,
+    phases: [],
+  };
   return {
-    contractVersion: 4,
+    contractVersion: 5,
     ratingContract: 'formation-rating-v3',
-    strategy: 'best-ten-overall',
+    allocationMode,
     optimal: true,
+    requestedFormationCount: formationCount,
+    generatedFormationCount: formationCount,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
-    requestFingerprint: createRosterOptimizerRequestFingerprint(snapshot, 'best-ten-overall'),
-    formations,
-    collection: {
-      totalRating: objective.totalRating,
-      averageRating: objective.totalRating / 10,
-      minimumRating: objective.minimumRating,
-      rarityCounts: usedRarityCounts,
-      tierDistribution,
-      totalRelationshipValue: objective.totalRelationshipValue,
-      totalRelationshipValueUnits: objective.totalRelationshipValueUnits,
-      totalActiveRelationships: objective.totalActiveRelationships,
-      quantifiedRelationshipCount: formations.reduce(
-        (total, formation) => total + formation.quantifiedRelationshipCount,
-        0,
-      ),
-      unquantifiedRelationshipCount: 0,
-      unquantifiedBasePotential: 0,
-    },
-    usedDragonIds,
-    unusedDragonIds,
-    usedRarityCounts,
-    unusedRarityCounts,
-    objective,
-    averageRating: objective.totalRating / 10,
-    minimumRating: objective.minimumRating,
-    tierDistribution,
-    diagnostics: diagnostics(snapshot.length),
-    optimizerSolutionHash: 'fnv1a64:test-solution',
-    optimizerResultHash: 'fnv1a64:test-result',
-  };
-}
-
-function makePrimaryBackupResult(
-  roster: ReturnType<typeof ownedRoster>,
-  unusedDragonId?: string,
-): PrimaryBackupOptimizationResult {
-  const snapshot = buildOptimizerRosterSnapshot(dragons, roster);
-  const selected = snapshot.filter((dragon) => dragon.dragonId !== unusedDragonId).slice(0, 30);
-  const allFormations = makeFormations(selected);
-  const primaryFormations = allFormations.slice(0, 5).map((formation, index) => ({ ...formation, wave: 'primary' as const, waveRank: index + 1 }));
-  const backupFormations = allFormations.slice(5).map((formation, index) => ({ ...formation, rank: index + 1, wave: 'backup' as const, waveRank: index + 1 }));
-  const primary = makeWave('primary', primaryFormations, selected.slice(0, 15));
-  const backup = makeWave('backup', backupFormations, selected.slice(15));
-  const usedDragonIds = selected.map((dragon) => dragon.dragonId).sort();
-  const unusedDragonIds = snapshot.map((dragon) => dragon.dragonId).filter((id) => !usedDragonIds.includes(id));
-  const objective = {
-    strategy: 'primary-five-backup-five' as const,
-    primary: primary.objective,
-    backup: backup.objective,
-    combinedTotalRating: primary.totalRating + backup.totalRating,
-    combinedRelationshipValue: primary.totalRelationshipValue + backup.totalRelationshipValue,
-    combinedRelationshipValueUnits:
-      primary.totalRelationshipValueUnits + backup.totalRelationshipValueUnits,
-    combinedActiveRelationships: primary.totalActiveRelationships + backup.totalActiveRelationships,
-    stableSolutionKey: `primary:${primary.objective.stableSolutionKey}||backup:${backup.objective.stableSolutionKey}`,
-  };
-  return {
-    contractVersion: 4,
-    ratingContract: 'formation-rating-v3',
-    strategy: 'primary-five-backup-five',
-    optimal: true,
-    rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
-    requestFingerprint: createRosterOptimizerRequestFingerprint(snapshot, 'primary-five-backup-five'),
-    primary,
-    backup,
-    formations: [...primaryFormations, ...backupFormations],
-    usedDragonIds,
-    unusedDragonIds,
-    unusedRarityCounts: countRarities(snapshot.filter((dragon) => unusedDragonIds.includes(dragon.dragonId)).map((dragon) => dragon.rarity)),
-    combined: {
-      totalRating: objective.combinedTotalRating,
-      averageRating: objective.combinedTotalRating / 10,
-      minimumRating: Math.min(primary.minimumRating, backup.minimumRating),
-      rarityCounts: countRarities(selected.map((dragon) => dragon.rarity)),
-      tierDistribution: { Excellent: 0, Strong: 10, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 },
-      totalRelationshipValue: objective.combinedRelationshipValue,
-      totalRelationshipValueUnits: objective.combinedRelationshipValueUnits,
-      totalActiveRelationships: objective.combinedActiveRelationships,
-      quantifiedRelationshipCount:
-        primary.quantifiedRelationshipCount + backup.quantifiedRelationshipCount,
-      unquantifiedRelationshipCount: 0,
-      unquantifiedBasePotential: 0,
-    },
-    objective,
-    diagnostics: diagnostics(snapshot.length),
-    optimizerSolutionHash: 'fnv1a64:test-primary-backup-solution',
-    optimizerResultHash: 'fnv1a64:test-primary-backup-result',
-  };
-}
-
-function makeWave(
-  kind: 'primary' | 'backup',
-  formations: OptimizedFormation[],
-  selected: ReturnType<typeof buildOptimizerRosterSnapshot>,
-): OptimizerWaveResult {
-  const objective = objectiveFor(formations, selected);
-  return {
-    kind,
-    label: kind === 'primary' ? 'Primary' : 'Backup',
-    formations,
-    usedDragonIds: selected.map((dragon) => dragon.dragonId).sort(),
-    rarityCounts: countRarities(selected.map((dragon) => dragon.rarity)),
-    totalRating: objective.totalRating,
-    averageRating: objective.totalRating / 5,
-    minimumRating: objective.minimumRating,
-    totalRelationshipValue: objective.totalRelationshipValue,
-    totalRelationshipValueUnits: objective.totalRelationshipValueUnits,
-    totalActiveRelationships: objective.totalActiveRelationships,
-    quantifiedRelationshipCount: formations.reduce(
-      (total, formation) => total + formation.quantifiedRelationshipCount,
-      0,
+    requestFingerprint: createRosterOptimizerRequestFingerprint(
+      snapshot,
+      allocationMode,
+      formationCount,
     ),
+    estimatedPowerModelVersion: 'estimated-power-v2',
+    estimatedPowerModelHash: 'fnv1a64:efa6081babb4e520',
+    estimatedPowerObservationHash: 'fnv1a64:26bfe615f0d9bdd5',
+    estimatedPowerByDragonId: Object.fromEntries(
+      selected.map((dragon) => [dragon.dragonId, estimate(10_000)]),
+    ),
+    formations,
+    usedDragonIds,
+    unusedDragonIds,
+    collection: {
+      totalEstimatedPower: powers.reduce((total, power) => total + power, 0),
+      averageEstimatedPower: powers.reduce((total, power) => total + power, 0) / formationCount,
+      minimumFormationEstimatedPower: Math.min(...powers),
+      maximumFormationEstimatedPower: Math.max(...powers),
+      estimatedPowerSpread: Math.max(...powers) - Math.min(...powers),
+      totalRating: ratings.reduce((total, rating) => total + rating, 0),
+      averageRating: ratings.reduce((total, rating) => total + rating, 0) / formationCount,
+      minimumRating: Math.min(...ratings),
+      totalRelationshipValue: totalRelationshipValueUnits / 1_000_000,
+      totalRelationshipValueUnits,
+      totalActiveRelationships: formationCount * 3,
+      quantifiedRelationshipCount: formationCount * 3,
+      unquantifiedRelationshipCount: 0,
+      unquantifiedBasePotential: 0,
+      powerConfidenceCounts: { observed: formationCount * 3, modeled: 0, low: 0 },
+      rarityCounts,
+      tierDistribution,
+    },
+    objective: {
+      allocationMode,
+      ascendingEstimatedPowerUnits: powers.map((power) => power / 10).sort((a, b) => a - b),
+      ascendingEstimatedPowerVector: [...powers].sort((a, b) => a - b),
+      ascendingRatingVector: [...ratings].sort((a, b) => a - b),
+      totalRelationshipValue: totalRelationshipValueUnits / 1_000_000,
+      totalRelationshipValueUnits,
+      totalActiveRelationships: formationCount * 3,
+      stableSolutionKey: formations.map((formation) => formation.stableCandidateKey).sort().join('||'),
+    },
+    diagnostics: {
+      optimal: true,
+      eligibleDragonCount: snapshot.length,
+      candidateCount: 5456,
+      selectedFormationCount: formationCount,
+      nodesVisited: 10,
+      branchesPruned: 2,
+      cacheEntries: 0,
+      solverPasses: 4,
+      candidateGenerationMs: 100,
+      solverMs: 50,
+      totalMs: 150,
+      performanceProfile,
+    },
+    optimizerSolutionHash: `fnv1a64:solution-${allocationMode}-${formationCount}`,
+    optimizerResultHash: `fnv1a64:result-${allocationMode}-${formationCount}`,
+  };
+}
+
+function makeFormation(
+  trio: ReturnType<typeof buildOptimizerRosterSnapshot>,
+  index: number,
+): PowerAwareOptimizedFormation {
+  const dragonIds = trio.map((dragon) => dragon.dragonId) as [string, string, string];
+  const arrangement = {
+    'left-flank': dragonIds[0],
+    vanguard: dragonIds[1],
+    'right-flank': dragonIds[2],
+  };
+  const estimatedPower = 30_000 + index * 1_000;
+  return {
+    ratingContract: 'formation-rating-v3',
+    rank: index + 1,
+    stableCandidateKey: dragonIds.join('+'),
+    dragonIds,
+    arrangement,
+    tiedBestArrangements: [arrangement],
+    rating: 80 - index,
+    tier: 'Strong',
+    activeSynergyScore: 60 - index,
+    placementScore: 20,
+    adjustedRelationshipValue: 3,
+    adjustedRelationshipValueUnits: 3_000_000,
+    activeRelationshipCount: 3,
+    quantifiedRelationshipCount: 3,
     unquantifiedRelationshipCount: 0,
     unquantifiedBasePotential: 0,
-    tierDistribution: { Excellent: 0, Strong: 5, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 },
-    objective,
-  };
-}
-
-function makeFormations(selected: ReturnType<typeof buildOptimizerRosterSnapshot>): OptimizedFormation[] {
-  return Array.from({ length: 10 }, (_, index) => {
-    const trio = selected.slice(index * 3, index * 3 + 3);
-    const dragonIds = trio.map((dragon) => dragon.dragonId) as [string, string, string];
-    const arrangement = { 'left-flank': dragonIds[0], vanguard: dragonIds[1], 'right-flank': dragonIds[2] };
-    return {
-      ratingContract: 'formation-rating-v3',
-      rank: index + 1,
-      stableCandidateKey: dragonIds.join('+'),
-      dragonIds,
-      arrangement,
-      tiedBestArrangements: [arrangement],
-      rating: 80 - index,
-      tier: 'Strong',
-      activeSynergyScore: 60 - index,
-      placementScore: 20,
-      adjustedRelationshipValue: 20 - index,
-      adjustedRelationshipValueUnits: (20 - index) * 1_000_000,
-      activeRelationshipCount: 3,
-      quantifiedRelationshipCount: 3,
-      unquantifiedRelationshipCount: 0,
-      unquantifiedBasePotential: 0,
-      reliabilityCoverage: 'all-quantified',
-      participatingDragonCount: 3,
-      relationships: [], strengths: [], gaps: [],
-      progressionSnapshot: Object.fromEntries(trio.map((dragon) => [dragon.dragonId, {
+    reliabilityCoverage: 'all-quantified',
+    participatingDragonCount: 3,
+    relationships: [],
+    strengths: [],
+    gaps: [],
+    progressionSnapshot: Object.fromEntries(trio.map((dragon) => [
+      dragon.dragonId,
+      {
         starRank: dragon.starRank,
         dragonLevel: dragon.dragonLevel,
         activeHabitLevels: dragon.activeHabitLevels ?? {},
-      }])),
-    };
-  });
-}
-
-function objectiveFor(
-  formations: OptimizedFormation[],
-  selected: ReturnType<typeof buildOptimizerRosterSnapshot>,
-): RosterOptimizerObjective {
-  const rarities = countRarities(selected.map((dragon) => dragon.rarity));
-  const ratings = formations.map((formation) => formation.rating).sort((a, b) => a - b);
-  return {
-    rarityPriority: { legendaryCount: rarities.Legendary, epicCount: rarities.Epic, rareCount: rarities.Rare },
-    totalRating: ratings.reduce((total, rating) => total + rating, 0),
-    minimumRating: ratings[0]!,
-    ascendingRatingVector: ratings,
-    totalRelationshipValue: formations.reduce(
-      (total, formation) => total + formation.adjustedRelationshipValue,
-      0,
+      },
+    ])),
+    estimatedPowerUnits: estimatedPower / 10,
+    estimatedPower,
+    dragonPowerEstimates: Object.fromEntries(
+      dragonIds.map((dragonId) => [dragonId, estimate(estimatedPower / 3)]),
     ),
-    totalRelationshipValueUnits: formations.reduce(
-      (total, formation) => total + formation.adjustedRelationshipValueUnits,
-      0,
-    ),
-    totalActiveRelationships: formations.reduce((total, formation) => total + formation.activeRelationshipCount, 0),
-    stableSolutionKey: formations.map((formation) => formation.stableCandidateKey).sort().join('||'),
+    powerConfidenceCounts: { observed: 3, modeled: 0, low: 0 },
   };
 }
 
-function diagnostics(eligibleDragonCount: number) {
+function estimate(power: number) {
   return {
-    optimal: true,
-    eligibleDragonCount,
-    candidateCount: eligibleDragonCount === 31 ? 4495 : 4060,
-    selectedFormationCount: 10,
-    nodesVisited: 13,
-    branchesPruned: 0,
-    cacheEntries: 0,
-    solverPasses: 17,
-    candidateGenerationMs: 2500,
-    solverMs: 4500,
-    totalMs: 7000,
+    power,
+    confidence: 'observed' as const,
+    modelVersion: 'estimated-power-v2',
+    modelHash: 'fnv1a64:efa6081babb4e520',
+    observationHash: 'fnv1a64:26bfe615f0d9bdd5',
+    basis: 'exact-observation' as const,
   };
 }
 
 function countRarities(rarities: string[]): RarityCountRecord {
   const counts: RarityCountRecord = { Legendary: 0, Epic: 0, Rare: 0 };
-  rarities.forEach((rarity) => { counts[rarity as keyof RarityCountRecord] += 1; });
+  rarities.forEach((rarity) => {
+    counts[rarity as keyof RarityCountRecord] += 1;
+  });
   return counts;
 }
