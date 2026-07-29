@@ -2,8 +2,14 @@ import { HiGHS, Model, Solution, sum, type LinExpr, type Var } from '@bubblyworl
 import type { DragonRarity } from '../models/dragon';
 import { applyRosterOptimizerExactGapOptions } from './highsExactOptions';
 import { objectiveForCandidates } from './rosterOptimizerObjective';
+import {
+  evaluateExactOptimumCertification,
+  OPTIMIZER_MATERIAL_OBJECTIVE_DELTA,
+  reconstructExactIntegerObjective,
+} from './rosterOptimizerPrimaryBackupMipSolver';
 import type {
   OptimizerFormationCandidate,
+  OptimizerPerformanceProfile,
   OptimizerRosterDragon,
   RosterOptimizerSolverResult,
 } from './rosterOptimizerTypes';
@@ -12,7 +18,7 @@ interface ModelContext {
   model: Model;
   variables: Var[];
   totalRating: LinExpr;
-  totalRelationshipValueDoubled: LinExpr;
+  totalRelationshipValueUnits: LinExpr;
   totalActiveRelationships: LinExpr;
 }
 
@@ -21,11 +27,29 @@ interface SolverTelemetry {
   nodesVisited: number;
   branchesPruned: number;
   logLines: string[];
+  performanceProfile: OptimizerPerformanceProfile;
 }
 
 interface SolverSession {
   highs: HiGHS;
   telemetry: SolverTelemetry;
+}
+
+interface BestTenFixedObjectives {
+  totalRating: number;
+  histogramFixes: Array<{
+    levels: number[];
+    weights: readonly number[];
+    value: number;
+  }>;
+  relationshipValueUnits: number;
+  relationshipCount: number;
+  stableFixes: Array<{
+    indices: number[];
+    weights: readonly number[];
+    maximumSelections: number;
+    value: number;
+  }>;
 }
 
 const histogramChunkSize = 8;
@@ -39,7 +63,10 @@ export async function solveRosterOptimizerMip(
   candidates: OptimizerFormationCandidate[],
   eligibleDragons: OptimizerRosterDragon[],
   targetFormationCount = 10,
-): Promise<RosterOptimizerSolverResult & { solverPasses: number }> {
+): Promise<RosterOptimizerSolverResult & {
+  solverPasses: number;
+  performanceProfile: OptimizerPerformanceProfile;
+}> {
   candidates = [...candidates].sort((left, right) =>
     left.stableCandidateKey.localeCompare(right.stableCandidateKey),
   );
@@ -48,6 +75,14 @@ export async function solveRosterOptimizerMip(
     nodesVisited: 0,
     branchesPruned: 0,
     logLines: [],
+    performanceProfile: {
+      modelBuilds: 0,
+      modelConstructionMs: 0,
+      certificationPasses: 0,
+      skippedPhases: 0,
+      prunedVariables: 0,
+      phases: [],
+    },
   };
   const session: SolverSession = {
     highs: await HiGHS.create({
@@ -63,7 +98,12 @@ export async function solveRosterOptimizerMip(
     const rarityByDragonId = new Map(
       eligibleDragons.map((dragon) => [dragon.dragonId, dragon.rarity]),
     );
-    let context = buildModel(candidates, eligibleDragons, targetFormationCount);
+    let context = measuredBuildModel(
+      candidates,
+      eligibleDragons,
+      targetFormationCount,
+      telemetry,
+    );
 
     context.model.maximize(context.totalRating);
     const ratingSolution = await solveOptimal(context.model, session, 'total Formation Rating');
@@ -74,26 +114,37 @@ export async function solveRosterOptimizerMip(
       Math.min(...candidates.map((candidate) => candidate.rating)),
       Math.max(...candidates.map((candidate) => candidate.rating)),
     );
-    const histogramFixes: Array<{ levels: number[]; value: number }> = [];
-    for (let start = 0; start < ratingLevels.length; start += histogramChunkSize) {
-      const levels = ratingLevels.slice(start, start + histogramChunkSize);
-      const expression = histogramExpression(candidates, context.variables, levels);
+    const histogramFixes: BestTenFixedObjectives['histogramFixes'] = [];
+    for (let ratingStart = 0; ratingStart < ratingLevels.length; ratingStart += histogramChunkSize) {
+      const levels = ratingLevels.slice(ratingStart, ratingStart + histogramChunkSize);
+      const weights = levels.map(
+        (_rating, index) => 11 ** (levels.length - index - 1),
+      );
+      const expression = histogramExpression(
+        candidates,
+        context.variables,
+        levels,
+        weights,
+      );
       context.model.minimize(expression);
       const solution = await solveOptimal(context.model, session, 'rating-vector refinement');
       const value = roundedInteger(solution.objective);
-      context.model.addConstraint(expression.eq(value), `fix_rating_histogram_${start}`);
-      histogramFixes.push({ levels, value });
+      context.model.addConstraint(
+        expression.eq(value),
+        `fix_rating_histogram_${ratingStart}`,
+      );
+      histogramFixes.push({ levels, weights, value });
     }
 
-    context.model.maximize(context.totalRelationshipValueDoubled);
+    context.model.maximize(context.totalRelationshipValueUnits);
     const relationshipSolution = await solveOptimal(
       context.model,
       session,
       'active relationship value',
     );
-    const optimalRelationshipValueDoubled = roundedInteger(relationshipSolution.objective);
+    const optimalRelationshipValueUnits = roundedInteger(relationshipSolution.objective);
     context.model.addConstraint(
-      context.totalRelationshipValueDoubled.eq(optimalRelationshipValueDoubled),
+      context.totalRelationshipValueUnits.eq(optimalRelationshipValueUnits),
       'fix_relationship_value',
     );
 
@@ -120,23 +171,46 @@ export async function solveRosterOptimizerMip(
     const alternate = await solveAllowInfeasible(context.model, session);
 
     if (alternate.status !== 'infeasible') {
-      context = buildModel(candidates, eligibleDragons, targetFormationCount);
+      context = measuredBuildModel(
+        candidates,
+        eligibleDragons,
+        targetFormationCount,
+        telemetry,
+      );
       context.model.addConstraint(context.totalRating.eq(optimalTotalRating), 'fix_total_rating');
       histogramFixes.forEach((fix, index) => {
         context.model.addConstraint(
-          histogramExpression(candidates, context.variables, fix.levels).eq(fix.value),
+          histogramExpression(
+            candidates,
+            context.variables,
+            fix.levels,
+            fix.weights,
+          ).eq(fix.value),
           `fix_rating_histogram_${index}`,
         );
       });
       context.model.addConstraint(
-        context.totalRelationshipValueDoubled.eq(optimalRelationshipValueDoubled),
+        context.totalRelationshipValueUnits.eq(optimalRelationshipValueUnits),
         'fix_relationship_value',
       );
       context.model.addConstraint(
         context.totalActiveRelationships.eq(optimalRelationshipCount),
         'fix_relationship_count',
       );
-      selectedIndices = await refineStableSolutionKey(context, session, targetFormationCount);
+      selectedIndices = await refineStableSolutionKey({
+        context,
+        session,
+        candidates,
+        eligibleDragons,
+        targetFormationCount,
+        fixed: {
+          totalRating: optimalTotalRating,
+          histogramFixes,
+          relationshipValueUnits: optimalRelationshipValueUnits,
+          relationshipCount: optimalRelationshipCount,
+          stableFixes: [],
+        },
+      });
     }
 
     const selectedCandidates = selectedIndices.map((index) => candidates[index]!);
@@ -156,6 +230,7 @@ export async function solveRosterOptimizerMip(
       branchesPruned: telemetry.branchesPruned,
       cacheEntries: 0,
       solverPasses: telemetry.passes,
+      performanceProfile: telemetry.performanceProfile,
     };
   } finally {
     session.highs.free();
@@ -200,9 +275,9 @@ function buildModel(
     totalRating: sum(
       ...variables.map((variable, index) => variable.times(candidates[index]!.rating)),
     ),
-    totalRelationshipValueDoubled: sum(
+    totalRelationshipValueUnits: sum(
       ...variables.map((variable, index) =>
-        variable.times(Math.round(candidates[index]!.activeRelationshipValue * 2)),
+        variable.times(candidates[index]!.adjustedRelationshipValueUnits),
       ),
     ),
     totalActiveRelationships: sum(
@@ -213,27 +288,75 @@ function buildModel(
   };
 }
 
-async function refineStableSolutionKey(
-  context: ModelContext,
-  session: SolverSession,
-  targetFormationCount: number,
-): Promise<number[]> {
+async function refineStableSolutionKey({
+  context,
+  session,
+  candidates,
+  eligibleDragons,
+  targetFormationCount,
+  fixed,
+}: {
+  context: ModelContext;
+  session: SolverSession;
+  candidates: OptimizerFormationCandidate[];
+  eligibleDragons: OptimizerRosterDragon[];
+  targetFormationCount: number;
+  fixed: BestTenFixedObjectives;
+}): Promise<number[]> {
   const fixedSelected = new Set<number>();
   let latestSelected: number[] = [];
   for (let start = 0; start < context.variables.length; start += stableChunkSize) {
+    const maximumSelections = targetFormationCount - fixedSelected.size;
+    const chunkLength = Math.min(stableChunkSize, context.variables.length - start);
+    const weights = Array.from(
+      { length: chunkLength },
+      (_unused, offset) => 2 ** (chunkLength - offset - 1),
+    );
     const indices = integerRange(
       start,
-      Math.min(context.variables.length - 1, start + stableChunkSize - 1),
+      start + weights.length - 1,
     );
     const expression = sum(
       ...indices.map((index, offset) =>
-        context.variables[index]!.times(2 ** (indices.length - offset - 1)),
+        context.variables[index]!.times(weights[offset]!),
       ),
     );
     context.model.maximize(expression);
     const solution = await solveOptimal(context.model, session, 'stable solution key');
-    const value = roundedInteger(solution.objective);
-    context.model.addConstraint(expression.eq(value), `fix_stable_${start}`);
+    const reconstruction = reconstructExactIntegerObjective({
+      solution,
+      expression,
+      integerVariables: context.variables,
+      stage: 'Best Ten stable solution key',
+    });
+    if (reconstruction.rawObjectiveDelta > OPTIMIZER_MATERIAL_OBJECTIVE_DELTA) {
+      await certifyBestTenStableOptimum({
+        session,
+        candidates,
+        eligibleDragons,
+        targetFormationCount,
+        fixed,
+        indices,
+        weights,
+        reconstructedValue: reconstruction.value,
+        start,
+      });
+    }
+    const value = reconstruction.value;
+    addStableVariableFixes(
+      context.model,
+      context.variables,
+      indices,
+      weights,
+      value,
+      `fix_stable_${start}`,
+    );
+    fixed.stableFixes.push({
+      indices,
+      weights,
+      maximumSelections,
+      value,
+    });
     latestSelected = selectedVariableIndices(solution, context.variables);
     latestSelected
       .filter((index) => index <= indices.at(-1)!)
@@ -243,13 +366,128 @@ async function refineStableSolutionKey(
   return latestSelected;
 }
 
+async function certifyBestTenStableOptimum({
+  session,
+  candidates,
+  eligibleDragons,
+  targetFormationCount,
+  fixed,
+  indices,
+  weights,
+  reconstructedValue,
+  start,
+}: {
+  session: SolverSession;
+  candidates: OptimizerFormationCandidate[];
+  eligibleDragons: OptimizerRosterDragon[];
+  targetFormationCount: number;
+  fixed: BestTenFixedObjectives;
+  indices: number[];
+  weights: readonly number[];
+  reconstructedValue: number;
+  start: number;
+}): Promise<void> {
+  const probe = measuredBuildModel(
+    candidates,
+    eligibleDragons,
+    targetFormationCount,
+    session.telemetry,
+  );
+  applyBestTenFixedObjectives(probe, candidates, fixed);
+  const expression = sum(
+    ...indices.map((index, offset) =>
+      probe.variables[index]!.times(weights[offset]!),
+    ),
+  );
+  probe.model.addConstraint(
+    expression.geq(reconstructedValue + 1),
+    `certify_stable_${start}`,
+  );
+  probe.model.minimize(sum(0));
+  const solution = await solveAllowInfeasible(
+    probe.model,
+    session,
+    'Best Ten stable-key certification',
+    'certification',
+    true,
+  );
+  evaluateExactOptimumCertification({
+    solution,
+    expression,
+    integerVariables: probe.variables,
+    direction: 'maximize',
+    reconstructedValue,
+    stage: 'Best Ten stable solution key',
+    solverPass: session.telemetry.passes,
+  });
+}
+
+function applyBestTenFixedObjectives(
+  context: ModelContext,
+  candidates: OptimizerFormationCandidate[],
+  fixed: BestTenFixedObjectives,
+): void {
+  context.model.addConstraint(
+    context.totalRating.eq(fixed.totalRating),
+    'probe_fix_total_rating',
+  );
+  fixed.histogramFixes.forEach((fix, index) => {
+    context.model.addConstraint(
+      histogramExpression(
+        candidates,
+        context.variables,
+        fix.levels,
+        fix.weights,
+      ).eq(fix.value),
+      `probe_fix_rating_histogram_${index}`,
+    );
+  });
+  context.model.addConstraint(
+    context.totalRelationshipValueUnits.eq(fixed.relationshipValueUnits),
+    'probe_fix_relationship_value',
+  );
+  context.model.addConstraint(
+    context.totalActiveRelationships.eq(fixed.relationshipCount),
+    'probe_fix_relationship_count',
+  );
+  fixed.stableFixes.forEach((fix, index) => {
+    addStableVariableFixes(
+      context.model,
+      context.variables,
+      fix.indices,
+      fix.weights,
+      fix.value,
+      `probe_fix_stable_${index}`,
+    );
+  });
+}
+
+function addStableVariableFixes(
+  model: Model,
+  variables: Var[],
+  indices: number[],
+  weights: readonly number[],
+  value: number,
+  name: string,
+): void {
+  model.addConstraint(
+    sum(...indices.map((index, offset) =>
+      variables[index]!.times(weights[offset]!),
+    )).eq(value),
+    name,
+  );
+}
+
 function histogramExpression(
   candidates: OptimizerFormationCandidate[],
   variables: Var[],
   levels: number[],
+  weights: readonly number[] = levels.map(
+    (_rating, index) => 11 ** (levels.length - index - 1),
+  ),
 ): LinExpr {
   const coefficientByRating = new Map(
-    levels.map((rating, index) => [rating, 11 ** (levels.length - index - 1)]),
+    levels.map((rating, index) => [rating, weights[index]!]),
   );
   return sum(
     ...candidates.flatMap((candidate, index) => {
@@ -260,17 +498,76 @@ function histogramExpression(
 }
 
 async function solveOptimal(model: Model, session: SolverSession, stage: string) {
-  const solution = await solveAllowInfeasible(model, session);
+  const solution = await solveAllowInfeasible(
+    model,
+    session,
+    stage,
+    bestTenProfileCategory(stage),
+  );
   if (solution.status !== 'optimal') {
     throw new Error(`Exact optimizer ${stage} stage ended with ${solution.status}.`);
   }
   return solution;
 }
 
-async function solveAllowInfeasible(model: Model, session: SolverSession) {
+async function solveAllowInfeasible(
+  model: Model,
+  session: SolverSession,
+  stage = 'Best Ten alternate-selection probe',
+  category: OptimizerPerformanceProfile['phases'][number]['category'] = 'stable-key',
+  certification = false,
+) {
   session.telemetry.passes += 1;
+  const startedAt = performance.now();
   await session.highs.parse(model.print('lp'), 'lp');
-  return new Solution(await session.highs.solve());
+  const solution = new Solution(await session.highs.solve());
+  if (certification) session.telemetry.performanceProfile.certificationPasses += 1;
+  session.telemetry.performanceProfile.phases.push({
+    stage,
+    category,
+    solverPass: session.telemetry.passes,
+    elapsedMs: performance.now() - startedAt,
+    ...modelSize(model),
+    certification,
+  });
+  return solution;
+}
+
+function modelSize(model: Model): {
+  variableCount: number;
+  constraintCount: number;
+} {
+  const inventory = model as unknown as {
+    variables: readonly Var[];
+    constraints: readonly unknown[];
+  };
+  return {
+    variableCount: inventory.variables.length,
+    constraintCount: inventory.constraints.length,
+  };
+}
+
+function measuredBuildModel(
+  candidates: OptimizerFormationCandidate[],
+  eligibleDragons: OptimizerRosterDragon[],
+  targetFormationCount: number,
+  telemetry: SolverTelemetry,
+): ModelContext {
+  const startedAt = performance.now();
+  telemetry.performanceProfile.modelBuilds += 1;
+  const context = buildModel(candidates, eligibleDragons, targetFormationCount);
+  telemetry.performanceProfile.modelConstructionMs += performance.now() - startedAt;
+  return context;
+}
+
+function bestTenProfileCategory(
+  stage: string,
+): OptimizerPerformanceProfile['phases'][number]['category'] {
+  if (stage.includes('total Formation Rating')) return 'total-rating';
+  if (stage.includes('rating-vector')) return 'rating-vector';
+  if (stage.includes('relationship value')) return 'relationship-value';
+  if (stage.includes('relationship count')) return 'relationship-count';
+  return 'stable-key';
 }
 
 function recordSolverLog(line: string, telemetry: SolverTelemetry): void {

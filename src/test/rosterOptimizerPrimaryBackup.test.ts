@@ -252,6 +252,7 @@ function candidate(
   relationshipCount = 1,
 ): OptimizerFormationCandidate {
   return {
+    ratingContract: 'formation-rating-v3',
     stableCandidateKey: dragonIds.join(':'),
     dragonIds,
     dragonMask: 0n,
@@ -261,8 +262,13 @@ function candidate(
     tier: 'Solid',
     activeSynergyScore: Math.max(0, rating - 20),
     placementScore: 20,
-    activeRelationshipValue: relationshipValue,
+    adjustedRelationshipValue: relationshipValue,
+    adjustedRelationshipValueUnits: Math.round(relationshipValue * 1_000_000),
     activeRelationshipCount: relationshipCount,
+    quantifiedRelationshipCount: relationshipCount,
+    unquantifiedRelationshipCount: 0,
+    unquantifiedBasePotential: 0,
+    reliabilityCoverage: 'all-quantified',
     participatingDragonCount: 3,
     relationships: [], strengths: [], gaps: [], progressionSnapshot: {},
   };
@@ -286,6 +292,7 @@ function objective(overrides: {
     minimumRating: Math.min(...ratings),
     ascendingRatingVector: [...ratings].sort((left, right) => left - right),
     totalRelationshipValue: relationshipValue,
+    totalRelationshipValueUnits: Math.round(relationshipValue * 1_000_000),
     totalActiveRelationships: 3,
     stableSolutionKey: key,
   });
@@ -305,6 +312,8 @@ function objective(overrides: {
     backup,
     combinedTotalRating: primary.totalRating + backup.totalRating,
     combinedRelationshipValue: primary.totalRelationshipValue + backup.totalRelationshipValue,
+    combinedRelationshipValueUnits:
+      primary.totalRelationshipValueUnits + backup.totalRelationshipValueUnits,
     combinedActiveRelationships: primary.totalActiveRelationships + backup.totalActiveRelationships,
     stableSolutionKey: `primary:${primary.stableSolutionKey}||backup:${backup.stableSolutionKey}`,
   };

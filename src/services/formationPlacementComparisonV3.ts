@@ -12,7 +12,7 @@ import type {
 import {
   allFormationPermutations,
   type FormationArrangement,
-} from './formationPlacementComparison';
+} from './formationArrangement';
 
 export interface PlacementCandidateV3 {
   arrangement: FormationArrangement;

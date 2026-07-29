@@ -1,6 +1,9 @@
 import type { FormationPosition } from '../models/dragon';
 import type { FormationSignalChip } from '../app/formationCardPresentation';
-import type { FormationRatingResult, FormationScoreCategory } from './formationRating';
+import type {
+  FormationAnalysisConfidence,
+  FormationScoreCategory,
+} from './formationRating';
 import type { FormationRecommendationResult } from './formationRecommendation';
 import type { SemanticRelationship } from '../synergy/semanticRelationships';
 import type {
@@ -71,7 +74,7 @@ export function buildFormationFindings({
   relationships: SemanticRelationship[];
   signalChipsByDragonId: Record<string, FindingSignalChips | undefined>;
   recommendation: FormationRecommendationResult;
-  rating: FormationRatingResult;
+  rating: { confidence: FormationAnalysisConfidence };
 }): FormationFindingSet {
   const profilesById = new Map(profiles.map((profile) => [profile.dragonId, profile]));
   const dragonNamesById = new Map(profiles.map((profile) => [profile.dragonId, profile.dragonName]));

@@ -45,6 +45,7 @@
     "lockedBlockedAndUnresolvedAreActive": false
   },
   "publicRating": {
+    "contract": "formation-rating-v3",
     "total": 100,
     "categories": {
       "Active Synergy": 80,
@@ -56,11 +57,17 @@
       "otherwise": 0
     },
     "tierThresholds": {
-      "Excellent": 80,
-      "Strong": 67,
-      "Solid": 49,
-      "Developing": 25,
+      "Excellent": 66,
+      "Strong": 53,
+      "Solid": 34,
+      "Developing": 5,
       "Weak": 0
+    },
+    "reliability": {
+      "guaranteedAndProvenRetainFullValue": true,
+      "supportedChanceMayReduceContribution": true,
+      "unquantifiedPotentialScored": false,
+      "cumulativeRequiresExactOpportunitiesAndConfirmedIndependence": true
     },
     "incompleteIsValidationGate": true,
     "analysisConfidenceScored": false,
@@ -71,7 +78,7 @@
     "meaningfulAbsoluteDelta": 5,
     "meaningfulRelativeDelta": 0.1,
     "meaningfulImprovementWhen": "delta >= 5 && relativeDelta >= 0.10",
-    "meaningfulLossFormula": "round(20 * currentValue / bestValue)",
+    "meaningfulLossFormula": "round(20 * adjustedCurrentValue / adjustedBestValue)",
     "candidateScoring": "Each candidate is scored as though it were the current arrangement.",
     "fullCreditWhen": [
       "best",

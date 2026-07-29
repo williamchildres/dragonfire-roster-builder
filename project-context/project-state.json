@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-07-23T14:48:50.880Z",
+  "generatedAt": "2026-07-29T15:13:05.211Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/formation-rating-reliability-notice",
-    "commit": "c76ef66c1278e2c770089bd448bfd00f24138ceb",
-    "databaseVersion": "0.20.3",
+    "branch": "feature/adopt-formation-rating-v3",
+    "commit": "ff0c3dcbb9be259afe3bf6afff777ef691e82ad4",
+    "databaseVersion": "0.21.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
   },
-  "contextVersion": 2,
+  "contextVersion": 3,
   "format": "dragonfire-lab-project-context",
   "rosterSummary": {
     "totalDragons": 33,
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 56,
-    "testCaseCount": 468,
+    "testFileCount": 67,
+    "testCaseCount": 573,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

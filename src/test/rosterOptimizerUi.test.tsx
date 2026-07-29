@@ -24,7 +24,7 @@ import type {
   RosterOptimizationResult,
   RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
-import type { FormationArrangement } from '../services/formationPlacementComparison';
+import type { FormationArrangement } from '../services/formationArrangement';
 import { createEmptyRoster } from '../services/rosterStorage';
 
 describe('Roster Optimizer workspace', () => {
@@ -108,7 +108,7 @@ describe('Roster Optimizer workspace', () => {
     expect(onOpenRoster).toHaveBeenCalledOnce();
   });
 
-  it('ignores Habit Level changes but marks ranking-relevant progression stale', async () => {
+  it('marks the retained result stale after a saved Habit Level changes', async () => {
     const roster = ownedRoster(30);
     const result = makePrimaryBackupResult(roster);
     const view = renderOptimizer({ roster, runner: resolvedRunner(result) });
@@ -116,13 +116,10 @@ describe('Roster Optimizer workspace', () => {
     await userEvent.setup().click(screen.getByRole('button', { name: /Find My Primary/i }));
     await screen.findByRole('heading', { name: 'Exact optimal result' });
     const firstId = result.usedDragonIds[0]!;
+    const habitId = dragons.find((dragon) => dragon.id === firstId)!.habits[0]!.id;
     const habitOnly = structuredClone(roster);
-    habitOnly[firstId]!.habitLevels = { arbitrary: 5 };
+    habitOnly[firstId]!.habitLevels[habitId] = 2;
     view.rerender(component(habitOnly, resolvedRunner(result)));
-    expect(screen.queryByText(/progression or optimization strategy changed/i)).not.toBeInTheDocument();
-    const changedStar = structuredClone(habitOnly);
-    changedStar[firstId]!.starRank = 9;
-    view.rerender(component(changedStar, resolvedRunner(result)));
     expect(screen.getByText(/progression or optimization strategy changed/i)).toBeInTheDocument();
   });
 
@@ -223,7 +220,8 @@ function makeBestTenResult(
   const unusedRarityCounts = countRarities(snapshot.filter((dragon) => unusedDragonIds.includes(dragon.dragonId)).map((dragon) => dragon.rarity));
   const tierDistribution = { Excellent: 0, Strong: 10, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 };
   return {
-    contractVersion: 3,
+    contractVersion: 4,
+    ratingContract: 'formation-rating-v3',
     strategy: 'best-ten-overall',
     optimal: true,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
@@ -236,7 +234,14 @@ function makeBestTenResult(
       rarityCounts: usedRarityCounts,
       tierDistribution,
       totalRelationshipValue: objective.totalRelationshipValue,
+      totalRelationshipValueUnits: objective.totalRelationshipValueUnits,
       totalActiveRelationships: objective.totalActiveRelationships,
+      quantifiedRelationshipCount: formations.reduce(
+        (total, formation) => total + formation.quantifiedRelationshipCount,
+        0,
+      ),
+      unquantifiedRelationshipCount: 0,
+      unquantifiedBasePotential: 0,
     },
     usedDragonIds,
     unusedDragonIds,
@@ -271,11 +276,14 @@ function makePrimaryBackupResult(
     backup: backup.objective,
     combinedTotalRating: primary.totalRating + backup.totalRating,
     combinedRelationshipValue: primary.totalRelationshipValue + backup.totalRelationshipValue,
+    combinedRelationshipValueUnits:
+      primary.totalRelationshipValueUnits + backup.totalRelationshipValueUnits,
     combinedActiveRelationships: primary.totalActiveRelationships + backup.totalActiveRelationships,
     stableSolutionKey: `primary:${primary.objective.stableSolutionKey}||backup:${backup.objective.stableSolutionKey}`,
   };
   return {
-    contractVersion: 3,
+    contractVersion: 4,
+    ratingContract: 'formation-rating-v3',
     strategy: 'primary-five-backup-five',
     optimal: true,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
@@ -293,7 +301,12 @@ function makePrimaryBackupResult(
       rarityCounts: countRarities(selected.map((dragon) => dragon.rarity)),
       tierDistribution: { Excellent: 0, Strong: 10, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 },
       totalRelationshipValue: objective.combinedRelationshipValue,
+      totalRelationshipValueUnits: objective.combinedRelationshipValueUnits,
       totalActiveRelationships: objective.combinedActiveRelationships,
+      quantifiedRelationshipCount:
+        primary.quantifiedRelationshipCount + backup.quantifiedRelationshipCount,
+      unquantifiedRelationshipCount: 0,
+      unquantifiedBasePotential: 0,
     },
     objective,
     diagnostics: diagnostics(snapshot.length),
@@ -318,7 +331,14 @@ function makeWave(
     averageRating: objective.totalRating / 5,
     minimumRating: objective.minimumRating,
     totalRelationshipValue: objective.totalRelationshipValue,
+    totalRelationshipValueUnits: objective.totalRelationshipValueUnits,
     totalActiveRelationships: objective.totalActiveRelationships,
+    quantifiedRelationshipCount: formations.reduce(
+      (total, formation) => total + formation.quantifiedRelationshipCount,
+      0,
+    ),
+    unquantifiedRelationshipCount: 0,
+    unquantifiedBasePotential: 0,
     tierDistribution: { Excellent: 0, Strong: 5, Solid: 0, Developing: 0, Weak: 0, Incomplete: 0 },
     objective,
   };
@@ -330,6 +350,7 @@ function makeFormations(selected: ReturnType<typeof buildOptimizerRosterSnapshot
     const dragonIds = trio.map((dragon) => dragon.dragonId) as [string, string, string];
     const arrangement = { 'left-flank': dragonIds[0], vanguard: dragonIds[1], 'right-flank': dragonIds[2] };
     return {
+      ratingContract: 'formation-rating-v3',
       rank: index + 1,
       stableCandidateKey: dragonIds.join('+'),
       dragonIds,
@@ -339,11 +360,20 @@ function makeFormations(selected: ReturnType<typeof buildOptimizerRosterSnapshot
       tier: 'Strong',
       activeSynergyScore: 60 - index,
       placementScore: 20,
-      activeRelationshipValue: 20 - index,
+      adjustedRelationshipValue: 20 - index,
+      adjustedRelationshipValueUnits: (20 - index) * 1_000_000,
       activeRelationshipCount: 3,
+      quantifiedRelationshipCount: 3,
+      unquantifiedRelationshipCount: 0,
+      unquantifiedBasePotential: 0,
+      reliabilityCoverage: 'all-quantified',
       participatingDragonCount: 3,
       relationships: [], strengths: [], gaps: [],
-      progressionSnapshot: Object.fromEntries(trio.map((dragon) => [dragon.dragonId, { starRank: dragon.starRank, dragonLevel: dragon.dragonLevel }])),
+      progressionSnapshot: Object.fromEntries(trio.map((dragon) => [dragon.dragonId, {
+        starRank: dragon.starRank,
+        dragonLevel: dragon.dragonLevel,
+        activeHabitLevels: dragon.activeHabitLevels ?? {},
+      }])),
     };
   });
 }
@@ -359,7 +389,14 @@ function objectiveFor(
     totalRating: ratings.reduce((total, rating) => total + rating, 0),
     minimumRating: ratings[0]!,
     ascendingRatingVector: ratings,
-    totalRelationshipValue: formations.reduce((total, formation) => total + formation.activeRelationshipValue, 0),
+    totalRelationshipValue: formations.reduce(
+      (total, formation) => total + formation.adjustedRelationshipValue,
+      0,
+    ),
+    totalRelationshipValueUnits: formations.reduce(
+      (total, formation) => total + formation.adjustedRelationshipValueUnits,
+      0,
+    ),
     totalActiveRelationships: formations.reduce((total, formation) => total + formation.activeRelationshipCount, 0),
     stableSolutionKey: formations.map((formation) => formation.stableCandidateKey).sort().join('||'),
   };

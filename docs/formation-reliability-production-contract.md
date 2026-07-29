@@ -2,7 +2,7 @@
 
 ## Ownership and scope
 
-`src/synergy/reliability` owns Formation Reliability types, pure validation, progression adaptation, probability helpers, the production metadata registry, and the isolated Formation Rating v3 scoring consumer. Formation Rating v2, the live Formation Builder, optimizer behavior, Estimated Power, persistence, and UI remain disconnected from v3, so current scoring does not change.
+`src/synergy/reliability` owns Formation Reliability types, pure validation, progression adaptation, probability helpers, the production metadata registry, and the live Formation Rating v3 scoring consumer. The Formation Builder and every optimizer strategy consume v3; Estimated Power, persistence, synchronization, routes, and sharing remain separate.
 
 ## Registry organization and coverage
 

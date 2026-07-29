@@ -26,7 +26,9 @@ import {
 import {
   OPTIMIZER_DRAGON_COUNT,
   OPTIMIZER_FORMATION_COUNT,
+  OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
   ROSTER_OPTIMIZER_CONTRACT_VERSION,
+  ROSTER_OPTIMIZER_RATING_CONTRACT,
   RosterOptimizerCancelledError,
   type BestTenOverallOptimizationResult,
   type OptimizedFormation,
@@ -57,6 +59,7 @@ export async function optimizeCurrentRoster(
   if (snapshot.length < OPTIMIZER_DRAGON_COUNT) {
     return {
       contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+      ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
       strategy,
       optimal: false,
       status: 'unavailable',
@@ -160,6 +163,7 @@ async function optimizePowerAwarePrimaryBackup(
   const partition = dragonPartition(formations, snapshot);
   const unusedRarityCounts = rarityCounts(partition.unusedDragonIds, rarityById);
   const combinedRarityCounts = rarityCounts(partition.usedDragonIds, rarityById);
+  const relationshipSummary = relationshipSummaryFor(formations);
   const combined = {
     totalRating: solver.objective.combinedTotalRating,
     averageRating: solver.objective.combinedTotalRating / OPTIMIZER_FORMATION_COUNT,
@@ -167,11 +171,16 @@ async function optimizePowerAwarePrimaryBackup(
     rarityCounts: combinedRarityCounts,
     tierDistribution: tierDistributionFor(formations),
     totalRelationshipValue: solver.objective.combinedRelationshipValue,
+    totalRelationshipValueUnits: solver.objective.combinedRelationshipValueUnits,
     totalActiveRelationships: solver.objective.combinedActiveRelationships,
+    ...relationshipSummary,
     totalEstimatedPower: solver.objective.combinedEstimatedPower,
     powerConfidenceCounts: powerConfidenceCounts(partition.usedDragonIds, estimatesByDragonId),
   };
   const semanticIdentity = {
+    contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
+    relationshipValueScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
     strategy: 'power-aware-primary-five-backup-five' as const,
     rosterFingerprint,
     estimatedPowerModelVersion: ESTIMATED_POWER_MODEL_VERSION,
@@ -185,12 +194,14 @@ async function optimizePowerAwarePrimaryBackup(
   const optimizerSolutionHash = stableHash(JSON.stringify(semanticIdentity));
   const resultIdentity = {
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     strategy: 'power-aware-primary-five-backup-five' as const,
     requestFingerprint,
     optimizerSolutionHash,
   };
   return {
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     strategy: 'power-aware-primary-five-backup-five',
     optimal: true,
     rosterFingerprint,
@@ -220,6 +231,7 @@ async function optimizePowerAwarePrimaryBackup(
       solverMs,
       totalMs: performance.now() - totalStartedAt,
       phaseTimings: solver.phaseTimings,
+      performanceProfile: solver.performanceProfile,
       numericalExactness: solver.numericalExactness,
     },
     optimizerSolutionHash,
@@ -243,6 +255,7 @@ async function optimizeBestTen({
   const usedRarityCounts = rarityCounts(partition.usedDragonIds, partition.rarityById);
   const unusedRarityCounts = rarityCounts(partition.unusedDragonIds, partition.rarityById);
   const tierDistribution = tierDistributionFor(formations);
+  const relationshipSummary = relationshipSummaryFor(formations);
   const collection: OptimizerCollectionSummary = {
     totalRating: solver.objective.totalRating,
     averageRating: solver.objective.totalRating / OPTIMIZER_FORMATION_COUNT,
@@ -250,27 +263,31 @@ async function optimizeBestTen({
     rarityCounts: usedRarityCounts,
     tierDistribution,
     totalRelationshipValue: solver.objective.totalRelationshipValue,
+    totalRelationshipValueUnits: solver.objective.totalRelationshipValueUnits,
     totalActiveRelationships: solver.objective.totalActiveRelationships,
+    ...relationshipSummary,
   };
-  // This exact v1-shaped identity intentionally preserves the two published
-  // v0.12.0 semantic solution hashes.
-  const legacySolutionIdentity = {
-    contractVersion: 1,
+  const semanticIdentity = {
+    contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
+    relationshipValueScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
     rosterFingerprint,
     objective: solver.objective,
     formations: formationIdentity(formations),
     usedDragonIds: partition.usedDragonIds,
     unusedDragonIds: partition.unusedDragonIds,
   };
-  const optimizerSolutionHash = stableHash(JSON.stringify(legacySolutionIdentity));
+  const optimizerSolutionHash = stableHash(JSON.stringify(semanticIdentity));
   const resultIdentity = {
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     strategy: 'best-ten-overall' as const,
     requestFingerprint,
     optimizerSolutionHash,
   };
   return {
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     strategy: 'best-ten-overall',
     optimal: true,
     rosterFingerprint,
@@ -297,6 +314,7 @@ async function optimizeBestTen({
       candidateGenerationMs,
       solverMs,
       totalMs: performance.now() - totalStartedAt,
+      performanceProfile: solver.performanceProfile,
     },
     optimizerSolutionHash,
     optimizerResultHash: stableHash(JSON.stringify(resultIdentity)),
@@ -323,6 +341,7 @@ async function optimizePrimaryBackup({
   const partition = dragonPartition(formations, snapshot);
   const unusedRarityCounts = rarityCounts(partition.unusedDragonIds, rarityById);
   const combinedRarityCounts = rarityCounts(partition.usedDragonIds, rarityById);
+  const relationshipSummary = relationshipSummaryFor(formations);
   const combined: OptimizerCollectionSummary = {
     totalRating: solver.objective.combinedTotalRating,
     averageRating: solver.objective.combinedTotalRating / OPTIMIZER_FORMATION_COUNT,
@@ -330,9 +349,14 @@ async function optimizePrimaryBackup({
     rarityCounts: combinedRarityCounts,
     tierDistribution: tierDistributionFor(formations),
     totalRelationshipValue: solver.objective.combinedRelationshipValue,
+    totalRelationshipValueUnits: solver.objective.combinedRelationshipValueUnits,
     totalActiveRelationships: solver.objective.combinedActiveRelationships,
+    ...relationshipSummary,
   };
   const semanticIdentity = {
+    contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
+    relationshipValueScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
     strategy: 'primary-five-backup-five' as const,
     rosterFingerprint,
     primary: formationIdentity(primaryFormations),
@@ -343,12 +367,14 @@ async function optimizePrimaryBackup({
   const optimizerSolutionHash = stableHash(JSON.stringify(semanticIdentity));
   const resultIdentity = {
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     strategy: 'primary-five-backup-five' as const,
     requestFingerprint,
     optimizerSolutionHash,
   };
   return {
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+    ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     strategy: 'primary-five-backup-five',
     optimal: true,
     rosterFingerprint,
@@ -374,6 +400,7 @@ async function optimizePrimaryBackup({
       solverMs,
       totalMs: performance.now() - totalStartedAt,
       phaseTimings: solver.phaseTimings,
+      performanceProfile: solver.performanceProfile,
       numericalExactness: solver.numericalExactness,
     },
     optimizerSolutionHash,
@@ -438,6 +465,7 @@ function powerWaveResult(
   const usedDragonIds = [...new Set(formations.flatMap((formation) => formation.dragonIds))]
     .sort();
   const formationPowers = formations.map((formation) => formation.estimatedPower);
+  const relationshipSummary = relationshipSummaryFor(formations);
   return {
     kind,
     label: kind === 'primary' ? 'Primary' : 'Backup',
@@ -448,7 +476,9 @@ function powerWaveResult(
     averageRating: objective.totalRating / formations.length,
     minimumRating: objective.minimumRating,
     totalRelationshipValue: objective.totalRelationshipValue,
+    totalRelationshipValueUnits: objective.totalRelationshipValueUnits,
     totalActiveRelationships: objective.totalActiveRelationships,
+    ...relationshipSummary,
     tierDistribution: tierDistributionFor(formations),
     totalEstimatedPower: objective.totalEstimatedPower,
     averageEstimatedPowerPerDragon: objective.totalEstimatedPower / usedDragonIds.length,
@@ -467,6 +497,7 @@ function waveResult(
 ): OptimizerWaveResult {
   const usedDragonIds = [...new Set(formations.flatMap((formation) => formation.dragonIds))]
     .sort();
+  const relationshipSummary = relationshipSummaryFor(formations);
   return {
     kind,
     label: kind === 'primary' ? 'Primary' : 'Backup',
@@ -477,7 +508,9 @@ function waveResult(
     averageRating: objective.totalRating / formations.length,
     minimumRating: objective.minimumRating,
     totalRelationshipValue: objective.totalRelationshipValue,
+    totalRelationshipValueUnits: objective.totalRelationshipValueUnits,
     totalActiveRelationships: objective.totalActiveRelationships,
+    ...relationshipSummary,
     tierDistribution: tierDistributionFor(formations),
     objective,
   };
@@ -509,13 +542,30 @@ function formationIdentity(formations: OptimizedFormation[]) {
   }));
 }
 
+function relationshipSummaryFor(formations: OptimizedFormation[]) {
+  return {
+    quantifiedRelationshipCount: formations.reduce(
+      (total, formation) => total + formation.quantifiedRelationshipCount,
+      0,
+    ),
+    unquantifiedRelationshipCount: formations.reduce(
+      (total, formation) => total + formation.unquantifiedRelationshipCount,
+      0,
+    ),
+    unquantifiedBasePotential: formations.reduce(
+      (total, formation) => total + formation.unquantifiedBasePotential,
+      0,
+    ),
+  };
+}
+
 function displayCandidateOrder(
   left: OptimizerFormationCandidate,
   right: OptimizerFormationCandidate,
 ): number {
   return (
     right.rating - left.rating ||
-    right.activeRelationshipValue - left.activeRelationshipValue ||
+    right.adjustedRelationshipValueUnits - left.adjustedRelationshipValueUnits ||
     left.stableCandidateKey.localeCompare(right.stableCandidateKey)
   );
 }

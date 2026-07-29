@@ -1,13 +1,13 @@
 import { buildFormationSignalChips } from '../app/formationCardPresentation';
 import type { Dragon, FormationPosition, OwnedDragon } from '../models/dragon';
 import { buildFormationFindings } from '../services/formationFindings';
+import type { FormationArrangement } from '../services/formationArrangement';
 import {
-  buildPlacementComparison,
-  compareFormationPlacements,
-  type FormationArrangement,
-} from '../services/formationPlacementComparison';
-import { rateFormation } from '../services/formationRating';
-import { buildFormationRecommendation } from '../services/formationRecommendation';
+  buildPlacementComparisonV3,
+  compareFormationPlacementsV3,
+} from '../services/formationPlacementComparisonV3';
+import { rateFormationV3 } from '../services/formationRatingV3';
+import { buildFormationRecommendationV3 } from '../services/formationRecommendationV3';
 import {
   currentRosterProgression,
   eligibleRosterDragons,
@@ -18,7 +18,8 @@ import {
   ESTIMATED_POWER_MODEL_VERSION,
   ESTIMATED_POWER_OBSERVATION_HASH,
 } from '../power/generatedDragonPowerModel';
-import { buildSemanticRelationships, relationshipValue } from '../synergy/semanticRelationships';
+import { buildSemanticRelationships } from '../synergy/semanticRelationships';
+import { reliabilityProgressionFromOwnedDragon } from '../synergy/reliability';
 import type {
   DragonSynergyProfile,
   SimpleProgressionByDragonId,
@@ -26,6 +27,7 @@ import type {
 import {
   ROSTER_OPTIMIZER_RATING_CONTRACT,
   ROSTER_OPTIMIZER_CONTRACT_VERSION,
+  OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
   RosterOptimizerCancelledError,
   type OptimizerFormationCandidate,
   type OptimizerRosterDragon,
@@ -41,11 +43,16 @@ export function buildOptimizerRosterSnapshot(
   return eligibleRosterDragons(dragons, roster)
     .map((dragon) => {
       const progression = currentRosterProgression(roster[dragon.id]);
+      const reliabilityProgression = reliabilityProgressionFromOwnedDragon(
+        dragon,
+        roster[dragon.id],
+      );
       return {
         dragonId: dragon.id,
         rarity: dragon.rarity,
         starRank: progression.starRank ?? null,
         dragonLevel: progression.dragonLevel ?? null,
+        activeHabitLevels: reliabilityProgression.activeHabitLevels,
       };
     })
     .sort((left, right) => left.dragonId.localeCompare(right.dragonId));
@@ -63,6 +70,9 @@ export function createRosterOptimizerFingerprint(
         dragon.rarity,
         dragon.starRank,
         dragon.dragonLevel,
+        Object.entries(dragon.activeHabitLevels ?? {}).sort(([left], [right]) =>
+          left.localeCompare(right),
+        ),
       ]),
   });
   return stableHash(canonical);
@@ -91,6 +101,7 @@ export function createRosterOptimizerRequestFingerprint(
   return stableHash(JSON.stringify({
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
     ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
+    relationshipValueScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
     strategy,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
     ...powerAwareContract,
@@ -122,6 +133,16 @@ export function generateOptimizerFormationCandidates({
       { starRank: dragon.starRank, dragonLevel: dragon.dragonLevel },
     ]),
   );
+  const reliabilityProgression = Object.fromEntries(
+    sortedSnapshot.map((dragon) => [
+      dragon.dragonId,
+      {
+        starRank: dragon.starRank,
+        dragonLevel: dragon.dragonLevel,
+        activeHabitLevels: dragon.activeHabitLevels ?? {},
+      },
+    ]),
+  );
   const candidates: OptimizerFormationCandidate[] = [];
   let generated = 0;
 
@@ -138,24 +159,25 @@ export function generateOptimizerFormationCandidates({
           sortedSnapshot[third]!.dragonId,
         ] as [string, string, string];
         const initialArrangement = arrangementOf(dragonIds);
-        const initialComparison = compareFormationPlacements({
+        const initialComparison = compareFormationPlacementsV3({
           formation: initialArrangement,
           progression,
+          reliabilityProgression,
           profiles,
         });
         if (!initialComparison) continue;
         const bestArrangement = initialComparison.best.arrangement;
-        const comparison = buildPlacementComparison(
+        const comparison = buildPlacementComparisonV3(
           bestArrangement,
           initialComparison.candidates,
         );
         if (!comparison) continue;
-        const relationships = comparison.current.relationships;
-        const rating = rateFormation({
+        const rating = rateFormationV3({
           formation: bestArrangement,
           dragons,
           profiles,
-          relationships,
+          progression,
+          reliabilityProgression,
           placementComparison: comparison,
         });
         if (rating.score === null) continue;
@@ -180,7 +202,7 @@ export function generateOptimizerFormationCandidates({
             ];
           }),
         );
-        const recommendation = buildFormationRecommendation({
+        const recommendation = buildFormationRecommendationV3({
           comparison,
           progression,
           dragonNamesById,
@@ -196,22 +218,19 @@ export function generateOptimizerFormationCandidates({
           recommendation,
           rating,
         });
-        const placementScore = rating.breakdown.find(
-          (item) => item.label === 'Placement Effectiveness',
-        )?.score ?? 0;
+        const placementScore = rating.placementScore;
         if (placementScore !== 20) {
           throw new Error(
             `Optimizer candidate ${dragonIds.join('/')} did not retain a best placement.`,
           );
         }
-        const activeSynergyScore = rating.breakdown.find(
-          (item) => item.label === 'Active Synergy',
-        )?.score ?? 0;
+        const activeSynergyScore = rating.activeSynergy.score;
         const dragonMask = dragonIds.reduce(
           (mask, dragonId) => mask | (1n << BigInt(indexByDragonId.get(dragonId)!)),
           0n,
         );
         candidates.push({
+          ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
           stableCandidateKey: stableCandidateKey(dragonIds, bestArrangement),
           dragonIds,
           dragonMask,
@@ -221,14 +240,28 @@ export function generateOptimizerFormationCandidates({
           tier: rating.tier,
           activeSynergyScore,
           placementScore,
-          activeRelationshipValue: relationshipValue(canonicalRelationships),
+          adjustedRelationshipValue: rating.adjustedUncappedRelationshipValue,
+          adjustedRelationshipValueUnits: optimizerRelationshipValueUnits(
+            rating.adjustedUncappedRelationshipValue,
+          ),
           activeRelationshipCount: rating.activeRelationshipCount,
-          participatingDragonCount: rating.participatingDragonCount,
-          relationships: canonicalRelationships,
+          quantifiedRelationshipCount: rating.quantifiedRelationshipCount,
+          unquantifiedRelationshipCount: rating.unquantifiedRelationshipCount,
+          unquantifiedBasePotential: rating.unquantifiedBasePotential,
+          reliabilityCoverage: rating.reliabilityCoverage,
+          participatingDragonCount: rating.participatingDragonIds.length,
+          relationships: rating.relationships,
           strengths: findings.keyStrengths,
           gaps: findings.keyGaps,
           progressionSnapshot: Object.fromEntries(
-            dragonIds.map((dragonId) => [dragonId, progression[dragonId] ?? {}]),
+            dragonIds.map((dragonId) => [
+              dragonId,
+              {
+                ...(progression[dragonId] ?? {}),
+                activeHabitLevels:
+                  reliabilityProgression[dragonId]?.activeHabitLevels ?? {},
+              },
+            ]),
           ),
         });
       }
@@ -237,6 +270,17 @@ export function generateOptimizerFormationCandidates({
   return candidates.sort((left, right) =>
     left.stableCandidateKey.localeCompare(right.stableCandidateKey),
   );
+}
+
+export function optimizerRelationshipValueUnits(value: number): number {
+  if (!Number.isFinite(value) || value < 0) {
+    throw new RangeError('Optimizer v3 relationship value must be finite and nonnegative.');
+  }
+  const units = Math.round(value * OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE);
+  if (!Number.isSafeInteger(units)) {
+    throw new RangeError('Optimizer v3 relationship units exceed safe-integer bounds.');
+  }
+  return units;
 }
 
 export function stableCandidateKey(

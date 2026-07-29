@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
-  "contextVersion": 2,
-  "generatedAt": "2026-07-23T14:48:50.880Z",
+  "contextVersion": 3,
+  "generatedAt": "2026-07-29T15:13:05.211Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/formation-rating-reliability-notice",
-    "commit": "c76ef66c1278e2c770089bd448bfd00f24138ceb",
-    "databaseVersion": "0.20.3",
+    "branch": "feature/adopt-formation-rating-v3",
+    "commit": "ff0c3dcbb9be259afe3bf6afff777ef691e82ad4",
+    "databaseVersion": "0.21.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -15418,6 +15418,7 @@
       "lockedBlockedAndUnresolvedAreActive": false
     },
     "publicRating": {
+      "contract": "formation-rating-v3",
       "total": 100,
       "categories": {
         "Active Synergy": 80,
@@ -15429,11 +15430,17 @@
         "otherwise": 0
       },
       "tierThresholds": {
-        "Excellent": 80,
-        "Strong": 67,
-        "Solid": 49,
-        "Developing": 25,
+        "Excellent": 66,
+        "Strong": 53,
+        "Solid": 34,
+        "Developing": 5,
         "Weak": 0
+      },
+      "reliability": {
+        "guaranteedAndProvenRetainFullValue": true,
+        "supportedChanceMayReduceContribution": true,
+        "unquantifiedPotentialScored": false,
+        "cumulativeRequiresExactOpportunitiesAndConfirmedIndependence": true
       },
       "incompleteIsValidationGate": true,
       "analysisConfidenceScored": false,
@@ -15444,7 +15451,7 @@
       "meaningfulAbsoluteDelta": 5,
       "meaningfulRelativeDelta": 0.1,
       "meaningfulImprovementWhen": "delta >= 5 && relativeDelta >= 0.10",
-      "meaningfulLossFormula": "round(20 * currentValue / bestValue)",
+      "meaningfulLossFormula": "round(20 * adjustedCurrentValue / adjustedBestValue)",
       "candidateScoring": "Each candidate is scored as though it were the current arrangement.",
       "fullCreditWhen": [
         "best",

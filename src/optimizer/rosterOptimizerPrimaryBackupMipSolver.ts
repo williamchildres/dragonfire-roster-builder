@@ -1,14 +1,17 @@
 import { HiGHS, Model, Solution, Var, sum, type LinExpr } from '@bubblyworld/highs-ts';
 import { applyRosterOptimizerExactGapOptions } from './highsExactOptions';
+import { constantSelectionExpressionValue } from './exactPhaseSkipping';
 import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
 import {
   powerAwarePrimaryBackupObjectiveForCandidates,
   primaryBackupObjectiveForCandidates,
 } from './rosterOptimizerObjective';
 import type { PrimaryPowerCutoff } from './rosterOptimizerPower';
+import { solvePrimaryBackupStableFace } from './rosterOptimizerStableFaceSolver';
 import type {
   OptimizerFormationCandidate,
   OptimizerNumericalExactnessDiagnostics,
+  OptimizerPerformanceProfile,
   OptimizerPhaseObjectiveDiagnostic,
   OptimizerPhaseTimings,
   OptimizerRosterDragon,
@@ -21,12 +24,13 @@ type PhaseCategory = Exclude<keyof OptimizerPhaseTimings, 'modelConstructionMs'>
 
 interface WaveExpressions {
   variables: Var[];
+  ratingUsedVariables: Var[];
   legendaryCount: LinExpr;
   epicCount: LinExpr;
   totalPowerUnits: LinExpr;
   totalRating: LinExpr;
   minimumRating: Var;
-  totalRelationshipValueDoubled: LinExpr;
+  totalRelationshipValueUnits: LinExpr;
   totalActiveRelationships: LinExpr;
 }
 
@@ -44,6 +48,7 @@ interface SolverTelemetry {
   recentSolverLog: string[];
   objectiveReconstructions: OptimizerPhaseObjectiveDiagnostic[];
   fixedPhasesValidated: boolean;
+  performanceProfile: OptimizerPerformanceProfile;
 }
 
 interface SolverSession {
@@ -54,12 +59,33 @@ interface SolverSession {
     eligibleDragons: OptimizerRosterDragon[];
     formationsPerWave: number;
   };
+  lastOptimalSolution: Solution | null;
+  certificationCache: Map<string, CertificationResult>;
 }
+type CertificationResult = Pick<
+  OptimizerPhaseObjectiveDiagnostic,
+  | 'exactOptimumCertified'
+  | 'certificationDirection'
+  | 'certificationBound'
+  | 'certificationStatus'
+  | 'certificationSolverPass'
+>;
 
 type FixedPhase =
-  | { kind: 'scalar'; wave: OptimizerWave; field: ScalarField; value: number }
-  | { kind: 'histogram'; wave: OptimizerWave; levels: number[]; value: number }
-  | { kind: 'stable'; wave: OptimizerWave; indices: number[]; value: number }
+  | {
+      kind: 'scalar';
+      wave: OptimizerWave;
+      field: ScalarField;
+      value: number;
+      implied?: boolean;
+    }
+  | {
+      kind: 'histogram';
+      wave: OptimizerWave;
+      levels: number[];
+      weights: readonly number[];
+      value: number;
+    }
   | { kind: 'dragon-inclusion'; wave: OptimizerWave; dragonId: string; value: number }
   | { kind: 'cutoff-ties'; wave: OptimizerWave; dragonIds: string[]; value: number };
 
@@ -69,13 +95,12 @@ type ScalarField =
   | 'totalPowerUnits'
   | 'totalRating'
   | 'minimumRating'
-  | 'totalRelationshipValueDoubled'
+  | 'totalRelationshipValueUnits'
   | 'totalActiveRelationships';
 
-const histogramChunkSize = 9;
-const stableChunkSize = 49;
 export const OPTIMIZER_VARIABLE_INTEGRALITY_TOLERANCE = 1e-7;
 export const OPTIMIZER_MATERIAL_OBJECTIVE_DELTA = 1e-3;
+const histogramChunkSize = 9;
 
 export interface PowerAwarePrimaryBackupMipOptions {
   primaryCutoff: PrimaryPowerCutoff;
@@ -121,6 +146,14 @@ export async function solvePrimaryBackupRosterOptimizerMip(
     recentSolverLog: [],
     objectiveReconstructions: [],
     fixedPhasesValidated: false,
+    performanceProfile: {
+      modelBuilds: 0,
+      modelConstructionMs: 0,
+      certificationPasses: 0,
+      skippedPhases: 0,
+      prunedVariables: 0,
+      phases: [],
+    },
   };
   const session: SolverSession = {
     highs: await HiGHS.create({
@@ -131,6 +164,8 @@ export async function solvePrimaryBackupRosterOptimizerMip(
     }),
     telemetry,
     problem: { candidates, eligibleDragons, formationsPerWave },
+    lastOptimalSolution: null,
+    certificationCache: new Map(),
   };
   applyRosterOptimizerExactGapOptions(session.highs);
 
@@ -144,7 +179,13 @@ export async function solvePrimaryBackupRosterOptimizerMip(
     );
 
     if (powerAware) {
-      addPrimaryPowerCutoffConstraints(context, candidates, powerAware.primaryCutoff, fixed);
+      addPrimaryPowerCutoffConstraints(
+        context,
+        candidates,
+        powerAware.primaryCutoff,
+        fixed,
+        telemetry,
+      );
     }
 
     if (!powerAware) {
@@ -165,7 +206,7 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       'primary',
       'primaryQualityMs',
     );
-    await maximizeAndFix(context, session, fixed, 'primary', 'totalRelationshipValueDoubled',
+    await maximizeAndFix(context, session, fixed, 'primary', 'totalRelationshipValueUnits',
       'Primary active relationship value', 'primaryQualityMs');
     await maximizeAndFix(context, session, fixed, 'primary', 'totalActiveRelationships',
       'Primary active relationship count', 'primaryQualityMs');
@@ -191,9 +232,9 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       'backup',
       'backupQualityMs',
     );
-    await maximizeAndFix(context, session, fixed, 'backup', 'totalRelationshipValueDoubled',
+    await maximizeAndFix(context, session, fixed, 'backup', 'totalRelationshipValueUnits',
       'Backup active relationship value', 'backupQualityMs');
-    const numericSolution = await maximizeAndFix(
+    const numericPhaseSolution = await maximizeAndFix(
       context,
       session,
       fixed,
@@ -202,75 +243,82 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       'Backup active relationship count',
       'backupQualityMs',
     );
-
-    let primaryIndices = selectedVariableIndices(numericSolution, context.primary.variables);
-    let backupIndices = selectedVariableIndices(numericSolution, context.backup.variables);
-    if (await hasAlternateWaveSelection({
-      candidates,
-      eligibleDragons,
-      formationsPerWave,
-      fixed,
-      wave: 'primary',
-      selectedIndices: primaryIndices,
-      session,
-    })) {
-      primaryIndices = await refineStableWaveKey(
-        context,
-        session,
-        fixed,
-        'primary',
-        formationsPerWave,
-      );
+    const numericSolution = numericPhaseSolution ?? session.lastOptimalSolution;
+    if (!numericSolution) {
+      throw new Error('Exact optimizer completed numeric phases without a solution.');
     }
 
-    const afterPrimary = await solveOptimal(
-      context.model,
-      session,
-      'Primary stable solution key',
-      'stableKeyMs',
+    const numericPrimaryIndices = selectedVariableIndices(
+      numericSolution,
+      context.primary.variables,
     );
-    validateIntegralVariables(
-      afterPrimary,
-      integralModelVariables(context),
-      'Primary stable solution key replay',
+    const numericBackupIndices = selectedVariableIndices(
+      numericSolution,
+      context.backup.variables,
     );
-    primaryIndices = selectedVariableIndices(afterPrimary, context.primary.variables);
-    backupIndices = selectedVariableIndices(afterPrimary, context.backup.variables);
-    if (await hasAlternateWaveSelection({
-      candidates,
-      eligibleDragons,
-      formationsPerWave,
-      fixed,
-      wave: 'backup',
-      selectedIndices: backupIndices,
-      session,
-    })) {
-      backupIndices = await refineStableWaveKey(
-        context,
-        session,
-        fixed,
-        'backup',
-        formationsPerWave,
-      );
-    }
-
-    context.model.minimize(sum(0));
-    const finalSolution = await solveOptimal(
-      context.model,
-      session,
-      'combined stable solution key',
-      'stableKeyMs',
-    );
-    primaryIndices = selectedVariableIndices(finalSolution, context.primary.variables);
-    backupIndices = selectedVariableIndices(finalSolution, context.backup.variables);
-    validateFixedPhases(context, candidates, fixed, finalSolution);
+    validateFixedPhases(context, candidates, fixed, numericSolution);
     telemetry.fixedPhasesValidated = true;
-    const primaryCandidates = primaryIndices.map((index) => candidates[index]!);
-    const backupCandidates = backupIndices.map((index) => candidates[index]!);
-    validateAllocation(primaryCandidates, backupCandidates, formationsPerWave);
     const rarityByDragonId = new Map(
       eligibleDragons.map((dragon) => [dragon.dragonId, dragon.rarity]),
     );
+    const numericPrimaryCandidates = numericPrimaryIndices.map(
+      (index) => candidates[index]!,
+    );
+    const numericBackupCandidates = numericBackupIndices.map(
+      (index) => candidates[index]!,
+    );
+    const numericObjective = powerAware
+      ? powerAwarePrimaryBackupObjectiveForCandidates(
+          numericPrimaryCandidates,
+          numericBackupCandidates,
+          rarityByDragonId,
+          powerAware.estimatesByDragonId,
+        )
+      : primaryBackupObjectiveForCandidates(
+          numericPrimaryCandidates,
+          numericBackupCandidates,
+          rarityByDragonId,
+        );
+    const stableStartedAt = performance.now();
+    const stableFace = solvePrimaryBackupStableFace({
+      candidates,
+      eligibleDragons,
+      primaryTarget: numericObjective.primary,
+      backupTarget: numericObjective.backup,
+      formationsPerWave,
+      primaryPowerUnits: powerAware
+        ? numericPrimaryCandidates.reduce(
+            (total, candidate) => total + (candidate.estimatedPowerUnits ?? 0),
+            0,
+          )
+        : undefined,
+      backupPowerUnits: powerAware
+        ? numericBackupCandidates.reduce(
+            (total, candidate) => total + (candidate.estimatedPowerUnits ?? 0),
+            0,
+          )
+        : undefined,
+      primaryCutoff: powerAware?.primaryCutoff,
+    });
+    if (!stableFace) {
+      throw new Error('Exact optimizer could not reconstruct the numeric-optimal face.');
+    }
+    telemetry.performanceProfile.phases.push({
+      stage: 'Primary/Backup exact optimal-face stable key',
+      category: 'stable-key',
+      solverPass: 0,
+      elapsedMs: performance.now() - stableStartedAt,
+      variableCount: 0,
+      constraintCount: 0,
+      certification: false,
+      exactSearchNodes: stableFace.nodesVisited,
+    });
+    telemetry.nodesVisited += stableFace.nodesVisited;
+    const primaryIndices = stableFace.primaryIndices;
+    const backupIndices = stableFace.backupIndices;
+    const primaryCandidates = primaryIndices.map((index) => candidates[index]!);
+    const backupCandidates = backupIndices.map((index) => candidates[index]!);
+    validateAllocation(primaryCandidates, backupCandidates, formationsPerWave);
     const common = {
       optimal: true,
       primaryCandidates,
@@ -280,6 +328,7 @@ export async function solvePrimaryBackupRosterOptimizerMip(
       cacheEntries: 0,
       solverPasses: telemetry.passes,
       phaseTimings: telemetry.phaseTimings,
+      performanceProfile: telemetry.performanceProfile,
       numericalExactness: numericalExactnessDiagnostics(telemetry),
     } as const;
     if (powerAware) {
@@ -350,6 +399,7 @@ function buildModel(
       eligibleDragons,
       primaryVariables,
       'primary',
+      formationsPerWave,
       minimumCandidateRating,
       maximumCandidateRating,
     ),
@@ -359,6 +409,7 @@ function buildModel(
       eligibleDragons,
       backupVariables,
       'backup',
+      formationsPerWave,
       minimumCandidateRating,
       maximumCandidateRating,
     ),
@@ -371,6 +422,7 @@ function buildWaveExpressions(
   eligibleDragons: OptimizerRosterDragon[],
   variables: Var[],
   wave: OptimizerWave,
+  formationsPerWave: number,
   minimumCandidateRating: number,
   maximumCandidateRating: number,
 ): WaveExpressions {
@@ -391,14 +443,32 @@ function buildWaveExpressions(
     `${wave}_minimum_rating`,
   );
   const bigM = maximumCandidateRating - minimumCandidateRating;
-  candidates.forEach((candidate, index) => {
+  const ratingLevels = [...new Set(candidates.map((candidate) => candidate.rating))]
+    .sort((left, right) => left - right);
+  const ratingUsedVariables = ratingLevels.map((rating) =>
+    model.boolVar(`${wave}_rating_${rating}_used`),
+  );
+  ratingLevels.forEach((rating, ratingIndex) => {
+    const used = ratingUsedVariables[ratingIndex]!;
+    const count = sum(...variables.flatMap((variable, candidateIndex) =>
+      candidates[candidateIndex]!.rating === rating ? [variable] : [],
+    ));
     model.addConstraint(
-      minimumRating.plus(variables[index]!.times(bigM)).leq(candidate.rating + bigM),
-      `${wave}_minimum_${index}`,
+      count.minus(used.times(formationsPerWave)).leq(0),
+      `${wave}_rating_${rating}_used_upper`,
+    );
+    model.addConstraint(
+      count.minus(used).geq(0),
+      `${wave}_rating_${rating}_used_lower`,
+    );
+    model.addConstraint(
+      minimumRating.plus(used.times(bigM)).leq(rating + bigM),
+      `${wave}_minimum_rating_${rating}`,
     );
   });
   return {
     variables,
+    ratingUsedVariables,
     legendaryCount: rarityExpression('Legendary'),
     epicCount: rarityExpression('Epic'),
     totalPowerUnits: sum(
@@ -410,9 +480,9 @@ function buildWaveExpressions(
       ...variables.map((variable, index) => variable.times(candidates[index]!.rating)),
     ),
     minimumRating,
-    totalRelationshipValueDoubled: sum(
+    totalRelationshipValueUnits: sum(
       ...variables.map((variable, index) =>
-        variable.times(Math.round(candidates[index]!.activeRelationshipValue * 2)),
+        variable.times(candidates[index]!.adjustedRelationshipValueUnits),
       ),
     ),
     totalActiveRelationships: sum(
@@ -433,6 +503,23 @@ async function maximizeAndFix(
   category: PhaseCategory,
 ) {
   const expression = context[wave][field];
+  const constantValue = constantScalarPhaseValue(
+    session.problem.candidates,
+    session.problem.eligibleDragons,
+    session.problem.formationsPerWave,
+    field,
+  );
+  if (constantValue !== null) {
+    fixed.push({
+      kind: 'scalar',
+      wave,
+      field,
+      value: constantValue,
+      implied: true,
+    });
+    session.telemetry.performanceProfile.skippedPhases += 1;
+    return session.lastOptimalSolution;
+  }
   context.model.maximize(expression);
   const solution = await solveOptimal(context.model, session, label, category);
   const phase = { kind: 'scalar', wave, field, value: 0 } as const;
@@ -466,7 +553,15 @@ async function refineRatingVector(
     .sort((left, right) => left - right);
   for (let start = 0; start < ratingLevels.length; start += histogramChunkSize) {
     const levels = ratingLevels.slice(start, start + histogramChunkSize);
-    const expression = histogramExpression(candidates, context[wave].variables, levels);
+    const weights = levels.map(
+      (_rating, index) => 6 ** (levels.length - index - 1),
+    );
+    const expression = histogramExpression(
+      candidates,
+      context[wave].variables,
+      levels,
+      weights,
+    );
     context.model.minimize(expression);
     const solution = await solveOptimal(
       context.model,
@@ -474,7 +569,13 @@ async function refineRatingVector(
       `${wave} ascending rating vector`,
       category,
     );
-    const phase = { kind: 'histogram', wave, levels, value: 0 } as const;
+    const phase = {
+      kind: 'histogram',
+      wave,
+      levels,
+      weights,
+      value: 0,
+    } as const;
     const value = await reconstructCertifyAndRecord({
       context,
       session,
@@ -491,101 +592,8 @@ async function refineRatingVector(
       chunkEnd: start + levels.length - 1,
     });
     context.model.addConstraint(expression.eq(value), `fix_${wave}_histogram_${start}`);
-    fixed.push({ kind: 'histogram', wave, levels, value });
+    fixed.push({ kind: 'histogram', wave, levels, weights, value });
   }
-}
-
-async function hasAlternateWaveSelection({
-  candidates,
-  eligibleDragons,
-  formationsPerWave,
-  fixed,
-  wave,
-  selectedIndices,
-  session,
-}: {
-  candidates: OptimizerFormationCandidate[];
-  eligibleDragons: OptimizerRosterDragon[];
-  formationsPerWave: number;
-  fixed: FixedPhase[];
-  wave: OptimizerWave;
-  selectedIndices: number[];
-  session: SolverSession;
-}): Promise<boolean> {
-  const probe = measuredBuildModel(
-    candidates,
-    eligibleDragons,
-    formationsPerWave,
-    session.telemetry,
-  );
-  applyFixedPhases(probe, candidates, fixed);
-  probe.model.addConstraint(
-    sum(...selectedIndices.map((index) => probe[wave].variables[index]!)).leq(
-      formationsPerWave - 1,
-    ),
-    `exclude_${wave}_selection`,
-  );
-  probe.model.minimize(sum(0));
-  const solution = await solveAllowInfeasible(probe.model, session, 'stableKeyMs');
-  if (solution.status === 'infeasible') return false;
-  if (solution.status !== 'optimal') {
-    throw new Error(`Exact optimizer ${wave} stable-key probe ended with ${solution.status}.`);
-  }
-  validateIntegralVariables(
-    solution,
-    integralModelVariables(probe),
-    `${wave} stable-key alternate-selection probe`,
-  );
-  return true;
-}
-
-async function refineStableWaveKey(
-  context: ModelContext,
-  session: SolverSession,
-  fixed: FixedPhase[],
-  wave: OptimizerWave,
-  formationsPerWave: number,
-): Promise<number[]> {
-  const fixedSelected = new Set<number>();
-  let latestSelected: number[] = [];
-  for (let start = 0; start < context[wave].variables.length; start += stableChunkSize) {
-    const indices = integerRange(
-      start,
-      Math.min(context[wave].variables.length - 1, start + stableChunkSize - 1),
-    );
-    const expression = stableExpression(context[wave].variables, indices);
-    context.model.maximize(expression);
-    const solution = await solveOptimal(
-      context.model,
-      session,
-      `${wave} stable solution key`,
-      'stableKeyMs',
-    );
-    const phase = { kind: 'stable', wave, indices, value: 0 } as const;
-    const value = await reconstructCertifyAndRecord({
-      context,
-      session,
-      fixed,
-      solution,
-      expression,
-      phase,
-      direction: 'maximize',
-      category: 'stableKeyMs',
-      stage: `${wave} stable solution key`,
-      wave,
-      kind: 'stable',
-      chunkStart: start,
-      chunkEnd: indices.at(-1)!,
-    });
-    context.model.addConstraint(expression.eq(value), `fix_${wave}_stable_${start}`);
-    fixed.push({ kind: 'stable', wave, indices, value });
-    latestSelected = selectedVariableIndices(solution, context[wave].variables);
-    latestSelected
-      .filter((index) => index <= indices.at(-1)!)
-      .forEach((index) => fixedSelected.add(index));
-    if (fixedSelected.size === formationsPerWave) break;
-  }
-  return latestSelected;
 }
 
 function applyFixedPhases(
@@ -594,6 +602,7 @@ function applyFixedPhases(
   fixed: FixedPhase[],
 ): void {
   fixed.forEach((phase, index) => {
+    if (phase.kind === 'scalar' && phase.implied) return;
     const expression = fixedPhaseExpression(context, candidates, phase);
     context.model.addConstraint(expression.eq(phase.value), `replay_fix_${index}`);
   });
@@ -607,10 +616,13 @@ function fixedPhaseExpression(
   return phase.kind === 'scalar'
     ? context[phase.wave][phase.field]
     : phase.kind === 'histogram'
-      ? histogramExpression(candidates, context[phase.wave].variables, phase.levels)
-      : phase.kind === 'stable'
-        ? stableExpression(context[phase.wave].variables, phase.indices)
-        : phase.kind === 'dragon-inclusion'
+      ? histogramExpression(
+          candidates,
+          context[phase.wave].variables,
+          phase.levels,
+          phase.weights,
+        )
+      : phase.kind === 'dragon-inclusion'
           ? dragonInclusionExpression(candidates, context[phase.wave].variables, phase.dragonId)
           : dragonSetInclusionExpression(candidates, context[phase.wave].variables, phase.dragonIds);
 }
@@ -620,6 +632,7 @@ function addPrimaryPowerCutoffConstraints(
   candidates: OptimizerFormationCandidate[],
   cutoff: PrimaryPowerCutoff,
   fixed: FixedPhase[],
+  telemetry: SolverTelemetry,
 ): void {
   for (const dragonId of cutoff.aboveCutoffDragonIds) {
     const expression = dragonInclusionExpression(candidates, context.primary.variables, dragonId);
@@ -645,6 +658,39 @@ function addPrimaryPowerCutoffConstraints(
     wave: 'primary',
     dragonIds: cutoff.cutoffTiedDragonIds,
     value: cutoff.requiredCutoffTieCount,
+  });
+  const excludedPrimaryIndices = candidateIndicesOverlappingDragonIds(
+    candidates,
+    new Set(cutoff.belowCutoffDragonIds),
+  );
+  addCandidateExclusions(
+    context.model,
+    context.primary.variables,
+    excludedPrimaryIndices,
+    'primary_power_cutoff',
+  );
+  telemetry.performanceProfile.prunedVariables += excludedPrimaryIndices.length;
+}
+
+export function candidateIndicesOverlappingDragonIds(
+  candidates: readonly OptimizerFormationCandidate[],
+  dragonIds: ReadonlySet<string>,
+): number[] {
+  return candidates.flatMap((candidate, index) =>
+    candidate.dragonIds.some((dragonId) => dragonIds.has(dragonId))
+      ? [index]
+      : [],
+  );
+}
+
+function addCandidateExclusions(
+  model: Model,
+  variables: Var[],
+  indices: readonly number[],
+  name: string,
+): void {
+  indices.forEach((index) => {
+    model.addConstraint(variables[index]!.eq(0), `${name}_${index}`);
   });
 }
 
@@ -674,23 +720,18 @@ function histogramExpression(
   candidates: OptimizerFormationCandidate[],
   variables: Var[],
   levels: number[],
+  weights: readonly number[] = levels.map(
+    (_rating, index) => 6 ** (levels.length - index - 1),
+  ),
 ): LinExpr {
   const coefficientByRating = new Map(
-    levels.map((rating, index) => [rating, 6 ** (levels.length - index - 1)]),
+    levels.map((rating, index) => [rating, weights[index]!]),
   );
   return sum(
     ...candidates.flatMap((candidate, index) => {
       const coefficient = coefficientByRating.get(candidate.rating);
       return coefficient === undefined ? [] : [variables[index]!.times(coefficient)];
     }),
-  );
-}
-
-function stableExpression(variables: Var[], indices: number[]): LinExpr {
-  return sum(
-    ...indices.map((index, offset) =>
-      variables[index]!.times(2 ** (indices.length - offset - 1)),
-    ),
   );
 }
 
@@ -703,6 +744,8 @@ function measuredBuildModel(
   const startedAt = performance.now();
   const context = buildModel(candidates, eligibleDragons, formationsPerWave);
   telemetry.phaseTimings.modelConstructionMs += performance.now() - startedAt;
+  telemetry.performanceProfile.modelBuilds += 1;
+  telemetry.performanceProfile.modelConstructionMs += performance.now() - startedAt;
   return context;
 }
 
@@ -712,25 +755,95 @@ async function solveOptimal(
   stage: string,
   category: PhaseCategory,
 ) {
-  const solution = await solveAllowInfeasible(model, session, category);
+  const solution = await solveAllowInfeasible(model, session, category, stage);
   if (solution.status !== 'optimal') {
     throw new Error(`Exact optimizer ${stage} stage ended with ${solution.status}.`);
   }
+  session.lastOptimalSolution = solution;
   return solution;
+}
+
+function constantScalarPhaseValue(
+  candidates: readonly OptimizerFormationCandidate[],
+  eligibleDragons: readonly OptimizerRosterDragon[],
+  formationsPerWave: number,
+  field: ScalarField,
+): number | null {
+  if (field === 'minimumRating') return null;
+  const rarityByDragonId = new Map(
+    eligibleDragons.map((dragon) => [dragon.dragonId, dragon.rarity]),
+  );
+  const coefficients = candidates.map((candidate) => {
+    if (field === 'legendaryCount' || field === 'epicCount') {
+      const rarity = field === 'legendaryCount' ? 'Legendary' : 'Epic';
+      return candidate.dragonIds.filter(
+        (dragonId) => rarityByDragonId.get(dragonId) === rarity,
+      ).length;
+    }
+    if (field === 'totalPowerUnits') return candidate.estimatedPowerUnits ?? 0;
+    if (field === 'totalRating') return candidate.rating;
+    if (field === 'totalRelationshipValueUnits') {
+      return candidate.adjustedRelationshipValueUnits;
+    }
+    return candidate.activeRelationshipCount;
+  });
+  return constantSelectionExpressionValue(coefficients, formationsPerWave);
 }
 
 async function solveAllowInfeasible(
   model: Model,
   session: SolverSession,
   category: PhaseCategory,
+  stage = 'stable-key alternate-selection probe',
+  certification = false,
 ) {
   session.telemetry.passes += 1;
   session.telemetry.recentSolverLog = [];
   const startedAt = performance.now();
   await session.highs.parse(model.print('lp'), 'lp');
   const solution = new Solution(await session.highs.solve());
-  session.telemetry.phaseTimings[category] += performance.now() - startedAt;
+  const elapsedMs = performance.now() - startedAt;
+  session.telemetry.phaseTimings[category] += elapsedMs;
+  if (certification) session.telemetry.performanceProfile.certificationPasses += 1;
+  session.telemetry.performanceProfile.phases.push({
+    stage,
+    category: primaryBackupProfileCategory(stage, category, certification),
+    solverPass: session.telemetry.passes,
+    elapsedMs,
+    ...modelSize(model),
+    certification,
+  });
   return solution;
+}
+
+function modelSize(model: Model): {
+  variableCount: number;
+  constraintCount: number;
+} {
+  const inventory = model as unknown as {
+    variables: readonly Var[];
+    constraints: readonly unknown[];
+  };
+  return {
+    variableCount: inventory.variables.length,
+    constraintCount: inventory.constraints.length,
+  };
+}
+
+function primaryBackupProfileCategory(
+  stage: string,
+  category: PhaseCategory,
+  certification: boolean,
+): OptimizerPerformanceProfile['phases'][number]['category'] {
+  if (certification) return 'certification';
+  if (category === 'primaryRarityMs' || category === 'backupRarityMs') return 'rarity';
+  if (category === 'primaryPowerMs' || category === 'backupPowerMs') return 'power';
+  if (stage.includes('total Formation Rating')) return 'total-rating';
+  if (stage.includes('minimum Formation Rating')) return 'minimum-rating';
+  if (stage.includes('ascending rating vector')) return 'rating-vector';
+  if (stage.includes('relationship value')) return 'relationship-value';
+  if (stage.includes('relationship count')) return 'relationship-count';
+  return 'stable-key';
 }
 
 function selectedVariableIndices(
@@ -859,6 +972,14 @@ async function certifyExactIntegerOptimum({
 }): Promise<Pick<OptimizerPhaseObjectiveDiagnostic,
   'exactOptimumCertified' | 'certificationDirection' | 'certificationBound'
   | 'certificationStatus' | 'certificationSolverPass'>> {
+  const cacheIdentity = exactCertificationCacheIdentity({
+    fixedConstraints: fixed,
+    objective: phase,
+    direction,
+    reconstructedValue,
+  });
+  const cached = session.certificationCache.get(cacheIdentity);
+  if (cached) return cached;
   const { candidates, eligibleDragons, formationsPerWave } = session.problem;
   const probe = measuredBuildModel(
     candidates,
@@ -876,8 +997,14 @@ async function certifyExactIntegerOptimum({
     `certify_${phase.wave}_${phase.kind}_${session.telemetry.passes + 1}`,
   );
   probe.model.minimize(sum(0));
-  const certificationSolution = await solveAllowInfeasible(probe.model, session, category);
-  return evaluateExactOptimumCertification({
+  const certificationSolution = await solveAllowInfeasible(
+    probe.model,
+    session,
+    category,
+    `${stage} exact-optimum certification`,
+    true,
+  );
+  const result = evaluateExactOptimumCertification({
     solution: certificationSolution,
     expression,
     integerVariables: integralModelVariables(probe),
@@ -886,6 +1013,17 @@ async function certifyExactIntegerOptimum({
     stage,
     solverPass: session.telemetry.passes,
   });
+  session.certificationCache.set(cacheIdentity, result);
+  return result;
+}
+
+export function exactCertificationCacheIdentity(input: {
+  fixedConstraints: readonly unknown[];
+  objective: unknown;
+  direction: 'maximize' | 'minimize';
+  reconstructedValue: number;
+}): string {
+  return JSON.stringify(input);
 }
 
 export function evaluateExactOptimumCertification({
@@ -1059,7 +1197,9 @@ function exactExpressionValue(
 function integralModelVariables(context: ModelContext): Var[] {
   return [
     ...context.primary.variables,
+    ...context.primary.ratingUsedVariables,
     ...context.backup.variables,
+    ...context.backup.ratingUsedVariables,
     context.primary.minimumRating,
     context.backup.minimumRating,
   ];
@@ -1137,8 +1277,4 @@ function maximumConstraintViolation(model: Model, solution: Solution): number {
         ? Math.max(0, constraint.rhs - actual)
         : Math.abs(actual - constraint.rhs);
   }));
-}
-
-function integerRange(start: number, end: number): number[] {
-  return Array.from({ length: Math.max(0, end - start + 1) }, (_, index) => start + index);
 }

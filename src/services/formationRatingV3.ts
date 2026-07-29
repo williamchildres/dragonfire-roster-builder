@@ -13,11 +13,11 @@ import type {
 } from '../synergy/types';
 import {
   assessFormationConfidence,
-  tierForScore,
   type FormationAnalysisConfidence,
   type FormationRatingBreakdownItem,
   type FormationRatingTier,
 } from './formationRating';
+import { tierForFormationRatingV3 } from './formationRatingTierV3';
 import {
   compareFormationPlacementsV3,
   type FormationPlacementComparisonV3,
@@ -73,23 +73,31 @@ export function rateFormationV3({
   profiles,
   progression,
   reliabilityProgression,
+  placementComparison: suppliedPlacementComparison,
 }: {
   formation: SimpleFormation;
   dragons: Dragon[];
   profiles: DragonSynergyProfile[];
   progression: SimpleProgressionByDragonId;
   reliabilityProgression: ReliabilityProgressionByDragonId;
+  /**
+   * Callers that already evaluated all six placements may reuse that exact
+   * result. Audits omit this value so their recomputation remains independent.
+   */
+  placementComparison?: FormationPlacementComparisonV3;
 }): FormationRatingV3Result {
-  const relationships = evaluateFormationRelationshipsV3({
-    input: { formation, progression, reliabilityProgression },
-    profiles,
-  });
-  const placementComparison = compareFormationPlacementsV3({
-    formation,
-    progression,
-    reliabilityProgression,
-    profiles,
-  });
+  const relationships = suppliedPlacementComparison?.current.relationships ??
+    evaluateFormationRelationshipsV3({
+      input: { formation, progression, reliabilityProgression },
+      profiles,
+    });
+  const placementComparison = suppliedPlacementComparison ??
+    compareFormationPlacementsV3({
+      formation,
+      progression,
+      reliabilityProgression,
+      profiles,
+    });
   const confidence = assessFormationConfidence(formation, dragons, profiles);
   const active = scoreActiveSynergyV3(relationships);
   const quantifiedRelationshipCount = relationships.filter(
@@ -103,7 +111,7 @@ export function rateFormationV3({
   const placementScore = placementComparison?.placementScore ?? 0;
   const complete = confidence.status === 'complete' && placementComparison !== null;
   const score = complete ? clamp(active.score + placementScore, 0, 100) : null;
-  const tier = score === null ? 'Incomplete' : tierForScore(score);
+  const tier = score === null ? 'Incomplete' : tierForFormationRatingV3(score);
   return {
     contract: FORMATION_RATING_V3_CONTRACT,
     score,

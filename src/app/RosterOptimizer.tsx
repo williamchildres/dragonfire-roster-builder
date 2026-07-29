@@ -22,8 +22,22 @@ import {
   type RosterOptimizationResult,
   type RosterOptimizerStrategy,
 } from '../optimizer/rosterOptimizerTypes';
-import type { FormationArrangement } from '../services/formationPlacementComparison';
+import type { FormationArrangement } from '../services/formationArrangement';
+import type {
+  FormationRelationshipV3,
+} from '../synergy/reliability';
 import { AppLink, type NavigateToRoute } from './appRouter';
+import {
+  candidateAbilityLabels,
+  candidateAdjustedValue,
+  mixedUseLabels,
+  nonSharedRequirementLabels,
+  relationshipClassLabel,
+  reliabilityMethodLabels,
+  reliabilityReasonLabels,
+  semanticTagLabel,
+  signalLabel,
+} from './relationshipReliabilityPresentation';
 
 export const DEFAULT_ROSTER_OPTIMIZER_STRATEGY: RosterOptimizerStrategy =
   'power-aware-primary-five-backup-five';
@@ -143,7 +157,7 @@ export function RosterOptimizer({
         <Metric label="Rare" value={eligibleCounts.Rare} />
       </div>
       <p className="optimizer-policy-note">
-        Recommendations use your owned dragons, current Star Ranks, and Dragon Levels. Habit Levels are preserved but do not change synergy ranking.{' '}
+        Recommendations use your owned dragons, current Star Ranks, Dragon Levels, and saved Habit Levels. Missing required progression remains unquantified.{' '}
         <AppLink route="about" navigate={onNavigate}>How recommendations are built</AppLink>
       </p>
 
@@ -330,6 +344,11 @@ function BestTenResult({
       <Metric label="Legendary used" value={result.usedRarityCounts.Legendary} />
       <Metric label="Epic used" value={result.usedRarityCounts.Epic} />
       <Metric label="Rare used" value={result.usedRarityCounts.Rare} />
+      <Metric label="Adjusted relationship value" value={result.collection.totalRelationshipValue} />
+      <Metric label="Evidence-backed relationships" value={result.collection.totalActiveRelationships} />
+      <Metric label="Quantified relationships" value={result.collection.quantifiedRelationshipCount} />
+      <Metric label="Unquantified relationships" value={result.collection.unquantifiedRelationshipCount} />
+      <Metric label="Unquantified base potential" value={result.collection.unquantifiedBasePotential} />
     </div>
     <p className="optimizer-allocation-note">All ten formations are optimized as one equally weighted non-overlapping collection.</p>
     <div className="optimizer-formation-grid">
@@ -387,7 +406,10 @@ function PrimaryBackupResult({
         <Metric label="Total rating" value={result.combined.totalRating} />
         <Metric label="Average" value={result.combined.averageRating.toFixed(1)} />
         <Metric label="Unique dragons" value={result.usedDragonIds.length} />
-        <Metric label="Active relationships" value={result.combined.totalActiveRelationships} />
+        <Metric label="Evidence-backed relationships" value={result.combined.totalActiveRelationships} />
+        <Metric label="Quantified relationships" value={result.combined.quantifiedRelationshipCount} />
+        <Metric label="Unquantified relationships" value={result.combined.unquantifiedRelationshipCount} />
+        <Metric label="Unquantified base potential" value={result.combined.unquantifiedBasePotential} />
       </div>
     </section>
   </>;
@@ -429,8 +451,11 @@ function WaveSection({
         <Metric label="Legendary" value={wave.rarityCounts.Legendary} />
         <Metric label="Epic" value={wave.rarityCounts.Epic} />
         <Metric label="Rare" value={wave.rarityCounts.Rare} />
-        <Metric label="Relationship value" value={wave.totalRelationshipValue} />
-        <Metric label="Active relationships" value={wave.totalActiveRelationships} />
+        <Metric label="Adjusted relationship value" value={wave.totalRelationshipValue} />
+        <Metric label="Evidence-backed relationships" value={wave.totalActiveRelationships} />
+        <Metric label="Quantified relationships" value={wave.quantifiedRelationshipCount} />
+        <Metric label="Unquantified relationships" value={wave.unquantifiedRelationshipCount} />
+        <Metric label="Unquantified base potential" value={wave.unquantifiedBasePotential} />
         {'powerConfidenceCounts' in wave ? <>
           <Metric label="Observed Power" value={wave.powerConfidenceCounts.observed} />
           <Metric label="Modeled Power" value={wave.powerConfidenceCounts.modeled} />
@@ -554,7 +579,14 @@ function OptimizerFormationCard({
           );
         })}
       </dl>
-      <p className="optimizer-relationship-count">{formation.activeRelationshipCount} active semantic {formation.activeRelationshipCount === 1 ? 'relationship' : 'relationships'}</p>
+      <p className="optimizer-relationship-count">
+        {formation.activeRelationshipCount} evidence-backed {formation.activeRelationshipCount === 1 ? 'relationship' : 'relationships'}
+        {' · '}
+        {formation.quantifiedRelationshipCount} quantified
+        {formation.unquantifiedRelationshipCount > 0
+          ? ` · ${formation.unquantifiedRelationshipCount} unquantified`
+          : ''}
+      </p>
       {formation.strengths[0] ? <p className="optimizer-strength"><strong>Key strength:</strong> {formation.strengths[0].summary}</p> : null}
       {formation.gaps.length > 0 ? (
         <ul className="optimizer-gaps" aria-label="Important gaps">
@@ -567,8 +599,13 @@ function OptimizerFormationCard({
       <details>
         <summary>Relationship details</summary>
         <ul>
-          {formation.relationships.filter((relationship) => relationship.marginalValue > 0).map((relationship) => (
-            <li key={relationship.id}>{relationship.summary}</li>
+          {formation.relationships.map((relationship) => (
+            <li key={relationship.id}>
+              <OptimizerRelationshipDetail
+                relationship={relationship}
+                dragonsById={dragonsById}
+              />
+            </li>
           ))}
         </ul>
       </details>
@@ -577,6 +614,168 @@ function OptimizerFormationCard({
       </button>
     </article>
   );
+}
+
+export function OptimizerRelationshipDetail({
+  relationship,
+  dragonsById,
+}: {
+  relationship: FormationRelationshipV3;
+  dragonsById: ReadonlyMap<string, Dragon>;
+}) {
+  const selectedTrace = relationship.candidateTraces.find(
+    (trace) => trace.candidate.id === relationship.selectedCandidateId,
+  );
+  const simultaneousUses = [
+    ...(selectedTrace ? mixedUseLabels(selectedTrace.provider, dragonsById) : []),
+    ...(selectedTrace ? mixedUseLabels(selectedTrace.beneficiary, dragonsById) : []),
+  ];
+  const nonSharedRequirements = selectedTrace
+    ? nonSharedRequirementLabels(selectedTrace, dragonsById)
+    : [];
+  return (
+    <>
+      <p>
+        <strong>{semanticTagLabel(relationship)}</strong>
+        {' · '}
+        {relationshipClassLabel(relationship)}
+        {' · '}
+        {relationship.quantification.status === 'quantified'
+          ? `${formatPercent(relationship.quantification.reliability)} reliability`
+          : 'Unquantified'}
+      </p>
+      <p>
+        {dragonsById.get(relationship.providerDragonId)?.name ??
+          relationship.providerDragonId}
+        {' → '}
+        {dragonsById.get(relationship.beneficiaryDragonId)?.name ??
+          relationship.beneficiaryDragonId}
+      </p>
+      <dl className="optimizer-relationship-metrics">
+        <div><dt>Base value</dt><dd>{formatRelationshipValue(relationship.baseValue)}</dd></div>
+        <div>
+          <dt>Final contribution</dt>
+          <dd>{formatRelationshipValue(relationship.adjustedMarginalValue)}</dd>
+        </div>
+        <div><dt>Redundancy rank</dt><dd>{relationship.redundancyRank}</dd></div>
+      </dl>
+      {relationship.quantification.status === 'quantified' ? (
+        <p>
+          {reliabilityMethodLabels[relationship.quantification.method]}:{' '}
+          {relationship.quantification.explanation}
+        </p>
+      ) : (
+        <>
+          <p>
+            Base potential {formatRelationshipValue(relationship.unquantifiedBasePotential)};
+            numeric contribution 0. Unconditional reliability is unresolved:{' '}
+            {reliabilityReasonLabels[relationship.quantification.reason]}.
+          </p>
+          {relationship.quantification.conditionalProbabilities?.length ? (
+            <p>
+              Conditional per-opportunity probability:{' '}
+              {relationship.quantification.conditionalProbabilities
+                .map(formatPercent)
+                .join(', ')}.
+            </p>
+          ) : null}
+          <p>{relationship.quantification.explanation}</p>
+        </>
+      )}
+      {simultaneousUses.length > 0 ? (
+        <>
+          <p>Simultaneous uses:</p>
+          <ul>
+            {simultaneousUses.map((use, index) => (
+              <li key={`${use.label}:${index}`}>
+                {use.label}{use.selected ? ' — supplied the supported lower bound' : ''}
+              </li>
+            ))}
+          </ul>
+          <p>
+            One relationship base value is used. Use probabilities are not added or averaged.
+          </p>
+        </>
+      ) : null}
+      {(selectedTrace?.sharedRequirementIds.length ?? 0) > 0 ? (
+        <p>
+          Shared activation counted once; distinct provider and beneficiary
+          requirements remain required
+          {nonSharedRequirements.length > 0
+            ? ` (${nonSharedRequirements.join(', ')})`
+            : ''}.
+        </p>
+      ) : null}
+      {selectedTrace ? (
+        <p>
+          Selected signals: {signalLabel(selectedTrace, 'provider', dragonsById)}
+          {' → '}
+          {signalLabel(selectedTrace, 'beneficiary', dragonsById)}.
+        </p>
+      ) : null}
+      <details>
+        <summary>Retained alternatives ({relationship.candidateTraces.length})</summary>
+        <ol className="optimizer-retained-alternatives">
+          {relationship.candidateTraces.map((trace) => {
+            const selected = trace.candidate.id === relationship.selectedCandidateId;
+            return (
+              <li key={trace.candidate.id}>
+                <strong>
+                  {candidateAbilityLabels(trace, 'provider', dragonsById).join(' + ')}
+                  {' → '}
+                  {candidateAbilityLabels(trace, 'beneficiary', dragonsById).join(' + ')}
+                </strong>
+                {' · '}
+                {trace.candidate.resultKind === 'setup-payoff'
+                  ? 'Setup payoff'
+                  : 'Amplifier output'}
+                {' · '}
+                {trace.quantification.status === 'quantified'
+                  ? `${formatPercent(trace.quantification.reliability)} · ${reliabilityMethodLabels[trace.quantification.method]}`
+                  : `Unquantified · ${reliabilityReasonLabels[trace.quantification.reason]}`}
+                {' · adjusted value '}
+                {formatRelationshipValue(candidateAdjustedValue(relationship, trace))}
+                {' · '}
+                {selected ? 'Selected' : 'Not selected'}. {trace.selectionReason}
+              </li>
+            );
+          })}
+        </ol>
+      </details>
+      <details>
+        <summary>Technical trace</summary>
+        <p>
+          Components: {relationship.componentIds.join(', ') || 'none'}. Events:{' '}
+          {relationship.eventIds.join(', ') || 'none'}.
+        </p>
+        <p>
+          Selected signals: {relationship.selectedProviderSignalId} →{' '}
+          {relationship.selectedBeneficiarySignalId}. Candidate:{' '}
+          {relationship.selectedCandidateId}. Probability variants:{' '}
+          {relationship.probabilityVariantIds.join(', ') || 'none'}.
+        </p>
+        {relationship.candidateTraces.map((trace) => (
+          <p key={trace.candidate.id}>
+            Candidate {trace.candidate.id}. Provider signal {trace.provider.signalId};
+            beneficiary signal {trace.beneficiary.signalId}. Components{' '}
+            {trace.componentIds.join(', ') || 'none'}; events{' '}
+            {trace.eventIds.join(', ') || 'none'}; variants{' '}
+            {trace.probabilityVariantIds.join(', ') || 'none'}; uses{' '}
+            {[...trace.provider.useIds, ...trace.beneficiary.useIds].join(', ') || 'none'};
+            paths {[...trace.provider.pathIds, ...trace.beneficiary.pathIds].join(', ') || 'none'}.
+          </p>
+        ))}
+      </details>
+    </>
+  );
+}
+
+function formatPercent(value: number): string {
+  return `${Math.round(value * 10_000) / 100}%`;
+}
+
+function formatRelationshipValue(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(3);
 }
 
 function Methodology({ strategy }: { strategy: RosterOptimizerStrategy }) {
@@ -591,7 +790,7 @@ function Methodology({ strategy }: { strategy: RosterOptimizerStrategy }) {
             <li>Estimated Power is empirical and unofficial. It is not combat simulation or an official game formula.</li>
             <li>Backup Estimated Power is optimized only after every Primary numeric quality objective is fixed.</li>
             <li>Power and the 0–100 Formation Rating remain separate; no weighted blend is used.</li>
-            <li>Rarity and confidence are diagnostics only. Habit Levels are not used.</li>
+            <li>Rarity and power confidence are diagnostics only. Formation reliability uses the saved Habit Levels from My Roster.</li>
           </ul>
         ) : strategy === 'primary-five-backup-five' ? (
           <ul>
@@ -599,16 +798,16 @@ function Methodology({ strategy }: { strategy: RosterOptimizerStrategy }) {
             <li>Primary Legendary inclusion is prioritized before Epic and Rare, then Primary formation quality is optimized.</li>
             <li>Backup uses dragons not used by Primary. Exactly tied Primary results are decided by the strongest possible Backup set.</li>
             <li>No dragon is repeated across the five Primary and five Backup formations.</li>
-            <li>Every trio checks all six placements and reuses Formation Rating v2 unchanged.</li>
-            <li>Star Rank and Dragon Level are respected. Habit Levels are preserved but unweighted.</li>
+            <li>Every trio checks all six placements with Formation Rating v3 reliability-adjusted value.</li>
+            <li>Star Rank, Dragon Level, and saved Habit Levels are respected.</li>
             <li>No combat simulation occurs.</li>
           </ul>
         ) : (
           <ul>
             <li>All ten formations are optimized together as one collection with no dragon reuse.</li>
             <li>Legendary inclusion is prioritized over Epic; Epic is prioritized over Rare.</li>
-            <li>Every trio checks all six placements and reuses Formation Rating v2 unchanged.</li>
-            <li>Star Rank and Dragon Level are respected. Habit Levels are preserved but unweighted.</li>
+            <li>Every trio checks all six placements with Formation Rating v3 reliability-adjusted value.</li>
+            <li>Star Rank, Dragon Level, and saved Habit Levels are respected.</li>
             <li>No combat simulation occurs.</li>
           </ul>
         )}

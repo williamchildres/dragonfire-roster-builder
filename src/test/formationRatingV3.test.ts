@@ -4,6 +4,7 @@ import { dragons } from '../data/dragons';
 import type { OwnedDragon } from '../models/dragon';
 import {
   buildPlacementComparisonV3,
+  compareFormationPlacementsV3,
   placementScoreForV3,
   type PlacementCandidateV3,
 } from '../services/formationPlacementComparisonV3';
@@ -200,9 +201,42 @@ describe('Formation Rating v3 placement and engine isolation', () => {
     });
   });
 
-  it('leaves the optimizer explicitly pinned to Formation Rating v2', () => {
-    expect(ROSTER_OPTIMIZER_CONTRACT_VERSION).toBe(3);
-    expect(ROSTER_OPTIMIZER_RATING_CONTRACT).toBe('formation-rating-v2');
+  it('adopts Formation Rating v3 in optimizer contract 4', () => {
+    expect(ROSTER_OPTIMIZER_CONTRACT_VERSION).toBe(4);
+    expect(ROSTER_OPTIMIZER_RATING_CONTRACT).toBe('formation-rating-v3');
+  });
+
+  it('reuses an already evaluated placement result without changing the rating', () => {
+    const formation: SimpleFormation = {
+      'left-flank': 'tairax',
+      vanguard: 'crimson',
+      'right-flank': 'velar',
+    };
+    const progression = simpleProgression(formation);
+    const reliability = reliabilityProgression(formation);
+    const placementComparison = compareFormationPlacementsV3({
+      formation,
+      progression,
+      reliabilityProgression: reliability,
+      profiles: simpleSynergyProfiles,
+    })!;
+    const direct = rateFormationV3({
+      formation,
+      dragons,
+      profiles: simpleSynergyProfiles,
+      progression,
+      reliabilityProgression: reliability,
+    });
+    const reused = rateFormationV3({
+      formation,
+      dragons,
+      profiles: simpleSynergyProfiles,
+      progression,
+      reliabilityProgression: reliability,
+      placementComparison,
+    });
+    expect(reused).toEqual(direct);
+    expect(reused.relationships).toBe(placementComparison.current.relationships);
   });
 });
 

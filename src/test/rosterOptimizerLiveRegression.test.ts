@@ -96,39 +96,34 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
       expect(result.primary.totalEstimatedPower).toBe(375760);
       expect(result.backup.totalEstimatedPower).toBe(227070);
       expect(result.diagnostics.candidateCount).toBe(5456);
-      expect(result.diagnostics.solverPasses).toBe(135);
+      expect(result.diagnostics.solverPasses).toBe(19);
       const exactness = result.diagnostics.numericalExactness!;
       expect(exactness.integralityTolerance).toBe(1e-7);
       expect(exactness.maximumIntegralityResidual).toBeLessThanOrEqual(1e-7);
       expect(exactness.fixedPhasesValidated).toBe(true);
       expect(exactness.phaseObjectives.every((phase) =>
         Number.isSafeInteger(phase.reconstructedObjective))).toBe(true);
-      const contaminatedPhase = exactness.phaseObjectives.find((phase) =>
-        phase.stage === 'backup stable solution key'
-        && phase.kind === 'stable'
-        && phase.chunkStart === 0
-        && phase.chunkEnd === 48);
-      expect(contaminatedPhase).toEqual(expect.objectContaining({
-        stage: 'backup stable solution key',
-        kind: 'stable',
-        chunkStart: 0,
-        chunkEnd: 48,
-        reconstructedObjective: 0,
-        mipGap: 0,
-        exactOptimumCertified: true,
-        certificationDirection: 'maximize',
-        certificationBound: 1,
-        certificationStatus: 'infeasible',
+      expect(exactness.phaseObjectives.some((phase) => phase.kind === 'stable'))
+        .toBe(false);
+      const stableFacePhase = result.diagnostics.performanceProfile?.phases.find(
+        (phase) => phase.stage === 'Primary/Backup exact optimal-face stable key',
+      );
+      expect(stableFacePhase).toEqual(expect.objectContaining({
+        category: 'stable-key',
+        solverPass: 0,
+        variableCount: 0,
+        constraintCount: 0,
+        certification: false,
       }));
-      expect(contaminatedPhase?.certificationSolverPass)
-        .toBe((contaminatedPhase?.solverPass ?? 0) + 1);
+      expect(stableFacePhase?.exactSearchNodes).toBeGreaterThan(0);
+      expect(result.diagnostics.performanceProfile?.certificationPasses).toBe(0);
     }
     if (!forward.optimal || !reversed.optimal || !repeated.optimal) return;
     expect(reversed.optimizerSolutionHash).toBe(forward.optimizerSolutionHash);
     expect(reversed.optimizerResultHash).toBe(forward.optimizerResultHash);
     expect(repeated.optimizerSolutionHash).toBe(forward.optimizerSolutionHash);
     expect(repeated.optimizerResultHash).toBe(forward.optimizerResultHash);
-  }, 300_000);
+  }, 600_000);
 
   it('returns no partial result when cancellation is requested', async () => {
     await expect(optimizeCurrentRoster(

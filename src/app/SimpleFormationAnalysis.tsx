@@ -1,32 +1,43 @@
 import type { FormationFindingSet } from '../services/formationFindings';
-import type { FormationPlacementComparison } from '../services/formationPlacementComparison';
-import type { FormationRatingResult } from '../services/formationRating';
+import { dragons } from '../data/dragons';
+import type { FormationPlacementComparisonV3 } from '../services/formationPlacementComparisonV3';
+import type { FormationRatingV3Result } from '../services/formationRatingV3';
 import type { FormationRecommendationResult } from '../services/formationRecommendation';
 import type { EstimatedFormationPower } from '../power/estimatedFormationPower';
 import { ESTIMATED_POWER_MODEL_VERSION } from '../power/generatedDragonPowerModel';
-import type { SemanticRelationship } from '../synergy/semanticRelationships';
+import type {
+  FormationRelationshipV3,
+} from '../synergy/reliability';
+import {
+  candidateAbilityLabels,
+  candidateAdjustedValue,
+  mixedUseLabels,
+  nonSharedRequirementLabels,
+  relationshipClassLabel,
+  reliabilityMethodLabels,
+  reliabilityReasonLabels,
+  semanticTagLabel,
+  signalLabel,
+} from './relationshipReliabilityPresentation';
+
+const canonicalDragonsById = new Map(dragons.map((dragon) => [dragon.id, dragon]));
 
 export function SimpleFormationAnalysis({
   rating,
   estimatedPower,
   dragonNamesById,
-  relationships,
   findings,
   recommendation,
   placementComparison,
 }: {
-  rating: FormationRatingResult;
+  rating: FormationRatingV3Result;
   estimatedPower: EstimatedFormationPower | null;
   dragonNamesById: ReadonlyMap<string, string>;
-  relationships: SemanticRelationship[];
   findings: FormationFindingSet;
   recommendation: FormationRecommendationResult;
-  placementComparison: FormationPlacementComparison | null;
+  placementComparison: FormationPlacementComparisonV3 | null;
 }) {
   const placementStatus = placementStatusLabel(placementComparison);
-  const primaryRelationshipIds = new Set(
-    findings.keyStrengths.flatMap((finding) => finding.semanticRelationshipId ?? []),
-  );
 
   return (
     <section className="panel simple-formation-analysis" aria-labelledby="formation-analysis-title">
@@ -45,7 +56,9 @@ export function SimpleFormationAnalysis({
 
       {rating.score !== null ? (
         <p className="formation-rating-limitations" role="note" aria-label="Formation Rating limitations">
-          Formation Rating measures ability compatibility and placement. It does not currently weight relationships by activation chance, number of rolls, duration, target count, or exact effect magnitude.
+          Formation Rating weights mapped relationships by documented activation reliability.
+          Unquantified potential remains visible but is not added to the score. Reliability is
+          not damage, Recovery magnitude, duration, target count, or battle-win probability.
         </p>
       ) : null}
 
@@ -86,9 +99,15 @@ export function SimpleFormationAnalysis({
       ) : (
         <>
           <dl className="formation-analysis-metrics" aria-label="Formation analysis summary">
-            <Metric label="Active relationships" value={String(rating.activeRelationshipCount)} />
-            <Metric label="Participating dragons" value={`${rating.participatingDragonCount} / 3`} />
-            <Metric label="Key gaps" value={String(findings.keyGaps.length)} />
+            <Metric
+              label="Evidence-backed relationships"
+              value={`${rating.activeRelationshipCount} (${rating.quantifiedRelationshipCount} quantified)`}
+            />
+            <Metric
+              label="Unquantified potential"
+              value={formatValue(rating.unquantifiedBasePotential)}
+            />
+            <Metric label="Reliability coverage" value={coverageLabel(rating.reliabilityCoverage)} />
             <Metric label="Placement status" value={placementStatus} />
           </dl>
 
@@ -133,21 +152,14 @@ export function SimpleFormationAnalysis({
         <details>
           <summary>Relationship details</summary>
           <div className="formation-relationship-trace">
-            {relationships.length === 0 ? (
-              <p className="empty-card-note">No active canonical relationship is mapped.</p>
-            ) : relationships.map((relationship) => (
-              <article className="formation-relationship-item" key={relationship.id}>
-                <div className="formation-relationship-heading">
-                  <strong>{relationship.semanticTag}</strong>
-                  <span>{relationship.relationshipClass}</span>
-                  <span>{formatValue(relationship.marginalValue)} value</span>
-                </div>
-                {!primaryRelationshipIds.has(relationship.id) ? <p>{relationship.summary}</p> : null}
-                <small>
-                  Evidence: {relationship.abilityIds.join(', ')}. Redundancy rank {relationship.redundancyRank}.
-                </small>
-                {relationship.evidenceDetails.map((detail) => <small key={detail}>{detail}</small>)}
-              </article>
+            {rating.relationships.length === 0 ? (
+              <p className="empty-card-note">No mapped relationship is active.</p>
+            ) : rating.relationships.map((relationship) => (
+              <ReliabilityRelationship
+                key={relationship.id}
+                relationship={relationship}
+                dragonNamesById={dragonNamesById}
+              />
             ))}
           </div>
         </details>
@@ -168,9 +180,189 @@ export function SimpleFormationAnalysis({
       </div>
 
       <p className="formation-rating-note">
-        Active Synergy is scored once through canonical provider-to-beneficiary relationships. Kit gaps are diagnostic; this is not a combat simulation.
+        Supported exact opportunities use cumulative probability only when independence is
+        confirmed. Formation Rating is unofficial and explainable, not a combat simulator or
+        a guarantee of the best possible formation.
       </p>
     </section>
+  );
+}
+
+function ReliabilityRelationship({
+  relationship,
+  dragonNamesById,
+}: {
+  relationship: FormationRelationshipV3;
+  dragonNamesById: ReadonlyMap<string, string>;
+}) {
+  const quantified = relationship.quantification.status === 'quantified';
+  const selectedTrace = relationship.candidateTraces.find(
+    (trace) => trace.candidate.id === relationship.selectedCandidateId,
+  );
+  const simultaneousUses = [
+    ...(selectedTrace
+      ? mixedUseLabels(selectedTrace.provider, canonicalDragonsById)
+      : []),
+    ...(selectedTrace
+      ? mixedUseLabels(selectedTrace.beneficiary, canonicalDragonsById)
+      : []),
+  ];
+  const nonSharedRequirements = selectedTrace
+    ? nonSharedRequirementLabels(selectedTrace, canonicalDragonsById)
+    : [];
+  return (
+    <article className="formation-relationship-item">
+      <div className="formation-relationship-heading">
+        <strong>{semanticTagLabel(relationship)}</strong>
+        <span>{relationshipClassLabel(relationship)}</span>
+        <span>{quantified ? 'Quantified' : 'Unquantified'}</span>
+        <span>{formatValue(relationship.adjustedMarginalValue)} contribution</span>
+      </div>
+      <p>
+        {dragonNamesById.get(relationship.providerDragonId) ??
+          relationship.providerDragonId}{' '}
+        →{' '}
+        {dragonNamesById.get(relationship.beneficiaryDragonId) ??
+          relationship.beneficiaryDragonId}
+      </p>
+      <details>
+        <summary>Reliability evidence</summary>
+        <dl className="formation-analysis-metrics">
+          <Metric label="Base value" value={formatValue(relationship.baseValue)} />
+          <Metric
+            label={quantified ? 'Activation reliability' : 'Base potential'}
+            value={
+              relationship.quantification.status === 'quantified'
+                ? `${Math.round(relationship.quantification.reliability * 10_000) / 100}%`
+                : formatValue(relationship.unquantifiedBasePotential)
+            }
+          />
+          <Metric
+            label="Adjusted base"
+            value={formatValue(relationship.adjustedBaseValue)}
+          />
+          <Metric label="Redundancy rank" value={String(relationship.redundancyRank)} />
+        </dl>
+        {relationship.quantification.status === 'quantified' ? (
+          <p>
+            Method: {reliabilityMethodLabels[relationship.quantification.method]}.{' '}
+            {relationship.quantification.explanation}
+          </p>
+        ) : (
+          <>
+            <p>
+              Numeric contribution: 0. Unconditional reliability is unresolved:{' '}
+              {reliabilityReasonLabels[relationship.quantification.reason]}.
+            </p>
+            {relationship.quantification.conditionalProbabilities?.length ? (
+              <p>
+                Conditional per-opportunity probability:{' '}
+                {relationship.quantification.conditionalProbabilities
+                  .map((value) => `${Math.round(value * 10_000) / 100}%`)
+                  .join(', ')}
+              </p>
+            ) : null}
+            <p>{relationship.quantification.explanation}</p>
+          </>
+        )}
+        {selectedTrace ? (
+          <p>
+            Selected signals:{' '}
+            {signalLabel(selectedTrace, 'provider', canonicalDragonsById)}
+            {' → '}
+            {signalLabel(selectedTrace, 'beneficiary', canonicalDragonsById)}.
+          </p>
+        ) : null}
+        {simultaneousUses.length > 0 ? (
+          <>
+            <p>Simultaneous uses:</p>
+            <ul>
+              {simultaneousUses.map((use, index) => (
+                <li key={`${use.label}:${index}`}>
+                  {use.label}{use.selected ? ' — supplied the supported lower bound' : ''}
+                </li>
+              ))}
+            </ul>
+            <p>
+              One relationship base value is used. Use probabilities are not added or averaged.
+            </p>
+          </>
+        ) : null}
+        {(selectedTrace?.sharedRequirementIds.length ?? 0) > 0 ? (
+          <p>
+            Shared activation counted once; distinct provider and beneficiary requirements
+            remain required
+            {nonSharedRequirements.length > 0
+              ? ` (${nonSharedRequirements.join(', ')})`
+              : ''}.
+          </p>
+        ) : null}
+        <p>
+          Candidate selection: {selectedTrace?.selectionReason ?? 'Only supported candidate.'}
+        </p>
+        <details>
+          <summary>Retained alternatives ({relationship.candidateTraces.length})</summary>
+          <ol className="formation-retained-alternatives">
+            {relationship.candidateTraces.map((trace) => {
+              const selected = trace.candidate.id === relationship.selectedCandidateId;
+              return (
+                <li key={trace.candidate.id}>
+                  <strong>
+                    {candidateAbilityLabels(
+                      trace,
+                      'provider',
+                      canonicalDragonsById,
+                    ).join(' + ')}
+                    {' → '}
+                    {candidateAbilityLabels(
+                      trace,
+                      'beneficiary',
+                      canonicalDragonsById,
+                    ).join(' + ')}
+                  </strong>
+                  {' · '}
+                  {trace.candidate.resultKind === 'setup-payoff'
+                    ? 'Setup payoff'
+                    : 'Amplifier output'}
+                  {' · '}
+                  {trace.quantification.status === 'quantified'
+                    ? `${Math.round(trace.quantification.reliability * 10_000) / 100}% · ${reliabilityMethodLabels[trace.quantification.method]}`
+                    : `Unquantified · ${reliabilityReasonLabels[trace.quantification.reason]}`}
+                  {' · adjusted value '}
+                  {formatValue(candidateAdjustedValue(relationship, trace))}
+                  {' · '}
+                  {selected ? 'Selected' : 'Not selected'}. {trace.selectionReason}
+                </li>
+              );
+            })}
+          </ol>
+        </details>
+        <details>
+          <summary>Technical trace</summary>
+          <p>
+            Components: {relationship.componentIds.join(', ') || 'none'}. Events:{' '}
+            {relationship.eventIds.join(', ') || 'none'}.
+          </p>
+          <p>
+            Selected signals: {relationship.selectedProviderSignalId} →{' '}
+            {relationship.selectedBeneficiarySignalId}. Candidate:{' '}
+            {relationship.selectedCandidateId}. Probability variants:{' '}
+            {relationship.probabilityVariantIds.join(', ') || 'none'}.
+          </p>
+          {relationship.candidateTraces.map((trace) => (
+            <p key={trace.candidate.id}>
+              Candidate {trace.candidate.id}. Provider signal {trace.provider.signalId};
+              beneficiary signal {trace.beneficiary.signalId}. Components{' '}
+              {trace.componentIds.join(', ') || 'none'}; events{' '}
+              {trace.eventIds.join(', ') || 'none'}; variants{' '}
+              {trace.probabilityVariantIds.join(', ') || 'none'}; uses{' '}
+              {[...trace.provider.useIds, ...trace.beneficiary.useIds].join(', ') || 'none'};
+              paths {[...trace.provider.pathIds, ...trace.beneficiary.pathIds].join(', ') || 'none'}.
+            </p>
+          ))}
+        </details>
+      </details>
+    </article>
   );
 }
 
@@ -199,7 +391,7 @@ function FindingList({
   );
 }
 
-function placementStatusLabel(comparison: FormationPlacementComparison | null): string {
+function placementStatusLabel(comparison: FormationPlacementComparisonV3 | null): string {
   if (!comparison) return 'Unavailable';
   if (comparison.status === 'better-available') return 'Better arrangement available';
   if (comparison.status === 'tied-best') return 'Tied best';
@@ -207,15 +399,22 @@ function placementStatusLabel(comparison: FormationPlacementComparison | null): 
   return 'Best';
 }
 
-function ratingAriaLabel(rating: FormationRatingResult): string {
+function ratingAriaLabel(rating: FormationRatingV3Result): string {
   return rating.score === null
     ? 'Formation rating unavailable, Incomplete'
     : `Formation rating ${rating.score} out of 100, ${rating.tier}`;
 }
 
 function formatValue(value: number): string {
-  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+  return Number.isInteger(value) ? String(value) : value.toFixed(3);
 }
+
+function coverageLabel(coverage: FormationRatingV3Result['reliabilityCoverage']): string {
+  if (coverage === 'all-quantified') return 'All quantified';
+  if (coverage === 'partially-quantified') return 'Partially quantified';
+  return 'No quantified relationships';
+}
+
 
 function formatPower(value: number): string {
   return new Intl.NumberFormat('en-US').format(value);

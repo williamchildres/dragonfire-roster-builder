@@ -95,9 +95,10 @@ import {
   sanitizeFormation,
   type Formation,
 } from '../services/teamShare';
-import { rateFormation } from '../services/formationRating';
-import { compareFormationPlacements } from '../services/formationPlacementComparison';
-import { buildFormationRecommendation } from '../services/formationRecommendation';
+import { rateFormationV3 } from '../services/formationRatingV3';
+import { compareFormationPlacementsV3 } from '../services/formationPlacementComparisonV3';
+import { buildFormationRecommendationV3 } from '../services/formationRecommendationV3';
+import { reliabilityProgressionForFormation } from '../services/formationReliabilityProgression';
 import { buildFormationFindings } from '../services/formationFindings';
 import { currentRosterProgression, isRosterDragonEligible } from '../services/rosterEligibility';
 import { evaluateFormation } from '../synergy/evaluateFormation';
@@ -1171,6 +1172,17 @@ function FormationBuilderSection({
     [dragonPoolMode, formation, roster],
   );
   const selectedCount = FORMATION_POSITIONS.filter((position) => formation[position]).length;
+  const reliabilityProgression = useMemo(
+    () =>
+      reliabilityProgressionForFormation({
+        formation,
+        dragons,
+        roster,
+        simpleProgression: progression,
+        planningHabitLevel: dragonPoolMode === 'all-star-10' ? 5 : undefined,
+      }),
+    [dragonPoolMode, formation, progression, roster],
+  );
   const simpleResults = useMemo(
     () => selectedCount >= 2
       ? evaluateFormation({
@@ -1215,22 +1227,23 @@ function FormationBuilderSection({
     [formation, signalChipsByPosition],
   );
   const placementComparison = useMemo(
-    () => compareFormationPlacements({
+    () => compareFormationPlacementsV3({
       formation,
       progression,
+      reliabilityProgression,
       profiles: simpleSynergyProfiles,
     }),
-    [formation, progression],
+    [formation, progression, reliabilityProgression],
   );
   const rating = useMemo(
-    () => rateFormation({
+    () => rateFormationV3({
       formation,
       dragons,
       profiles: simpleSynergyProfiles,
-      relationships: semanticRelationships,
-      placementComparison,
+      progression,
+      reliabilityProgression,
     }),
-    [formation, placementComparison, semanticRelationships],
+    [formation, progression, reliabilityProgression],
   );
   const estimatedPower = useMemo(
     () => placementComparison
@@ -1247,7 +1260,7 @@ function FormationBuilderSection({
     [],
   );
   const recommendation = useMemo(
-    () => buildFormationRecommendation({
+    () => buildFormationRecommendationV3({
       comparison: placementComparison,
       progression,
       dragonNamesById,
@@ -1288,7 +1301,10 @@ function FormationBuilderSection({
     <section aria-labelledby="team-title">
       <div className="formation-workspace-header">
         <h2 id="team-title" tabIndex={-1}>Formation Builder</h2>
-        <p>Assign one unique dragon to each position and review curated profile relationships.</p>
+        <p>
+          Assign one unique dragon to each position and review reliability-adjusted
+          relationships. All Dragons planning evaluates unlocked Habits at Level 5.
+        </p>
       </div>
       <div className="toolbar">
         <fieldset className="formation-mode-toggle" aria-label="Formation dragon pool">
@@ -1332,7 +1348,6 @@ function FormationBuilderSection({
         rating={rating}
         estimatedPower={estimatedPower}
         dragonNamesById={dragonNamesById}
-        relationships={semanticRelationships}
         findings={findings}
         recommendation={recommendation}
         placementComparison={placementComparison}
@@ -1489,7 +1504,7 @@ function FormationDragonSelectorDialog({
             <h2 id="formation-dragon-selector-title">Choose a dragon for {positionLabel}</h2>
             <p className="details-summary-line">
               {dragonPoolMode === 'all-star-10'
-                ? 'Showing all dragons at Star Rank 10. Dragon Level and Habit Levels are not forced to maximum.'
+                ? 'Showing all dragons at Star Rank 10 with the existing Dragon Level planning convention; unlocked Habits are evaluated at Level 5.'
                 : 'Showing only dragons saved to your roster.'}
             </p>
           </div>
@@ -1765,21 +1780,21 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
         </section>
 
         <section className="methodology-section panel readable" id="formation-rating-methodology">
-          <p className="eyebrow">Formation Rating v2</p>
+          <p className="eyebrow">Formation Rating v3</p>
           <h3>An explainable 100-point planning score</h3>
           <p className="methodology-formula">
             <strong>Formation Rating</strong> = Active Synergy, maximum 80 + Placement Effectiveness, maximum 20
           </p>
           <p>
-            Active Synergy scores unique canonical provider-to-beneficiary relationships with typed semantic tags. It avoids repeatedly counting the same relationship and applies defined relationship values, caps, and participation behavior.
+            Active Synergy maps canonical provider-to-beneficiary relationships and weights them by documented activation reliability. Guaranteed and statically proven relationships keep full value; supported chance activation may reduce contribution. Conditional or insufficiently documented activation remains unquantified, and its potential is shown without entering the numeric score.
           </p>
           <p>
-            Placement Effectiveness evaluates all six assignments of the selected three dragons and compares the current relationship value with the best arrangement. Small or immaterial differences remain neutral; a placement recommendation appears only when the improvement is meaningful.
+            Placement Effectiveness evaluates all six assignments using reliability-adjusted relationship value. Small or immaterial differences remain neutral; a placement recommendation appears only when the improvement is meaningful.
           </p>
-          <p>Key gaps are diagnostics, not duplicate score penalties. Formation Rating is explainable roster-planning logic, not a combat simulator.</p>
+          <p>Supported cumulative probability is used only for exact opportunities with confirmed independence. Reliability does not measure damage or Recovery magnitude, duration, target count, or win probability. Formation Rating is unofficial, explainable planning logic—not a combat simulator or guarantee of the best possible formation.</p>
           <details>
             <summary>Technical details</summary>
-            <p>The rating uses versioned canonical semantic edges and deterministic placement comparison. Full-roster audits evaluate every ordered three-dragon placement and lock expected output with a release hash.</p>
+            <p>The rating uses versioned reliability bindings, structured probability traces, canonical semantic edges, and deterministic placement comparison. Full-roster audits evaluate every ordered three-dragon placement and lock numeric and full-contract output with separate hashes.</p>
           </details>
         </section>
 

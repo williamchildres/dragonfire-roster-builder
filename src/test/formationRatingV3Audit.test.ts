@@ -4,6 +4,7 @@ import {
   EXPECTED_FORMATION_RATING_V2_HASH,
   EXPECTED_FORMATION_RATING_V3_AUDIT_HASH,
   EXPECTED_FORMATION_RATING_V3_HASH,
+  EXPECTED_FORMATION_RATING_V3_NUMERIC_HASH,
   EXPECTED_FORMATION_RELIABILITY_REGISTRY_HASH,
   EXPECTED_FORMATION_RELIABILITY_RESEARCH_HASH,
   runFormationRatingV3Audit,
@@ -25,6 +26,7 @@ describe('Formation Rating v3 exhaustive audit', () => {
         research: EXPECTED_FORMATION_RELIABILITY_RESEARCH_HASH,
         v2: EXPECTED_FORMATION_RATING_V2_HASH,
         v3: EXPECTED_FORMATION_RATING_V3_HASH,
+        v3Numeric: EXPECTED_FORMATION_RATING_V3_NUMERIC_HASH,
       });
       expect(report.deterministicAuditHash).toBe(
         EXPECTED_FORMATION_RATING_V3_AUDIT_HASH,
@@ -32,6 +34,24 @@ describe('Formation Rating v3 exhaustive audit', () => {
       expect(report.reliabilitySummary.quantifiedRelationshipCount).toBeGreaterThan(0);
       expect(report.reliabilitySummary.unquantifiedRelationshipCount).toBeGreaterThan(0);
       expect(report.representativeVelarCases).toHaveLength(3);
+      expect(report.tierCalibration).toMatchObject({
+        selectedThresholds: {
+          Excellent: 66,
+          Strong: 53,
+          Solid: 34,
+          Developing: 5,
+        },
+        postCalibrationCounts: {
+          Excellent: 381,
+          Strong: 3266,
+          Solid: 14116,
+          Developing: 12822,
+          Weak: 2151,
+        },
+      });
+      expect(report.tierCalibration.derivedThresholds).toEqual(
+        report.tierCalibration.selectedThresholds,
+      );
       expect(
         report.representativeVelarCases.every((entry) => entry.placements.length === 6),
       ).toBe(true);

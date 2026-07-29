@@ -258,17 +258,31 @@ export function maxedRoster(): Record<string, OwnedDragon> {
       starRank: 10,
       reignLevel: 16,
       notes: '',
-      habitLevels: {},
+      habitLevels: Object.fromEntries(dragon.habits.map((habit) => [habit.id, 5])),
     }]),
   );
 }
 
 export function mixedProgressionRoster(): Record<string, OwnedDragon> {
-  return {
+  const roster: Record<string, OwnedDragon> = {
     ...archivedMixedProgressionRoster(),
     sunfyre: ownedProgression('sunfyre', 2, 25),
     tairax: ownedProgression('tairax', 2, 25),
   };
+  dragons.forEach((dragon, dragonIndex) => {
+    const entry = roster[dragon.id];
+    if (!entry) return;
+    entry.habitLevels = Object.fromEntries(
+      dragon.habits
+        .filter((habit) => (habit.unlockStarRank ?? 1) <= (entry.starRank ?? 0))
+        .filter((_habit, habitIndex) => (dragonIndex + habitIndex) % 5 !== 0)
+        .map((habit, habitIndex) => [
+          habit.id,
+          (1 + ((dragonIndex + habitIndex) % 5)) as 1 | 2 | 3 | 4 | 5,
+        ]),
+    );
+  });
+  return roster;
 }
 
 export function allOneRoster(): Record<string, OwnedDragon> {
@@ -279,7 +293,11 @@ export function allOneRoster(): Record<string, OwnedDragon> {
       starRank: 1,
       reignLevel: 1,
       notes: '',
-      habitLevels: {},
+      habitLevels: Object.fromEntries(
+        dragon.habits
+          .filter((habit) => (habit.unlockStarRank ?? 1) <= 1)
+          .map((habit) => [habit.id, 1]),
+      ),
     }]),
   );
 }
