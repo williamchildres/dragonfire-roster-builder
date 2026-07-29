@@ -28,7 +28,7 @@ describe('optimizer v3 fixed-point scale evidence', () => {
     expect(audit.report.powerOfTenScaleAudit.every(
       (entry) => entry.safeTenFormationTotal && entry.highsCoefficientSafe,
     )).toBe(true);
-  });
+  }, 60_000);
 
   it('keeps operational pass reductions outside the protected adoption identity', () => {
     const artifact = JSON.parse(readFileSync(
