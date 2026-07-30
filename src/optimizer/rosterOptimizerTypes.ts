@@ -11,10 +11,15 @@ import type {
   EstimatedPowerConfidence,
 } from '../power/estimatedDragonPower';
 
-export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 4 as const;
+export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 5 as const;
 export const ROSTER_OPTIMIZER_RATING_CONTRACT = 'formation-rating-v3' as const;
 export const OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE = 1_000_000 as const;
+export const OPTIMIZER_MIN_FORMATION_COUNT = 1 as const;
+export const OPTIMIZER_MAX_FORMATION_COUNT = 11 as const;
+export const OPTIMIZER_DEFAULT_FORMATION_COUNT = 10 as const;
+/** @deprecated Historical v0.21 fixed-size contract. */
 export const OPTIMIZER_FORMATION_COUNT = 10;
+/** @deprecated Historical v0.21 fixed-size contract. */
 export const OPTIMIZER_DRAGON_COUNT = 30;
 export const OPTIMIZER_WAVE_FORMATION_COUNT = 5;
 export const OPTIMIZER_WAVE_DRAGON_COUNT = 15;
@@ -23,6 +28,14 @@ export type RosterOptimizerStrategy =
   | 'power-aware-primary-five-backup-five'
   | 'primary-five-backup-five'
   | 'best-ten-overall';
+
+export type OptimizerAllocationMode =
+  | 'strongest-first'
+  | 'balanced';
+
+export type OptimizerRunProgress =
+  | { stage: 'candidate-generation'; allocationMode: OptimizerAllocationMode; formationCount: number }
+  | { stage: 'exact-solving'; allocationMode: OptimizerAllocationMode; formationCount: number };
 
 export type OptimizerWave = 'primary' | 'backup';
 
@@ -209,6 +222,17 @@ export interface OptimizerSearchDiagnostics {
   numericalExactness?: OptimizerNumericalExactnessDiagnostics;
 }
 
+export interface FlexiblePowerAwareObjective {
+  allocationMode: OptimizerAllocationMode;
+  ascendingEstimatedPowerUnits: number[];
+  ascendingEstimatedPowerVector: number[];
+  ascendingRatingVector: number[];
+  totalRelationshipValue: number;
+  totalRelationshipValueUnits: number;
+  totalActiveRelationships: number;
+  stableSolutionKey: string;
+}
+
 export type RarityCountRecord = Record<DragonRarity, number>;
 export type TierDistribution = Record<FormationRatingTier, number>;
 
@@ -297,6 +321,39 @@ export interface PowerAwareOptimizedFormation extends OptimizedFormation {
   powerConfidenceCounts: PowerConfidenceCountRecord;
 }
 
+export interface FlexiblePowerAwareCollectionSummary
+  extends OptimizerCollectionSummary {
+  totalEstimatedPower: number;
+  averageEstimatedPower: number;
+  minimumFormationEstimatedPower: number;
+  maximumFormationEstimatedPower: number;
+  estimatedPowerSpread: number;
+  powerConfidenceCounts: PowerConfidenceCountRecord;
+}
+
+export interface FlexiblePowerAwareOptimizationResult {
+  contractVersion: 5;
+  ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
+  allocationMode: OptimizerAllocationMode;
+  optimal: true;
+  requestedFormationCount: number;
+  generatedFormationCount: number;
+  rosterFingerprint: string;
+  requestFingerprint: string;
+  estimatedPowerModelVersion: string;
+  estimatedPowerModelHash: string;
+  estimatedPowerObservationHash: string;
+  estimatedPowerByDragonId: Record<string, EstimatedDragonPower>;
+  formations: PowerAwareOptimizedFormation[];
+  usedDragonIds: string[];
+  unusedDragonIds: string[];
+  collection: FlexiblePowerAwareCollectionSummary;
+  objective: FlexiblePowerAwareObjective;
+  diagnostics: OptimizerSearchDiagnostics;
+  optimizerSolutionHash: string;
+  optimizerResultHash: string;
+}
+
 export interface PowerAwareOptimizerWaveResult extends Omit<OptimizerWaveResult, 'formations' | 'objective'> {
   formations: PowerAwareOptimizedFormation[];
   totalEstimatedPower: number;
@@ -340,9 +397,10 @@ export type RosterOptimizationResult =
   | PowerAwarePrimaryBackupOptimizationResult;
 
 export interface RosterOptimizationUnavailable {
-  contractVersion: 4;
+  contractVersion: 5;
   ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
-  strategy: RosterOptimizerStrategy;
+  allocationMode: OptimizerAllocationMode;
+  requestedFormationCount: number;
   optimal: false;
   status: 'unavailable';
   reason: 'insufficient-eligible-dragons';
@@ -354,7 +412,7 @@ export interface RosterOptimizationUnavailable {
 }
 
 export type RosterOptimizerResponse =
-  | RosterOptimizationResult
+  | FlexiblePowerAwareOptimizationResult
   | RosterOptimizationUnavailable;
 
 export interface RosterOptimizerSolverResult {
@@ -382,6 +440,18 @@ export interface PrimaryBackupOptimizerSolverResult {
 
 export interface PowerAwarePrimaryBackupOptimizerSolverResult extends Omit<PrimaryBackupOptimizerSolverResult, 'objective'> {
   objective: PowerAwarePrimaryBackupOptimizerObjective;
+}
+
+export interface FlexiblePowerAwareOptimizerSolverResult {
+  optimal: true;
+  selectedCandidates: OptimizerFormationCandidate[];
+  objective: FlexiblePowerAwareObjective;
+  nodesVisited: number;
+  branchesPruned: number;
+  cacheEntries: number;
+  solverPasses: number;
+  performanceProfile: OptimizerPerformanceProfile;
+  numericalExactness?: OptimizerNumericalExactnessDiagnostics;
 }
 
 export class RosterOptimizerCancelledError extends Error {

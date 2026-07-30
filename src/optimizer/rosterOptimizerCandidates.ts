@@ -18,6 +18,8 @@ import {
   ESTIMATED_POWER_MODEL_VERSION,
   ESTIMATED_POWER_OBSERVATION_HASH,
 } from '../power/generatedDragonPowerModel';
+import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
+import { candidatePowerUnits } from './rosterOptimizerPower';
 import { buildSemanticRelationships } from '../synergy/semanticRelationships';
 import { reliabilityProgressionFromOwnedDragon } from '../synergy/reliability';
 import type {
@@ -30,6 +32,7 @@ import {
   OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
   RosterOptimizerCancelledError,
   type OptimizerFormationCandidate,
+  type OptimizerAllocationMode,
   type OptimizerRosterDragon,
   type RosterOptimizerStrategy,
 } from './rosterOptimizerTypes';
@@ -80,7 +83,8 @@ export function createRosterOptimizerFingerprint(
 
 export function createRosterOptimizerRequestFingerprint(
   snapshot: OptimizerRosterDragon[],
-  strategy: RosterOptimizerStrategy,
+  allocationMode: OptimizerAllocationMode | RosterOptimizerStrategy,
+  formationCount = 10,
   estimatedPowerContract: {
     version: string;
     modelHash: string;
@@ -91,20 +95,16 @@ export function createRosterOptimizerRequestFingerprint(
     observationHash: ESTIMATED_POWER_OBSERVATION_HASH,
   },
 ): string {
-  const powerAwareContract = strategy === 'power-aware-primary-five-backup-five'
-    ? {
-        estimatedPowerVersion: estimatedPowerContract.version,
-        estimatedPowerModelHash: estimatedPowerContract.modelHash,
-        estimatedPowerObservationHash: estimatedPowerContract.observationHash,
-      }
-    : {};
   return stableHash(JSON.stringify({
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
     ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     relationshipValueScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
-    strategy,
+    allocationMode,
+    formationCount,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),
-    ...powerAwareContract,
+    estimatedPowerVersion: estimatedPowerContract.version,
+    estimatedPowerModelHash: estimatedPowerContract.modelHash,
+    estimatedPowerObservationHash: estimatedPowerContract.observationHash,
   }));
 }
 
@@ -112,11 +112,13 @@ export function generateOptimizerFormationCandidates({
   dragons,
   profiles,
   snapshot,
+  estimatesByDragonId,
   shouldCancel,
 }: {
   dragons: Dragon[];
   profiles: DragonSynergyProfile[];
   snapshot: OptimizerRosterDragon[];
+  estimatesByDragonId?: ReadonlyMap<string, EstimatedDragonPower>;
   shouldCancel?: () => boolean;
 }): OptimizerFormationCandidate[] {
   const sortedSnapshot = [...snapshot].sort((left, right) =>
@@ -263,6 +265,9 @@ export function generateOptimizerFormationCandidates({
               },
             ]),
           ),
+          estimatedPowerUnits: estimatesByDragonId
+            ? candidatePowerUnits({ dragonIds }, estimatesByDragonId)
+            : undefined,
         });
       }
     }

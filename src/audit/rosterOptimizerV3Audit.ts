@@ -16,7 +16,6 @@ import {
 import { optimizeCurrentRoster } from '../optimizer/rosterOptimizer';
 import {
   OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
-  ROSTER_OPTIMIZER_CONTRACT_VERSION,
   ROSTER_OPTIMIZER_RATING_CONTRACT,
   type OptimizedFormation,
   type RosterOptimizationResult,
@@ -32,11 +31,14 @@ import {
   EXPECTED_FORMATION_RATING_V3_HASH,
   EXPECTED_FORMATION_RATING_V3_NUMERIC_HASH,
 } from './formationRatingV3Audit';
+
 import {
   allOneRoster,
   maxedRoster,
   mixedProgressionRoster,
 } from './rosterOptimizerAudit';
+
+const HISTORICAL_ROSTER_OPTIMIZER_CONTRACT_VERSION = 4 as const;
 
 export const ROSTER_OPTIMIZER_V3_AUDIT_VERSION =
   'roster-optimizer-v3-adoption-v1' as const;
@@ -124,7 +126,7 @@ export async function runRosterOptimizerV3Audit() {
   const semanticReport = {
     auditVersion: ROSTER_OPTIMIZER_V3_AUDIT_VERSION,
     contracts: {
-      optimizer: ROSTER_OPTIMIZER_CONTRACT_VERSION,
+      optimizer: HISTORICAL_ROSTER_OPTIMIZER_CONTRACT_VERSION,
       rating: ROSTER_OPTIMIZER_RATING_CONTRACT,
       relationshipFixedPointScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
     },
@@ -397,7 +399,7 @@ function validateResult({
   const prefix = `${fixture}/${strategy}/${order}`;
   const fail = (reason: string) => failedChecks.push(`${prefix}:${reason}`);
   if (
-    result.contractVersion !== ROSTER_OPTIMIZER_CONTRACT_VERSION ||
+    result.contractVersion !== HISTORICAL_ROSTER_OPTIMIZER_CONTRACT_VERSION ||
     result.ratingContract !== ROSTER_OPTIMIZER_RATING_CONTRACT
   ) fail('contract-mismatch');
   if (!result.diagnostics.optimal) fail('not-proven-optimal');

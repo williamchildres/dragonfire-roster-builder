@@ -1,40 +1,65 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { dragons } from '../data/dragons';
 import { RosterOptimizerClient } from '../optimizer/rosterOptimizerClient';
 import {
   RosterOptimizerCancelledError,
-  type RosterOptimizerStrategy,
+  type OptimizerAllocationMode,
 } from '../optimizer/rosterOptimizerTypes';
 import type { RosterOptimizerWorkerResponse } from '../optimizer/rosterOptimizerWorker';
 import { createEmptyRoster } from '../services/rosterStorage';
 
-describe('RosterOptimizerClient worker boundary', () => {
-  it('uses request IDs and terminates a successful worker', async () => {
+describe('RosterOptimizerClient contract-v5 Worker boundary', () => {
+  it('sends mode, count, complete progression snapshot, and v5 model identities', async () => {
     const worker = new FakeWorker();
     const client = new RosterOptimizerClient(() => worker as unknown as Worker);
-    const promise = client.run(createEmptyRoster(dragons), 'primary-five-backup-five');
+    const onProgress = vi.fn();
+    const promise = client.run(
+      createEmptyRoster(dragons),
+      'strongest-first',
+      1,
+      onProgress,
+    );
     const request = worker.posted[0] as {
       contractVersion: number;
       ratingContract: string;
       requestId: number;
-      strategy: string;
+      allocationMode: string;
+      formationCount: number;
+      rosterSnapshot: unknown[];
+      estimatedPowerModelVersion: string;
     };
-    expect(request.strategy).toBe('primary-five-backup-five');
-    expect(request.contractVersion).toBe(4);
-    expect(request.ratingContract).toBe('formation-rating-v3');
+    expect(request).toMatchObject({
+      contractVersion: 5,
+      ratingContract: 'formation-rating-v3',
+      allocationMode: 'strongest-first',
+      formationCount: 1,
+      estimatedPowerModelVersion: 'estimated-power-v2',
+    });
+    expect(request.rosterSnapshot).toEqual([]);
+    worker.respond({
+      type: 'progress',
+      requestId: request.requestId,
+      progress: {
+        stage: 'candidate-generation',
+        allocationMode: 'strongest-first',
+        formationCount: 1,
+      },
+    });
+    expect(onProgress).toHaveBeenCalledOnce();
     worker.respond({
       type: 'result',
       requestId: request.requestId,
       result: {
-        contractVersion: 4,
+        contractVersion: 5,
         ratingContract: 'formation-rating-v3',
-        strategy: 'primary-five-backup-five',
+        allocationMode: 'strongest-first',
+        requestedFormationCount: 1,
         optimal: false,
         status: 'unavailable',
         reason: 'insufficient-eligible-dragons',
         eligibleDragonCount: 0,
-        requiredDragonCount: 30,
-        additionalDragonsNeeded: 30,
+        requiredDragonCount: 3,
+        additionalDragonsNeeded: 3,
         rosterFingerprint: 'test',
         requestFingerprint: 'request-test',
       },
@@ -44,20 +69,37 @@ describe('RosterOptimizerClient worker boundary', () => {
   });
 
   it.each([
-    'best-ten-overall',
-    'primary-five-backup-five',
-    'power-aware-primary-five-backup-five',
-  ] satisfies RosterOptimizerStrategy[])(
-    'terminates %s cancellation and never returns a partial optimal result',
-    async (strategy) => {
+    'strongest-first',
+    'balanced',
+  ] satisfies OptimizerAllocationMode[])(
+    'terminates %s cancellation and never returns a partial result',
+    async (allocationMode) => {
       const worker = new FakeWorker();
       const client = new RosterOptimizerClient(() => worker as unknown as Worker);
-      const promise = client.run(createEmptyRoster(dragons), strategy);
+      const promise = client.run(createEmptyRoster(dragons), allocationMode, 1);
       client.cancel();
       await expect(promise).rejects.toBeInstanceOf(RosterOptimizerCancelledError);
       expect(worker.terminated).toBe(true);
     },
   );
+
+  it('rejects a stale contract-v4 response', async () => {
+    const worker = new FakeWorker();
+    const client = new RosterOptimizerClient(() => worker as unknown as Worker);
+    const promise = client.run(createEmptyRoster(dragons), 'balanced', 1);
+    const request = worker.posted[0] as { requestId: number };
+    worker.respond({
+      type: 'result',
+      requestId: request.requestId,
+      result: {
+        contractVersion: 4,
+        ratingContract: 'formation-rating-v3',
+        strategy: 'best-ten-overall',
+        optimal: true,
+      } as never,
+    });
+    await expect(promise).rejects.toThrow('response contract is stale');
+  });
 });
 
 class FakeWorker extends EventTarget {

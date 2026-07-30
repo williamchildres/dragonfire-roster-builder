@@ -201,8 +201,8 @@ describe('Formation Rating v3 placement and engine isolation', () => {
     });
   });
 
-  it('adopts Formation Rating v3 in optimizer contract 4', () => {
-    expect(ROSTER_OPTIMIZER_CONTRACT_VERSION).toBe(4);
+  it('retains Formation Rating v3 in optimizer contract 5', () => {
+    expect(ROSTER_OPTIMIZER_CONTRACT_VERSION).toBe(5);
     expect(ROSTER_OPTIMIZER_RATING_CONTRACT).toBe('formation-rating-v3');
   });
 

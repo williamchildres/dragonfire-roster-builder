@@ -1,9 +1,99 @@
 import type { DragonRarity } from '../models/dragon';
 import type {
   OptimizerFormationCandidate,
+  FlexiblePowerAwareObjective,
   OptimizerRosterDragon,
   RosterOptimizerObjective,
 } from './rosterOptimizerTypes';
+
+export interface FlexibleStableFaceResult {
+  selectedIndices: number[];
+  nodesVisited: number;
+}
+
+/**
+ * Enumerates the already-proven balanced numeric optimal face in stable-key
+ * order. The first feasible exact reconstruction minimizes the sorted
+ * stable-candidate-key sequence without exposing large radix coefficients to
+ * floating-point MILP objective reporting.
+ */
+export function solveFlexibleStableFace({
+  candidates,
+  target,
+  formationCount,
+  shouldCancel,
+}: {
+  candidates: readonly OptimizerFormationCandidate[];
+  target: FlexiblePowerAwareObjective;
+  formationCount: number;
+  shouldCancel?: () => boolean;
+}): FlexibleStableFaceResult | null {
+  const powerCounts = countValues(target.ascendingEstimatedPowerUnits);
+  const ratingCounts = countValues(target.ascendingRatingVector);
+  const selected: number[] = [];
+  let nodesVisited = 0;
+
+  const visit = (
+    start: number,
+    usedMask: bigint,
+    powersRemaining: Map<number, number>,
+    ratingsRemaining: Map<number, number>,
+    relationshipRemaining: number,
+    relationshipCountRemaining: number,
+  ): boolean => {
+    nodesVisited += 1;
+    if ((nodesVisited & 1023) === 0 && shouldCancel?.()) return false;
+    const slots = formationCount - selected.length;
+    if (slots === 0) {
+      return (
+        relationshipRemaining === 0 &&
+        relationshipCountRemaining === 0 &&
+        [...powersRemaining.values()].every((count) => count === 0) &&
+        [...ratingsRemaining.values()].every((count) => count === 0)
+      );
+    }
+    for (let index = start; index <= candidates.length - slots; index += 1) {
+      const candidate = candidates[index]!;
+      if ((candidate.dragonMask & usedMask) !== 0n) continue;
+      const powerUnits = candidate.estimatedPowerUnits;
+      if (!Number.isSafeInteger(powerUnits)) continue;
+      const powerCount = powersRemaining.get(powerUnits!) ?? 0;
+      const ratingCount = ratingsRemaining.get(candidate.rating) ?? 0;
+      if (powerCount === 0 || ratingCount === 0) continue;
+      if (candidate.adjustedRelationshipValueUnits > relationshipRemaining) continue;
+      if (candidate.activeRelationshipCount > relationshipCountRemaining) continue;
+
+      const nextPowers = new Map(powersRemaining);
+      nextPowers.set(powerUnits!, powerCount - 1);
+      const nextRatings = new Map(ratingsRemaining);
+      nextRatings.set(candidate.rating, ratingCount - 1);
+      selected.push(index);
+      if (visit(
+        index + 1,
+        usedMask | candidate.dragonMask,
+        nextPowers,
+        nextRatings,
+        relationshipRemaining - candidate.adjustedRelationshipValueUnits,
+        relationshipCountRemaining - candidate.activeRelationshipCount,
+      )) {
+        return true;
+      }
+      selected.pop();
+    }
+    return false;
+  };
+
+  return visit(
+    0,
+    0n,
+    powerCounts,
+    ratingCounts,
+    target.totalRelationshipValueUnits,
+    target.totalActiveRelationships,
+  )
+    ? { selectedIndices: [...selected], nodesVisited }
+    : null;
+}
 import type { PrimaryPowerCutoff } from './rosterOptimizerPower';
 
 export interface PrimaryBackupStableFaceResult {

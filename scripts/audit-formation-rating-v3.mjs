@@ -23,7 +23,7 @@ try {
     console.log(`Wrote ${path.relative(root, artifactPath)}.`);
   } else {
     const committed = await readFile(artifactPath, 'utf8');
-    if (committed !== serialized) {
+    if (committed.replaceAll('\r\n', '\n') !== serialized) {
       throw new Error(
         'Formation Rating v3 audit artifact is stale. Run pnpm run audit:formation-rating-v3:write and review the diff.',
       );

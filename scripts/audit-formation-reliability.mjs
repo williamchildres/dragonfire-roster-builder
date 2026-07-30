@@ -24,7 +24,7 @@ try {
     console.log(`Wrote ${path.relative(root, reportPath)}.`);
   } else {
     const committed = await readFile(reportPath, 'utf8');
-    if (committed !== serialized) {
+    if (committed.replaceAll('\r\n', '\n') !== serialized) {
       throw new Error(
         'Committed Formation Reliability audit is stale. Run pnpm run audit:reliability:write and review the diff.',
       );

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.22.0 - 2026-07-29
+
+- Replaced the three public fixed ten-formation strategies with one progression-aware Power-Aware optimizer and two allocation modes: Strongest Armies First and Balance All Armies.
+- Added a dynamic 1–11 army control limited by the owned eligible roster, including exact insufficient-roster messaging, roster-change clamping, stale-result invalidation, and unchanged roster persistence schemas.
+- Advanced the Worker request/result contract to v5 with explicit allocation mode and formation count. Every request uses Estimated Power v2, Formation Rating v3, current Star Rank, Dragon Level, active Habit Levels, fixed-point relationship values, and deterministic exact arrangements.
+- Added exact sequential strongest-first selection and exact lexicographic max-min balanced power and rating vectors with zero-gap HiGHS phases and deterministic optimal-face reconstruction.
+- Preserved the historical v0.21 audit artifacts and protected Formation Rating, reliability, research, historical v2, and Estimated Power identities. This optimizer does not simulate combat or guarantee a real-game outcome.
+
 ## 0.21.0 - 2026-07-28
 
 - Adopted Formation Rating v3 across the live Formation Builder and all three exact Roster Optimizer strategies. Documented activation reliability now weights supported relationships; unresolved potential remains visible without entering the numeric score.
