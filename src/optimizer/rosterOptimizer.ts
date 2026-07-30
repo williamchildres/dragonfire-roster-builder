@@ -9,6 +9,7 @@ import {
 } from '../power/generatedDragonPowerModel';
 import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
 import { solveBalancedRosterOptimizer } from './rosterOptimizerBalancedSolver';
+import { solveBestOverallFirst } from './rosterOptimizerBestOverallSolver';
 import {
   buildOptimizerRosterSnapshot,
   createRosterOptimizerFingerprint,
@@ -28,6 +29,10 @@ import { solveStrongestFirst } from './rosterOptimizerStrongestFirstSolver';
 import {
   ROSTER_OPTIMIZER_CONTRACT_VERSION,
   ROSTER_OPTIMIZER_RATING_CONTRACT,
+  BEST_OVERALL_NORMALIZATION_SCALE,
+  BEST_OVERALL_POWER_WEIGHT,
+  BEST_OVERALL_RATING_WEIGHT,
+  BEST_OVERALL_SCORING_VERSION,
   type FlexiblePowerAwareOptimizationResult,
   type FlexiblePowerAwareOptimizerSolverResult,
   type OptimizerAllocationMode,
@@ -65,9 +70,13 @@ export async function optimizeCurrentRoster(
   shouldCancel?: () => boolean,
   onProgress?: (progress: OptimizerRunProgress) => void,
 ): Promise<RosterOptimizerResponse | RosterOptimizationResult> {
-  if (allocationMode !== 'strongest-first' && allocationMode !== 'balanced') {
+  if (
+    allocationMode !== 'best-overall-first' &&
+    allocationMode !== 'strongest-first' &&
+    allocationMode !== 'balanced'
+  ) {
     throw new Error(
-      `Optimizer contract v5 does not accept legacy strategy "${allocationMode}".`,
+      `Optimizer contract v6 does not accept legacy strategy "${allocationMode}".`,
     );
   }
   const totalStartedAt = performance.now();
@@ -116,14 +125,16 @@ export async function optimizeCurrentRoster(
   const candidateGenerationMs = performance.now() - candidateStartedAt;
   onProgress?.({ stage: 'exact-solving', allocationMode, formationCount });
   const solverStartedAt = performance.now();
-  const solver = allocationMode === 'strongest-first'
-    ? solveStrongestFirst(candidates, formationCount, shouldCancel)
-    : await solveBalancedRosterOptimizer(
-        candidates,
-        snapshot,
-        formationCount,
-        shouldCancel,
-      );
+  const solver = allocationMode === 'best-overall-first'
+    ? solveBestOverallFirst(candidates, formationCount, shouldCancel)
+    : allocationMode === 'strongest-first'
+      ? solveStrongestFirst(candidates, formationCount, shouldCancel)
+      : await solveBalancedRosterOptimizer(
+          candidates,
+          snapshot,
+          formationCount,
+          shouldCancel,
+        );
   const solverMs = performance.now() - solverStartedAt;
   return buildFlexibleResult({
     allocationMode,
@@ -165,7 +176,7 @@ export function buildFlexibleResult({
   solverMs: number;
   totalMs: number;
 }): FlexiblePowerAwareOptimizationResult {
-  const displayCandidates = allocationMode === 'strongest-first'
+  const displayCandidates = allocationMode !== 'balanced'
     ? solver.selectedCandidates
     : [...solver.selectedCandidates].sort(
         (left, right) =>
@@ -174,7 +185,14 @@ export function buildFlexibleResult({
           left.stableCandidateKey.localeCompare(right.stableCandidateKey),
       );
   const formations = displayCandidates.map((candidate, index) =>
-    publicPowerFormation(candidate, index + 1, estimatesByDragonId),
+    publicPowerFormation(
+      candidate,
+      index + 1,
+      estimatesByDragonId,
+      allocationMode === 'best-overall-first'
+        ? solver.bestOverallScoreBreakdowns?.[index]
+        : undefined,
+    ),
   );
   const usedDragonIds = [...new Set(
     solver.selectedCandidates.flatMap((candidate) => candidate.dragonIds),
@@ -210,11 +228,16 @@ export function buildFlexibleResult({
   const canonicalFormations = canonicalFormationIdentity(
     solver.selectedCandidates,
     allocationMode,
+    solver.bestOverallScoreBreakdowns,
   );
   const solutionIdentity = {
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
     ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     allocationMode,
+    bestOverallScoringVersion: BEST_OVERALL_SCORING_VERSION,
+    bestOverallPowerWeight: BEST_OVERALL_POWER_WEIGHT,
+    bestOverallFormationRatingWeight: BEST_OVERALL_RATING_WEIGHT,
+    bestOverallNormalizationScale: BEST_OVERALL_NORMALIZATION_SCALE,
     requestedFormationCount: formationCount,
     formations: canonicalFormations,
     objective: solver.objective,
@@ -231,6 +254,10 @@ export function buildFlexibleResult({
     estimatedPowerModelVersion: ESTIMATED_POWER_MODEL_VERSION,
     estimatedPowerModelHash: ESTIMATED_POWER_MODEL_HASH,
     estimatedPowerObservationHash: ESTIMATED_POWER_OBSERVATION_HASH,
+    bestOverallScoringVersion: BEST_OVERALL_SCORING_VERSION,
+    bestOverallPowerWeight: BEST_OVERALL_POWER_WEIGHT,
+    bestOverallFormationRatingWeight: BEST_OVERALL_RATING_WEIGHT,
+    bestOverallNormalizationScale: BEST_OVERALL_NORMALIZATION_SCALE,
   }));
   return {
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
@@ -244,6 +271,10 @@ export function buildFlexibleResult({
     estimatedPowerModelVersion: ESTIMATED_POWER_MODEL_VERSION,
     estimatedPowerModelHash: ESTIMATED_POWER_MODEL_HASH,
     estimatedPowerObservationHash: ESTIMATED_POWER_OBSERVATION_HASH,
+    bestOverallScoringVersion: BEST_OVERALL_SCORING_VERSION,
+    bestOverallPowerWeight: BEST_OVERALL_POWER_WEIGHT,
+    bestOverallFormationRatingWeight: BEST_OVERALL_RATING_WEIGHT,
+    bestOverallNormalizationScale: BEST_OVERALL_NORMALIZATION_SCALE,
     estimatedPowerByDragonId: Object.fromEntries(estimatesByDragonId),
     formations,
     usedDragonIds,
@@ -264,6 +295,7 @@ export function buildFlexibleResult({
       totalMs,
       performanceProfile: solver.performanceProfile,
       numericalExactness: solver.numericalExactness,
+      bestOverallSteps: solver.bestOverallSteps,
     },
     optimizerSolutionHash,
     optimizerResultHash,
@@ -274,6 +306,7 @@ function publicPowerFormation(
   candidate: OptimizerFormationCandidate,
   rank: number,
   estimatesByDragonId: ReadonlyMap<string, EstimatedDragonPower>,
+  bestOverallScore?: PowerAwareOptimizedFormation['bestOverallScore'],
 ): PowerAwareOptimizedFormation {
   const { dragonMask, ...publicCandidate } = candidate;
   void dragonMask;
@@ -292,19 +325,21 @@ function publicPowerFormation(
       candidate.dragonIds,
       estimatesByDragonId,
     ),
+    ...(bestOverallScore ? { bestOverallScore } : {}),
   };
 }
 
 function canonicalFormationIdentity(
   candidates: readonly OptimizerFormationCandidate[],
   allocationMode: OptimizerAllocationMode,
+  bestOverallScoreBreakdowns?: readonly PowerAwareOptimizedFormation['bestOverallScore'][],
 ) {
-  const ordered = allocationMode === 'strongest-first'
+  const ordered = allocationMode !== 'balanced'
     ? candidates
     : [...candidates].sort((left, right) =>
         left.stableCandidateKey.localeCompare(right.stableCandidateKey),
       );
-  return ordered.map((candidate) => ({
+  return ordered.map((candidate, index) => ({
     dragonIds: candidate.dragonIds,
     arrangement: candidate.arrangement,
     estimatedPowerUnits: requiredPowerUnits(candidate),
@@ -312,6 +347,9 @@ function canonicalFormationIdentity(
     adjustedRelationshipValueUnits: candidate.adjustedRelationshipValueUnits,
     activeRelationshipCount: candidate.activeRelationshipCount,
     stableCandidateKey: candidate.stableCandidateKey,
+    ...(allocationMode === 'best-overall-first'
+      ? { bestOverallScore: bestOverallScoreBreakdowns?.[index] }
+      : {}),
   }));
 }
 

@@ -29,6 +29,10 @@ import type {
 import {
   ROSTER_OPTIMIZER_RATING_CONTRACT,
   ROSTER_OPTIMIZER_CONTRACT_VERSION,
+  BEST_OVERALL_NORMALIZATION_SCALE,
+  BEST_OVERALL_POWER_WEIGHT,
+  BEST_OVERALL_RATING_WEIGHT,
+  BEST_OVERALL_SCORING_VERSION,
   OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
   RosterOptimizerCancelledError,
   type OptimizerFormationCandidate,
@@ -94,11 +98,26 @@ export function createRosterOptimizerRequestFingerprint(
     modelHash: ESTIMATED_POWER_MODEL_HASH,
     observationHash: ESTIMATED_POWER_OBSERVATION_HASH,
   },
+  bestOverallScoringProfile: {
+    version: string;
+    powerWeight: number;
+    formationRatingWeight: number;
+    normalizationScale: number;
+  } = {
+    version: BEST_OVERALL_SCORING_VERSION,
+    powerWeight: BEST_OVERALL_POWER_WEIGHT,
+    formationRatingWeight: BEST_OVERALL_RATING_WEIGHT,
+    normalizationScale: BEST_OVERALL_NORMALIZATION_SCALE,
+  },
 ): string {
   return stableHash(JSON.stringify({
     contractVersion: ROSTER_OPTIMIZER_CONTRACT_VERSION,
     ratingContract: ROSTER_OPTIMIZER_RATING_CONTRACT,
     relationshipValueScale: OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE,
+    bestOverallScoringVersion: bestOverallScoringProfile.version,
+    bestOverallPowerWeight: bestOverallScoringProfile.powerWeight,
+    bestOverallFormationRatingWeight: bestOverallScoringProfile.formationRatingWeight,
+    bestOverallNormalizationScale: bestOverallScoringProfile.normalizationScale,
     allocationMode,
     formationCount,
     rosterFingerprint: createRosterOptimizerFingerprint(snapshot),

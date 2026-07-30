@@ -1,5 +1,5 @@
 import changelogText from '../../CHANGELOG.md?raw';
-import { databaseMetadata } from './databaseMetadata';
+import { releaseMetadata } from './databaseMetadata';
 
 export type ReleaseEntry = {
   version: string;
@@ -62,6 +62,6 @@ export function validateLatestRelease(
 export const releaseHistory = parseReleaseHistory(changelogText);
 
 validateLatestRelease(releaseHistory, {
-  version: databaseMetadata.databaseVersion,
-  date: databaseMetadata.lastUpdated,
+  version: releaseMetadata.version,
+  date: releaseMetadata.date,
 });

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.22.1 - 2026-07-29
+
+- Added Best Overall First as the default optimizer mode, using an exact step-relative planning index with 60% progression-aware Estimated Power and 40% Formation Rating v3.
+- Renamed the preserved modes to Highest Raw Power First and Balance Raw Power Across Armies so their standalone-power objectives are explicit.
+- Advanced the live Worker contract to v6, added exact per-army score evidence, and added a 198-execution independent optimizer-v6 audit plus a privacy-minimized 33-dragon comparison fixture.
+
 ## 0.22.0 - 2026-07-29
 
 - Replaced the three public fixed ten-formation strategies with one progression-aware Power-Aware optimizer and two allocation modes: Strongest Armies First and Balance All Armies.

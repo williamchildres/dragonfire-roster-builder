@@ -797,7 +797,7 @@ function HomeSection({ navigate }: { navigate: NavigateToRoute }) {
         <FeatureCard
           icon={Sparkles}
           title="Optimize Your Roster"
-          description="Choose 1–11 exact non-overlapping armies, then prioritize the strongest first army or balance the full collection."
+          description="Choose 1–11 exact non-overlapping armies, combine progression power with Formation Rating, prioritize raw power, or balance raw power."
           route="optimizer"
           navigate={navigate}
         />
@@ -1831,7 +1831,7 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
             HiGHS solves the defined lexicographic objectives. Every production phase requires optimal status with zero configured MIP gap, and deterministic stable ordering resolves exact ties. No greedy or approximate result is labeled “Proven optimal.”
           </p>
           <p>
-            The Power-Aware optimizer can build 1–11 armies. Strongest Armies First claims the strongest remaining exact trio at each rank; Balance All Armies maximizes the weakest integer-power position first, then every next position before Formation Rating and relationship tie-breaks.
+            The optimizer can build 1–11 armies. Best Overall First combines step-relative progression power with Formation Rating; Highest Raw Power First groups the strongest standalone power; Balance Raw Power Across Armies strengthens the weakest raw-power army first.
           </p>
           <details>
             <summary>Technical details</summary>

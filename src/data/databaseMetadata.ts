@@ -8,6 +8,11 @@ export const databaseMetadata = {
   officialRosterUrl: 'https://gotdragonfire.com/dragons/',
 } as const;
 
+export const releaseMetadata = {
+  version: '0.22.1',
+  date: '2026-07-29',
+} as const;
+
 export const repository = {
   owner: 'williamchildres',
   name: 'dragonfire-roster-builder',

@@ -29,14 +29,14 @@ describe('Formation Rating v3 production adoption', () => {
     expect(candidates).not.toMatch(/from '..\/services\/formationPlacementComparison'/);
   });
 
-  it('uses separate strict v3 thresholds and optimizer contract 5', () => {
+  it('uses separate strict v3 thresholds and optimizer contract 6', () => {
     expect(FORMATION_RATING_V3_TIER_THRESHOLDS).toEqual({
       Excellent: 66,
       Strong: 53,
       Solid: 34,
       Developing: 5,
     });
-    expect(ROSTER_OPTIMIZER_CONTRACT_VERSION).toBe(5);
+    expect(ROSTER_OPTIMIZER_CONTRACT_VERSION).toBe(6);
     expect(ROSTER_OPTIMIZER_RATING_CONTRACT).toBe('formation-rating-v3');
   });
 

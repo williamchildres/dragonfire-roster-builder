@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { databaseMetadata } from '../data/databaseMetadata';
+import { releaseMetadata } from '../data/databaseMetadata';
 import { parseReleaseHistory, releaseHistory, validateLatestRelease } from '../data/releaseHistory';
 
 describe('release history parser', () => {
@@ -9,8 +9,8 @@ describe('release history parser', () => {
     const headingCount = source.split(/\r?\n/).filter((line) => line.startsWith('## ')).length;
     expect(releaseHistory).toHaveLength(headingCount);
     expect(releaseHistory[0]).toMatchObject({
-      version: databaseMetadata.databaseVersion,
-      date: databaseMetadata.lastUpdated,
+      version: releaseMetadata.version,
+      date: releaseMetadata.date,
     });
     expect(releaseHistory.every((release) => release.items.length > 0)).toBe(true);
   });

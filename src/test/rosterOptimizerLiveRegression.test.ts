@@ -65,7 +65,7 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
     });
   });
 
-  it('finishes contract-v5 Strongest First and remains deterministic in forward, reversed, and repeated order', async () => {
+  it('finishes contract-v6 Highest Raw Power and remains deterministic in forward, reversed, and repeated order', async () => {
     const forwardRoster = live33ProgressionRegressionRoster();
     const reversedRoster = Object.fromEntries(Object.entries(forwardRoster).reverse());
     const forward = await optimizeCurrentRoster(
@@ -87,7 +87,7 @@ describe('Power-Aware live 33-dragon numerical regression', () => {
     for (const result of [forward, reversed, repeated]) {
       expect(result.optimal).toBe(true);
       if (!result.optimal || !('allocationMode' in result)) continue;
-      expect(result.contractVersion).toBe(5);
+      expect(result.contractVersion).toBe(6);
       expect(result.allocationMode).toBe('strongest-first');
       expect(result.requestedFormationCount).toBe(10);
       expect(result.generatedFormationCount).toBe(10);

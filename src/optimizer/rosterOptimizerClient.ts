@@ -9,6 +9,10 @@ import { buildOptimizerRosterSnapshot } from './rosterOptimizerCandidates';
 import {
   ROSTER_OPTIMIZER_CONTRACT_VERSION,
   ROSTER_OPTIMIZER_RATING_CONTRACT,
+  BEST_OVERALL_NORMALIZATION_SCALE,
+  BEST_OVERALL_POWER_WEIGHT,
+  BEST_OVERALL_RATING_WEIGHT,
+  BEST_OVERALL_SCORING_VERSION,
   RosterOptimizerCancelledError,
   type OptimizerAllocationMode,
   type OptimizerRunProgress,
@@ -42,7 +46,7 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
   constructor(
     private readonly createWorker: WorkerFactory = () => new Worker(
       new URL('./rosterOptimizerWorker.ts', import.meta.url),
-      { type: 'module', name: 'roster-optimizer-v5' },
+      { type: 'module', name: 'roster-optimizer-v6' },
     ),
   ) {}
 
@@ -69,7 +73,24 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
             event.data.result.contractVersion !== ROSTER_OPTIMIZER_CONTRACT_VERSION ||
             event.data.result.ratingContract !== ROSTER_OPTIMIZER_RATING_CONTRACT ||
             event.data.result.allocationMode !== allocationMode ||
-            event.data.result.requestedFormationCount !== formationCount
+            event.data.result.requestedFormationCount !== formationCount ||
+            (
+              event.data.result.optimal &&
+              (
+                event.data.result.estimatedPowerModelVersion !==
+                  ESTIMATED_POWER_MODEL_VERSION ||
+                event.data.result.estimatedPowerModelHash !== ESTIMATED_POWER_MODEL_HASH ||
+                event.data.result.estimatedPowerObservationHash !==
+                  ESTIMATED_POWER_OBSERVATION_HASH ||
+                event.data.result.bestOverallScoringVersion !==
+                  BEST_OVERALL_SCORING_VERSION ||
+                event.data.result.bestOverallPowerWeight !== BEST_OVERALL_POWER_WEIGHT ||
+                event.data.result.bestOverallFormationRatingWeight !==
+                  BEST_OVERALL_RATING_WEIGHT ||
+                event.data.result.bestOverallNormalizationScale !==
+                  BEST_OVERALL_NORMALIZATION_SCALE
+              )
+            )
           ) {
             reject(new Error('The optimizer response contract is stale. Refresh and try again.'));
           } else {
@@ -89,6 +110,10 @@ export class RosterOptimizerClient implements RosterOptimizerRunner {
         estimatedPowerModelVersion: ESTIMATED_POWER_MODEL_VERSION,
         estimatedPowerModelHash: ESTIMATED_POWER_MODEL_HASH,
         estimatedPowerObservationHash: ESTIMATED_POWER_OBSERVATION_HASH,
+        bestOverallScoringVersion: BEST_OVERALL_SCORING_VERSION,
+        bestOverallPowerWeight: BEST_OVERALL_POWER_WEIGHT,
+        bestOverallFormationRatingWeight: BEST_OVERALL_RATING_WEIGHT,
+        bestOverallNormalizationScale: BEST_OVERALL_NORMALIZATION_SCALE,
         requestId,
         allocationMode,
         formationCount,

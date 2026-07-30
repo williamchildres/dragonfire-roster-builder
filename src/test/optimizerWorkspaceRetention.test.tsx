@@ -15,12 +15,27 @@ import type {
   OptimizerAllocationMode,
   PowerAwareOptimizedFormation,
 } from '../optimizer/rosterOptimizerTypes';
+import {
+  BEST_OVERALL_NORMALIZATION_SCALE,
+  BEST_OVERALL_POWER_WEIGHT,
+  BEST_OVERALL_RATING_WEIGHT,
+  BEST_OVERALL_SCORING_VERSION,
+} from '../optimizer/rosterOptimizerTypes';
 import { createEmptyRoster, saveRoster } from '../services/rosterStorage';
 
-describe('Optimizer v5 workspace retention', () => {
+describe('Optimizer v6 workspace retention', () => {
   afterEach(() => {
     window.localStorage.clear();
     window.history.replaceState(null, '', '/');
+  });
+
+  it('initializes fresh app state to Best Overall without persisting the mode', async () => {
+    renderApp(resolvedRunner(result('best-overall-first', 10, 700_000)));
+    await userEvent.setup().click(screen.getByRole('link', { name: /^optimizer$/i }));
+    expect(screen.getByRole('radio', { name: /Best Overall First/i })).toBeChecked();
+    expect(Object.keys(window.localStorage)).not.toContain(
+      'dragonfire-roster-optimizer-workspace',
+    );
   });
 
   it('retains a completed result, selected count, and mode through navigation without rerunning', async () => {
@@ -30,14 +45,17 @@ describe('Optimizer v5 workspace retention', () => {
 
     await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     await user.selectOptions(screen.getByLabelText('Number of armies'), '9');
-    await user.click(screen.getByRole('radio', { name: /Balance All Armies/i }));
+    await user.click(
+      screen.getByRole('radio', { name: /Balance Raw Power Across Armies/i }),
+    );
     await user.click(screen.getByRole('button', { name: /Build 9 armies/i }));
     await screen.findByRole('heading', { name: 'Exact optimal result' });
 
     await user.click(screen.getByRole('link', { name: /^overview$/i }));
     await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     expect(screen.getByLabelText('Number of armies')).toHaveValue('9');
-    expect(screen.getByRole('radio', { name: /Balance All Armies/i })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /Balance Raw Power Across Armies/i }))
+      .toBeChecked();
     expect(screen.getByRole('heading', { name: 'Exact optimal result' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('link', { name: /^roster$/i }));
@@ -53,12 +71,14 @@ describe('Optimizer v5 workspace retention', () => {
 
   it('marks retained results stale after count or mode changes', async () => {
     const user = userEvent.setup();
-    renderApp(resolvedRunner(result('strongest-first', 10, 700_000)));
+    renderApp(resolvedRunner(result('best-overall-first', 10, 700_000)));
     await runOptimizer(user);
     await user.selectOptions(screen.getByLabelText('Number of armies'), '9');
     expect(screen.getByText(/army count, or allocation mode changed/i)).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText('Number of armies'), '10');
-    await user.click(screen.getByRole('radio', { name: /Balance All Armies/i }));
+    await user.click(
+      screen.getByRole('radio', { name: /Balance Raw Power Across Armies/i }),
+    );
     expect(screen.getByText(/army count, or allocation mode changed/i)).toBeInTheDocument();
   });
 
@@ -168,7 +188,7 @@ function result(
   const usedDragonIds = selected.map((dragon) => dragon.dragonId).sort();
   const totalRelationshipValueUnits = formationCount * 3_000_000;
   return {
-    contractVersion: 5,
+    contractVersion: 6,
     ratingContract: 'formation-rating-v3',
     allocationMode,
     optimal: true,
@@ -183,6 +203,10 @@ function result(
     estimatedPowerModelVersion: 'estimated-power-v2',
     estimatedPowerModelHash: 'fnv1a64:efa6081babb4e520',
     estimatedPowerObservationHash: 'fnv1a64:26bfe615f0d9bdd5',
+    bestOverallScoringVersion: BEST_OVERALL_SCORING_VERSION,
+    bestOverallPowerWeight: BEST_OVERALL_POWER_WEIGHT,
+    bestOverallFormationRatingWeight: BEST_OVERALL_RATING_WEIGHT,
+    bestOverallNormalizationScale: BEST_OVERALL_NORMALIZATION_SCALE,
     estimatedPowerByDragonId: {},
     formations,
     usedDragonIds,

@@ -132,21 +132,40 @@ describe('optimizer candidate generation and roster progression', () => {
     );
   });
 
-  it('includes strategy and contract metadata in the request fingerprint', () => {
+  it('includes v6 mode, count, model, and Best Overall profile in the request fingerprint', () => {
     const snapshot = buildOptimizerRosterSnapshot(dragons, rosterFor(trioIds, 10, 16));
-    const strategyFingerprints = [
-      'best-ten-overall',
-      'primary-five-backup-five',
-      'power-aware-primary-five-backup-five',
-    ].map((strategy) =>
-      createRosterOptimizerRequestFingerprint(
-        snapshot,
-        strategy as Parameters<typeof createRosterOptimizerRequestFingerprint>[1],
-      ),
+    const baseline = createRosterOptimizerRequestFingerprint(
+      snapshot,
+      'best-overall-first',
+      1,
     );
-    expect(new Set(strategyFingerprints).size).toBe(3);
-    expect(createRosterOptimizerRequestFingerprint([...snapshot].reverse(), 'best-ten-overall'))
-      .toBe(createRosterOptimizerRequestFingerprint(snapshot, 'best-ten-overall'));
+    expect(createRosterOptimizerRequestFingerprint(
+      [...snapshot].reverse(),
+      'best-overall-first',
+      1,
+    )).toBe(baseline);
+    expect(createRosterOptimizerRequestFingerprint(snapshot, 'strongest-first', 1))
+      .not.toBe(baseline);
+    expect(createRosterOptimizerRequestFingerprint(snapshot, 'best-overall-first', 2))
+      .not.toBe(baseline);
+    expect(createRosterOptimizerRequestFingerprint(
+      snapshot,
+      'best-overall-first',
+      1,
+      { version: 'test', modelHash: 'model', observationHash: 'observations' },
+    )).not.toBe(baseline);
+    expect(createRosterOptimizerRequestFingerprint(
+      snapshot,
+      'best-overall-first',
+      1,
+      undefined,
+      {
+        version: 'best-overall-v2',
+        powerWeight: 50,
+        formationRatingWeight: 50,
+        normalizationScale: 1_000,
+      },
+    )).not.toBe(baseline);
   });
 });
 

@@ -66,7 +66,7 @@ My Roster shows each owned dragon's read-only estimate and confidence. Formation
 
 There is no manual Power field, persistence field, Supabase migration, Habit Level Power effect, damage estimate, combat simulation, or win probability. Formation Rating v2 is unchanged.
 
-Optimizer contract-v5 requests include the Estimated Power version, observation hash, model hash, allocation mode, formation count, Formation Rating contract, and the complete eligible progression snapshot. Both v0.22 modes use the same cached per-dragon v2 estimates and per-trio integer power units. Rarity and confidence remain descriptive and never outrank Estimated Power.
+Optimizer contract-v6 requests include the Estimated Power version, observation hash, model hash, allocation mode, formation count, Best Overall scoring profile, Formation Rating contract, and the complete eligible progression snapshot. All v0.22.1 modes use the same cached per-dragon v2 estimates and per-trio integer power units. Best Overall uses power only through its documented step-relative 60/40 planning index; the two preserved modes retain their v5 raw-power objectives. Rarity and confidence remain descriptive.
 
 ## Limitations
 
