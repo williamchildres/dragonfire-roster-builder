@@ -25,7 +25,6 @@ import { buildEstimatedPowerCache } from '../optimizer/rosterOptimizerPower';
 import { solveStrongestFirst } from '../optimizer/rosterOptimizerStrongestFirstSolver';
 import type {
   FlexiblePowerAwareOptimizationResult,
-  FlexiblePowerAwareOptimizerSolverResult,
   OptimizerAllocationMode,
   OptimizerFormationCandidate,
 } from '../optimizer/rosterOptimizerTypes';
@@ -70,8 +69,8 @@ export async function runRosterOptimizerV5Audit(
   requestedFixtureIds: readonly string[] = fixtureDefinitions.map((fixture) => fixture.id),
 ) {
   const executions: OptimizerV5AuditExecution[] = [];
-  const solverCache = new Map<string, FlexiblePowerAwareOptimizerSolverResult>();
   let candidatePoolBuilds = 0;
+  let solverExecutions = 0;
 
   const selectedFixtures = fixtureDefinitions.filter((fixture) =>
     requestedFixtureIds.includes(fixture.id),
@@ -117,20 +116,15 @@ export async function runRosterOptimizerV5Audit(
       for (let count = 1; count <= 11; count += 1) {
         let forwardResult: FlexiblePowerAwareOptimizationResult | null = null;
         for (const pool of pools) {
-          const cacheKey = `${fixture.id}/${mode}/${count}/${pool.candidateIdentity}`;
           const solveStartedAt = performance.now();
-          let solver = solverCache.get(cacheKey);
-          const solverReused = solver !== undefined;
-          if (!solver) {
-            solver = mode === 'strongest-first'
-              ? solveStrongestFirst(pool.candidates, count)
-              : await solveBalancedRosterOptimizer(
-                  pool.candidates,
-                  pool.snapshot,
-                  count,
-                );
-            solverCache.set(cacheKey, solver);
-          }
+          const solver = mode === 'strongest-first'
+            ? solveStrongestFirst(pool.candidates, count)
+            : await solveBalancedRosterOptimizer(
+                pool.candidates,
+                pool.snapshot,
+                count,
+              );
+          solverExecutions += 1;
           const solverMs = performance.now() - solveStartedAt;
           const rosterFingerprint = createRosterOptimizerFingerprint(pool.snapshot);
           const requestFingerprint = createRosterOptimizerRequestFingerprint(
@@ -165,7 +159,7 @@ export async function runRosterOptimizerV5Audit(
             fixture.id,
             pool.inputOrder,
             result,
-            solverReused,
+            false,
           ));
           onExecution?.(
             `${executions.length}/${expectedExecutions} ${fixture.id}/${mode}/${count}/${pool.inputOrder}`,
@@ -175,7 +169,7 @@ export async function runRosterOptimizerV5Audit(
     }
   }
 
-  return createReport(executions, candidatePoolBuilds, solverCache.size);
+  return createReport(executions, candidatePoolBuilds, solverExecutions);
 }
 
 export function combineRosterOptimizerV5AuditReports(
@@ -204,6 +198,37 @@ function createReport(
   candidatePoolBuilds: number,
   solverExecutions: number,
 ) {
+  const fixtureCount = new Set(executions.map((execution) => execution.fixture)).size;
+  const expectedExecutions = fixtureCount * modes.length * 11 * 2;
+  const expectedCandidatePoolBuilds = fixtureCount * 2;
+  const failedChecks: string[] = [];
+  if (executions.length !== expectedExecutions) {
+    failedChecks.push(`expected ${expectedExecutions} execution records, received ${executions.length}`);
+  }
+  if (solverExecutions !== expectedExecutions) {
+    failedChecks.push(`expected ${expectedExecutions} independent solves, received ${solverExecutions}`);
+  }
+  if (candidatePoolBuilds !== expectedCandidatePoolBuilds) {
+    failedChecks.push(
+      `expected ${expectedCandidatePoolBuilds} independent candidate pools, received ${candidatePoolBuilds}`,
+    );
+  }
+  if (executions.some((execution) => execution.solverReused)) {
+    failedChecks.push('one or more executions reused a solver result');
+  }
+  if (executions.some((execution) => !execution.noDuplicateDragons)) {
+    failedChecks.push('one or more executions duplicated a dragon');
+  }
+  if (executions.some((execution) => !execution.exactReconstruction)) {
+    failedChecks.push('one or more executions failed exact objective reconstruction');
+  }
+  const forwardReverseEqual = forwardReverseHashesMatch(executions);
+  if (!forwardReverseEqual) {
+    failedChecks.push('one or more forward/reverse solution or result hashes differ');
+  }
+  if (failedChecks.length > 0) {
+    throw new Error(`Optimizer v5 audit assertions failed: ${failedChecks.join('; ')}.`);
+  }
   const semanticExecutions = executions.map((execution) => ({
     fixture: execution.fixture,
     mode: execution.mode,
@@ -233,13 +258,36 @@ function createReport(
     executionCount: executions.length,
     candidatePoolBuilds,
     solverExecutions,
-    forwardReverseEqual: true,
-    noDuplicateDragons: true,
-    failedChecks: 0,
+    candidatePoolsIndependent: candidatePoolBuilds === expectedCandidatePoolBuilds,
+    allSolversIndependent: solverExecutions === executions.length &&
+      executions.every((execution) => !execution.solverReused),
+    forwardReverseEqual,
+    noDuplicateDragons: executions.every((execution) => execution.noDuplicateDragons),
+    failedChecks: failedChecks.length,
     protectedIdentities,
     executions,
     deterministicAuditHash: stableHash(JSON.stringify(semanticIdentity)),
   };
+}
+
+function forwardReverseHashesMatch(executions: readonly OptimizerV5AuditExecution[]): boolean {
+  const groups = new Map<string, OptimizerV5AuditExecution[]>();
+  for (const execution of executions) {
+    const key = `${execution.fixture}/${execution.mode}/${execution.count}`;
+    const group = groups.get(key) ?? [];
+    group.push(execution);
+    groups.set(key, group);
+  }
+  return groups.size * 2 === executions.length &&
+    [...groups.values()].every((group) => {
+      const forward = group.find((execution) => execution.inputOrder === 'forward');
+      const reverse = group.find((execution) => execution.inputOrder === 'reverse');
+      return group.length === 2 &&
+        forward !== undefined &&
+        reverse !== undefined &&
+        forward.solutionHash === reverse.solutionHash &&
+        forward.resultHash === reverse.resultHash;
+    });
 }
 
 function fixtureOrder(fixture: string): number {
@@ -262,18 +310,34 @@ function validateResult(
   const powers = result.formations
     .map((formation) => formation.estimatedPower)
     .sort((left, right) => left - right);
+  const powerUnits = powers.map((power) => power / 10);
   const ratings = result.formations
     .map((formation) => formation.rating)
     .sort((left, right) => left - right);
+  const relationshipValueUnits = result.formations.reduce(
+    (sum, formation) => sum + formation.adjustedRelationshipValueUnits,
+    0,
+  );
+  const activeRelationshipCount = result.formations.reduce(
+    (sum, formation) => sum + formation.activeRelationshipCount,
+    0,
+  );
+  const stableSolutionKey = result.formations
+    .map((formation) => formation.stableCandidateKey)
+    .sort()
+    .join('||');
   if (
+    JSON.stringify(powerUnits) !==
+      JSON.stringify(result.objective.ascendingEstimatedPowerUnits) ||
     JSON.stringify(powers) !== JSON.stringify(result.objective.ascendingEstimatedPowerVector) ||
     JSON.stringify(ratings) !== JSON.stringify(result.objective.ascendingRatingVector) ||
     result.collection.totalEstimatedPower !== powers.reduce((sum, value) => sum + value, 0) ||
     result.collection.totalRating !== ratings.reduce((sum, value) => sum + value, 0) ||
-    result.collection.totalRelationshipValueUnits !== result.formations.reduce(
-      (sum, formation) => sum + formation.adjustedRelationshipValueUnits,
-      0,
-    )
+    result.objective.totalRelationshipValueUnits !== relationshipValueUnits ||
+    result.collection.totalRelationshipValueUnits !== relationshipValueUnits ||
+    result.objective.totalActiveRelationships !== activeRelationshipCount ||
+    result.collection.totalActiveRelationships !== activeRelationshipCount ||
+    result.objective.stableSolutionKey !== stableSolutionKey
   ) {
     throw new Error('Optimizer v5 audit reconstruction failed.');
   }

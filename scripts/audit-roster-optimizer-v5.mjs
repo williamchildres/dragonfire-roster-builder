@@ -67,8 +67,9 @@ function renderMarkdown(report) {
 - Generated: ${report.generatedAt}
 - Contract: 5 / formation-rating-v3
 - Executions: ${report.executionCount}
-- Candidate pool builds: ${report.candidatePoolBuilds}
-- Exact solver executions: ${report.solverExecutions}
+- Independent candidate-pool builds: ${report.candidatePoolBuilds}
+- Independent exact solver executions: ${report.solverExecutions}
+- Every solver execution independent: ${report.allSolversIndependent}
 - Forward/reverse equality: ${report.forwardReverseEqual}
 - No duplicate dragons: ${report.noDuplicateDragons}
 - Failed checks: ${report.failedChecks}

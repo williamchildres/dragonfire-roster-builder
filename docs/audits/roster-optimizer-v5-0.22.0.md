@@ -1,10 +1,11 @@
 # Optimizer v5 audit — 0.22.0
 
-- Generated: 2026-07-29T20:16:56.144Z
+- Generated: 2026-07-29T23:17:43.159Z
 - Contract: 5 / formation-rating-v3
 - Executions: 132
-- Candidate pool builds: 6
-- Exact solver executions: 66
+- Independent candidate-pool builds: 6
+- Independent exact solver executions: 132
+- Every solver execution independent: true
 - Forward/reverse equality: true
 - No duplicate dragons: true
 - Failed checks: 0
@@ -12,9 +13,9 @@
 
 ## Maximum Node telemetry
 
-- Candidate generation: 5072.719 ms
-- Solver: 114818.385 ms
-- Total: 118158.124 ms
+- Candidate generation: 6399.082 ms
+- Solver: 121870.828 ms
+- Total: 125643.707 ms
 - Solver passes: 504
 - Exact-search nodes: 5456
 - Variables: 5456
