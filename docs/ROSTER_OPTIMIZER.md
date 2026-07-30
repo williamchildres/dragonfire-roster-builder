@@ -38,11 +38,13 @@ Round-half-up uses positive integer/BigInt arithmetic, so no floating-point valu
 5. higher active relationship count;
 6. lexicographically preferred stable candidate key.
 
-The selected trio is locked and the power reference is recalculated for the next step. Every formation records its maximum remaining power, raw power, normalized indices, weighted contributions, and final score units. This evidence is part of the semantic solution identity. Overall Score is an explainable planning index, not combat power, predicted damage, win probability, or simulation.
+The selected trio is locked and the power reference is recalculated for the next step. Every formation records its maximum remaining power, raw power, normalized indices, weighted contributions, and final score units. This evidence is part of the semantic solution identity. Because every army uses the strongest trio remaining at its own selection step as the reference, Overall Scores from different army numbers are not directly comparable. A later army can have a higher score than Army 1 without being a stronger formation.
+
+The result is labeled **Exact sequential result**: each army is the exact Best Overall winner at its selection step, but the complete multi-army collection is not jointly optimized. Overall Score is an explainable planning index, not combat power, predicted damage, win probability, or simulation.
 
 ## Highest Raw Power First
 
-This is the unchanged `strongest-first` v0.22 solver under a more precise public label. At each rank it selects the highest remaining integer Estimated Power, then Formation Rating v3, fixed-point relationship value, active relationship count, and stable key. It never weakens an earlier army to improve a later one.
+This is the unchanged `strongest-first` v0.22 solver under a more precise public label. At each rank it selects the highest remaining integer Estimated Power, then Formation Rating v3, fixed-point relationship value, active relationship count, and stable key. It never weakens an earlier army to improve a later one. The result is labeled **Exact sequential result** because each army is proven against the candidates remaining at its selection step.
 
 ## Balance Raw Power Across Armies
 
@@ -54,7 +56,7 @@ This is the unchanged `balanced` v0.22 joint solver under a more precise public 
 4. maximizes active relationships;
 5. selects the stable optimal-face identity.
 
-Numeric MILP phases require zero MIP gap and exact integer reconstruction. The final optimal face is enumerated exactly in stable-key order. There is no heuristic fallback, timeout result, weighted approximation, variance, spread, or average-power objective. Display order is strongest-to-weakest; canonical allocation identity is display-order independent.
+Numeric MILP phases require zero MIP gap and exact integer reconstruction. The final optimal face is enumerated exactly in stable-key order. There is no heuristic fallback, timeout result, weighted approximation, variance, spread, or average-power objective. The result retains the **Exact optimal result** label because all selected armies are solved jointly. Display order is strongest-to-weakest; canonical allocation identity is display-order independent.
 
 ## Contract v6
 

@@ -369,10 +369,25 @@ function OptimizerResultView({
       <header className="optimizer-result-header">
         <div>
           <p className="eyebrow">{modeLabel(result.allocationMode)}</p>
-          <h3>Exact optimal result</h3>
+          <h3>{resultHeading(result.allocationMode)}</h3>
+          <p className="optimizer-result-proof">
+            {resultProofCopy(result.allocationMode)}
+          </p>
         </div>
-        <span className="optimizer-optimal-badge"><CircleCheck size={17} aria-hidden="true" /> Proven exact</span>
+        <span
+          className="optimizer-optimal-badge"
+          aria-label={resultBadgeLabel(result.allocationMode)}
+        >
+          <CircleCheck size={17} aria-hidden="true" /> Proven exact
+        </span>
       </header>
+      <p className="optimizer-allocation-note">
+        {result.allocationMode === 'best-overall-first'
+          ? 'Each army’s Overall Score is calculated against the dragons remaining at that selection step. Scores from different army numbers are not directly comparable.'
+          : result.allocationMode === 'strongest-first'
+            ? 'Later armies are selected by raw Estimated Power only after every earlier army has claimed its three dragons.'
+            : 'The solver prioritized the weakest raw-power army first, then the next weakest, before applying Formation Rating and relationship tie-breaks.'}
+      </p>
       <div className="optimizer-result-metrics">
         <Metric label="Armies" value={result.generatedFormationCount} />
         <Metric label="Strongest power" value={collection.maximumFormationEstimatedPower.toLocaleString()} />
@@ -383,13 +398,6 @@ function OptimizerResultView({
         <Metric label="Average Formation Rating" value={collection.averageRating.toFixed(1)} />
         <Metric label="Minimum Formation Rating" value={collection.minimumRating} />
       </div>
-      <p className="optimizer-allocation-note">
-        {result.allocationMode === 'best-overall-first'
-          ? 'Army 1 has the highest Best Overall score from the full roster. Each later army is rescored after earlier armies claim their dragons.'
-          : result.allocationMode === 'strongest-first'
-            ? 'Later armies are selected by raw Estimated Power only after every earlier army has claimed its three dragons.'
-            : 'The solver prioritized the weakest raw-power army first, then the next weakest, before applying Formation Rating and relationship tie-breaks.'}
-      </p>
       <p className="optimizer-tier-summary"><strong>Rating tiers:</strong> {tierSummary(collection.tierDistribution)}</p>
       <div className="optimizer-formation-grid">
         {result.formations.map((formation) => (
@@ -444,7 +452,10 @@ function OptimizerFormationCard({
         </small>
       </div>
       {formation.bestOverallScore ? (
-        <BestOverallScoreDetails score={formation.bestOverallScore} />
+        <BestOverallScoreDetails
+          score={formation.bestOverallScore}
+          armyRank={formation.rank}
+        />
       ) : null}
       <dl className="optimizer-positions">
         {(['left-flank', 'vanguard', 'right-flank'] as const).map((position) => {
@@ -495,27 +506,47 @@ function OptimizerFormationCard({
 
 function BestOverallScoreDetails({
   score,
+  armyRank,
 }: {
   score: NonNullable<PowerAwareOptimizedFormation['bestOverallScore']>;
+  armyRank: number;
 }) {
   return (
     <details className="optimizer-overall-score">
       <summary>Overall Score {score.overallScore.toFixed(1)}</summary>
       <p>An explainable planning index, not combat power or predicted damage.</p>
+      <p>
+        Relative power compares this army with the strongest raw-power trio still available
+        {' '}when Army {armyRank} was selected.
+      </p>
       <dl>
         <div>
-          <dt>Power contribution</dt>
-          <dd>
-            Relative power: {(score.powerIndexBasisPoints / 100).toFixed(1)} / 100
-            {' · '}Weight: {score.powerWeight}%
-          </dd>
+          <dt>Candidate raw power</dt>
+          <dd>{formatEstimatedPowerUnits(score.estimatedPowerUnits)}</dd>
         </div>
         <div>
-          <dt>Formation contribution</dt>
-          <dd>
-            Formation Rating: {score.ratingIndexBasisPoints / 100} / 100
-            {' · '}Weight: {score.formationRatingWeight}%
-          </dd>
+          <dt>Strongest raw power remaining at that step</dt>
+          <dd>{formatEstimatedPowerUnits(score.maxRemainingPowerUnits)}</dd>
+        </div>
+        <div>
+          <dt>Relative power index</dt>
+          <dd>{(score.powerIndexBasisPoints / 100).toFixed(1)} / 100</dd>
+        </div>
+        <div>
+          <dt>Formation Rating</dt>
+          <dd>{score.ratingIndexBasisPoints / 100} / 100</dd>
+        </div>
+        <div>
+          <dt>Power contribution ({score.powerWeight}%)</dt>
+          <dd>{score.powerContributionUnits.toLocaleString()} score units</dd>
+        </div>
+        <div>
+          <dt>Formation contribution ({score.formationRatingWeight}%)</dt>
+          <dd>{score.ratingContributionUnits.toLocaleString()} score units</dd>
+        </div>
+        <div>
+          <dt>Overall Score</dt>
+          <dd>{score.overallScore.toFixed(1)}</dd>
         </div>
       </dl>
     </details>
@@ -718,7 +749,7 @@ function Methodology({ mode }: { mode: OptimizerAllocationMode }) {
           <li>Each eligible trio is generated once. All six placements are compared with Formation Rating v3 and the exact best arrangement is retained.</li>
           <li>Estimated Power v2 uses each dragon’s current Star Rank and Dragon Level. Formation reliability uses current active Habit Levels.</li>
           {mode === 'best-overall-first' ? (
-            <li>Overall Score is an integer planning index: 60% step-relative progression power and 40% Formation Rating. It is recalculated after each army claims its dragons.</li>
+            <li>Overall Score is an integer planning index: 60% step-relative progression power and 40% Formation Rating. It is recalculated after each army claims its dragons, so scores from different army numbers are not directly comparable.</li>
           ) : (
             <li>Power, rating, and relationship values remain separate integer lexicographic objectives; no weighted floating-point blend or rarity priority is used.</li>
           )}
@@ -791,4 +822,28 @@ function modeLabel(mode: OptimizerAllocationMode): string {
   if (mode === 'best-overall-first') return 'Best Overall First';
   if (mode === 'strongest-first') return 'Highest Raw Power First';
   return 'Balance Raw Power Across Armies';
+}
+
+function resultHeading(mode: OptimizerAllocationMode): string {
+  return mode === 'balanced' ? 'Exact optimal result' : 'Exact sequential result';
+}
+
+function resultProofCopy(mode: OptimizerAllocationMode): string {
+  if (mode === 'best-overall-first') {
+    return 'Each army is the exact Best Overall winner at its selection step. The complete multi-army collection is not jointly optimized.';
+  }
+  if (mode === 'strongest-first') {
+    return 'Each army is the exact highest raw-power trio remaining at its selection step.';
+  }
+  return 'All selected armies are solved jointly with exact lexicographic raw-power balance.';
+}
+
+function resultBadgeLabel(mode: OptimizerAllocationMode): string {
+  return mode === 'balanced'
+    ? 'Proven exact joint optimization'
+    : 'Proven exact sequential selection';
+}
+
+function formatEstimatedPowerUnits(units: number): string {
+  return (units * 10).toLocaleString();
 }

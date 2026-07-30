@@ -98,7 +98,7 @@ describe('Optimizer v6 workspace retention', () => {
     resolveLate!(result('strongest-first', 10, 900_000));
     await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
     await waitFor(() =>
-      expect(screen.queryByRole('heading', { name: 'Exact optimal result' })).not.toBeInTheDocument(),
+      expect(screen.queryByRole('heading', { name: 'Exact sequential result' })).not.toBeInTheDocument(),
     );
     expect(run).toHaveBeenCalledTimes(1);
     expect(Object.keys(window.localStorage)).not.toContain(
@@ -116,7 +116,7 @@ function renderApp(runner: RosterOptimizerRunner) {
 async function runOptimizer(user: ReturnType<typeof userEvent.setup>) {
   await user.click(screen.getByRole('link', { name: /^optimizer$/i }));
   await user.click(screen.getByRole('button', { name: /Build 10 armies/i }));
-  await screen.findByRole('heading', { name: 'Exact optimal result' });
+  await screen.findByRole('heading', { name: 'Exact sequential result' });
 }
 
 function resolvedRunner(value: FlexiblePowerAwareOptimizationResult): RosterOptimizerRunner {

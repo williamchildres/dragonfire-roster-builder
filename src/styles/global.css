@@ -3871,6 +3871,12 @@ th {
   margin: 0;
 }
 
+.optimizer-result-proof {
+  color: var(--muted);
+  margin: 0.35rem 0 0;
+  max-width: 48rem;
+}
+
 .optimizer-optimal-badge {
   align-items: center;
   background: rgba(127, 176, 143, 0.14);
