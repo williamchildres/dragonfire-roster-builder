@@ -3,6 +3,7 @@ import type { EstimatedDragonPower } from '../power/estimatedDragonPower';
 import { candidatePowerUnits } from './rosterOptimizerPower';
 import type {
   OptimizerFormationCandidate,
+  BestOverallScoreBreakdown,
   FlexiblePowerAwareObjective,
   OptimizerAllocationMode,
   PowerAwarePrimaryBackupOptimizerObjective,
@@ -45,6 +46,7 @@ export function compareFlexiblePowerAwareObjectives(
 export function flexiblePowerAwareObjectiveForCandidates(
   candidates: OptimizerFormationCandidate[],
   allocationMode: OptimizerAllocationMode,
+  bestOverallScoreBreakdowns?: readonly BestOverallScoreBreakdown[],
 ): FlexiblePowerAwareObjective {
   const ascendingEstimatedPowerUnits = candidates
     .map(requiredPowerUnits)
@@ -58,6 +60,9 @@ export function flexiblePowerAwareObjectiveForCandidates(
   );
   return {
     allocationMode,
+    ...(bestOverallScoreBreakdowns
+      ? { bestOverallScoreUnits: bestOverallScoreBreakdowns.map((score) => score.overallScoreUnits) }
+      : {}),
     ascendingEstimatedPowerUnits,
     ascendingEstimatedPowerVector: ascendingEstimatedPowerUnits.map(
       (powerUnits) => powerUnits * 10,

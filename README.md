@@ -16,7 +16,7 @@ Public site: https://dragonfirelab.com/overview
 - Read-only Estimated Power v2 diagnostics for roster dragons and complete formations, using 59 provenance observations and support-aware rarity-specific Star-plus-Level curves.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
-- Flexible Power-Aware Roster Optimizer for 1–11 armies with Strongest Armies First and Balance All Armies modes over current My Roster progression.
+- Flexible Power-Aware Roster Optimizer for 1–11 armies with Best Overall First, Highest Raw Power First, and Balance Raw Power Across Armies over current My Roster progression.
 - Formation share links and roster JSON import/export.
 - Clean path-based routes for Overview, Roster, Formation Builder, Optimizer, About, and Updates, with a GitHub Pages deep-link fallback.
 - A CHANGELOG-backed Recent Update panel and complete public release history.
@@ -55,11 +55,13 @@ Typed defensive and Recovery Received support may be presented through explicitl
 
 Roster Optimizer uses the same current My Roster eligibility and progression resolution as Formation Builder. Three eligible owned dragons enable one army; the dynamic maximum is `min(11, floor(eligible / 3))`. Ten remains the initial selection when at least 30 dragons are eligible. Every unique trio is evaluated once, all six positions are compared, and no dragon may repeat.
 
-Strongest Armies First selects the exact strongest remaining trio by integer Estimated Power, Formation Rating v3, fixed-point relationship value, active relationship count, and stable key. Each selected army claims its dragons before the next rank.
+Best Overall First is the default. At each army rank it exactly combines step-relative progression power (60%) with Formation Rating v3 (40%), selects the highest integer planning index, and then removes those dragons. Each score uses the strongest trio still available at that selection step as its reference, so scores from different army numbers are not directly comparable. The UI labels this an exact sequential result because the complete collection is not jointly optimized. It is explainable allocation guidance, not combat simulation.
 
-Balance All Armies solves the requested collection jointly. It lexicographically maximizes the sorted ascending integer power vector, then the sorted ascending rating vector, combined fixed-point relationship value, active relationship count, and stable key. It is not a spread, variance, average-power, or weighted-score approximation.
+Highest Raw Power First preserves the exact sequential v0.22 behavior: it selects the highest remaining standalone integer Estimated Power, using Formation Rating v3 and relationship evidence only as exact tie-breaks. The UI labels it an exact sequential result.
 
-Both modes use Estimated Power v2 plus Formation Rating v3 with current Star Rank, Dragon Level, and active Habit Levels. Rarity and Power confidence are descriptive only. Unquantified relationship potential is explanatory and never enters objectives. Results do not simulate combat or guarantee a real-game outcome. The last completed result survives section navigation in the current app session, becomes stale after relevant roster, count, or mode changes, and is not persisted. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md).
+Balance Raw Power Across Armies preserves the joint v0.22 solver and retains the exact optimal result label. It lexicographically maximizes the sorted ascending integer raw-power vector, then the sorted ascending rating vector, combined fixed-point relationship value, active relationship count, and stable key. It is not a spread, variance, average-power, or weighted-score approximation.
+
+All three modes use Estimated Power v2 plus Formation Rating v3 with current Star Rank, Dragon Level, and active Habit Levels. Rarity and Power confidence are descriptive only. Unquantified relationship potential is explanatory and never enters objectives. Results do not simulate combat or guarantee a real-game outcome. The last completed result survives section navigation in the current app session, becomes stale after relevant roster, count, or mode changes, and is not persisted. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md).
 
 ## Development
 
@@ -111,4 +113,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.22.0`. Source data schema: `13`. Local and cloud roster schemas: `5`; optimizer contract: `5`; live rating contract: `formation-rating-v3`. Formation Rating v3 weights mapped relationships by documented activation reliability and leaves unresolved potential outside the numeric score. Estimated Power v2 remains runtime-only and unchanged. No persistence format, SQL migration, route, sharing payload, or account-synchronization behavior changed. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`).
+Current release: `0.22.1`. Source data schema: `13`. Local and cloud roster schemas: `5`; optimizer contract: `6`; live rating contract: `formation-rating-v3`. Formation Rating v3 weights mapped relationships by documented activation reliability and leaves unresolved potential outside the numeric score. Estimated Power v2 remains runtime-only and unchanged. No persistence format, SQL migration, route, sharing payload, or account-synchronization behavior changed. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`).

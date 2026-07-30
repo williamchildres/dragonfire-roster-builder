@@ -1,17 +1,22 @@
 import type { OwnedDragon } from '../models/dragon';
-import {
+import type {
   ESTIMATED_POWER_MODEL_HASH,
   ESTIMATED_POWER_MODEL_VERSION,
   ESTIMATED_POWER_OBSERVATION_HASH,
 } from '../power/generatedDragonPowerModel';
 import { optimizeCurrentRoster } from './rosterOptimizer';
-import {
+import type {
   ROSTER_OPTIMIZER_CONTRACT_VERSION,
   ROSTER_OPTIMIZER_RATING_CONTRACT,
-  type OptimizerAllocationMode,
-  type OptimizerRosterDragon,
-  type OptimizerRunProgress,
+  BEST_OVERALL_NORMALIZATION_SCALE,
+  BEST_OVERALL_POWER_WEIGHT,
+  BEST_OVERALL_RATING_WEIGHT,
+  BEST_OVERALL_SCORING_VERSION,
+  OptimizerAllocationMode,
+  OptimizerRosterDragon,
+  OptimizerRunProgress,
 } from './rosterOptimizerTypes';
+import { isRosterOptimizerRequestV6 } from './rosterOptimizerProtocol';
 
 export type RosterOptimizerWorkerRequest = {
   type: 'optimize';
@@ -20,6 +25,10 @@ export type RosterOptimizerWorkerRequest = {
   estimatedPowerModelVersion: typeof ESTIMATED_POWER_MODEL_VERSION;
   estimatedPowerModelHash: typeof ESTIMATED_POWER_MODEL_HASH;
   estimatedPowerObservationHash: typeof ESTIMATED_POWER_OBSERVATION_HASH;
+  bestOverallScoringVersion: typeof BEST_OVERALL_SCORING_VERSION;
+  bestOverallPowerWeight: typeof BEST_OVERALL_POWER_WEIGHT;
+  bestOverallFormationRatingWeight: typeof BEST_OVERALL_RATING_WEIGHT;
+  bestOverallNormalizationScale: typeof BEST_OVERALL_NORMALIZATION_SCALE;
   requestId: number;
   allocationMode: OptimizerAllocationMode;
   formationCount: number;
@@ -56,6 +65,10 @@ workerScope.addEventListener('message', (event) => {
   if (event.data.type !== 'optimize') return;
   const {
     allocationMode,
+    bestOverallFormationRatingWeight,
+    bestOverallNormalizationScale,
+    bestOverallPowerWeight,
+    bestOverallScoringVersion,
     contractVersion,
     estimatedPowerModelHash,
     estimatedPowerModelVersion,
@@ -65,15 +78,19 @@ workerScope.addEventListener('message', (event) => {
     requestId,
     roster,
   } = event.data;
-  if (
-    contractVersion !== ROSTER_OPTIMIZER_CONTRACT_VERSION ||
-    ratingContract !== ROSTER_OPTIMIZER_RATING_CONTRACT ||
-    estimatedPowerModelVersion !== ESTIMATED_POWER_MODEL_VERSION ||
-    estimatedPowerModelHash !== ESTIMATED_POWER_MODEL_HASH ||
-    estimatedPowerObservationHash !== ESTIMATED_POWER_OBSERVATION_HASH ||
-    (allocationMode !== 'strongest-first' && allocationMode !== 'balanced') ||
-    !Number.isInteger(formationCount)
-  ) {
+  if (!isRosterOptimizerRequestV6({
+    allocationMode,
+    bestOverallFormationRatingWeight,
+    bestOverallNormalizationScale,
+    bestOverallPowerWeight,
+    bestOverallScoringVersion,
+    contractVersion,
+    estimatedPowerModelHash,
+    estimatedPowerModelVersion,
+    estimatedPowerObservationHash,
+    formationCount,
+    ratingContract,
+  })) {
     workerScope.postMessage({
       type: 'error',
       requestId,

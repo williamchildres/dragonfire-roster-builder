@@ -1,6 +1,6 @@
 # Flexible Power-Aware Roster Optimizer
 
-Dragonfire Lab v0.22 uses optimizer contract 5 and exposes two allocation modes over a selectable 1–11 armies. Historical v0.21 strategy artifacts remain committed as historical evidence; they are not public v0.22 choices.
+Dragonfire Lab v0.22.1 uses live optimizer contract 6 and exposes three allocation modes over a selectable 1–11 armies. Best Overall First is the default for a fresh session. Historical v0.21 and optimizer-v5 artifacts remain committed evidence, not live contracts.
 
 ## Eligibility and count
 
@@ -10,76 +10,88 @@ Only owned, optimizer-eligible dragons count. The maximum is:
 Math.min(11, Math.floor(eligibleDragonCount / 3))
 ```
 
-Three eligible dragons enable one army. Ten is the initial selection when at least 30 are eligible; otherwise the initial selection is the maximum. Roster changes recompute and clamp the selected count. Count, mode, eligible collection, progression, model, or rating-contract changes invalidate the previous request fingerprint. The count is session UI state and is not added to roster or account schemas.
+Ten is the initial selection when at least 30 dragons are eligible; otherwise the maximum is selected. Roster changes recompute and clamp the count. Count, mode, eligible progression, scoring profile, model identity, or rating-contract changes invalidate the prior request. No optimizer selection is persisted to roster or account schemas.
 
-## Shared candidate source
+## One shared candidate pool
 
-Each unordered eligible trio is generated once per request. Candidate generation:
+Each unordered eligible trio is generated once per request. Candidate generation evaluates all six placements with Formation Rating v3, retains the deterministic best arrangement and all tied best arrangements, retains the complete reliability trace, and attaches cached Estimated Power v2 integer units. Current Star Rank, Dragon Level, and active Habit Levels are included. All three modes consume this same pool.
 
-1. evaluates all six exact positions through Formation Rating v3 placement comparison;
-2. retains the same deterministic best arrangement and all tied best arrangements;
-3. retains the complete v3 reliability and relationship trace;
-4. uses each dragon’s current Star Rank, Dragon Level, and active Habit Levels;
-5. attaches the sum of the three cached Estimated Power v2 values in integer units of ten Power;
-6. attaches Formation Rating, fixed-point adjusted relationship units at scale 1,000,000, active relationship count, and stable candidate key.
+## Best Overall First
 
-Both modes consume this one pool. Candidate generation remains cancellable; Worker termination provides responsive cancellation while HiGHS is active.
+Best Overall First is exact sequential allocation. At Army K, overlapping candidates are removed and the strongest remaining raw-power value becomes that step’s normalization reference.
 
-## Strongest Armies First
+```ts
+powerIndexBasisPoints =
+  roundHalfUp(candidatePowerUnits * 10_000 / maxRemainingPowerUnits);
+ratingIndexBasisPoints = formationRating * 100;
+overallScoreUnits =
+  powerIndexBasisPoints * 60 +
+  ratingIndexBasisPoints * 40;
+```
 
-Strongest Armies First is exact sequential allocation. For each Army K, it selects the highest-ranked candidate that does not overlap Armies 1 through K−1:
+Round-half-up uses positive integer/BigInt arithmetic, so no floating-point value affects the semantic rank. The exact candidate order is:
 
-1. maximum integer Estimated Power units;
-2. maximum Formation Rating v3;
-3. maximum fixed-point adjusted relationship value units;
-4. maximum active relationship count;
-5. lexicographically preferred stable candidate key.
+1. higher Overall Score units;
+2. higher raw Estimated Power units;
+3. higher Formation Rating v3;
+4. higher fixed-point adjusted relationship value units;
+5. higher active relationship count;
+6. lexicographically preferred stable candidate key.
 
-The implementation sorts the complete shared pool by this tuple once and takes the first disjoint candidate at every rank. Because each sequential phase selects exactly one remaining candidate, this is mathematically identical to exhaustive one-candidate optimization at that phase. Bounded exhaustive tests prove agreement. It intentionally never weakens an earlier army to improve a later one.
+The selected trio is locked and the power reference is recalculated for the next step. Every formation records its maximum remaining power, raw power, normalized indices, weighted contributions, and final score units. This evidence is part of the semantic solution identity. Because every army uses the strongest trio remaining at its own selection step as the reference, Overall Scores from different army numbers are not directly comparable. A later army can have a higher score than Army 1 without being a stronger formation.
 
-## Balance All Armies
+The result is labeled **Exact sequential result**: each army is the exact Best Overall winner at its selection step, but the complete multi-army collection is not jointly optimized. Overall Score is an explainable planning index, not combat power, predicted damage, win probability, or simulation.
 
-Balance All Armies selects all requested candidates jointly with binary candidate variables, exactly N selections, and at most one selected formation containing each dragon.
+## Highest Raw Power First
 
-Its objective is:
+This is the unchanged `strongest-first` v0.22 solver under a more precise public label. At each rank it selects the highest remaining integer Estimated Power, then Formation Rating v3, fixed-point relationship value, active relationship count, and stable key. It never weakens an earlier army to improve a later one. The result is labeled **Exact sequential result** because each army is proven against the candidates remaining at its selection step.
 
-1. lexicographically maximize selected integer Estimated Power values sorted ascending;
-2. with the complete power vector fixed, lexicographically maximize Formation Rating v3 values sorted ascending;
-3. maximize combined fixed-point adjusted relationship value units;
-4. maximize combined active relationship count;
-5. choose the lexicographically preferred sorted stable-candidate-key sequence.
+## Balance Raw Power Across Armies
 
-For a fixed selection count, one sorted ascending vector beats another exactly when its histogram has fewer selections at the first lowest value where their histograms differ. The solver therefore visits discrete values from low to high and minimizes their selected counts. Safe-integer radix chunks combine adjacent histogram digits without changing lexicographic meaning. Every numeric phase uses `mip_rel_gap = 0` and `mip_abs_gap = 0`, must return `optimal`, reconstructs its integer objective from validated binary assignments, and fixes that exact value.
+This is the unchanged `balanced` v0.22 joint solver under a more precise public label. With binary candidate selection, exactly N formations, and each dragon used at most once, it:
 
-The final numeric face is enumerated in stable-key order. The first allocation that exactly reconstructs the fixed power histogram, rating histogram, relationship units, relationship count, formation count, and no-overlap constraints is the exact stable-key optimum. This avoids exposing the stable identity to contaminated large floating-point objectives. No heuristic fallback, timeout result, weighted approximation, variance, spread, or average-power objective is used.
+1. lexicographically maximizes selected integer raw-power values sorted ascending;
+2. fixes that complete vector and lexicographically maximizes ratings sorted ascending;
+3. maximizes relationship-value units;
+4. maximizes active relationships;
+5. selects the stable optimal-face identity.
 
-Balanced formations are displayed strongest to weakest for readability. Hash identity uses canonical stable-key order, so display order does not change allocation identity.
+Numeric MILP phases require zero MIP gap and exact integer reconstruction. The final optimal face is enumerated exactly in stable-key order. There is no heuristic fallback, timeout result, weighted approximation, variance, spread, or average-power objective. The result retains the **Exact optimal result** label because all selected armies are solved jointly. Display order is strongest-to-weakest; canonical allocation identity is display-order independent.
 
-## Contract v5
+## Contract v6
 
 The Worker request includes:
 
 ```ts
-interface RosterOptimizerRequestV5 {
+interface RosterOptimizerRequestV6 {
   type: 'optimize';
-  contractVersion: 5;
+  contractVersion: 6;
   ratingContract: 'formation-rating-v3';
-  allocationMode: 'strongest-first' | 'balanced';
+  allocationMode:
+    | 'best-overall-first'
+    | 'strongest-first'
+    | 'balanced';
   formationCount: number;
   rosterSnapshot: OptimizerRosterDragon[];
   roster: Record<string, OwnedDragon>;
   estimatedPowerModelVersion: 'estimated-power-v2';
   estimatedPowerModelHash: string;
   estimatedPowerObservationHash: string;
+  bestOverallScoringVersion: 'best-overall-v1';
+  bestOverallPowerWeight: 60;
+  bestOverallFormationRatingWeight: 40;
+  bestOverallNormalizationScale: 10_000;
 }
 ```
 
-The unified successful result includes contract and model identities, mode, requested/generated count, flat formations, used/unused dragon IDs, collection Power/Rating/relationship/reliability/rarity summaries, the complete objective vectors, exact-search telemetry, and semantic solution/result hashes. Operational timing and solver telemetry do not enter semantic hashes.
+The unified result includes those contract/model/profile identities, flat formations, used and unused dragon IDs, collection summaries, exact objective vectors, telemetry, and deterministic solution/result hashes. Only Best Overall formations carry `BestOverallScoreBreakdown`; the raw-power modes never fabricate an Overall Score.
 
-Contract-v4 Worker requests and responses are rejected. Legacy strategy names are never interpreted as v5 modes.
+Contract-v5 and older Worker requests/responses are rejected. Historical strategy names are never interpreted as live modes. Operational timing and solver telemetry remain excluded from semantic hashes.
 
-## Presentation and limits
+## Audit and limits
 
-Formation cards retain exact position, Estimated Power and confidence, Formation Rating v3 and tier, reliability coverage, canonical relationship labels, strengths, gaps, retained alternatives, raw IDs inside Technical Trace, and exact Formation Builder handoff.
+The optimizer-v6 audit independently solves 3 fixtures × 3 modes × 11 counts × 2 input orders: 198 records, 198 solver executions, and six independent candidate-pool builds. Existing raw and balanced candidate identities and objective vectors are checked against the immutable optimizer-v5 artifact.
 
-Estimated Power is an unofficial progression estimate. Formation Rating measures documented compatibility and reliability. Neither simulates combat or guarantees the best real-game outcome. Rarity remains descriptive and is not an objective priority.
+Formation cards retain exact positions, Estimated Power and confidence, Formation Rating v3 and tier, reliability, canonical relationship labels, strengths, gaps, raw IDs inside Technical Trace, and Formation Builder handoff.
+
+Estimated Power is unofficial progression guidance. Formation Rating measures documented compatibility and reliability. Neither simulates combat nor guarantees the best real-game outcome. Rarity remains descriptive and is never an objective priority.

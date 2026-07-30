@@ -23,14 +23,23 @@ import type {
   RosterOptimizerResponse,
   TierDistribution,
 } from '../optimizer/rosterOptimizerTypes';
+import {
+  BEST_OVERALL_NORMALIZATION_SCALE,
+  BEST_OVERALL_POWER_WEIGHT,
+  BEST_OVERALL_RATING_WEIGHT,
+  BEST_OVERALL_SCORING_VERSION,
+} from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationArrangement';
 import { createEmptyRoster } from '../services/rosterStorage';
 
-describe('Roster Optimizer v5 workspace', () => {
-  it('defaults to 10 Strongest Armies First and exposes only the two v5 modes', () => {
+describe('Roster Optimizer v6 workspace', () => {
+  it('defaults to 10 Best Overall First and exposes all three precise modes', () => {
     renderOptimizer({ roster: ownedRoster(33) });
-    expect(screen.getByRole('radio', { name: /Strongest Armies First/i })).toBeChecked();
-    expect(screen.getByRole('radio', { name: /Balance All Armies/i })).not.toBeChecked();
+    expect(DEFAULT_OPTIMIZER_ALLOCATION_MODE).toBe('best-overall-first');
+    expect(screen.getByRole('radio', { name: /Best Overall First/i })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /Highest Raw Power First/i })).not.toBeChecked();
+    expect(screen.getByRole('radio', { name: /Balance Raw Power Across Armies/i }))
+      .not.toBeChecked();
     expect(screen.queryByText(/Primary|Backup|Best 10|Rarity-Priority/i)).not.toBeInTheDocument();
     expect(screen.getByLabelText('Number of armies')).toHaveValue('10');
     expect(screen.getByText('10 armies use 30 of your 33 eligible dragons.')).toBeInTheDocument();
@@ -42,9 +51,14 @@ describe('Roster Optimizer v5 workspace', () => {
     const select = screen.getByLabelText('Number of armies');
     expect(within(select).getAllByRole('option')).toHaveLength(11);
     await userEvent.setup().selectOptions(select, '11');
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Balance All Armies/i }));
+    await userEvent.setup().click(
+      screen.getByRole('radio', { name: /Balance Raw Power Across Armies/i }),
+    );
     await userEvent.setup().click(screen.getByRole('button', { name: /Build 11 armies/i }));
     await screen.findByRole('heading', { name: 'Exact optimal result' });
+    expect(screen.getByText(
+      'All selected armies are solved jointly with exact lexicographic raw-power balance.',
+    )).toBeInTheDocument();
     expect(runner.run).toHaveBeenCalledWith(
       expect.any(Object),
       'balanced',
@@ -52,6 +66,8 @@ describe('Roster Optimizer v5 workspace', () => {
       expect.any(Function),
     );
     expect(screen.getAllByRole('article')).toHaveLength(11);
+    expect(within(screen.getAllByRole('article')[0]!).queryByText(/Overall Score/i))
+      .not.toBeInTheDocument();
   });
 
   it('clamps a now-invalid count after roster changes and explains the adjustment', async () => {
@@ -89,10 +105,11 @@ describe('Roster Optimizer v5 workspace', () => {
     renderOptimizer({ roster: ownedRoster(33), runner });
     await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
     expect(screen.getByText('Generating every eligible trio…')).toBeInTheDocument();
-    expect(screen.getByText(/10 armies · Strongest Armies First.*fully proven exact/i)).toBeInTheDocument();
+    expect(screen.getByText(/10 armies · Best Overall First.*fully proven exact/i))
+      .toBeInTheDocument();
     progressCallback?.({
       stage: 'exact-solving',
-      allocationMode: 'strongest-first',
+      allocationMode: 'best-overall-first',
       formationCount: 10,
     });
     expect(await screen.findByText('Proving the exact allocation…')).toBeInTheDocument();
@@ -105,11 +122,13 @@ describe('Roster Optimizer v5 workspace', () => {
     const runner = dynamicRunner();
     const view = renderOptimizer({ roster, runner });
     await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
-    await screen.findByRole('heading', { name: 'Exact optimal result' });
+    await screen.findByRole('heading', { name: 'Exact sequential result' });
     await userEvent.setup().selectOptions(screen.getByLabelText('Number of armies'), '9');
     expect(screen.getByText(/roster progression, army count, or allocation mode changed/i)).toBeInTheDocument();
     await userEvent.setup().selectOptions(screen.getByLabelText('Number of armies'), '10');
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Balance All Armies/i }));
+    await userEvent.setup().click(
+      screen.getByRole('radio', { name: /Balance Raw Power Across Armies/i }),
+    );
     expect(screen.getByText(/roster progression, army count, or allocation mode changed/i)).toBeInTheDocument();
 
     const changedRoster = structuredClone(roster);
@@ -128,7 +147,9 @@ describe('Roster Optimizer v5 workspace', () => {
       runner: dynamicRunner(),
       onOpenFormation,
     });
-    await userEvent.setup().click(screen.getByRole('radio', { name: /Balance All Armies/i }));
+    await userEvent.setup().click(
+      screen.getByRole('radio', { name: /Balance Raw Power Across Armies/i }),
+    );
     await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
     const cards = await screen.findAllByRole('article');
     const powers = cards.map((card) =>
@@ -148,6 +169,65 @@ describe('Roster Optimizer v5 workspace', () => {
     renderOptimizer({ roster: ownedRoster(15) });
     expect(screen.getByLabelText('Number of armies')).toHaveValue('5');
     expect(screen.getByText('5 armies use 15 of your 15 eligible dragons.')).toBeInTheDocument();
+  });
+
+  it('shows step-relative Best Overall proof copy and stored score references', async () => {
+    const roster = ownedRoster(33);
+    const result = makeResult(roster, 'best-overall-first', 10);
+    const score = result.formations[0]!.bestOverallScore!;
+    Object.assign(score, {
+      maxRemainingPowerUnits: 4_000,
+      estimatedPowerUnits: 3_000,
+      powerIndexBasisPoints: 7_500,
+      powerContributionUnits: 450_000,
+      ratingContributionUnits: 320_000,
+      overallScoreUnits: 770_000,
+      overallScore: 77,
+    });
+    renderOptimizer({ roster, runner: resolvedRunner(result) });
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
+    await screen.findByRole('heading', { name: 'Exact sequential result' });
+    expect(screen.getByText(
+      'Each army is the exact Best Overall winner at its selection step. The complete multi-army collection is not jointly optimized.',
+    )).toBeInTheDocument();
+    expect(screen.getByText(
+      'Each army’s Overall Score is calculated against the dragons remaining at that selection step. Scores from different army numbers are not directly comparable.',
+    )).toBeInTheDocument();
+    const cards = await screen.findAllByRole('article');
+    expect(within(cards[0]!).getByText(/^Overall Score 77\.0$/i)).toBeInTheDocument();
+    await userEvent.setup().click(
+      within(cards[0]!).getByText(/^Overall Score 77\.0$/i),
+    );
+    const candidatePower = within(cards[0]!).getByText('Candidate raw power').parentElement!;
+    const maximumPower = within(cards[0]!)
+      .getByText('Strongest raw power remaining at that step').parentElement!;
+    expect(within(candidatePower).getByText('30,000')).toBeInTheDocument();
+    expect(within(maximumPower).getByText('40,000')).toBeInTheDocument();
+    expect(within(cards[0]!).getByText('Relative power index').parentElement)
+      .toHaveTextContent('75.0 / 100');
+    expect(within(cards[0]!).getByText('Formation Rating').parentElement)
+      .toHaveTextContent('80 / 100');
+    expect(within(cards[0]!).getByText('Power contribution (60%)').parentElement)
+      .toHaveTextContent('450,000 score units');
+    expect(within(cards[0]!).getByText('Formation contribution (40%)').parentElement)
+      .toHaveTextContent('320,000 score units');
+    expect(within(cards[0]!).getByText(
+      'Relative power compares this army with the strongest raw-power trio still available when Army 1 was selected.',
+    )).toBeInTheDocument();
+  });
+
+  it('labels Highest Raw Power as exact sequential and omits Overall Score', async () => {
+    renderOptimizer({ roster: ownedRoster(33), runner: dynamicRunner() });
+    await userEvent.setup().click(
+      screen.getByRole('radio', { name: /Highest Raw Power First/i }),
+    );
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
+    await screen.findByRole('heading', { name: 'Exact sequential result' });
+    expect(screen.getByText(
+      'Each army is the exact highest raw-power trio remaining at its selection step.',
+    )).toBeInTheDocument();
+    const cards = await screen.findAllByRole('article');
+    expect(within(cards[0]!).queryByText(/Overall Score/i)).not.toBeInTheDocument();
   });
 });
 
@@ -226,6 +306,14 @@ function dynamicRunner(): RosterOptimizerRunner & { run: ReturnType<typeof vi.fn
   };
 }
 
+function resolvedRunner(result: FlexiblePowerAwareOptimizationResult): RosterOptimizerRunner {
+  return {
+    run: vi.fn().mockResolvedValue(result),
+    cancel: vi.fn(),
+    dispose: vi.fn(),
+  };
+}
+
 function ownedRoster(count: number) {
   const roster = createEmptyRoster(dragons);
   dragons.slice(0, count).forEach((dragon) => {
@@ -246,9 +334,36 @@ function makeResult(
 ): FlexiblePowerAwareOptimizationResult {
   const snapshot = buildOptimizerRosterSnapshot(dragons, roster);
   const selected = snapshot.slice(0, formationCount * 3);
-  const rawFormations = Array.from({ length: formationCount }, (_unused, index) =>
+  const generatedFormations = Array.from({ length: formationCount }, (_unused, index) =>
     makeFormation(selected.slice(index * 3, index * 3 + 3), index),
   );
+  const rawFormations = allocationMode === 'best-overall-first'
+    ? generatedFormations.map((formation) => {
+        const estimatedPowerUnits = formation.estimatedPowerUnits!;
+        const ratingIndexBasisPoints = formation.rating * 100;
+        const powerContributionUnits = 10_000 * BEST_OVERALL_POWER_WEIGHT;
+        const ratingContributionUnits =
+          ratingIndexBasisPoints * BEST_OVERALL_RATING_WEIGHT;
+        const overallScoreUnits = powerContributionUnits + ratingContributionUnits;
+        return {
+          ...formation,
+          bestOverallScore: {
+            scoringVersion: BEST_OVERALL_SCORING_VERSION,
+            powerWeight: BEST_OVERALL_POWER_WEIGHT,
+            formationRatingWeight: BEST_OVERALL_RATING_WEIGHT,
+            normalizationScale: BEST_OVERALL_NORMALIZATION_SCALE,
+            maxRemainingPowerUnits: estimatedPowerUnits,
+            estimatedPowerUnits,
+            powerIndexBasisPoints: 10_000,
+            ratingIndexBasisPoints,
+            powerContributionUnits,
+            ratingContributionUnits,
+            overallScoreUnits,
+            overallScore: overallScoreUnits / BEST_OVERALL_NORMALIZATION_SCALE,
+          },
+        };
+      })
+    : generatedFormations;
   const formations = allocationMode === 'balanced'
     ? [...rawFormations].sort((left, right) => right.estimatedPower - left.estimatedPower)
       .map((formation, index) => ({ ...formation, rank: index + 1 }))
@@ -281,7 +396,7 @@ function makeResult(
     phases: [],
   };
   return {
-    contractVersion: 5,
+    contractVersion: 6,
     ratingContract: 'formation-rating-v3',
     allocationMode,
     optimal: true,
@@ -296,6 +411,10 @@ function makeResult(
     estimatedPowerModelVersion: 'estimated-power-v2',
     estimatedPowerModelHash: 'fnv1a64:efa6081babb4e520',
     estimatedPowerObservationHash: 'fnv1a64:26bfe615f0d9bdd5',
+    bestOverallScoringVersion: BEST_OVERALL_SCORING_VERSION,
+    bestOverallPowerWeight: BEST_OVERALL_POWER_WEIGHT,
+    bestOverallFormationRatingWeight: BEST_OVERALL_RATING_WEIGHT,
+    bestOverallNormalizationScale: BEST_OVERALL_NORMALIZATION_SCALE,
     estimatedPowerByDragonId: Object.fromEntries(
       selected.map((dragon) => [dragon.dragonId, estimate(10_000)]),
     ),
@@ -323,6 +442,13 @@ function makeResult(
     },
     objective: {
       allocationMode,
+      ...(allocationMode === 'best-overall-first'
+        ? {
+            bestOverallScoreUnits: formations.map(
+              (formation) => formation.bestOverallScore!.overallScoreUnits,
+            ),
+          }
+        : {}),
       ascendingEstimatedPowerUnits: powers.map((power) => power / 10).sort((a, b) => a - b),
       ascendingEstimatedPowerVector: [...powers].sort((a, b) => a - b),
       ascendingRatingVector: [...ratings].sort((a, b) => a - b),

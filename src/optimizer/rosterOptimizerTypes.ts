@@ -11,9 +11,13 @@ import type {
   EstimatedPowerConfidence,
 } from '../power/estimatedDragonPower';
 
-export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 5 as const;
+export const ROSTER_OPTIMIZER_CONTRACT_VERSION = 6 as const;
 export const ROSTER_OPTIMIZER_RATING_CONTRACT = 'formation-rating-v3' as const;
 export const OPTIMIZER_V3_RELATIONSHIP_VALUE_SCALE = 1_000_000 as const;
+export const BEST_OVERALL_SCORING_VERSION = 'best-overall-v1' as const;
+export const BEST_OVERALL_POWER_WEIGHT = 60 as const;
+export const BEST_OVERALL_RATING_WEIGHT = 40 as const;
+export const BEST_OVERALL_NORMALIZATION_SCALE = 10_000 as const;
 export const OPTIMIZER_MIN_FORMATION_COUNT = 1 as const;
 export const OPTIMIZER_MAX_FORMATION_COUNT = 11 as const;
 export const OPTIMIZER_DEFAULT_FORMATION_COUNT = 10 as const;
@@ -30,6 +34,7 @@ export type RosterOptimizerStrategy =
   | 'best-ten-overall';
 
 export type OptimizerAllocationMode =
+  | 'best-overall-first'
   | 'strongest-first'
   | 'balanced';
 
@@ -150,6 +155,7 @@ export interface OptimizerSolvePhaseProfile {
   category:
     | 'rarity'
     | 'power'
+    | 'overall-score'
     | 'total-rating'
     | 'minimum-rating'
     | 'rating-vector'
@@ -220,10 +226,12 @@ export interface OptimizerSearchDiagnostics {
   phaseTimings?: OptimizerPhaseTimings;
   performanceProfile?: OptimizerPerformanceProfile;
   numericalExactness?: OptimizerNumericalExactnessDiagnostics;
+  bestOverallSteps?: BestOverallStepTelemetry[];
 }
 
 export interface FlexiblePowerAwareObjective {
   allocationMode: OptimizerAllocationMode;
+  bestOverallScoreUnits?: number[];
   ascendingEstimatedPowerUnits: number[];
   ascendingEstimatedPowerVector: number[];
   ascendingRatingVector: number[];
@@ -231,6 +239,30 @@ export interface FlexiblePowerAwareObjective {
   totalRelationshipValueUnits: number;
   totalActiveRelationships: number;
   stableSolutionKey: string;
+}
+
+export interface BestOverallScoreBreakdown {
+  scoringVersion: typeof BEST_OVERALL_SCORING_VERSION;
+  powerWeight: typeof BEST_OVERALL_POWER_WEIGHT;
+  formationRatingWeight: typeof BEST_OVERALL_RATING_WEIGHT;
+  normalizationScale: typeof BEST_OVERALL_NORMALIZATION_SCALE;
+  maxRemainingPowerUnits: number;
+  estimatedPowerUnits: number;
+  powerIndexBasisPoints: number;
+  ratingIndexBasisPoints: number;
+  powerContributionUnits: number;
+  ratingContributionUnits: number;
+  overallScoreUnits: number;
+  overallScore: number;
+}
+
+export interface BestOverallStepTelemetry {
+  armyRank: number;
+  candidatesExamined: number;
+  candidatesRejectedForOverlap: number;
+  scoreCalculations: number;
+  maxRemainingPowerUnits: number;
+  elapsedMs: number;
 }
 
 export type RarityCountRecord = Record<DragonRarity, number>;
@@ -319,6 +351,7 @@ export interface PowerAwareOptimizedFormation extends OptimizedFormation {
   estimatedPower: number;
   dragonPowerEstimates: Record<string, EstimatedDragonPower>;
   powerConfidenceCounts: PowerConfidenceCountRecord;
+  bestOverallScore?: BestOverallScoreBreakdown;
 }
 
 export interface FlexiblePowerAwareCollectionSummary
@@ -332,7 +365,7 @@ export interface FlexiblePowerAwareCollectionSummary
 }
 
 export interface FlexiblePowerAwareOptimizationResult {
-  contractVersion: 5;
+  contractVersion: 6;
   ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
   allocationMode: OptimizerAllocationMode;
   optimal: true;
@@ -343,6 +376,10 @@ export interface FlexiblePowerAwareOptimizationResult {
   estimatedPowerModelVersion: string;
   estimatedPowerModelHash: string;
   estimatedPowerObservationHash: string;
+  bestOverallScoringVersion: typeof BEST_OVERALL_SCORING_VERSION;
+  bestOverallPowerWeight: typeof BEST_OVERALL_POWER_WEIGHT;
+  bestOverallFormationRatingWeight: typeof BEST_OVERALL_RATING_WEIGHT;
+  bestOverallNormalizationScale: typeof BEST_OVERALL_NORMALIZATION_SCALE;
   estimatedPowerByDragonId: Record<string, EstimatedDragonPower>;
   formations: PowerAwareOptimizedFormation[];
   usedDragonIds: string[];
@@ -397,7 +434,7 @@ export type RosterOptimizationResult =
   | PowerAwarePrimaryBackupOptimizationResult;
 
 export interface RosterOptimizationUnavailable {
-  contractVersion: 5;
+  contractVersion: 6;
   ratingContract: typeof ROSTER_OPTIMIZER_RATING_CONTRACT;
   allocationMode: OptimizerAllocationMode;
   requestedFormationCount: number;
@@ -452,6 +489,8 @@ export interface FlexiblePowerAwareOptimizerSolverResult {
   solverPasses: number;
   performanceProfile: OptimizerPerformanceProfile;
   numericalExactness?: OptimizerNumericalExactnessDiagnostics;
+  bestOverallScoreBreakdowns?: BestOverallScoreBreakdown[];
+  bestOverallSteps?: BestOverallStepTelemetry[];
 }
 
 export class RosterOptimizerCancelledError extends Error {
