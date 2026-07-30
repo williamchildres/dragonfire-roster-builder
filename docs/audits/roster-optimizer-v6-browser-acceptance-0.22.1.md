@@ -4,7 +4,9 @@
 - Build: production Vite output
 - Execution path: bundled module Worker, `@bubblyworld/highs-ts`, and production `highs.wasm`
 - Desktop viewport: 1280 × 720
+- Mobile viewport: 390 × 844
 - Desktop horizontal overflow: none (`scrollWidth` 1265, `clientWidth` 1265)
+- Mobile horizontal overflow: none (`scrollWidth` 375, `clientWidth` 375; 15-pixel vertical scrollbar)
 - Unexpected console errors or warnings: 0
 
 The real-world fixture is the user-supplied 33-dragon export. The mixed fixture uses the same schema-v5 normalization as local import and persistence. Every browser solution/result hash matched an independent Node execution.
@@ -31,4 +33,4 @@ The real-world fixture is the user-supplied 33-dragon export. The mixed fixture 
 
 ## Mobile status
 
-The automated 390 × 844 component acceptance passed, including the compact count control. The in-app production-browser surface available for this run was fixed at 1280 × 720; its security policy rejected creation of a 390-pixel iframe browsing context, and the browser API exposed no viewport emulation. Therefore the production-browser 390 × 844 visual/overflow check remains open. No policy workaround or alternate browser surface was used.
+The automated component acceptance and the production build both passed at 390 × 844. The production browser reported `innerWidth` 390 and `innerHeight` 844; the document client and scroll widths were both 375 after the vertical scrollbar, so there was no horizontal overflow. Visual inspection confirmed the compact army-count control, the three single-column allocation cards, complete mode copy, and usable navigation. The mobile console was empty.
