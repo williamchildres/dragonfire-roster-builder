@@ -138,6 +138,7 @@ describe('Roster Optimizer v6 workspace', () => {
     view.rerender(component(changedRoster, runner));
     expect(screen.getByText(/roster progression, army count, or allocation mode changed/i)).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /Open in Formation Builder/i })[0]).toBeDisabled();
+    expect(screen.getAllByRole('button', { name: 'Save Formation' })[0]).toBeDisabled();
   });
 
   it('orders Balanced results strongest to weakest and hands the exact arrangement to Formation Builder', async () => {
@@ -229,6 +230,30 @@ describe('Roster Optimizer v6 workspace', () => {
     const cards = await screen.findAllByRole('article');
     expect(within(cards[0]!).queryByText(/Overall Score/i)).not.toBeInTheDocument();
   });
+
+  it('saves exact results from all three modes without rerunning or mutating optimizer output', async () => {
+    const modes: Array<{ mode: OptimizerAllocationMode; label: RegExp }> = [
+      { mode: 'best-overall-first', label: /Best Overall First/i },
+      { mode: 'strongest-first', label: /Highest Raw Power First/i },
+      { mode: 'balanced', label: /Balance Raw Power Across Armies/i },
+    ];
+    for (const { mode, label } of modes) {
+      const roster = ownedRoster(33);
+      const expected = makeResult(roster, mode, 10);
+      const before = JSON.stringify(expected);
+      const runner = resolvedRunner(expected) as RosterOptimizerRunner & { run: ReturnType<typeof vi.fn> };
+      const onSaveFormation = vi.fn();
+      const view = renderOptimizer({ roster, runner, onSaveFormation });
+      if (mode !== 'best-overall-first') await userEvent.setup().click(screen.getByRole('radio', { name: label }));
+      await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
+      const cards = await screen.findAllByRole('article');
+      await userEvent.setup().click(within(cards[0]!).getByRole('button', { name: 'Save Formation' }));
+      expect(onSaveFormation).toHaveBeenCalledWith(expected.formations[0]!.arrangement);
+      expect(runner.run).toHaveBeenCalledTimes(1);
+      expect(JSON.stringify(expected)).toBe(before);
+      view.unmount();
+    }
+  });
 });
 
 function renderOptimizer({
@@ -236,13 +261,15 @@ function renderOptimizer({
   runner = dynamicRunner(),
   onOpenFormation = vi.fn(),
   onOpenRoster = vi.fn(),
+  onSaveFormation = vi.fn(),
 }: {
   roster: ReturnType<typeof ownedRoster>;
   runner?: RosterOptimizerRunner;
   onOpenFormation?: (arrangement: FormationArrangement) => void;
   onOpenRoster?: () => void;
+  onSaveFormation?: (arrangement: FormationArrangement) => void;
 }) {
-  return render(component(roster, runner, onOpenFormation, onOpenRoster));
+  return render(component(roster, runner, onOpenFormation, onOpenRoster, onSaveFormation));
 }
 
 function component(
@@ -250,6 +277,7 @@ function component(
   runner: RosterOptimizerRunner,
   onOpenFormation: (arrangement: FormationArrangement) => void = vi.fn(),
   onOpenRoster: () => void = vi.fn(),
+  onSaveFormation: (arrangement: FormationArrangement) => void = vi.fn(),
 ) {
   return (
     <OptimizerTestHarness
@@ -257,6 +285,7 @@ function component(
       runner={runner}
       onOpenFormation={onOpenFormation}
       onOpenRoster={onOpenRoster}
+      onSaveFormation={onSaveFormation}
     />
   );
 }
@@ -266,11 +295,13 @@ function OptimizerTestHarness({
   runner,
   onOpenFormation,
   onOpenRoster,
+  onSaveFormation,
 }: {
   roster: ReturnType<typeof ownedRoster>;
   runner: RosterOptimizerRunner;
   onOpenFormation: (arrangement: FormationArrangement) => void;
   onOpenRoster: () => void;
+  onSaveFormation: (arrangement: FormationArrangement) => void;
 }) {
   const [allocationMode, setAllocationMode] = useState<OptimizerAllocationMode>(
     DEFAULT_OPTIMIZER_ALLOCATION_MODE,
@@ -290,6 +321,7 @@ function OptimizerTestHarness({
       runner={runner}
       onOpenFormation={onOpenFormation}
       onOpenRoster={onOpenRoster}
+      onSaveFormation={onSaveFormation}
     />
   );
 }

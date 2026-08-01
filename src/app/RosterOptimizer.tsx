@@ -1,4 +1,4 @@
-import { ChevronRight, CircleCheck, Sparkles, X } from 'lucide-react';
+import { BookmarkPlus, ChevronRight, CircleCheck, Sparkles, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Dragon, DragonRarity, OwnedDragon } from '../models/dragon';
 import {
@@ -52,6 +52,8 @@ export function RosterOptimizer({
   onResultChange,
   runner: suppliedRunner,
   onOpenFormation,
+  onSaveFormation = () => undefined,
+  savedFormationLimitReached = false,
   onOpenRoster,
   onNavigate,
 }: {
@@ -65,6 +67,8 @@ export function RosterOptimizer({
   onResultChange: (result: FlexiblePowerAwareOptimizationResult) => void;
   runner?: RosterOptimizerRunner;
   onOpenFormation: (arrangement: FormationArrangement) => void;
+  onSaveFormation?: (arrangement: FormationArrangement) => void;
+  savedFormationLimitReached?: boolean;
   onOpenRoster: () => void;
   onNavigate?: NavigateToRoute;
 }) {
@@ -308,6 +312,8 @@ export function RosterOptimizer({
           snapshot={snapshot}
           stale={isStale}
           onOpenFormation={onOpenFormation}
+          onSaveFormation={onSaveFormation}
+          savedFormationLimitReached={savedFormationLimitReached}
         />
       ) : null}
       <Methodology mode={allocationMode} />
@@ -354,12 +360,16 @@ function OptimizerResultView({
   snapshot,
   stale,
   onOpenFormation,
+  onSaveFormation,
+  savedFormationLimitReached,
 }: {
   result: FlexiblePowerAwareOptimizationResult;
   allDragons: Dragon[];
   snapshot: OptimizerRosterDragon[];
   stale: boolean;
   onOpenFormation: (arrangement: FormationArrangement) => void;
+  onSaveFormation: (arrangement: FormationArrangement) => void;
+  savedFormationLimitReached: boolean;
 }) {
   const dragonsById = new Map(allDragons.map((dragon) => [dragon.id, dragon]));
   const progressionById = new Map(snapshot.map((dragon) => [dragon.dragonId, dragon]));
@@ -407,6 +417,8 @@ function OptimizerResultView({
             dragonsById={dragonsById}
             disabled={stale}
             onOpen={() => onOpenFormation(formation.arrangement)}
+            onSave={() => onSaveFormation(formation.arrangement)}
+            saveDisabled={stale || savedFormationLimitReached}
           />
         ))}
       </div>
@@ -425,11 +437,15 @@ function OptimizerFormationCard({
   dragonsById,
   disabled,
   onOpen,
+  onSave,
+  saveDisabled,
 }: {
   formation: PowerAwareOptimizedFormation;
   dragonsById: Map<string, Dragon>;
   disabled: boolean;
   onOpen: () => void;
+  onSave: () => void;
+  saveDisabled: boolean;
 }) {
   const headingId = `optimizer-army-${formation.rank}`;
   return (
@@ -497,9 +513,14 @@ function OptimizerFormationCard({
           ))}
         </ul>
       </details>
-      <button type="button" className="secondary-button" disabled={disabled} onClick={onOpen}>
-        Open in Formation Builder <ChevronRight size={16} aria-hidden="true" />
-      </button>
+      <div className="button-row optimizer-card-actions">
+        <button type="button" className="secondary-button" disabled={disabled} onClick={onOpen}>
+          Open in Formation Builder <ChevronRight size={16} aria-hidden="true" />
+        </button>
+        <button type="button" className="primary-button" disabled={saveDisabled} onClick={onSave}>
+          <BookmarkPlus size={16} aria-hidden="true" /> Save Formation
+        </button>
+      </div>
     </article>
   );
 }

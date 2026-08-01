@@ -29,6 +29,8 @@ import {
 import { SimpleFormationAnalysis } from './SimpleFormationAnalysis';
 import { SimpleFormationCard } from './SimpleFormationCard';
 import { RosterWorkspace } from './RosterWorkspace';
+import { SavedFormationsWorkspace } from './SavedFormationsWorkspace';
+import { SavedFormationSaveDialog, type SavedFormationSaveRequest } from './SavedFormationSaveDialog';
 import {
   AppLink,
   canonicalRouteFromLocation,
@@ -96,6 +98,7 @@ import {
   type Formation,
 } from '../services/teamShare';
 import { rateFormationV3 } from '../services/formationRatingV3';
+import type { FormationArrangement } from '../services/formationArrangement';
 import { compareFormationPlacementsV3 } from '../services/formationPlacementComparisonV3';
 import { buildFormationRecommendationV3 } from '../services/formationRecommendationV3';
 import { reliabilityProgressionForFormation } from '../services/formationReliabilityProgression';
@@ -109,6 +112,18 @@ import type { AccountServices } from '../cloud/types';
 import { buildAuthRedirectUrl, getProductionAccountServices } from '../cloud/supabaseServices';
 import { useAccountSession } from '../hooks/useAccountSession';
 import { useRosterSync, type RosterSyncStatus } from '../hooks/useRosterSync';
+import { useSavedFormationSync, type SavedFormationSyncStatus } from '../hooks/useSavedFormationSync';
+import {
+  MAX_SAVED_FORMATIONS,
+  type SavedFormationLibrary,
+  type SavedFormationRecord,
+} from '../savedFormations/types';
+import {
+  createSavedFormation,
+  findExactSavedFormationDuplicate,
+  updateSavedFormation,
+} from '../savedFormations/crud';
+import { loadSavedFormationLibrary, saveSavedFormationLibrary } from '../savedFormations/storage';
 import type { RosterOptimizerRunner } from '../optimizer/rosterOptimizerClient';
 import type {
   FlexiblePowerAwareOptimizationResult,
@@ -195,6 +210,17 @@ export function App({
   const [rosterSuccessMessage, setRosterSuccessMessage] = useState<RosterSuccessMessage | null>(null);
   const [formationDragonPoolMode, setFormationDragonPoolMode] = useState<FormationDragonPoolMode>('all-star-10');
   const [formation, setFormation] = useState<Formation>(() => getInitialFormation());
+  const [savedFormationInitialLoad] = useState(() => typeof window === 'undefined'
+    ? { library: null, warnings: [] as string[] }
+    : loadSavedFormationLibrary(window.localStorage));
+  const [savedFormationLibrary, setSavedFormationLibrary] = useState<SavedFormationLibrary>(() =>
+    savedFormationInitialLoad.library ?? loadSavedFormationLibrary({ getItem: () => null }).library,
+  );
+  const [savedFormationWarning, setSavedFormationWarning] = useState<string | null>(() => savedFormationInitialLoad.warnings.join(' ') || null);
+  const [savedFormationNotice, setSavedFormationNotice] = useState<string | null>(null);
+  const [savedFormationSaveRequest, setSavedFormationSaveRequest] = useState<SavedFormationSaveRequest | null>(null);
+  const [editingSavedFormationId, setEditingSavedFormationId] = useState<string | null>(null);
+  const [rosterWorkspaceView, setRosterWorkspaceView] = useState<'dragons' | 'saved-formations'>('dragons');
   const [isAddDragonOpen, setIsAddDragonOpen] = useState(false);
   const [showAlreadyAdded, setShowAlreadyAdded] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -206,6 +232,7 @@ export function App({
   const rosterSuccessTimerRef = useRef<number | null>(null);
   const [accountDialogReturnFocus, setAccountDialogReturnFocus] = useState<HTMLElement | null>(null);
   const focusHeadingAfterNavigationRef = useRef(false);
+  const skipInitialSavedFormationWriteRef = useRef(true);
 
   const openSignInDialog = useCallback(() => {
     setAccountDialogReturnFocus(document.activeElement instanceof HTMLElement ? document.activeElement : null);
@@ -228,6 +255,17 @@ export function App({
     snapshot: rosterSnapshot,
     onApplyCloud: applyRosterSnapshot,
   });
+  const applyAccountSavedFormations = useCallback((library: SavedFormationLibrary) => {
+    setSavedFormationLibrary(library);
+    setSavedFormationNotice('Loaded Saved Formations from your account.');
+  }, []);
+  const savedFormationSync = useSavedFormationSync({
+    repository: accountServices?.savedFormations ?? null,
+    session,
+    sessionLoading,
+    library: savedFormationLibrary,
+    onApplyAccount: applyAccountSavedFormations,
+  });
 
   const activePasswordDialog = passwordDialog ?? (passwordRecovery && session ? 'recovery' : null);
 
@@ -240,6 +278,15 @@ export function App({
   useEffect(() => {
     window.localStorage.setItem(FORMATION_STORAGE_KEY, JSON.stringify(formation));
   }, [formation]);
+
+  useEffect(() => {
+    if (skipInitialSavedFormationWriteRef.current) {
+      skipInitialSavedFormationWriteRef.current = false;
+      return;
+    }
+    const result = saveSavedFormationLibrary(window.localStorage, savedFormationLibrary);
+    if (!result.ok) queueMicrotask(() => setSavedFormationWarning(result.error ?? 'Saved Formations could not be saved in this browser.'));
+  }, [savedFormationLibrary]);
 
   useEffect(() => {
     if (!rosterSuccessMessage) {
@@ -512,7 +559,96 @@ export function App({
   const openOptimizedFormation = (arrangement: Formation) => {
     setFormation(arrangement);
     setFormationDragonPoolMode('roster');
+    setEditingSavedFormationId(null);
     selectSection('formations');
+  };
+
+  const applySavedFormationLibrary = (library: SavedFormationLibrary, notice: string) => {
+    setSavedFormationLibrary(library);
+    setSavedFormationWarning(null);
+    setSavedFormationNotice(notice);
+  };
+
+  const openSavedFormation = (record: SavedFormationRecord) => {
+    setFormation({ ...record.arrangement });
+    setFormationDragonPoolMode(record.evaluationMode === 'planning' ? 'all-star-10' : 'roster');
+    setEditingSavedFormationId(record.id);
+    selectSection('formations');
+  };
+
+  const openSavedFormationLibrary = () => {
+    setRosterWorkspaceView('saved-formations');
+    selectSection('roster');
+  };
+
+  const requestSaveFormation = (
+    arrangement: FormationArrangement,
+    evaluationMode: 'current-roster' | 'planning',
+    source: 'formation-builder' | 'optimizer',
+    kind: 'new' | 'update' | 'copy' = 'new',
+    recordId?: string,
+  ) => {
+    if (kind !== 'update' && savedFormationLibrary.formations.length >= MAX_SAVED_FORMATIONS) {
+      setMessage({ kind: 'error', text: `You can save up to ${MAX_SAVED_FORMATIONS} formations. Delete one to make room.` });
+      return;
+    }
+    const record = recordId ? savedFormationLibrary.formations.find((item) => item.id === recordId) : null;
+    setSavedFormationSaveRequest({
+      kind,
+      arrangement: { ...arrangement },
+      evaluationMode,
+      source,
+      recordId,
+      defaultName: record?.name ?? defaultSavedFormationName(arrangement),
+    });
+  };
+
+  const confirmSaveFormation = (name: string, duplicateChoice?: 'update-existing' | 'save-copy') => {
+    const request = savedFormationSaveRequest;
+    if (!request) return;
+    const duplicate = findExactSavedFormationDuplicate(
+      savedFormationLibrary,
+      request.arrangement,
+      request.evaluationMode,
+      request.kind === 'update' ? request.recordId : undefined,
+    );
+    try {
+      let next: SavedFormationLibrary;
+      let savedId: string | undefined;
+      if (duplicateChoice === 'update-existing' && duplicate) {
+        next = updateSavedFormation(savedFormationLibrary, duplicate.id, {
+          name,
+          arrangement: request.arrangement,
+          evaluationMode: request.evaluationMode,
+          roster,
+        });
+        savedId = duplicate.id;
+      } else if (request.kind === 'update' && request.recordId) {
+        next = updateSavedFormation(savedFormationLibrary, request.recordId, {
+          name,
+          arrangement: request.arrangement,
+          evaluationMode: request.evaluationMode,
+          roster,
+        });
+        savedId = request.recordId;
+      } else {
+        next = createSavedFormation(savedFormationLibrary, {
+          name,
+          arrangement: request.arrangement,
+          evaluationMode: request.evaluationMode,
+          source: request.source,
+          roster,
+          insertAfterId: request.kind === 'copy' ? request.recordId : undefined,
+        });
+        savedId = next.formations.find((record) => !savedFormationLibrary.formations.some((current) => current.id === record.id))?.id;
+      }
+      setSavedFormationLibrary(next);
+      if (request.source === 'formation-builder' && savedId) setEditingSavedFormationId(savedId);
+      setSavedFormationNotice(`Saved “${name.trim()}”. ${savedFormationDestination(savedFormationSync.status, session !== null)}.`);
+      setSavedFormationSaveRequest(null);
+    } catch (error) {
+      setMessage({ kind: 'error', text: error instanceof Error ? error.message : 'Formation could not be saved.' });
+    }
   };
 
   return (
@@ -568,33 +704,82 @@ export function App({
             {message.text}
           </div>
         ) : null}
+        {savedFormationWarning ? <div className="status-message error" role="alert">{savedFormationWarning}</div> : null}
+        {savedFormationNotice ? (
+          <div className="status-message success saved-formation-notice" role="status" aria-live="polite">
+            <span>{savedFormationNotice}</span>
+            <button type="button" className="text-button" onClick={openSavedFormationLibrary}>Open Saved Formations</button>
+          </div>
+        ) : null}
+        {savedFormationSync.status === 'migration-required' || savedFormationSync.status === 'conflict' || savedFormationSync.status === 'offline' || savedFormationSync.status === 'error' ? (
+          <div className="status-message info saved-formation-notice" role="status" aria-live="polite">
+            <span>{savedFormationSync.status === 'migration-required' ? 'Saved Formations are waiting for your account choice.' : savedFormationSync.status === 'conflict' ? 'Browser and account Saved Formations differ.' : 'Saved Formation account sync needs attention; browser copies remain available.'}</span>
+            <button type="button" className="text-button" onClick={openSavedFormationLibrary}>Review Saved Formations</button>
+          </div>
+        ) : null}
 
         {activeSection === 'overview' ? (
           <HomeSection navigate={selectSection} />
         ) : null}
 
         {activeSection === 'roster' ? (
-          <RosterWorkspace
-            allDragons={dragons}
-            roster={roster}
-            successMessage={rosterSuccessMessage}
-            selectionRequest={rosterSelectionRequest}
-            onSelectionRequestConsumed={consumeRosterSelectionRequest}
-            onUpdateRoster={updateRoster}
-            onOpenDetails={setSelectedDragon}
-            onOpenAddDragon={openAddDragon}
-            onAddAllDragons={addAllDragonsToRoster}
-            onExport={exportRoster}
-            onImport={(event) => void importRoster(event)}
-            onClear={clearRoster}
-            accountConfigured={accountServices !== null}
-            session={session}
-            syncStatus={rosterSync.status}
-            onOpenAccount={openAccountDialog}
-            onOpenSignIn={openSignInDialog}
-            onResolveSync={rosterSync.reopenDecision}
-            onRetrySync={rosterSync.retry}
-          />
+          <section className="roster-hub" aria-labelledby="roster-hub-title">
+            <div className="roster-hub-header"><h2 id="roster-hub-title" tabIndex={-1}>My Roster</h2><p>Manage dragons and the formations you want to keep.</p></div>
+            <div className="roster-hub-tabs" role="tablist" aria-label="My Roster views" onKeyDown={(event) => {
+              if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+              event.preventDefault();
+              const next = rosterWorkspaceView === 'dragons' ? 'saved-formations' : 'dragons';
+              setRosterWorkspaceView(next);
+              requestAnimationFrame(() => document.getElementById(next === 'dragons' ? 'my-dragons-tab' : 'saved-formations-tab')?.focus());
+            }}>
+              <button type="button" role="tab" aria-selected={rosterWorkspaceView === 'dragons'} aria-controls="my-dragons-panel" id="my-dragons-tab" className={rosterWorkspaceView === 'dragons' ? 'is-active' : undefined} onClick={() => setRosterWorkspaceView('dragons')}>My Dragons</button>
+              <button type="button" role="tab" aria-selected={rosterWorkspaceView === 'saved-formations'} aria-controls="saved-formations-panel" id="saved-formations-tab" className={rosterWorkspaceView === 'saved-formations' ? 'is-active' : undefined} onClick={() => setRosterWorkspaceView('saved-formations')}>Saved Formations</button>
+            </div>
+            <div role="tabpanel" id={rosterWorkspaceView === 'dragons' ? 'my-dragons-panel' : 'saved-formations-panel'} aria-labelledby={rosterWorkspaceView === 'dragons' ? 'my-dragons-tab' : 'saved-formations-tab'}>
+              {rosterWorkspaceView === 'dragons' ? (
+                <RosterWorkspace
+                  embedded
+                  allDragons={dragons}
+                  roster={roster}
+                  successMessage={rosterSuccessMessage}
+                  selectionRequest={rosterSelectionRequest}
+                  onSelectionRequestConsumed={consumeRosterSelectionRequest}
+                  onUpdateRoster={updateRoster}
+                  onOpenDetails={setSelectedDragon}
+                  onOpenAddDragon={openAddDragon}
+                  onAddAllDragons={addAllDragonsToRoster}
+                  onExport={exportRoster}
+                  onImport={(event) => void importRoster(event)}
+                  onClear={clearRoster}
+                  accountConfigured={accountServices !== null}
+                  session={session}
+                  syncStatus={rosterSync.status}
+                  onOpenAccount={openAccountDialog}
+                  onOpenSignIn={openSignInDialog}
+                  onResolveSync={rosterSync.reopenDecision}
+                  onRetrySync={rosterSync.retry}
+                />
+              ) : (
+                <SavedFormationsWorkspace
+                  library={savedFormationLibrary}
+                  roster={roster}
+                  session={session}
+                  syncStatus={savedFormationSync.status}
+                  syncComparison={savedFormationSync.comparison}
+                  syncError={savedFormationSync.errorMessage}
+                  onLibraryChange={applySavedFormationLibrary}
+                  onOpen={openSavedFormation}
+                  onNavigate={selectSection}
+                  onOpenSignIn={openSignInDialog}
+                  onSaveBrowserToAccount={savedFormationSync.saveBrowserToAccount}
+                  onUseAccount={savedFormationSync.useAccountFormations}
+                  onPauseSync={savedFormationSync.pause}
+                  onReopenSync={savedFormationSync.reopenDecision}
+                  onRetrySync={savedFormationSync.retry}
+                />
+              )}
+            </div>
+          </section>
         ) : null}
 
         {activeSection === 'formations' ? (
@@ -606,7 +791,11 @@ export function App({
             onFormationChange={setFormation}
             onOpenDetails={setSelectedDragon}
             onShare={() => void shareFormation()}
-
+            editingSavedFormation={editingSavedFormationId ? savedFormationLibrary.formations.find((record) => record.id === editingSavedFormationId) ?? null : null}
+            savedFormationLimitReached={savedFormationLibrary.formations.length >= MAX_SAVED_FORMATIONS}
+            onSaveFormation={(arrangement, mode) => requestSaveFormation(arrangement, mode, 'formation-builder')}
+            onUpdateSavedFormation={(record, arrangement, mode) => requestSaveFormation(arrangement, mode, record.source, 'update', record.id)}
+            onSaveFormationAsNew={(record, arrangement, mode) => requestSaveFormation(arrangement, mode, 'formation-builder', 'copy', record.id)}
           />
         ) : null}
 
@@ -622,6 +811,8 @@ export function App({
             onResultChange={setOptimizerResult}
             runner={optimizerRunner}
             onOpenFormation={openOptimizedFormation}
+            onSaveFormation={(arrangement) => requestSaveFormation(arrangement, 'current-roster', 'optimizer')}
+            savedFormationLimitReached={savedFormationLibrary.formations.length >= MAX_SAVED_FORMATIONS}
             onOpenRoster={() => selectSection('roster')}
             onNavigate={selectSection}
           />
@@ -640,8 +831,8 @@ export function App({
           </p>
           <p className="site-footer-copy">
             {accountServices
-              ? 'Your roster stays stored in this browser and is only sent to your account after you sign in and choose synchronization.'
-              : 'Roster data stays in your browser.'}{' '}
+              ? 'Your roster and Saved Formations stay stored in this browser and synchronize as separate account documents after you sign in and resolve each choice.'
+              : 'Roster and Saved Formation data stay in your browser.'}{' '}
             Public verification wording is summarized from official roster pages, screenshot evidence, and curated community review.
           </p>
           <div className="site-footer-actions" aria-label="Feedback and support">
@@ -662,6 +853,21 @@ export function App({
           </div>
         </div>
       </footer>
+
+      {savedFormationSaveRequest ? (
+        <SavedFormationSaveDialog
+          request={savedFormationSaveRequest}
+          duplicate={findExactSavedFormationDuplicate(
+            savedFormationLibrary,
+            savedFormationSaveRequest.arrangement,
+            savedFormationSaveRequest.evaluationMode,
+            savedFormationSaveRequest.kind === 'update' ? savedFormationSaveRequest.recordId : undefined,
+          )}
+          destination={savedFormationDestination(savedFormationSync.status, session !== null)}
+          onCancel={() => setSavedFormationSaveRequest(null)}
+          onConfirm={confirmSaveFormation}
+        />
+      ) : null}
 
       {selectedDragon ? (
         <DragonDetailsDialog
@@ -1139,6 +1345,11 @@ function FormationBuilderSection({
   onFormationChange,
   onOpenDetails,
   onShare,
+  editingSavedFormation,
+  savedFormationLimitReached,
+  onSaveFormation,
+  onUpdateSavedFormation,
+  onSaveFormationAsNew,
 }: {
   dragonPoolMode: FormationDragonPoolMode;
   roster: Record<string, OwnedDragon>;
@@ -1147,6 +1358,11 @@ function FormationBuilderSection({
   onFormationChange: (formation: Formation) => void;
   onOpenDetails: (dragon: Dragon) => void;
   onShare: () => void;
+  editingSavedFormation: SavedFormationRecord | null;
+  savedFormationLimitReached: boolean;
+  onSaveFormation: (arrangement: FormationArrangement, mode: 'current-roster' | 'planning') => void;
+  onUpdateSavedFormation: (record: SavedFormationRecord, arrangement: FormationArrangement, mode: 'current-roster' | 'planning') => void;
+  onSaveFormationAsNew: (record: SavedFormationRecord, arrangement: FormationArrangement, mode: 'current-roster' | 'planning') => void;
 }) {
   const [selectorPosition, setSelectorPosition] = useState<FormationPosition | null>(null);
   const [selectorFilters, setSelectorFilters] = useState<FormationSelectorFilters>(defaultFormationSelectorFilters);
@@ -1176,6 +1392,8 @@ function FormationBuilderSection({
     [dragonPoolMode, formation, roster],
   );
   const selectedCount = FORMATION_POSITIONS.filter((position) => formation[position]).length;
+  const completeArrangement = completeFormationArrangement(formation);
+  const savedEvaluationMode = dragonPoolMode === 'all-star-10' ? 'planning' : 'current-roster';
   const reliabilityProgression = useMemo(
     () =>
       reliabilityProgressionForFormation({
@@ -1333,6 +1551,20 @@ function FormationBuilderSection({
           </label>
         </fieldset>
         <div className="button-row">
+          {editingSavedFormation ? (
+            <>
+              <button type="button" className="primary-button" disabled={!completeArrangement} onClick={() => completeArrangement && onUpdateSavedFormation(editingSavedFormation, completeArrangement, savedEvaluationMode)}>
+                Update Saved Formation
+              </button>
+              <button type="button" className="secondary-button" disabled={!completeArrangement || savedFormationLimitReached} onClick={() => completeArrangement && onSaveFormationAsNew(editingSavedFormation, completeArrangement, savedEvaluationMode)}>
+                Save as New
+              </button>
+            </>
+          ) : (
+            <button type="button" className="primary-button" disabled={!completeArrangement || savedFormationLimitReached} onClick={() => completeArrangement && onSaveFormation(completeArrangement, savedEvaluationMode)}>
+              Save Formation
+            </button>
+          )}
           <button type="button" className="secondary-button" onClick={() => onFormationChange(emptyFormation())}>
             Clear formation
           </button>
@@ -2049,6 +2281,26 @@ function formatFormationPosition(position: FormationPosition) {
   }
 }
 
+function completeFormationArrangement(formation: Formation): FormationArrangement | null {
+  const left = formation['left-flank'];
+  const vanguard = formation.vanguard;
+  const right = formation['right-flank'];
+  if (!left || !vanguard || !right || new Set([left, vanguard, right]).size !== 3) return null;
+  return { 'left-flank': left, vanguard, 'right-flank': right };
+}
+
 function isActiveRosterSync(status: RosterSyncStatus): boolean {
   return status === 'synced' || status === 'syncing' || status === 'offline' || status === 'error';
+}
+
+function defaultSavedFormationName(arrangement: FormationArrangement): string {
+  return FORMATION_POSITIONS.map(
+    (position) => dragons.find((dragon) => dragon.id === arrangement[position])?.name ?? arrangement[position],
+  ).join(' · ').slice(0, 80);
+}
+
+function savedFormationDestination(status: SavedFormationSyncStatus, signedIn: boolean): string {
+  if (!signedIn || status === 'browser-only') return 'Saved in this browser';
+  if (status === 'synced' || status === 'syncing') return 'Account sync active';
+  return 'Account sync paused or offline; browser copy is safe';
 }

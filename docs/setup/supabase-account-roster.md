@@ -63,7 +63,7 @@ Use two disposable authenticated test users. As user A, insert or update only th
 
 Account synchronization covers roster ownership, Star Rank, Dragon Level (persisted as `reignLevel`), sparse Habit Levels, and dragon notes. Cloud roster schema 5 writes only unlocked canonical habit IDs with values 1 through 5. Existing schema-4 rows are read and normalized deterministically: unlocked null, zero, or missing values become Level 1, while locked and unknown values are removed. The existing `integer` version column and `jsonb` roster column already support schema 5, so no SQL migration, row replacement, RLS change, or privilege change is required. The next normal account write may upgrade a schema-4 row; reading alone does not require a version-only write.
 
-The browser copy remains available after sign-out and after cloud errors. Saved formations and subscriptions do not exist as account-backed features. The 750 ms serialized/coalesced save debounce, stale-user guards, conflict decisions, offline/retry behavior, and local formations remain unchanged.
+The browser roster copy remains available after sign-out and cloud errors. Saved Formations use a separate document, repository, fingerprint, conflict decision, and debounce described in `supabase-saved-formations.md`; neither synchronization path resolves or overwrites the other.
 
 ## Post-deployment acceptance checklist
 
@@ -87,7 +87,7 @@ After the Supabase project is configured and the PR is merged:
 16. Verify synchronization status becomes Synced.
 17. Reload and verify values.
 18. Confirm a different authenticated user cannot access the first user’s row.
-19. Confirm formations are still local and no UI claims otherwise.
+19. Confirm roster and Saved Formation synchronization report and resolve independently.
 20. Sign in with Google using the same verified email as an existing magic-link account and confirm the Supabase user UUID and `user_rosters.user_id` are unchanged before treating rollout as accepted. Do not add manual identity linking.
 21. Set a password while signed in, sign out, then verify email/password sign-in, signup confirmation, password recovery, and magic-link delivery through the environment's configured SMTP provider.
 22. Lower progression below the habit threshold, confirm its JSON key is absent after synchronization, then re-unlock it and confirm Level 1.

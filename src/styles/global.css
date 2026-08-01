@@ -43,6 +43,274 @@
   --formation-control-gap: 0.45rem;
 }
 
+/* Saved Formation Library */
+.roster-hub-header,
+.saved-formations-workspace,
+.roster-hub > [role='tabpanel'] {
+  min-width: 0;
+}
+
+.roster-hub-tabs {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin: 1rem 0 1.5rem;
+  padding: 0.25rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.75rem;
+  background: var(--panel-strong);
+}
+
+.roster-hub-tabs button {
+  border: 0;
+  border-radius: 0.55rem;
+  padding: 0.7rem 1rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.roster-hub-tabs button.is-active {
+  background: var(--panel-hover);
+  box-shadow: 0 1px 5px rgb(0 0 0 / 22%);
+}
+
+.saved-formations-summary-bar,
+.saved-formation-notice,
+.saved-formations-summary-bar > div,
+.saved-sync-panel.compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.saved-formations-summary-bar {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.85rem;
+}
+
+.saved-formations-summary-bar > div:first-child {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.saved-sync-panel {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.85rem;
+  background: var(--panel);
+}
+
+.saved-sync-panel.is-attention {
+  border-color: var(--gold);
+  background: #2b2115;
+}
+
+.saved-sync-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.saved-sync-comparison > div {
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid rgb(80 55 25 / 18%);
+  border-radius: 0.65rem;
+}
+
+.saved-sync-comparison span {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+}
+
+.saved-sync-comparison li,
+.saved-formation-card h4 {
+  overflow-wrap: anywhere;
+}
+
+.saved-formation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.saved-formation-card {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.9rem;
+  background: var(--panel);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 22%);
+}
+
+.saved-formation-card > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.saved-formation-card h4 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.saved-evaluation-status {
+  flex: 0 0 auto;
+  max-width: 45%;
+  border-radius: 999px;
+  padding: 0.35rem 0.6rem;
+  background: #edf6ec;
+  color: #245b2c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.saved-evaluation-status.status-unavailable {
+  background: #fff0e8;
+  color: #8d2d17;
+}
+
+.saved-formation-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.saved-formation-metrics > div {
+  min-width: 0;
+  padding: 0.65rem;
+  border-radius: 0.6rem;
+  background: var(--panel-strong);
+}
+
+.saved-formation-metrics span,
+.saved-formation-metrics strong {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.saved-formation-metrics span {
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.saved-formation-positions {
+  margin-bottom: 0.75rem;
+}
+
+.saved-progression-details summary,
+.saved-progression-unchanged {
+  color: var(--gold);
+  font-weight: 750;
+}
+
+.saved-unavailable-detail {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  border-left: 4px solid #b64b2a;
+  background: #2d1914;
+}
+
+.saved-formation-actions,
+.optimizer-card-actions {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.saved-formation-actions button {
+  flex: 1 1 auto;
+}
+
+.saved-formation-dialog {
+  width: min(42rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+
+.saved-formation-dialog-positions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.saved-formation-dialog-positions > div {
+  min-width: 0;
+  padding: 0.75rem;
+  border-radius: 0.6rem;
+  background: var(--panel-strong);
+}
+
+.saved-formation-dialog-positions dd {
+  margin: 0.25rem 0 0;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.duplicate-save-choice {
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border: 1px solid var(--gold);
+  border-radius: 0.7rem;
+  background: #2b2115;
+}
+
+@media (max-width: 899px) {
+  .saved-formation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .roster-hub-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .saved-formations-summary-bar,
+  .saved-formations-summary-bar .button-row,
+  .saved-formation-actions,
+  .optimizer-card-actions,
+  .saved-formation-dialog .dialog-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .saved-formations-summary-bar button,
+  .saved-formations-summary-bar .file-button,
+  .saved-formation-actions button,
+  .optimizer-card-actions button,
+  .saved-formation-dialog .dialog-actions button {
+    width: 100%;
+  }
+
+  .saved-sync-comparison,
+  .saved-formation-metrics,
+  .saved-formation-dialog-positions {
+    grid-template-columns: 1fr;
+  }
+
+  .saved-evaluation-status {
+    max-width: 50%;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

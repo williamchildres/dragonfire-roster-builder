@@ -16,8 +16,9 @@ Public site: https://dragonfirelab.com/overview
 - Read-only Estimated Power v2 diagnostics for roster dragons and complete formations, using 59 provenance observations and support-aware rarity-specific Star-plus-Level curves.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
+- A persistent Saved Formation Library for exact Builder and optimizer arrangements, with recalculated analysis, progression-change details, organization controls, and separate JSON import/export.
 - Flexible Power-Aware Roster Optimizer for 1–11 armies with Best Overall First, Highest Raw Power First, and Balance Raw Power Across Armies over current My Roster progression.
-- Formation share links and roster JSON import/export.
+- Formation share links plus separate roster and Saved Formation Library JSON import/export.
 - Clean path-based routes for Overview, Roster, Formation Builder, Optimizer, About, and Updates, with a GitHub Pages deep-link fallback.
 - A CHANGELOG-backed Recent Update panel and complete public release history.
 - A methodology-focused About page covering reviewed data, Formation Rating, Estimated Power, exact optimization, validation, privacy, optional support, and feedback at support@dragonfirelab.com.
@@ -29,7 +30,7 @@ Canonical abilities use a minimal descriptive shape: stable ID, dragon ID, kind,
 
 The repository does not store execution-level schedules, rolls, attempts, target-selection groups, structured effects, ranked battle values, capability dependencies, traces, expected interactions, or unresolved-mechanics exports. Raw ability wording may still mention rounds, chances, targets, durations, and percentages because players need the source text.
 
-Account synchronization stores one RLS-protected normalized roster row per authenticated user. It synchronizes ownership, Star Rank, `reignLevel` (shown as Dragon Level), Habit Levels, and dragon notes. Formations remain browser-local. See [`docs/setup/supabase-account-roster.md`](docs/setup/supabase-account-roster.md) for migration, environment, and security setup.
+Account synchronization stores two independent RLS-protected documents per authenticated user: the normalized roster row and the versioned Saved Formation Library row. Signed-out formations remain in that browser. Signed-in libraries can synchronize only after the Saved Formations migration and account choice are available; roster conflicts never resolve formation conflicts. See [`docs/SAVED_FORMATIONS.md`](docs/SAVED_FORMATIONS.md), [`docs/setup/supabase-account-roster.md`](docs/setup/supabase-account-roster.md), and [`docs/setup/supabase-saved-formations.md`](docs/setup/supabase-saved-formations.md).
 
 Estimated Power is computed at runtime and is never entered manually or persisted locally or in the cloud. It uses only rarity, Star Rank, and Dragon Level; dragon identity, notes, and Habit Levels are not model inputs. V2 preserves exact observations, uses piecewise-linear interpolation within connected empirical support, and marks disconnected bridges or extrapolation low confidence. See [`docs/ESTIMATED_POWER.md`](docs/ESTIMATED_POWER.md) for the curves, support graph, confidence contract, validation, and limitations.
 
@@ -113,4 +114,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.22.1`. Source data schema: `13`. Local and cloud roster schemas: `5`; optimizer contract: `6`; live rating contract: `formation-rating-v3`. Formation Rating v3 weights mapped relationships by documented activation reliability and leaves unresolved potential outside the numeric score. Estimated Power v2 remains runtime-only and unchanged. No persistence format, SQL migration, route, sharing payload, or account-synchronization behavior changed. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. Supabase migrations remain `0001` (`202607170001_create_user_rosters.sql`) and `0002` (`202607170002_restrict_user_roster_privileges.sql`).
+Current release: `0.23.0`. Source data schema: `13`. Local and cloud roster schemas remain `5`; Saved Formation Library schema is `1`; optimizer contract remains `6`; live rating contract remains `formation-rating-v3`. Saved analysis is recalculated rather than frozen, and saved arrangements do not reserve dragons or affect optimizer recommendations. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. Supabase migration `202608010001_create_user_saved_formations.sql` must be applied and verified before cross-device Saved Formation synchronization is released.

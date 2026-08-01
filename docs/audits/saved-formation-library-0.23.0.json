@@ -1,0 +1,11 @@
+{
+  "version": "0.23.0",
+  "identity": "fnv1a64:1e1f6e4c02946489",
+  "format": "dragonfire-lab-saved-formations",
+  "schemaVersion": 1,
+  "storageKey": "dragonfire-roster-lab:saved-formations",
+  "maximumRecords": 50,
+  "maximumNameLength": 80,
+  "semanticOrder": true,
+  "derivedValuesPersisted": false
+}
