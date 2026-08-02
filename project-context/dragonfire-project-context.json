@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-08-02T04:19:56.938Z",
+  "generatedAt": "2026-08-02T04:35:07.965Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "feature/roster-power-sort-troop-affinity",
-    "commit": "f942257b317033cd64ebad59bc287f7570cf48c9",
+    "commit": "13baa56a82124f040cae89cb0b805a8bea53a7ee",
     "databaseVersion": "0.23.2",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
