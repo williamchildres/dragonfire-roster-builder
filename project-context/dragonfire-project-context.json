@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-08-02T02:53:07.163Z",
+  "generatedAt": "2026-08-02T03:17:39.108Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "feature/reserved-formations-optimizer-exclusions",
-    "commit": "dc7e7eba316e348f4fcd7a911558ea13b3494e68",
+    "commit": "2b92db921a7562b993c0bb18e57dd3581681f13c",
     "databaseVersion": "0.23.1",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
