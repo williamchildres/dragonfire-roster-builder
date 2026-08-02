@@ -39,7 +39,7 @@ Raw descriptions preserve the verified player-facing wording, including natural 
 
 ## Removed Execution Model
 
-The source data intentionally does not contain schedules, trigger rolls, attempts, repeat modes, target-priority selectors, target groups, per-target checks, battle contexts, effect branches, periodic tick structures, stack transitions, structured damage/recovery/stat modifier objects, ranked execution values, command-augmentation execution records, capability dependencies, traces, expected interactions, or unresolved-mechanics exports.
+The canonical dragon source data intentionally does not contain schedules, trigger rolls, attempts, repeat modes, per-target checks, battle contexts, effect branches, periodic tick structures, stack transitions, structured damage/recovery/stat modifier objects, ranked execution values, command-augmentation execution records, or expected-interaction exports. The separate simple-synergy layer may define narrow recipient selectors and targeting-resolution traces when verified targeting is necessary to decide whether a numeric relationship exists.
 
 ## Simple Synergy Data
 
@@ -48,6 +48,8 @@ Formation recommendations come from `src/synergy`:
 - `profiles.ts` records curated high-level outputs, supports, benefits, and position claims.
 - `profileAudit.ts` gives every detailed ability exactly one disposition.
 - `evaluateFormation.ts` applies progression, adjacency, hard recipient positions, position conflicts, missing enablers, future unlocks, and duplicate aggregation.
+
+`FriendlyRecipientSelector` includes existing highest-stat, position-priority, unresolved-group, and adjacent-group variants plus `capability-priority-one`. The latter carries `priorityTag`, literal `recipientCount: 1`, `includeSelf`, and `selectionGroupId`. Evaluation returns a `TargetingResolution` with resolved/unresolved status, selected recipient when resolved, eligible/priority/fallback candidate IDs, reason, ability IDs, and sibling signal IDs. See [`TARGETING_SELECTORS.md`](TARGETING_SELECTORS.md).
 
 Exact timing, rolls, target overlap, stacks, and damage simulation are not modeled.
 

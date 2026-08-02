@@ -8802,7 +8802,7 @@
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "habitLevelDependent": false,
-      "currentCuratedDescription": "improves allied Fire Damage",
+      "currentCuratedDescription": "improves Fire Damage for the same one self-eligible Ally selected with Fire-damage priority",
       "currentConfidence": "verified",
       "currentRelationshipTypesOrValuesAffected": [
         "output-amplification base value 6"
@@ -8856,7 +8856,7 @@
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "habitLevelDependent": false,
-      "currentCuratedDescription": "grants First-Strike to a teammate",
+      "currentCuratedDescription": "grants First-Strike to the same one self-eligible Ally selected with Fire-damage priority",
       "currentConfidence": "verified",
       "currentRelationshipTypesOrValuesAffected": [
         "conditional-payoff base value 10 as producing signal when a payoff matches",
@@ -13400,5 +13400,5 @@
       "coverageStatus": "covered"
     }
   ],
-  "deterministicHash": "f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f"
+  "deterministicHash": "f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d"
 }

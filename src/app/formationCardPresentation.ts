@@ -167,6 +167,7 @@ function signalHasResolvedTeammateTarget(
         recipient: { dragonId: recipient.profile.dragonId, position: recipient.position },
         selected: selected.map((entry) => ({ dragonId: entry.profile.dragonId, position: entry.position })),
         progression,
+        profiles: selected.map((entry) => entry.profile),
       }),
   );
 }
@@ -369,6 +370,7 @@ function relationshipIsCurrentlyActive(
       recipient: { dragonId: beneficiary.profile.dragonId, position: beneficiary.position },
       selected: selected.map((entry) => ({ dragonId: entry.profile.dragonId, position: entry.position })),
       progression,
+      profiles: selected.map((entry) => entry.profile),
     })
   );
 }

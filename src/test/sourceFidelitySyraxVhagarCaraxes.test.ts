@@ -103,7 +103,24 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
 
   it('reports the exhaustive rating delta caused only by the corrected Syrax scaling tag', () => {
     const archivedDragons = dragons.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.id));
-    const archivedProfiles = simpleSynergyProfiles.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.dragonId));
+    // This is a historical audit of the earlier Recovery scaling correction.
+    // Freeze its original profile contract so later current-profile targeting
+    // corrections cannot rewrite the preserved before/after evidence.
+    const archivedProfiles: DragonSynergyProfile[] = simpleSynergyProfiles
+      .filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.dragonId))
+      .map((profile) => profile.dragonId !== 'syrax' ? profile : ({
+        ...profile,
+        outputs: profile.outputs.map((signal) =>
+          signal.id === 'syrax-blazing-fury-first-strike'
+            ? { ...signal, recipientSelector: undefined }
+            : signal,
+        ),
+        supports: profile.supports.map((signal) =>
+          signal.id === 'syrax-blazing-fury-fire-support'
+            ? { ...signal, recipientSelector: undefined }
+            : signal,
+        ),
+      }));
     const priorProfiles: DragonSynergyProfile[] = archivedProfiles.map((profile) =>
       profile.dragonId !== 'syrax'
         ? profile

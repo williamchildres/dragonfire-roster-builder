@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.3 - 2026-08-02
+
+- Corrected Syrax's Blazing Fury so its shared effects target only one eligible ally and unresolved Fire-priority ties no longer grant duplicate synergy credit.
+- Added the `capability-priority-one` recipient selector, shared selection-group identity, current-progression Fire-output qualification, fallback resolution, and structured resolved/unresolved targeting evidence.
+- Preserved the verified shared 20% activation without inventing target probabilities, position priority, stat priority, or forced Caraxes/Syrax pairing preferences.
+- Re-ran Formation Rating v3 and optimizer-v6 artifacts plus William's private current-roster Optimizer Sensitivity Pass v1. No optimizer weight, objective, comparator, power model, reservation rule, Saved Formation schema, or troop-affinity contract changed.
+- Existing saved formations remain valid; displayed ratings may recalculate from the corrected relationship mapping. The historical Formation Rating v2 input is now explicitly frozen so current profile fixes cannot rewrite archived evidence.
+
 ## 0.23.2 - 2026-08-01
 
 - Added My Roster sorting by current Estimated Power from highest to lowest. Each owned-dragon row now shows its formatted estimate and support-aware confidence; incomplete Star Rank or Dragon Level remains visibly unavailable and sorts after every calculable dragon.

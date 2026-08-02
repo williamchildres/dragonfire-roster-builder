@@ -1,6 +1,6 @@
 # Flexible Power-Aware Roster Optimizer
 
-Dragonfire Lab v0.23.2 uses live optimizer contract 6 and exposes three allocation modes over a selectable 1–11 armies. Best Overall First is the default for a fresh session. Historical v0.21 and optimizer-v5 artifacts remain committed evidence, not live contracts.
+Dragonfire Lab v0.23.3 uses live optimizer contract 6 and exposes three allocation modes over a selectable 1–11 armies. Best Overall First is the default for a fresh session. Historical v0.21 and optimizer-v5 artifacts remain committed evidence, not live contracts.
 
 ## Eligibility and count
 
@@ -25,6 +25,8 @@ Run results report reserved formation/dragon counts, actually excluded and unava
 ## One shared candidate pool
 
 Each unordered eligible trio is generated once per request. Candidate generation evaluates all six placements with Formation Rating v3, retains the deterministic best arrangement and all tied best arrangements, retains the complete reliability trace, and attaches cached Estimated Power v2 integer units. Current Star Rank, Dragon Level, and active Habit Levels are included. All three modes consume this same pool.
+
+Candidate generation also uses the shared recipient-resolution contract. For Blazing Fury, one unique active Fire-output Ally receives both sibling effects; multiple Fire candidates remain unresolved and create no recipient-specific numeric relationships. This correction can change candidate ratings, arrangements, and optimizer outputs, but it does not change the 60/40 weights, power normalization, mode objectives, comparator order, sequential allocation, formation count, reservation handling, or troop-affinity presentation. No Caraxes/Syrax pairing preference exists.
 
 ## Best Overall First
 
@@ -106,7 +108,9 @@ Contract-v5 and older Worker requests/responses are rejected. Historical strateg
 
 ## Audit and limits
 
-The optimizer-v6 audit independently solves 3 fixtures × 3 modes × 11 counts × 2 input orders: 198 records, 198 solver executions, and six independent candidate-pool builds. Existing raw and balanced candidate identities and objective vectors are checked against the immutable optimizer-v5 artifact.
+The optimizer-v6 audit independently solves 3 fixtures × 3 modes × 11 counts × 2 input orders: 198 records, 198 solver executions, and six independent candidate-pool builds. Current raw and balanced selections are compared with the immutable optimizer-v5 artifact, and every changed execution is reported rather than treated as an audit failure when current Formation Rating inputs legitimately changed. The historical artifact and hash remain untouched.
+
+Release 0.23.3 commits the regenerated [complete optimizer-v6 audit](audits/roster-optimizer-v6-0.23.3.md), the [real-world three-mode comparison](audits/roster-optimizer-v6-real-world-0.23.3.md), and the private-roster-safe [Optimizer Sensitivity Pass v1 report](audits/optimizer-sensitivity-v1-0.23.3.md). The private roster itself is excluded.
 
 Formation cards retain exact positions, Estimated Power and confidence, Formation Rating v3 and tier, reliability, canonical relationship labels, strengths, gaps, derived troop-affinity guidance, raw IDs inside Technical Trace, and Formation Builder handoff.
 

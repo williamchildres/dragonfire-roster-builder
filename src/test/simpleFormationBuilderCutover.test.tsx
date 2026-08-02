@@ -481,7 +481,9 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(sectionText('Strong synergies')).toContain(
       "Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.",
     );
-    expect(sectionText('Future unlocks')).not.toContain('Fire Damage');
+    expect(sectionText('Future unlocks')).toContain(
+      'Blazing Fury selects Caraxes as its shared recipient because Caraxes is the unique active Fire Damage ally.',
+    );
     expect(sectionText('Future unlocks')).not.toContain('Tactical Inferno');
   });
 
@@ -1064,7 +1066,10 @@ describe('Formation Builder simple synergy cutover', () => {
 
     expect(analysisText()).not.toContain('Synergy data not yet mapped: Antares.');
     await openDetailedSignalTrace(user);
-    expect(sectionText('Strong synergies')).toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
+    expect(sectionText('Strong synergies')).not.toContain("Syrax can grant First-Strike, which improves Caraxes's Infernal Burst.");
+    expect(sectionText('Future unlocks')).toContain(
+      'Blazing Fury selects one Fire-damage ally, but Antares and Caraxes both qualify and the tie rule is not verified.',
+    );
     expect(screen.queryByRole('heading', { name: 'Missing enablers' })).not.toBeInTheDocument();
     await user.click(within(screen.getByRole('article', { name: 'Vanguard' })).getByRole('button', { name: /replace dragon/i }));
     const selector = screen.getByRole('dialog', { name: /choose a dragon for vanguard/i });

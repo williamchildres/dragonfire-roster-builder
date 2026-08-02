@@ -238,6 +238,7 @@ export function generateOptimizerFormationCandidates({
           signalChipsByDragonId,
           recommendation,
           rating,
+          targetingResolutions: rating.targetingResolutions,
         });
         const placementScore = rating.placementScore;
         if (placementScore !== 20) {

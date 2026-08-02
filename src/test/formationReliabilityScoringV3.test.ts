@@ -16,9 +16,11 @@ import {
 } from '../synergy/reliability';
 import {
   combineProviderBeneficiaryReliability,
+  evaluateFormationRelationshipsV3,
   reliabilityRequirementId,
   setupPayoffConditionProofRequirementIds,
 } from '../synergy/reliability/scoring';
+import { simpleSynergyProfiles } from '../synergy/profiles';
 import type { EnrichedRelationshipCandidate } from '../synergy/types';
 
 const componentsById = new Map<string, AbilityReliabilityComponent>(
@@ -477,6 +479,34 @@ describe('Formation Rating v3 path and mixed-use evaluation', () => {
       reason: 'conditional-opportunity',
       conditionalProbabilities: [0.35],
     });
+  });
+
+  it('keeps Vhagar Burn to Fiery Bonds numerically unquantified', () => {
+    const simpleProgression = Object.fromEntries(simpleSynergyProfiles.map(({ dragonId }) => [
+      dragonId,
+      { starRank: 10, dragonLevel: 16 },
+    ]));
+    const reliabilityProgression = Object.fromEntries(simpleSynergyProfiles.map(({ dragonId }) => [
+      dragonId,
+      maxProgression(),
+    ]));
+    const relationship = evaluateFormationRelationshipsV3({
+      input: {
+        formation: { 'left-flank': 'caraxes', vanguard: 'vhagar', 'right-flank': 'syrax' },
+        progression: simpleProgression,
+        reliabilityProgression,
+      },
+      profiles: simpleSynergyProfiles,
+    }).find(({ providerDragonId, beneficiaryDragonId, semanticTag }) =>
+      providerDragonId === 'caraxes' &&
+      beneficiaryDragonId === 'vhagar' &&
+      semanticTag === 'status:burn',
+    );
+    expect(relationship?.quantification).toMatchObject({
+      status: 'unquantified',
+    });
+    expect(relationship?.adjustedMarginalValue).toBe(0);
+    expect(relationship?.unquantifiedBasePotential).toBeGreaterThan(0);
   });
 
   it('does not multiply distinct chance setup and payoff events', () => {

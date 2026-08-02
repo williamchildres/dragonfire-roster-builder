@@ -50,7 +50,7 @@ describe('full-roster regression audit', () => {
 
     expect(result.reliable).toBe(true);
     expect(result.generatedFrom).toEqual({
-      databaseVersion: '0.23.2',
+      databaseVersion: '0.23.3',
       dataSchemaVersion: 13,
       localRosterSchemaVersion: 5,
     });
@@ -90,7 +90,7 @@ describe('full-roster regression audit', () => {
   it.each([
     [
       'Caraxes/Syrax First-Strike',
-      { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'feskar' },
+      { 'left-flank': 'syrax', vanguard: 'caraxes', 'right-flank': 'vhagar' },
       'status:first-strike',
       'setup-payoff',
       1,

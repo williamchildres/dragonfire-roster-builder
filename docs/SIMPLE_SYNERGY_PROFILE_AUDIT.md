@@ -29,11 +29,15 @@ Stun, Stagger, Overwhelm, and Confusion are Control aliases for broad Control pa
 
 A profile signal is included when verified or provisionally verified ability text shows a meaningful pair-specific relationship: setup/payoff, damage or Recovery amplification, enemy damage-received vulnerability, stat support for explicit scaling, hard position-specific support, adjacency support, or exclusive position claims.
 
-Exact timing, chance, target overlap, duration, stack acquisition, refresh behavior, target selection, and damage or Recovery values are not modeled.
+Exact timing, chance, target overlap, duration, stack acquisition, refresh behavior, battle-AI target selection, and damage or Recovery values are not modeled. Curated recipient selectors are a narrower contract: they can prove that one documented ally is eligible, or retain an explicit unresolved result when more than one eligible ally remains and no tie rule is verified.
 
 Output signal `tag`/`tags` values describe what the dragon actually emits or provides. Scaling stats for that output are recorded separately as inbound support metadata and must not be treated as provided setup or support.
 
 The live false-attribution defects came from mixing those meanings in one tag list. Damage and Recovery outputs carried their scaling stats in emitted `tags`, so the evaluator could match an output as though it provided that stat to a teammate. The same directional leak also allowed Initiative-support provenance to be considered for recipient outputs whose source ability did not actually provide Initiative. Flight Mastery remains Syrax-owned; any Velar/Flight Mastery explanation was a relationship-construction defect rather than a canonical Velar signal.
+
+## Recipient Targeting
+
+Release 0.23.3 gives both scoring branches of Syrax's Blazing Fury one shared `capability-priority-one` selector group. The resolver examines active output capabilities at the current progression, prefers the exact `damage:fire` capability, permits Syrax as an eligible recipient because the source wording allows it, and selects only a unique candidate. Multiple priority candidates or multiple fallback candidates remain unresolved and contribute no Blazing Fury relationship value. Support-only Fire signals do not qualify. The grouped resolution is computed once and shared by the Fire-support and First-Strike branches so sibling effects cannot choose different recipients. See [TARGETING_SELECTORS.md](TARGETING_SELECTORS.md).
 
 ## Disposition Coverage
 

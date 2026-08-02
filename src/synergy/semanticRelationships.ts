@@ -247,5 +247,7 @@ function describeRecipientSelector(selector: FriendlyRecipientSelector): string 
       return `unresolved group of ${selector.recipientCount}`;
     case 'adjacent-group':
       return `adjacent group of ${selector.recipientCount}`;
+    case 'capability-priority-one':
+      return `one recipient prioritizing active ${selector.priorityTag} (${selector.selectionGroupId})`;
   }
 }

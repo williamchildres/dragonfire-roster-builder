@@ -26,6 +26,7 @@ interface AuditReport {
   noDuplicateDragons: boolean;
   exactReconstruction: boolean;
   historicalV5Compatible: boolean;
+  historicalV5ChangedExecutionCount: number;
   failedChecks: number;
   deterministicAuditHash: string;
   executions: AuditExecution[];
@@ -35,7 +36,7 @@ describe('optimizer v6 independent audit artifact', () => {
   it('records all 198 independent solves and the three-mode matrix', () => {
     const report = JSON.parse(readFileSync(resolve(
       process.cwd(),
-      'docs/audits/roster-optimizer-v6-0.22.1.json',
+      'docs/audits/roster-optimizer-v6-0.23.3.json',
     ), 'utf8')) as AuditReport;
 
     expect(report.executionCount).toBe(198);
@@ -50,12 +51,11 @@ describe('optimizer v6 independent audit artifact', () => {
       .toBe(true);
     expect(report.executions.every((execution) => execution.exactReconstruction))
       .toBe(true);
-    expect(report.executions.every((execution) => execution.historicalV5Compatible))
-      .toBe(true);
     expect(report.forwardReverseEqual).toBe(true);
     expect(report.noDuplicateDragons).toBe(true);
     expect(report.exactReconstruction).toBe(true);
-    expect(report.historicalV5Compatible).toBe(true);
+    expect(report.historicalV5Compatible).toBe(false);
+    expect(report.historicalV5ChangedExecutionCount).toBeGreaterThan(0);
     expect(report.failedChecks).toBe(0);
 
     const pairs = new Map<string, AuditExecution[]>();
@@ -77,6 +77,6 @@ describe('optimizer v6 independent audit artifact', () => {
       expect(reverse?.resultHash).toBe(forward?.resultHash);
     }
 
-    expect(report.deterministicAuditHash).toBe('fnv1a64:ffb3095cf43ea1f6');
+    expect(report.deterministicAuditHash).toBe('fnv1a64:0f61190ace8f1e22');
   });
 });

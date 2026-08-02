@@ -19,6 +19,7 @@ import { evaluateFormation } from '../synergy/evaluateFormation';
 import { SIMPLE_FORMATION_POSITIONS } from '../synergy/positionRules';
 import { metadataOnlyDragonIds, simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { historicalFormationRatingV2Profiles } from './historicalFormationRatingV2Profiles';
 import { buildSemanticRelationships } from '../synergy/semanticRelationships';
 import {
   CONTROL_ALIAS_TAGS,
@@ -251,7 +252,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const rarityCoverage = countBy(dragons, (dragon) => dragon.rarity);
   addCheck(
     'FRR-C001',
-    databaseMetadata.databaseVersion === '0.23.2',
+    databaseMetadata.databaseVersion === '0.23.3',
     `Database version is ${databaseMetadata.databaseVersion}.`,
   );
   addCheck(
@@ -1042,9 +1043,9 @@ function auditFormationSweep(
         const results = evaluateFormation({
           formation,
           progression,
-          profiles: simpleSynergyProfiles,
+          profiles: historicalFormationRatingV2Profiles,
         }).results;
-        const relationships = buildSemanticRelationships(results, simpleSynergyProfiles);
+        const relationships = buildSemanticRelationships(results, historicalFormationRatingV2Profiles);
         const arrangement: FormationArrangement = {
           'left-flank': left.id,
           vanguard: vanguard.id,
@@ -1056,7 +1057,7 @@ function auditFormationSweep(
           comparisonCandidates = compareFormationPlacements({
             formation,
             progression,
-            profiles: simpleSynergyProfiles,
+            profiles: historicalFormationRatingV2Profiles,
           })?.candidates;
           if (comparisonCandidates) {
             comparisonCandidatesByTrio.set(trioKey, comparisonCandidates);
@@ -1068,7 +1069,7 @@ function auditFormationSweep(
         const rating = rateFormation({
           formation,
           dragons,
-          profiles: simpleSynergyProfiles,
+          profiles: historicalFormationRatingV2Profiles,
           relationships,
           placementComparison,
         });

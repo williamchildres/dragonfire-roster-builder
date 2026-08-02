@@ -4,6 +4,8 @@
 
 `src/synergy/reliability` owns Formation Reliability types, pure validation, progression adaptation, probability helpers, the production metadata registry, and the live Formation Rating v3 scoring consumer. The Formation Builder and every optimizer strategy consume v3; Estimated Power, persistence, synchronization, routes, and sharing remain separate.
 
+Recipient targeting is an upstream eligibility contract owned by the synergy evaluator, not a reliability probability. A structured targeting group is resolved once per formation and shared by all sibling signals in that group. Only a uniquely resolved recipient can produce a scored relationship; unresolved priority ties, unresolved fallback ties, and missing capability data remain visible as neutral findings and receive no reliability trace or relationship value.
+
 ## Registry organization and coverage
 
 `registry/catalog.ts` derives canonical abilities and current scoring IDs from dragon data and `simpleSynergyProfiles`. `registry/dragons/` contains one reviewable module per dragon, while `registry/index.ts` exports the sorted aggregate components, bindings, ability catalog, scoring IDs, and complete contract input.

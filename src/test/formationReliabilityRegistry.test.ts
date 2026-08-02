@@ -313,7 +313,7 @@ describe('production Formation Reliability registry', () => {
       'e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c',
     );
     expect(runFormationReliabilityAudit().deterministicHash).toBe(
-      'f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f',
+      'f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d',
     );
   });
 

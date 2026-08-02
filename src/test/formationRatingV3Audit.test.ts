@@ -43,8 +43,8 @@ describe('Formation Rating v3 exhaustive audit', () => {
         },
         postCalibrationCounts: {
           Excellent: 381,
-          Strong: 3266,
-          Solid: 14116,
+          Strong: 3257,
+          Solid: 14125,
           Developing: 12822,
           Weak: 2151,
         },

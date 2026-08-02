@@ -206,7 +206,14 @@ export const simpleSynergyProfiles = [
         tag: 'status:first-strike',
         abilityId: 'syrax-blazing-fury',
         abilityName: 'Blazing Fury',
-        description: 'grants First-Strike to a teammate',
+        description: 'grants First-Strike to the same one self-eligible Ally selected with Fire-damage priority',
+        recipientSelector: {
+          kind: 'capability-priority-one',
+          priorityTag: 'damage:fire',
+          recipientCount: 1,
+          includeSelf: true,
+          selectionGroupId: 'syrax-blazing-fury-recipient',
+        },
         friendlyScope: 'formation',
       }),
       output({
@@ -244,7 +251,14 @@ export const simpleSynergyProfiles = [
         tag: 'damage:fire',
         abilityId: 'syrax-blazing-fury',
         abilityName: 'Blazing Fury',
-        description: 'improves allied Fire Damage',
+        description: 'improves Fire Damage for the same one self-eligible Ally selected with Fire-damage priority',
+        recipientSelector: {
+          kind: 'capability-priority-one',
+          priorityTag: 'damage:fire',
+          recipientCount: 1,
+          includeSelf: true,
+          selectionGroupId: 'syrax-blazing-fury-recipient',
+        },
         friendlyScope: 'formation',
       }),
       output({

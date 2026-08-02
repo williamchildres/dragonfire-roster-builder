@@ -10,7 +10,9 @@ import type {
   DragonSynergyProfile,
   SimpleFormation,
   SimpleProgressionByDragonId,
+  TargetingResolution,
 } from '../synergy/types';
+import { evaluateFormationCandidates } from '../synergy/evaluateFormation';
 import {
   assessFormationConfidence,
   type FormationAnalysisConfidence,
@@ -59,6 +61,7 @@ export interface FormationRatingV3Result {
   reliabilityCoverage: ReliabilityCoverage;
   confidence: FormationAnalysisConfidence;
   relationships: FormationRelationshipV3[];
+  targetingResolutions: TargetingResolution[];
 }
 
 const classCaps = {
@@ -86,11 +89,18 @@ export function rateFormationV3({
    */
   placementComparison?: FormationPlacementComparisonV3;
 }): FormationRatingV3Result {
+  const candidateEvaluation = evaluateFormationCandidates({
+    formation,
+    progression,
+    profiles,
+  });
   const relationships = suppliedPlacementComparison?.current.relationships ??
     evaluateFormationRelationshipsV3({
       input: { formation, progression, reliabilityProgression },
       profiles,
+      candidateEvaluation,
     });
+  const targetingResolutions = candidateEvaluation.targetingResolutions;
   const placementComparison = suppliedPlacementComparison ??
     compareFormationPlacementsV3({
       formation,
@@ -154,6 +164,7 @@ export function rateFormationV3({
     reliabilityCoverage,
     confidence,
     relationships,
+    targetingResolutions,
   };
 }
 

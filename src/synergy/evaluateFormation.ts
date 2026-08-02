@@ -1,6 +1,10 @@
 import type { FormationPosition } from '../models/dragon';
 import { areAdjacent, SIMPLE_FORMATION_POSITIONS } from './positionRules';
-import { signalTargetsRecipient } from './recipientSelectors';
+import {
+  resolveCapabilityPriorityRecipientGroups,
+  signalTargetsRecipient,
+  type RecipientCandidate,
+} from './recipientSelectors';
 import { tagSatisfies, type SynergyTag } from './tags';
 import {
   explainAmplifierOutput,
@@ -21,6 +25,7 @@ import type {
   SimpleSynergyResult,
   SimpleSynergyResultKind,
   SynergySignal,
+  TargetingResolution,
 } from './types';
 
 interface SelectedProfile {
@@ -66,18 +71,39 @@ export function evaluateFormation(input: EvaluateFormationInput): EvaluateFormat
 export function evaluateFormationCandidates(
   input: EvaluateFormationInput,
 ): EvaluateFormationCandidatesResult {
+  const evaluated = evaluateFormationInternal(input, true);
   return {
-    candidates: evaluateFormationInternal(input, true).candidates.sort((left, right) =>
+    candidates: evaluated.candidates.sort((left, right) =>
       left.id.localeCompare(right.id),
     ),
+    targetingResolutions: evaluated.targetingResolutions,
   };
 }
 
 function evaluateFormationInternal(input: EvaluateFormationInput, collectEnriched: boolean): {
   legacy: EvaluateFormationResult;
   candidates: EnrichedRelationshipCandidate[];
+  targetingResolutions: TargetingResolution[];
 } {
   const selected = selectedProfiles(input);
+  const recipients = formationRecipients(input);
+  const targetingResolutions = resolveCapabilityPriorityRecipientGroups({
+    signals: selected.flatMap((entry) =>
+      [...entry.profile.outputs, ...entry.profile.supports].flatMap((signal) =>
+        signal.recipientSelector?.kind === 'capability-priority-one'
+          ? [{
+              provider: { dragonId: entry.profile.dragonId, position: entry.position },
+              signal: signal as SynergySignal & {
+                recipientSelector: Extract<NonNullable<SynergySignal['recipientSelector']>, { kind: 'capability-priority-one' }>;
+              },
+            }]
+          : [],
+      ),
+    ),
+    selected: recipients,
+    profiles: input.profiles,
+    progression: input.progression,
+  });
   const results = new Map<string, SimpleSynergyResult>();
   const relationshipCandidates = new Map<string, RelationshipCandidate>();
   const enrichedCandidates: EnrichedRelationshipCandidate[] | undefined =
@@ -91,6 +117,7 @@ function evaluateFormationInternal(input: EvaluateFormationInput, collectEnriche
         enrichedCandidates,
         input,
         selected,
+        targetingResolutions,
         beneficiary,
         benefit,
       );
@@ -104,6 +131,7 @@ function evaluateFormationInternal(input: EvaluateFormationInput, collectEnriche
         enrichedCandidates,
         input,
         selected,
+        targetingResolutions,
         supporter,
         support,
       );
@@ -117,9 +145,18 @@ function evaluateFormationInternal(input: EvaluateFormationInput, collectEnriche
   return {
     legacy: {
       results: [...results.values()].sort(compareResults),
+      targetingResolutions,
     },
     candidates: enrichedCandidates ?? [],
+    targetingResolutions,
   };
+}
+
+function formationRecipients(input: EvaluateFormationInput): RecipientCandidate[] {
+  return SIMPLE_FORMATION_POSITIONS.flatMap((position) => {
+    const dragonId = input.formation[position];
+    return dragonId ? [{ dragonId, position }] : [];
+  });
 }
 
 function selectedProfiles(input: EvaluateFormationInput): SelectedProfile[] {
@@ -138,6 +175,7 @@ function addSetupPayoffResults(
   enrichedCandidates: EnrichedRelationshipCandidate[] | undefined,
   input: EvaluateFormationInput,
   selected: SelectedProfile[],
+  targetingResolutions: TargetingResolution[],
   beneficiary: SelectedProfile,
   benefit: SynergySignal,
 ): void {
@@ -176,7 +214,7 @@ function addSetupPayoffResults(
       (candidate) =>
         matchingSetupTag(candidate, benefit) !== null &&
         signalCanReachTeammate(candidate) &&
-        targetsBeneficiary(input, selected, provider, candidate, beneficiary),
+        targetsBeneficiary(input, selected, targetingResolutions, provider, candidate, beneficiary),
     )) {
       const tagMatch = matchingSetupTag(output, benefit);
       if (tagMatch) {
@@ -201,6 +239,7 @@ function addAmplifierOutputResults(
   enrichedCandidates: EnrichedRelationshipCandidate[] | undefined,
   input: EvaluateFormationInput,
   selected: SelectedProfile[],
+  targetingResolutions: TargetingResolution[],
   supporter: SelectedProfile,
   support: SynergySignal,
 ): void {
@@ -215,7 +254,7 @@ function addAmplifierOutputResults(
 
     for (const output of producer.profile.outputs.filter((candidate) => matchingSupportTag(support, candidate) !== null)) {
       const tagMatch = matchingSupportTag(support, output);
-      if (tagMatch && targetsBeneficiary(input, selected, supporter, support, producer)) {
+      if (tagMatch && targetsBeneficiary(input, selected, targetingResolutions, supporter, support, producer)) {
         addRelationshipCandidate(
           relationshipCandidates,
           enrichedCandidates,
@@ -232,7 +271,7 @@ function addAmplifierOutputResults(
 
     for (const benefit of producer.profile.benefitsFrom.filter((candidate) => candidate.tag.startsWith('stat:') && matchingSupportTag(support, candidate) !== null)) {
       const tagMatch = matchingSupportTag(support, benefit);
-      if (tagMatch && targetsBeneficiary(input, selected, supporter, support, producer)) {
+      if (tagMatch && targetsBeneficiary(input, selected, targetingResolutions, supporter, support, producer)) {
         addRelationshipCandidate(
           relationshipCandidates,
           enrichedCandidates,
@@ -252,6 +291,7 @@ function addAmplifierOutputResults(
 function targetsBeneficiary(
   input: EvaluateFormationInput,
   selected: SelectedProfile[],
+  targetingResolutions: TargetingResolution[],
   provider: SelectedProfile,
   signal: SynergySignal,
   beneficiary: SelectedProfile,
@@ -262,6 +302,8 @@ function targetsBeneficiary(
     recipient: { dragonId: beneficiary.profile.dragonId, position: beneficiary.position },
     selected: selected.map((entry) => ({ dragonId: entry.profile.dragonId, position: entry.position })),
     progression: input.progression,
+    profiles: input.profiles,
+    targetingResolutions,
   });
 }
 

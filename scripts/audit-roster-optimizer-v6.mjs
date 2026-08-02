@@ -4,13 +4,18 @@ import { createServer } from 'vite';
 const write = process.argv.includes('--write');
 const merge = process.argv.includes('--merge');
 const fixture = value('--fixture');
-const jsonPath = new URL('../docs/audits/roster-optimizer-v6-0.22.1.json', import.meta.url);
-const markdownPath = new URL('../docs/audits/roster-optimizer-v6-0.22.1.md', import.meta.url);
+const jsonPath = new URL('../docs/audits/roster-optimizer-v6-0.23.3.json', import.meta.url);
+const markdownPath = new URL('../docs/audits/roster-optimizer-v6-0.23.3.md', import.meta.url);
 const scratchDirectory = new URL('../Scratch/', import.meta.url);
 const server = await createServer({
   root: process.cwd(),
   appType: 'custom',
-  server: { middlewareMode: true, hmr: false },
+  server: {
+    middlewareMode: true,
+    hmr: fixture
+      ? { port: 24_678 + ['mixed', 'maxed', 'all-one'].indexOf(fixture) }
+      : false,
+  },
   logLevel: 'error',
 });
 
@@ -83,7 +88,7 @@ try {
 function renderMarkdown(report) {
   const unique = report.executions.filter((execution) => execution.inputOrder === 'forward');
   const maximum = (field) => Math.max(...unique.map((execution) => execution.telemetry[field]));
-  return `# Optimizer v6 audit — 0.22.1
+  return `# Optimizer v6 audit — 0.23.3
 
 - Generated: ${report.generatedAt}
 - Contract: 6 / formation-rating-v3 / best-overall-v1
@@ -94,7 +99,8 @@ function renderMarkdown(report) {
 - Forward/reverse equality: ${report.forwardReverseEqual}
 - No duplicate dragons: ${report.noDuplicateDragons}
 - Exact reconstruction: ${report.exactReconstruction}
-- Historical optimizer-v5 selections preserved: ${report.historicalV5Compatible}
+- Current selections identical to historical optimizer-v5: ${report.historicalV5Compatible}
+- Current executions changed from historical optimizer-v5: ${report.historicalV5ChangedExecutionCount}
 - Failed checks: ${report.failedChecks}
 - Deterministic audit hash: \`${report.deterministicAuditHash}\`
 
@@ -120,7 +126,7 @@ ${unique.map((execution) =>
     `\`${execution.solutionHash}\` | \`${execution.resultHash}\` |`,
   ).join('\n')}
 
-The historical optimizer-v5 artifact remains unchanged at \`fnv1a64:e5ac2432442f5cb0\`.
+The historical optimizer-v5 artifact remains unchanged at \`fnv1a64:e5ac2432442f5cb0\`; current selection deltas are attributed to corrected Formation Rating candidate generation.
 Operational telemetry and generation time are excluded from this deterministic audit identity.
 `;
 }

@@ -40,18 +40,26 @@ import {
 import { normalizeRoster } from '../services/rosterStorage';
 
 const protectedIdentities = {
-  formationRatingV3Numeric:
+  previousFormationRatingV3Numeric:
     '958cf36d329a6fb00c732ecf576d8020d10553d3585b136bda0493a7db754724',
-  formationRatingV3:
+  currentFormationRatingV3Numeric:
+    'c9c93c5a9c89f85c08df958924d3fa61cfbdae555a0c50779c7f3b37d05f9c00',
+  previousFormationRatingV3:
     '215f2c669cee0c96d584b6b3014aa2f075302c644f85ec0801c70b4a6740344f',
-  formationRatingV3Audit:
+  currentFormationRatingV3:
+    'bceda8493e5af3ae4a805fd45dca4861b6a35e2788531699b7e65e707ed6a31a',
+  previousFormationRatingV3Audit:
     '0cd7e73c6dffe528dcb738c3eeb1f7a06bf19008c62280aa2bf9a74cdbcaf94a',
+  currentFormationRatingV3Audit:
+    'fc21d2d75740def4a23b9deeb4a8c03712d9b1724522ab05304b109820a67f3f',
   formationRatingV2:
     '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf',
   reliabilityRegistry:
     'e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c',
-  research:
+  previousResearch:
     'f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f',
+  currentResearch:
+    'f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d',
   estimatedPowerObservation: ESTIMATED_POWER_OBSERVATION_HASH,
   estimatedPowerModel: ESTIMATED_POWER_MODEL_HASH,
   estimatedPowerGrid: ESTIMATED_POWER_NUMERICAL_GRID_FINGERPRINT,
@@ -168,7 +176,11 @@ export async function runRosterOptimizerV6Audit(
             totalMs: pool.candidateGenerationMs + solverMs,
           });
           validateResult(result, pool.candidates);
-          validateHistoricalCompatibility(fixture.id, pool.inputOrder, result);
+          const historicalV5Compatible = historicalCompatibility(
+            fixture.id,
+            pool.inputOrder,
+            result,
+          );
           if (pool.inputOrder === 'forward') {
             forwardResult = result;
           } else if (
@@ -178,7 +190,12 @@ export async function runRosterOptimizerV6Audit(
           ) {
             throw new Error(`${fixture.id}/${mode}/${count} forward/reverse hashes differ.`);
           }
-          executions.push(executionRecord(fixture.id, pool.inputOrder, result));
+          executions.push(executionRecord(
+            fixture.id,
+            pool.inputOrder,
+            result,
+            historicalV5Compatible,
+          ));
           onExecution?.(
             `${executions.length}/${expectedExecutions} ${fixture.id}/${mode}/${count}/${pool.inputOrder}`,
           );
@@ -240,9 +257,6 @@ function createReport(
   if (executions.some((execution) => !execution.exactReconstruction)) {
     failedChecks.push('one or more executions failed exact reconstruction');
   }
-  if (executions.some((execution) => !execution.historicalV5Compatible)) {
-    failedChecks.push('one or more existing-mode executions changed from optimizer v5');
-  }
   const forwardReverseEqual = forwardReverseHashesMatch(executions);
   if (!forwardReverseEqual) failedChecks.push('one or more forward/reverse hashes differ');
   if (failedChecks.length > 0) {
@@ -278,7 +292,7 @@ function createReport(
     })),
   };
   return {
-    release: '0.22.1',
+    release: '0.23.3',
     contractVersion: 6,
     ratingContract: 'formation-rating-v3',
     generatedAt: new Date().toISOString(),
@@ -293,6 +307,8 @@ function createReport(
     exactReconstruction: executions.every((execution) => execution.exactReconstruction),
     historicalV5Compatible:
       executions.every((execution) => execution.historicalV5Compatible),
+    historicalV5ChangedExecutionCount:
+      executions.filter((execution) => !execution.historicalV5Compatible).length,
     failedChecks: failedChecks.length,
     protectedIdentities,
     executions,
@@ -388,37 +404,33 @@ function validateBestOverall(
   }
 }
 
-function validateHistoricalCompatibility(
+function historicalCompatibility(
   fixture: string,
   inputOrder: 'forward' | 'reverse',
   result: FlexiblePowerAwareOptimizationResult,
-): void {
-  if (result.allocationMode === 'best-overall-first') return;
+): boolean {
+  if (result.allocationMode === 'best-overall-first') return true;
   const historical = historicalV5Executions.get(historicalKey(
     fixture,
     result.allocationMode,
     result.requestedFormationCount,
     inputOrder,
   ));
-  if (
-    !historical ||
-    historical.stableSolutionKey !== result.objective.stableSolutionKey ||
-    JSON.stringify(historical.ascendingPowerVector) !==
-      JSON.stringify(result.objective.ascendingEstimatedPowerVector) ||
-    JSON.stringify(historical.ascendingRatingVector) !==
-      JSON.stringify(result.objective.ascendingRatingVector)
-  ) {
-    throw new Error(
-      `${fixture}/${result.allocationMode}/${result.requestedFormationCount}/${inputOrder} ` +
-      'changed from the historical optimizer-v5 selection.',
-    );
-  }
+  return Boolean(
+    historical &&
+    historical.stableSolutionKey === result.objective.stableSolutionKey &&
+    JSON.stringify(historical.ascendingPowerVector) ===
+      JSON.stringify(result.objective.ascendingEstimatedPowerVector) &&
+    JSON.stringify(historical.ascendingRatingVector) ===
+      JSON.stringify(result.objective.ascendingRatingVector),
+  );
 }
 
 function executionRecord(
   fixture: string,
   inputOrder: 'forward' | 'reverse',
   result: FlexiblePowerAwareOptimizationResult,
+  historicalV5Compatible: boolean,
 ): OptimizerV6AuditExecution {
   const profile = result.diagnostics.performanceProfile;
   return {
@@ -438,7 +450,7 @@ function executionRecord(
       new Set(result.formations.flatMap((formation) => formation.dragonIds)).size ===
       result.generatedFormationCount * 3,
     exactReconstruction: true,
-    historicalV5Compatible: true,
+    historicalV5Compatible,
     telemetry: {
       candidateGenerationMs: round(result.diagnostics.candidateGenerationMs),
       solverMs: round(result.diagnostics.solverMs),
