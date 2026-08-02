@@ -28,6 +28,12 @@ export class SavedFormationReservationClearanceError extends Error {
   }
 }
 
+export interface SavedFormationReservationConflictGroup {
+  conflictingFormationId: string;
+  conflictingFormationName: string;
+  dragonIds: string[];
+}
+
 export function getReservedFormationRecords(library: SavedFormationLibrary): SavedFormationRecord[] {
   return library.formations.filter((record) => record.reserved);
 }
@@ -83,6 +89,29 @@ export function getFormationReservationConflicts(
       conflictingFormationName: existing.name,
     }] : [];
   });
+}
+
+export function groupReservationConflictsByFormation(
+  library: SavedFormationLibrary,
+  conflicts: readonly SavedFormationReservationConflict[],
+): SavedFormationReservationConflictGroup[] {
+  const displayOrder = new Map(library.formations.map((record, index) => [record.id, index]));
+  const grouped = new Map<string, SavedFormationReservationConflictGroup>();
+  for (const conflict of conflicts) {
+    const group = grouped.get(conflict.conflictingFormationId) ?? {
+      conflictingFormationId: conflict.conflictingFormationId,
+      conflictingFormationName: conflict.conflictingFormationName,
+      dragonIds: [],
+    };
+    group.dragonIds.push(conflict.dragonId);
+    grouped.set(conflict.conflictingFormationId, group);
+  }
+  return [...grouped.values()]
+    .map((group) => ({ ...group, dragonIds: [...new Set(group.dragonIds)].sort((left, right) => left.localeCompare(right)) }))
+    .sort((left, right) =>
+      (displayOrder.get(left.conflictingFormationId) ?? Number.MAX_SAFE_INTEGER) -
+        (displayOrder.get(right.conflictingFormationId) ?? Number.MAX_SAFE_INTEGER) ||
+      left.conflictingFormationId.localeCompare(right.conflictingFormationId));
 }
 
 export function canReserveFormation(library: SavedFormationLibrary, formationId: string): boolean {

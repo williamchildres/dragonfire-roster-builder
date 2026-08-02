@@ -2,13 +2,19 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../app/App';
-import { SavedFormationsWorkspace } from '../app/SavedFormationsWorkspace';
+import { ReservationImportDecisions, SavedFormationsWorkspace } from '../app/SavedFormationsWorkspace';
 import { dragons } from '../data/dragons';
 import type { OwnedDragon } from '../models/dragon';
 import { applyOwnedDragonPatch } from '../services/habitLevels';
 import { createEmptyRoster, FORMATION_STORAGE_KEY, saveRosterSnapshot } from '../services/rosterStorage';
 import { createEmptySavedFormationLibrary } from '../savedFormations/contract';
 import { createSavedFormation } from '../savedFormations/crud';
+import {
+  mergeSavedFormationImport,
+  previewSavedFormationMerge,
+  previewSavedFormationReplace,
+  replaceSavedFormationImport,
+} from '../savedFormations/importExport';
 import { setFormationReserved } from '../savedFormations/reservations';
 import { loadSavedFormationLibrary } from '../savedFormations/storage';
 import type { SavedFormationLibrary } from '../savedFormations/types';
@@ -85,6 +91,64 @@ describe('Saved Formations workspace UI', () => {
     expect(screen.getByRole('button', { name: 'Open “Alpha formation”' })).toBeInTheDocument();
   });
 
+  it('attributes a direct conflict to every reserved formation and exposes each locate action', async () => {
+    const roster = progressedRoster();
+    const { library, attemptedId } = multiReservationFixture(roster);
+    const { changes } = renderWorkspace(library, roster);
+
+    const attemptedCard = screen.getByRole('article', { name: 'Attempted reservation' });
+    await userEvent.setup().click(within(attemptedCard).getByRole('checkbox', { name: /Reserve these dragons/i }));
+
+    expect(changes).toHaveLength(0);
+    expect(library.formations.find((record) => record.id === attemptedId)?.reserved).toBe(false);
+    const conflictItems = within(screen.getByRole('alert')).getAllByRole('listitem');
+    expect(conflictItems).toHaveLength(2);
+    expect(conflictItems[0]).toHaveTextContent(`${dragons[0]!.name} and ${dragons[1]!.name} are already reserved by “Fire Vanguard”.`);
+    expect(conflictItems[1]).toHaveTextContent(`${dragons[3]!.name} is already reserved by “Royal Flames”.`);
+    expect(screen.getByRole('button', { name: 'Open “Fire Vanguard”' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Open “Royal Flames”' })).toBeInTheDocument();
+  });
+
+  it('shows every merge conflict while keeping one decision for the imported record', async () => {
+    const roster = progressedRoster();
+    const { existing, imported } = multiImportFixture(roster);
+    const preview = previewSavedFormationMerge(existing, [imported]);
+    const onDecision = vi.fn();
+
+    render(<ReservationImportDecisions conflicts={preview.reservationConflicts} decisions={{}} namesById={dragonNamesById} onDecision={onDecision} />);
+
+    const evidence = within(screen.getByRole('alert')).getAllByRole('listitem');
+    expect(evidence).toHaveLength(2);
+    expect(evidence[0]).toHaveTextContent(`${dragons[0]!.name} and ${dragons[1]!.name} are already reserved by “Fire Vanguard”.`);
+    expect(evidence[1]).toHaveTextContent(`${dragons[3]!.name} is already reserved by “Royal Flames”.`);
+    const decision = screen.getByRole('button', { name: 'Import this formation unreserved' });
+    expect(screen.getAllByRole('button', { name: /Import this formation unreserved|Skip this formation/ })).toHaveLength(2);
+    await userEvent.setup().click(decision);
+    expect(onDecision).toHaveBeenCalledOnce();
+    expect(onDecision).toHaveBeenCalledWith(imported.id, 'unreserved');
+    expect(mergeSavedFormationImport(existing, preview, false, '2026-08-01T01:00:00.000Z', { [imported.id]: 'unreserved' }).formations.at(-1)).toMatchObject({ id: imported.id, reserved: false });
+  });
+
+  it('shows every earlier replace conflict while retaining unreserved and skip semantics', () => {
+    const roster = progressedRoster();
+    const { existing, imported } = multiImportFixture(roster);
+    const replacement = [...existing.formations, imported];
+    const conflicts = previewSavedFormationReplace(replacement);
+
+    render(<ReservationImportDecisions conflicts={conflicts} decisions={{}} namesById={dragonNamesById} onDecision={vi.fn()} />);
+
+    const evidence = within(screen.getByRole('alert')).getAllByRole('listitem');
+    expect(evidence).toHaveLength(2);
+    expect(evidence[0]).toHaveTextContent(`${dragons[0]!.name} and ${dragons[1]!.name} are already reserved by “Fire Vanguard”.`);
+    expect(evidence[1]).toHaveTextContent(`${dragons[3]!.name} is already reserved by “Royal Flames”.`);
+    expect(() => replaceSavedFormationImport(existing, replacement)).toThrow(/resolve every overlapping/i);
+    const unreserved = replaceSavedFormationImport(existing, replacement, '2026-08-01T01:00:00.000Z', { [imported.id]: 'unreserved' });
+    expect(unreserved.formations).toHaveLength(3);
+    expect(unreserved.formations.at(-1)?.reserved).toBe(false);
+    const skipped = replaceSavedFormationImport(existing, replacement, '2026-08-01T01:00:00.000Z', { [imported.id]: 'skip' });
+    expect(skipped.formations.map((record) => record.name)).toEqual(['Fire Vanguard', 'Royal Flames']);
+  });
+
   it('explains that planning formations cannot reserve roster dragons', () => {
     const roster = progressedRoster();
     const planning = createSavedFormation(createEmptySavedFormationLibrary(), { name: 'Plan', arrangement, evaluationMode: 'planning', source: 'formation-builder', roster, id: '00000000-0000-4000-8000-000000000004' });
@@ -148,10 +212,42 @@ function libraryFixture(roster = progressedRoster()) {
 
 function progressedRoster(starRank = 8, dragonLevel = 30, habitLevel: 1 | 2 | 3 | 4 | 5 = 2) {
   const roster = createEmptyRoster(dragons);
-  for (const dragon of dragons.slice(0, 6)) {
+  for (const dragon of dragons.slice(0, 9)) {
     const entry = applyOwnedDragonPatch(dragon, roster[dragon.id]!, { owned: true, starRank, reignLevel: dragonLevel });
     for (const habit of dragon.habits) entry.habitLevels[habit.id] = habitLevel;
     roster[dragon.id] = entry;
   }
   return roster;
+}
+
+const dragonNamesById = new Map(dragons.map((dragon) => [dragon.id, dragon.name]));
+
+function multiReservationFixture(roster: Record<string, OwnedDragon>) {
+  let library = createSavedFormation(createEmptySavedFormationLibrary(), {
+    name: 'Fire Vanguard', arrangement: { 'left-flank': dragons[0]!.id, vanguard: dragons[1]!.id, 'right-flank': dragons[2]!.id },
+    evaluationMode: 'current-roster', source: 'formation-builder', roster, id: '00000000-0000-4000-8000-000000000010',
+  });
+  library = setFormationReserved(library, '00000000-0000-4000-8000-000000000010', true);
+  library = createSavedFormation(library, {
+    name: 'Royal Flames', arrangement: { 'left-flank': dragons[3]!.id, vanguard: dragons[4]!.id, 'right-flank': dragons[5]!.id },
+    evaluationMode: 'current-roster', source: 'formation-builder', roster, id: '00000000-0000-4000-8000-000000000011',
+  });
+  library = setFormationReserved(library, '00000000-0000-4000-8000-000000000011', true);
+  const attemptedId = '00000000-0000-4000-8000-000000000012';
+  library = createSavedFormation(library, {
+    name: 'Attempted reservation', arrangement: { 'left-flank': dragons[3]!.id, vanguard: dragons[1]!.id, 'right-flank': dragons[0]!.id },
+    evaluationMode: 'current-roster', source: 'formation-builder', roster, id: attemptedId,
+  });
+  return { library, attemptedId };
+}
+
+function multiImportFixture(roster: Record<string, OwnedDragon>) {
+  const { library } = multiReservationFixture(roster);
+  const existing = { ...library, formations: library.formations.slice(0, 2) };
+  let importedLibrary = createSavedFormation(createEmptySavedFormationLibrary(), {
+    name: 'Imported overlap', arrangement: { 'left-flank': dragons[3]!.id, vanguard: dragons[1]!.id, 'right-flank': dragons[0]!.id },
+    evaluationMode: 'current-roster', source: 'formation-builder', roster, id: '00000000-0000-4000-8000-000000000013',
+  });
+  importedLibrary = setFormationReserved(importedLibrary, '00000000-0000-4000-8000-000000000013', true);
+  return { existing, imported: importedLibrary.formations[0]! };
 }

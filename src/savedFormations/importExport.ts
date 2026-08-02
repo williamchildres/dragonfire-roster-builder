@@ -177,6 +177,7 @@ export function replaceSavedFormationImport(
 
 export function previewSavedFormationReplace(imported: readonly SavedFormationRecord[]): SavedFormationImportReservationConflict[] {
   const owners = new Map<string, SavedFormationRecord>();
+  const displayOrder = new Map(imported.map((record, index) => [record.id, index]));
   const conflicts: SavedFormationImportReservationConflict[] = [];
   for (const importedRecord of imported) {
     if (!importedRecord.reserved) continue;
@@ -188,7 +189,11 @@ export function previewSavedFormationReplace(imported: readonly SavedFormationRe
       entry.dragonIds.push(dragonId);
       byExisting.set(existing.id, entry);
     }
-    for (const { existing, dragonIds } of byExisting.values()) {
+    const orderedExistingConflicts = [...byExisting.values()].sort((left, right) =>
+      (displayOrder.get(left.existing.id) ?? Number.MAX_SAFE_INTEGER) -
+        (displayOrder.get(right.existing.id) ?? Number.MAX_SAFE_INTEGER) ||
+      left.existing.id.localeCompare(right.existing.id));
+    for (const { existing, dragonIds } of orderedExistingConflicts) {
       conflicts.push({ imported: importedRecord, existing, conflictingDragonIds: dragonIds.sort((a, b) => a.localeCompare(b)) });
     }
     if (byExisting.size === 0) for (const dragonId of arrangementDragonIds(importedRecord)) owners.set(dragonId, importedRecord);

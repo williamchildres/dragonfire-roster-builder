@@ -29,9 +29,11 @@ import {
   type SavedFormationImportReservationConflict,
 } from '../savedFormations/importExport';
 import {
+  groupReservationConflictsByFormation,
   getReservedDragonIds,
   getReservedFormationRecords,
   SavedFormationReservationConflictError,
+  type SavedFormationReservationConflictGroup,
   setFormationReserved,
 } from '../savedFormations/reservations';
 import { savedFormationSyncStatusLabel, type SavedFormationComparison, type SavedFormationSyncStatus } from '../hooks/useSavedFormationSync';
@@ -79,7 +81,7 @@ export function SavedFormationsWorkspace({
     reservationDecisions: Record<string, SavedFormationImportReservationDecision>;
   } | null>(null);
   const [localError, setLocalError] = useState<string | null>(null);
-  const [conflictTarget, setConflictTarget] = useState<{ id: string; name: string } | null>(null);
+  const [reservationConflictGroups, setReservationConflictGroups] = useState<SavedFormationReservationConflictGroup[]>([]);
   const evaluations = useMemo(() => library.formations.map((record) => evaluateSavedFormation({ record, roster })), [library, roster]);
   const atLimit = library.formations.length >= MAX_SAVED_FORMATIONS;
   const namesById = useMemo(() => new Map(dragons.map((dragon) => [dragon.id, dragon.name])), []);
@@ -88,14 +90,15 @@ export function SavedFormationsWorkspace({
   const ownedReservedCount = reservedDragonIds.filter((dragonId) => roster[dragonId]?.owned).length;
 
   const apply = (action: () => SavedFormationLibrary, message: string) => {
-    try { onLibraryChange(action(), message); setLocalError(null); setConflictTarget(null); }
+    try { onLibraryChange(action(), message); setLocalError(null); setReservationConflictGroups([]); }
     catch (error) {
       if (error instanceof SavedFormationReservationConflictError) {
-        const conflict = error.conflicts[0]!;
-        const dragonNames = error.conflicts.map((item) => namesById.get(item.dragonId) ?? item.dragonId).join(', ');
-        setLocalError(`${dragonNames} ${error.conflicts.length === 1 ? 'is' : 'are'} already reserved by “${conflict.conflictingFormationName}”.`);
-        setConflictTarget({ id: conflict.conflictingFormationId, name: conflict.conflictingFormationName });
-      } else setLocalError(error instanceof Error ? error.message : 'Saved Formations could not be updated.');
+        setLocalError(null);
+        setReservationConflictGroups(groupReservationConflictsByFormation(library, error.conflicts));
+      } else {
+        setReservationConflictGroups([]);
+        setLocalError(error instanceof Error ? error.message : 'Saved Formations could not be updated.');
+      }
     }
   };
   const exportLibrary = () => {
@@ -139,7 +142,7 @@ export function SavedFormationsWorkspace({
 
       {atLimit ? <p className="status-message info">The 50-formation limit is reached. Delete a formation to make room; updates, rename, reorder, export, and delete remain available.</p> : null}
       {localError || syncError ? <p className="status-message error" role="alert">{localError ?? syncError}</p> : null}
-      {conflictTarget ? <p className="saved-conflict-action"><button type="button" className="text-button" onClick={() => { const element = document.getElementById(`saved-formation-card-${conflictTarget.id}`); element?.scrollIntoView({ block: 'center' }); element?.focus(); }}>Open “{conflictTarget.name}”</button></p> : null}
+      {reservationConflictGroups.length > 0 ? <div className="status-message error" role="alert"><ul>{reservationConflictGroups.map((group) => <li key={group.conflictingFormationId}><span>{formatConflictDragonNames(group.dragonIds, namesById)} {group.dragonIds.length === 1 ? 'is' : 'are'} already reserved by “{group.conflictingFormationName}”.</span>{' '}<button type="button" className="text-button" onClick={() => { const element = document.getElementById(`saved-formation-card-${group.conflictingFormationId}`); element?.scrollIntoView({ block: 'center' }); element?.focus(); }}>Open “{group.conflictingFormationName}”</button></li>)}</ul></div> : null}
       <SyncDecisionPanel
         session={session}
         status={syncStatus}
@@ -253,15 +256,27 @@ export function SavedFormationsWorkspace({
   );
 }
 
-function ReservationImportDecisions({ conflicts, decisions, namesById, onDecision }: {
+export function ReservationImportDecisions({ conflicts, decisions, namesById, onDecision }: {
   conflicts: SavedFormationImportReservationConflict[];
   decisions: Readonly<Record<string, SavedFormationImportReservationDecision>>;
   namesById: ReadonlyMap<string, string>;
   onDecision: (recordId: string, decision: SavedFormationImportReservationDecision) => void;
 }) {
-  const grouped = [...new Map(conflicts.map((conflict) => [conflict.imported.id, conflict])).values()];
-  if (grouped.length === 0) return null;
-  return <div className="import-reservation-conflicts" role="alert"><h3>Reservation conflicts require a decision</h3>{grouped.map((conflict) => <div key={conflict.imported.id}><p><strong>{conflict.imported.name}</strong>: {conflict.conflictingDragonIds.map((id) => namesById.get(id) ?? id).join(', ')} {conflict.conflictingDragonIds.length === 1 ? 'is' : 'are'} already reserved by “{conflict.existing.name}”.</p><div className="button-row"><button type="button" className={decisions[conflict.imported.id] === 'unreserved' ? 'primary-button' : 'secondary-button'} onClick={() => onDecision(conflict.imported.id, 'unreserved')}>Import this formation unreserved</button><button type="button" className={decisions[conflict.imported.id] === 'skip' ? 'primary-button' : 'secondary-button'} onClick={() => onDecision(conflict.imported.id, 'skip')}>Skip this formation</button></div></div>)}</div>;
+  const grouped = new Map<string, { imported: SavedFormationRecord; conflicts: SavedFormationImportReservationConflict[] }>();
+  for (const conflict of conflicts) {
+    const group = grouped.get(conflict.imported.id) ?? { imported: conflict.imported, conflicts: [] };
+    group.conflicts.push(conflict);
+    grouped.set(conflict.imported.id, group);
+  }
+  if (grouped.size === 0) return null;
+  return <div className="import-reservation-conflicts" role="alert"><h3>Reservation conflicts require a decision</h3>{[...grouped.values()].map((group) => <div key={group.imported.id}><p><strong>{group.imported.name}</strong> conflicts with existing reservations:</p><ul>{group.conflicts.map((conflict) => <li key={`${group.imported.id}:${conflict.existing.id}`}>{formatConflictDragonNames(conflict.conflictingDragonIds, namesById)} {conflict.conflictingDragonIds.length === 1 ? 'is' : 'are'} already reserved by “{conflict.existing.name}”.</li>)}</ul><div className="button-row"><button type="button" className={decisions[group.imported.id] === 'unreserved' ? 'primary-button' : 'secondary-button'} onClick={() => onDecision(group.imported.id, 'unreserved')}>Import this formation unreserved</button><button type="button" className={decisions[group.imported.id] === 'skip' ? 'primary-button' : 'secondary-button'} onClick={() => onDecision(group.imported.id, 'skip')}>Skip this formation</button></div></div>)}</div>;
+}
+
+function formatConflictDragonNames(dragonIds: readonly string[], namesById: ReadonlyMap<string, string>) {
+  const names = dragonIds.map((id) => namesById.get(id) ?? id);
+  if (names.length < 2) return names[0] ?? 'A dragon';
+  if (names.length === 2) return `${names[0]} and ${names[1]}`;
+  return `${names.slice(0, -1).join(', ')}, and ${names.at(-1)}`;
 }
 
 function SyncDecisionPanel({ session, status, comparison, onExport, onOpenSignIn, onSaveBrowser, onUseAccount, onPause, onReopen, onRetry }: {

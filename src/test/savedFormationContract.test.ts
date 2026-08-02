@@ -32,6 +32,7 @@ import {
   canReserveFormation,
   getReservedDragonIds,
   getReservationConflicts,
+  groupReservationConflictsByFormation,
   SavedFormationReservationClearanceError,
   SavedFormationReservationConflictError,
   setFormationReserved,
@@ -186,6 +187,49 @@ describe('Saved Formation CRUD and evaluation', () => {
     expect(() => updateSavedFormation(library, deterministicId(0), { name: 'Plan', arrangement, evaluationMode: 'planning', roster })).toThrow(SavedFormationReservationClearanceError);
     const planning = updateSavedFormation(library, deterministicId(0), { name: 'Plan', arrangement, evaluationMode: 'planning', roster, clearReservation: true });
     expect(planning.formations[0]).toMatchObject({ reserved: false, evaluationMode: 'planning' });
+  });
+
+  it('reports every reserved-arrangement update conflict in display order without mutating the prior record', () => {
+    const roster = progressedRoster();
+    let library = createSavedFormation(createEmptySavedFormationLibrary(), {
+      name: 'Fire Vanguard', arrangement: { 'left-flank': dragons[0]!.id, vanguard: dragons[1]!.id, 'right-flank': dragons[2]!.id },
+      evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(40),
+    });
+    library = setFormationReserved(library, deterministicId(40), true);
+    library = createSavedFormation(library, {
+      name: 'Royal Flames', arrangement: { 'left-flank': dragons[3]!.id, vanguard: dragons[4]!.id, 'right-flank': dragons[5]!.id },
+      evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(41),
+    });
+    library = setFormationReserved(library, deterministicId(41), true);
+    library = createSavedFormation(library, {
+      name: 'Reserved target', arrangement: { 'left-flank': dragons[6]!.id, vanguard: dragons[7]!.id, 'right-flank': dragons[8]!.id },
+      evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(42),
+    });
+    library = setFormationReserved(library, deterministicId(42), true);
+    const priorRecord = library.formations[2]!;
+    let error: SavedFormationReservationConflictError | null = null;
+
+    try {
+      updateSavedFormation(library, deterministicId(42), {
+        name: 'Conflicting update',
+        arrangement: { 'left-flank': dragons[3]!.id, vanguard: dragons[1]!.id, 'right-flank': dragons[0]!.id },
+        evaluationMode: 'current-roster',
+        roster,
+      });
+    } catch (caught) {
+      if (caught instanceof SavedFormationReservationConflictError) error = caught;
+      else throw caught;
+    }
+
+    expect(error).not.toBeNull();
+    expect(groupReservationConflictsByFormation(library, error!.conflicts)).toEqual([
+      { conflictingFormationId: deterministicId(40), conflictingFormationName: 'Fire Vanguard', dragonIds: [dragons[0]!.id, dragons[1]!.id].sort() },
+      { conflictingFormationId: deterministicId(41), conflictingFormationName: 'Royal Flames', dragonIds: [dragons[3]!.id] },
+    ]);
+    expect(library.formations[2]).toBe(priorRecord);
+    expect(library.formations[2]).toMatchObject({ name: 'Reserved target', reserved: true, arrangement: {
+      'left-flank': dragons[6]!.id, vanguard: dragons[7]!.id, 'right-flank': dragons[8]!.id,
+    } });
   });
   it('saves, updates, saves as new, renames, duplicates, reorders, and deletes', () => {
     const roster = progressedRoster();
