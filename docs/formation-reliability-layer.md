@@ -29,6 +29,8 @@ The inventory found:
 
 The recommended data design is a hybrid: reusable ability-level reliability components hold roll facts, while every scoring signal explicitly references the component or components that govern it. This avoids duplicated facts and prevents a chance multiplier from being applied to an entire mixed ability.
 
+Recipient eligibility is resolved upstream of reliability. In release 0.23.3, structured targeting resolutions select a documented unique recipient or remain explicitly unresolved; reliability is evaluated only for relationships that survive that eligibility gate. The two Blazing Fury branches share one targeting resolution, so reliability cannot cause sibling effects to select different recipients.
+
 The recommended Formation Rating v3 model is evidence-aware:
 
 - guaranteed components receive reliability 1;
@@ -414,7 +416,7 @@ The `65 / 76 / 47` values are a direct per-opportunity discount scenario, not fi
 
 ## 16. Proposed v3 calculation
 
-Reliability should be calculated in a new pure service between active result selection and semantic relationship aggregation. The service receives the selected provider signal, selected receiving signal, active Habit Levels, and component definitions, and returns a stable relationship reliability trace.
+Reliability should be calculated in a new pure service between active result selection and semantic relationship aggregation. The service receives the selected provider signal, selected receiving signal, active Habit Levels, and component definitions, and returns a stable relationship reliability trace. Current production additionally receives the upstream structured targeting result; an unresolved recipient suppresses the relationship before any reliability weight is assigned.
 
 Reliability belongs to the relationship-enabling event graph:
 

@@ -26,7 +26,34 @@ export type FriendlyRecipientSelector =
       kind: 'adjacent-group';
       recipientCount: number;
       includeSelf: boolean;
+    }
+  | {
+      kind: 'capability-priority-one';
+      priorityTag: SynergyTag;
+      recipientCount: 1;
+      includeSelf: boolean;
+      selectionGroupId: string;
     };
+
+export type TargetingResolutionStatus = 'resolved' | 'unresolved';
+export type TargetingUnresolvedReason =
+  | 'multiple-priority-candidates'
+  | 'multiple-fallback-candidates'
+  | 'missing-capability-data';
+
+export interface TargetingResolution {
+  selectorKind: FriendlyRecipientSelector['kind'];
+  selectionGroupId: string;
+  status: TargetingResolutionStatus;
+  selectedRecipientId?: string;
+  eligibleRecipientIds: string[];
+  priorityRecipientIds: string[];
+  fallbackRecipientIds: string[];
+  recipientCount: number;
+  unresolvedReason?: TargetingUnresolvedReason;
+  abilityIds: string[];
+  signalIds: string[];
+}
 
 export interface ProgressionRequirement {
   minimumStarRank?: number;
@@ -110,6 +137,7 @@ export interface EvaluateFormationInput {
 
 export interface EvaluateFormationResult {
   results: SimpleSynergyResult[];
+  targetingResolutions: TargetingResolution[];
 }
 
 export type SynergySignalCategory = 'output' | 'support' | 'benefits-from';
@@ -132,4 +160,5 @@ export interface EnrichedRelationshipCandidate {
 
 export interface EvaluateFormationCandidatesResult {
   candidates: EnrichedRelationshipCandidate[];
+  targetingResolutions: TargetingResolution[];
 }

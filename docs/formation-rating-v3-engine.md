@@ -4,9 +4,13 @@ Formation Rating v3 is the live production engine identified by `formation-ratin
 
 ## Inputs and identity
 
-The formation evaluator now has a second, internal-facing result that retains every eligible provider-beneficiary candidate before semantic selection. Each candidate carries exact provider and beneficiary signal IDs, signal categories, dragon and ability IDs, semantic tag, result kind, and a stable identity. Legacy `evaluateFormation` still strips this metadata and returns its original shape.
+The formation evaluator has an internal-facing candidate result that retains every eligible provider-beneficiary candidate before semantic selection. Each candidate carries exact provider and beneficiary signal IDs, signal categories, dragon and ability IDs, semantic tag, result kind, and a stable identity. Both evaluator entry points also expose structured recipient-selection resolutions; the legacy relationship result shape remains intact under `results`.
 
 V3 resolves those exact signal IDs through the production reliability registry. It never parses result IDs, ability text, or explanations to recover signal or probability context. Current unlock, position, targeting, and recipient selection use `SimpleProgressionByDragonId`; probability resolution uses a separate `ReliabilityProgressionByDragonId`, normally built with `reliabilityProgressionFromOwnedDragon`. No Habit level is inferred for an actual roster.
+
+## Recipient selection before reliability
+
+Recipient selection gates candidate generation before reliability is evaluated. `capability-priority-one` builds the complete eligible formation pool, checks active output signals for the priority semantic tag at current progression and self position, and resolves only a unique priority or unique fallback recipient. Support signals do not qualify as active damage output. Multiple priority or fallback candidates remain unresolved with zero recipient-specific candidates; no probability, lane order, stats, or canonical-ID preference is invented. Sibling signals with one `selectionGroupId` share the same resolution object. See [`TARGETING_SELECTORS.md`](TARGETING_SELECTORS.md).
 
 ## Reliability quantification
 
@@ -58,4 +62,4 @@ Structured traces retain signal, component, event, probability-variant, path, mi
 
 The Formation Builder and all three optimizer strategies consume v3 together. Actual-roster evaluation uses saved Habit progression; planning mode explicitly uses Level 5 for unlocked Habits. The optimizer uses exact fixed-point adjusted relationship values and excludes unquantified potential from every objective.
 
-Persistence, cloud synchronization, routes, sharing, and Estimated Power remain separate from the rating cutover. V2 source and tests are retained unchanged as historical evidence.
+Persistence, cloud synchronization, routes, sharing, and Estimated Power remain separate from the rating cutover. The historical v2 audit consumes a committed, deeply frozen JSON profile input captured directly from base commit `2832d64c75621ce2fcf57385d716df2f2de52aab`: schema 1, 33 profiles, 239 signals, identity `sha256:68343cd6bfa67e10f616cf8c3ee109f0d19026058cbf6ffb53776aa6cb758719`. The historical module does not import or derive from `simpleSynergyProfiles`; current v3 production continues to use the corrected current profiles. Historical expected output hashes are not rewritten.

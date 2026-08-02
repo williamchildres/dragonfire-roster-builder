@@ -13,6 +13,7 @@ import type {
   SimpleFormation,
   SimpleProgressionByDragonId,
   SimpleSynergyResult,
+  TargetingResolution,
 } from '../synergy/types';
 
 export type FormationFindingType =
@@ -23,6 +24,7 @@ export type FormationFindingType =
   | 'better-placement'
   | 'alternative-vanguard'
   | 'future-unlock'
+  | 'targeting-resolution'
   | 'confidence-limitation';
 
 export type FormationFindingTone = 'positive' | 'negative' | 'neutral' | 'informational';
@@ -66,6 +68,7 @@ export function buildFormationFindings({
   signalChipsByDragonId,
   recommendation,
   rating,
+  targetingResolutions = [],
 }: {
   formation: SimpleFormation;
   progression: SimpleProgressionByDragonId;
@@ -75,6 +78,7 @@ export function buildFormationFindings({
   signalChipsByDragonId: Record<string, FindingSignalChips | undefined>;
   recommendation: FormationRecommendationResult;
   rating: { confidence: FormationAnalysisConfidence };
+  targetingResolutions?: TargetingResolution[];
 }): FormationFindingSet {
   const profilesById = new Map(profiles.map((profile) => [profile.dragonId, profile]));
   const dragonNamesById = new Map(profiles.map((profile) => [profile.dragonId, profile.dragonName]));
@@ -213,6 +217,7 @@ export function buildFormationFindings({
     visibility: 'primary',
     summary: issue,
   }));
+  const targetingFindings = buildTargetingResolutionFindings(targetingResolutions, profiles);
   const findings = [
     ...confidenceFindings,
     ...placementFindings,
@@ -220,6 +225,7 @@ export function buildFormationFindings({
     ...sortedGaps,
     ...(vanguardFinding ? [vanguardFinding] : []),
     ...futureFindings,
+    ...targetingFindings,
   ];
 
   return {
@@ -230,9 +236,62 @@ export function buildFormationFindings({
       ...sortedGaps.filter((finding) => finding.visibility === 'secondary'),
       ...(vanguardFinding ? [vanguardFinding] : []),
       ...futureFindings,
+      ...targetingFindings,
     ],
     participatingDragonIds,
   };
+}
+
+export function buildTargetingResolutionFindings(
+  targetingResolutions: TargetingResolution[],
+  profiles: DragonSynergyProfile[],
+): FormationFinding[] {
+  const profilesById = new Map(profiles.map((profile) => [profile.dragonId, profile]));
+  const dragonNamesById = new Map(profiles.map((profile) => [profile.dragonId, profile.dragonName]));
+  return targetingResolutions.map((resolution): FormationFinding => ({
+    id: `finding:targeting:${resolution.selectionGroupId}`,
+    type: 'targeting-resolution',
+    tone: resolution.status === 'resolved' ? 'neutral' : 'informational',
+    dragonIds: resolution.eligibleRecipientIds,
+    abilityIds: resolution.abilityIds,
+    visibility: 'secondary',
+    summary: targetingResolutionSummary(resolution, profilesById, dragonNamesById),
+    detail: targetingResolutionDetail(resolution),
+  }));
+}
+
+function targetingResolutionSummary(
+  resolution: TargetingResolution,
+  profilesById: Map<string, DragonSynergyProfile>,
+  dragonNamesById: Map<string, string>,
+): string {
+  const firstSignalId = resolution.signalIds[0];
+  const abilityName = [...profilesById.values()]
+    .flatMap((profile) => [...profile.outputs, ...profile.supports])
+    .find((signal) => signal.id === firstSignalId)?.abilityName ?? resolution.selectionGroupId;
+  const names = (ids: string[]) => ids.map((id) => dragonNamesById.get(id) ?? id);
+  if (resolution.status === 'resolved') {
+    const selected = dragonNamesById.get(resolution.selectedRecipientId!) ?? resolution.selectedRecipientId!;
+    return resolution.priorityRecipientIds.length === 1
+      ? `${abilityName} selects ${selected} as its shared recipient because ${selected} is the unique active Fire Damage ally.`
+      : `${abilityName} selects ${selected} as its shared fallback recipient because no active Fire Damage ally qualifies.`;
+  }
+  if (resolution.unresolvedReason === 'multiple-priority-candidates') {
+    const candidateNames = names(resolution.priorityRecipientIds);
+    const candidates = joinNames(candidateNames);
+    const collective = candidateNames.length === 2 ? ' both' : '';
+    return `${abilityName} selects one Fire-damage ally, but ${candidates}${collective} qualify and the tie rule is not verified.`;
+  }
+  if (resolution.unresolvedReason === 'multiple-fallback-candidates') {
+    const candidates = joinNames(names(resolution.fallbackRecipientIds));
+    return `${abilityName} selects one Ally, but no active Fire Damage ally qualifies and ${candidates} remain fallback candidates; the tie rule is not verified.`;
+  }
+  return `${abilityName} target selection is unresolved because one or more eligible Allies lack active-capability data.`;
+}
+
+function targetingResolutionDetail(resolution: TargetingResolution): string {
+  const selected = resolution.selectedRecipientId ?? 'none';
+  return `Targeting trace: selector ${resolution.selectorKind}; group ${resolution.selectionGroupId}; status ${resolution.status}; selected ${selected}; eligible ${resolution.eligibleRecipientIds.join(', ') || 'none'}; priority ${resolution.priorityRecipientIds.join(', ') || 'none'}; fallback ${resolution.fallbackRecipientIds.join(', ') || 'none'}; recipient count ${resolution.recipientCount}; reason ${resolution.unresolvedReason ?? 'none'}; signals ${resolution.signalIds.join(', ')}.`;
 }
 
 function alternativeVanguardFinding(

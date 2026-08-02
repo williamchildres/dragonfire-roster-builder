@@ -4,7 +4,11 @@ import {
   semanticRelationshipId,
   type SemanticRelationshipClass,
 } from '../../semanticRelationships';
-import type { DragonSynergyProfile, EnrichedRelationshipCandidate } from '../../types';
+import type {
+  DragonSynergyProfile,
+  EnrichedRelationshipCandidate,
+  EvaluateFormationCandidatesResult,
+} from '../../types';
 import { formationReliabilityBindings, formationReliabilityComponents } from '../registry';
 import { reliabilityBindingPathVisits } from '../traversal';
 import type {
@@ -39,15 +43,17 @@ const baseValues: Record<SemanticRelationshipClass, number> = {
 export function evaluateFormationRelationshipsV3({
   input,
   profiles,
+  candidateEvaluation,
 }: {
   input: EvaluateFormationV3Input;
   profiles: DragonSynergyProfile[];
+  candidateEvaluation?: EvaluateFormationCandidatesResult;
 }): FormationRelationshipV3[] {
-  const candidates = evaluateFormationCandidates({
+  const candidates = (candidateEvaluation ?? evaluateFormationCandidates({
     formation: input.formation,
     progression: input.progression,
     profiles,
-  }).candidates;
+  })).candidates;
   const componentsById = new Map(
     formationReliabilityComponents.map((component) => [component.id, component]),
   );

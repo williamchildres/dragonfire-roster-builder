@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { summarizeAbility } from '../app/dragonDetailPresentation';
+import { historicalFormationRatingV2Profiles } from '../audit/historicalFormationRatingV2Profiles';
 import { dragons } from '../data/dragons';
 import type { AbilityDefinition } from '../models/dragon';
 import type { FormationPlacementComparison } from '../services/formationPlacementComparison';
@@ -103,7 +104,12 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
 
   it('reports the exhaustive rating delta caused only by the corrected Syrax scaling tag', () => {
     const archivedDragons = dragons.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.id));
-    const archivedProfiles = simpleSynergyProfiles.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.dragonId));
+    // This is a historical audit of the earlier Recovery scaling correction.
+    // Its after-state comes from the immutable base-commit v2 profile artifact,
+    // not from a compatibility view derived from current production profiles.
+    const archivedProfiles: DragonSynergyProfile[] = historicalFormationRatingV2Profiles
+      .filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.dragonId))
+      .map((profile) => structuredClone(profile));
     const priorProfiles: DragonSynergyProfile[] = archivedProfiles.map((profile) =>
       profile.dragonId !== 'syrax'
         ? profile

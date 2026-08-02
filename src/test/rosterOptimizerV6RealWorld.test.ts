@@ -49,7 +49,7 @@ describe('optimizer v6 real-world acceptance fixture', () => {
   it('records the complete three-mode comparison and Caraxes/Syrax diagnostic', () => {
     const report = JSON.parse(readFileSync(resolve(
       process.cwd(),
-      'docs/audits/roster-optimizer-v6-real-world-0.22.1.json',
+      'docs/audits/roster-optimizer-v6-real-world-0.23.3.json',
     ), 'utf8')) as {
       fixtureDragonCount: number;
       candidatePoolBuilds: number;
@@ -91,13 +91,13 @@ describe('optimizer v6 real-world acceptance fixture', () => {
     )).toBe(true);
     expect(report.caraxesSyrax).toMatchObject({
       earliestAvailableStep: 1,
-      thirdDragonId: 'tessarion',
-      formationRating: 40,
-      overallScoreUnits: 681_400,
-      activeRelationshipCount: 5,
+      thirdDragonId: 'vhagar',
+      formationRating: 34,
+      overallScoreUnits: 671_860,
+      activeRelationshipCount: 3,
       unquantifiedRelationshipCount: 0,
       selectedByBestOverall: false,
-      scoreDifferenceUnits: 97_620,
+      scoreDifferenceUnits: 107_160,
     });
     expect(report.caraxesSyrax.activeRelationships.some(({ label }) =>
       label.includes('First-Strike'),

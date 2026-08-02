@@ -1,4 +1,5 @@
 import historicalV5Report from '../../docs/audits/roster-optimizer-v5-0.22.0.json';
+import approvedHistoricalDeltaManifest from './fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.3.json';
 import { dragons } from '../data/dragons';
 import {
   ESTIMATED_POWER_MODEL_HASH,
@@ -40,18 +41,26 @@ import {
 import { normalizeRoster } from '../services/rosterStorage';
 
 const protectedIdentities = {
-  formationRatingV3Numeric:
+  previousFormationRatingV3Numeric:
     '958cf36d329a6fb00c732ecf576d8020d10553d3585b136bda0493a7db754724',
-  formationRatingV3:
+  currentFormationRatingV3Numeric:
+    'c9c93c5a9c89f85c08df958924d3fa61cfbdae555a0c50779c7f3b37d05f9c00',
+  previousFormationRatingV3:
     '215f2c669cee0c96d584b6b3014aa2f075302c644f85ec0801c70b4a6740344f',
-  formationRatingV3Audit:
+  currentFormationRatingV3:
+    'bceda8493e5af3ae4a805fd45dca4861b6a35e2788531699b7e65e707ed6a31a',
+  previousFormationRatingV3Audit:
     '0cd7e73c6dffe528dcb738c3eeb1f7a06bf19008c62280aa2bf9a74cdbcaf94a',
+  currentFormationRatingV3Audit:
+    'fc21d2d75740def4a23b9deeb4a8c03712d9b1724522ab05304b109820a67f3f',
   formationRatingV2:
     '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf',
   reliabilityRegistry:
     'e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c',
-  research:
+  previousResearch:
     'f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f',
+  currentResearch:
+    'f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d',
   estimatedPowerObservation: ESTIMATED_POWER_OBSERVATION_HASH,
   estimatedPowerModel: ESTIMATED_POWER_MODEL_HASH,
   estimatedPowerGrid: ESTIMATED_POWER_NUMERICAL_GRID_FINGERPRINT,
@@ -81,7 +90,48 @@ type HistoricalV5Execution = {
   ascendingPowerVector: number[];
   ascendingRatingVector: number[];
   stableSolutionKey: string;
+  solutionHash: string;
+  resultHash: string;
 };
+
+export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY =
+  'sha256:7630e354700b908f4e3c86379552a2c13b9e6d1034a0fdaa011772cd4eaff69a' as const;
+export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_COUNT = 50 as const;
+export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_REASON =
+  'syrax-blazing-fury-recipient-correction' as const;
+
+export interface OptimizerV6ApprovedHistoricalDelta {
+  key: string;
+  fixtureId: string;
+  allocationMode: 'strongest-first' | 'balanced';
+  formationCount: number;
+  inputOrder: 'forward' | 'reverse';
+  historicalStableSolutionKey: string;
+  currentStableSolutionKey: string;
+  historicalAscendingPowerVector: number[];
+  currentAscendingPowerVector: number[];
+  historicalAscendingRatingVector: number[];
+  currentAscendingRatingVector: number[];
+  historicalSolutionHash: string;
+  currentSolutionHash: string;
+  historicalResultHash: string;
+  currentResultHash: string;
+  reasonCode: typeof OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_REASON;
+}
+
+const approvedHistoricalDeltas =
+  approvedHistoricalDeltaManifest.deltas as OptimizerV6ApprovedHistoricalDelta[];
+
+if (
+  approvedHistoricalDeltaManifest.approvedChangedExecutionCount !==
+    OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_COUNT ||
+  approvedHistoricalDeltaManifest.deterministicManifestHash !==
+    OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY ||
+  approvedHistoricalDeltaManifest.reasonCode !==
+    OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_REASON
+) {
+  throw new Error('Optimizer-v6 approved historical-delta manifest metadata changed unexpectedly.');
+}
 
 const historicalV5Executions = new Map(
   (historicalV5Report.executions as HistoricalV5Execution[]).map((execution) => [
@@ -168,7 +218,11 @@ export async function runRosterOptimizerV6Audit(
             totalMs: pool.candidateGenerationMs + solverMs,
           });
           validateResult(result, pool.candidates);
-          validateHistoricalCompatibility(fixture.id, pool.inputOrder, result);
+          const historicalV5Compatible = historicalCompatibility(
+            fixture.id,
+            pool.inputOrder,
+            result,
+          );
           if (pool.inputOrder === 'forward') {
             forwardResult = result;
           } else if (
@@ -178,7 +232,12 @@ export async function runRosterOptimizerV6Audit(
           ) {
             throw new Error(`${fixture.id}/${mode}/${count} forward/reverse hashes differ.`);
           }
-          executions.push(executionRecord(fixture.id, pool.inputOrder, result));
+          executions.push(executionRecord(
+            fixture.id,
+            pool.inputOrder,
+            result,
+            historicalV5Compatible,
+          ));
           onExecution?.(
             `${executions.length}/${expectedExecutions} ${fixture.id}/${mode}/${count}/${pool.inputOrder}`,
           );
@@ -240,11 +299,10 @@ function createReport(
   if (executions.some((execution) => !execution.exactReconstruction)) {
     failedChecks.push('one or more executions failed exact reconstruction');
   }
-  if (executions.some((execution) => !execution.historicalV5Compatible)) {
-    failedChecks.push('one or more existing-mode executions changed from optimizer v5');
-  }
   const forwardReverseEqual = forwardReverseHashesMatch(executions);
   if (!forwardReverseEqual) failedChecks.push('one or more forward/reverse hashes differ');
+  const historicalDeltaValidation = evaluateApprovedHistoricalDeltas(executions);
+  failedChecks.push(...historicalDeltaValidation.failedChecks);
   if (failedChecks.length > 0) {
     throw new Error(`Optimizer v6 audit assertions failed: ${failedChecks.join('; ')}.`);
   }
@@ -260,6 +318,10 @@ function createReport(
     },
     estimatedPowerModelVersion: ESTIMATED_POWER_MODEL_VERSION,
     protectedIdentities,
+    approvedHistoricalDeltaManifestIdentity:
+      OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY,
+    approvedHistoricalDeltaCount: historicalDeltaValidation.approvedChangedExecutionCount,
+    historicalV5DeltaContractValid: historicalDeltaValidation.exactMatch,
     executions: executions.map((execution) => ({
       fixture: execution.fixture,
       mode: execution.mode,
@@ -278,7 +340,7 @@ function createReport(
     })),
   };
   return {
-    release: '0.22.1',
+    release: '0.23.3',
     contractVersion: 6,
     ratingContract: 'formation-rating-v3',
     generatedAt: new Date().toISOString(),
@@ -291,8 +353,12 @@ function createReport(
     forwardReverseEqual,
     noDuplicateDragons: executions.every((execution) => execution.noDuplicateDragons),
     exactReconstruction: executions.every((execution) => execution.exactReconstruction),
-    historicalV5Compatible:
-      executions.every((execution) => execution.historicalV5Compatible),
+    historicalV5Compatible: historicalDeltaValidation.actualChangedExecutionCount === 0,
+    historicalV5ChangedExecutionCount: historicalDeltaValidation.actualChangedExecutionCount,
+    approvedHistoricalDeltaManifestIdentity:
+      OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY,
+    approvedHistoricalDeltaCount: historicalDeltaValidation.approvedChangedExecutionCount,
+    historicalV5DeltaContractValid: historicalDeltaValidation.exactMatch,
     failedChecks: failedChecks.length,
     protectedIdentities,
     executions,
@@ -388,37 +454,187 @@ function validateBestOverall(
   }
 }
 
-function validateHistoricalCompatibility(
+export interface ApprovedHistoricalDeltaValidation {
+  approvedChangedExecutionCount: number;
+  actualChangedExecutionCount: number;
+  exactMatch: boolean;
+  failedChecks: string[];
+  actualDeltas: OptimizerV6ApprovedHistoricalDelta[];
+}
+
+export function evaluateApprovedHistoricalDeltas(
+  executions: readonly OptimizerV6AuditExecution[],
+): ApprovedHistoricalDeltaValidation {
+  const failedChecks: string[] = [];
+  const executionKeys = executions.map((execution) => historicalKey(
+    execution.fixture,
+    execution.mode,
+    execution.count,
+    execution.inputOrder,
+  ));
+  const duplicateExecutionKeys = duplicates(executionKeys);
+  if (duplicateExecutionKeys.length > 0) {
+    failedChecks.push(`duplicate execution keys: ${duplicateExecutionKeys.join(', ')}`);
+  }
+
+  const approvedKeys = approvedHistoricalDeltas.map((delta) => delta.key);
+  const duplicateApprovedKeys = duplicates(approvedKeys);
+  if (duplicateApprovedKeys.length > 0) {
+    failedChecks.push(`duplicate approved delta keys: ${duplicateApprovedKeys.join(', ')}`);
+  }
+  if (approvedHistoricalDeltas.length !== OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_COUNT) {
+    failedChecks.push(
+      `approved changed count expected ${OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_COUNT}, ` +
+      `received ${approvedHistoricalDeltas.length}`,
+    );
+  }
+  if (approvedHistoricalDeltas.some((delta) =>
+    (delta.allocationMode as OptimizerAllocationMode) === 'best-overall-first'
+  )) {
+    failedChecks.push('approved manifest contains a Best Overall execution without a v5 baseline');
+  }
+  const fixtureIds = new Set(executions.map((execution) => execution.fixture));
+  const applicableApprovedDeltas = approvedHistoricalDeltas.filter((delta) =>
+    fixtureIds.has(delta.fixtureId)
+  );
+
+  const actualDeltas: OptimizerV6ApprovedHistoricalDelta[] = [];
+  for (const execution of executions) {
+    if (execution.mode === 'best-overall-first') continue;
+    const historical = historicalV5Executions.get(historicalKey(
+      execution.fixture,
+      execution.mode,
+      execution.count,
+      execution.inputOrder,
+    ));
+    if (!historical) {
+      failedChecks.push(
+        `historical-compatible execution missing v5 baseline: ` +
+        `${execution.fixture}/${execution.mode}/${execution.count}/${execution.inputOrder}`,
+      );
+      continue;
+    }
+    if (!historicalExecutionMatches(historical, execution)) {
+      actualDeltas.push(historicalDeltaRecord(historical, execution));
+      if (execution.historicalV5Compatible) {
+        failedChecks.push(
+          `changed execution marked compatible: ` +
+          `${execution.fixture}/${execution.mode}/${execution.count}/${execution.inputOrder}`,
+        );
+      }
+    } else if (!execution.historicalV5Compatible) {
+      failedChecks.push(
+        `unchanged execution marked incompatible: ` +
+        `${execution.fixture}/${execution.mode}/${execution.count}/${execution.inputOrder}`,
+      );
+    }
+  }
+  actualDeltas.sort((left, right) => left.key.localeCompare(right.key));
+
+  const actualByKey = new Map(actualDeltas.map((delta) => [delta.key, delta]));
+  const approvedByKey = new Map(applicableApprovedDeltas.map((delta) => [delta.key, delta]));
+  for (const actual of actualDeltas) {
+    const approved = approvedByKey.get(actual.key);
+    if (!approved) {
+      failedChecks.push(`unexpected historical delta: ${actual.key}`);
+    } else if (JSON.stringify(actual) !== JSON.stringify(approved)) {
+      failedChecks.push(`approved historical delta changed differently: ${actual.key}`);
+    }
+  }
+  for (const approved of applicableApprovedDeltas) {
+    if (!actualByKey.has(approved.key)) {
+      failedChecks.push(`expected historical delta missing: ${approved.key}`);
+    }
+  }
+  if (actualDeltas.length !== applicableApprovedDeltas.length) {
+    failedChecks.push(
+      `actual changed count expected ${applicableApprovedDeltas.length}, ` +
+      `received ${actualDeltas.length}`,
+    );
+  }
+
+  return {
+    approvedChangedExecutionCount: applicableApprovedDeltas.length,
+    actualChangedExecutionCount: actualDeltas.length,
+    exactMatch: failedChecks.length === 0,
+    failedChecks,
+    actualDeltas,
+  };
+}
+
+function historicalDeltaRecord(
+  historical: HistoricalV5Execution,
+  current: OptimizerV6AuditExecution,
+): OptimizerV6ApprovedHistoricalDelta {
+  const key = historicalKey(current.fixture, current.mode, current.count, current.inputOrder);
+  return {
+    key,
+    fixtureId: current.fixture,
+    allocationMode: current.mode as 'strongest-first' | 'balanced',
+    formationCount: current.count,
+    inputOrder: current.inputOrder,
+    historicalStableSolutionKey: historical.stableSolutionKey,
+    currentStableSolutionKey: current.stableSolutionKey,
+    historicalAscendingPowerVector: historical.ascendingPowerVector,
+    currentAscendingPowerVector: current.ascendingPowerVector,
+    historicalAscendingRatingVector: historical.ascendingRatingVector,
+    currentAscendingRatingVector: current.ascendingRatingVector,
+    historicalSolutionHash: historical.solutionHash,
+    currentSolutionHash: current.solutionHash,
+    historicalResultHash: historical.resultHash,
+    currentResultHash: current.resultHash,
+    reasonCode: OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_REASON,
+  };
+}
+
+function historicalExecutionMatches(
+  historical: HistoricalV5Execution,
+  current: Pick<
+    OptimizerV6AuditExecution,
+    'stableSolutionKey' | 'ascendingPowerVector' | 'ascendingRatingVector'
+  >,
+): boolean {
+  return historical.stableSolutionKey === current.stableSolutionKey &&
+    JSON.stringify(historical.ascendingPowerVector) ===
+      JSON.stringify(current.ascendingPowerVector) &&
+    JSON.stringify(historical.ascendingRatingVector) ===
+      JSON.stringify(current.ascendingRatingVector);
+}
+
+function duplicates(values: readonly string[]): string[] {
+  const seen = new Set<string>();
+  const duplicated = new Set<string>();
+  for (const value of values) {
+    if (seen.has(value)) duplicated.add(value);
+    seen.add(value);
+  }
+  return [...duplicated].sort();
+}
+
+function historicalCompatibility(
   fixture: string,
   inputOrder: 'forward' | 'reverse',
   result: FlexiblePowerAwareOptimizationResult,
-): void {
-  if (result.allocationMode === 'best-overall-first') return;
+): boolean {
+  if (result.allocationMode === 'best-overall-first') return true;
   const historical = historicalV5Executions.get(historicalKey(
     fixture,
     result.allocationMode,
     result.requestedFormationCount,
     inputOrder,
   ));
-  if (
-    !historical ||
-    historical.stableSolutionKey !== result.objective.stableSolutionKey ||
-    JSON.stringify(historical.ascendingPowerVector) !==
-      JSON.stringify(result.objective.ascendingEstimatedPowerVector) ||
-    JSON.stringify(historical.ascendingRatingVector) !==
-      JSON.stringify(result.objective.ascendingRatingVector)
-  ) {
-    throw new Error(
-      `${fixture}/${result.allocationMode}/${result.requestedFormationCount}/${inputOrder} ` +
-      'changed from the historical optimizer-v5 selection.',
-    );
-  }
+  return Boolean(historical && historicalExecutionMatches(historical, {
+    stableSolutionKey: result.objective.stableSolutionKey,
+    ascendingPowerVector: result.objective.ascendingEstimatedPowerVector,
+    ascendingRatingVector: result.objective.ascendingRatingVector,
+  }));
 }
 
 function executionRecord(
   fixture: string,
   inputOrder: 'forward' | 'reverse',
   result: FlexiblePowerAwareOptimizationResult,
+  historicalV5Compatible: boolean,
 ): OptimizerV6AuditExecution {
   const profile = result.diagnostics.performanceProfile;
   return {
@@ -438,7 +654,7 @@ function executionRecord(
       new Set(result.formations.flatMap((formation) => formation.dragonIds)).size ===
       result.generatedFormationCount * 3,
     exactReconstruction: true,
-    historicalV5Compatible: true,
+    historicalV5Compatible,
     telemetry: {
       candidateGenerationMs: round(result.diagnostics.candidateGenerationMs),
       solverMs: round(result.diagnostics.solverMs),

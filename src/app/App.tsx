@@ -1423,16 +1423,17 @@ function FormationBuilderSection({
       }),
     [dragonPoolMode, formation, progression, roster],
   );
-  const simpleResults = useMemo(
+  const simpleEvaluation = useMemo(
     () => selectedCount >= 2
       ? evaluateFormation({
           formation,
           progression,
           profiles: simpleSynergyProfiles,
-        }).results
-      : [],
+        })
+      : { results: [], targetingResolutions: [] },
     [formation, progression, selectedCount],
   );
+  const simpleResults = simpleEvaluation.results;
   const semanticRelationships = useMemo(
     () => buildSemanticRelationships(simpleResults, simpleSynergyProfiles),
     [simpleResults],
@@ -1526,8 +1527,9 @@ function FormationBuilderSection({
       signalChipsByDragonId,
       recommendation,
       rating,
+      targetingResolutions: simpleEvaluation.targetingResolutions,
     }),
-    [formation, progression, rating, recommendation, semanticRelationships, signalChipsByDragonId, simpleResults],
+    [formation, progression, rating, recommendation, semanticRelationships, signalChipsByDragonId, simpleEvaluation.targetingResolutions, simpleResults],
   );
 
   const updatePosition = (position: FormationPosition, nextId: string | null) => {

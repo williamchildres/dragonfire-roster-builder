@@ -1,6 +1,6 @@
 # Formation Builder UI
 
-The live Formation Builder is a high-level formation planner. It uses curated simple synergy profiles in `src/synergy` and does not run a combat-analysis, trace, capability, audit, or card-projection engine.
+The live Formation Builder is a high-level formation planner. It uses curated simple synergy profiles in `src/synergy` and does not run a combat simulator. It retains narrow reliability and target-resolution traces needed to explain the displayed rating.
 
 ## Position Cards
 
@@ -32,8 +32,11 @@ The Formation Rating panel explains Active Synergy and Placement Effectiveness, 
 - Placement issues.
 - Position conflicts.
 - Future unlocks.
+- Resolved or unresolved shared recipient selection.
 
 Single selected dragons do not show missing-enabler warnings. Repeated ability paths are aggregated by semantic relationship, and active paths suppress duplicate locked or blocked variants of the same relationship.
+
+Blazing Fury's two sibling signals display one shared target-resolution finding. A unique active Fire producer is named as the resolved target. Multiple active Fire producers are named as unresolved priority candidates, and multiple no-Fire fallback Allies are named as unresolved fallback candidates. Unresolved target selection contributes no recipient-specific relationship value; the technical detail preserves selector, group, candidate, reason, ability, and signal identities.
 
 Estimated Formation Power is a separate read-only progression diagnostic. It sums the three current rarity/Star Rank/Dragon Level estimates, exposes each dragon's confidence classification, and remains visually and semantically separate from Formation Rating. It is empirical and unofficial, does not alter recommendations or scoring, and is unavailable until all three dragons have recorded progression.
 
