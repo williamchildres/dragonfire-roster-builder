@@ -256,6 +256,26 @@ describe('Roster Optimizer v6 workspace', () => {
     expect(within(cards[0]!).queryByText(/Overall Score/i)).not.toBeInTheDocument();
   });
 
+  it('inherits unknown-data disclosure in optimizer result presentation', async () => {
+    const roster = ownedRoster(33);
+    const result = makeResult(roster, 'best-overall-first', 1);
+    const arrangement = { 'left-flank': 'vhagar', vanguard: 'kalspire', 'right-flank': 'tairax' } as const;
+    result.formations[0] = {
+      ...result.formations[0]!,
+      dragonIds: ['vhagar', 'kalspire', 'tairax'],
+      arrangement,
+      tiedBestArrangements: [arrangement],
+      stableCandidateKey: 'kalspire+tairax+vhagar',
+    };
+    renderOptimizer({ roster, runner: resolvedRunner(result) });
+    await userEvent.setup().selectOptions(screen.getByLabelText('Number of armies'), '1');
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 1 army/i }));
+
+    const card = (await screen.findAllByRole('article'))[0]!;
+    expect(within(card).getByText(/Full affinity match: Shieldbearers and Siege each give all 3 dragons positive affinity/i)).toBeInTheDocument();
+    expect(within(card).getByText(/Some other troop affinities are not verified and could change the comparison/i)).toBeInTheDocument();
+  });
+
   it('saves exact results from all three modes without rerunning or mutating optimizer output', async () => {
     const modes: Array<{ mode: OptimizerAllocationMode; label: RegExp }> = [
       { mode: 'best-overall-first', label: /Best Overall First/i },
@@ -272,6 +292,14 @@ describe('Roster Optimizer v6 workspace', () => {
       if (mode !== 'best-overall-first') await userEvent.setup().click(screen.getByRole('radio', { name: label }));
       await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
       const cards = await screen.findAllByRole('article');
+      expect(cards).toHaveLength(10);
+      for (const card of cards) {
+        expect(within(card).getByRole('heading', { name: 'Troop Affinity' })).toBeInTheDocument();
+        expect(within(card).getByText(/Enemy troop advantage may change this choice/i)).toBeInTheDocument();
+      }
+      const affinityDetails = within(cards[0]!).getByText('Affinity breakdown for all five troop types');
+      await userEvent.setup().click(affinityDetails);
+      expect(affinityDetails.closest('details')).toHaveAttribute('open');
       await userEvent.setup().click(within(cards[0]!).getByRole('button', { name: 'Save Formation' }));
       expect(onSaveFormation).toHaveBeenCalledWith(expected.formations[0]!.arrangement);
       expect(runner.run).toHaveBeenCalledTimes(1);

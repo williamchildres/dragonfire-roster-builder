@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-02T03:17:39.108Z",
+  "generatedAt": "2026-08-02T04:35:07.965Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/reserved-formations-optimizer-exclusions",
-    "commit": "2b92db921a7562b993c0bb18e57dd3581681f13c",
-    "databaseVersion": "0.23.1",
+    "branch": "feature/roster-power-sort-troop-affinity",
+    "commit": "13baa56a82124f040cae89cb0b805a8bea53a7ee",
+    "databaseVersion": "0.23.2",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 79,
-    "testCaseCount": 652,
+    "testFileCount": 81,
+    "testCaseCount": 680,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

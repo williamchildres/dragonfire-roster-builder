@@ -1,6 +1,6 @@
 # Supabase Saved Formation Library
 
-Saved formations use `public.user_saved_formations`, a separate account document from `public.user_rosters`. The existing table already supports v0.23.1 schema-2 JSON and reservation synchronization through `formations_schema_version`, `formations`, `client_updated_at`, and `updated_at`; no new migration or policy change is required. Apply `supabase/migrations/202608010001_create_user_saved_formations.sql` only where the original v0.23.0 table has not yet been installed.
+Saved formations use `public.user_saved_formations`, a separate account document from `public.user_rosters`. The existing table already supports v0.23.2 schema-2 JSON and reservation synchronization through `formations_schema_version`, `formations`, `client_updated_at`, and `updated_at`; no new migration or policy change is required. Troop-affinity recommendations remain render-time derived data and are not written to this row. Apply `supabase/migrations/202608010001_create_user_saved_formations.sql` only where the original v0.23.0 table has not yet been installed.
 
 The browser client uses only the Supabase publishable key. It never uses service-role credentials, and exports contain no account ID or email address.
 

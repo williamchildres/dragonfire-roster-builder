@@ -1,3 +1,4 @@
+import type { Dragon } from '../models/dragon';
 import type { FormationFindingSet } from '../services/formationFindings';
 import { dragons } from '../data/dragons';
 import type { FormationPlacementComparisonV3 } from '../services/formationPlacementComparisonV3';
@@ -19,6 +20,7 @@ import {
   semanticTagLabel,
   signalLabel,
 } from './relationshipReliabilityPresentation';
+import { TroopAffinityRecommendation } from './TroopAffinityRecommendation';
 
 const canonicalDragonsById = new Map(dragons.map((dragon) => [dragon.id, dragon]));
 
@@ -29,6 +31,7 @@ export function SimpleFormationAnalysis({
   findings,
   recommendation,
   placementComparison,
+  formationDragons,
 }: {
   rating: FormationRatingV3Result;
   estimatedPower: EstimatedFormationPower | null;
@@ -36,6 +39,7 @@ export function SimpleFormationAnalysis({
   findings: FormationFindingSet;
   recommendation: FormationRecommendationResult;
   placementComparison: FormationPlacementComparisonV3 | null;
+  formationDragons: readonly Dragon[];
 }) {
   const placementStatus = placementStatusLabel(placementComparison);
 
@@ -90,6 +94,8 @@ export function SimpleFormationAnalysis({
           {estimatedPower ? ` Model: ${estimatedPower.modelVersion}.` : ''}
         </p>
       </section>
+
+      <TroopAffinityRecommendation formationDragons={formationDragons} />
 
       {rating.confidence.status === 'limited' ? (
         <div className="formation-confidence-warning" role="status">

@@ -37,6 +37,7 @@ import {
   setFormationReserved,
 } from '../savedFormations/reservations';
 import { savedFormationSyncStatusLabel, type SavedFormationComparison, type SavedFormationSyncStatus } from '../hooks/useSavedFormationSync';
+import { TroopAffinityRecommendation } from './TroopAffinityRecommendation';
 
 export function SavedFormationsWorkspace({
   library,
@@ -193,6 +194,13 @@ export function SavedFormationsWorkspace({
                 <dl className="optimizer-positions saved-formation-positions">
                   {FORMATION_POSITIONS.map((position) => <div key={position}><dt>{positionLabels[position]}</dt><dd><strong>{namesById.get(record.arrangement[position]) ?? record.arrangement[position]}</strong></dd></div>)}
                 </dl>
+                <TroopAffinityRecommendation
+                  compact
+                  formationDragons={FORMATION_POSITIONS.flatMap((position) => {
+                    const dragon = dragons.find((candidate) => candidate.id === record.arrangement[position]);
+                    return dragon ? [dragon] : [];
+                  })}
+                />
                 {evaluation.progression.status === 'changed' || evaluation.progression.changes.length > 0 ? (
                   <details className="saved-progression-details">
                     <summary>Progression changed since saved</summary>

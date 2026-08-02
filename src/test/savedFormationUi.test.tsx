@@ -41,11 +41,31 @@ describe('Saved Formations workspace UI', () => {
     expect(screen.getByText(/Formation Rating/)).toBeInTheDocument();
     expect(screen.getByText('Progression unavailable')).toBeInTheDocument();
     expect(screen.getByText('Estimated Power').nextSibling).toHaveTextContent('Unavailable');
-    expect(screen.getByText(dragons[0]!.name)).toBeInTheDocument();
-    expect(screen.getByText(dragons[1]!.name)).toBeInTheDocument();
-    expect(screen.getByText(dragons[2]!.name)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Troop Affinity' })).toBeInTheDocument();
+    expect(screen.getByText(/Enemy troop advantage may change this choice/i)).toBeInTheDocument();
+    expect(screen.getByText(/of 3 dragons receive \+20%|all 3 dragons receive the \+20%/i)).toBeInTheDocument();
+    expect(screen.getAllByText(dragons[0]!.name).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(dragons[1]!.name).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(dragons[2]!.name).length).toBeGreaterThan(0);
     expect(screen.getByText(/no longer marked owned/)).toBeInTheDocument();
     expect(screen.getByText('Progression changed since saved')).toBeInTheDocument();
+  });
+
+  it('inherits unknown-data disclosure for a fully verified Saved Formation recommendation', () => {
+    const roster = progressedRoster();
+    const library = createSavedFormation(createEmptySavedFormationLibrary(), {
+      name: 'Verified Siege match',
+      arrangement: { 'left-flank': 'vhagar', vanguard: 'kalspire', 'right-flank': 'tairax' },
+      evaluationMode: 'planning',
+      source: 'formation-builder',
+      roster,
+      id: '00000000-0000-4000-8000-000000000099',
+    });
+    renderWorkspace(library, roster);
+
+    const card = screen.getByRole('article', { name: 'Verified Siege match' });
+    expect(within(card).getByText(/Full affinity match: Shieldbearers and Siege each give all 3 dragons positive affinity/i)).toBeInTheDocument();
+    expect(within(card).getByText(/Some other troop affinities are not verified and could change the comparison/i)).toBeInTheDocument();
   });
 
   it('renames, duplicates, reorders, and confirms deletion with the name', async () => {

@@ -62,9 +62,11 @@ The complete audits are [`audits/estimated-power-v2.md`](audits/estimated-power-
 
 ## Presentation, persistence, and optimizer impact
 
-My Roster shows each owned dragon's read-only estimate and confidence. Formation Builder sums exactly three individual estimates. Missing progression produces no estimate.
+My Roster shows each owned dragon's read-only estimate and confidence and can sort current estimates from high to low. The roster sort calls this same protected v2 estimator; it does not duplicate model curves or confidence logic. Numeric power alone controls the primary order, name and canonical ID resolve ties, and missing Star Rank or Dragon Level is unavailable and sorts after every calculable dragon. Progression edits update the value and order immediately while selection remains keyed to dragon ID.
 
-There is no manual Power field, persistence field, Supabase migration, Habit Level Power effect, damage estimate, combat simulation, or win probability. Formation Rating v2 is unchanged.
+Formation Builder sums exactly three individual estimates. Missing progression produces no estimate.
+
+There is no manual Power field, persisted sort field, Supabase migration, Habit Level Power effect, affinity multiplier, damage estimate, combat simulation, or win probability. Formation Rating v3 is unchanged.
 
 Optimizer contract-v6 requests include the Estimated Power version, observation hash, model hash, allocation mode, formation count, Best Overall scoring profile, Formation Rating contract, and the complete eligible progression snapshot. All v0.22.1 modes use the same cached per-dragon v2 estimates and per-trio integer power units. Best Overall uses power only through its documented step-relative 60/40 planning index; the two preserved modes retain their v5 raw-power objectives. Rarity and confidence remain descriptive.
 

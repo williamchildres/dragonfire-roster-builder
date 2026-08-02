@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.2 - 2026-08-01
+
+- Added My Roster sorting by current Estimated Power from highest to lowest. Each owned-dragon row now shows its formatted estimate and support-aware confidence; incomplete Star Rank or Dragon Level remains visibly unavailable and sorts after every calculable dragon.
+- Added deterministic, explainable troop-affinity recommendations for complete three-dragon formations. Guidance identifies every tied troop type plus each positive, neutral, negative, and unknown dragon; the displayed +20% applies per positively aligned dragon and is never aggregated into formation power.
+- Added current derived affinity guidance to Formation Builder, Saved Formations, every optimizer result, and individual dragon details. Enemy troop advantage remains a separate battle choice, and recommended Siege is labeled as objective-specific for Durability and siege damage rather than a general-combat default.
+- Added the independent `troop-affinity-recommendation-v1` audit contract and readable report. Recommendations use current canonical dragon affinity data and are never persisted, scored, or included in Saved Formation or optimizer hashes.
+- Preserved Formation Rating v3, Estimated Power v2, reliability, historical optimizer-v5, optimizer-v6, Saved Formation schemas 1 and 2, reservations, synchronization, the 60/40 Best Overall formula, and every protected identity. No Supabase migration was added.
+
 ## 0.23.1 - 2026-08-01
 
 - Added whole-formation reservations for current-roster Saved Formations. A reserved record owns all three exact dragon identities, overlapping reservations are blocked with formation-specific conflict actions, and planning formations cannot reserve roster dragons.

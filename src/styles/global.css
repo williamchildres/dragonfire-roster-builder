@@ -4505,6 +4505,159 @@ th {
   overflow-wrap: anywhere;
 }
 
+.troop-affinity-recommendation {
+  background: rgba(127, 176, 143, 0.08);
+  border: 1px solid rgba(127, 176, 143, 0.42);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
+}
+
+.troop-affinity-recommendation.is-compact {
+  margin: 0.8rem 0;
+  padding: 0.8rem;
+}
+
+.troop-affinity-heading,
+.troop-affinity-candidate > header {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.65rem;
+  justify-content: space-between;
+}
+
+.troop-affinity-heading h4,
+.troop-affinity-heading p,
+.troop-affinity-summary,
+.troop-affinity-warning,
+.troop-affinity-caveat,
+.troop-affinity-candidate p,
+.troop-affinity-candidate dl {
+  margin: 0;
+}
+
+.troop-affinity-kind {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.3rem 0.5rem;
+}
+
+.troop-affinity-kind.kind-full-positive,
+.troop-affinity-kind.kind-best-nonnegative-coverage {
+  color: #b6dfc2;
+}
+
+.troop-affinity-kind.kind-incomplete,
+.troop-affinity-kind.kind-least-negative-tradeoff,
+.troop-affinity-warning {
+  color: #ffd7a8;
+}
+
+.troop-affinity-summary {
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.troop-affinity-warning,
+.troop-affinity-caveat {
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.troop-affinity-caveat {
+  color: var(--muted);
+}
+
+.troop-affinity-details {
+  border-top: 1px solid var(--line-soft);
+  margin: 0 !important;
+  padding-top: 0.65rem !important;
+}
+
+.troop-affinity-details > summary {
+  color: var(--gold);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.troop-affinity-candidates {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin-top: 0.7rem;
+}
+
+.troop-affinity-candidate {
+  background: var(--panel-inset);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  min-width: 0;
+  padding: 0.7rem;
+}
+
+.troop-affinity-candidate > header span,
+.troop-affinity-candidate > p,
+.troop-affinity-candidate dt {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.troop-affinity-candidate dl {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+}
+
+.troop-affinity-candidate dl > div {
+  display: grid;
+  gap: 0.08rem;
+}
+
+.troop-affinity-candidate dd {
+  font-size: 0.82rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.dragon-affinity-details dl {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.dragon-affinity-details dl > div {
+  background: var(--panel-inset);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem;
+}
+
+.dragon-affinity-details dt {
+  color: var(--gold);
+  font-weight: 800;
+}
+
+.dragon-affinity-details dd {
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
+}
+
+@media (max-width: 560px) {
+  .troop-affinity-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .troop-affinity-candidates,
+  .dragon-affinity-details dl {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 1180px) {
   .roster-filter-primary {
     grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.7fr);

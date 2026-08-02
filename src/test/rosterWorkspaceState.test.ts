@@ -11,6 +11,8 @@ import {
   unlockedHabitCount,
   type RosterWorkspaceFilters,
 } from '../app/rosterWorkspaceState';
+import { rosterEstimatedPowerPresentation } from '../app/rosterEstimatedPowerPresentation';
+import type { Dragon } from '../models/dragon';
 
 const byId = (id: string) => dragons.find((dragon) => dragon.id === id)!;
 
@@ -85,6 +87,46 @@ describe('roster workspace state', () => {
     expect(filterAndSortRosterDragons(dragons, roster, defaultRosterWorkspaceFilters, 'dragon-level').map((dragon) => dragon.id)).toEqual(['caraxes', 'daemoros', 'vhagar', 'syrax']);
   });
 
+  it('sorts Estimated Power descending, with numeric power outranking confidence', () => {
+    const lowConfidence = { ...byId('syrax'), id: 'low-confidence', name: 'Low Confidence' };
+    const observed = { ...byId('antares'), id: 'observed', name: 'Observed' };
+    const allDragons = [observed, lowConfidence];
+    const roster = createEmptyRoster(allDragons);
+    roster['low-confidence'] = { ...roster['low-confidence']!, owned: true, starRank: 10, reignLevel: 100 };
+    roster.observed = { ...roster.observed!, owned: true, starRank: 4, reignLevel: 29 };
+
+    const low = rosterEstimatedPowerPresentation(lowConfidence, roster['low-confidence']);
+    const exact = rosterEstimatedPowerPresentation(observed, roster.observed);
+    expect(low).toMatchObject({ status: 'available', confidence: 'low', basis: 'extrapolation' });
+    expect(exact).toMatchObject({ status: 'available', power: 13000, confidence: 'observed', basis: 'exact-observation' });
+    expect(low.power).toBeGreaterThan(exact.power!);
+    expect(filterAndSortRosterDragons(allDragons, roster, defaultRosterWorkspaceFilters, 'estimated-power').map((dragon) => dragon.id)).toEqual(['low-confidence', 'observed']);
+  });
+
+  it('uses name and canonical ID for equal Estimated Power ties', () => {
+    const source = byId('syrax');
+    const tied: Dragon[] = [
+      { ...source, id: 'b', name: 'Alpha' },
+      { ...source, id: 'a', name: 'Alpha' },
+      { ...source, id: 'c', name: 'Beta' },
+    ];
+    const roster = createEmptyRoster(tied);
+    for (const dragon of tied) roster[dragon.id] = { ...roster[dragon.id]!, owned: true, starRank: 4, reignLevel: 35 };
+    expect(filterAndSortRosterDragons(tied, roster, defaultRosterWorkspaceFilters, 'estimated-power').map((dragon) => dragon.id)).toEqual(['a', 'b', 'c']);
+  });
+
+  it('sorts missing Star Rank and Dragon Level after calculable entries and keeps unavailable rows deterministic', () => {
+    const roster = createEmptyRoster(dragons);
+    const selected = ['syrax', 'vhagar', 'caraxes', 'daemoros'];
+    for (const id of selected) roster[id]!.owned = true;
+    roster.syrax = { ...roster.syrax!, starRank: 4, reignLevel: 35 };
+    roster.vhagar = { ...roster.vhagar!, starRank: null, reignLevel: 35 };
+    roster.caraxes = { ...roster.caraxes!, starRank: 4, reignLevel: null };
+    roster.daemoros = { ...roster.daemoros!, starRank: null, reignLevel: null };
+    expect(filterAndSortRosterDragons(dragons, roster, defaultRosterWorkspaceFilters, 'estimated-power').map((dragon) => dragon.id)).toEqual(['syrax', 'caraxes', 'daemoros', 'vhagar']);
+    expect(rosterEstimatedPowerPresentation(vhagarOrThrow(), roster.vhagar)).toEqual({ status: 'unavailable', power: null, confidence: null, basis: null });
+  });
+
   it('chooses the next visible row, then previous, then no selection after removal', () => {
     expect(nextSelectionAfterRemoval(['a', 'b', 'c'], 'b')).toBe('c');
     expect(nextSelectionAfterRemoval(['a', 'b'], 'b')).toBe('a');
@@ -115,3 +157,7 @@ describe('roster workspace state', () => {
     expect(clearConsumedSelectionRequest(newerRequest, 2)).toBeNull();
   });
 });
+
+function vhagarOrThrow() {
+  return byId('vhagar');
+}

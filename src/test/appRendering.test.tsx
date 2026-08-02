@@ -225,7 +225,7 @@ describe('Dragonfire Lab app', () => {
     expect(datasetStatus).toHaveTextContent('231');
     expect(datasetStatus).toHaveTextContent('33');
     expect(screen.getByText('Recent Update')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Version 0.23.1' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Version 0.23.2' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /view all updates/i })).toHaveAttribute('href', '/updates');
 
     await user.click(screen.getByRole('link', { name: /^about$/i }));

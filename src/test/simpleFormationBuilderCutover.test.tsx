@@ -1091,4 +1091,26 @@ describe('Formation Builder simple synergy cutover', () => {
     await user.click(screen.getByRole('button', { name: /clear formation/i }));
     expect(screen.getAllByText(/add a dragon to review its command, position trait, and mapped synergy signals/i)).toHaveLength(3);
   });
+
+  it('derives live troop-affinity guidance from the trio and keeps it invariant for position-only swaps', async () => {
+    const user = userEvent.setup();
+    await openFormationBuilder(user);
+    expect(screen.getByText('Add three dragons to receive a troop-affinity recommendation.')).toBeInTheDocument();
+    await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'crimson', 'right-flank': 'antares' });
+    const summary = screen.getByText(/Full affinity match: all 3 dragons receive the \+20% positive-affinity benefit with Archers/i).textContent;
+    await user.click(within(screen.getByRole('article', { name: 'Left Flank' })).getByRole('button', { name: /move to right flank/i }));
+    expect(screen.getByText(summary)).toBeInTheDocument();
+    await chooseDragonForPosition(user, 'vanguard', 'caraxes');
+    expect(screen.queryByText(summary)).not.toBeInTheDocument();
+    expect(screen.getByText(/Best (?:verified )?shared affinity/i)).toBeInTheDocument();
+  });
+
+  it('inherits unknown-data disclosure for a fully verified Formation Builder recommendation', async () => {
+    const user = userEvent.setup();
+    await openFormationBuilder(user);
+    await selectFormation(user, { 'left-flank': 'vhagar', vanguard: 'kalspire', 'right-flank': 'tairax' });
+
+    expect(screen.getByText(/Full affinity match: Shieldbearers and Siege each give all 3 dragons positive affinity/i)).toBeInTheDocument();
+    expect(screen.getByText(/Some other troop affinities are not verified and could change the comparison/i)).toBeInTheDocument();
+  });
 });
