@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-08-02T03:17:39.108Z",
+  "generatedAt": "2026-08-02T04:19:56.938Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/reserved-formations-optimizer-exclusions",
-    "commit": "2b92db921a7562b993c0bb18e57dd3581681f13c",
-    "databaseVersion": "0.23.1",
+    "branch": "feature/roster-power-sort-troop-affinity",
+    "commit": "f942257b317033cd64ebad59bc287f7570cf48c9",
+    "databaseVersion": "0.23.2",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
