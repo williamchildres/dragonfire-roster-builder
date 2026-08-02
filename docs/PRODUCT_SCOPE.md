@@ -15,6 +15,7 @@ The application should answer:
 - Which enablers are missing?
 - Which relationships are unavailable because of saved progression?
 - Which exact non-overlapping formation plan best satisfies the selected optimizer strategy?
+- Which exact formations did I save, and how do they evaluate with current progression?
 
 ## Non-Goals
 
@@ -52,6 +53,8 @@ Raw ability descriptions may preserve these details for reference, but those det
   - The two flanks are not adjacent.
 - Formation Rating represents relative formation fit, not predicted combat performance.
 - Exact optimizer results must satisfy the documented objective hierarchy and zero-gap proof contract.
+- Saved formations are a separate versioned library, never roster fields or optimizer inputs. Derived analysis is recalculated rather than frozen.
+- Saved formations do not reserve dragons and do not change optimizer eligibility, recommendations, fingerprints, selections, or hashes. Reservation belongs to a later release.
 
 ## Ability Data
 

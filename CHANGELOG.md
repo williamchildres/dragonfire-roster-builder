@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.0 - 2026-08-01
+
+- Added the Saved Formation Library: save exact three-position arrangements from Formation Builder or any current Roster Optimizer mode, then reopen, rename, update, copy, duplicate, reorder, delete, export, or import them from My Roster.
+- Saved records persist only durable definitions and save-time progression snapshots. Formation Rating v3, tier, reliability, and Estimated Power are recalculated from current mechanics and progression; exact progression changes or unavailable current-roster data remain visible without rewriting the saved arrangement.
+- Added a separate schema-1 browser document at `dragonfire-roster-lab:saved-formations`, strict record-isolating validation, a 50-record and 80-character-name limit, deterministic serialization, UUID IDs with a safe fallback, and explicit duplicate/import decisions.
+- Added independent account synchronization and the RLS-protected `user_saved_formations` Supabase migration. Browser/account conflicts never merge or overwrite silently and remain independent from roster synchronization; production migration application and authenticated acceptance are release blockers until separately verified.
+- Preserved Formation Rating v3, reliability, Estimated Power, historical optimizer-v5, and optimizer-v6 semantic identities. Saved formations do not reserve dragons or affect optimizer requests, results, selections, fingerprints, or hashes.
+
 ## 0.22.1 - 2026-07-29
 
 - Added Best Overall First as the default optimizer mode, using an exact step-relative planning index with 60% progression-aware Estimated Power and 40% Formation Rating v3.

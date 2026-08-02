@@ -249,7 +249,7 @@ export function AccountDialog({
       </dl>
       {errorMessage ? <div className="status-message error" role="status">{errorMessage}</div> : null}
       <p>Your roster can sync to this account while remaining stored in this browser for local use.</p>
-      <p className="account-limitation">Saved formations are not yet synchronized to your account.</p>
+      <p className="account-limitation">Saved Formations synchronize separately from the roster and can be managed from My Roster.</p>
       <div className="dialog-actions">
         {status === 'paused' ? (
           <button type="button" className="primary-button" onClick={onResolve}>Resolve roster choice</button>

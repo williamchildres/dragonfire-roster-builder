@@ -2,11 +2,14 @@ import { createClient, type Session, type SupabaseClient } from '@supabase/supab
 import { ROSTER_SCHEMA_VERSION } from '../services/rosterStorage';
 import { readCloudConfig, type CloudConfig } from './cloudConfig';
 import { parseCloudRosterRow, serializeCloudRoster } from './rosterContract';
+import { parseCloudSavedFormationRow, serializeCloudSavedFormationLibrary } from './savedFormationContract';
+import { SAVED_FORMATION_LIBRARY_SCHEMA_VERSION } from '../savedFormations/types';
 import type {
   AccountServices,
   AccountSession,
   AuthService,
   CloudRosterRepository,
+  CloudSavedFormationRepository,
 } from './types';
 
 let productionServices: AccountServices | null | undefined;
@@ -30,7 +33,37 @@ export function createSupabaseServices(
   return {
     auth: new SupabaseAuthService(client),
     rosters: new SupabaseRosterRepository(client),
+    savedFormations: new SupabaseSavedFormationRepository(client),
   };
+}
+
+export class SupabaseSavedFormationRepository implements CloudSavedFormationRepository {
+  constructor(private readonly client: SupabaseClient) {}
+
+  async fetchLibrary(userId: string) {
+    const { data, error } = await this.client
+      .from('user_saved_formations')
+      .select('user_id, formations_schema_version, formations, client_updated_at, updated_at')
+      .eq('user_id', userId)
+      .maybeSingle();
+    if (error) throw error;
+    return data === null ? null : parseCloudSavedFormationRow(data);
+  }
+
+  async upsertLibrary(userId: string, library: Parameters<CloudSavedFormationRepository['upsertLibrary']>[1], clientUpdatedAt: string) {
+    const { data, error } = await this.client
+      .from('user_saved_formations')
+      .upsert({
+        user_id: userId,
+        formations_schema_version: SAVED_FORMATION_LIBRARY_SCHEMA_VERSION,
+        formations: serializeCloudSavedFormationLibrary(library),
+        client_updated_at: clientUpdatedAt,
+      }, { onConflict: 'user_id' })
+      .select('user_id, formations_schema_version, formations, client_updated_at, updated_at')
+      .single();
+    if (error) throw error;
+    return parseCloudSavedFormationRow(data);
+  }
 }
 
 class SupabaseAuthService implements AuthService {

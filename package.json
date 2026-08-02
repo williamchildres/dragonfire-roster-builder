@@ -1,6 +1,6 @@
 {
   "name": "dragonfire-roster-builder",
-  "version": "0.22.1",
+  "version": "0.23.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,6 +29,7 @@
     "audit:reliability-registry:write": "node scripts/audit-formation-reliability-registry.mjs --write",
     "audit:formation-rating-v3": "node scripts/audit-formation-rating-v3.mjs",
     "audit:formation-rating-v3:write": "node scripts/audit-formation-rating-v3.mjs --write",
+    "audit:saved-formations": "node scripts/audit-saved-formation-library.mjs",
     "validate:reliability-registry": "node scripts/validate-formation-reliability-registry.mjs",
     "fit:power": "node scripts/fit-dragon-power-model.mjs",
     "audit:power": "node scripts/fit-dragon-power-model.mjs",

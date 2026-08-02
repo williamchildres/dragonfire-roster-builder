@@ -41,6 +41,7 @@ export function RosterWorkspace({
   onOpenSignIn,
   onResolveSync,
   onRetrySync,
+  embedded = false,
 }: {
   allDragons: readonly Dragon[];
   roster: Record<string, OwnedDragon>;
@@ -61,6 +62,7 @@ export function RosterWorkspace({
   onOpenSignIn: () => void;
   onResolveSync: () => void;
   onRetrySync: () => void;
+  embedded?: boolean;
 }) {
   const [filters, setFilters] = useState<RosterWorkspaceFilters>(defaultRosterWorkspaceFilters);
   const [sortBy, setSortBy] = useState<RosterWorkspaceSort>('name');
@@ -171,7 +173,7 @@ export function RosterWorkspace({
   return (
     <section className="roster-section" aria-labelledby="roster-title">
       <div className="roster-workspace-header">
-        <h2 id="roster-title" tabIndex={-1}>My Roster</h2>
+        {embedded ? <h3 id="roster-title" tabIndex={-1}>My Dragons</h3> : <h2 id="roster-title" tabIndex={-1}>My Roster</h2>}
         <p>Track ownership, progression, Habit Levels, and notes.</p>
       </div>
 

@@ -1,4 +1,5 @@
 import type { OwnedDragon } from '../models/dragon';
+import type { SavedFormationLibrary } from '../savedFormations/types';
 
 export interface AccountSession {
   userId: string;
@@ -45,9 +46,27 @@ export interface CloudRosterRepository {
   ): Promise<CloudRosterRecord>;
 }
 
+export interface CloudSavedFormationRecord {
+  userId: string;
+  schemaVersion: number;
+  library: SavedFormationLibrary;
+  clientUpdatedAt: string | null;
+  updatedAt: string;
+}
+
+export interface CloudSavedFormationRepository {
+  fetchLibrary(userId: string): Promise<CloudSavedFormationRecord | null>;
+  upsertLibrary(
+    userId: string,
+    library: SavedFormationLibrary,
+    clientUpdatedAt: string,
+  ): Promise<CloudSavedFormationRecord>;
+}
+
 export interface AccountServices {
   auth: AuthService;
   rosters: CloudRosterRepository;
+  savedFormations: CloudSavedFormationRepository;
 }
 
 export class UnsupportedRosterSchemaError extends Error {
@@ -61,5 +80,19 @@ export class InvalidCloudRosterError extends Error {
   constructor() {
     super('The account roster could not be read safely. Your browser roster was not changed.');
     this.name = 'InvalidCloudRosterError';
+  }
+}
+
+export class UnsupportedSavedFormationSchemaError extends Error {
+  constructor(public readonly schemaVersion: number) {
+    super('This account Saved Formation Library uses an unsupported schema version. Browser formations were not changed.');
+    this.name = 'UnsupportedSavedFormationSchemaError';
+  }
+}
+
+export class InvalidCloudSavedFormationError extends Error {
+  constructor() {
+    super('The account Saved Formation Library could not be read safely. Browser formations were not changed.');
+    this.name = 'InvalidCloudSavedFormationError';
   }
 }

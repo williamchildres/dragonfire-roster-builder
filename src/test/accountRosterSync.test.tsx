@@ -10,6 +10,7 @@ import type {
   AuthService,
   CloudRosterRecord,
   CloudRosterRepository,
+  CloudSavedFormationRepository,
 } from '../cloud/types';
 import { dragons } from '../data/dragons';
 import type { OwnedDragon } from '../models/dragon';
@@ -173,7 +174,7 @@ describe('optional account authentication UI', () => {
     await user.click(await screen.findByRole('button', { name: /Account for PLAYER@Example.com/i }));
     const dialog = screen.getByRole('dialog', { name: 'Your account' });
     expect(within(dialog).getByText('PLAYER@Example.com')).toBeInTheDocument();
-    expect(within(dialog).getByText('Saved formations are not yet synchronized to your account.')).toBeInTheDocument();
+    expect(within(dialog).getByText('Saved Formations synchronize separately from the roster and can be managed from My Roster.')).toBeInTheDocument();
     view.unmount();
     expect(auth.cleanupCount).toBe(1);
   });
@@ -524,7 +525,17 @@ describe('ongoing synchronization safety', () => {
 });
 
 function makeServices(auth: AuthService, rosters: CloudRosterRepository): AccountServices {
-  return { auth, rosters };
+  const savedFormations: CloudSavedFormationRepository = {
+    fetchLibrary: () => Promise.resolve(null),
+    upsertLibrary: (userId, library, clientUpdatedAt) => Promise.resolve({
+      userId,
+      schemaVersion: 1,
+      library,
+      clientUpdatedAt,
+      updatedAt: clientUpdatedAt,
+    }),
+  };
+  return { auth, rosters, savedFormations };
 }
 
 function meaningfulRoster(note: string, habitLevel: 1 | 2 | 3 | 4 | 5) {

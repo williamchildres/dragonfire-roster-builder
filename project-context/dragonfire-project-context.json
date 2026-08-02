@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-07-30T02:32:39.787Z",
+  "generatedAt": "2026-08-02T01:27:42.387Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/best-overall-optimizer-v6",
-    "commit": "a25e937bb65250cf44a021e98de1f1e117608c08",
-    "databaseVersion": "0.22.1",
+    "branch": "feature/saved-formation-library-v1",
+    "commit": "5527fb395847409127ac9b984f9dcc43053a58f4",
+    "databaseVersion": "0.23.0",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
