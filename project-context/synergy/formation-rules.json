@@ -42,7 +42,18 @@
       0
     ],
     "controlAliasesCanonicalizeTo": "status:control",
-    "lockedBlockedAndUnresolvedAreActive": false
+    "lockedBlockedAndUnresolvedAreActive": false,
+    "recipientTargeting": {
+      "capabilityPriorityOne": {
+        "sharedSelectionGroup": true,
+        "uniquePriorityResolves": true,
+        "multiplePriorityUnresolved": true,
+        "uniqueFallbackResolves": true,
+        "multipleFallbackUnresolved": true,
+        "unresolvedRecipientCredit": 0,
+        "capabilitySource": "active output signals at current progression and self position"
+      }
+    }
   },
   "publicRating": {
     "contract": "formation-rating-v3",
@@ -103,6 +114,7 @@
     "better-placement",
     "alternative-vanguard",
     "future-unlock",
+    "targeting-resolution",
     "confidence-limitation"
   ]
 }

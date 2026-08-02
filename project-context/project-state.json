@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-02T04:35:07.965Z",
+  "generatedAt": "2026-08-02T07:08:57.313Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/roster-power-sort-troop-affinity",
-    "commit": "13baa56a82124f040cae89cb0b805a8bea53a7ee",
-    "databaseVersion": "0.23.2",
+    "branch": "fix/syrax-blazing-fury-recipient-targeting",
+    "commit": "0fd6bf96ae3dadb6432360b32a90d68b703113fd",
+    "databaseVersion": "0.23.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 81,
-    "testCaseCount": 680,
+    "testFileCount": 82,
+    "testCaseCount": 690,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-08-02T04:35:07.965Z",
+  "generatedAt": "2026-08-02T07:08:57.313Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "feature/roster-power-sort-troop-affinity",
-    "commit": "13baa56a82124f040cae89cb0b805a8bea53a7ee",
-    "databaseVersion": "0.23.2",
+    "branch": "fix/syrax-blazing-fury-recipient-targeting",
+    "commit": "0fd6bf96ae3dadb6432360b32a90d68b703113fd",
+    "databaseVersion": "0.23.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -9027,7 +9027,14 @@
             "tag": "status:first-strike",
             "abilityId": "syrax-blazing-fury",
             "abilityName": "Blazing Fury",
-            "description": "grants First-Strike to a teammate",
+            "description": "grants First-Strike to the same one self-eligible Ally selected with Fire-damage priority",
+            "recipientSelector": {
+              "kind": "capability-priority-one",
+              "priorityTag": "damage:fire",
+              "recipientCount": 1,
+              "includeSelf": true,
+              "selectionGroupId": "syrax-blazing-fury-recipient"
+            },
             "friendlyScope": "formation",
             "confidence": "verified"
           },
@@ -9077,7 +9084,14 @@
             "tag": "damage:fire",
             "abilityId": "syrax-blazing-fury",
             "abilityName": "Blazing Fury",
-            "description": "improves allied Fire Damage",
+            "description": "improves Fire Damage for the same one self-eligible Ally selected with Fire-damage priority",
+            "recipientSelector": {
+              "kind": "capability-priority-one",
+              "priorityTag": "damage:fire",
+              "recipientCount": 1,
+              "includeSelf": true,
+              "selectionGroupId": "syrax-blazing-fury-recipient"
+            },
             "friendlyScope": "formation",
             "confidence": "verified"
           },
@@ -15415,7 +15429,18 @@
         0
       ],
       "controlAliasesCanonicalizeTo": "status:control",
-      "lockedBlockedAndUnresolvedAreActive": false
+      "lockedBlockedAndUnresolvedAreActive": false,
+      "recipientTargeting": {
+        "capabilityPriorityOne": {
+          "sharedSelectionGroup": true,
+          "uniquePriorityResolves": true,
+          "multiplePriorityUnresolved": true,
+          "uniqueFallbackResolves": true,
+          "multipleFallbackUnresolved": true,
+          "unresolvedRecipientCredit": 0,
+          "capabilitySource": "active output signals at current progression and self position"
+        }
+      }
     },
     "publicRating": {
       "contract": "formation-rating-v3",
@@ -15476,6 +15501,7 @@
       "better-placement",
       "alternative-vanguard",
       "future-unlock",
+      "targeting-resolution",
       "confidence-limitation"
     ]
   },
