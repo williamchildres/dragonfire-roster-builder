@@ -37,6 +37,14 @@ Single selected dragons do not show missing-enabler warnings. Repeated ability p
 
 Estimated Formation Power is a separate read-only progression diagnostic. It sums the three current rarity/Star Rank/Dragon Level estimates, exposes each dragon's confidence classification, and remains visually and semantically separate from Formation Rating. It is empirical and unofficial, does not alter recommendations or scoring, and is unavailable until all three dragons have recorded progression.
 
+## Troop Affinity
+
+A separate Troop Affinity section evaluates the canonical affinity records of the selected three dragons. It recommends every tied troop type under `troop-affinity-recommendation-v1`, shows positive coverage as N of 3, and expands to positive, neutral, negative, and unknown dragon names for all five troop types. Position is not an input, so swapping the same trio cannot change the recommendation; adding, removing, or replacing a dragon recalculates it immediately.
+
+Positive affinity is displayed as +20% for each positively aligned dragon. Neutral has no affinity modifier, negative reduces that dragon's stats and siege damage without an invented percentage, and unknown remains unverified rather than being treated as neutral. The UI never combines three positive dragons into +60%, multiplies Estimated Power, adjusts Formation Rating, or claims combat simulation.
+
+The recommendation is affinity guidance, not a universal battle optimum. Enemy Troop Type Advantage is a separate matchup system and may change the actual choice. Siege remains in the five-candidate comparison, but a recommended or tied Siege option is labeled as objective-specific for Durability and siege damage and weak in ordinary troop matchups. See [`TROOP_AFFINITY_RECOMMENDATIONS.md`](TROOP_AFFINITY_RECOMMENDATIONS.md).
+
 ## Progression Mapping
 
 - `OwnedDragon.starRank` becomes simple `starRank`.
@@ -56,4 +64,4 @@ Placement requirements are evaluated before progression. A relationship that is 
 
 ## Non-Goals
 
-The Formation Builder uses documented activation probability only where the reliability contract supports it. Unresolved potential remains visible and contributes zero; it is not displayed as a known 0% chance. Reliability does not measure damage or Recovery magnitude, duration, target count, or win probability. Estimated Formation Power remains a separate empirical diagnostic. All three Roster Optimizer strategies use the same v3 relationship and six-placement source; opening a result applies its exact retained arrangement without changing Star Rank, Dragon Level, or Habit Levels.
+The Formation Builder uses documented activation probability only where the reliability contract supports it. Unresolved potential remains visible and contributes zero; it is not displayed as a known 0% chance. Reliability does not measure damage or Recovery magnitude, duration, target count, or win probability. Estimated Formation Power and troop-affinity guidance remain separate diagnostics. All three Roster Optimizer strategies use the same v3 relationship and six-placement source; opening a result applies its exact retained arrangement without changing Star Rank, Dragon Level, Habit Levels, optimizer output, or affinity recommendation for the same trio.

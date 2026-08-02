@@ -161,6 +161,7 @@ describe('RosterWorkspace', () => {
 
     expect(screen.getByLabelText('Search owned dragons')).toBeVisible();
     expect(screen.getByLabelText('Sort')).toBeVisible();
+    expect(within(screen.getByLabelText('Sort')).getByRole('option', { name: 'Estimated Power high to low' })).toBeInTheDocument();
     const toggle = screen.getByRole('button', { name: 'Filters' });
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
     expect(toggle).toHaveAttribute('aria-controls', 'roster-advanced-filters');
@@ -288,11 +289,35 @@ describe('RosterWorkspace', () => {
     expect(screen.getByRole('button', { name: /^Caraxes,/i })).toHaveAttribute('aria-current', 'true');
     expect(screen.getByRole('complementary', { name: 'Caraxes' })).toBeInTheDocument();
 
+    await user.selectOptions(screen.getByLabelText('Sort'), 'estimated-power');
+    expect(screen.getByRole('complementary', { name: 'Caraxes' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Caraxes,/i })).toHaveAttribute('aria-current', 'true');
+
     await user.click(screen.getByRole('button', { name: /^Syrax,/i }));
     expect(screen.getByRole('button', { name: /^Syrax,/i })).toHaveAttribute('aria-current', 'true');
     expect(screen.getByRole('button', { name: /^Caraxes,/i })).not.toHaveAttribute('aria-current');
     await user.selectOptions(screen.getByLabelText('Sort'), 'rarity');
     expect(screen.getByRole('complementary', { name: 'Syrax' })).toBeInTheDocument();
+  });
+
+  it('updates Estimated Power order immediately after progression edits while retaining dragon selection and editor state', async () => {
+    const user = userEvent.setup();
+    render(<WorkspaceHarness />);
+    await user.selectOptions(screen.getByLabelText('Sort'), 'estimated-power');
+    await user.click(screen.getByRole('button', { name: /^Syrax,/i }));
+    const editor = screen.getByRole('complementary', { name: 'Syrax' });
+    const notes = within(editor).getByLabelText('Personal notes for Syrax');
+    await user.type(notes, ' retained');
+    await user.selectOptions(within(editor).getByLabelText('Star Rank'), '10');
+    await user.clear(within(editor).getByLabelText('Dragon Level'));
+    await user.type(within(editor).getByLabelText('Dragon Level'), '100');
+
+    const rows = screen.getAllByRole('button', { name: /Estimated Power/i });
+    expect(rows[0]).toHaveAccessibleName(/^Syrax,/i);
+    expect(rows.at(-1)).toHaveAccessibleName(/^Vhagar,.*Estimated Power Unavailable/i);
+    expect(screen.getByRole('button', { name: /^Syrax,/i })).toHaveAttribute('aria-current', 'true');
+    expect(screen.getByRole('complementary', { name: 'Syrax' })).toBe(editor);
+    expect(notes).toHaveValue('Fire support retained');
   });
 
   it('moves selection when filtering hides it, clears the editor at zero results, and restores a valid selection', async () => {

@@ -45,6 +45,7 @@ import {
   semanticTagLabel,
   signalLabel,
 } from './relationshipReliabilityPresentation';
+import { TroopAffinityRecommendation } from './TroopAffinityRecommendation';
 
 export const DEFAULT_OPTIMIZER_ALLOCATION_MODE: OptimizerAllocationMode = 'best-overall-first';
 const EMPTY_SAVED_FORMATION_LIBRARY = createEmptySavedFormationLibrary('1970-01-01T00:00:00.000Z');
@@ -562,6 +563,13 @@ function OptimizerFormationCard({
           );
         })}
       </dl>
+      <TroopAffinityRecommendation
+        compact
+        formationDragons={(['left-flank', 'vanguard', 'right-flank'] as const).flatMap((position) => {
+          const dragon = dragonsById.get(formation.arrangement[position]);
+          return dragon ? [dragon] : [];
+        })}
+      />
       <p className="optimizer-relationship-count">
         Reliability coverage: {formation.reliabilityCoverage.replaceAll('-', ' ')} ·{' '}
         {formation.activeRelationshipCount} active · {formation.quantifiedRelationshipCount} quantified

@@ -16,6 +16,7 @@ The application should answer:
 - Which relationships are unavailable because of saved progression?
 - Which exact non-overlapping formation plan best satisfies the selected optimizer strategy?
 - Which exact formations did I save, and how do they evaluate with current progression?
+- Which troop types have the strongest shared affinity coverage for these three dragons, and which dragons are positive, neutral, negative, or still unknown?
 
 ## Non-Goals
 
@@ -34,6 +35,10 @@ Synergy calculation must not model:
 - Expected damage.
 - Win probability.
 - Full battle simulation.
+- Enemy troop selection or Troop Type Advantage simulation.
+- Automatic troop assignment, troop inventory, research, upgrades, Siege Precision, or Durability simulation.
+- Affinity-adjusted Estimated Power, Formation Rating, combat power, optimizer scoring, or formation order.
+- A guessed negative-affinity percentage or combined positive-affinity percentage.
 
 Raw ability descriptions may preserve these details for reference, but those details must not drive the simple synergy matcher.
 
@@ -55,6 +60,8 @@ Raw ability descriptions may preserve these details for reference, but those det
 - Exact optimizer results must satisfy the documented objective hierarchy and zero-gap proof contract.
 - Saved formations are a separate versioned library, never roster fields. Derived analysis is recalculated rather than frozen.
 - A current-roster saved record may reserve all three identities. Only the sorted intersection with currently eligible owned dragons enters the pre-solver eligibility projection when exclusions are enabled; reservation metadata never enters scoring, candidates, comparators, Formation Rating, Estimated Power, relationships, or core optimizer hashes.
+- Troop-affinity guidance is a deterministic derived presentation over three canonical affinity records. It retains exact ties, treats unknown separately from neutral, is invariant to position, and never enters Formation Rating, Estimated Power, optimizer objectives, optimizer hashes, Saved Formation records, or account data.
+- Siege remains a canonical candidate but is objective-specific for Durability and siege damage. Enemy Troop Type Advantage remains a separate battle input, so affinity guidance is never labeled universally optimal.
 
 ## Ability Data
 

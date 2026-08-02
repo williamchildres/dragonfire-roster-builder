@@ -1499,6 +1499,14 @@ function FormationBuilderSection({
     () => new Map(dragons.map((dragon) => [dragon.id, dragon.name])),
     [],
   );
+  const formationDragons = useMemo(
+    () => FORMATION_POSITIONS.flatMap((position) => {
+      const dragonId = formation[position];
+      const dragon = dragons.find((candidate) => candidate.id === dragonId);
+      return dragon ? [dragon] : [];
+    }),
+    [formation],
+  );
   const recommendation = useMemo(
     () => buildFormationRecommendationV3({
       comparison: placementComparison,
@@ -1605,6 +1613,7 @@ function FormationBuilderSection({
         findings={findings}
         recommendation={recommendation}
         placementComparison={placementComparison}
+        formationDragons={formationDragons}
       />
       <div className="formation-board" aria-label="Formation positions">
         {FORMATION_POSITIONS.map((position) => {

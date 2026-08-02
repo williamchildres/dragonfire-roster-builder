@@ -1,7 +1,10 @@
 import { Shield } from 'lucide-react';
 import type { Dragon, OwnedDragon } from '../models/dragon';
-import { estimateDragonPower } from '../power/estimatedDragonPower';
 import { applicableHabitCount, unlockedHabitCount } from './rosterWorkspaceState';
+import {
+  estimatedPowerConfidenceLabel,
+  rosterEstimatedPowerPresentation,
+} from './rosterEstimatedPowerPresentation';
 
 export function RosterList({
   dragons,
@@ -23,15 +26,17 @@ export function RosterList({
         const selected = selectedDragonId === dragon.id;
         const unlockedHabits = unlockedHabitCount(dragon, entry);
         const totalHabits = applicableHabitCount(dragon);
-        const estimatedPower = entry?.starRank != null && entry.reignLevel != null
-          ? estimateDragonPower({ rarity: dragon.rarity, starRank: entry.starRank, dragonLevel: entry.reignLevel })
+        const estimatedPower = rosterEstimatedPowerPresentation(dragon, entry);
+        const powerAvailable = estimatedPower.status === 'available';
+        const confidence = powerAvailable
+          ? estimatedPowerConfidenceLabel(estimatedPower.confidence!)
           : null;
         return (
           <li key={dragon.id}>
             <button
               type="button"
               className={selected ? 'roster-row is-selected' : 'roster-row'}
-              aria-label={`${dragon.name}, ${dragon.rarity} ${dragon.breed}, Star Rank ${formatAccessible(entry?.starRank)}, Dragon Level ${formatAccessible(entry?.reignLevel)}, Estimated Power ${estimatedPower ? formatPower(estimatedPower.power) : 'unavailable'}, ${unlockedHabits} of ${totalHabits} habits unlocked${selected ? ', selected' : ''}`}
+              aria-label={`${dragon.name}, ${dragon.rarity} ${dragon.breed}, Star Rank ${formatAccessible(entry?.starRank)}, Dragon Level ${formatAccessible(entry?.reignLevel)}, Estimated Power ${powerAvailable ? `${formatPower(estimatedPower.power!)} with ${confidence} confidence` : 'Unavailable'}, ${unlockedHabits} of ${totalHabits} habits unlocked${selected ? ', selected' : ''}`}
               aria-current={selected ? 'true' : undefined}
               onClick={() => onSelect(dragon.id)}
               ref={(element) => registerRow(dragon.id, element)}
@@ -45,7 +50,7 @@ export function RosterList({
                 <span>{formatStarRank(entry?.starRank)}</span>
                 <span>Lv {formatUnknown(entry?.reignLevel)}</span>
                 <span title="Unofficial empirical estimate from current rarity, Star Rank, and Dragon Level.">
-                  Est. Power {estimatedPower ? formatPower(estimatedPower.power) : '—'}
+                  Est. Power {powerAvailable ? `${formatPower(estimatedPower.power!)} · ${confidence}` : 'Unavailable'}
                 </span>
                 <span>{unlockedHabits}/{totalHabits} habits</span>
               </span>

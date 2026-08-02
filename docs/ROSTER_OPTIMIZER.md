@@ -1,6 +1,6 @@
 # Flexible Power-Aware Roster Optimizer
 
-Dragonfire Lab v0.23.1 uses live optimizer contract 6 and exposes three allocation modes over a selectable 1–11 armies. Best Overall First is the default for a fresh session. Historical v0.21 and optimizer-v5 artifacts remain committed evidence, not live contracts.
+Dragonfire Lab v0.23.2 uses live optimizer contract 6 and exposes three allocation modes over a selectable 1–11 armies. Best Overall First is the default for a fresh session. Historical v0.21 and optimizer-v5 artifacts remain committed evidence, not live contracts.
 
 ## Eligibility and count
 
@@ -68,6 +68,12 @@ This is the unchanged `balanced` v0.22 joint solver under a more precise public 
 
 Numeric MILP phases require zero MIP gap and exact integer reconstruction. The final optimal face is enumerated exactly in stable-key order. There is no heuristic fallback, timeout result, weighted approximation, variance, spread, or average-power objective. The result retains the **Exact optimal result** label because all selected armies are solved jointly. Display order is strongest-to-weakest; canonical allocation identity is display-order independent.
 
+## Troop-affinity presentation
+
+Every result card derives `troop-affinity-recommendation-v1` from the displayed formation's three canonical dragon IDs. The summary shows tied suggested troop types, N of 3 positive coverage, incomplete or negative-tradeoff warnings, the enemy Troop Type Advantage caveat, and objective-specific Siege guidance. Its expandable breakdown classifies all three dragons for all five troop types.
+
+This is render-time presentation only. Affinity is not an objective, candidate input, comparator, tie-breaker, arrangement input, request fingerprint, reservation-context fingerprint, solution hash, result hash, Formation Rating adjustment, or Estimated Power adjustment. All three modes therefore retain identical generated formations, arrangements, objective vectors, and protected identities; older optimizer results remain semantically valid when only affinity presentation changes.
+
 ## Contract v6
 
 The Worker request includes:
@@ -102,6 +108,6 @@ Contract-v5 and older Worker requests/responses are rejected. Historical strateg
 
 The optimizer-v6 audit independently solves 3 fixtures × 3 modes × 11 counts × 2 input orders: 198 records, 198 solver executions, and six independent candidate-pool builds. Existing raw and balanced candidate identities and objective vectors are checked against the immutable optimizer-v5 artifact.
 
-Formation cards retain exact positions, Estimated Power and confidence, Formation Rating v3 and tier, reliability, canonical relationship labels, strengths, gaps, raw IDs inside Technical Trace, and Formation Builder handoff.
+Formation cards retain exact positions, Estimated Power and confidence, Formation Rating v3 and tier, reliability, canonical relationship labels, strengths, gaps, derived troop-affinity guidance, raw IDs inside Technical Trace, and Formation Builder handoff.
 
 Estimated Power is unofficial progression guidance. Formation Rating measures documented compatibility and reliability. Neither simulates combat nor guarantees the best real-game outcome. Rarity remains descriptive and is never an objective priority.

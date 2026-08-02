@@ -297,6 +297,7 @@ describe('Saved Formation import and export', () => {
     expect(parsed.ok).toBe(true);
     expect(parsed.formations).toHaveLength(1);
     expect(json).not.toMatch(/email|userId|user_id/);
+    expect(json).not.toMatch(/troopAffinity|recommendedTroop|positiveDragonIds/);
   });
 
   it('imports schema 1 unreserved and round-trips schema 2 reservations', () => {

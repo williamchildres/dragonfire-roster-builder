@@ -4,12 +4,14 @@ import { dragonObservationSnapshots } from '../data/observations';
 import { dragonStatDefinitions } from '../data/statDefinitions';
 import { evidenceSources } from '../data/evidence';
 import { statusGlossary } from '../data/statusGlossary';
-import type {
-  AbilityDefinition,
-  Dragon,
-  DragonCollectionState,
-  OwnedDragon,
-  VerificationStatus,
+import {
+  TROOP_TYPES,
+  type AffinityLevel,
+  type AbilityDefinition,
+  type Dragon,
+  type DragonCollectionState,
+  type OwnedDragon,
+  type VerificationStatus,
 } from '../models/dragon';
 import { isHabitUnlocked } from '../services/habitLevels';
 import { simpleSynergyProfiles } from '../synergy/profiles';
@@ -123,6 +125,7 @@ export function DragonDetailsDialog({
 
           <div className="details-layout">
             <DragonAtAGlance presentation={presentation} />
+            <DragonAffinityDetails dragon={dragon} />
             <section className="panel details-abilities-panel">
               <h3>Abilities</h3>
               <div className="ability-stack">
@@ -162,6 +165,29 @@ export function DragonDetailsDialog({
         </div>
       </div>
     </div>
+  );
+}
+
+function DragonAffinityDetails({ dragon }: { dragon: Dragon }) {
+  const labels: Record<AffinityLevel, string> = {
+    positive: '+20% positive affinity',
+    neutral: 'No affinity modifier',
+    negative: 'Negative affinity — reduced stats and siege damage',
+    unknown: 'Affinity not verified',
+  };
+  return (
+    <section className="panel dragon-affinity-details" aria-labelledby={`dragon-affinities-${dragon.id}`}>
+      <h3 id={`dragon-affinities-${dragon.id}`}>Troop Affinities</h3>
+      <p>Positive affinity gives this dragon the displayed +20% benefit. Formation recommendations consider the canonical affinities of all three dragons.</p>
+      <dl>
+        {TROOP_TYPES.map((troopType) => (
+          <div key={troopType} className={`affinity-${dragon.affinities[troopType]}`}>
+            <dt>{troopType}</dt>
+            <dd>{labels[dragon.affinities[troopType]]}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
   );
 }
 

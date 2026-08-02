@@ -1,8 +1,9 @@
 import type { Dragon, DragonBreed, DragonRarity, OwnedDragon } from '../models/dragon';
 import { isHabitUnlocked } from '../services/habitLevels';
+import { rosterEstimatedPowerPresentation } from './rosterEstimatedPowerPresentation';
 
 export type RosterDetailsFilter = 'all' | 'complete' | 'missing' | 'has-notes' | 'no-notes';
-export type RosterWorkspaceSort = 'name' | 'rarity' | 'star-rank' | 'dragon-level';
+export type RosterWorkspaceSort = 'name' | 'rarity' | 'star-rank' | 'dragon-level' | 'estimated-power';
 
 export interface RosterWorkspaceFilters {
   search: string;
@@ -89,11 +90,25 @@ export function filterAndSortRosterDragons(
         comparison = compareNullableProgression(roster[a.id]?.starRank, roster[b.id]?.starRank);
       } else if (sortBy === 'dragon-level') {
         comparison = compareNullableProgression(roster[a.id]?.reignLevel, roster[b.id]?.reignLevel);
+      } else if (sortBy === 'estimated-power') {
+        comparison = compareEstimatedPower(a, b, roster);
       }
 
       return comparison || compareDragonNames(a, b) || left.index - right.index;
     })
     .map(({ dragon }) => dragon);
+}
+
+function compareEstimatedPower(
+  left: Dragon,
+  right: Dragon,
+  roster: Record<string, OwnedDragon>,
+): number {
+  const leftPower = rosterEstimatedPowerPresentation(left, roster[left.id]);
+  const rightPower = rosterEstimatedPowerPresentation(right, roster[right.id]);
+  if (leftPower.status === 'unavailable') return rightPower.status === 'unavailable' ? 0 : 1;
+  if (rightPower.status === 'unavailable') return -1;
+  return rightPower.power! - leftPower.power!;
 }
 
 export function filtersRevealingDragon(

@@ -41,9 +41,12 @@ describe('Saved Formations workspace UI', () => {
     expect(screen.getByText(/Formation Rating/)).toBeInTheDocument();
     expect(screen.getByText('Progression unavailable')).toBeInTheDocument();
     expect(screen.getByText('Estimated Power').nextSibling).toHaveTextContent('Unavailable');
-    expect(screen.getByText(dragons[0]!.name)).toBeInTheDocument();
-    expect(screen.getByText(dragons[1]!.name)).toBeInTheDocument();
-    expect(screen.getByText(dragons[2]!.name)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Troop Affinity' })).toBeInTheDocument();
+    expect(screen.getByText(/Enemy troop advantage may change this choice/i)).toBeInTheDocument();
+    expect(screen.getByText(/of 3 dragons receive \+20%|all 3 dragons receive the \+20%/i)).toBeInTheDocument();
+    expect(screen.getAllByText(dragons[0]!.name).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(dragons[1]!.name).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(dragons[2]!.name).length).toBeGreaterThan(0);
     expect(screen.getByText(/no longer marked owned/)).toBeInTheDocument();
     expect(screen.getByText('Progression changed since saved')).toBeInTheDocument();
   });

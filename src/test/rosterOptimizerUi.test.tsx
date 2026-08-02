@@ -272,6 +272,14 @@ describe('Roster Optimizer v6 workspace', () => {
       if (mode !== 'best-overall-first') await userEvent.setup().click(screen.getByRole('radio', { name: label }));
       await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
       const cards = await screen.findAllByRole('article');
+      expect(cards).toHaveLength(10);
+      for (const card of cards) {
+        expect(within(card).getByRole('heading', { name: 'Troop Affinity' })).toBeInTheDocument();
+        expect(within(card).getByText(/Enemy troop advantage may change this choice/i)).toBeInTheDocument();
+      }
+      const affinityDetails = within(cards[0]!).getByText('Affinity breakdown for all five troop types');
+      await userEvent.setup().click(affinityDetails);
+      expect(affinityDetails.closest('details')).toHaveAttribute('open');
       await userEvent.setup().click(within(cards[0]!).getByRole('button', { name: 'Save Formation' }));
       expect(onSaveFormation).toHaveBeenCalledWith(expected.formations[0]!.arrangement);
       expect(runner.run).toHaveBeenCalledTimes(1);

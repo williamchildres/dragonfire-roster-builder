@@ -1,6 +1,6 @@
 # Roster workspace
 
-Dragonfire Lab 0.23.1 presents My Dragons and Saved Formations as accessible tabs inside My Roster. The authoritative roster and separate Saved Formation Library remain owned by `App.tsx`; workspace components receive current documents and explicit callbacks rather than creating cloud clients.
+Dragonfire Lab 0.23.2 presents My Dragons and Saved Formations as accessible tabs inside My Roster. The authoritative roster and separate Saved Formation Library remain owned by `App.tsx`; workspace components receive current documents and explicit callbacks rather than creating cloud clients.
 
 Roster Optimizer and Formation Builder My Roster mode share the same authoritative owned/hatched eligibility helper. Optimizer roster snapshots use stable dragon ID, rarity, Star Rank, and Dragon Level; notes, Habit Levels, filters, sorting, responsive mode, and selection never affect ranking. The separate request fingerprint also includes strategy, optimizer contract version, and Formation Rating contract. Power-Aware fingerprints additionally include Estimated Power version, model hash, and observation hash.
 
@@ -13,7 +13,7 @@ Roster Optimizer and Formation Builder My Roster mode share the same authoritati
 - Add All Dragons derives missing IDs from the complete canonical collection, never from the current filters, sorting, visible rows, or optimizer candidates. It confirms the current missing count before committing one immutable roster snapshot. `All Dragons Added` is disabled when no canonical dragon is missing.
 - Removing selects the next visible row, then the previous row, then the empty state.
 - Star Rank, Dragon Level (`reignLevel` in stored JSON), named Habit Levels, and notes save immediately through the existing local snapshot and optional account-sync path.
-- Estimated Power is derived read-only from rarity, Star Rank, and Dragon Level. It has no editor control or persistence field and does not participate in roster synchronization. Both Power-Aware allocation modes use it without adding any roster field.
+- Estimated Power is derived read-only from rarity, Star Rank, and Dragon Level through the protected Estimated Power v2 estimator. It has no editor control or persistence field and does not participate in roster synchronization. The visible value and confidence update as soon as either progression input changes.
 - Habit controls appear only when every canonical `unlockStarRank` and `minimumDragonLevel` requirement is satisfied. An unlocked habit begins at Level 1 and can be set only to 1 through 5. A relocked habit disappears and its saved key is deleted; re-unlocking starts again at Level 1.
 - Removing ownership does not change progression, notes, or valid unlocked Habit Levels. Re-adding the dragon restores those retained values unless progression itself crossed below an unlock threshold.
 - The shared ownership transition preserves valid Star Rank, Dragon Level, notes, and Habit Levels on re-add; only absent or invalid Star Rank and Dragon Level receive the 1/1 defaults. Existing browser persistence and the single debounced account save path remain authoritative; a failed cloud save leaves the complete local snapshot available for the existing retry flow.
@@ -24,7 +24,9 @@ Search trims surrounding whitespace and matches dragon names case-insensitively.
 
 `All progression recorded` means Star Rank and Dragon Level are non-null. Habit Levels do not participate because unlocked habits always have a deterministic value and locked habits have no level. `Missing progression` means Star Rank or Dragon Level is null. `Has notes` and `No notes` use trimmed notes content.
 
-Sort options are Name A–Z, rarity (Legendary, Epic, Rare), Star Rank descending, and Dragon Level descending. Progression nulls sort last and ties resolve by dragon name. Filters, sorting, responsive mode, and selection are never written to local roster JSON, account data, exports, formations, or share links.
+Sort options are Name A–Z, rarity (Legendary, Epic, Rare), Star Rank descending, Dragon Level descending, and Estimated Power high to low. Estimated Power sorting compares only the current numeric v2 estimate; confidence never outranks the value. Missing Star Rank or Dragon Level is unavailable and sorts after all calculable dragons. Equal values and unavailable rows resolve by dragon name and canonical ID.
+
+Progression edits recalculate the selected dragon and the sorted list in the same render. Selection remains attached to canonical dragon ID even when the row moves, editor state remains mounted, and focus or scrolling is changed only by the existing explicit mobile navigation and selection flows. Filters, sorting, responsive mode, and selection are never written to local roster JSON, account data, exports, formations, or share links.
 
 Adding a dragon preserves the current sort and every filter that already matches it. Only filters that would hide the new dragon are reset: a nonmatching search, rarity, breed, or details filter returns to its unfiltered value. Unrelated filter choices remain intact.
 
@@ -41,4 +43,5 @@ The editor always describes browser autosave. It mentions active account synchro
 - signed-out formations remain browser-local; signed-in sync uses the independent `user_saved_formations` document
 - formation conflicts, writes, reservation fingerprints, imports, and reordering never affect roster synchronization
 - no direct Supabase calls from roster UI components
-- Estimated Power is runtime-only; local/cloud roster schema 5 remains unchanged, while Saved Formations add only their separate migration
+- Estimated Power and the selected sort are runtime-only; local/cloud roster schema 5 remains unchanged
+- troop-affinity recommendations are separately derived from canonical dragon data and add no roster or account field

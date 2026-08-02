@@ -135,6 +135,11 @@ export function RosterWorkspace({
     setSelection((current) => current && nextVisibleIds.includes(current) ? current : nextVisibleIds[0] ?? null);
   };
   const updateFilters = (patch: Partial<RosterWorkspaceFilters>) => applyFilters({ ...filters, ...patch });
+  const updateSort = (nextSort: RosterWorkspaceSort) => {
+    // Preserve the effective initial selection before changing the visible order.
+    setSelection(selectedDragonId);
+    setSortBy(nextSort);
+  };
   const registerRow = (dragonId: string, element: HTMLButtonElement | null) => {
     if (element) rowRefs.current.set(dragonId, element);
     else rowRefs.current.delete(dragonId);
@@ -238,7 +243,7 @@ export function RosterWorkspace({
                     {filters.search ? <button type="button" className="icon-button" onClick={() => updateFilters({ search: '' })} aria-label="Clear roster search"><X size={16} aria-hidden="true" /></button> : null}
                   </span>
                 </label>
-                <label className="roster-sort-field">Sort<select value={sortBy} onChange={(event) => setSortBy(event.target.value as RosterWorkspaceSort)}><option value="name">Name A–Z</option><option value="rarity">Rarity</option><option value="star-rank">Star Rank high to low</option><option value="dragon-level">Dragon Level high to low</option></select></label>
+                <label className="roster-sort-field">Sort<select value={sortBy} onChange={(event) => updateSort(event.target.value as RosterWorkspaceSort)}><option value="name">Name A–Z</option><option value="rarity">Rarity</option><option value="star-rank">Star Rank high to low</option><option value="dragon-level">Dragon Level high to low</option><option value="estimated-power">Estimated Power high to low</option></select></label>
                 <button
                   type="button"
                   className="secondary-button roster-filters-toggle"

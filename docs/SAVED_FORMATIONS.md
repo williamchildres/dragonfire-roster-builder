@@ -1,6 +1,6 @@
 # Saved Formation Library
 
-Dragonfire Lab 0.23.1 saves complete, duplicate-free three-dragon arrangements from Formation Builder and from each Roster Optimizer allocation mode. Current-roster records can reserve all three dragon identities for later use. The Saved Formations tab lives inside My Roster, and its array order is user-controlled semantic state.
+Dragonfire Lab 0.23.2 saves complete, duplicate-free three-dragon arrangements from Formation Builder and from each Roster Optimizer allocation mode. Current-roster records can reserve all three dragon identities for later use. The Saved Formations tab lives inside My Roster, and its array order is user-controlled semantic state.
 
 ## Versioned document
 
@@ -10,7 +10,7 @@ Schema 1 remains readable locally, in imports, and in account rows. It normalize
 
 Names are not identifiers and need not be unique. Exact duplicates have the same evaluation mode and dragon in each exact position. Reordering the same trio is a different formation. A normal save surfaces an existing exact duplicate and offers Update Existing, Save Explicit Copy, or Cancel. The explicit Duplicate action always creates a new UUID and appends `— Copy` to a bounded name.
 
-The library never stores Formation Rating, tier, Synergy, Placement, Estimated Power, Overall Score, relationship values, strengths, gaps, reliability summaries, optimizer rank, or optimizer hashes as authoritative data. Cards recalculate Formation Rating v3, current tier, reliability coverage, and Estimated Formation Power from current app mechanics whenever displayed.
+The library never stores Formation Rating, tier, Synergy, Placement, Estimated Power, troop-affinity recommendations, Overall Score, relationship values, strengths, gaps, reliability summaries, optimizer rank, or optimizer hashes as authoritative data. Cards recalculate Formation Rating v3, current tier, reliability coverage, Estimated Formation Power, and `troop-affinity-recommendation-v1` guidance from current app mechanics and canonical dragon data whenever displayed.
 
 ## Evaluation and progression changes
 
@@ -20,11 +20,13 @@ The library never stores Formation Rating, tier, Synergy, Placement, Estimated P
 
 The saved snapshot is comparison-only. Changes list the dragon, field, and before/after value. App-version or scoring changes do not create a progression badge. Mechanics can change the recalculated card while the progression status remains unchanged.
 
+Troop affinity belongs to canonical dragon data rather than roster progression. It remains available when ownership, Star Rank, Dragon Level, or Estimated Power is unavailable. Rename, library reorder, reservation changes, and synchronization do not affect it; only the saved trio's canonical IDs and current canonical affinity records are inputs. Schema-1 and schema-2 records therefore render the same derived guidance without a schema-3 record or audit-identity change.
+
 ## CRUD, Builder, and optimizer behavior
 
 Opening a saved record preserves all three positions, selects its evaluation mode, and establishes editing context. Update preserves UUID, `createdAt`, collection position, and reservation unless the confirmed update changes a reserved record to planning mode. Save as New and Duplicate always create unreserved records. Rename and reorder preserve reservation state. Delete releases all three identities because reservation belongs only to the record. Reservation controls remain available at the 50-record limit.
 
-Optimizer Save Formation uses the exact displayed arrangement and current-roster progression without rerunning or mutating the result. The new record is always unreserved. Stale optimizer results cannot be saved. Saved-formation names, order, and UI state never enter candidates, solver/result hashes, scoring, Formation Rating, Estimated Power, or relationships.
+Optimizer Save Formation uses the exact displayed arrangement and current-roster progression without rerunning or mutating the result. The new record is always unreserved. Stale optimizer results cannot be saved. Saved-formation names, order, UI state, and derived affinity guidance never enter candidates, solver/result hashes, scoring, Formation Rating, Estimated Power, or relationships.
 
 ## Reservation invariants
 

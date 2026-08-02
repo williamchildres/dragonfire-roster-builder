@@ -8,14 +8,14 @@ Public site: https://dragonfirelab.com/overview
 
 ## Current Features
 
-- A compact, filterable My Roster workspace with selectable owned-dragon rows, one dedicated editor, a focused phone list/editor flow, and an Add All Dragons convenience action.
+- A compact, filterable My Roster workspace with selectable owned-dragon rows, current Estimated Power high-to-low sorting, one dedicated editor, a focused phone list/editor flow, and an Add All Dragons convenience action.
 - Full raw Command, Trait, and Habit wording for all 33 known dragons.
 - Curated simple synergy profiles for all 33 known dragons.
 - Complete detailed coverage for all 33 dragons and 231 abilities.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
 - Read-only Estimated Power v2 diagnostics for roster dragons and complete formations, using 59 provenance observations and support-aware rarity-specific Star-plus-Level curves.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
-- Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
+- Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and derived troop-affinity recommendations.
 - A persistent Saved Formation Library for exact Builder and optimizer arrangements, with whole-formation reservations, recalculated analysis, progression-change details, organization controls, and separate JSON import/export.
 - Flexible Power-Aware Roster Optimizer for 1–11 armies with Best Overall First, Highest Raw Power First, and Balance Raw Power Across Armies over current My Roster progression.
 - Formation share links plus separate roster and Saved Formation Library JSON import/export.
@@ -32,7 +32,7 @@ The repository does not store execution-level schedules, rolls, attempts, target
 
 Account synchronization stores two independent RLS-protected documents per authenticated user: the normalized roster row and the versioned Saved Formation Library row. Signed-out formations remain in that browser. Signed-in libraries can synchronize only after the Saved Formations migration and account choice are available; roster conflicts never resolve formation conflicts. See [`docs/SAVED_FORMATIONS.md`](docs/SAVED_FORMATIONS.md), [`docs/setup/supabase-account-roster.md`](docs/setup/supabase-account-roster.md), and [`docs/setup/supabase-saved-formations.md`](docs/setup/supabase-saved-formations.md).
 
-Estimated Power is computed at runtime and is never entered manually or persisted locally or in the cloud. It uses only rarity, Star Rank, and Dragon Level; dragon identity, notes, and Habit Levels are not model inputs. V2 preserves exact observations, uses piecewise-linear interpolation within connected empirical support, and marks disconnected bridges or extrapolation low confidence. See [`docs/ESTIMATED_POWER.md`](docs/ESTIMATED_POWER.md) for the curves, support graph, confidence contract, validation, and limitations.
+Estimated Power is computed at runtime and is never entered manually or persisted locally or in the cloud. It uses only rarity, Star Rank, and Dragon Level; dragon identity, notes, and Habit Levels are not model inputs. V2 preserves exact observations, uses piecewise-linear interpolation within connected empirical support, and marks disconnected bridges or extrapolation low confidence. My Roster's high-to-low option sorts this same numeric estimate, never confidence, and places incomplete progression last. See [`docs/ESTIMATED_POWER.md`](docs/ESTIMATED_POWER.md) for the curves, support graph, confidence contract, validation, and limitations.
 
 The Roster workspace keeps search, rarity, breed, details filters, sorting, and row selection as ephemeral UI state. Individual additions and Add All Dragons use one ownership transition: new dragons begin at Star 1 and Dragon Level 1, while re-added dragons retain saved valid progression, notes, and Habit Levels. Add All Dragons uses the full canonical collection, ignores filters, and commits one roster snapshot through the existing browser/account synchronization path. See [`docs/roster-workspace.md`](docs/roster-workspace.md) for interaction and filter definitions.
 
@@ -43,6 +43,8 @@ The live Formation Builder uses curated simple profiles in `src/synergy`. Ordina
 Formation Builder opens in `All Dragons — Star 10` mode for sandbox planning with every selectable dragon shown at Star Rank 10. Saved Dragon Level still applies where roster progression exists. `My Roster` mode restricts choices to owned roster dragons and uses saved roster progression.
 
 Selected Formation Builder cards show current Damage Profile, Provides, and Synergy needs signal sections. Those chips are dragon-local diagnostics and never form an independent scoring source. Formation Rating v3 keeps exactly two categories: Active Synergy (80) and Placement Effectiveness (20), while weighting documented relationships by production reliability metadata. Reliability that cannot be quantified remains visible as unquantified potential and does not enter the numeric score.
+
+The separate `troop-affinity-recommendation-v1` service evaluates all five canonical troop types for the selected trio, retains exact ties, and identifies positive, neutral, negative, and unknown dragons. Positive affinity is displayed as +20% per positively aligned dragon, never as a combined formation percentage. Guidance is derived at render time in Formation Builder, Saved Formations, and optimizer results; it does not alter Formation Rating, Estimated Power, optimizer scoring or hashes, Saved Formation schemas, or persistence. Enemy troop advantage may change the battle choice, and Siege is labeled objective-specific. See [`docs/TROOP_AFFINITY_RECOMMENDATIONS.md`](docs/TROOP_AFFINITY_RECOMMENDATIONS.md).
 
 The evaluator discovers active setup/payoff and amplifier/output results at current progression and recipient targeting. A canonical layer collapses evidence into one provider, semantic tag, and beneficiary relationship. Setup/payoff edges have base value 10; non-stat amplifier/output edges have base value 6; stat-tag edges have base value 5. Formation Rating v3 then applies the documented fixed, Habit-derived, override, round-specific, contextual, and shared-event reliability contract. Multiple abilities for the same edge aggregate as evidence, while redundant providers for the same beneficiary/tag/class contribute 100%, 50%, then 0% trace-only.
 
@@ -62,7 +64,7 @@ Highest Raw Power First preserves the exact sequential v0.22 behavior: it select
 
 Balance Raw Power Across Armies preserves the joint v0.22 solver and retains the exact optimal result label. It lexicographically maximizes the sorted ascending integer raw-power vector, then the sorted ascending rating vector, combined fixed-point relationship value, active relationship count, and stable key. It is not a spread, variance, average-power, or weighted-score approximation.
 
-All three modes use Estimated Power v2 plus Formation Rating v3 with current Star Rank, Dragon Level, and active Habit Levels. Rarity and Power confidence are descriptive only. Unquantified relationship potential is explanatory and never enters objectives. Results do not simulate combat or guarantee a real-game outcome. The last completed result survives section navigation in the current app session, becomes stale after relevant roster, count, or mode changes, and is not persisted. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md).
+All three modes use Estimated Power v2 plus Formation Rating v3 with current Star Rank, Dragon Level, and active Habit Levels. Rarity, Power confidence, and rendered troop-affinity recommendations are descriptive only. Unquantified relationship potential is explanatory and never enters objectives. Results do not simulate combat or guarantee a real-game outcome. The last completed result survives section navigation in the current app session, becomes stale after relevant roster, count, or mode changes, and is not persisted. See [`docs/ROSTER_OPTIMIZER.md`](docs/ROSTER_OPTIMIZER.md).
 
 ## Development
 
@@ -79,6 +81,7 @@ npm run audit:optimizer:power-aware -- --fixture maxed
 npm run audit:optimizer:power-aware -- --fixture all-one
 npm run fit:power
 npm run audit:power
+npm run audit:troop-affinity
 npm run export:context
 npm run validate:context
 npm run package:context
@@ -114,4 +117,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.23.1`. Source data schema: `13`. Local and cloud roster schemas remain `5`; Saved Formation Library schema is `2` with schema 1 still readable; optimizer contract remains `6`; live rating contract remains `formation-rating-v3`. A current-roster Saved Formation may reserve all three dragons, and the in-memory optimizer preference excludes currently eligible reserved dragons by default while allowing temporary inclusion. Reservations do not change ratings, power, scoring, candidate comparators, or core optimizer hashes. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. The existing `user_saved_formations` table stores schema-2 JSON without a new migration.
+Current release: `0.23.2`. Source data schema: `13`. Local and cloud roster schemas remain `5`; Saved Formation Library schema is `2` with schema 1 still readable; optimizer contract remains `6`; live rating contract remains `formation-rating-v3`; troop-affinity contract is `troop-affinity-recommendation-v1`. Roster Estimated Power sorting and affinity guidance are ephemeral derived presentation. They do not change ratings, power, scoring, candidate comparators, saved records, synchronization, or core optimizer hashes. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. The existing `user_saved_formations` table stores schema-2 JSON without a new migration.
