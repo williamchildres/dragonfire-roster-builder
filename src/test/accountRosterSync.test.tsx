@@ -529,7 +529,7 @@ function makeServices(auth: AuthService, rosters: CloudRosterRepository): Accoun
     fetchLibrary: () => Promise.resolve(null),
     upsertLibrary: (userId, library, clientUpdatedAt) => Promise.resolve({
       userId,
-      schemaVersion: 1,
+      schemaVersion: 2,
       library,
       clientUpdatedAt,
       updatedAt: clientUpdatedAt,

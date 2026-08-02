@@ -53,8 +53,8 @@ Raw ability descriptions may preserve these details for reference, but those det
   - The two flanks are not adjacent.
 - Formation Rating represents relative formation fit, not predicted combat performance.
 - Exact optimizer results must satisfy the documented objective hierarchy and zero-gap proof contract.
-- Saved formations are a separate versioned library, never roster fields or optimizer inputs. Derived analysis is recalculated rather than frozen.
-- Saved formations do not reserve dragons and do not change optimizer eligibility, recommendations, fingerprints, selections, or hashes. Reservation belongs to a later release.
+- Saved formations are a separate versioned library, never roster fields. Derived analysis is recalculated rather than frozen.
+- A current-roster saved record may reserve all three identities. Only the sorted intersection with currently eligible owned dragons enters the pre-solver eligibility projection when exclusions are enabled; reservation metadata never enters scoring, candidates, comparators, Formation Rating, Estimated Power, relationships, or core optimizer hashes.
 
 ## Ability Data
 

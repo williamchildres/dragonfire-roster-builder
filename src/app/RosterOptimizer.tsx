@@ -7,7 +7,6 @@ import {
 } from '../optimizer/rosterOptimizerCandidates';
 import {
   clampOptimizerFormationCount,
-  maximumOptimizerFormationCount,
 } from '../optimizer/rosterOptimizerCount';
 import {
   RosterOptimizerClient,
@@ -23,6 +22,16 @@ import {
   type TierDistribution,
 } from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationArrangement';
+import { createEmptySavedFormationLibrary } from '../savedFormations/contract';
+import type { SavedFormationLibrary } from '../savedFormations/types';
+import { getReservedFormationRecords } from '../savedFormations/reservations';
+import {
+  buildOptimizerReservationContextFingerprint,
+  projectReservedOptimizerRoster,
+  reservationPresentationEntries,
+  OPTIMIZER_RESERVATION_CONTEXT_VERSION,
+  type OptimizerReservationRunContext,
+} from '../optimizer/reservedOptimizerProjection';
 import type { FormationRelationshipV3 } from '../synergy/reliability';
 import { AppLink, type NavigateToRoute } from './appRouter';
 import {
@@ -38,6 +47,7 @@ import {
 } from './relationshipReliabilityPresentation';
 
 export const DEFAULT_OPTIMIZER_ALLOCATION_MODE: OptimizerAllocationMode = 'best-overall-first';
+const EMPTY_SAVED_FORMATION_LIBRARY = createEmptySavedFormationLibrary('1970-01-01T00:00:00.000Z');
 /** @deprecated v0.21 compatibility alias; the UI no longer exposes strategies. */
 export const DEFAULT_ROSTER_OPTIMIZER_STRATEGY = DEFAULT_OPTIMIZER_ALLOCATION_MODE;
 
@@ -48,13 +58,18 @@ export function RosterOptimizer({
   onAllocationModeChange,
   formationCount,
   onFormationCountChange,
+  savedFormationLibrary = EMPTY_SAVED_FORMATION_LIBRARY,
+  excludeReservedDragons = true,
+  onExcludeReservedDragonsChange = () => undefined,
   result,
+  resultReservationContext = null,
   onResultChange,
   runner: suppliedRunner,
   onOpenFormation,
   onSaveFormation = () => undefined,
   savedFormationLimitReached = false,
   onOpenRoster,
+  onOpenSavedFormations = onOpenRoster,
   onNavigate,
 }: {
   allDragons: Dragon[];
@@ -63,24 +78,37 @@ export function RosterOptimizer({
   onAllocationModeChange: (mode: OptimizerAllocationMode) => void;
   formationCount: number;
   onFormationCountChange: (count: number) => void;
+  savedFormationLibrary?: SavedFormationLibrary;
+  excludeReservedDragons?: boolean;
+  onExcludeReservedDragonsChange?: (exclude: boolean) => void;
   result: FlexiblePowerAwareOptimizationResult | null;
-  onResultChange: (result: FlexiblePowerAwareOptimizationResult) => void;
+  resultReservationContext?: OptimizerReservationRunContext | null;
+  onResultChange: (result: FlexiblePowerAwareOptimizationResult, reservationContext: OptimizerReservationRunContext) => void;
   runner?: RosterOptimizerRunner;
   onOpenFormation: (arrangement: FormationArrangement) => void;
   onSaveFormation?: (arrangement: FormationArrangement) => void;
   savedFormationLimitReached?: boolean;
   onOpenRoster: () => void;
+  onOpenSavedFormations?: () => void;
   onNavigate?: NavigateToRoute;
 }) {
   const [ownedRunner] = useState<RosterOptimizerRunner | null>(() =>
     suppliedRunner ? null : new RosterOptimizerClient(),
   );
   const runner = suppliedRunner ?? ownedRunner!;
+  const reservedFormations = useMemo(() => getReservedFormationRecords(savedFormationLibrary), [savedFormationLibrary]);
+  const reservationExclusionEnabled = reservedFormations.length > 0 && excludeReservedDragons;
+  const projection = useMemo(() => projectReservedOptimizerRoster({
+    dragons: allDragons,
+    roster,
+    library: savedFormationLibrary,
+    exclusionEnabled: reservationExclusionEnabled,
+  }), [allDragons, reservationExclusionEnabled, roster, savedFormationLibrary]);
   const snapshot = useMemo(
-    () => buildOptimizerRosterSnapshot(allDragons, roster),
-    [allDragons, roster],
+    () => buildOptimizerRosterSnapshot(allDragons, projection.effectiveRoster),
+    [allDragons, projection.effectiveRoster],
   );
-  const maximumCount = maximumOptimizerFormationCount(snapshot.length);
+  const maximumCount = projection.maximumFormationCount;
   const effectiveCount = clampOptimizerFormationCount(formationCount, snapshot.length);
   const requestFingerprint = useMemo(
     () => createRosterOptimizerRequestFingerprint(
@@ -90,14 +118,26 @@ export function RosterOptimizer({
     ),
     [allocationMode, effectiveCount, snapshot],
   );
+  const reservationContextFingerprint = useMemo(() => buildOptimizerReservationContextFingerprint({
+    dragons: allDragons,
+    projection,
+    exclusionEnabled: reservationExclusionEnabled,
+    allocationMode,
+    formationCount: effectiveCount,
+    optimizerRequestFingerprint: requestFingerprint,
+  }), [allocationMode, allDragons, effectiveCount, projection, requestFingerprint, reservationExclusionEnabled]);
   const latestRequestFingerprint = useRef(requestFingerprint);
+  const latestReservationContextFingerprint = useRef(reservationContextFingerprint);
   const activeRunId = useRef(0);
   const isMounted = useRef(true);
   const [status, setStatus] = useState<'idle' | 'running' | 'success' | 'error'>('idle');
   const [progress, setProgress] = useState<OptimizerRunProgress | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [countNotice, setCountNotice] = useState<string | null>(null);
-  const isStale = Boolean(result && result.requestFingerprint !== requestFingerprint);
+  const isStale = Boolean(result && (
+    result.requestFingerprint !== requestFingerprint ||
+    (resultReservationContext && resultReservationContext.fingerprint !== reservationContextFingerprint)
+  ));
   const eligibleCounts = rarityCounts(snapshot.map((dragon) => dragon.rarity));
 
   useEffect(() => {
@@ -112,7 +152,8 @@ export function RosterOptimizer({
 
   useEffect(() => {
     latestRequestFingerprint.current = requestFingerprint;
-  }, [requestFingerprint]);
+    latestReservationContextFingerprint.current = reservationContextFingerprint;
+  }, [requestFingerprint, reservationContextFingerprint]);
 
   useEffect(() => {
     if (formationCount === effectiveCount) return;
@@ -120,14 +161,17 @@ export function RosterOptimizer({
     if (effectiveCount > 0) queueMicrotask(() => {
       if (!isMounted.current) return;
       setCountNotice(
-        `Your eligible roster now supports ${effectiveCount} ${armyWord(effectiveCount)}. The selected count was adjusted to ${effectiveCount}.`,
+        reservationExclusionEnabled
+          ? `Reserved-dragon exclusions leave ${projection.eligibleAfterExclusions} eligible dragons. Your roster now supports ${effectiveCount} ${armyWord(effectiveCount)}; the selected count was adjusted to ${effectiveCount}.`
+          : `Your eligible roster now supports ${effectiveCount} ${armyWord(effectiveCount)}. The selected count was adjusted to ${effectiveCount}.`,
       );
     });
-  }, [effectiveCount, formationCount, onFormationCountChange]);
+  }, [effectiveCount, formationCount, onFormationCountChange, projection.eligibleAfterExclusions, reservationExclusionEnabled]);
 
   const run = async () => {
     if (effectiveCount < 1) return;
     const activeFingerprint = requestFingerprint;
+    const activeReservationFingerprint = reservationContextFingerprint;
     const runId = activeRunId.current + 1;
     activeRunId.current = runId;
     setStatus('running');
@@ -139,7 +183,7 @@ export function RosterOptimizer({
     setError(null);
     try {
       const response = await runner.run(
-        roster,
+        projection.effectiveRoster,
         allocationMode,
         effectiveCount,
         setProgress,
@@ -148,6 +192,7 @@ export function RosterOptimizer({
         !isMounted.current ||
         activeRunId.current !== runId ||
         latestRequestFingerprint.current !== activeFingerprint ||
+        latestReservationContextFingerprint.current !== activeReservationFingerprint ||
         response.requestFingerprint !== activeFingerprint
       ) {
         setStatus('idle');
@@ -160,7 +205,19 @@ export function RosterOptimizer({
       if (!('allocationMode' in response) || response.contractVersion !== 6) {
         throw new Error('The optimizer response contract is stale. Refresh and try again.');
       }
-      onResultChange(response);
+      onResultChange(response, {
+        version: OPTIMIZER_RESERVATION_CONTEXT_VERSION,
+        fingerprint: activeReservationFingerprint,
+        exclusionEnabled: reservationExclusionEnabled,
+        reservedFormationCount: reservedFormations.length,
+        reservedDragonCount: projection.reservedDragonIds.length,
+        resolvedExcludedDragonIds: projection.resolvedExcludedDragonIds,
+        unavailableReservedDragonIds: projection.unavailableReservedDragonIds,
+        eligibleDragonCount: projection.eligibleAfterExclusions,
+        requestedFormationCount: effectiveCount,
+        generatedFormationCount: response.generatedFormationCount,
+        reservations: reservationPresentationEntries(savedFormationLibrary, projection),
+      });
       setStatus('success');
     } catch (runError) {
       if (!isMounted.current || activeRunId.current !== runId) return;
@@ -204,6 +261,18 @@ export function RosterOptimizer({
         <Metric label="Legendary" value={eligibleCounts.Legendary} />
         <Metric label="Epic" value={eligibleCounts.Epic} />
         <Metric label="Rare" value={eligibleCounts.Rare} />
+      </div>
+      <div className="optimizer-reservation-control">
+        <label className={reservedFormations.length === 0 ? 'checkbox-row is-disabled' : 'checkbox-row'}>
+          <input
+            type="checkbox"
+            checked={reservedFormations.length > 0 && excludeReservedDragons}
+            disabled={reservedFormations.length === 0 || status === 'running'}
+            onChange={(event) => { setCountNotice(null); onExcludeReservedDragonsChange(event.target.checked); }}
+          />
+          <span><strong>Exclude reserved dragons</strong><small>{reservedFormations.length === 0 ? 'No Saved Formations are currently reserved.' : 'Temporarily keep reserved dragons out of optimizer recommendations without changing reservations.'}</small></span>
+        </label>
+        {reservedFormations.length > 0 ? <div className="optimizer-reservation-summary" aria-live="polite"><p><strong>{projection.reservedDragonIds.length} dragons reserved in {reservedFormations.length} {reservedFormations.length === 1 ? 'formation' : 'formations'}.</strong></p><p>{reservationExclusionEnabled ? `${projection.resolvedExcludedDragonIds.length} currently owned dragons will be excluded.` : 'Reserved dragons will be included in this run.'}</p>{projection.unavailableReservedDragonIds.length > 0 ? <p>{projection.unavailableReservedDragonIds.length} reserved {projection.unavailableReservedDragonIds.length === 1 ? 'dragon is' : 'dragons are'} not currently owned and will not be described as excluded.</p> : null}<p>{projection.eligibleAfterExclusions} dragons remain eligible, allowing up to {projection.maximumFormationCount} {armyWord(projection.maximumFormationCount)}.</p><button type="button" className="text-button" onClick={onOpenSavedFormations}>Review Saved Formations</button></div> : null}
       </div>
       <p className="optimizer-policy-note">
         Recommendations use owned dragons, current Star Ranks, Dragon Levels, and active Habit Levels.{' '}
@@ -255,10 +324,12 @@ export function RosterOptimizer({
 
       {snapshot.length < 3 ? (
         <div className="optimizer-unavailable" role="status">
-          <p>You need {3 - snapshot.length} more eligible {dragonWord(3 - snapshot.length)} to build one complete army.</p>
-          <button type="button" className="secondary-button" onClick={onOpenRoster}>
-            Go to My Roster <ChevronRight size={16} aria-hidden="true" />
-          </button>
+          <p>{reservationExclusionEnabled ? <><strong>Only {snapshot.length} eligible {dragonWord(snapshot.length)} remain.</strong> You need {3 - snapshot.length} more to build one complete army; reserved-dragon exclusions are reducing availability.</> : <>You need {3 - snapshot.length} more eligible {dragonWord(3 - snapshot.length)} to build one complete army.</>}</p>
+          <div className="button-row">
+            {reservationExclusionEnabled ? <button type="button" className="primary-button" onClick={() => onExcludeReservedDragonsChange(false)}>Include reserved dragons</button> : null}
+            {reservedFormations.length > 0 ? <button type="button" className="secondary-button" onClick={onOpenSavedFormations}>Review reservations</button> : null}
+            <button type="button" className="secondary-button" onClick={onOpenRoster}>Go to My Roster <ChevronRight size={16} aria-hidden="true" /></button>
+          </div>
         </div>
       ) : (
         <div className="optimizer-actions">
@@ -302,7 +373,7 @@ export function RosterOptimizer({
       {error ? <div className="status-message error" role="alert">{error}</div> : null}
       {isStale ? (
         <div className="optimizer-stale" role="status">
-          Your roster progression, army count, or allocation mode changed. Run the optimizer again to refresh this result.
+          Your roster progression, army count, or allocation mode changed; the effective eligible roster or reservation exclusions may also have changed. Run the optimizer again to refresh this result.
         </div>
       ) : null}
       {result ? (
@@ -310,6 +381,8 @@ export function RosterOptimizer({
           result={result}
           allDragons={allDragons}
           snapshot={snapshot}
+          reservationContext={resultReservationContext}
+          savedFormationLibrary={savedFormationLibrary}
           stale={isStale}
           onOpenFormation={onOpenFormation}
           onSaveFormation={onSaveFormation}
@@ -358,6 +431,8 @@ function OptimizerResultView({
   result,
   allDragons,
   snapshot,
+  reservationContext,
+  savedFormationLibrary,
   stale,
   onOpenFormation,
   onSaveFormation,
@@ -366,6 +441,8 @@ function OptimizerResultView({
   result: FlexiblePowerAwareOptimizationResult;
   allDragons: Dragon[];
   snapshot: OptimizerRosterDragon[];
+  reservationContext: OptimizerReservationRunContext | null;
+  savedFormationLibrary: SavedFormationLibrary;
   stale: boolean;
   onOpenFormation: (arrangement: FormationArrangement) => void;
   onSaveFormation: (arrangement: FormationArrangement) => void;
@@ -408,6 +485,7 @@ function OptimizerResultView({
         <Metric label="Average Formation Rating" value={collection.averageRating.toFixed(1)} />
         <Metric label="Minimum Formation Rating" value={collection.minimumRating} />
       </div>
+      {reservationContext ? <ReservationRunSummary context={reservationContext} dragonsById={dragonsById} library={savedFormationLibrary} /> : null}
       <p className="optimizer-tier-summary"><strong>Rating tiers:</strong> {tierSummary(collection.tierDistribution)}</p>
       <div className="optimizer-formation-grid">
         {result.formations.map((formation) => (
@@ -572,6 +650,26 @@ function BestOverallScoreDetails({
       </dl>
     </details>
   );
+}
+
+function ReservationRunSummary({ context, dragonsById, library }: {
+  context: OptimizerReservationRunContext;
+  dragonsById: ReadonlyMap<string, Dragon>;
+  library: SavedFormationLibrary;
+}) {
+  const currentNames = new Map(library.formations.map((record) => [record.id, record.name]));
+  return <div className="optimizer-reservation-result-summary">
+    <p><strong>{context.exclusionEnabled ? `${context.resolvedExcludedDragonIds.length} reserved dragons were excluded from this run.` : 'Reserved dragons were included in this run.'}</strong></p>
+    <dl className="optimizer-reservation-run-metrics">
+      <div><dt>Reserved formations</dt><dd>{context.reservedFormationCount}</dd></div>
+      <div><dt>Reserved dragons</dt><dd>{context.reservedDragonCount}</dd></div>
+      <div><dt>Actually excluded</dt><dd>{context.resolvedExcludedDragonIds.length}</dd></div>
+      <div><dt>Unavailable reserved</dt><dd>{context.unavailableReservedDragonIds.length}</dd></div>
+      <div><dt>Eligible for solve</dt><dd>{context.eligibleDragonCount}</dd></div>
+      <div><dt>Requested / generated</dt><dd>{context.requestedFormationCount} / {context.generatedFormationCount}</dd></div>
+    </dl>
+    {context.reservations.length > 0 ? <details className="optimizer-reserved-details"><summary>Reserved and excluded dragons</summary><ul>{context.reservations.map((reservation) => <li key={`${reservation.formationId}:${reservation.dragonId}`}><strong>{dragonsById.get(reservation.dragonId)?.name ?? reservation.dragonId}</strong><span>{currentNames.get(reservation.formationId) ?? reservation.formationName}</span><span>{reservation.eligible ? context.exclusionEnabled ? 'Currently owned · excluded' : 'Currently owned · included' : 'Not currently optimizer-eligible'}</span></li>)}</ul></details> : null}
+  </div>;
 }
 
 function UnusedDragons({

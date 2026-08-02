@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.1 - 2026-08-01
+
+- Added whole-formation reservations for current-roster Saved Formations. A reserved record owns all three exact dragon identities, overlapping reservations are blocked with formation-specific conflict actions, and planning formations cannot reserve roster dragons.
+- Advanced the Saved Formation Library to schema 2 with deterministic `reserved` state across browser storage, JSON import/export, semantic fingerprints, conflict detection, and account synchronization. Schema-1 browser and account documents normalize in memory to unreserved schema 2 without changing IDs, order, snapshots, or timestamps; the historical schema-1 audit remains unchanged.
+- Added an Exclude reserved dragons optimizer preference that defaults on when reservations exist, remains in memory for the app session, and can be temporarily disabled without changing the Saved Formation Library. A deterministic immutable eligibility projection removes only currently owned reserved dragons before the unchanged optimizer-v6 request is built.
+- Added live reserved/eligible/maximum-army summaries, deterministic formation-count clamping, fewer-than-three recovery actions, stale-result context identity, and per-run reserved/excluded detail. Excluded dragons never appear as ordinary unused eligible dragons.
+- Preserved optimizer-v6 scoring, candidate evaluation, allocation comparators, solution/result hashes for no-exclusion runs, Formation Rating v3, reliability, and Estimated Power. No Supabase table, migration, policy, ownership, or authentication behavior changed.
+
 ## 0.23.0 - 2026-08-01
 
 - Added the Saved Formation Library: save exact three-position arrangements from Formation Builder or any current Roster Optimizer mode, then reopen, rename, update, copy, duplicate, reorder, delete, export, or import them from My Roster.

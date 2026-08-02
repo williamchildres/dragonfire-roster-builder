@@ -43,6 +43,83 @@
   --formation-control-gap: 0.45rem;
 }
 
+.saved-reservation-summary,
+.optimizer-reservation-summary,
+.optimizer-reservation-result-summary {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--panel) 92%, var(--fire) 8%);
+}
+
+.saved-formation-card.is-reserved {
+  border-color: color-mix(in srgb, var(--fire) 58%, var(--line-soft));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fire) 25%, transparent);
+}
+
+.saved-card-badges,
+.saved-reserved-badge,
+.saved-reservation-toggle,
+.optimizer-reservation-control .checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.saved-card-badges { flex-wrap: wrap; justify-content: flex-end; }
+.saved-reserved-badge {
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fire) 18%, transparent);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.saved-reservation-toggle,
+.optimizer-reservation-control .checkbox-row {
+  align-items: flex-start;
+  padding: 0.85rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.65rem;
+  cursor: pointer;
+}
+
+.saved-reservation-toggle input,
+.optimizer-reservation-control input { margin-top: 0.18rem; }
+.saved-reservation-toggle span,
+.optimizer-reservation-control .checkbox-row span { display: grid; gap: 0.2rem; }
+.saved-reservation-toggle small,
+.optimizer-reservation-control small { color: var(--muted); line-height: 1.4; }
+.saved-planning-reservation-note { color: var(--muted); }
+.saved-reserved-dragons ul,
+.optimizer-reserved-details ul { display: grid; gap: 0.4rem; padding: 0; list-style: none; }
+.saved-reserved-dragons li,
+.optimizer-reserved-details li { display: flex; justify-content: space-between; gap: 0.75rem; }
+.saved-reserved-dragons li span:last-child,
+.optimizer-reserved-details li span:last-child { color: var(--muted); text-align: right; }
+.optimizer-reservation-control { display: grid; gap: 0.65rem; margin-block: 1rem; }
+.optimizer-reservation-control .is-disabled { cursor: not-allowed; opacity: 0.72; }
+.optimizer-reservation-summary { display: grid; gap: 0.25rem; }
+.optimizer-reservation-summary p { margin: 0; }
+.optimizer-reservation-run-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.65rem; }
+.optimizer-reservation-run-metrics div { display: grid; gap: 0.15rem; }
+.optimizer-reservation-run-metrics dt { color: var(--muted); font-size: 0.78rem; }
+.optimizer-reservation-run-metrics dd { margin: 0; font-weight: 700; }
+.optimizer-reserved-details { margin-top: 0.75rem; }
+.import-reservation-conflicts { display: grid; gap: 0.75rem; padding: 0.85rem; border: 1px solid var(--red); border-radius: 0.65rem; }
+.import-reservation-conflicts h3,
+.import-reservation-conflicts p { margin: 0; }
+
+@media (max-width: 480px) {
+  .saved-reserved-dragons li,
+  .optimizer-reserved-details li { align-items: flex-start; flex-direction: column; gap: 0.15rem; }
+  .saved-reserved-dragons li span:last-child,
+  .optimizer-reserved-details li span:last-child { text-align: left; }
+  .optimizer-reservation-run-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* Saved Formation Library */
 .roster-hub-header,
 .saved-formations-workspace,

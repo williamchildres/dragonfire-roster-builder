@@ -1,6 +1,6 @@
 # Flexible Power-Aware Roster Optimizer
 
-Dragonfire Lab v0.22.1 uses live optimizer contract 6 and exposes three allocation modes over a selectable 1–11 armies. Best Overall First is the default for a fresh session. Historical v0.21 and optimizer-v5 artifacts remain committed evidence, not live contracts.
+Dragonfire Lab v0.23.1 uses live optimizer contract 6 and exposes three allocation modes over a selectable 1–11 armies. Best Overall First is the default for a fresh session. Historical v0.21 and optimizer-v5 artifacts remain committed evidence, not live contracts.
 
 ## Eligibility and count
 
@@ -10,7 +10,17 @@ Only owned, optimizer-eligible dragons count. The maximum is:
 Math.min(11, Math.floor(eligibleDragonCount / 3))
 ```
 
-Ten is the initial selection when at least 30 dragons are eligible; otherwise the maximum is selected. Roster changes recompute and clamp the count. Count, mode, eligible progression, scoring profile, model identity, or rating-contract changes invalidate the prior request. No optimizer selection is persisted to roster or account schemas.
+Ten is the initial selection when at least 30 dragons are eligible; otherwise the maximum is selected. Roster or reservation-exclusion changes recompute and clamp the count. Count, mode, effective eligible progression, scoring profile, model identity, or rating-contract changes invalidate the prior request. No optimizer selection is persisted to roster or account schemas.
+
+## Reserved-dragon eligibility projection
+
+When at least one current-roster Saved Formation is reserved, **Exclude reserved dragons** defaults on. The preference follows the existing optimizer workspace convention: it remains in memory across app navigation, is not written to browser storage, and is not synchronized as Saved Formation data. Turning it off temporarily includes reserved dragons without changing reservations.
+
+Before the unchanged optimizer-v6 request is built, a deterministic immutable projection intersects sorted reserved IDs with the currently owned optimizer-eligible roster. Only that intersection is marked ineligible. Unowned reserved dragons remain visible as unavailable reservations and are never described as actively excluded. The source roster is not mutated. The live maximum is `min(11, floor(eligibleAfterExclusions / 3))`; an excessive selected count is clamped with an accessible notice, and fewer than three eligible dragons disables optimization with actions to include reserved dragons or review reservations.
+
+The client identity `optimizer-reservation-context-v1` includes exclusion enabled/disabled, sorted actually excluded IDs, the effective eligible-roster fingerprint, allocation mode, formation count, and the existing optimizer-v6 request identity. It excludes names, display order, unrelated unreserved records, card state, and sync status. Therefore rename/reorder alone does not stale a result, while reservation, arrangement, ownership, or exclusion changes do when they alter effective inputs. Core optimizer-v6 solution and result hashes remain untouched.
+
+Run results report reserved formation/dragon counts, actually excluded and unavailable reserved counts, eligible dragons used for the solve, requested/generated armies, and a collapsible formation-attributed dragon list. Actually excluded dragons are not listed as ordinary unused eligible dragons. When exclusion is off, the result states that reserved dragons were included.
 
 ## One shared candidate pool
 

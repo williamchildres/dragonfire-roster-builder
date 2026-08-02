@@ -1,7 +1,8 @@
 import type { HabitLevel } from '../models/dragon';
 import type { FormationArrangement } from '../services/formationArrangement';
 
-export const SAVED_FORMATION_LIBRARY_SCHEMA_VERSION = 1 as const;
+export const LEGACY_SAVED_FORMATION_LIBRARY_SCHEMA_VERSION = 1 as const;
+export const SAVED_FORMATION_LIBRARY_SCHEMA_VERSION = 2 as const;
 export const SAVED_FORMATION_LIBRARY_FORMAT = 'dragonfire-lab-saved-formations' as const;
 export const SAVED_FORMATIONS_STORAGE_KEY = 'dragonfire-roster-lab:saved-formations' as const;
 export const MAX_SAVED_FORMATIONS = 50 as const;
@@ -23,6 +24,7 @@ export interface SavedFormationRecord {
   arrangement: FormationArrangement;
   evaluationMode: SavedFormationEvaluationMode;
   source: SavedFormationSource;
+  reserved: boolean;
   savedProgressionByDragonId: Record<string, SavedFormationProgressionEntry>;
   createdAt: string;
   updatedAt: string;
@@ -68,4 +70,12 @@ export interface SavedFormationExport {
   schemaVersion: typeof SAVED_FORMATION_LIBRARY_SCHEMA_VERSION;
   exportedAt: string;
   formations: SavedFormationRecord[];
+}
+
+export interface SavedFormationReservationConflict {
+  dragonId: string;
+  formationId: string;
+  formationName: string;
+  conflictingFormationId: string;
+  conflictingFormationName: string;
 }

@@ -8,6 +8,7 @@ import {
   RosterOptimizer,
 } from '../app/RosterOptimizer';
 import { dragons } from '../data/dragons';
+import type { OwnedDragon } from '../models/dragon';
 import {
   buildOptimizerRosterSnapshot,
   createRosterOptimizerFingerprint,
@@ -31,6 +32,11 @@ import {
 } from '../optimizer/rosterOptimizerTypes';
 import type { FormationArrangement } from '../services/formationArrangement';
 import { createEmptyRoster } from '../services/rosterStorage';
+import { createEmptySavedFormationLibrary } from '../savedFormations/contract';
+import { createSavedFormation } from '../savedFormations/crud';
+import { setFormationReserved } from '../savedFormations/reservations';
+import type { SavedFormationLibrary } from '../savedFormations/types';
+import type { OptimizerReservationRunContext } from '../optimizer/reservedOptimizerProjection';
 
 describe('Roster Optimizer v6 workspace', () => {
   it('defaults to 10 Best Overall First and exposes all three precise modes', () => {
@@ -43,6 +49,25 @@ describe('Roster Optimizer v6 workspace', () => {
     expect(screen.queryByText(/Primary|Backup|Best 10|Rarity-Priority/i)).not.toBeInTheDocument();
     expect(screen.getByLabelText('Number of armies')).toHaveValue('10');
     expect(screen.getByText('10 armies use 30 of your 33 eligible dragons.')).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: /Exclude reserved dragons/i })).toBeDisabled();
+  });
+
+  it('defaults reservation exclusions on, projects the Worker roster, and can temporarily include reservations', async () => {
+    const roster = ownedRoster(33);
+    const runner = dynamicRunner();
+    renderOptimizer({ roster, runner, savedFormationLibrary: reservedLibrary(roster) });
+    const toggle = screen.getByRole('checkbox', { name: /Exclude reserved dragons/i });
+    expect(toggle).toBeChecked();
+    expect(screen.getByText(/3 dragons reserved in 1 formation/i)).toBeInTheDocument();
+    expect(screen.getByText(/3 currently owned dragons will be excluded/i)).toBeInTheDocument();
+    expect(screen.getByText(/30 dragons remain eligible, allowing up to 10 armies/i)).toBeInTheDocument();
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 10 armies/i }));
+    await screen.findByText(/3 reserved dragons were excluded from this run/i);
+    const projectedRoster = runner.run.mock.calls[0]![0] as Record<string, OwnedDragon>;
+    for (const dragon of dragons.slice(0, 3)) expect(projectedRoster[dragon.id]!.owned).toBe(false);
+    await userEvent.setup().click(toggle);
+    expect(screen.getByText(/Reserved dragons will be included in this run/i)).toBeInTheDocument();
+    expect(screen.getByText(/reservation exclusions may also have changed/i)).toBeInTheDocument();
   });
 
   it('offers every count through the dynamic maximum and passes count/mode to the Worker runner', async () => {
@@ -262,14 +287,16 @@ function renderOptimizer({
   onOpenFormation = vi.fn(),
   onOpenRoster = vi.fn(),
   onSaveFormation = vi.fn(),
+  savedFormationLibrary = createEmptySavedFormationLibrary(),
 }: {
   roster: ReturnType<typeof ownedRoster>;
   runner?: RosterOptimizerRunner;
   onOpenFormation?: (arrangement: FormationArrangement) => void;
   onOpenRoster?: () => void;
   onSaveFormation?: (arrangement: FormationArrangement) => void;
+  savedFormationLibrary?: SavedFormationLibrary;
 }) {
-  return render(component(roster, runner, onOpenFormation, onOpenRoster, onSaveFormation));
+  return render(component(roster, runner, onOpenFormation, onOpenRoster, onSaveFormation, savedFormationLibrary));
 }
 
 function component(
@@ -278,6 +305,7 @@ function component(
   onOpenFormation: (arrangement: FormationArrangement) => void = vi.fn(),
   onOpenRoster: () => void = vi.fn(),
   onSaveFormation: (arrangement: FormationArrangement) => void = vi.fn(),
+  savedFormationLibrary: SavedFormationLibrary = createEmptySavedFormationLibrary(),
 ) {
   return (
     <OptimizerTestHarness
@@ -286,6 +314,7 @@ function component(
       onOpenFormation={onOpenFormation}
       onOpenRoster={onOpenRoster}
       onSaveFormation={onSaveFormation}
+      savedFormationLibrary={savedFormationLibrary}
     />
   );
 }
@@ -296,18 +325,22 @@ function OptimizerTestHarness({
   onOpenFormation,
   onOpenRoster,
   onSaveFormation,
+  savedFormationLibrary,
 }: {
   roster: ReturnType<typeof ownedRoster>;
   runner: RosterOptimizerRunner;
   onOpenFormation: (arrangement: FormationArrangement) => void;
   onOpenRoster: () => void;
   onSaveFormation: (arrangement: FormationArrangement) => void;
+  savedFormationLibrary: SavedFormationLibrary;
 }) {
   const [allocationMode, setAllocationMode] = useState<OptimizerAllocationMode>(
     DEFAULT_OPTIMIZER_ALLOCATION_MODE,
   );
   const [formationCount, setFormationCount] = useState(10);
   const [result, setResult] = useState<FlexiblePowerAwareOptimizationResult | null>(null);
+  const [resultReservationContext, setResultReservationContext] = useState<OptimizerReservationRunContext | null>(null);
+  const [excludeReservedDragons, setExcludeReservedDragons] = useState(true);
   return (
     <RosterOptimizer
       allDragons={dragons}
@@ -316,14 +349,26 @@ function OptimizerTestHarness({
       onAllocationModeChange={setAllocationMode}
       formationCount={formationCount}
       onFormationCountChange={setFormationCount}
+      savedFormationLibrary={savedFormationLibrary}
+      excludeReservedDragons={excludeReservedDragons}
+      onExcludeReservedDragonsChange={setExcludeReservedDragons}
       result={result}
-      onResultChange={setResult}
+      resultReservationContext={resultReservationContext}
+      onResultChange={(next, context) => { setResult(next); setResultReservationContext(context); }}
       runner={runner}
       onOpenFormation={onOpenFormation}
       onOpenRoster={onOpenRoster}
       onSaveFormation={onSaveFormation}
     />
   );
+}
+
+function reservedLibrary(roster: ReturnType<typeof ownedRoster>) {
+  const id = '00000000-0000-4000-8000-000000000091';
+  const library = createSavedFormation(createEmptySavedFormationLibrary(), { name: 'Fire Vanguard', arrangement: {
+    'left-flank': dragons[0]!.id, vanguard: dragons[1]!.id, 'right-flank': dragons[2]!.id,
+  }, evaluationMode: 'current-roster', source: 'formation-builder', roster, id });
+  return setFormationReserved(library, id, true);
 }
 
 function dynamicRunner(): RosterOptimizerRunner & { run: ReturnType<typeof vi.fn> } {

@@ -1,6 +1,6 @@
 # Supabase Saved Formation Library
 
-Saved formations use `public.user_saved_formations`, a separate account document from `public.user_rosters`. Apply `supabase/migrations/202608010001_create_user_saved_formations.sql` after the two existing roster migrations and before deploying the v0.23.0 frontend.
+Saved formations use `public.user_saved_formations`, a separate account document from `public.user_rosters`. The existing table already supports v0.23.1 schema-2 JSON and reservation synchronization through `formations_schema_version`, `formations`, `client_updated_at`, and `updated_at`; no new migration or policy change is required. Apply `supabase/migrations/202608010001_create_user_saved_formations.sql` only where the original v0.23.0 table has not yet been installed.
 
 The browser client uses only the Supabase publishable key. It never uses service-role credentials, and exports contain no account ID or email address.
 
@@ -25,7 +25,7 @@ where schemaname = 'public'
 order by policyname;
 ```
 
-Use two disposable authenticated test users to verify that each can select, insert, update, and delete only its own row. An anonymous request and a cross-user request must be denied. Confirm that updates advance `updated_at`, that `client_updated_at` retains the client timestamp, and that `formations` is an object with format `dragonfire-lab-saved-formations` and schema version `1`.
+Use two disposable authenticated test users to verify that each can select, insert, update, and delete only its own row. An anonymous request and a cross-user request must be denied. Confirm that updates advance `updated_at`, that `client_updated_at` retains the client timestamp, and that `formations` is an object with format `dragonfire-lab-saved-formations` and schema version `2`. Existing schema-1 rows must load unreserved and persist schema 2 only on the next actual account write. Malformed schema-2 `reserved` values and overlapping reserved records must be rejected without changing browser data.
 
 ## Rollback and deployment ordering
 

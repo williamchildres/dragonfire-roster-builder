@@ -4,5 +4,6 @@ export * from './crud';
 export * from './evaluation';
 export * from './importExport';
 export * from './progression';
+export * from './reservations';
 export * from './storage';
 export * from './types';

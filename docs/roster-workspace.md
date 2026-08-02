@@ -1,6 +1,6 @@
 # Roster workspace
 
-Dragonfire Lab 0.23.0 presents My Dragons and Saved Formations as accessible tabs inside My Roster. The authoritative roster and separate Saved Formation Library remain owned by `App.tsx`; workspace components receive current documents and explicit callbacks rather than creating cloud clients.
+Dragonfire Lab 0.23.1 presents My Dragons and Saved Formations as accessible tabs inside My Roster. The authoritative roster and separate Saved Formation Library remain owned by `App.tsx`; workspace components receive current documents and explicit callbacks rather than creating cloud clients.
 
 Roster Optimizer and Formation Builder My Roster mode share the same authoritative owned/hatched eligibility helper. Optimizer roster snapshots use stable dragon ID, rarity, Star Rank, and Dragon Level; notes, Habit Levels, filters, sorting, responsive mode, and selection never affect ranking. The separate request fingerprint also includes strategy, optimizer contract version, and Formation Rating contract. Power-Aware fingerprints additionally include Estimated Power version, model hash, and observation hash.
 
@@ -37,8 +37,8 @@ The editor always describes browser autosave. It mentions active account synchro
 - immediate browser persistence
 - 750 ms serialized account-save debounce
 - conflict, migration, offline, retry, sign-out retention, import, and clear-local behavior
-- Saved Formation Library schema 1 remains separate from roster schema 5 and `user_rosters`
+- Saved Formation Library schema 2 remains separate from roster schema 5 and `user_rosters`; schema 1 remains readable and normalizes unreserved
 - signed-out formations remain browser-local; signed-in sync uses the independent `user_saved_formations` document
-- formation conflicts, writes, fingerprints, imports, and reordering never affect roster synchronization
+- formation conflicts, writes, reservation fingerprints, imports, and reordering never affect roster synchronization
 - no direct Supabase calls from roster UI components
 - Estimated Power is runtime-only; local/cloud roster schema 5 remains unchanged, while Saved Formations add only their separate migration

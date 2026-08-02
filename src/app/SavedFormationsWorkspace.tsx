@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Copy, Download, Edit3, ExternalLink, Save, Trash2, Upload, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, Copy, Download, Edit3, ExternalLink, Save, ShieldCheck, Trash2, Upload, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent, type ReactNode } from 'react';
 import type { AccountSession } from '../cloud/types';
 import { dragons } from '../data/dragons';
@@ -21,10 +21,19 @@ import {
   mergeSavedFormationImport,
   previewSavedFormationMerge,
   replaceSavedFormationImport,
+  previewSavedFormationReplace,
   serializeSavedFormationExport,
   validateSavedFormationImport,
   type SavedFormationMergePreview,
+  type SavedFormationImportReservationDecision,
+  type SavedFormationImportReservationConflict,
 } from '../savedFormations/importExport';
+import {
+  getReservedDragonIds,
+  getReservedFormationRecords,
+  SavedFormationReservationConflictError,
+  setFormationReserved,
+} from '../savedFormations/reservations';
 import { savedFormationSyncStatusLabel, type SavedFormationComparison, type SavedFormationSyncStatus } from '../hooks/useSavedFormationSync';
 
 export function SavedFormationsWorkspace({
@@ -62,15 +71,32 @@ export function SavedFormationsWorkspace({
 }) {
   const [renameRecord, setRenameRecord] = useState<SavedFormationRecord | null>(null);
   const [renameValue, setRenameValue] = useState('');
-  const [importState, setImportState] = useState<{ records: SavedFormationRecord[]; preview: SavedFormationMergePreview; includeDuplicates: boolean; replaceConfirm: boolean } | null>(null);
+  const [importState, setImportState] = useState<{
+    records: SavedFormationRecord[];
+    preview: SavedFormationMergePreview;
+    includeDuplicates: boolean;
+    replaceConfirm: boolean;
+    reservationDecisions: Record<string, SavedFormationImportReservationDecision>;
+  } | null>(null);
   const [localError, setLocalError] = useState<string | null>(null);
+  const [conflictTarget, setConflictTarget] = useState<{ id: string; name: string } | null>(null);
   const evaluations = useMemo(() => library.formations.map((record) => evaluateSavedFormation({ record, roster })), [library, roster]);
   const atLimit = library.formations.length >= MAX_SAVED_FORMATIONS;
   const namesById = useMemo(() => new Map(dragons.map((dragon) => [dragon.id, dragon.name])), []);
+  const reservedFormations = useMemo(() => getReservedFormationRecords(library), [library]);
+  const reservedDragonIds = useMemo(() => getReservedDragonIds(library), [library]);
+  const ownedReservedCount = reservedDragonIds.filter((dragonId) => roster[dragonId]?.owned).length;
 
   const apply = (action: () => SavedFormationLibrary, message: string) => {
-    try { onLibraryChange(action(), message); setLocalError(null); }
-    catch (error) { setLocalError(error instanceof Error ? error.message : 'Saved Formations could not be updated.'); }
+    try { onLibraryChange(action(), message); setLocalError(null); setConflictTarget(null); }
+    catch (error) {
+      if (error instanceof SavedFormationReservationConflictError) {
+        const conflict = error.conflicts[0]!;
+        const dragonNames = error.conflicts.map((item) => namesById.get(item.dragonId) ?? item.dragonId).join(', ');
+        setLocalError(`${dragonNames} ${error.conflicts.length === 1 ? 'is' : 'are'} already reserved by “${conflict.conflictingFormationName}”.`);
+        setConflictTarget({ id: conflict.conflictingFormationId, name: conflict.conflictingFormationName });
+      } else setLocalError(error instanceof Error ? error.message : 'Saved Formations could not be updated.');
+    }
   };
   const exportLibrary = () => {
     const blob = new Blob([serializeSavedFormationExport(library)], { type: 'application/json' });
@@ -87,7 +113,7 @@ export function SavedFormationsWorkspace({
     if (!file) return;
     const result = validateSavedFormationImport(await file.text());
     if (!result.ok || !result.formations) { setLocalError(result.errors.join(' ')); return; }
-    setImportState({ records: result.formations, preview: previewSavedFormationMerge(library, result.formations), includeDuplicates: false, replaceConfirm: false });
+    setImportState({ records: result.formations, preview: previewSavedFormationMerge(library, result.formations), includeDuplicates: false, replaceConfirm: false, reservationDecisions: {} });
   };
 
   return (
@@ -104,9 +130,16 @@ export function SavedFormationsWorkspace({
           <label className="file-button"><Upload size={17} aria-hidden="true" /> Import library<input type="file" accept="application/json,.json" onChange={(event) => void importFile(event)} /></label>
         </div>
       </div>
+      <p className="saved-reservation-summary" aria-live="polite">
+        <strong>{reservedFormations.length} reserved {reservedFormations.length === 1 ? 'formation' : 'formations'}</strong>
+        {' · '}{reservedDragonIds.length} reserved {reservedDragonIds.length === 1 ? 'dragon' : 'dragons'}
+        {' · '}{ownedReservedCount} currently owned
+        {reservedDragonIds.length - ownedReservedCount > 0 ? ` · ${reservedDragonIds.length - ownedReservedCount} unavailable` : ''}
+      </p>
 
       {atLimit ? <p className="status-message info">The 50-formation limit is reached. Delete a formation to make room; updates, rename, reorder, export, and delete remain available.</p> : null}
       {localError || syncError ? <p className="status-message error" role="alert">{localError ?? syncError}</p> : null}
+      {conflictTarget ? <p className="saved-conflict-action"><button type="button" className="text-button" onClick={() => { const element = document.getElementById(`saved-formation-card-${conflictTarget.id}`); element?.scrollIntoView({ block: 'center' }); element?.focus(); }}>Open “{conflictTarget.name}”</button></p> : null}
       <SyncDecisionPanel
         session={session}
         status={syncStatus}
@@ -134,14 +167,21 @@ export function SavedFormationsWorkspace({
           {evaluations.map((evaluation, index) => {
             const { record } = evaluation;
             return (
-              <article className="saved-formation-card" key={record.id} aria-labelledby={`saved-formation-${record.id}`}>
+              <article id={`saved-formation-card-${record.id}`} tabIndex={-1} className={record.reserved ? 'saved-formation-card is-reserved' : 'saved-formation-card'} key={record.id} aria-labelledby={`saved-formation-${record.id}`}>
                 <header>
                   <div>
                     <p className="eyebrow">{record.source === 'optimizer' ? 'Roster Optimizer' : 'Formation Builder'} · {record.evaluationMode === 'planning' ? 'Planning' : 'Current roster'}</p>
                     <h4 id={`saved-formation-${record.id}`}>{record.name}</h4>
                   </div>
-                  <span className={`saved-evaluation-status status-${evaluation.status}`}>{evaluation.status === 'unavailable' ? 'Progression unavailable' : evaluation.rating.tier}</span>
+                  <div className="saved-card-badges">{record.reserved ? <span className="saved-reserved-badge"><ShieldCheck size={15} aria-hidden="true" /> Reserved</span> : null}<span className={`saved-evaluation-status status-${evaluation.status}`}>{evaluation.status === 'unavailable' ? 'Progression unavailable' : evaluation.rating.tier}</span></div>
                 </header>
+                {record.evaluationMode === 'current-roster' ? (
+                  <label className="saved-reservation-toggle">
+                    <input type="checkbox" checked={record.reserved} onChange={(event) => apply(() => setFormationReserved(library, record.id, event.target.checked), event.target.checked ? `Reserved all three dragons in ${record.name}.` : `Released the reservation for ${record.name}.`)} />
+                    <span><strong>Reserve these dragons</strong><small>Keep these three dragons available for this saved formation by excluding them from optimizer runs when reservation exclusions are enabled.</small></span>
+                  </label>
+                ) : <p className="saved-planning-reservation-note">Planning formations cannot reserve roster dragons.</p>}
+                {record.reserved ? <div className="saved-reserved-dragons"><strong>Reserved dragons</strong><ul>{FORMATION_POSITIONS.map((position) => { const dragonId = record.arrangement[position]; return <li key={dragonId}><span>{namesById.get(dragonId) ?? dragonId}</span><span>{roster[dragonId]?.owned ? 'Currently owned' : 'Not currently owned'}</span></li>; })}</ul><p>{evaluation.progression.status === 'unavailable' ? 'Formation progression is unavailable.' : 'Formation progression is available.'}</p></div> : null}
                 <div className="saved-formation-metrics">
                   <div><span>Formation Rating</span><strong>{evaluation.rating.score ?? '—'} · {evaluation.rating.tier}</strong></div>
                   <div><span>Estimated Power</span><strong>{evaluation.estimatedPower?.totalPower.toLocaleString() ?? 'Unavailable'}</strong></div>
@@ -189,7 +229,8 @@ export function SavedFormationsWorkspace({
           {importState.replaceConfirm ? (
             <>
               <p>Replace all {library.formations.length} browser formations with {importState.records.length} imported formations? Export the current library first if you need a backup.</p>
-              <div className="dialog-actions decision-actions"><button type="button" className="secondary-button" onClick={exportLibrary}>Export current first</button><button type="button" className="danger-button" onClick={() => { onLibraryChange(replaceSavedFormationImport(library, importState.records), `Replaced the library with ${importState.records.length} imported formations.`); setImportState(null); }}>Replace library</button><button type="button" className="secondary-button" onClick={() => setImportState(null)}>Cancel</button></div>
+              <ReservationImportDecisions conflicts={previewSavedFormationReplace(importState.records)} decisions={importState.reservationDecisions} namesById={namesById} onDecision={(id, decision) => setImportState({ ...importState, reservationDecisions: { ...importState.reservationDecisions, [id]: decision } })} />
+              <div className="dialog-actions decision-actions"><button type="button" className="secondary-button" onClick={exportLibrary}>Export current first</button><button type="button" className="danger-button" onClick={() => { try { onLibraryChange(replaceSavedFormationImport(library, importState.records, new Date().toISOString(), importState.reservationDecisions), `Replaced the library with ${importState.records.length} imported formations.`); setImportState(null); } catch (error) { setLocalError(error instanceof Error ? error.message : 'Import could not be completed.'); } }}>Replace library</button><button type="button" className="secondary-button" onClick={() => setImportState(null)}>Cancel</button></div>
             </>
           ) : (
             <>
@@ -201,14 +242,26 @@ export function SavedFormationsWorkspace({
                 <li>{importState.preview.exactDuplicates.length} exact placement duplicates need a decision</li>
               </ul>
               {importState.preview.exactDuplicates.length > 0 ? <label className="checkbox-row"><input type="checkbox" checked={importState.includeDuplicates} onChange={(event) => setImportState({ ...importState, includeDuplicates: event.target.checked })} /> Import exact duplicates as explicit copies</label> : null}
+              <ReservationImportDecisions conflicts={importState.preview.reservationConflicts} decisions={importState.reservationDecisions} namesById={namesById} onDecision={(id, decision) => setImportState({ ...importState, reservationDecisions: { ...importState.reservationDecisions, [id]: decision } })} />
               <p>Existing order is preserved; imported additions are appended. Result: {importState.includeDuplicates ? importState.preview.totalIfDuplicatesIncluded : importState.preview.totalIfDuplicatesSkipped} of {MAX_SAVED_FORMATIONS}.</p>
-              <div className="dialog-actions decision-actions"><button type="button" className="primary-button" disabled={(importState.includeDuplicates ? importState.preview.totalIfDuplicatesIncluded : importState.preview.totalIfDuplicatesSkipped) > MAX_SAVED_FORMATIONS} onClick={() => { onLibraryChange(mergeSavedFormationImport(library, importState.preview, importState.includeDuplicates), 'Imported Saved Formations by merge.'); setImportState(null); }}>Merge</button><button type="button" className="secondary-button" onClick={() => setImportState({ ...importState, replaceConfirm: true })}>Replace…</button><button type="button" className="secondary-button" onClick={() => setImportState(null)}>Cancel</button></div>
+              <div className="dialog-actions decision-actions"><button type="button" className="primary-button" disabled={(importState.includeDuplicates ? importState.preview.totalIfDuplicatesIncluded : importState.preview.totalIfDuplicatesSkipped) > MAX_SAVED_FORMATIONS} onClick={() => { try { onLibraryChange(mergeSavedFormationImport(library, importState.preview, importState.includeDuplicates, new Date().toISOString(), importState.reservationDecisions), 'Imported Saved Formations by merge.'); setImportState(null); } catch (error) { setLocalError(error instanceof Error ? error.message : 'Import could not be completed.'); } }}>Merge</button><button type="button" className="secondary-button" onClick={() => setImportState({ ...importState, replaceConfirm: true })}>Replace…</button><button type="button" className="secondary-button" onClick={() => setImportState(null)}>Cancel</button></div>
             </>
           )}
         </LibraryDialog>
       ) : null}
     </section>
   );
+}
+
+function ReservationImportDecisions({ conflicts, decisions, namesById, onDecision }: {
+  conflicts: SavedFormationImportReservationConflict[];
+  decisions: Readonly<Record<string, SavedFormationImportReservationDecision>>;
+  namesById: ReadonlyMap<string, string>;
+  onDecision: (recordId: string, decision: SavedFormationImportReservationDecision) => void;
+}) {
+  const grouped = [...new Map(conflicts.map((conflict) => [conflict.imported.id, conflict])).values()];
+  if (grouped.length === 0) return null;
+  return <div className="import-reservation-conflicts" role="alert"><h3>Reservation conflicts require a decision</h3>{grouped.map((conflict) => <div key={conflict.imported.id}><p><strong>{conflict.imported.name}</strong>: {conflict.conflictingDragonIds.map((id) => namesById.get(id) ?? id).join(', ')} {conflict.conflictingDragonIds.length === 1 ? 'is' : 'are'} already reserved by “{conflict.existing.name}”.</p><div className="button-row"><button type="button" className={decisions[conflict.imported.id] === 'unreserved' ? 'primary-button' : 'secondary-button'} onClick={() => onDecision(conflict.imported.id, 'unreserved')}>Import this formation unreserved</button><button type="button" className={decisions[conflict.imported.id] === 'skip' ? 'primary-button' : 'secondary-button'} onClick={() => onDecision(conflict.imported.id, 'skip')}>Skip this formation</button></div></div>)}</div>;
 }
 
 function SyncDecisionPanel({ session, status, comparison, onExport, onOpenSignIn, onSaveBrowser, onUseAccount, onPause, onReopen, onRetry }: {

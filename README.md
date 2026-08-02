@@ -16,7 +16,7 @@ Public site: https://dragonfirelab.com/overview
 - Read-only Estimated Power v2 diagnostics for roster dragons and complete formations, using 59 provenance observations and support-aware rarity-specific Star-plus-Level curves.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
 - Formation Builder with canonical semantic relationships, an explainable 80/20 local rating, six-permutation placement comparison, typed diagnostics, and one actionable recommendation.
-- A persistent Saved Formation Library for exact Builder and optimizer arrangements, with recalculated analysis, progression-change details, organization controls, and separate JSON import/export.
+- A persistent Saved Formation Library for exact Builder and optimizer arrangements, with whole-formation reservations, recalculated analysis, progression-change details, organization controls, and separate JSON import/export.
 - Flexible Power-Aware Roster Optimizer for 1–11 armies with Best Overall First, Highest Raw Power First, and Balance Raw Power Across Armies over current My Roster progression.
 - Formation share links plus separate roster and Saved Formation Library JSON import/export.
 - Clean path-based routes for Overview, Roster, Formation Builder, Optimizer, About, and Updates, with a GitHub Pages deep-link fallback.
@@ -114,4 +114,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.23.0`. Source data schema: `13`. Local and cloud roster schemas remain `5`; Saved Formation Library schema is `1`; optimizer contract remains `6`; live rating contract remains `formation-rating-v3`. Saved analysis is recalculated rather than frozen, and saved arrangements do not reserve dragons or affect optimizer recommendations. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. Supabase migration `202608010001_create_user_saved_formations.sql` must be applied and verified before cross-device Saved Formation synchronization is released.
+Current release: `0.23.1`. Source data schema: `13`. Local and cloud roster schemas remain `5`; Saved Formation Library schema is `2` with schema 1 still readable; optimizer contract remains `6`; live rating contract remains `formation-rating-v3`. A current-roster Saved Formation may reserve all three dragons, and the in-memory optimizer preference excludes currently eligible reserved dragons by default while allowing temporary inclusion. Reservations do not change ratings, power, scoring, candidate comparators, or core optimizer hashes. The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. The existing `user_saved_formations` table stores schema-2 JSON without a new migration.

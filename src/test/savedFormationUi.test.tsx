@@ -9,6 +9,7 @@ import { applyOwnedDragonPatch } from '../services/habitLevels';
 import { createEmptyRoster, FORMATION_STORAGE_KEY, saveRosterSnapshot } from '../services/rosterStorage';
 import { createEmptySavedFormationLibrary } from '../savedFormations/contract';
 import { createSavedFormation } from '../savedFormations/crud';
+import { setFormationReserved } from '../savedFormations/reservations';
 import { loadSavedFormationLibrary } from '../savedFormations/storage';
 import type { SavedFormationLibrary } from '../savedFormations/types';
 
@@ -63,6 +64,33 @@ describe('Saved Formations workspace UI', () => {
     await user.click(screen.getByRole('button', { name: 'Delete Alpha formation' }));
     expect(confirm).toHaveBeenCalledWith(expect.stringContaining('Alpha formation'));
     confirm.mockRestore();
+  });
+
+  it('exposes accessible reservation controls, badges, ownership, and conflict actions', async () => {
+    const roster = progressedRoster();
+    let library = setFormationReserved(libraryFixture(roster), '00000000-0000-4000-8000-000000000001', true);
+    library = createSavedFormation(library, { name: 'Overlap', arrangement: {
+      'left-flank': arrangement['left-flank'], vanguard: dragons[3]!.id, 'right-flank': dragons[4]!.id,
+    }, evaluationMode: 'current-roster', source: 'formation-builder', roster, id: '00000000-0000-4000-8000-000000000003' });
+    const { changes } = renderWorkspace(library, roster);
+    expect(screen.getByText('Reserved')).toBeInTheDocument();
+    expect(screen.getByText(/1 reserved formation/)).toBeInTheDocument();
+    expect(screen.getByText(/3 reserved dragons/)).toBeInTheDocument();
+    expect(screen.getAllByText('Currently owned')).toHaveLength(3);
+    const toggles = screen.getAllByRole('checkbox', { name: /Reserve these dragons/i });
+    expect(toggles[0]).toBeChecked();
+    await userEvent.setup().click(toggles[1]!);
+    expect(changes).toHaveLength(0);
+    expect(screen.getByRole('alert')).toHaveTextContent(/already reserved by “Alpha formation”/i);
+    expect(screen.getByRole('button', { name: 'Open “Alpha formation”' })).toBeInTheDocument();
+  });
+
+  it('explains that planning formations cannot reserve roster dragons', () => {
+    const roster = progressedRoster();
+    const planning = createSavedFormation(createEmptySavedFormationLibrary(), { name: 'Plan', arrangement, evaluationMode: 'planning', source: 'formation-builder', roster, id: '00000000-0000-4000-8000-000000000004' });
+    renderWorkspace(planning, roster);
+    expect(screen.getByText('Planning formations cannot reserve roster dragons.')).toBeInTheDocument();
+    expect(screen.queryByRole('checkbox', { name: /Reserve these dragons/i })).not.toBeInTheDocument();
   });
 });
 
