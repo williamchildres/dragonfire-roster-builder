@@ -5,6 +5,13 @@ import { fileURLToPath } from 'node:url';
 
 import { createServer } from 'vite';
 
+import {
+  HISTORICAL_FULL_ROSTER_AUDIT_CONTRACT,
+  resolveFullRosterAuditPaths,
+  validateCommittedFullRosterAudit,
+  validateFullRosterAuditReport,
+} from './full-roster-audit-contract.mjs';
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const writeMarkdown = process.argv.includes('--write');
 const writeDiagnosticJson = process.argv.includes('--write-json');
@@ -29,21 +36,13 @@ try {
   const baseline = JSON.parse(await readFile(baselinePath, 'utf8'));
   validateBaseline(baseline);
 
-  const auditVersion = report.generatedFrom.databaseVersion;
-  const markdownPath = path.join(
-    root,
-    'docs',
-    'audits',
-    `full-roster-regression-${auditVersion}.md`,
-  );
-  const diagnosticJsonPath = path.join(
-    root,
-    'Scratch',
-    `full-roster-regression-${auditVersion}.json`,
-  );
+  const auditContract = HISTORICAL_FULL_ROSTER_AUDIT_CONTRACT;
+  const auditVersion = auditContract.auditVersion;
+  const { markdownPath, diagnosticJsonPath } = resolveFullRosterAuditPaths(root, auditContract);
   const comparison = compareRatings(baseline.rows, report.formationSweep.rows);
   const artifact = {
     ...report,
+    auditVersion,
     sourceOfTruth: {
       startingMainSha,
       baselineSourceCommit,
@@ -95,6 +94,8 @@ try {
     },
   };
 
+  validateFullRosterAuditReport({ report, comparison }, auditContract);
+
   if (writeMarkdown || writeDiagnosticJson) {
     if (writeMarkdown) {
       await mkdir(path.dirname(markdownPath), { recursive: true });
@@ -108,23 +109,12 @@ try {
     }
   } else {
     const committedMarkdown = await readFile(markdownPath, 'utf8');
-    const stableFieldsMatch =
-      auditVersion === '0.20.0' &&
-      report.formationSweep.deterministicFullResultHash ===
-        '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf' &&
-      report.formationSweep.actualCount === 32736 &&
-      comparison.formationMigrations.length === 26970 &&
-      comparison.newFormationCount === 5766 &&
-      report.totals.failedChecks === 0 &&
-      committedMarkdown.includes(`Current: ${auditVersion}`) &&
-      committedMarkdown.includes(report.formationSweep.deterministicFullResultHash);
-    if (!stableFieldsMatch) {
-      throw new Error(
-        'Committed audit artifacts are stale. Run pnpm run audit:full-roster:write and review the complete diff.',
-      );
-    }
+    validateCommittedFullRosterAudit(
+      { report, comparison, committedMarkdown },
+      auditContract,
+    );
     console.log(
-      `Audit verified in ${runtimeMs} ms: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.orderedFormationsEvaluated} formations.`,
+      `Historical audit ${auditVersion} verified against product ${report.generatedFrom.databaseVersion} in ${runtimeMs} ms: ${report.totals.dragons} dragons, ${report.totals.abilities} abilities, ${report.totals.orderedFormationsEvaluated} formations.`,
     );
     console.log(`Deterministic result hash: ${report.formationSweep.deterministicFullResultHash}`);
     console.log(
