@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-08-02T07:08:57.313Z",
+  "generatedAt": "2026-08-02T16:44:01.145Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "fix/syrax-blazing-fury-recipient-targeting",
-    "commit": "0fd6bf96ae3dadb6432360b32a90d68b703113fd",
+    "commit": "695226d5e0fb05ee7011667b58c7fcffb002e1f7",
     "databaseVersion": "0.23.3",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
