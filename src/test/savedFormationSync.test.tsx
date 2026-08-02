@@ -134,5 +134,5 @@ function library(name: string) {
   });
 }
 function record(currentLibrary: SavedFormationLibrary, userId = 'user-a'): CloudSavedFormationRecord {
-  return { userId, schemaVersion: 1, library: currentLibrary, clientUpdatedAt: currentLibrary.updatedAt, updatedAt: currentLibrary.updatedAt };
+  return { userId, schemaVersion: 2, library: currentLibrary, clientUpdatedAt: currentLibrary.updatedAt, updatedAt: currentLibrary.updatedAt };
 }

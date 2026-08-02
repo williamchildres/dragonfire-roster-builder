@@ -3,6 +3,11 @@ import type { FormationArrangement } from '../services/formationArrangement';
 import { captureSavedFormationProgression } from './progression';
 import { generateSavedFormationId } from './contract';
 import {
+  getFormationReservationConflicts,
+  SavedFormationReservationClearanceError,
+  SavedFormationReservationConflictError,
+} from './reservations';
+import {
   MAX_SAVED_FORMATIONS,
   MAX_SAVED_FORMATION_NAME_LENGTH,
   type SavedFormationEvaluationMode,
@@ -31,6 +36,7 @@ export function createSavedFormation(library: SavedFormationLibrary, input: Crea
     arrangement: { ...input.arrangement },
     evaluationMode: input.evaluationMode,
     source: input.source,
+    reserved: false,
     savedProgressionByDragonId: captureSavedFormationProgression(input),
     createdAt: now,
     updatedAt: now,
@@ -44,19 +50,30 @@ export function createSavedFormation(library: SavedFormationLibrary, input: Crea
 export function updateSavedFormation(
   library: SavedFormationLibrary,
   id: string,
-  input: Omit<CreateSavedFormationInput, 'id' | 'insertAfterId' | 'source'> & { source?: SavedFormationSource },
+  input: Omit<CreateSavedFormationInput, 'id' | 'insertAfterId' | 'source'> & {
+    source?: SavedFormationSource;
+    clearReservation?: boolean;
+  },
 ): SavedFormationLibrary {
   const now = input.now ?? new Date().toISOString();
   let found = false;
   const formations = library.formations.map((record) => {
     if (record.id !== id) return record;
     found = true;
+    if (record.reserved && input.evaluationMode === 'planning' && !input.clearReservation) {
+      throw new SavedFormationReservationClearanceError();
+    }
+    if (record.reserved && input.evaluationMode === 'current-roster') {
+      const conflicts = getFormationReservationConflicts(library, id, input.arrangement);
+      if (conflicts.length > 0) throw new SavedFormationReservationConflictError(conflicts);
+    }
     return {
       ...record,
       name: validateName(input.name),
       arrangement: { ...input.arrangement },
       evaluationMode: input.evaluationMode,
       source: input.source ?? record.source,
+      reserved: record.reserved && input.evaluationMode === 'current-roster',
       savedProgressionByDragonId: captureSavedFormationProgression(input),
       updatedAt: now,
     };
@@ -78,6 +95,7 @@ export function duplicateSavedFormation(library: SavedFormationLibrary, id: stri
     ...source,
     id: newId,
     name: copyName(source.name),
+    reserved: false,
     savedProgressionByDragonId: structuredCloneProgression(source.savedProgressionByDragonId),
     createdAt: now,
     updatedAt: now,

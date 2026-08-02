@@ -129,6 +129,7 @@ import type {
   FlexiblePowerAwareOptimizationResult,
   OptimizerAllocationMode,
 } from '../optimizer/rosterOptimizerTypes';
+import type { OptimizerReservationRunContext } from '../optimizer/reservedOptimizerProjection';
 export { RawWordingDisclosure } from './DragonDetailModal';
 
 type Section = AppRoute;
@@ -196,8 +197,11 @@ export function App({
     DEFAULT_OPTIMIZER_ALLOCATION_MODE,
   );
   const [optimizerFormationCount, setOptimizerFormationCount] = useState(10);
+  const [optimizerExcludeReservedDragons, setOptimizerExcludeReservedDragons] = useState(true);
   const [optimizerResult, setOptimizerResult] =
     useState<FlexiblePowerAwareOptimizationResult | null>(null);
+  const [optimizerResultReservationContext, setOptimizerResultReservationContext] =
+    useState<OptimizerReservationRunContext | null>(null);
   const [rosterSnapshot, setRosterSnapshot] = useState<StoredRosterSnapshot>(() =>
     typeof window === 'undefined'
       ? { roster: createEmptyRoster(dragons), updatedAt: null }
@@ -612,6 +616,13 @@ export function App({
       request.evaluationMode,
       request.kind === 'update' ? request.recordId : undefined,
     );
+    const updateTarget = duplicateChoice === 'update-existing' && duplicate
+      ? duplicate
+      : request.kind === 'update' && request.recordId
+        ? savedFormationLibrary.formations.find((record) => record.id === request.recordId) ?? null
+        : null;
+    const clearReservation = Boolean(updateTarget?.reserved && request.evaluationMode === 'planning');
+    if (clearReservation && !window.confirm(`“${updateTarget!.name}” is reserved. Updating it to planning mode will remove its reservation. Continue?`)) return;
     try {
       let next: SavedFormationLibrary;
       let savedId: string | undefined;
@@ -621,6 +632,7 @@ export function App({
           arrangement: request.arrangement,
           evaluationMode: request.evaluationMode,
           roster,
+          clearReservation,
         });
         savedId = duplicate.id;
       } else if (request.kind === 'update' && request.recordId) {
@@ -629,6 +641,7 @@ export function App({
           arrangement: request.arrangement,
           evaluationMode: request.evaluationMode,
           roster,
+          clearReservation,
         });
         savedId = request.recordId;
       } else {
@@ -807,13 +820,18 @@ export function App({
             onAllocationModeChange={setOptimizerAllocationMode}
             formationCount={optimizerFormationCount}
             onFormationCountChange={setOptimizerFormationCount}
+            savedFormationLibrary={savedFormationLibrary}
+            excludeReservedDragons={optimizerExcludeReservedDragons}
+            onExcludeReservedDragonsChange={setOptimizerExcludeReservedDragons}
             result={optimizerResult}
-            onResultChange={setOptimizerResult}
+            resultReservationContext={optimizerResultReservationContext}
+            onResultChange={(result, reservationContext) => { setOptimizerResult(result); setOptimizerResultReservationContext(reservationContext); }}
             runner={optimizerRunner}
             onOpenFormation={openOptimizedFormation}
             onSaveFormation={(arrangement) => requestSaveFormation(arrangement, 'current-roster', 'optimizer')}
             savedFormationLimitReached={savedFormationLibrary.formations.length >= MAX_SAVED_FORMATIONS}
             onOpenRoster={() => selectSection('roster')}
+            onOpenSavedFormations={openSavedFormationLibrary}
             onNavigate={selectSection}
           />
         ) : null}

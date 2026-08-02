@@ -6,6 +6,7 @@ import type { FormationArrangement } from '../services/formationArrangement';
 import {
   MAX_SAVED_FORMATIONS,
   MAX_SAVED_FORMATION_NAME_LENGTH,
+  LEGACY_SAVED_FORMATION_LIBRARY_SCHEMA_VERSION,
   SAVED_FORMATION_LIBRARY_FORMAT,
   SAVED_FORMATION_LIBRARY_SCHEMA_VERSION,
   type SavedFormationEvaluationMode,
@@ -15,6 +16,7 @@ import {
   type SavedFormationRecord,
   type SavedFormationSource,
 } from './types';
+import { getReservationConflicts } from './reservations';
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -38,7 +40,8 @@ export function parseSavedFormationLibrary(
   if (value.format !== SAVED_FORMATION_LIBRARY_FORMAT) {
     return { library: fallback, warnings: ['Unsupported Saved Formations format.'], rejectedRecordCount: 0 };
   }
-  if (value.schemaVersion !== SAVED_FORMATION_LIBRARY_SCHEMA_VERSION) {
+  const schemaVersion = value.schemaVersion;
+  if (schemaVersion !== LEGACY_SAVED_FORMATION_LIBRARY_SCHEMA_VERSION && schemaVersion !== SAVED_FORMATION_LIBRARY_SCHEMA_VERSION) {
     return { library: fallback, warnings: ['Unsupported Saved Formations schema version.'], rejectedRecordCount: 0 };
   }
   if (!isTimestamp(value.updatedAt) || !Array.isArray(value.formations)) {
@@ -53,7 +56,7 @@ export function parseSavedFormationLibrary(
     warnings.push(`Only the first ${MAX_SAVED_FORMATIONS} saved formations were loaded.`);
   }
   input.forEach((record, index) => {
-    const parsed = parseSavedFormationRecord(record, canonicalDragons);
+    const parsed = parseSavedFormationRecord(record, canonicalDragons, schemaVersion);
     if (!parsed.ok) {
       warnings.push(`Saved formation ${index + 1} was skipped: ${parsed.error}`);
       return;
@@ -66,13 +69,22 @@ export function parseSavedFormationLibrary(
     formations.push(parsed.record);
   });
 
-  return {
-    library: normalizeSavedFormationLibrary({
+  const library = normalizeSavedFormationLibrary({
       format: SAVED_FORMATION_LIBRARY_FORMAT,
       schemaVersion: SAVED_FORMATION_LIBRARY_SCHEMA_VERSION,
       updatedAt: value.updatedAt,
       formations,
-    }),
+    });
+  const reservationConflicts = getReservationConflicts(library);
+  if (reservationConflicts.length > 0) {
+    return {
+      library: fallback,
+      warnings: ['Saved Formations reservation data conflicts because a dragon is reserved by more than one formation.'],
+      rejectedRecordCount: input.length,
+    };
+  }
+  return {
+    library,
     warnings,
     rejectedRecordCount: input.length - formations.length,
   };
@@ -81,6 +93,7 @@ export function parseSavedFormationLibrary(
 export function parseSavedFormationRecord(
   value: unknown,
   canonicalDragons: readonly Dragon[] = dragons,
+  schemaVersion: 1 | 2 = SAVED_FORMATION_LIBRARY_SCHEMA_VERSION,
 ): { ok: true; record: SavedFormationRecord } | { ok: false; error: string } {
   if (!isRecord(value)) return { ok: false, error: 'record must be an object.' };
   const name = typeof value.name === 'string' ? value.name.trim() : '';
@@ -96,6 +109,13 @@ export function parseSavedFormationRecord(
   }
   if (!isEvaluationMode(value.evaluationMode)) return { ok: false, error: 'evaluation mode is invalid.' };
   if (!isSource(value.source)) return { ok: false, error: 'source is invalid.' };
+  const reserved = schemaVersion === LEGACY_SAVED_FORMATION_LIBRARY_SCHEMA_VERSION
+    ? false
+    : value.reserved;
+  if (typeof reserved !== 'boolean') return { ok: false, error: 'reserved must be a boolean.' };
+  if (reserved && value.evaluationMode !== 'current-roster') {
+    return { ok: false, error: 'planning formations cannot reserve roster dragons.' };
+  }
   const arrangement = parseArrangement(value.arrangement, canonicalDragons);
   if (!arrangement.ok) return arrangement;
   if (!isRecord(value.savedProgressionByDragonId)) {
@@ -118,6 +138,7 @@ export function parseSavedFormationRecord(
       arrangement: arrangement.arrangement,
       evaluationMode: value.evaluationMode,
       source: value.source,
+      reserved,
       savedProgressionByDragonId: progression,
       createdAt: value.createdAt,
       updatedAt: value.updatedAt,
@@ -158,6 +179,7 @@ export function normalizeSavedFormationRecord(record: SavedFormationRecord): Sav
     },
     evaluationMode: record.evaluationMode,
     source: record.source,
+    reserved: record.reserved,
     savedProgressionByDragonId: progression,
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,

@@ -22,17 +22,36 @@ import {
   mergeSavedFormationImport,
   previewSavedFormationMerge,
   replaceSavedFormationImport,
+  previewSavedFormationReplace,
   serializeSavedFormationExport,
   validateSavedFormationImport,
 } from '../savedFormations/importExport';
 import { compareSavedFormationProgression } from '../savedFormations/progression';
 import { loadSavedFormationLibrary, saveSavedFormationLibrary, serializeSavedFormationLibrary } from '../savedFormations/storage';
 import {
+  canReserveFormation,
+  getReservedDragonIds,
+  getReservationConflicts,
+  groupReservationConflictsByFormation,
+  SavedFormationReservationClearanceError,
+  SavedFormationReservationConflictError,
+  setFormationReserved,
+} from '../savedFormations/reservations';
+import { savedFormationLibraryFingerprint } from '../cloud/savedFormationContract';
+import {
   MAX_SAVED_FORMATIONS,
   SAVED_FORMATIONS_STORAGE_KEY,
   type SavedFormationLibrary,
+  type SavedFormationRecord,
 } from '../savedFormations/types';
-import { EXPECTED_SAVED_FORMATION_LIBRARY_AUDIT_IDENTITY, SAVED_FORMATION_LIBRARY_AUDIT_IDENTITY } from '../savedFormations/auditIdentity';
+import {
+  EXPECTED_HISTORICAL_SAVED_FORMATION_SCHEMA_1_AUDIT_IDENTITY,
+  EXPECTED_SAVED_FORMATION_LIBRARY_AUDIT_IDENTITY,
+  EXPECTED_SAVED_FORMATION_RESERVATION_AUDIT_IDENTITY,
+  HISTORICAL_SAVED_FORMATION_SCHEMA_1_AUDIT_IDENTITY,
+  SAVED_FORMATION_LIBRARY_AUDIT_IDENTITY,
+  SAVED_FORMATION_RESERVATION_AUDIT_IDENTITY,
+} from '../savedFormations/auditIdentity';
 
 const arrangement = {
   'left-flank': dragons[0]!.id,
@@ -48,11 +67,31 @@ const rearranged = {
 describe('Saved Formation Library contract and storage', () => {
   it('locks the separate Saved Formation Library contract identity', () => {
     expect(SAVED_FORMATION_LIBRARY_AUDIT_IDENTITY).toBe(EXPECTED_SAVED_FORMATION_LIBRARY_AUDIT_IDENTITY);
+    expect(SAVED_FORMATION_RESERVATION_AUDIT_IDENTITY).toBe(EXPECTED_SAVED_FORMATION_RESERVATION_AUDIT_IDENTITY);
+    expect(HISTORICAL_SAVED_FORMATION_SCHEMA_1_AUDIT_IDENTITY).toBe(EXPECTED_HISTORICAL_SAVED_FORMATION_SCHEMA_1_AUDIT_IDENTITY);
+    expect(HISTORICAL_SAVED_FORMATION_SCHEMA_1_AUDIT_IDENTITY).toBe('fnv1a64:1e1f6e4c02946489');
   });
   it('creates and round-trips an empty versioned library', () => {
     const library = createEmptySavedFormationLibrary('2026-08-01T00:00:00.000Z');
-    expect(library).toMatchObject({ format: 'dragonfire-lab-saved-formations', schemaVersion: 1, formations: [] });
+    expect(library).toMatchObject({ format: 'dragonfire-lab-saved-formations', schemaVersion: 2, formations: [] });
     expect(parseSavedFormationLibrary(JSON.parse(serializeSavedFormationLibrary(library))).library).toEqual(library);
+  });
+
+  it('migrates schema 1 without changing semantic formation identity or timestamps', () => {
+    const current = oneLibrary();
+    const legacyRecord = withoutReserved(current.formations[0]!);
+    const legacy = { ...current, schemaVersion: 1, formations: [legacyRecord] };
+    const migrated = parseSavedFormationLibrary(legacy).library;
+    expect(migrated.schemaVersion).toBe(2);
+    expect(migrated.formations[0]).toEqual({ ...current.formations[0], reserved: false });
+    expect(migrated.updatedAt).toBe(current.updatedAt);
+    expect(savedFormationLibraryFingerprint(migrated)).toBe(savedFormationLibraryFingerprint(current));
+    const storage = memoryStorage(JSON.stringify(legacy));
+    expect(loadSavedFormationLibrary(storage).library).toEqual(migrated);
+    expect(storage.values.get(SAVED_FORMATIONS_STORAGE_KEY)).toBe(JSON.stringify(legacy));
+    saveSavedFormationLibrary(storage, renameSavedFormation(migrated, migrated.formations[0]!.id, 'Edited', '2026-08-03T00:00:00.000Z'));
+    const persisted = JSON.parse(storage.values.get(SAVED_FORMATIONS_STORAGE_KEY)!) as { schemaVersion: number };
+    expect(persisted.schemaVersion).toBe(2);
   });
 
   it('round-trips valid local data deterministically', () => {
@@ -107,6 +146,91 @@ describe('Saved Formation Library contract and storage', () => {
 });
 
 describe('Saved Formation CRUD and evaluation', () => {
+  it('enforces whole-formation reservations and deterministic conflicts', () => {
+    const roster = progressedRoster();
+    let library = oneLibrary(roster);
+    const firstId = library.formations[0]!.id;
+    library = setFormationReserved(library, firstId, true, '2026-08-01T00:02:00.000Z');
+    expect(getReservedDragonIds(library)).toEqual([...Object.values(arrangement)].sort());
+    expect(canReserveFormation(library, firstId)).toBe(true);
+    library = createSavedFormation(library, { name: 'Overlap', arrangement: {
+      'left-flank': arrangement['left-flank'], vanguard: dragons[3]!.id, 'right-flank': dragons[4]!.id,
+    }, evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(22), now: '2026-08-01T00:03:00.000Z' });
+    expect(() => setFormationReserved(library, deterministicId(22), true)).toThrow(SavedFormationReservationConflictError);
+    expect(library.formations[1]!.reserved).toBe(false);
+    expect(getReservationConflicts(library)).toEqual([]);
+    expect(duplicateSavedFormation(library, firstId, '2026-08-01T00:04:00.000Z', deterministicId(23)).formations[1]!.reserved).toBe(false);
+    expect(setFormationReserved(library, firstId, false).formations[0]!.reserved).toBe(false);
+  });
+
+  it('allows reservation updates at the 50-record limit', () => {
+    const base = oneLibrary();
+    const record = base.formations[0]!;
+    const full = { ...base, formations: Array.from({ length: 50 }, (_value, index) => ({ ...record, id: deterministicId(index) })) };
+    const reserved = setFormationReserved(full, deterministicId(0), true);
+    expect(reserved.formations).toHaveLength(50);
+    expect(reserved.formations[0]!.reserved).toBe(true);
+  });
+
+  it('blocks conflicting reserved edits and requires confirmation before planning conversion', () => {
+    const roster = progressedRoster();
+    let library = setFormationReserved(oneLibrary(roster), deterministicId(0), true);
+    library = createSavedFormation(library, { name: 'Other', arrangement: {
+      'left-flank': dragons[3]!.id, vanguard: dragons[4]!.id, 'right-flank': dragons[5]!.id,
+    }, evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(24) });
+    library = setFormationReserved(library, deterministicId(24), true);
+    const before = library;
+    expect(() => updateSavedFormation(library, deterministicId(0), { name: 'Alpha', arrangement: {
+      ...arrangement, 'left-flank': dragons[3]!.id,
+    }, evaluationMode: 'current-roster', roster })).toThrow(SavedFormationReservationConflictError);
+    expect(library).toBe(before);
+    expect(() => updateSavedFormation(library, deterministicId(0), { name: 'Plan', arrangement, evaluationMode: 'planning', roster })).toThrow(SavedFormationReservationClearanceError);
+    const planning = updateSavedFormation(library, deterministicId(0), { name: 'Plan', arrangement, evaluationMode: 'planning', roster, clearReservation: true });
+    expect(planning.formations[0]).toMatchObject({ reserved: false, evaluationMode: 'planning' });
+  });
+
+  it('reports every reserved-arrangement update conflict in display order without mutating the prior record', () => {
+    const roster = progressedRoster();
+    let library = createSavedFormation(createEmptySavedFormationLibrary(), {
+      name: 'Fire Vanguard', arrangement: { 'left-flank': dragons[0]!.id, vanguard: dragons[1]!.id, 'right-flank': dragons[2]!.id },
+      evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(40),
+    });
+    library = setFormationReserved(library, deterministicId(40), true);
+    library = createSavedFormation(library, {
+      name: 'Royal Flames', arrangement: { 'left-flank': dragons[3]!.id, vanguard: dragons[4]!.id, 'right-flank': dragons[5]!.id },
+      evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(41),
+    });
+    library = setFormationReserved(library, deterministicId(41), true);
+    library = createSavedFormation(library, {
+      name: 'Reserved target', arrangement: { 'left-flank': dragons[6]!.id, vanguard: dragons[7]!.id, 'right-flank': dragons[8]!.id },
+      evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(42),
+    });
+    library = setFormationReserved(library, deterministicId(42), true);
+    const priorRecord = library.formations[2]!;
+    let error: SavedFormationReservationConflictError | null = null;
+
+    try {
+      updateSavedFormation(library, deterministicId(42), {
+        name: 'Conflicting update',
+        arrangement: { 'left-flank': dragons[3]!.id, vanguard: dragons[1]!.id, 'right-flank': dragons[0]!.id },
+        evaluationMode: 'current-roster',
+        roster,
+      });
+    } catch (caught) {
+      if (caught instanceof SavedFormationReservationConflictError) error = caught;
+      else throw caught;
+    }
+
+    expect(error).not.toBeNull();
+    expect(groupReservationConflictsByFormation(library, error!.conflicts)).toEqual([
+      { conflictingFormationId: deterministicId(40), conflictingFormationName: 'Fire Vanguard', dragonIds: [dragons[0]!.id, dragons[1]!.id].sort() },
+      { conflictingFormationId: deterministicId(41), conflictingFormationName: 'Royal Flames', dragonIds: [dragons[3]!.id] },
+    ]);
+    expect(library.formations[2]).toBe(priorRecord);
+    expect(library.formations[2]).toMatchObject({ name: 'Reserved target', reserved: true, arrangement: {
+      'left-flank': dragons[6]!.id, vanguard: dragons[7]!.id, 'right-flank': dragons[8]!.id,
+    } });
+  });
   it('saves, updates, saves as new, renames, duplicates, reorders, and deletes', () => {
     const roster = progressedRoster();
     let library = createEmptySavedFormationLibrary('2026-08-01T00:00:00.000Z');
@@ -175,6 +299,38 @@ describe('Saved Formation import and export', () => {
     expect(json).not.toMatch(/email|userId|user_id/);
   });
 
+  it('imports schema 1 unreserved and round-trips schema 2 reservations', () => {
+    const library = oneLibrary();
+    const legacyRecord = withoutReserved(library.formations[0]!);
+    const legacyJson = JSON.stringify({ format: library.format, schemaVersion: 1, exportedAt: library.updatedAt, formations: [legacyRecord] });
+    expect(validateSavedFormationImport(legacyJson).formations?.[0]!.reserved).toBe(false);
+    const reserved = setFormationReserved(library, library.formations[0]!.id, true);
+    const roundTrip = validateSavedFormationImport(serializeSavedFormationExport(reserved));
+    expect(roundTrip.formations?.[0]!.reserved).toBe(true);
+  });
+
+  it('requires explicit merge and replace decisions for reservation conflicts', () => {
+    const roster = progressedRoster();
+    const existing = setFormationReserved(oneLibrary(roster), deterministicId(0), true);
+    let importedLibrary = createSavedFormation(createEmptySavedFormationLibrary(), {
+      name: 'Imported overlap', arrangement: { 'left-flank': arrangement['left-flank'], vanguard: dragons[3]!.id, 'right-flank': dragons[4]!.id },
+      evaluationMode: 'current-roster', source: 'formation-builder', roster, id: deterministicId(30),
+    });
+    importedLibrary = setFormationReserved(importedLibrary, deterministicId(30), true);
+    const preview = previewSavedFormationMerge(existing, importedLibrary.formations);
+    expect(preview.reservationConflicts[0]).toMatchObject({ imported: { name: 'Imported overlap' }, existing: { name: 'Alpha' } });
+    expect(preview.reservationConflicts[0]!.conflictingDragonIds).toEqual([arrangement['left-flank']]);
+    expect(() => mergeSavedFormationImport(existing, preview, false)).toThrow(/choose/i);
+    expect(mergeSavedFormationImport(existing, preview, false, new Date().toISOString(), { [deterministicId(30)]: 'unreserved' }).formations[1]!.reserved).toBe(false);
+    expect(mergeSavedFormationImport(existing, preview, false, new Date().toISOString(), { [deterministicId(30)]: 'skip' }).formations).toHaveLength(1);
+
+    const overlappingLater = { ...importedLibrary.formations[0]!, id: deterministicId(31), name: 'Later overlap' };
+    const replacement = [importedLibrary.formations[0]!, overlappingLater];
+    expect(previewSavedFormationReplace(replacement)).toHaveLength(1);
+    expect(() => replaceSavedFormationImport(existing, replacement)).toThrow(/resolve/i);
+    expect(replaceSavedFormationImport(existing, replacement, new Date().toISOString(), { [deterministicId(31)]: 'unreserved' }).formations[1]!.reserved).toBe(false);
+  });
+
   it('previews merge collisions and exact duplicates before committing', () => {
     const library = oneLibrary();
     const source = library.formations[0]!;
@@ -216,6 +372,12 @@ function progressedRoster(): Record<string, OwnedDragon> {
 
 function deterministicId(index: number) {
   return `00000000-0000-4000-8000-${index.toString().padStart(12, '0')}`;
+}
+
+function withoutReserved(record: SavedFormationRecord): Omit<SavedFormationRecord, 'reserved'> {
+  const clone: Partial<SavedFormationRecord> = { ...record };
+  delete clone.reserved;
+  return clone as Omit<SavedFormationRecord, 'reserved'>;
 }
 
 function memoryStorage(initial?: string) {

@@ -1,5 +1,6 @@
 import { parseSavedFormationLibrary, normalizeSavedFormationLibrary } from '../savedFormations/contract';
 import {
+  LEGACY_SAVED_FORMATION_LIBRARY_SCHEMA_VERSION,
   SAVED_FORMATION_LIBRARY_SCHEMA_VERSION,
   type SavedFormationLibrary,
 } from '../savedFormations/types';
@@ -22,15 +23,16 @@ export function parseCloudSavedFormationRow(value: unknown): CloudSavedFormation
   const row = value as CloudSavedFormationRow;
   if (!Number.isInteger(row.formations_schema_version)) throw new InvalidCloudSavedFormationError();
   const schemaVersion = Number(row.formations_schema_version);
-  if (schemaVersion !== SAVED_FORMATION_LIBRARY_SCHEMA_VERSION) throw new UnsupportedSavedFormationSchemaError(schemaVersion);
+  if (schemaVersion !== LEGACY_SAVED_FORMATION_LIBRARY_SCHEMA_VERSION && schemaVersion !== SAVED_FORMATION_LIBRARY_SCHEMA_VERSION) throw new UnsupportedSavedFormationSchemaError(schemaVersion);
   if (typeof row.user_id !== 'string' || !isTimestamp(row.updated_at) || !(row.client_updated_at === null || isTimestamp(row.client_updated_at))) {
     throw new InvalidCloudSavedFormationError();
   }
+  if (!isRecord(row.formations) || row.formations.schemaVersion !== schemaVersion) throw new InvalidCloudSavedFormationError();
   const parsed = parseSavedFormationLibrary(row.formations);
   if (parsed.warnings.length > 0 || parsed.rejectedRecordCount > 0) throw new InvalidCloudSavedFormationError();
   return {
     userId: row.user_id,
-    schemaVersion,
+    schemaVersion: SAVED_FORMATION_LIBRARY_SCHEMA_VERSION,
     library: parsed.library,
     clientUpdatedAt: row.client_updated_at,
     updatedAt: row.updated_at,
@@ -49,6 +51,7 @@ export function summarizeSavedFormationLibrary(library: SavedFormationLibrary) {
   return {
     count: library.formations.length,
     names: library.formations.slice(0, 5).map((record) => record.name),
+    reservedCount: library.formations.filter((record) => record.reserved).length,
   };
 }
 

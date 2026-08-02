@@ -8,4 +8,4 @@ The account Saved Formation row contains the authenticated user's UUID as its pr
 
 Row Level Security allows authenticated users to select, insert, update, and delete only the row whose `user_id` equals `auth.uid()`. There is no public or anonymous read policy. Browser edits continue while offline and retry after reconnect. A missing cloud table or sync error leaves the browser library available and does not reset or modify the roster.
 
-Saved formation progression snapshots include ownership, Star Rank, Dragon Level, and active Habit Levels for the three selected dragons. Derived ratings, power, relationships, optimizer rank, result hashes, account email, and personal roster notes are not included.
+Saved formation records include exact dragon identities, whole-formation reservation intent, and progression snapshots with ownership, Star Rank, Dragon Level, and active Habit Levels for the three selected dragons. Derived ratings, power, relationships, optimizer exclusion preference, optimizer rank, result hashes, account email, and personal roster notes are not included. The temporary optimizer exclusion preference remains only in app-session memory.
