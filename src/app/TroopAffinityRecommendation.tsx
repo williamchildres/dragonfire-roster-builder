@@ -50,9 +50,9 @@ export function TroopAffinityRecommendation({
         {recommendationSummary(recommendation, recommendedCandidates, namesById)}
       </p>
       <p className="sr-only">Positive affinity coverage is {positiveCoverage} of 3 dragons.</p>
-      {recommendation.kind === 'incomplete' ? (
+      {!recommendation.completeAffinityData ? (
         <p className="troop-affinity-warning" role="status">
-          Some troop affinities are not verified, so this recommendation may be incomplete.
+          {unknownDataWarning(recommendation.kind)}
         </p>
       ) : null}
       {recommendation.recommendedTroopTypes.includes('Siege') ? (
@@ -128,12 +128,23 @@ function recommendationSummary(
   }
   if (recommendation.kind === 'best-nonnegative-coverage') {
     const suffix = recommended.length === 1 ? describeNonpositive(first, namesById) : '';
-    return `Best shared affinity: ${first.positiveCount} of 3 dragons receive +20% with ${troopTypes}${suffix}.`;
+    const label = recommendation.completeAffinityData ? 'Best shared affinity' : 'Best verified shared affinity';
+    return `${label}: ${first.positiveCount} of 3 dragons receive +20% with ${troopTypes}${suffix}.`;
   }
   if (recommendation.kind === 'incomplete') {
     return `Known affinity coverage: ${first.positiveCount} of 3 dragons receive +20% with ${troopTypes}.`;
   }
   return `Affinity tradeoff: no troop type avoids a negative affinity. ${troopTypes} ${recommended.length === 1 ? 'has' : 'each have'} ${first.positiveCount} positive ${first.positiveCount === 1 ? 'match' : 'matches'} and ${first.negativeCount} negative ${first.negativeCount === 1 ? 'match' : 'matches'}.`;
+}
+
+function unknownDataWarning(kind: TroopAffinityRecommendationKind): string {
+  if (kind === 'incomplete') {
+    return 'Some troop affinities are not verified, so this recommendation may be incomplete.';
+  }
+  if (kind === 'best-nonnegative-coverage') {
+    return 'This is the best fully verified nonnegative option, but some other troop affinities are not verified and could change the comparison.';
+  }
+  return 'Some other troop affinities are not verified and could change the comparison.';
 }
 
 function describeNonpositive(candidate: TroopAffinityCandidate, namesById: ReadonlyMap<string, string>): string {

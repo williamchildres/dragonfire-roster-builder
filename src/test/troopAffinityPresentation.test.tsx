@@ -29,6 +29,37 @@ describe('Troop Affinity recommendation presentation', () => {
     expect(screen.getByText(/Best shared affinity: 2 of 3 dragons receive \+20% with Archers; Velar is neutral/i)).toBeInTheDocument();
     expect(screen.getByText('Partial affinity match')).toBeInTheDocument();
     expect(screen.getByText(/Positive affinity coverage is 2 of 3 dragons/i)).toBeInTheDocument();
+    expect(screen.queryByText(/some other troop affinities are not verified/i)).not.toBeInTheDocument();
+  });
+
+  it('qualifies a complete recommendation when unknown data could change the comparison', async () => {
+    const user = userEvent.setup();
+    render(<TroopAffinityRecommendation formationDragons={[
+      synthetic('a', { Cavalry: 'positive', Shieldbearers: 'positive' }, 'negative'),
+      synthetic('b', { Cavalry: 'positive', Shieldbearers: 'neutral' }, 'negative'),
+      synthetic('c', { Cavalry: 'unknown', Shieldbearers: 'neutral' }, 'negative'),
+    ]} />);
+
+    expect(screen.getByText(/Best verified shared affinity: 1 of 3 dragons receive \+20% with Shieldbearers; B and C are neutral/i)).toBeInTheDocument();
+    expect(screen.getByText('Partial affinity match')).toBeInTheDocument();
+    expect(screen.getByText(/best fully verified nonnegative option.*could change the comparison/i)).toBeInTheDocument();
+    const detailsSummary = screen.getByText('Affinity breakdown for all five troop types');
+    await user.click(detailsSummary);
+    const cavalry = screen.getByText('Cavalry').closest('.troop-affinity-candidate');
+    expect(cavalry).not.toBeNull();
+    expect(within(cavalry as HTMLElement).getByText('Affinity not verified').nextSibling).toHaveTextContent('C');
+  });
+
+  it('keeps a full-positive result while disclosing unrelated unknown data', () => {
+    render(<TroopAffinityRecommendation formationDragons={[
+      synthetic('a', { Cavalry: 'positive' }),
+      synthetic('b', { Cavalry: 'positive' }),
+      synthetic('c', { Cavalry: 'positive', Archers: 'unknown' }),
+    ]} />);
+
+    expect(screen.getByText(/Full affinity match: all 3 dragons receive the \+20% positive-affinity benefit with Cavalry/i)).toBeInTheDocument();
+    expect(screen.getByText('Full affinity match')).toBeInTheDocument();
+    expect(screen.getByText(/Some other troop affinities are not verified and could change the comparison/i)).toBeInTheDocument();
   });
 
   it('shows every tied recommendation and all five accessible category breakdowns', async () => {
@@ -52,7 +83,7 @@ describe('Troop Affinity recommendation presentation', () => {
       synthetic('c', { Cavalry: 'unknown' }, 'negative'),
     ]} />);
     expect(screen.getByText('Incomplete affinity data')).toBeInTheDocument();
-    expect(screen.getByText(/Some troop affinities are not verified/i)).toBeInTheDocument();
+    expect(screen.getByText('Some troop affinities are not verified, so this recommendation may be incomplete.')).toBeInTheDocument();
 
     rerender(<TroopAffinityRecommendation formationDragons={[
       synthetic('a', {}, 'negative'),

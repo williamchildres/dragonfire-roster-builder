@@ -256,6 +256,26 @@ describe('Roster Optimizer v6 workspace', () => {
     expect(within(cards[0]!).queryByText(/Overall Score/i)).not.toBeInTheDocument();
   });
 
+  it('inherits unknown-data disclosure in optimizer result presentation', async () => {
+    const roster = ownedRoster(33);
+    const result = makeResult(roster, 'best-overall-first', 1);
+    const arrangement = { 'left-flank': 'vhagar', vanguard: 'kalspire', 'right-flank': 'tairax' } as const;
+    result.formations[0] = {
+      ...result.formations[0]!,
+      dragonIds: ['vhagar', 'kalspire', 'tairax'],
+      arrangement,
+      tiedBestArrangements: [arrangement],
+      stableCandidateKey: 'kalspire+tairax+vhagar',
+    };
+    renderOptimizer({ roster, runner: resolvedRunner(result) });
+    await userEvent.setup().selectOptions(screen.getByLabelText('Number of armies'), '1');
+    await userEvent.setup().click(screen.getByRole('button', { name: /Build 1 army/i }));
+
+    const card = (await screen.findAllByRole('article'))[0]!;
+    expect(within(card).getByText(/Full affinity match: Shieldbearers and Siege each give all 3 dragons positive affinity/i)).toBeInTheDocument();
+    expect(within(card).getByText(/Some other troop affinities are not verified and could change the comparison/i)).toBeInTheDocument();
+  });
+
   it('saves exact results from all three modes without rerunning or mutating optimizer output', async () => {
     const modes: Array<{ mode: OptimizerAllocationMode; label: RegExp }> = [
       { mode: 'best-overall-first', label: /Best Overall First/i },

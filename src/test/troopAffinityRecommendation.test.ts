@@ -54,7 +54,14 @@ describe('troop-affinity-recommendation-v1', () => {
       dragon('b', affinities({ Cavalry: 'positive', Shieldbearers: 'neutral' }, 'negative')),
       dragon('c', affinities({ Cavalry: 'unknown', Shieldbearers: 'neutral' }, 'negative')),
     ];
-    expect(recommendTroopAffinity(formation)).toMatchObject({ kind: 'best-nonnegative-coverage', recommendedTroopTypes: ['Shieldbearers'], completeAffinityData: false });
+    const result = recommendTroopAffinity(formation)!;
+    expect(result).toMatchObject({ kind: 'best-nonnegative-coverage', recommendedTroopTypes: ['Shieldbearers'], completeAffinityData: false });
+    expect(result.candidates.find((candidate) => candidate.troopType === 'Cavalry')).toMatchObject({
+      positiveDragonIds: ['a', 'b'],
+      unknownDragonIds: ['c'],
+      positiveCount: 2,
+      unknownCount: 1,
+    });
   });
 
   it('never treats unknown as neutral', () => {

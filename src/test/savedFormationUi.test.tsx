@@ -51,6 +51,23 @@ describe('Saved Formations workspace UI', () => {
     expect(screen.getByText('Progression changed since saved')).toBeInTheDocument();
   });
 
+  it('inherits unknown-data disclosure for a fully verified Saved Formation recommendation', () => {
+    const roster = progressedRoster();
+    const library = createSavedFormation(createEmptySavedFormationLibrary(), {
+      name: 'Verified Siege match',
+      arrangement: { 'left-flank': 'vhagar', vanguard: 'kalspire', 'right-flank': 'tairax' },
+      evaluationMode: 'planning',
+      source: 'formation-builder',
+      roster,
+      id: '00000000-0000-4000-8000-000000000099',
+    });
+    renderWorkspace(library, roster);
+
+    const card = screen.getByRole('article', { name: 'Verified Siege match' });
+    expect(within(card).getByText(/Full affinity match: Shieldbearers and Siege each give all 3 dragons positive affinity/i)).toBeInTheDocument();
+    expect(within(card).getByText(/Some other troop affinities are not verified and could change the comparison/i)).toBeInTheDocument();
+  });
+
   it('renames, duplicates, reorders, and confirms deletion with the name', async () => {
     const user = userEvent.setup();
     const roster = progressedRoster();
