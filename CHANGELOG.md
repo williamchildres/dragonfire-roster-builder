@@ -6,7 +6,8 @@
 - Added the `capability-priority-one` recipient selector, shared selection-group identity, current-progression Fire-output qualification, fallback resolution, and structured resolved/unresolved targeting evidence.
 - Preserved the verified shared 20% activation without inventing target probabilities, position priority, stat priority, or forced Caraxes/Syrax pairing preferences.
 - Re-ran Formation Rating v3 and optimizer-v6 artifacts plus William's private current-roster Optimizer Sensitivity Pass v1. No optimizer weight, objective, comparator, power model, reservation rule, Saved Formation schema, or troop-affinity contract changed.
-- Existing saved formations remain valid; displayed ratings may recalculate from the corrected relationship mapping. The historical Formation Rating v2 input is now explicitly frozen so current profile fixes cannot rewrite archived evidence.
+- Existing saved formations remain valid; displayed ratings may recalculate from the corrected relationship mapping. Historical Formation Rating v2 now loads an immutable 33-profile/239-signal snapshot captured from `2832d64c75621ce2fcf57385d716df2f2de52aab` (`sha256:68343cd6bfa67e10f616cf8c3ee109f0d19026058cbf6ffb53776aa6cb758719`) rather than deriving a compatibility view from current profiles.
+- Locked optimizer-v6 comparison drift to an exact 50-entry approved-delta manifest for the Blazing Fury correction (`sha256:7630e354700b908f4e3c86379552a2c13b9e6d1034a0fdaa011772cd4eaff69a`). Missing, unexpected, duplicated, or differently changed historical executions now fail the audit.
 
 ## 0.23.2 - 2026-08-01
 

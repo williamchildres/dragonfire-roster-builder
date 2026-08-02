@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { summarizeAbility } from '../app/dragonDetailPresentation';
+import { historicalFormationRatingV2Profiles } from '../audit/historicalFormationRatingV2Profiles';
 import { dragons } from '../data/dragons';
 import type { AbilityDefinition } from '../models/dragon';
 import type { FormationPlacementComparison } from '../services/formationPlacementComparison';
@@ -104,23 +105,11 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
   it('reports the exhaustive rating delta caused only by the corrected Syrax scaling tag', () => {
     const archivedDragons = dragons.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.id));
     // This is a historical audit of the earlier Recovery scaling correction.
-    // Freeze its original profile contract so later current-profile targeting
-    // corrections cannot rewrite the preserved before/after evidence.
-    const archivedProfiles: DragonSynergyProfile[] = simpleSynergyProfiles
+    // Its after-state comes from the immutable base-commit v2 profile artifact,
+    // not from a compatibility view derived from current production profiles.
+    const archivedProfiles: DragonSynergyProfile[] = historicalFormationRatingV2Profiles
       .filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.dragonId))
-      .map((profile) => profile.dragonId !== 'syrax' ? profile : ({
-        ...profile,
-        outputs: profile.outputs.map((signal) =>
-          signal.id === 'syrax-blazing-fury-first-strike'
-            ? { ...signal, recipientSelector: undefined }
-            : signal,
-        ),
-        supports: profile.supports.map((signal) =>
-          signal.id === 'syrax-blazing-fury-fire-support'
-            ? { ...signal, recipientSelector: undefined }
-            : signal,
-        ),
-      }));
+      .map((profile) => structuredClone(profile));
     const priorProfiles: DragonSynergyProfile[] = archivedProfiles.map((profile) =>
       profile.dragonId !== 'syrax'
         ? profile

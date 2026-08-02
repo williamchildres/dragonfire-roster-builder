@@ -79,6 +79,11 @@ try {
     forwardReverseEqual: report.forwardReverseEqual,
     noDuplicateDragons: report.noDuplicateDragons,
     historicalV5Compatible: report.historicalV5Compatible,
+    historicalV5ChangedExecutionCount: report.historicalV5ChangedExecutionCount,
+    approvedHistoricalDeltaManifestIdentity:
+      report.approvedHistoricalDeltaManifestIdentity,
+    approvedHistoricalDeltaCount: report.approvedHistoricalDeltaCount,
+    historicalV5DeltaContractValid: report.historicalV5DeltaContractValid,
     deterministicAuditHash: report.deterministicAuditHash,
   }));
 } finally {
@@ -101,6 +106,9 @@ function renderMarkdown(report) {
 - Exact reconstruction: ${report.exactReconstruction}
 - Current selections identical to historical optimizer-v5: ${report.historicalV5Compatible}
 - Current executions changed from historical optimizer-v5: ${report.historicalV5ChangedExecutionCount}
+- Approved 0.23.3 historical deltas: ${report.approvedHistoricalDeltaCount}
+- Approved-delta manifest: \`${report.approvedHistoricalDeltaManifestIdentity}\`
+- Exact historical-delta contract valid: ${report.historicalV5DeltaContractValid}
 - Failed checks: ${report.failedChecks}
 - Deterministic audit hash: \`${report.deterministicAuditHash}\`
 

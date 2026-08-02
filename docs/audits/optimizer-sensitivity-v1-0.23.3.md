@@ -20,13 +20,15 @@ No optimizer weight, Estimated Power input, comparator, allocation rule, formati
 | Reliability registry | `e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c` | `e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c` |
 | Reliability/research audit | `f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f` | `f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d` |
 | Optimizer v6 real-world comparison | `fnv1a64:be1303065e21de60` | `fnv1a64:092ea9e799638354` |
-| Complete optimizer v6 audit | `fnv1a64:ffb3095cf43ea1f6` | `fnv1a64:0f61190ace8f1e22` |
+| Complete optimizer v6 audit | `fnv1a64:ffb3095cf43ea1f6` | `fnv1a64:2de5527469a511c0` |
 
 The candidate pool and current Formation Rating identities change because current Syrax trios are corrected and structured targeting evidence is now emitted. The selected solution and public result happen to remain identical. Every candidate without Syrax is byte-for-byte semantically unchanged under the report identity. The historical v2 and production reliability-registry identities remain protected; the reliability/research audit identity changes only because the current signal metadata now includes the selector contract.
 
 The deterministic optimizer-v6 real-world comparison identity changes only in its Caraxes/Syrax diagnostic: the best available third dragon changes from Tessarion (rating 40, five active relationships) to Vhagar (rating 34, three active relationships) after tied Fire-recipient candidates stop receiving guaranteed Blazing Fury credit. All three selected 11-army mode results and their solution/result identities remain unchanged.
 
-The complete optimizer-v6 audit was regenerated from six independent candidate pools and 198 independent exact solves. All forward/reverse pairs match, exact reconstruction and no-duplicate checks pass, and 50 current execution records differ from the immutable optimizer-v5 comparison because their current Formation Rating candidate inputs changed. The historical optimizer-v5 identity remains `fnv1a64:e5ac2432442f5cb0`.
+The complete optimizer-v6 audit was regenerated from six independent candidate pools and 198 independent exact solves. All forward/reverse pairs match, exact reconstruction and no-duplicate checks pass, and exactly 50 current execution records differ semantically from the immutable optimizer-v5 comparison because their current Formation Rating candidate inputs changed. Those 50 records must exactly equal the committed 0.23.3 approved-delta manifest (`sha256:7630e354700b908f4e3c86379552a2c13b9e6d1034a0fdaa011772cd4eaff69a`); all unapproved historical drift is a failure. The historical optimizer-v5 identity remains `fnv1a64:e5ac2432442f5cb0`.
+
+Adding the approved-delta manifest identity and validation result changes only the complete audit-document identity from the initial 0.23.3 value `fnv1a64:0f61190ace8f1e22` to `fnv1a64:2de5527469a511c0`. The regenerated execution records, candidate identities, and solver solution/result hashes are unchanged.
 
 ## Ten-army result
 
