@@ -13,7 +13,7 @@ import { simpleSynergyProfiles } from '../synergy/profiles';
 const trioIds = ['syrax', 'vhagar', 'caraxes'];
 
 describe('optimizer candidate generation and roster progression', () => {
-  it('generates all 5,456 unordered candidates for the canonical 33-dragon roster', () => {
+  it('generates all 5,984 unordered candidates for the canonical 34-dragon roster', () => {
     const roster = rosterFor(dragons.map((dragon) => dragon.id), 10, 16);
     const snapshot = buildOptimizerRosterSnapshot(dragons, roster);
     const candidates = generateOptimizerFormationCandidates({
@@ -21,8 +21,8 @@ describe('optimizer candidate generation and roster progression', () => {
       profiles: simpleSynergyProfiles,
       snapshot,
     });
-    expect(snapshot).toHaveLength(33);
-    expect(candidates).toHaveLength(5456);
+    expect(snapshot).toHaveLength(34);
+    expect(candidates).toHaveLength(5984);
   });
 
   it('uses only eligible My Roster dragons and produces one unordered trio candidate', () => {

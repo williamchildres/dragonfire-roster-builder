@@ -2,37 +2,37 @@
   "auditVersion": "formation-reliability-registry-audit-v1",
   "contractVersion": 1,
   "counts": {
-    "dragonsCovered": 33,
-    "currentScoringSignals": 234,
-    "currentNonScoringSignals": 5,
-    "positionClaimsExcluded": 33,
-    "components": 222,
-    "bindings": 234,
-    "guaranteedBindings": 133,
-    "conditionalDeterministicBindings": 29,
-    "chanceBindings": 69,
+    "dragonsCovered": 34,
+    "currentScoringSignals": 245,
+    "currentNonScoringSignals": 9,
+    "positionClaimsExcluded": 34,
+    "components": 240,
+    "bindings": 245,
+    "guaranteedBindings": 141,
+    "conditionalDeterministicBindings": 30,
+    "chanceBindings": 71,
     "resolvedMixedBindings": 3,
-    "componentsWithFixedProbability": 23,
-    "componentsWithDirectHabitProbability": 33,
+    "componentsWithFixedProbability": 24,
+    "componentsWithDirectHabitProbability": 37,
     "componentsWithHabitOverride": 2,
     "componentsWithRoundSpecificProbability": 2,
-    "componentsWithVariantProbability": 7,
-    "bindingsWithFixedProbability": 22,
+    "componentsWithVariantProbability": 11,
+    "bindingsWithFixedProbability": 23,
     "bindingsWithDirectHabitProbability": 34,
     "bindingsWithHabitOverride": 2,
     "bindingsWithRoundSpecificProbability": 2,
-    "bindingsWithVariantProbability": 10,
-    "guaranteedOpportunityPresence": 42,
-    "conditionalOpportunityPresence": 27,
+    "bindingsWithVariantProbability": 11,
+    "guaranteedOpportunityPresence": 43,
+    "conditionalOpportunityPresence": 28,
     "unknownOpportunityPresence": 3,
-    "unresolvedOpportunityCounts": 67,
-    "unresolvedIndependence": 67,
+    "unresolvedOpportunityCounts": 69,
+    "unresolvedIndependence": 69,
     "missingBindings": 0,
     "staleBindings": 0,
     "duplicateBindings": 0,
     "unreferencedComponents": 0,
     "unresolvedMixedBindings": 0,
-    "researchParityDifferences": 22,
+    "researchParityDifferences": 31,
     "researchParityIssues": 0
   },
   "missingBindingIds": [],
@@ -46,6 +46,7 @@
         "arrax-sudden-strike-bleed-payoff",
         "arrax-sudden-strike-weakened",
         "crimson-bloodscale-fury-taunt-payoff",
+        "moondancer-blood-moon-bleed",
         "shadowrend-fueled-by-darkness-advantage",
         "shadowsong-blazing-conductor-burn",
         "shadowsong-scorched-earth-vulnerable",
@@ -118,6 +119,69 @@
         "caraxes-crippling-inferno-slow"
       ],
       "explanation": "caraxes-crippling-inferno:slow-or-burn -> caraxes-crippling-inferno:slow; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-advantage-rising-tide-payoff"
+      ],
+      "explanation": "moondancer-new-moon:moondancer-advantage-rising-tide-payoff -> moondancer-new-moon:advantage-uplift; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-crescent-blade-physical"
+      ],
+      "explanation": "moondancer-crescent-blade:moondancer-crescent-blade-physical -> moondancer-crescent-blade:physical-damage; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-new-moon-instinct"
+      ],
+      "explanation": "moondancer-new-moon:moondancer-new-moon-instinct -> moondancer-new-moon:sentinel-support; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-new-moon-tactical"
+      ],
+      "explanation": "moondancer-new-moon:moondancer-new-moon-tactical -> moondancer-new-moon:sentinel-support; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-physical-payoff"
+      ],
+      "explanation": "moondancer-crescent-blade:moondancer-physical-payoff -> moondancer-crescent-blade:physical-damage; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-reactive-instincts-initiative"
+      ],
+      "explanation": "moondancer-reactive-instincts:moondancer-reactive-instincts-initiative -> moondancer-reactive-instincts:highest-instinct-support; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-reactive-instincts-instinct"
+      ],
+      "explanation": "moondancer-reactive-instincts:moondancer-reactive-instincts-instinct -> moondancer-reactive-instincts:highest-instinct-support; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-strength-payoff"
+      ],
+      "explanation": "moondancer-crescent-blade:moondancer-strength-payoff -> moondancer-crescent-blade:physical-damage; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-warriors-zeal-left-stats"
+      ],
+      "explanation": "moondancer-warriors-zeal:moondancer-warriors-zeal-left-stats -> moondancer-warriors-zeal:left-flank-stats; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
     },
     {
       "kind": "component-id-migration",
@@ -201,6 +265,7 @@
         "malachite-lightning-strike-first-strike",
         "malachite-lightning-strike-strength",
         "malachite-thunderous-roar-damage",
+        "moondancer-blood-moon-bleed",
         "rhysarion-inspiring-melody-initiative",
         "rhysarion-inspiring-melody-resistance",
         "seasmoke-loyal-bond-resistance",
@@ -250,5 +315,5 @@
     }
   ],
   "researchParityIssues": [],
-  "deterministicRegistryHash": "046360fadd35b809919e2cd4e6ae4cb59f537b5d4ef4d9052a1b02897af2d9e6"
+  "deterministicRegistryHash": "c77c5dbe00eeecfc3d8506f47f4c327bccbb52327b413ff5119d91bec9b2334b"
 }

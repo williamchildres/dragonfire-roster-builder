@@ -24,29 +24,29 @@ import {
 const registryAudit = runFormationReliabilityRegistryAudit();
 
 describe('production Formation Reliability registry', () => {
-  it('covers every canonical ability and all 33 dragons', () => {
+  it('covers every canonical ability and all 34 dragons', () => {
     const canonicalAbilities = dragons
       .flatMap((dragon) => [dragon.command, dragon.trait, ...dragon.habits])
       .map((ability) => ability.id)
       .sort();
-    expect(new Set(dragons.map((dragon) => dragon.id)).size).toBe(33);
+    expect(new Set(dragons.map((dragon) => dragon.id)).size).toBe(34);
     expect(formationReliabilityAbilityCatalog.map((ability) => ability.abilityId)).toEqual(
       canonicalAbilities,
     );
-    expect(formationReliabilityAbilityCatalog).toHaveLength(231);
-    expect(registryAudit.counts.dragonsCovered).toBe(33);
+    expect(formationReliabilityAbilityCatalog).toHaveLength(238);
+    expect(registryAudit.counts.dragonsCovered).toBe(34);
   });
 
-  it('derives exactly the current 234 scoring signals and excludes non-scoring rows and claims', () => {
+  it('derives exactly the current 245 scoring signals and excludes non-scoring rows and claims', () => {
     const currentScoringSignalIds = simpleSynergyProfiles
       .flatMap((profile) => [...profile.outputs, ...profile.supports, ...profile.benefitsFrom])
       .filter((signal) => signal.nonScoring !== true)
       .map((signal) => signal.id)
       .sort();
     expect(formationReliabilityScoringSignalIds).toEqual(currentScoringSignalIds);
-    expect(formationReliabilityScoringSignalIds).toHaveLength(234);
-    expect(formationReliabilityNonScoringSignalIds).toHaveLength(5);
-    expect(formationReliabilityPositionClaimIds).toHaveLength(33);
+    expect(formationReliabilityScoringSignalIds).toHaveLength(245);
+    expect(formationReliabilityNonScoringSignalIds).toHaveLength(9);
+    expect(formationReliabilityPositionClaimIds).toHaveLength(34);
   });
 
   it('binds every scoring signal exactly once with no stale or unresolved entries', () => {
@@ -54,7 +54,7 @@ describe('production Formation Reliability registry', () => {
     for (const binding of formationReliabilityBindings) {
       bindingCounts.set(binding.signalId, (bindingCounts.get(binding.signalId) ?? 0) + 1);
     }
-    expect(formationReliabilityBindings).toHaveLength(234);
+    expect(formationReliabilityBindings).toHaveLength(245);
     expect([...bindingCounts.values()].every((count) => count === 1)).toBe(true);
     expect([...bindingCounts.keys()].sort()).toEqual(formationReliabilityScoringSignalIds);
     expect(formationReliabilityBindings.every((binding) => binding.status === 'resolved')).toBe(
@@ -67,22 +67,22 @@ describe('production Formation Reliability registry', () => {
 
   it('reports exact binding, probability, opportunity, and unresolved-evidence boundaries', () => {
     expect(registryAudit.counts).toMatchObject({
-      components: 222,
-      bindings: 234,
-      guaranteedBindings: 133,
-      conditionalDeterministicBindings: 29,
-      chanceBindings: 69,
+      components: 240,
+      bindings: 245,
+      guaranteedBindings: 141,
+      conditionalDeterministicBindings: 30,
+      chanceBindings: 71,
       resolvedMixedBindings: 3,
-      bindingsWithFixedProbability: 22,
+      bindingsWithFixedProbability: 23,
       bindingsWithDirectHabitProbability: 34,
       bindingsWithHabitOverride: 2,
       bindingsWithRoundSpecificProbability: 2,
-      bindingsWithVariantProbability: 10,
-      guaranteedOpportunityPresence: 42,
-      conditionalOpportunityPresence: 27,
+      bindingsWithVariantProbability: 11,
+      guaranteedOpportunityPresence: 43,
+      conditionalOpportunityPresence: 28,
       unknownOpportunityPresence: 3,
-      unresolvedOpportunityCounts: 67,
-      unresolvedIndependence: 67,
+      unresolvedOpportunityCounts: 69,
+      unresolvedIndependence: 69,
       missingBindings: 0,
       staleBindings: 0,
       duplicateBindings: 0,
@@ -318,10 +318,10 @@ describe('production Formation Reliability registry', () => {
       [...registryAudit.researchParityDifferences].map((difference) => difference.kind).sort(),
     );
     expect(registryAudit.deterministicRegistryHash).toBe(
-      '046360fadd35b809919e2cd4e6ae4cb59f537b5d4ef4d9052a1b02897af2d9e6',
+      'c77c5dbe00eeecfc3d8506f47f4c327bccbb52327b413ff5119d91bec9b2334b',
     );
     expect(runFormationReliabilityAudit().deterministicHash).toBe(
-      'c8e025b2b5f57e5f2c19f24d802d72035e3c7663b595253de7b2712056400299',
+      'e01d0e4e99afcc1771dabcaf6289ebd616877ff4ed53cd3e32f4e78ee1fbfcde',
     );
   });
 

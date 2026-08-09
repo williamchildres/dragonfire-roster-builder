@@ -1,0 +1,104 @@
+{
+  "version": "troop-affinity-recommendation-v1",
+  "identity": "fnv1a64:95d0084196651307",
+  "canonicalTroopOrder": [
+    "Cavalry",
+    "Shieldbearers",
+    "Archers",
+    "Spearmen",
+    "Siege"
+  ],
+  "dragonCount": 34,
+  "formationFixtures": 6,
+  "fullPositiveFixtures": 2,
+  "partialFixtures": 2,
+  "tieFixtures": 2,
+  "negativeTradeoffFixtures": 1,
+  "unknownDataFixtures": 1,
+  "siegeFixtures": 1,
+  "positionInvarianceChecks": 6,
+  "fixtures": [
+    {
+      "name": "real-full-positive",
+      "dragonIds": [
+        "antares",
+        "crimson",
+        "syrax"
+      ],
+      "kind": "full-positive",
+      "recommendedTroopTypes": [
+        "Archers"
+      ],
+      "positiveCoverage": 3
+    },
+    {
+      "name": "real-partial",
+      "dragonIds": [
+        "antares",
+        "seasmoke",
+        "velar"
+      ],
+      "kind": "best-nonnegative-coverage",
+      "recommendedTroopTypes": [
+        "Archers"
+      ],
+      "positiveCoverage": 2
+    },
+    {
+      "name": "real-tie",
+      "dragonIds": [
+        "caraxes",
+        "seasmoke",
+        "syrax"
+      ],
+      "kind": "best-nonnegative-coverage",
+      "recommendedTroopTypes": [
+        "Cavalry",
+        "Archers",
+        "Spearmen"
+      ],
+      "positiveCoverage": 2
+    },
+    {
+      "name": "real-siege-tie",
+      "dragonIds": [
+        "kalspire",
+        "tairax",
+        "vhagar"
+      ],
+      "kind": "full-positive",
+      "recommendedTroopTypes": [
+        "Shieldbearers",
+        "Siege"
+      ],
+      "positiveCoverage": 3
+    },
+    {
+      "name": "verified-negative-tradeoff",
+      "dragonIds": [
+        "negative-a",
+        "negative-b",
+        "negative-c"
+      ],
+      "kind": "least-negative-tradeoff",
+      "recommendedTroopTypes": [
+        "Cavalry"
+      ],
+      "positiveCoverage": 2
+    },
+    {
+      "name": "unknown-incomplete",
+      "dragonIds": [
+        "unknown-a",
+        "unknown-b",
+        "unknown-c"
+      ],
+      "kind": "incomplete",
+      "recommendedTroopTypes": [
+        "Cavalry"
+      ],
+      "positiveCoverage": 2
+    }
+  ],
+  "failures": []
+}

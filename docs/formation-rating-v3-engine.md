@@ -56,7 +56,7 @@ V3 evaluates all six placements using fractional adjusted uncapped relationship 
 
 Structured traces retain signal, component, event, probability-variant, path, mixed-use, opportunity, count, scope, independence, method, reason, and selection data. They are data for a later UI and contain no display-specific React copy.
 
-`pnpm run audit:formation-rating-v3` verifies `docs/formation-rating-v3-audit.json`; the write variant regenerates it intentionally. The audit compares v2 and v3 across all 32,736 ordered formations at maximum star/dragon progression with every unlocked Habit explicitly set to Level 5. It reports deterministic hashes, distributions, transitions, placement changes, method and reason counts, per-dragon changes, and the three requested Velar trios without serializing every full trace.
+`pnpm run audit:formation-rating-v3` verifies `docs/formation-rating-v3-audit.json`; the write variant regenerates it intentionally. The current v3 sweep covers all 35,904 ordered 34-dragon formations at maximum star/dragon progression with every unlocked Habit explicitly set to Level 5. The separately frozen v2 sweep remains the historical 32,736-placement, 33-dragon universe. The audit reports deterministic hashes, distributions, transitions, placement changes, method and reason counts, per-dragon changes, and representative fixtures without serializing every full trace.
 
 ## Production adoption boundaries
 

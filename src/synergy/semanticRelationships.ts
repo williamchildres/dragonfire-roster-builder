@@ -249,5 +249,7 @@ function describeRecipientSelector(selector: FriendlyRecipientSelector): string 
       return `adjacent group of ${selector.recipientCount}`;
     case 'capability-priority-one':
       return `one recipient prioritizing active ${selector.priorityTag} (${selector.selectionGroupId})`;
+    case 'breed-one':
+      return `one ${selector.includeSelf ? '' : 'other '}${selector.breed} (${selector.selectionGroupId})`;
   }
 }

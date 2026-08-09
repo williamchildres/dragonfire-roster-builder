@@ -2502,6 +2502,34 @@ export const simpleSynergyProfiles = [
     ],
   },
   {
+    dragonId: 'moondancer',
+    dragonName: 'Moondancer',
+    outputs: [
+      output({ id: 'moondancer-crescent-blade-physical', tag: 'damage:physical', damageScope: 'non-basic-attack', scalesWith: ['stat:strength'], abilityId: 'moondancer-crescent-blade', abilityName: 'Crescent Blade', description: 'deals Physical Damage to two adjacent Enemies on even-numbered rounds' }),
+      output({ id: 'moondancer-blood-moon-bleed', tag: 'status:bleed', abilityId: 'moondancer-blood-moon', abilityName: 'Blood Moon', description: 'can afflict Bleed on two adjacent Enemies for two rounds; multi-target roll scope is unresolved', publicLabel: 'Can apply Bleed to two adjacent Enemies', unlock: { minimumStarRank: 8 }, friendlyScope: 'formation' }),
+      output({ id: 'moondancer-rising-tide-self', tag: 'effect:self-stack', abilityId: 'moondancer-crescent-blade', abilityName: 'Crescent Blade', description: 'each Rising Tide stack reduces Moondancer Damage Received by 2%, to a maximum of eight stacks', publicLabel: 'Rising Tide self-stack defense', nonScoring: true, friendlyScope: 'self' }),
+      output({ id: 'moondancer-eclipsing-strike-damage-down', tag: 'effect:enemy-debuff', abilityId: 'moondancer-eclipsing-strike', abilityName: 'Eclipsing Strike', description: 'reduces Damage Dealt of the Enemy with the Most Troops by 18%', publicLabel: 'Enemy Damage Dealt reduction', unlock: { minimumStarRank: 10 }, nonScoring: true, friendlyScope: 'self' }),
+      output({ id: 'moondancer-eclipsing-strike-initiative-down', tag: 'effect:enemy-debuff', abilityId: 'moondancer-eclipsing-strike', abilityName: 'Eclipsing Strike', description: 'at 6+ Rising Tide, reduces the same Eclipsing Strike target Initiative by 25%', publicLabel: 'Enemy Initiative reduction', unlock: { minimumStarRank: 10 }, nonScoring: true, friendlyScope: 'self' }),
+    ],
+    supports: [
+      output({ id: 'moondancer-warriors-zeal-self-physical', tag: 'damage:physical', abilityId: 'moondancer-warriors-zeal', abilityName: "Warrior's Zeal", description: 'increases Moondancer Physical Damage Dealt by 16%', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, requiredSelfPosition: 'vanguard', nonScoring: true, friendlyScope: 'self' }),
+      output({ id: 'moondancer-warriors-zeal-left-stats', tag: 'stat:instinct', tags: ['stat:instinct', 'stat:initiative'], abilityId: 'moondancer-warriors-zeal', abilityName: "Warrior's Zeal", description: 'increases Instinct and Initiative by 20 of the Left Flank Ally', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, requiredSelfPosition: 'vanguard', requiredRecipientPosition: 'left-flank', friendlyScope: 'formation' }),
+      output({ id: 'moondancer-new-moon-instinct', tag: 'stat:instinct', abilityId: 'moondancer-new-moon', abilityName: 'New Moon', description: 'increases Instinct of one other Ally Sentinel for two rounds on odd-numbered rounds', unlock: { minimumStarRank: 2 }, recipientSelector: { kind: 'breed-one', breed: 'Sentinel', recipientCount: 1, includeSelf: false, selectionGroupId: 'moondancer-new-moon-sentinel-recipient' }, friendlyScope: 'formation' }),
+      output({ id: 'moondancer-new-moon-tactical', tag: 'damage:tactical', abilityId: 'moondancer-new-moon', abilityName: 'New Moon', description: 'increases Tactical Damage Dealt of the same one other Ally Sentinel for two rounds', unlock: { minimumStarRank: 2 }, recipientSelector: { kind: 'breed-one', breed: 'Sentinel', recipientCount: 1, includeSelf: false, selectionGroupId: 'moondancer-new-moon-sentinel-recipient' }, friendlyScope: 'formation' }),
+      output({ id: 'moondancer-reactive-instincts-instinct', tag: 'stat:instinct', abilityId: 'moondancer-reactive-instincts', abilityName: 'Reactive Instincts', description: 'increases Instinct of the Ally with the highest Instinct until end of combat', unlock: { minimumStarRank: 4 }, recipientSelector: { kind: 'highest-stat', stat: 'instinct', excludeSelf: false, recipientCount: 1, selectionGroupId: 'moondancer-reactive-instincts-highest-instinct' }, friendlyScope: 'formation' }),
+      output({ id: 'moondancer-reactive-instincts-initiative', tag: 'stat:initiative', abilityId: 'moondancer-reactive-instincts', abilityName: 'Reactive Instincts', description: 'increases Initiative of the same highest-Instinct Ally until end of combat', unlock: { minimumStarRank: 4 }, recipientSelector: { kind: 'highest-stat', stat: 'instinct', excludeSelf: false, recipientCount: 1, selectionGroupId: 'moondancer-reactive-instincts-highest-instinct' }, friendlyScope: 'formation' }),
+    ],
+    benefitsFrom: [
+      output({ id: 'moondancer-advantage-rising-tide-payoff', tag: 'status:advantage', abilityId: 'moondancer-new-moon', abilityName: 'New Moon', description: 'Advantage on any Ally deterministically doubles the documented Rising Tide activation chance branches in New Moon and Full Moon', publicLabel: 'Advantage doubles Rising Tide chance', unlock: { minimumStarRank: 2 }, providerPresenceSatisfies: true, friendlyScope: 'formation' }),
+      output({ id: 'moondancer-crescent-blade-trigger-payoff', tag: 'trigger:tactical-or-recovery', abilityId: 'moondancer-crescent-blade', abilityName: 'Crescent Blade', description: 'the one selected other Ally Sentinel can create a Rising Tide roll opportunity by dealing Tactical Damage or applying Recovery', publicLabel: 'Selected Sentinel can trigger Crescent Blade with Tactical Damage or Recovery', providerSelector: { kind: 'breed-one', breed: 'Sentinel', recipientCount: 1, includeSelf: false, selectionGroupId: 'moondancer-crescent-blade-sentinel-recipient' }, friendlyScope: 'formation' }),
+      output({ id: 'moondancer-strength-payoff', tag: 'stat:strength', abilityId: 'moondancer-crescent-blade', abilityName: 'Crescent Blade', description: 'Strength improves direct Physical Damage', friendlyScope: 'formation' }),
+      output({ id: 'moondancer-physical-payoff', tag: 'damage:physical', abilityId: 'moondancer-crescent-blade', abilityName: 'Crescent Blade', description: 'benefits from Physical Damage support', supportOnly: true, friendlyScope: 'formation' }),
+    ],
+    positionClaims: [
+      claim({ id: 'moondancer-warriors-zeal-vanguard', abilityId: 'moondancer-warriors-zeal', abilityName: "Warrior's Zeal", requiredPosition: 'vanguard', unlock: { minimumStarRank: 1, minimumDragonLevel: 16 }, description: "Warrior's Zeal requires Vanguard" }),
+    ],
+  },
+  {
     dragonId: 'tessarion',
     dragonName: 'Tessarion',
     outputs: [

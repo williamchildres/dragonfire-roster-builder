@@ -77,6 +77,15 @@ export interface FormationReliabilityRegistryAuditReport {
 }
 
 const allowedComponentIdMigrationSignalIds = new Set([
+  'moondancer-advantage-rising-tide-payoff',
+  'moondancer-crescent-blade-physical',
+  'moondancer-new-moon-instinct',
+  'moondancer-new-moon-tactical',
+  'moondancer-physical-payoff',
+  'moondancer-reactive-instincts-initiative',
+  'moondancer-reactive-instincts-instinct',
+  'moondancer-strength-payoff',
+  'moondancer-warriors-zeal-left-stats',
   'arulix-hypnotic-helix-overwhelm',
   'arulix-hypnotic-helix-stagger',
   'bevlorin-bountiful-gifts-initiative',
@@ -118,7 +127,7 @@ export function runFormationReliabilityRegistryAudit(): FormationReliabilityRegi
     .map((binding) => binding.signalId)
     .sort();
   const unreferencedComponentIds = formationReliabilityComponents
-    .filter((component) => !referencedComponentIds.has(component.id))
+    .filter((component) => !component.researchOnly && !referencedComponentIds.has(component.id))
     .map((component) => component.id)
     .sort();
   const unresolvedMixedBindingIds = formationReliabilityBindings

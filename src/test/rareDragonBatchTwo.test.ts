@@ -40,13 +40,13 @@ function chipsFor(dragonId: string, starRank: number, selected = formation(null,
 
 describe('second Rare dragon batch', () => {
   it('upgrades exactly one canonical record for each requested Rare and advances coverage/version only', () => {
-    expect(dragons).toHaveLength(33);
-    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(33);
-    expect(simpleSynergyProfiles).toHaveLength(33);
+    expect(dragons).toHaveLength(34);
+    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(34);
+    expect(simpleSynergyProfiles).toHaveLength(34);
     expect(metadataOnlyDragonIds).toHaveLength(0);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.23.4', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.23.5', schemaVersion: 14 });
 
     const breeds = { solstryker: 'Champion', shimmer: 'Sentinel', jagadrix: 'Hunter' } as const;
     for (const dragonId of rareIds) {

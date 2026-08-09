@@ -814,6 +814,14 @@ export const simpleSynergyAbilityReviews = [
   review('dawnseeker', 'dawnseeker-winds-favor', 'habit', represented(['dawnseeker-winds-favor-initiative'], 'Full-formation Initiative support reaches both teammates without self-synergy.')),
   review('dawnseeker', 'dawnseeker-first-light', 'habit', represented(['dawnseeker-first-light-stats', 'dawnseeker-first-light-first-strike'], 'Paired Intelligence and Instinct share one group, while one shared activation grants specifically named First-Strike to both other allies without Control aliasing.')),
 
+  review('moondancer', 'moondancer-crescent-blade', 'command', represented(['moondancer-crescent-blade-physical', 'moondancer-rising-tide-self', 'moondancer-crescent-blade-trigger-payoff', 'moondancer-strength-payoff', 'moondancer-physical-payoff'], 'The Command preserves one other Sentinel recipient, qualifying Tactical-or-Recovery trigger evidence, the 50% Rising Tide roll, stack defense, and even-round Strength-based Physical output.')),
+  review('moondancer', 'moondancer-warriors-zeal', 'trait', represented(['moondancer-warriors-zeal-self-physical', 'moondancer-warriors-zeal-left-stats', 'moondancer-warriors-zeal-vanguard'], 'The Vanguard trait preserves self Physical amplification and exact Left Flank Instinct and Initiative support.')),
+  review('moondancer', 'moondancer-new-moon', 'habit', represented(['moondancer-new-moon-instinct', 'moondancer-new-moon-tactical', 'moondancer-advantage-rising-tide-payoff'], 'New Moon preserves one independently selected other Sentinel, progression-aware support, a 4+ stack magnitude modifier, and the Advantage probability uplift.')),
+  review('moondancer', 'moondancer-reactive-instincts', 'habit', represented(['moondancer-reactive-instincts-instinct', 'moondancer-reactive-instincts-initiative'], 'One grouped highest-Instinct selector governs both deterministic start-of-combat stat effects and preserves unresolved ties.')),
+  review('moondancer', 'moondancer-full-moon', 'habit', reinforces(['moondancer-crescent-blade-physical', 'moondancer-advantage-rising-tide-payoff'], 'Full Moon augments the Command rate and contributes the second progression-aware Advantage uplift while least-troops and 4+ stack conditions remain explicit.')),
+  review('moondancer', 'moondancer-blood-moon', 'habit', represented(['moondancer-blood-moon-bleed'], 'Blood Moon exposes Bleed while retaining conditional Physical amplification, 6+ stack chance uplift, two-target adjacency, duration, and unresolved roll scope.')),
+  review('moondancer', 'moondancer-eclipsing-strike', 'habit', represented(['moondancer-eclipsing-strike-damage-down', 'moondancer-eclipsing-strike-initiative-down'], 'Eclipsing Strike preserves one shared activation, fixed enemy reductions, highest-troop targeting, and unresolved ties as non-scoring battlefield evidence.')),
+
   review(
     'tessarion',
     'tessarion-cobalt-flame',

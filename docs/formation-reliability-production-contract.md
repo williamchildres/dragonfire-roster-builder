@@ -10,7 +10,7 @@ Recipient targeting is an upstream eligibility contract owned by the synergy eva
 
 `registry/catalog.ts` derives canonical abilities and current scoring IDs from dragon data and `simpleSynergyProfiles`. `registry/dragons/` contains one reviewable module per dragon, while `registry/index.ts` exports the sorted aggregate components, bindings, ability catalog, scoring IDs, and complete contract input.
 
-The registry covers all 33 dragons and all 234 current scoring signals. Five explicitly non-scoring signals and 33 position claims are identified but excluded from binding coverage. Every component is referenced and every scoring signal has exactly one resolved binding.
+The registry covers all 34 dragons and all 245 current scoring signals. Nine explicitly non-scoring signals and 34 position claims are identified but excluded from binding coverage. Every scoring signal has exactly one resolved binding. Research-only components may retain structured, inspectable mechanic evidence without creating a scored relationship.
 
 The production audit in `src/audit/formationReliabilityRegistryAudit.ts` reconciles registry facts with the historical research inventory. Intentional structural differences - including split independent rolls, explicit Habit sources, round-specific overrides, binding-selected variants, and resolved mixed uses - are reported deterministically. Production does not import or parse the research report at runtime.
 
@@ -27,6 +27,10 @@ Direct `habit-level` probability exists only while that Habit is active with a r
 - active Habit with a missing level: `null`, never the base or a default level.
 
 `round-specific` entries may be fixed, direct Habit-Level, Habit override, or unknown. This represents Tairax's Gleamstrike replacement on every odd round and Crimson's Vermin's Bane replacement only on Round 1.
+
+Conditional probability uplifts accept either a fixed probability or a complete Habit-level 1-5 progression. Validation checks every baseline, conditioned value, absolute delta, and multiplier without assigning condition uptime. Thus Advantage deterministically selects Moondancer's doubled New Moon or Full Moon probability branch, while the resulting Rising Tide roll remains probabilistic. The same generic evidence form records Rising Tide-conditioned Blood Moon and Eclipsing Strike branches; Vhagar's fixed 25% to 50% Fiery Bonds evidence remains unchanged.
+
+Conditional magnitude uplifts, stack facts, and target-selector evidence are research and presentation metadata. They preserve exact 1.5x or 2x modifiers, thresholds, caps, per-stack facts, target counts, and unresolved roll scope, but do not silently alter generic Formation Rating base values.
 
 ## Binding paths, variants, and mixed uses
 

@@ -367,6 +367,46 @@ registerChance(['vhagar-fiery-bonds-taunt'], {
   componentSuffix: 'taunt',
 });
 
+registerChance(['moondancer-blood-moon-bleed'], {
+  probability: {
+    kind: 'multiple',
+    variants: [
+      { label: 'below six Rising Tide stacks', byHabitLevel: [0.25, 0.3, 0.35, 0.425, 0.5] },
+      { label: 'six or more Rising Tide stacks', byHabitLevel: [0.5, 0.6, 0.7, 0.85, 1] },
+    ],
+  },
+  rollTiming: 'Odd-numbered rounds.',
+  rollScope: 'unresolved',
+  opportunityCount: scheduled([1, 3, 5, 7, 9]),
+  targetCount: 2,
+  separatePerTarget: null,
+  separatePerEffect: false,
+  durationRounds: 2,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'Whether one shared roll or separate per-target rolls control the two Bleed targets.',
+    'Temporal independence across odd rounds is not established.',
+  ],
+  componentSuffix: 'bleed',
+});
+
+registerChance(['moondancer-crescent-blade-trigger-payoff'], {
+  probability: fixed(0.5),
+  rollTiming: 'After the selected Crescent Blade recipient deals Tactical Damage or applies Recovery; at most once per round.',
+  rollScope: 'single-shared-roll',
+  opportunityCount: {
+    kind: 'ability-activation-dependent',
+    note: 'Qualifying selected-recipient event frequency is not established.',
+  },
+  targetCount: 1,
+  separatePerTarget: false,
+  separatePerEffect: false,
+  durationRounds: null,
+  independence: 'unknown',
+  unresolvedQuestions: ['Qualifying event frequency and temporal independence are not established.'],
+  componentSuffix: 'rising-tide-trigger',
+});
+
 registerChance(['vhagar-skyward-titan-physical'], {
   probability: fixed(
     0.3,
@@ -1205,6 +1245,14 @@ const mixedBySignalId = new Map<string, MixedSpec>([
 ]);
 
 const guaranteedSignalIds = new Set([
+  'moondancer-crescent-blade-physical',
+  'moondancer-new-moon-instinct',
+  'moondancer-new-moon-tactical',
+  'moondancer-physical-payoff',
+  'moondancer-reactive-instincts-initiative',
+  'moondancer-reactive-instincts-instinct',
+  'moondancer-strength-payoff',
+  'moondancer-warriors-zeal-left-stats',
   'antares-blazing-onslaught-fire-vulnerability',
   'antares-blazing-onslaught-non-basic-physical-vulnerability',
   'antares-hunters-wrath-right-stats',
@@ -1341,6 +1389,7 @@ const guaranteedSignalIds = new Set([
 ]);
 
 const conditionalDeterministicSignalIds = new Set([
+  'moondancer-advantage-rising-tide-payoff',
   'sunfyre-golden-wrath-fire',
   'sunfyre-adaptive-glory-damage',
   'tairax-gleamstrike-fire',
@@ -1373,6 +1422,7 @@ const conditionalDeterministicSignalIds = new Set([
 ]);
 
 const guaranteedAtLeastOneOpportunitySignalIds = new Set([
+  'moondancer-blood-moon-bleed',
   'antares-relentless-pursuit-vulnerable',
   'arulix-hypnotic-helix-overwhelm',
   'caraxes-crippling-inferno-burn',
@@ -1418,6 +1468,7 @@ const guaranteedAtLeastOneOpportunitySignalIds = new Set([
 ]);
 
 const conditionalOpportunitySignalIds = new Set([
+  'moondancer-crescent-blade-trigger-payoff',
   'arrax-sudden-strike-bleed-payoff',
   'arrax-sudden-strike-weakened',
   'arulix-hypnotic-helix-stagger',
@@ -1956,14 +2007,14 @@ function validateCoverage(
   signals: FormationReliabilityAuditSignal[],
   scoringSignals: FormationReliabilityAuditSignal[],
 ): void {
-  if (simpleSynergyProfiles.length !== 33) {
-    throw new Error(`Expected 33 profiles, found ${simpleSynergyProfiles.length}.`);
+  if (simpleSynergyProfiles.length !== 34) {
+    throw new Error(`Expected 34 profiles, found ${simpleSynergyProfiles.length}.`);
   }
-  if (signals.length !== 239) {
-    throw new Error(`Expected 239 curated signals, found ${signals.length}.`);
+  if (signals.length !== 254) {
+    throw new Error(`Expected 254 curated signals, found ${signals.length}.`);
   }
-  if (scoringSignals.length !== 234) {
-    throw new Error(`Expected 234 scoring signals, found ${scoringSignals.length}.`);
+  if (scoringSignals.length !== 245) {
+    throw new Error(`Expected 245 scoring signals, found ${scoringSignals.length}.`);
   }
   const signalIds = new Set(signals.map((signal) => signal.signalId));
   const unknownExplicitClassificationIds = [

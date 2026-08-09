@@ -281,7 +281,7 @@ export function runOptimizerV3FixedPointAudit() {
       }
     }
   }
-  if (auditedOrderedPlacementCount !== 32_736) {
+  if (auditedOrderedPlacementCount !== 35_904) {
     failedChecks.push(
       `fixed-point-ordered-placement-count:${auditedOrderedPlacementCount}`,
     );

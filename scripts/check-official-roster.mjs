@@ -1,42 +1,11 @@
 import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createServer } from 'vite';
 
 const OFFICIAL_URL = 'https://gotdragonfire.com/dragons/';
 const USER_AGENT =
-  'dragonfire-roster-builder/0.3.0 (+https://github.com/williamchildres/dragonfire-roster-builder)';
-
-const localRoster = [
-  ['Syrax', 'Legendary', 'Sentinel', 'official-website'],
-  ['Vhagar', 'Legendary', 'Warrior', 'official-website'],
-  ['Caraxes', 'Legendary', 'Hunter', 'official-website'],
-  ['Seasmoke', 'Legendary', 'Champion', 'official-website'],
-  ['Solstryker', 'Rare', 'Champion', 'official-website'],
-  ['Crimson', 'Legendary', 'Hunter', 'official-website'],
-  ['Kalspire', 'Legendary', 'Champion', 'official-website'],
-  ['Malachite', 'Legendary', 'Sentinel', 'official-website'],
-  ['Venator', 'Legendary', 'Warrior', 'official-website'],
-  ['Daemoros', 'Epic', 'Warrior', 'official-website'],
-  ['Feskar', 'Epic', 'Champion', 'official-website'],
-  ['Rhysarion', 'Epic', 'Champion', 'official-website'],
-  ['Shadowsong', 'Epic', 'Hunter', 'official-website'],
-  ['Tashix', 'Epic', 'Hunter', 'official-website'],
-  ['Vaeldra', 'Epic', 'Warrior', 'official-website'],
-  ['Velar', 'Epic', 'Sentinel', 'official-website'],
-  ['Zivern', 'Epic', 'Sentinel', 'official-website'],
-  ['Antares', 'Rare', 'Hunter', 'official-website'],
-  ['Shimmer', 'Rare', 'Sentinel', 'official-website'],
-  ['Jagadrix', 'Rare', 'Hunter', 'official-website'],
-  ['Bevlorin', 'Rare', 'Champion', 'official-website'],
-  ['Shadowrend', 'Rare', 'Warrior', 'official-website'],
-  ['Thunderstrike', 'Rare', 'Warrior', 'official-website'],
-  ['Vesper', 'Rare', 'Sentinel', 'official-website'],
-  ['Arulix', 'Rare', 'Champion', 'official-website'],
-  ['Nyrena', 'Rare', 'Champion', 'official-website'],
-  ['Dawnseeker', 'Rare', 'Sentinel', 'official-website'],
-  ['Arrax', 'Rare', 'Warrior', 'official-website'],
-  ['Sheepstealer', 'Legendary', 'Hunter', 'in-game-verified-pending-official-site'],
-  ['Vermax', 'Epic', 'Warrior', 'in-game-verified-pending-official-site'],
-].map(([name, rarity, breed, rosterSourceStatus]) => ({ name, rarity, breed, rosterSourceStatus }));
+  'dragonfire-roster-builder/0.23.5 (+https://github.com/williamchildres/dragonfire-roster-builder)';
 
 export function parseOfficialRoster(html) {
   const names = [...html.matchAll(/\/dragons\/([a-z0-9-]+)\/["']/gi)].map((match) =>
@@ -116,6 +85,7 @@ async function main() {
     return;
   }
 
+  const localRoster = await loadCanonicalRoster();
   const diff = compareRosters(localRoster, parsed);
   if (diff.additions.length || diff.removals.length || diff.changes.length || diff.pendingNowOfficial.length) {
     console.error('Official roster differences were found.');
@@ -129,6 +99,27 @@ async function main() {
       `Known in-game: ${diff.counts.knownInGame}; official-site local: ${diff.counts.officialWebsiteLocal}; ` +
       `pending official site: ${diff.counts.pendingOfficialSite}.`,
   );
+}
+
+async function loadCanonicalRoster() {
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+  const server = await createServer({
+    root,
+    appType: 'custom',
+    server: { middlewareMode: true, hmr: false },
+    logLevel: 'error',
+  });
+  try {
+    const { dragons } = await server.ssrLoadModule('/src/data/dragons.ts');
+    return dragons.map(({ name, rarity, breed, rosterSourceStatus }) => ({
+      name,
+      rarity,
+      breed,
+      rosterSourceStatus,
+    }));
+  } finally {
+    await server.close();
+  }
 }
 
 async function fetchHtml() {

@@ -3,11 +3,11 @@ import { createServer } from 'vite';
 
 const write = process.argv.includes('--write');
 const jsonPath = new URL(
-  '../docs/audits/roster-optimizer-v6-real-world-0.23.4.json',
+  '../docs/audits/roster-optimizer-v6-real-world-0.23.5.json',
   import.meta.url,
 );
 const markdownPath = new URL(
-  '../docs/audits/roster-optimizer-v6-real-world-0.23.4.md',
+  '../docs/audits/roster-optimizer-v6-real-world-0.23.5.md',
   import.meta.url,
 );
 const server = await createServer({
@@ -51,7 +51,7 @@ function renderMarkdown(report) {
     balanced: 'Balance Raw Power Across Armies',
   })[mode];
   const diagnostic = report.caraxesSyrax;
-  return `# Optimizer v6 real-world comparison — 0.23.4
+  return `# Optimizer v6 real-world comparison — 0.23.5
 
 - Fixture: minimal deterministic 33-dragon progression snapshot
 - Shared candidate-pool builds: ${report.candidatePoolBuilds}

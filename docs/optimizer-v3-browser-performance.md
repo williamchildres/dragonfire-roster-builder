@@ -77,8 +77,8 @@ returned the protected solution/result hashes.
 
 ## Fixed-point evidence
 
-The ordered power-of-ten audit over all 32,736 placements found 62 collisions
-at scale 1, 129 at scale 10, and zero at scales 100 through 1,000,000. Scale
+The current ordered power-of-ten audit over all 35,904 placements found 63 collisions
+at scale 1, 139 at scale 10, and zero at scales 100 through 1,000,000. Scale
 100 is therefore the smallest audited collision-free scale. The published
 production scale remains 1,000,000; it is safe for ten-formation totals and
 HiGHS coefficients, and retaining it preserves every optimizer identity.

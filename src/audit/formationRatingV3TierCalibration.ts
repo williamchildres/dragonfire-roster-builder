@@ -9,19 +9,19 @@ export interface FormationRatingV3TierThresholds {
 
 export const FORMATION_RATING_V3_TIER_TARGETS = {
   individual: {
-    Excellent: 421,
-    Strong: 3_481,
-    Solid: 13_366,
-    Developing: 13_404,
-    Weak: 2_064,
+    Excellent: 385,
+    Strong: 3_451,
+    Solid: 15_805,
+    Developing: 13_875,
+    Weak: 2_388,
   },
   cumulative: {
-    Excellent: 421,
-    Strong: 3_902,
-    Solid: 17_268,
-    Developing: 30_672,
+    Excellent: 385,
+    Strong: 3_836,
+    Solid: 19_641,
+    Developing: 33_516,
   },
-  total: 32_736,
+  total: 35_904,
 } as const;
 
 export interface FormationRatingV3TierCalibration {

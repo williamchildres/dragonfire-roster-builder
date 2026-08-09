@@ -40,14 +40,14 @@ function chipsFor(dragonId: string, position: keyof SimpleFormation, selected: S
 
 describe('fourth Rare dragon batch', () => {
   it('completes all roster coverage without changing schema contracts', () => {
-    expect(dragons).toHaveLength(33);
-    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(33);
-    expect(simpleSynergyProfiles).toHaveLength(33);
+    expect(dragons).toHaveLength(34);
+    expect(dragons.filter((dragon) => dragon.command)).toHaveLength(34);
+    expect(simpleSynergyProfiles).toHaveLength(34);
     expect(metadataOnlyDragonIds).toHaveLength(0);
-    expect(dragons.filter((dragon) => dragon.rarity === 'Legendary' && dragon.command)).toHaveLength(10);
+    expect(dragons.filter((dragon) => dragon.rarity === 'Legendary' && dragon.command)).toHaveLength(11);
     expect(dragons.filter((dragon) => dragon.rarity === 'Epic' && dragon.command)).toHaveLength(11);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command)).toHaveLength(12);
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.23.4', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.23.5', schemaVersion: 14 });
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
 
     for (const dragonId of targetIds) {

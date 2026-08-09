@@ -10,34 +10,34 @@ import {
 } from '../audit/formationReliabilityAudit';
 
 describe('Formation Reliability research audit', () => {
-  it('covers all 33 profiles and every current scoring signal deterministically', () => {
+  it('covers all 34 profiles and every current scoring signal deterministically', () => {
     const first = runFormationReliabilityAudit();
     const second = runFormationReliabilityAudit();
 
     expect(first.auditContract).toBe(FORMATION_RELIABILITY_AUDIT_CONTRACT);
     expect(first.totals).toMatchObject({
-      dragons: 33,
-      curatedSignals: 239,
-      scoringSignals: 234,
-      explicitlyNonScoringSignals: 5,
-      positionClaims: 33,
+      dragons: 34,
+      curatedSignals: 254,
+      scoringSignals: 245,
+      explicitlyNonScoringSignals: 9,
+      positionClaims: 34,
       signalsMissingProposedReliabilityCoverage: 0,
     });
-    expect(first.signals).toHaveLength(239);
-    expect(new Set(first.signals.map((signal) => signal.signalId)).size).toBe(239);
+    expect(first.signals).toHaveLength(254);
+    expect(new Set(first.signals.map((signal) => signal.signalId)).size).toBe(254);
     expect(first.missingProposedReliabilitySignalIds).toEqual([]);
     expect(first.deterministicHash).toBe(second.deterministicHash);
     expect(first).toEqual(second);
   });
 
-  it('requires an explicit classification for all 234 scoring signals', () => {
+  it('requires an explicit classification for all 245 scoring signals', () => {
     const report = runFormationReliabilityAudit();
     const scoringSignalIds = report.signals
       .filter((signal) => signal.classification !== 'not-applicable-to-activation-reliability')
       .map((signal) => signal.signalId);
     const classifications = getExplicitScoringReliabilityClassifications();
 
-    expect(classifications.size).toBe(234);
+    expect(classifications.size).toBe(245);
     expect(getMissingExplicitReliabilityClassificationIds(scoringSignalIds)).toEqual([]);
 
     const omittedClassification = new Map(classifications);
@@ -71,6 +71,10 @@ describe('Formation Reliability research audit', () => {
 
     expect(nonScoring).toEqual([
       'dawnseeker-unbroken-devotion-recovery-received',
+      'moondancer-eclipsing-strike-damage-down',
+      'moondancer-eclipsing-strike-initiative-down',
+      'moondancer-rising-tide-self',
+      'moondancer-warriors-zeal-self-physical',
       'nyrena-champions-brilliance-right-defense',
       'nyrena-the-long-siege-physical-defense',
       'rhysarion-unbroken-devotion-recovery',

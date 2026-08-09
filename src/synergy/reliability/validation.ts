@@ -6,6 +6,7 @@ import { reliabilityBindingPathVisits } from './traversal';
 import type {
   AbilityReliabilityComponent,
   ConcreteReliabilityProbability,
+  FixedOrHabitLevelEvidenceValue,
   ReliabilityAbilityReference,
   ReliabilityComponentId,
   ReliabilityComponentReference,
@@ -83,7 +84,7 @@ export function validateReliabilityContract(
   for (const component of input.components) {
     validateComponent(component, abilitiesById, mode, issues);
   }
-  validateConditionalUplifts(input.components, componentsById, issues);
+  validateConditionalUplifts(input.components, componentsById, abilitiesById, issues);
   for (const binding of input.bindings) {
     validateBinding(
       binding,
@@ -107,8 +108,8 @@ export function validateReliabilityContract(
         );
       }
     }
-    for (const componentId of componentsById.keys()) {
-      if (!referencedComponentIds.has(componentId)) {
+    for (const [componentId, component] of componentsById) {
+      if (!referencedComponentIds.has(componentId) && !component.researchOnly) {
         addIssue(
           issues,
           'coverage.unreferenced-component',
@@ -125,12 +126,18 @@ export function validateReliabilityContract(
 function validateConditionalUplifts(
   components: readonly AbilityReliabilityComponent[],
   componentsById: ReadonlyMap<string, AbilityReliabilityComponent>,
+  abilitiesById: ReadonlyMap<string, ReliabilityAbilityReference> | undefined,
   issues: ReliabilityValidationIssue[],
 ): void {
   for (const component of components) {
-    const uplift = component.conditionalUplift;
-    if (!uplift) continue;
-    const path = `components[${component.id}].conditionalUplift`;
+    const uplifts = [
+      ...(component.conditionalUplift ? [component.conditionalUplift] : []),
+      ...(component.conditionalUplifts ?? []),
+    ];
+    for (const [upliftIndex, uplift] of uplifts.entries()) {
+    const path = component.conditionalUplift === uplift
+      ? `components[${component.id}].conditionalUplift`
+      : `components[${component.id}].conditionalUplifts[${upliftIndex - (component.conditionalUplift ? 1 : 0)}]`;
     if (component.reliabilityClass !== 'conditional-deterministic') {
       addIssue(
         issues,
@@ -155,9 +162,13 @@ function validateConditionalUplifts(
         'A conditional uplift requires a readable affected metric label.',
       );
     }
-    validateProbabilityValue(uplift.baseline, `${path}.baseline`, issues);
-    validateProbabilityValue(uplift.conditioned, `${path}.conditioned`, issues);
-    if (uplift.conditioned <= uplift.baseline) {
+    validateEvidenceValue(uplift.baseline, `${path}.baseline`, issues);
+    validateEvidenceValue(uplift.conditioned, `${path}.conditioned`, issues);
+    validateEvidenceValue(uplift.absoluteDelta, `${path}.absoluteDelta`, issues);
+    const baselineValues = evidenceValues(uplift.baseline);
+    const conditionedValues = evidenceValues(uplift.conditioned);
+    const deltaValues = evidenceValues(uplift.absoluteDelta);
+    if (baselineValues.length !== conditionedValues.length || conditionedValues.some((value, index) => value <= baselineValues[index]!)) {
       addIssue(
         issues,
         'conditional-uplift.not-positive',
@@ -165,7 +176,7 @@ function validateConditionalUplifts(
         'The conditioned probability must be greater than the baseline probability.',
       );
     }
-    if (Math.abs(uplift.absoluteDelta - (uplift.conditioned - uplift.baseline)) > 1e-12) {
+    if (deltaValues.length !== baselineValues.length || deltaValues.some((value, index) => Math.abs(value - (conditionedValues[index]! - baselineValues[index]!)) > 1e-12)) {
       addIssue(
         issues,
         'conditional-uplift.absolute-delta-mismatch',
@@ -174,8 +185,8 @@ function validateConditionalUplifts(
       );
     }
     if (
-      uplift.baseline <= 0 ||
-      Math.abs(uplift.relativeMultiplier - uplift.conditioned / uplift.baseline) > 1e-12
+      baselineValues.some((value) => value <= 0) ||
+      conditionedValues.some((value, index) => Math.abs(uplift.relativeMultiplier - value / baselineValues[index]!) > 1e-12)
     ) {
       addIssue(
         issues,
@@ -194,12 +205,17 @@ function validateConditionalUplifts(
       );
       continue;
     }
-    if (affected.sourceAbilityId !== component.sourceAbilityId) {
+    const ownerAbility = abilitiesById?.get(component.sourceAbilityId);
+    const affectedAbility = abilitiesById?.get(affected.sourceAbilityId);
+    if (
+      affected.sourceAbilityId !== component.sourceAbilityId &&
+      (!ownerAbility || !affectedAbility || ownerAbility.dragonId !== affectedAbility.dragonId)
+    ) {
       addIssue(
         issues,
         'conditional-uplift.ability-mismatch',
         `${path}.affectedComponentId`,
-        'The uplift and affected output must belong to the same source ability.',
+        'The uplift and affected output must belong to the same dragon.',
       );
     }
     const probability = affected.probability;
@@ -218,7 +234,7 @@ function validateConditionalUplifts(
     const conditioned = probability.variants.find(
       (variant) => variant.id === uplift.conditionedVariantId,
     )?.probability;
-    if (baseline?.kind !== 'fixed' || baseline.value !== uplift.baseline) {
+    if (!probabilityEvidenceMatches(baseline, uplift.baseline)) {
       addIssue(
         issues,
         'conditional-uplift.baseline-variant-mismatch',
@@ -226,7 +242,7 @@ function validateConditionalUplifts(
         'The baseline variant must exist as a matching fixed probability.',
       );
     }
-    if (conditioned?.kind !== 'fixed' || conditioned.value !== uplift.conditioned) {
+    if (!probabilityEvidenceMatches(conditioned, uplift.conditioned)) {
       addIssue(
         issues,
         'conditional-uplift.conditioned-variant-mismatch',
@@ -234,7 +250,39 @@ function validateConditionalUplifts(
         'The conditioned variant must exist as a matching fixed probability.',
       );
     }
+    }
   }
+}
+
+function validateEvidenceValue(
+  value: FixedOrHabitLevelEvidenceValue,
+  path: string,
+  issues: ReliabilityValidationIssue[],
+): void {
+  if (typeof value === 'number') validateProbabilityValue(value, path, issues);
+  else {
+    if (value.kind !== 'habit-level') {
+      addIssue(issues, 'conditional-uplift.value-kind', path, 'Progression evidence must use habit-level values.');
+      return;
+    }
+    validateHabitLevels(value.byLevel, path, issues);
+  }
+}
+
+function evidenceValues(value: FixedOrHabitLevelEvidenceValue): number[] {
+  return typeof value === 'number'
+    ? [value]
+    : [1, 2, 3, 4, 5].map((level) => value.byLevel[level as 1 | 2 | 3 | 4 | 5]);
+}
+
+function probabilityEvidenceMatches(
+  probability: ConcreteReliabilityProbability | undefined,
+  evidence: FixedOrHabitLevelEvidenceValue,
+): boolean {
+  if (typeof evidence === 'number') return probability?.kind === 'fixed' && probability.value === evidence;
+  return probability?.kind === 'habit-level' &&
+    probability.habitAbilityId === evidence.habitAbilityId &&
+    [1, 2, 3, 4, 5].every((level) => probability.byLevel[level as 1 | 2 | 3 | 4 | 5] === evidence.byLevel[level as 1 | 2 | 3 | 4 | 5]);
 }
 
 export function assertValidReliabilityContract(

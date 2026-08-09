@@ -20,10 +20,10 @@ describe('roster filtering and sorting', () => {
     roster.syrax!.owned = true;
 
     expect(filterDragons(dragons, roster, { ...defaultFilters, search: 'syra' })).toHaveLength(1);
-    expect(filterDragons(dragons, roster, { ...defaultFilters, rarity: 'Legendary' })).toHaveLength(10);
+    expect(filterDragons(dragons, roster, { ...defaultFilters, rarity: 'Legendary' })).toHaveLength(11);
     expect(filterDragons(dragons, roster, { ...defaultFilters, breed: 'Champion' })).toHaveLength(9);
     expect(filterDragons(dragons, roster, { ...defaultFilters, owned: 'owned' })).toHaveLength(1);
-    expect(filterDragons(dragons, roster, { ...defaultFilters, owned: 'unowned' })).toHaveLength(32);
+    expect(filterDragons(dragons, roster, { ...defaultFilters, owned: 'unowned' })).toHaveLength(33);
   });
 
   it('sorts by name, rarity, breed, and star rank', () => {
@@ -67,7 +67,7 @@ describe('roster storage and import/export', () => {
 
     expect(exported.format).toBe('dragonfire-roster-lab');
     expect(exported.schemaVersion).toBe(ROSTER_SCHEMA_VERSION);
-    expect(exported.roster).toHaveLength(33);
+    expect(exported.roster).toHaveLength(34);
     expect(exported.roster[0]).not.toHaveProperty('collection');
   });
 

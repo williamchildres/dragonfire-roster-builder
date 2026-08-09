@@ -2104,7 +2104,7 @@ function AboutSection({ accountConfigured }: { accountConfigured: boolean }) {
           <p className="eyebrow">Testing and validation</p>
           <h3>Plausible is not enough</h3>
           <p>
-            Validation includes 500+ automated tests, all {productMetrics.orderedFormationPlacementCount.toLocaleString()} ordered three-dragon placements, Formation Rating regression audits, Estimated Power fit/support/monotonicity/full-grid checks, exact optimizer oracle fixtures, forward and reversed input-order determinism, archived 31-dragon and current 33-dragon protections, real-roster numerical regression coverage, deterministic semantic and result hashes, and desktop/mobile QA before releases.
+            Validation includes 500+ automated tests, all {productMetrics.orderedFormationPlacementCount.toLocaleString()} ordered three-dragon placements, Formation Rating regression audits, Estimated Power fit/support/monotonicity/full-grid checks, exact optimizer oracle fixtures, forward and reversed input-order determinism, archived 31/33-dragon and current 34-dragon protections, real-roster numerical regression coverage, deterministic semantic and result hashes, and desktop/mobile QA before releases.
           </p>
           <p>A recommendation is not accepted only because it looks plausible. The same inputs must reproduce the same audited result, and algorithm changes must explain any changed hash. This is project validation, not independent third-party certification.</p>
         </section>

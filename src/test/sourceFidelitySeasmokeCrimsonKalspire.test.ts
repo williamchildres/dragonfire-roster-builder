@@ -258,8 +258,8 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
     expect(profile('crimson').benefitsFrom.map((signal) => signal.id)).toEqual([
       'crimson-bloodscale-fury-taunt-payoff',
     ]);
-    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(239);
-    expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(231);
+    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(254);
+    expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(238);
   });
 
   it('keeps presentation summaries readable and canonical descriptions free of excluded screenshot text', () => {
@@ -275,8 +275,9 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
   });
 
   it('reports the exhaustive rating delta caused only by the two corrected Strength relationships', () => {
-    const archivedDragons = dragons.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.id));
-    const archivedProfiles = simpleSynergyProfiles.filter((candidate) => !['sunfyre', 'tairax'].includes(candidate.dragonId));
+    const archivedDragonIds = ['sunfyre', 'tairax', 'moondancer'];
+    const archivedDragons = dragons.filter((candidate) => !archivedDragonIds.includes(candidate.id));
+    const archivedProfiles = simpleSynergyProfiles.filter((candidate) => !archivedDragonIds.includes(candidate.dragonId));
     const withoutScaling = (signalIds: string[]): DragonSynergyProfile[] =>
       archivedProfiles.map((candidate) => ({
         ...candidate,

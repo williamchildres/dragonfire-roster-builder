@@ -90,6 +90,10 @@ export function explainSetupPayoff(
     return `${provider.dragonName} provides Recovery, which ${beneficiary.dragonName} benefits from through ${benefit.abilityName}.`;
   }
 
+  if (tag === 'trigger:tactical-or-recovery') {
+    return `${provider.dragonName}'s ${output.abilityName} can perform a qualifying Tactical Damage or Recovery event for ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
+  }
+
   return `${provider.dragonName} provides ${output.description}, which improves ${beneficiary.dragonName}'s ${benefit.abilityName}.`;
 }
 

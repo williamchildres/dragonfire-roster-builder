@@ -122,10 +122,43 @@ export interface ConditionalProbabilityUplift {
   affectedComponentId: ReliabilityComponentId;
   baselineVariantId: string;
   conditionedVariantId: string;
-  baseline: number;
-  conditioned: number;
-  absoluteDelta: number;
+  baseline: FixedOrHabitLevelEvidenceValue;
+  conditioned: FixedOrHabitLevelEvidenceValue;
+  absoluteDelta: FixedOrHabitLevelEvidenceValue;
   relativeMultiplier: number;
+  modifier?: { kind: 'multiplier'; value: number };
+}
+
+export type FixedOrHabitLevelEvidenceValue =
+  | number
+  | HabitLevelReliabilityProbability;
+
+export interface ConditionalMagnitudeUplift {
+  kind: 'magnitude-uplift';
+  conditionLabel: string;
+  affectedMetricLabel: string;
+  baseline: FixedOrHabitLevelEvidenceValue;
+  conditioned: FixedOrHabitLevelEvidenceValue;
+  modifier: { kind: 'multiplier'; value: number };
+}
+
+export interface ReliabilityStackFacts {
+  stackLabel: string;
+  maximum: number;
+  perStackMetricLabel?: string;
+  perStackDelta?: number;
+  thresholds?: readonly number[];
+  triggerLimitPerRound?: number;
+}
+
+export interface ReliabilityTargetSelectorEvidence {
+  population: 'friendly' | 'enemy';
+  qualification?: string;
+  stat?: 'strength' | 'intelligence' | 'instinct' | 'initiative' | 'troops';
+  order?: 'highest' | 'lowest';
+  recipientCount: number;
+  includeSelf?: boolean;
+  tieHandling: 'resolved-by-rule' | 'unresolved';
 }
 
 /**
@@ -148,6 +181,12 @@ export interface AbilityReliabilityComponent {
   independence: ReliabilityIndependence;
   durationRounds?: number;
   conditionalUplift?: ConditionalProbabilityUplift;
+  conditionalUplifts?: readonly ConditionalProbabilityUplift[];
+  conditionalMagnitudeUplifts?: readonly ConditionalMagnitudeUplift[];
+  stackFacts?: ReliabilityStackFacts;
+  targetSelectorEvidence?: ReliabilityTargetSelectorEvidence;
+  /** Evidence-only components are intentionally excluded from numeric signal bindings. */
+  researchOnly?: boolean;
   unlock?: ReliabilityUnlockRequirement;
   evidence: ReliabilityEvidence;
 }
