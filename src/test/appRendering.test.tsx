@@ -240,7 +240,7 @@ describe('Dragonfire Lab app', () => {
     const methodologyMetrics = screen.getByLabelText('Methodology at a glance');
     expect(methodologyMetrics).toHaveTextContent('34');
     expect(methodologyMetrics).toHaveTextContent('238');
-    expect(methodologyMetrics).toHaveTextContent('254');
+    expect(methodologyMetrics).toHaveTextContent('256');
     expect(methodologyMetrics).toHaveTextContent('35,904');
     expect(methodologyMetrics).toHaveTextContent('5,984');
     expect(methodologyMetrics).toHaveTextContent('500+');

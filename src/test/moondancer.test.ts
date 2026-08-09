@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
 import { conditionalUpliftSummary, conditionalUpliftsForRelationship } from '../app/relationshipReliabilityPresentation';
+import catalogDelta from '../audit/fixtures/formationRatingV3CatalogDeltas.0.23.4-to-0.23.5.json';
+import correctionDelta from '../audit/fixtures/formationRatingV3MoondancerCorrectionDeltas.0.23.5.json';
 import { dragons } from '../data/dragons';
 import { buildOptimizerRosterSnapshot, generateOptimizerFormationCandidates } from '../optimizer/rosterOptimizerCandidates';
 import { buildTargetingResolutionFindings } from '../services/formationFindings';
@@ -35,15 +37,31 @@ function profiles(ids: string[]) {
 function reliabilityProgression(
   ids: string[],
   level: 1 | 2 | 3 | 4 | 5 = 1,
+  starRanks: Readonly<Record<string, number>> = {},
 ): Record<string, ReliabilityProgression> {
   return Object.fromEntries(ids.map((dragonId) => {
     const dragon = dragonsById.get(dragonId)!;
+    const starRank = starRanks[dragonId] ?? 10;
     return [dragonId, {
-      starRank: 10,
+      starRank,
       dragonLevel: 16,
-      activeHabitLevels: Object.fromEntries(dragon.habits.map((habit) => [habit.id, level])),
+      activeHabitLevels: Object.fromEntries(
+        dragon.habits
+          .filter((habit) => habit.unlockStarRank == null || habit.unlockStarRank <= starRank)
+          .map((habit) => [habit.id, level]),
+      ),
     }];
   }));
+}
+
+function simpleProgression(
+  ids: string[],
+  starRanks: Readonly<Record<string, number>> = {},
+): SimpleProgressionByDragonId {
+  return Object.fromEntries(ids.map((dragonId) => [
+    dragonId,
+    { starRank: starRanks[dragonId] ?? 10, dragonLevel: 16 },
+  ]));
 }
 
 describe('Moondancer screenshot-verified production data', () => {
@@ -123,8 +141,22 @@ describe('Moondancer friendly recipient selection', () => {
 });
 
 describe('Moondancer reliability and magnitude evidence', () => {
-  it('keeps Crescent Blade trigger at 50%, once per round, max 8, and -2% per stack', () => {
-    expect(components.get('moondancer-crescent-blade:rising-tide-trigger')).toMatchObject({ reliabilityClass: 'chance', probability: { kind: 'fixed', value: 0.5 }, opportunityPresence: 'conditional', stackFacts: { maximum: 8, perStackDelta: -0.02, thresholds: [4, 6], triggerLimitPerRound: 1 } });
+  it('caps successful Crescent Blade triggers without inventing a once-per-round attempt cap', () => {
+    const component = components.get('moondancer-crescent-blade:rising-tide-trigger')!;
+    expect(component).toMatchObject({
+      reliabilityClass: 'chance',
+      probability: { kind: 'fixed', value: 0.5 },
+      opportunityPresence: 'conditional',
+      opportunityCount: { kind: 'unresolved' },
+      stackFacts: {
+        maximum: 8,
+        perStackDelta: -0.02,
+        thresholds: [4, 6],
+        successfulTriggerLimitPerRound: 1,
+      },
+    });
+    expect(component.opportunityCount).not.toMatchObject({ kind: 'exact', value: 1 });
+    expect(component.evidence.unresolvedQuestions.join(' ')).toContain('failed qualifying event');
   });
 
   it.each([
@@ -136,15 +168,134 @@ describe('Moondancer reliability and magnitude evidence', () => {
     expect(component.probability).toMatchObject({ kind: 'variants', variants: [{ id: 'ordinary', probability: { kind: 'habit-level', habitAbilityId: habitId, byLevel: { '1': 0.25, '2': 0.3, '3': 0.35, '4': 0.425, '5': 0.5 } } }, { id: 'advantage', probability: { kind: 'habit-level', habitAbilityId: habitId, byLevel: { '1': 0.5, '2': 0.6, '3': 0.7, '4': 0.85, '5': 1 } } }] });
   });
 
-  it('exposes progression-aware Advantage uplift while keeping generic base value unchanged', () => {
+  it('gates Full Moon Advantage evidence at 6 Stars while scoring one relationship', () => {
     const current = formation('moondancer', 'shadowrend', 'caraxes');
     const selectedProfiles = profiles(['moondancer', 'shadowrend', 'caraxes']);
-    const relationship = evaluateFormationRelationshipsV3({ input: { formation: current, progression: maxProgression, reliabilityProgression: reliabilityProgression(['moondancer', 'shadowrend', 'caraxes']) }, profiles: selectedProfiles }).find(({ providerDragonId, beneficiaryDragonId, semanticTag }) => providerDragonId === 'shadowrend' && beneficiaryDragonId === 'moondancer' && semanticTag === 'status:advantage')!;
-    expect(relationship.baseValue).toBe(10);
-    expect(conditionalUpliftsForRelationship(relationship)).toHaveLength(2);
-    expect(conditionalUpliftsForRelationship(relationship)[0]).toMatchObject({ relativeMultiplier: 2, modifier: { kind: 'multiplier', value: 2 }, baseline: { kind: 'habit-level' }, conditioned: { kind: 'habit-level' } });
-    expect(conditionalUpliftSummary(relationship, dragonsById)).toContain('Habit Levels 1–5 25%/30%/35%/42.5%/50%');
-    expect(conditionalUpliftSummary(relationship, dragonsById)).toContain('resulting activation remains probabilistic');
+    const relationshipAt = (starRank: number) => {
+      const progression = simpleProgression(
+        ['moondancer', 'shadowrend', 'caraxes'],
+        { moondancer: starRank },
+      );
+      const relationship = evaluateFormationRelationshipsV3({
+        input: {
+          formation: current,
+          progression,
+          reliabilityProgression: reliabilityProgression(
+            ['moondancer', 'shadowrend', 'caraxes'],
+            1,
+            { moondancer: starRank },
+          ),
+        },
+        profiles: selectedProfiles,
+      }).filter(({ providerDragonId, beneficiaryDragonId, semanticTag }) =>
+        providerDragonId === 'shadowrend' &&
+        beneficiaryDragonId === 'moondancer' &&
+        semanticTag === 'status:advantage',
+      );
+      return { progression, relationship };
+    };
+
+    for (const starRank of [2, 4, 5]) {
+      const { progression, relationship } = relationshipAt(starRank);
+      expect(relationship).toHaveLength(1);
+      expect(relationship[0]!.baseValue).toBe(10);
+      expect(conditionalUpliftsForRelationship(relationship[0]!, progression)).toHaveLength(1);
+      const summary = conditionalUpliftSummary(relationship[0]!, dragonsById, progression)!;
+      expect(summary).toContain("New Moon's Rising Tide chance");
+      expect(summary).not.toContain("Full Moon's Rising Tide chance");
+    }
+
+    const atSix = relationshipAt(6);
+    expect(atSix.relationship).toHaveLength(1);
+    expect(conditionalUpliftsForRelationship(atSix.relationship[0]!, atSix.progression)).toHaveLength(2);
+    const summaryAtSix = conditionalUpliftSummary(
+      atSix.relationship[0]!,
+      dragonsById,
+      atSix.progression,
+    )!;
+    expect(summaryAtSix).toContain("New Moon's Rising Tide chance");
+    expect(summaryAtSix).toContain("Full Moon's Rising Tide chance");
+    expect(summaryAtSix).toContain('resulting activation remains probabilistic');
+  });
+
+  it('keeps Full Moon uplift values and provenance on the Full Moon component', () => {
+    const newMoonUplift = components.get('moondancer-new-moon:advantage-uplift')!;
+    const fullMoonUplift = components.get('moondancer-full-moon:advantage-uplift')!;
+    expect(newMoonUplift.conditionalUplifts).toBeUndefined();
+    expect(newMoonUplift.additionalConditionalUpliftComponentIds).toEqual([
+      'moondancer-full-moon:advantage-uplift',
+    ]);
+    expect(newMoonUplift.evidence.evidenceIds).toEqual(['moondancer-new-moon-2026-08-09']);
+    expect(fullMoonUplift.evidence.evidenceIds).toEqual(['moondancer-full-moon-2026-08-09']);
+    expect(fullMoonUplift.conditionalUplift).toMatchObject({
+      affectedMetricLabel: "Full Moon's Rising Tide chance",
+      baseline: { habitAbilityId: 'moondancer-full-moon' },
+      conditioned: { habitAbilityId: 'moondancer-full-moon' },
+    });
+  });
+
+  it('maps Initiative from New Moon at 2 Stars and retains Eclipsing Strike at 10 Stars without duplicate credit', () => {
+    const current = formation('vesper', 'caraxes', 'moondancer');
+    const selectedProfiles = profiles(['moondancer', 'vesper', 'caraxes']);
+    const relationshipsAt = (starRank: number) => evaluateFormationRelationshipsV3({
+      input: {
+        formation: current,
+        progression: simpleProgression(
+          ['moondancer', 'vesper', 'caraxes'],
+          { moondancer: starRank },
+        ),
+        reliabilityProgression: reliabilityProgression(
+          ['moondancer', 'vesper', 'caraxes'],
+          1,
+          { moondancer: starRank },
+        ),
+      },
+      profiles: selectedProfiles,
+    }).filter(({ providerDragonId, beneficiaryDragonId, semanticTag }) =>
+      providerDragonId === 'caraxes' &&
+      beneficiaryDragonId === 'moondancer' &&
+      semanticTag === 'stat:initiative',
+    );
+
+    const atTwo = relationshipsAt(2);
+    expect(atTwo).toHaveLength(1);
+    expect(atTwo[0]!.candidateTraces).toHaveLength(1);
+    expect(atTwo[0]!.candidateTraces[0]!.candidate.beneficiarySignalId).toBe(
+      'moondancer-new-moon-initiative-payoff',
+    );
+    expect(atTwo[0]!.quantification).toMatchObject({ status: 'quantified', reliability: 1 });
+
+    const atTen = relationshipsAt(10);
+    expect(atTen).toHaveLength(1);
+    expect(atTen[0]!.candidateTraces.map((trace) => trace.candidate.beneficiarySignalId)).toEqual(
+      expect.arrayContaining([
+        'moondancer-new-moon-initiative-payoff',
+        'moondancer-eclipsing-strike-initiative-payoff',
+      ]),
+    );
+    expect(atTen[0]!.adjustedMarginalValue).toBe(atTwo[0]!.adjustedMarginalValue);
+  });
+
+  it('keeps one Strength relationship while acknowledging Reactive Instincts', () => {
+    const profile = simpleSynergyProfiles.find(({ dragonId }) => dragonId === 'moondancer')!;
+    const strengthSignal = profile.benefitsFrom.filter(({ tag }) => tag === 'stat:strength');
+    expect(strengthSignal).toHaveLength(1);
+    expect(strengthSignal[0]!.description).toContain('Reactive Instincts');
+
+    const current = formation('vesper', 'caraxes', 'moondancer');
+    const relationships = evaluateFormationRelationshipsV3({
+      input: {
+        formation: current,
+        progression: simpleProgression(['moondancer', 'vesper', 'caraxes']),
+        reliabilityProgression: reliabilityProgression(['moondancer', 'vesper', 'caraxes']),
+      },
+      profiles: profiles(['moondancer', 'vesper', 'caraxes']),
+    }).filter(({ providerDragonId, beneficiaryDragonId, semanticTag }) =>
+      providerDragonId === 'caraxes' &&
+      beneficiaryDragonId === 'moondancer' &&
+      semanticTag === 'stat:strength',
+    );
+    expect(relationships).toHaveLength(1);
   });
 
   it('stores Full Moon replacement/doubling, New Moon 1.5x support, and conditional least-troops facts without uptime', () => {
@@ -181,6 +332,20 @@ describe('Moondancer reliability and magnitude evidence', () => {
 });
 
 describe('Moondancer roster and optimizer compatibility', () => {
+  it('isolates the correction to Moondancer placements and preserves every existing placement', () => {
+    expect(catalogDelta).toMatchObject({
+      existingChangedPlacementCount: 0,
+      introducedMoondancerPlacementCount: 3_168,
+      currentSnapshotIdentity: correctionDelta.currentSnapshotIdentity,
+    });
+    expect(correctionDelta).toMatchObject({
+      placementCount: 35_904,
+      changedPlacementCount: 2_001,
+      moondancerChangedPlacementCount: 2_001,
+      existing33ChangedPlacementCount: 0,
+    });
+  });
+
   it('loads a legacy 33-dragon roster with Moondancer newly present and unowned', () => {
     const legacyDragons = dragons.filter((dragon) => dragon.id !== 'moondancer');
     const legacy = createEmptyRoster(legacyDragons);

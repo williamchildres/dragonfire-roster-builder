@@ -1,6 +1,6 @@
 # Optimizer v6 audit — 0.23.5
 
-- Generated: 2026-08-09T15:56:38.686Z
+- Generated: 2026-08-09T18:43:01.681Z
 - Contract: 6 / formation-rating-v3 / best-overall-v1
 - Execution records: 198
 - Independent candidate-pool builds: 6
@@ -12,18 +12,18 @@
 - Current selections identical to historical optimizer-v5: false
 - Current executions changed from historical optimizer-v5: 96
 - Approved cumulative current-v5 deltas: 96
-- Approved-delta manifest: `sha256:b09524e954e3cefad9787f2cb4d97f918139d339a6dea504c47929696865399c`
+- Approved-delta manifest: `sha256:0e3a22029d39195b28b662222aa4f32a9dea807ecd2fabdd166dc32e87dbfc91`
 - Exact historical-delta contract valid: true
 - Approved 0.23.4 → 0.23.5 release deltas: 198
-- Release-delta manifest: `sha256:0a0a1ac9d1429cdf1f7b9c2f82e5d2ee81780e01080f1156ff1daff12c109f5b`
+- Release-delta manifest: `sha256:d233f49e09484e10cc724d2601ae74597ee98c2a9ea409996f7728f171c9f14c`
 - Failed checks: 0
-- Deterministic audit hash: `fnv1a64:4919638a23435778`
+- Deterministic audit hash: `fnv1a64:38b92faea349b548`
 
 ## Maximum Node telemetry
 
-- Candidate generation: 8302.996 ms
-- Solver: 159608.774 ms
-- Total: 165590.863 ms
+- Candidate generation: 8184.03 ms
+- Solver: 151662.444 ms
+- Total: 157410.426 ms
 - Solver passes: 534
 - Exact-search nodes: 19569
 - Model builds: 1
@@ -66,41 +66,41 @@
 | mixed | balanced | 6 | `fnv1a64:be71decdc3ff9956` | `fnv1a64:c49d4ab398f2bfec` |
 | mixed | balanced | 7 | `fnv1a64:4e677cbdda4e36dc` | `fnv1a64:f4f6a51efbe0112b` |
 | mixed | balanced | 8 | `fnv1a64:ac60100aa5521f84` | `fnv1a64:f375940c5cc78680` |
-| mixed | balanced | 9 | `fnv1a64:02505f3ec35bdfd8` | `fnv1a64:fede084821637cf6` |
+| mixed | balanced | 9 | `fnv1a64:467f50c6bd1c6d28` | `fnv1a64:f9ef0deaeab91363` |
 | mixed | balanced | 10 | `fnv1a64:c90be3266fe4b21e` | `fnv1a64:1d1a29f769e28b1b` |
 | mixed | balanced | 11 | `fnv1a64:a8754f68faa20fa7` | `fnv1a64:2e7eada0f31c1352` |
 | maxed | best-overall-first | 1 | `fnv1a64:3669c8df81f2f908` | `fnv1a64:2ab3ecbb9b06a93a` |
-| maxed | best-overall-first | 2 | `fnv1a64:4865c167ef87c4f5` | `fnv1a64:502b49c8926f91d9` |
-| maxed | best-overall-first | 3 | `fnv1a64:18062513f127d752` | `fnv1a64:f95e54d7ec85de1a` |
-| maxed | best-overall-first | 4 | `fnv1a64:31a5cf5124c5f742` | `fnv1a64:7075c3fcb22fe835` |
-| maxed | best-overall-first | 5 | `fnv1a64:8b17b3680b58d254` | `fnv1a64:17dc9845022182cf` |
-| maxed | best-overall-first | 6 | `fnv1a64:ee62eb03848d40bd` | `fnv1a64:16716d0ce6b766d2` |
-| maxed | best-overall-first | 7 | `fnv1a64:1cbb51a543ff714e` | `fnv1a64:2d4cdf1873f465b9` |
-| maxed | best-overall-first | 8 | `fnv1a64:7fc76c0d19e05f3b` | `fnv1a64:622766f22b3cf10b` |
-| maxed | best-overall-first | 9 | `fnv1a64:93941e82b6ac3497` | `fnv1a64:64d174c7f37ec15e` |
-| maxed | best-overall-first | 10 | `fnv1a64:81b881ebf2b40458` | `fnv1a64:ea8417686ba99045` |
-| maxed | best-overall-first | 11 | `fnv1a64:f99c13b0eadb9f4b` | `fnv1a64:f673a0109ea42afa` |
+| maxed | best-overall-first | 2 | `fnv1a64:b43e70fa21ff8660` | `fnv1a64:cef8ac2cc46edf6f` |
+| maxed | best-overall-first | 3 | `fnv1a64:2dca27adee7e6fcb` | `fnv1a64:21043a330c431228` |
+| maxed | best-overall-first | 4 | `fnv1a64:b8d6961c5bf28853` | `fnv1a64:09a2e502ae7a203a` |
+| maxed | best-overall-first | 5 | `fnv1a64:2b7e09073d0f6aac` | `fnv1a64:6a8fb83fa12597b2` |
+| maxed | best-overall-first | 6 | `fnv1a64:3de1480ad87f4650` | `fnv1a64:1cdfc6b5025dfc79` |
+| maxed | best-overall-first | 7 | `fnv1a64:1e602f711f2224d5` | `fnv1a64:6810ddfb746d9c6e` |
+| maxed | best-overall-first | 8 | `fnv1a64:bdbaecba2e5afb6e` | `fnv1a64:0423b5607b0a7e0d` |
+| maxed | best-overall-first | 9 | `fnv1a64:fd7b41124b9cfdac` | `fnv1a64:7876df0fb4d162ec` |
+| maxed | best-overall-first | 10 | `fnv1a64:9444d06ca7ba3621` | `fnv1a64:e989019a86fb08e9` |
+| maxed | best-overall-first | 11 | `fnv1a64:274b57d765582925` | `fnv1a64:2b7b36b645537bbe` |
 | maxed | strongest-first | 1 | `fnv1a64:99bc2ff8eba54969` | `fnv1a64:a3afec9db0cc8566` |
-| maxed | strongest-first | 2 | `fnv1a64:66b97fadf2911807` | `fnv1a64:7e595898847fb919` |
-| maxed | strongest-first | 3 | `fnv1a64:98a4abfe118382a0` | `fnv1a64:0c88359fc653ad94` |
-| maxed | strongest-first | 4 | `fnv1a64:1626e242dbdf0301` | `fnv1a64:d3f06dec738a91c1` |
-| maxed | strongest-first | 5 | `fnv1a64:38b6315983569df4` | `fnv1a64:132fba3a24a559de` |
-| maxed | strongest-first | 6 | `fnv1a64:409e3c5ab2a0e746` | `fnv1a64:7c1863247e609662` |
-| maxed | strongest-first | 7 | `fnv1a64:3536ddb60592566c` | `fnv1a64:1bc3f1404260ba8d` |
-| maxed | strongest-first | 8 | `fnv1a64:3980523bac1a56f1` | `fnv1a64:65341a128839e41b` |
-| maxed | strongest-first | 9 | `fnv1a64:b1926ac1b850a6d3` | `fnv1a64:21c3f4e4d8e2a0d3` |
-| maxed | strongest-first | 10 | `fnv1a64:c16dc124ab43d1ec` | `fnv1a64:155be7f7208c37f0` |
-| maxed | strongest-first | 11 | `fnv1a64:e4c27a239024378f` | `fnv1a64:bd107d118b7d2a80` |
+| maxed | strongest-first | 2 | `fnv1a64:5653a79f8aff4e18` | `fnv1a64:ccbb9bdceea11ef0` |
+| maxed | strongest-first | 3 | `fnv1a64:78d8910022b725e4` | `fnv1a64:e59dd8bf202de6c4` |
+| maxed | strongest-first | 4 | `fnv1a64:7183b004758647a2` | `fnv1a64:cfd0d509062682d1` |
+| maxed | strongest-first | 5 | `fnv1a64:118b55cd45b41b7f` | `fnv1a64:3d65ce6be775651b` |
+| maxed | strongest-first | 6 | `fnv1a64:d1d4e473187ea70c` | `fnv1a64:7b076b60f87f12df` |
+| maxed | strongest-first | 7 | `fnv1a64:e96b1bc1729a1f6d` | `fnv1a64:e2b3f7ff29eb2640` |
+| maxed | strongest-first | 8 | `fnv1a64:502c68c2825f0315` | `fnv1a64:5021796af8fac55d` |
+| maxed | strongest-first | 9 | `fnv1a64:45baf2e43fbcc6b7` | `fnv1a64:560685ae638bdd9f` |
+| maxed | strongest-first | 10 | `fnv1a64:36540608b4bc2751` | `fnv1a64:74bbf97562446515` |
+| maxed | strongest-first | 11 | `fnv1a64:da61f4dfde030efe` | `fnv1a64:6c56e75e00e34d92` |
 | maxed | balanced | 1 | `fnv1a64:3051b253cd61b373` | `fnv1a64:f75bcae47526b8bf` |
-| maxed | balanced | 2 | `fnv1a64:6b81e2e6b64b2701` | `fnv1a64:cb184b468c8fa60b` |
-| maxed | balanced | 3 | `fnv1a64:418ab25e16905f1b` | `fnv1a64:daefe08db5ad02ec` |
-| maxed | balanced | 4 | `fnv1a64:9e24a13115f7d182` | `fnv1a64:6b02ed7449c9ed78` |
-| maxed | balanced | 5 | `fnv1a64:42dbfcfaf8b4c4c6` | `fnv1a64:59b944c56a23e1f6` |
+| maxed | balanced | 2 | `fnv1a64:78693f7e3083f13c` | `fnv1a64:d8ea2c2911f276a1` |
+| maxed | balanced | 3 | `fnv1a64:bab94071d89890ec` | `fnv1a64:6434fd107db6ebcb` |
+| maxed | balanced | 4 | `fnv1a64:be25110d4a710ee9` | `fnv1a64:a4e436cd64b70b59` |
+| maxed | balanced | 5 | `fnv1a64:f92d0bcc1a4283b6` | `fnv1a64:602372c3bde9a6b3` |
 | maxed | balanced | 6 | `fnv1a64:eb86d6099a290063` | `fnv1a64:e00c88aab0fb250d` |
-| maxed | balanced | 7 | `fnv1a64:a0761cc3839c7fca` | `fnv1a64:8e87e2cf5ed03a24` |
+| maxed | balanced | 7 | `fnv1a64:68e91847f4ba1476` | `fnv1a64:4bf2f1248c5aa0ae` |
 | maxed | balanced | 8 | `fnv1a64:dfdb747aec49050d` | `fnv1a64:d601e35850ef50eb` |
 | maxed | balanced | 9 | `fnv1a64:777981ac6c1c45de` | `fnv1a64:7a98ca7a1c87c215` |
-| maxed | balanced | 10 | `fnv1a64:45a77bf050d307b3` | `fnv1a64:3d9208c620dfd0e5` |
+| maxed | balanced | 10 | `fnv1a64:3740533824ab64f8` | `fnv1a64:3a8acbf07e070c65` |
 | maxed | balanced | 11 | `fnv1a64:0c9f1459cf52aef6` | `fnv1a64:421cec1ce8556089` |
 | all-one | best-overall-first | 1 | `fnv1a64:931df24090719b97` | `fnv1a64:5a7b0f49d2399f99` |
 | all-one | best-overall-first | 2 | `fnv1a64:6416a808b23f9ac1` | `fnv1a64:416882a71297b0dd` |

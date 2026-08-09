@@ -9,6 +9,7 @@ import { ESTIMATED_POWER_MODEL_VERSION } from '../power/generatedDragonPowerMode
 import type {
   FormationRelationshipV3,
 } from '../synergy/reliability';
+import type { SimpleProgressionByDragonId } from '../synergy/types';
 import {
   candidateAbilityLabels,
   candidateAdjustedValue,
@@ -33,6 +34,7 @@ export function SimpleFormationAnalysis({
   recommendation,
   placementComparison,
   formationDragons,
+  progression,
 }: {
   rating: FormationRatingV3Result;
   estimatedPower: EstimatedFormationPower | null;
@@ -41,6 +43,7 @@ export function SimpleFormationAnalysis({
   recommendation: FormationRecommendationResult;
   placementComparison: FormationPlacementComparisonV3 | null;
   formationDragons: readonly Dragon[];
+  progression: SimpleProgressionByDragonId;
 }) {
   const placementStatus = placementStatusLabel(placementComparison);
 
@@ -166,6 +169,7 @@ export function SimpleFormationAnalysis({
                 key={relationship.id}
                 relationship={relationship}
                 dragonNamesById={dragonNamesById}
+                progression={progression}
               />
             ))}
           </div>
@@ -198,9 +202,11 @@ export function SimpleFormationAnalysis({
 function ReliabilityRelationship({
   relationship,
   dragonNamesById,
+  progression,
 }: {
   relationship: FormationRelationshipV3;
   dragonNamesById: ReadonlyMap<string, string>;
+  progression: SimpleProgressionByDragonId;
 }) {
   const quantified = relationship.quantification.status === 'quantified';
   const selectedTrace = relationship.candidateTraces.find(
@@ -217,7 +223,11 @@ function ReliabilityRelationship({
   const nonSharedRequirements = selectedTrace
     ? nonSharedRequirementLabels(selectedTrace, canonicalDragonsById)
     : [];
-  const upliftSummary = conditionalUpliftSummary(relationship, canonicalDragonsById);
+  const upliftSummary = conditionalUpliftSummary(
+    relationship,
+    canonicalDragonsById,
+    progression,
+  );
   return (
     <article className="formation-relationship-item">
       <div className="formation-relationship-heading">

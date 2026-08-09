@@ -12,36 +12,36 @@
   },
   "totals": {
     "dragons": 34,
-    "curatedSignals": 254,
-    "scoringSignals": 245,
+    "curatedSignals": 256,
+    "scoringSignals": 247,
     "explicitlyNonScoringSignals": 9,
     "positionClaims": 34,
-    "guaranteedSignals": 141,
+    "guaranteedSignals": 142,
     "conditionalDeterministicSignals": 30,
-    "chanceBearingSignals": 74,
+    "chanceBearingSignals": 75,
     "mixedSignals": 3,
-    "signalsWithExplicitProbability": 70,
-    "signalsWithHabitLevelProbabilityProgression": 44,
+    "signalsWithExplicitProbability": 71,
+    "signalsWithHabitLevelProbabilityProgression": 45,
     "signalsWithKnownOpportunityCount": 2,
-    "signalsWithKnownRollScope": 58,
+    "signalsWithKnownRollScope": 59,
     "signalsWithConfirmedSeparatePerTargetChecks": 9,
-    "signalsWithUnresolvedOpportunityCount": 69,
-    "signalsWithUnresolvedIndependence": 69,
+    "signalsWithUnresolvedOpportunityCount": 70,
+    "signalsWithUnresolvedIndependence": 70,
     "signalsWithUnknownProbability": 0,
     "signalsWithCompleteSupportedProbabilityOpportunityScopeAndIndependence": 2,
     "signalsMissingProposedReliabilityCoverage": 0,
-    "signalsWithGuaranteedAtLeastOneOpportunity": 43,
+    "signalsWithGuaranteedAtLeastOneOpportunity": 44,
     "signalsWithConditionalOpportunityPresence": 28,
     "signalsWithUnknownOpportunityPresence": 3,
-    "signalsWithNotApplicableOpportunityPresence": 171
+    "signalsWithNotApplicableOpportunityPresence": 172
   },
   "missingProposedReliabilitySignalIds": [],
   "classificationCounts": {
-    "guaranteed": 141,
+    "guaranteed": 142,
     "conditional-deterministic": 30,
     "known-single-opportunity-chance": 2,
     "known-repeated-opportunity-chance": 24,
-    "known-chance-with-unresolved-opportunity-count": 43,
+    "known-chance-with-unresolved-opportunity-count": 44,
     "probability-present-exact-value-unresolved": 2,
     "probability-unknown": 0,
     "mixed-guaranteed-and-chance-based-ability": 3,
@@ -159,8 +159,8 @@
     {
       "dragonId": "moondancer",
       "dragonName": "Moondancer",
-      "scoringSignals": 11,
-      "chanceBearingSignals": 2,
+      "scoringSignals": 13,
+      "chanceBearingSignals": 3,
       "mixedSignals": 0,
       "conditionalDeterministicSignals": 1,
       "unknownProbabilitySignals": 0
@@ -370,8 +370,8 @@
     },
     {
       "signalCategory": "benefitsFrom",
-      "scoringSignals": 48,
-      "chanceBearingSignals": 10,
+      "scoringSignals": 50,
+      "chanceBearingSignals": 11,
       "mixedSignals": 3
     }
   ],
@@ -5134,11 +5134,11 @@
         "fixed": 0.5
       },
       "opportunityPresence": "conditional",
-      "rollTiming": "After the selected Crescent Blade recipient deals Tactical Damage or applies Recovery; at most once per round.",
+      "rollTiming": "After the selected Crescent Blade recipient deals Tactical Damage or applies Recovery; no more than one successful Rising Tide trigger per round.",
       "rollScope": "single-shared-roll",
       "opportunityCount": {
-        "kind": "ability-activation-dependent",
-        "note": "Qualifying selected-recipient event frequency is not established."
+        "kind": "unresolved",
+        "note": "Qualifying selected-recipient event frequency and same-round retry behavior after a failed check are not established."
       },
       "targetCount": 1,
       "separatePerTarget": false,
@@ -5157,7 +5157,8 @@
         ]
       },
       "unresolvedQuestions": [
-        "Qualifying event frequency and temporal independence are not established."
+        "Qualifying event frequency and temporal independence are not established.",
+        "Whether a failed qualifying event can be followed by another 50% check in the same round is not established."
       ],
       "coverageStatus": "covered"
     },
@@ -5252,6 +5253,128 @@
         "verificationSource": "Moondancer Eclipsing Strike screenshot",
         "evidenceIds": [
           "moondancer-eclipsing-strike-2026-08-09"
+        ]
+      },
+      "unresolvedQuestions": [],
+      "coverageStatus": "covered"
+    },
+    {
+      "dragonId": "moondancer",
+      "dragonName": "Moondancer",
+      "signalId": "moondancer-eclipsing-strike-initiative-payoff",
+      "signalCategory": "benefitsFrom",
+      "tags": [
+        "stat:initiative"
+      ],
+      "sourceAbilityId": "moondancer-eclipsing-strike",
+      "sourceAbilityName": "Eclipsing Strike",
+      "abilityKind": "habit",
+      "unlockStarRank": 10,
+      "minimumDragonLevel": null,
+      "habitLevelDependent": true,
+      "currentCuratedDescription": "Initiative enhances Eclipsing Strike's Initiative reduction",
+      "currentConfidence": "verified",
+      "currentRelationshipTypesOrValuesAffected": [
+        "stat-support base value 5 as receiving signal"
+      ],
+      "reliabilityComponentIds": [
+        "moondancer-eclipsing-strike:shared-activation"
+      ],
+      "classification": "known-chance-with-unresolved-opportunity-count",
+      "probability": {
+        "kind": "multiple",
+        "variants": [
+          {
+            "label": "below six Rising Tide stacks",
+            "byHabitLevel": [
+              0.2,
+              0.26,
+              0.32,
+              0.4,
+              0.5
+            ]
+          },
+          {
+            "label": "six or more Rising Tide stacks",
+            "byHabitLevel": [
+              0.4,
+              0.52,
+              0.64,
+              0.8,
+              1
+            ]
+          }
+        ]
+      },
+      "opportunityPresence": "guaranteed-at-least-one",
+      "rollTiming": "Each round after Eclipsing Strike unlocks.",
+      "rollScope": "single-shared-roll",
+      "opportunityCount": {
+        "kind": "battle-length-dependent",
+        "note": "One check is described each round; actual battle length is unresolved."
+      },
+      "targetCount": 1,
+      "separatePerTarget": false,
+      "separatePerEffect": false,
+      "durationRounds": 2,
+      "independence": "unknown",
+      "canonicalEvidence": {
+        "abilityRawDescription": "Each Round: 20%/26%/32%/40%/50% chance by Habit Level to reduce Damage Dealt of the Enemy with the Most Troops by 18% for 2 rounds. At 6+ Rising Tide stacks, double the activation chance to 40%/52%/64%/80%/100% and also reduce the same target's Initiative by 25%, enhanced by Initiative. The two reductions share the successful Eclipsing Strike activation. An unverified highest-troop tie remains unresolved.",
+        "verificationStatus": "screenshot-verified",
+        "verificationSource": "Moondancer Eclipsing Strike screenshot",
+        "evidenceIds": [
+          "moondancer-eclipsing-strike-2026-08-09"
+        ]
+      },
+      "unresolvedQuestions": [
+        "The stat-support payoff applies to Eclipsing Strike's chance-based enemy reductions.",
+        "Battle length and temporal independence are unresolved."
+      ],
+      "coverageStatus": "covered"
+    },
+    {
+      "dragonId": "moondancer",
+      "dragonName": "Moondancer",
+      "signalId": "moondancer-new-moon-initiative-payoff",
+      "signalCategory": "benefitsFrom",
+      "tags": [
+        "stat:initiative"
+      ],
+      "sourceAbilityId": "moondancer-new-moon",
+      "sourceAbilityName": "New Moon",
+      "abilityKind": "habit",
+      "unlockStarRank": 2,
+      "minimumDragonLevel": null,
+      "habitLevelDependent": true,
+      "currentCuratedDescription": "Initiative enhances New Moon's Instinct support",
+      "currentConfidence": "verified",
+      "currentRelationshipTypesOrValuesAffected": [
+        "stat-support base value 5 as receiving signal"
+      ],
+      "reliabilityComponentIds": [
+        "moondancer-new-moon:moondancer-new-moon-initiative-payoff"
+      ],
+      "classification": "guaranteed",
+      "probability": {
+        "kind": "none"
+      },
+      "opportunityPresence": "not-applicable",
+      "rollTiming": "Deterministic once unlocked and position-valid.",
+      "rollScope": "not-applicable",
+      "opportunityCount": {
+        "kind": "not-applicable"
+      },
+      "targetCount": null,
+      "separatePerTarget": null,
+      "separatePerEffect": null,
+      "durationRounds": null,
+      "independence": "not-applicable",
+      "canonicalEvidence": {
+        "abilityRawDescription": "Rounds 1, 3, 5: 25%/30%/35%/42.5%/50% chance by Habit Level to gain 1 Rising Tide stack; if any Ally has Advantage, deterministically double the chance to 50%/60%/70%/85%/100%. Odd-numbered Rounds: increase Instinct by 9%/10.8%/12.6%/15.3%/18% (enhanced by Initiative) and Tactical Damage Dealt by 6%/7.2%/8.4%/10.2%/12% of 1 other Ally Sentinel for 2 rounds. At 4+ Rising Tide stacks, multiply both support effects by 1.5.",
+        "verificationStatus": "screenshot-verified",
+        "verificationSource": "Moondancer New Moon screenshot",
+        "evidenceIds": [
+          "moondancer-new-moon-2026-08-09"
         ]
       },
       "unresolvedQuestions": [],
@@ -5565,7 +5688,7 @@
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "habitLevelDependent": false,
-      "currentCuratedDescription": "Strength improves direct Physical Damage",
+      "currentCuratedDescription": "Strength improves Crescent Blade Physical Damage and, from 4 Stars, both Reactive Instincts buffs",
       "currentConfidence": "verified",
       "currentRelationshipTypesOrValuesAffected": [
         "stat-support base value 5 as receiving signal"
@@ -14189,5 +14312,5 @@
       "coverageStatus": "covered"
     }
   ],
-  "deterministicHash": "e01d0e4e99afcc1771dabcaf6289ebd616877ff4ed53cd3e32f4e78ee1fbfcde"
+  "deterministicHash": "d2b662b302414611ab4bb03a0997f592fdb4482a79d6a191d6f26bd89977af21"
 }

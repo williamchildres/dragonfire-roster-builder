@@ -15,6 +15,7 @@ import type {
   ConditionalProbabilityUplift,
   FixedOrHabitLevelEvidenceValue,
 } from '../synergy/reliability/types';
+import type { DragonProgression, SimpleProgressionByDragonId } from '../synergy/types';
 
 export const reliabilityMethodLabels: Record<ReliabilityCalculationMethod, string> = {
   guaranteed: 'Guaranteed',
@@ -181,9 +182,28 @@ export function conditionalUpliftForRelationship(
 
 export function conditionalUpliftsForRelationship(
   relationship: FormationRelationshipV3,
+  progression?: SimpleProgressionByDragonId,
 ): ConditionalProbabilityUplift[] {
-  return relationship.componentIds.flatMap((componentId) => {
+  const directComponents = relationship.componentIds.flatMap((componentId) => {
     const component = formationReliabilityComponents.find((candidate) => candidate.id === componentId);
+    return component ? [component] : [];
+  });
+  const relatedComponents = progression
+    ? directComponents.flatMap((component) =>
+        (component.additionalConditionalUpliftComponentIds ?? []).flatMap((componentId) => {
+          const related = formationReliabilityComponents.find(
+            (candidate) => candidate.id === componentId,
+          );
+          return related && componentUnlockSatisfied(
+            related.unlock,
+            progression[relationship.beneficiaryDragonId],
+          )
+            ? [related]
+            : [];
+        }),
+      )
+    : [];
+  return [...new Map([...directComponents, ...relatedComponents].map((component) => [component.id, component])).values()].flatMap((component) => {
     return [
       ...(component?.conditionalUplift ? [component.conditionalUplift] : []),
       ...(component?.conditionalUplifts ?? []),
@@ -194,8 +214,9 @@ export function conditionalUpliftsForRelationship(
 export function conditionalUpliftSummary(
   relationship: FormationRelationshipV3,
   dragonsById: ReadonlyMap<string, Dragon>,
+  progression?: SimpleProgressionByDragonId,
 ): string | null {
-  const uplifts = conditionalUpliftsForRelationship(relationship);
+  const uplifts = conditionalUpliftsForRelationship(relationship, progression);
   const uplift = uplifts[0];
   if (!uplift) return null;
   const selectedTrace = relationship.candidateTraces.find(
@@ -244,6 +265,26 @@ export function abilityLabel(
 
 function formatProbability(value: number): string {
   return `${Math.round(value * 10_000) / 100}%`;
+}
+
+function componentUnlockSatisfied(
+  unlock: { minimumStarRank?: number; minimumDragonLevel?: number } | undefined,
+  progression: DragonProgression | undefined,
+): boolean {
+  if (!unlock) return true;
+  if (
+    unlock.minimumStarRank !== undefined &&
+    (progression?.starRank == null || progression.starRank < unlock.minimumStarRank)
+  ) {
+    return false;
+  }
+  if (
+    unlock.minimumDragonLevel !== undefined &&
+    (progression?.dragonLevel == null || progression.dragonLevel < unlock.minimumDragonLevel)
+  ) {
+    return false;
+  }
+  return true;
 }
 
 function formatEvidenceProbability(value: FixedOrHabitLevelEvidenceValue): string {

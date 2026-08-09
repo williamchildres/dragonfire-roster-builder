@@ -42,18 +42,18 @@ describe('Formation Rating v3 exhaustive audit', () => {
           Developing: 5,
         },
         postCalibrationCounts: {
-          Excellent: 385,
-          Strong: 3451,
-          Solid: 15805,
-          Developing: 13875,
-          Weak: 2388,
+          Excellent: 386,
+          Strong: 3511,
+          Solid: 15881,
+          Developing: 13739,
+          Weak: 2387,
         },
       });
       expect(report.tierCalibration.derivedThresholds).toEqual({
         Excellent: 66,
         Strong: 53,
         Solid: 34,
-        Developing: 5,
+        Developing: 7,
       });
       expect(report.tierCalibration.selectedThresholds.Solid).toBe(34);
       expect(

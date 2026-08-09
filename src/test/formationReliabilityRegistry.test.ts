@@ -37,14 +37,14 @@ describe('production Formation Reliability registry', () => {
     expect(registryAudit.counts.dragonsCovered).toBe(34);
   });
 
-  it('derives exactly the current 245 scoring signals and excludes non-scoring rows and claims', () => {
+  it('derives exactly the current 247 scoring signals and excludes non-scoring rows and claims', () => {
     const currentScoringSignalIds = simpleSynergyProfiles
       .flatMap((profile) => [...profile.outputs, ...profile.supports, ...profile.benefitsFrom])
       .filter((signal) => signal.nonScoring !== true)
       .map((signal) => signal.id)
       .sort();
     expect(formationReliabilityScoringSignalIds).toEqual(currentScoringSignalIds);
-    expect(formationReliabilityScoringSignalIds).toHaveLength(245);
+    expect(formationReliabilityScoringSignalIds).toHaveLength(247);
     expect(formationReliabilityNonScoringSignalIds).toHaveLength(9);
     expect(formationReliabilityPositionClaimIds).toHaveLength(34);
   });
@@ -54,7 +54,7 @@ describe('production Formation Reliability registry', () => {
     for (const binding of formationReliabilityBindings) {
       bindingCounts.set(binding.signalId, (bindingCounts.get(binding.signalId) ?? 0) + 1);
     }
-    expect(formationReliabilityBindings).toHaveLength(245);
+    expect(formationReliabilityBindings).toHaveLength(247);
     expect([...bindingCounts.values()].every((count) => count === 1)).toBe(true);
     expect([...bindingCounts.keys()].sort()).toEqual(formationReliabilityScoringSignalIds);
     expect(formationReliabilityBindings.every((binding) => binding.status === 'resolved')).toBe(
@@ -68,21 +68,21 @@ describe('production Formation Reliability registry', () => {
   it('reports exact binding, probability, opportunity, and unresolved-evidence boundaries', () => {
     expect(registryAudit.counts).toMatchObject({
       components: 240,
-      bindings: 245,
-      guaranteedBindings: 141,
+      bindings: 247,
+      guaranteedBindings: 142,
       conditionalDeterministicBindings: 30,
-      chanceBindings: 71,
+      chanceBindings: 72,
       resolvedMixedBindings: 3,
       bindingsWithFixedProbability: 23,
       bindingsWithDirectHabitProbability: 34,
       bindingsWithHabitOverride: 2,
       bindingsWithRoundSpecificProbability: 2,
-      bindingsWithVariantProbability: 11,
-      guaranteedOpportunityPresence: 43,
+      bindingsWithVariantProbability: 12,
+      guaranteedOpportunityPresence: 44,
       conditionalOpportunityPresence: 28,
       unknownOpportunityPresence: 3,
-      unresolvedOpportunityCounts: 69,
-      unresolvedIndependence: 69,
+      unresolvedOpportunityCounts: 70,
+      unresolvedIndependence: 70,
       missingBindings: 0,
       staleBindings: 0,
       duplicateBindings: 0,
@@ -318,10 +318,10 @@ describe('production Formation Reliability registry', () => {
       [...registryAudit.researchParityDifferences].map((difference) => difference.kind).sort(),
     );
     expect(registryAudit.deterministicRegistryHash).toBe(
-      'c77c5dbe00eeecfc3d8506f47f4c327bccbb52327b413ff5119d91bec9b2334b',
+      '3c995038f50606d9dc6470976021e1c717c1963ebb21c782455c78cf9652fab0',
     );
     expect(runFormationReliabilityAudit().deterministicHash).toBe(
-      'e01d0e4e99afcc1771dabcaf6289ebd616877ff4ed53cd3e32f4e78ee1fbfcde',
+      'd2b662b302414611ab4bb03a0997f592fdb4482a79d6a191d6f26bd89977af21',
     );
   });
 

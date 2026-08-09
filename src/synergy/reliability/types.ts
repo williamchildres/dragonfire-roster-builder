@@ -148,7 +148,8 @@ export interface ReliabilityStackFacts {
   perStackMetricLabel?: string;
   perStackDelta?: number;
   thresholds?: readonly number[];
-  triggerLimitPerRound?: number;
+  /** Maximum documented successful triggers; this does not cap failed attempts. */
+  successfulTriggerLimitPerRound?: number;
 }
 
 export interface ReliabilityTargetSelectorEvidence {
@@ -182,6 +183,11 @@ export interface AbilityReliabilityComponent {
   durationRounds?: number;
   conditionalUplift?: ConditionalProbabilityUplift;
   conditionalUplifts?: readonly ConditionalProbabilityUplift[];
+  /**
+   * Additional uplift evidence owned by separately unlocked components. Presentation
+   * resolves these references against current progression without adding scoring paths.
+   */
+  additionalConditionalUpliftComponentIds?: readonly ReliabilityComponentId[];
   conditionalMagnitudeUplifts?: readonly ConditionalMagnitudeUplift[];
   stackFacts?: ReliabilityStackFacts;
   targetSelectorEvidence?: ReliabilityTargetSelectorEvidence;

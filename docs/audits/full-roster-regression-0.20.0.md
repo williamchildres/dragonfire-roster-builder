@@ -7,10 +7,10 @@
 - Baseline: 0.10.5 at `a5c4bc2c05850210a64652921021bba1783e6eb1`; old hash `ca8d09e060d7b28faa44115f65d2cfe52b1cce2ecc1a9a5fc9439714e22afc48`.
 - Release branch starts from `8c66609e76962eec4a1122a79fb2113c7dc0153b`.
 - Current: 0.20.0; new hash `5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf`.
-- Coverage remains: 33 dragons, 231 abilities, 239 curated signals, 32736 ordered formations, 4563 provider/payoff pairs.
+- Coverage remains: 34 dragons, 238 abilities, 256 curated signals, 32736 ordered formations, 5425 provider/payoff pairs.
 - Baseline comparison covers 26970 formations composed only of the prior 31 dragons; 5766 formations include Sunfyre or Tairax and have no prior-row counterpart.
 - Validation: 32 PASS checks, 0 failed checks, 2 informational/unresolved findings.
-- Runtime: 12913 ms; prior audit 12838 ms; delta +75 ms.
+- Runtime: 7612 ms; prior audit 12838 ms; delta -5226 ms.
 
 ## Public contract
 

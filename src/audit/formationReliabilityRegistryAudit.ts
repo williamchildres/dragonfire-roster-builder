@@ -80,6 +80,7 @@ const allowedComponentIdMigrationSignalIds = new Set([
   'moondancer-advantage-rising-tide-payoff',
   'moondancer-crescent-blade-physical',
   'moondancer-new-moon-instinct',
+  'moondancer-new-moon-initiative-payoff',
   'moondancer-new-moon-tactical',
   'moondancer-physical-payoff',
   'moondancer-reactive-instincts-initiative',

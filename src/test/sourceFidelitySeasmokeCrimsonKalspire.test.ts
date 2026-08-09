@@ -258,7 +258,7 @@ describe('Seasmoke, Crimson, and Kalspire screenshot-source fidelity', () => {
     expect(profile('crimson').benefitsFrom.map((signal) => signal.id)).toEqual([
       'crimson-bloodscale-fury-taunt-payoff',
     ]);
-    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(254);
+    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(256);
     expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(238);
   });
 

@@ -87,7 +87,7 @@ describe('Sunfyre and Tairax canonical data', () => {
 
   it('adds exactly the requested 15 curated signals and 14 audit dispositions', () => {
     expect(simpleSynergyProfiles).toHaveLength(34);
-    expect(simpleSynergyProfiles.flatMap((profile) => [...profile.outputs, ...profile.supports, ...profile.benefitsFrom])).toHaveLength(254);
+    expect(simpleSynergyProfiles.flatMap((profile) => [...profile.outputs, ...profile.supports, ...profile.benefitsFrom])).toHaveLength(256);
     expect(signals('sunfyre')).toHaveLength(6);
     expect(signals('tairax')).toHaveLength(9);
     expect(simpleSynergyAbilityReviews).toHaveLength(238);

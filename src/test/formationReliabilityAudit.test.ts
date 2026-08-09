@@ -17,27 +17,27 @@ describe('Formation Reliability research audit', () => {
     expect(first.auditContract).toBe(FORMATION_RELIABILITY_AUDIT_CONTRACT);
     expect(first.totals).toMatchObject({
       dragons: 34,
-      curatedSignals: 254,
-      scoringSignals: 245,
+      curatedSignals: 256,
+      scoringSignals: 247,
       explicitlyNonScoringSignals: 9,
       positionClaims: 34,
       signalsMissingProposedReliabilityCoverage: 0,
     });
-    expect(first.signals).toHaveLength(254);
-    expect(new Set(first.signals.map((signal) => signal.signalId)).size).toBe(254);
+    expect(first.signals).toHaveLength(256);
+    expect(new Set(first.signals.map((signal) => signal.signalId)).size).toBe(256);
     expect(first.missingProposedReliabilitySignalIds).toEqual([]);
     expect(first.deterministicHash).toBe(second.deterministicHash);
     expect(first).toEqual(second);
   });
 
-  it('requires an explicit classification for all 245 scoring signals', () => {
+  it('requires an explicit classification for all 247 scoring signals', () => {
     const report = runFormationReliabilityAudit();
     const scoringSignalIds = report.signals
       .filter((signal) => signal.classification !== 'not-applicable-to-activation-reliability')
       .map((signal) => signal.signalId);
     const classifications = getExplicitScoringReliabilityClassifications();
 
-    expect(classifications.size).toBe(245);
+    expect(classifications.size).toBe(247);
     expect(getMissingExplicitReliabilityClassificationIds(scoringSignalIds)).toEqual([]);
 
     const omittedClassification = new Map(classifications);

@@ -122,7 +122,7 @@ describe('optimizer v6 independent audit artifact', () => {
       expect(reverse?.resultHash).toBe(forward?.resultHash);
     }
 
-    expect(report.deterministicAuditHash).toBe('fnv1a64:4919638a23435778');
+    expect(report.deterministicAuditHash).toBe('fnv1a64:38b92faea349b548');
   });
 
   it('matches the exact committed 0.23.5 cumulative historical delta manifest', () => {
@@ -194,7 +194,7 @@ describe('optimizer v6 independent audit artifact', () => {
     expect(`sha256:${createHash('sha256')
       .update(JSON.stringify(identityInput))
       .digest('hex')}`).toBe(
-      'sha256:0a0a1ac9d1429cdf1f7b9c2f82e5d2ee81780e01080f1156ff1daff12c109f5b',
+      'sha256:d233f49e09484e10cc724d2601ae74597ee98c2a9ea409996f7728f171c9f14c',
     );
   });
 

@@ -61,7 +61,7 @@ describe('Malachite, Venator, and Sheepstealer screenshot-source fidelity', () =
     expect(description('venator', 'venator-warriors-zeal')).toBe('At Level 16+ and deployed in Vanguard: increase Venator Physical Damage from Commands and Habits by 16%; Left Flank ally Instinct and Initiative +20.');
     expect(description('sheepstealer', 'sheepstealer-hunters-cunning')).toBe('At Level 16+ and deployed in Vanguard, increase self Recovery Received +20%, self Intelligence +25, and Right Flank ally Physical Damage Dealt +10%.');
     expect(simpleSynergyProfiles).toHaveLength(34);
-    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(254);
+    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(256);
     expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(238);
   });
 });

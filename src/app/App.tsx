@@ -1616,6 +1616,7 @@ function FormationBuilderSection({
         recommendation={recommendation}
         placementComparison={placementComparison}
         formationDragons={formationDragons}
+        progression={progression}
       />
       <div className="formation-board" aria-label="Formation positions">
         {FORMATION_POSITIONS.map((position) => {

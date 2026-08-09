@@ -7356,7 +7356,7 @@ export const dragons = [
       {
         "id": "moondancer-new-moon", "dragonId": "moondancer", "kind": "habit", "name": "New Moon", "abilityClass": "passive", "unlockStarRank": 2, "minimumDragonLevel": null, "positionRequirement": null,
         "rawDescription": "Rounds 1, 3, 5: 25%/30%/35%/42.5%/50% chance by Habit Level to gain 1 Rising Tide stack; if any Ally has Advantage, deterministically double the chance to 50%/60%/70%/85%/100%. Odd-numbered Rounds: increase Instinct by 9%/10.8%/12.6%/15.3%/18% (enhanced by Initiative) and Tactical Damage Dealt by 6%/7.2%/8.4%/10.2%/12% of 1 other Ally Sentinel for 2 rounds. At 4+ Rising Tide stacks, multiply both support effects by 1.5.",
-        "verification": { "status": "screenshot-verified", "source": "Moondancer New Moon screenshot", "capturedAt": "2026-08-09", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["moondancer-new-moon-2026-08-09"], "tags": ["RISING_TIDE", "ADVANTAGE", "INSTINCT_UP", "TACTICAL_DAMAGE_UP", "ENHANCED_BY_INSTINCT"]
+        "verification": { "status": "screenshot-verified", "source": "Moondancer New Moon screenshot", "capturedAt": "2026-08-09", "gameVersion": null, "reviewedManually": true }, "evidenceIds": ["moondancer-new-moon-2026-08-09"], "tags": ["RISING_TIDE", "ADVANTAGE", "INSTINCT_UP", "TACTICAL_DAMAGE_UP", "INITIATIVE_SCALING"]
       },
       {
         "id": "moondancer-reactive-instincts", "dragonId": "moondancer", "kind": "habit", "name": "Reactive Instincts", "abilityClass": "passive", "unlockStarRank": 4, "minimumDragonLevel": null, "positionRequirement": null,
@@ -7381,7 +7381,7 @@ export const dragons = [
     ],
     "affinities": { "Cavalry": "neutral", "Shieldbearers": "positive", "Archers": "positive", "Spearmen": "neutral", "Siege": "negative" },
     "stats": { "strength": null, "intelligence": null, "instinct": null, "initiative": null },
-    "tags": ["PHYSICAL_DAMAGE", "RISING_TIDE", "TACTICAL_DAMAGE", "RECOVERY", "DAMAGE_RECEIVED_DOWN", "VANGUARD_REQUIRED", "PHYSICAL_DAMAGE_UP", "INSTINCT_UP", "BUFF_INITIATIVE", "ADVANTAGE", "TACTICAL_DAMAGE_UP", "BLEED", "DAMAGE_DEALT_DOWN", "DEBUFF_INITIATIVE", "MOST_TROOPS_TARGET"],
+    "tags": ["PHYSICAL_DAMAGE", "RISING_TIDE", "TACTICAL_DAMAGE", "RECOVERY", "DAMAGE_RECEIVED_DOWN", "VANGUARD_REQUIRED", "PHYSICAL_DAMAGE_UP", "INSTINCT_UP", "BUFF_INITIATIVE", "ADVANTAGE", "TACTICAL_DAMAGE_UP", "INITIATIVE_SCALING", "BLEED", "DAMAGE_DEALT_DOWN", "DEBUFF_INITIATIVE", "MOST_TROOPS_TARGET"],
     "fieldVerification": {
       "identity": { "status": "screenshot-verified", "source": "Moondancer main screen screenshot", "capturedAt": "2026-08-09", "gameVersion": null, "reviewedManually": true },
       "command": { "status": "screenshot-verified", "source": "Moondancer Crescent Blade screenshots", "capturedAt": "2026-08-09", "gameVersion": null, "reviewedManually": true },

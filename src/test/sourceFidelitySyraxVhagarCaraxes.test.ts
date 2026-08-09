@@ -87,7 +87,7 @@ describe('Syrax, Vhagar, and Caraxes screenshot-source fidelity', () => {
     const profile = (id: string) => simpleSynergyProfiles.find((candidate) => candidate.dragonId === id)!;
     expect(profile('vhagar').outputs.map((signal) => signal.id)).toEqual(['vhagar-fiery-bonds-taunt', 'vhagar-fiery-bonds-physical', 'vhagar-skyward-titan-physical']);
     expect(profile('caraxes').outputs.map((signal) => signal.id)).toEqual(['caraxes-infernal-burst-fire', 'caraxes-crippling-inferno-slow', 'caraxes-crippling-inferno-burn', 'caraxes-crippling-inferno-fire']);
-    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(254);
+    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(256);
     expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(238);
   });
 

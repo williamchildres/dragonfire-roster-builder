@@ -8,8 +8,8 @@
   "existingChangedPlacementCount": 0,
   "introducedMoondancerPlacementCount": 3168,
   "previousSnapshotIdentity": "sha256:3e7c70f4a8d8133171465b5f24c490a60431fe1c7d9665ab936d665c55f79984",
-  "currentSnapshotIdentity": "sha256:4c733103a31ef5c3747fdfecaaa3c223ea1cbb8003634ad3d3628ddd2c69764d",
-  "introducedRowsIdentity": "sha256:f9d91299cd6001f5838640bf6e9beed07718fa495d71d8e24ed7f57bb8cb67ab",
+  "currentSnapshotIdentity": "sha256:4e695d5c106bec70174afbe673d562da51c52c31844aabb07fb97b53c4cb7a4d",
+  "introducedRowsIdentity": "sha256:030178f462b9c7b05a9c4e245b5c338d2e3c6fce705d62852f6d373055c7926d",
   "existingChanged": [],
-  "deterministicManifestHash": "sha256:e970ee4d7794e9dc69371dcac629bc3c1d7b58efa65365b4bc358dc1ce656c8f"
+  "deterministicManifestHash": "sha256:b29619884625ae48f120c7108d9f97e2ff7c1132c23a2090b65eae8605ed9722"
 }

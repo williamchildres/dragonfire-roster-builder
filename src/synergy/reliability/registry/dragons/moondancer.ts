@@ -21,9 +21,9 @@ export const moondancerReliabilityRegistry = defineDragonReliabilityRegistry({
     },
     {
       id: 'moondancer-crescent-blade:rising-tide-trigger', sourceAbilityId: 'moondancer-crescent-blade', sourceAbilityKind: 'command', reliabilityClass: 'chance', probability: { kind: 'fixed', value: 0.5 },
-      opportunityPresence: 'conditional', opportunityCondition: 'The selected other Ally Sentinel deals Tactical Damage or applies Recovery.', timing: { kind: 'after-event', sourceEvent: 'Selected Crescent Blade recipient deals Tactical Damage or applies Recovery.' }, opportunityCount: { kind: 'ability-activation-dependent', sourceEvent: 'Qualifying selected-recipient events, capped at once per round.' }, rollScope: 'shared', independence: 'unknown',
-      stackFacts: { stackLabel: 'Rising Tide', maximum: 8, perStackMetricLabel: 'Moondancer Damage Received', perStackDelta: -0.02, thresholds: [4, 6], triggerLimitPerRound: 1 },
-      evidence: { verificationStatus: 'verified', evidenceIds: ['moondancer-crescent-blade-1-2026-08-09', 'moondancer-crescent-blade-2-2026-08-09', 'moondancer-crescent-blade-3-2026-08-09', 'moondancer-crescent-blade-4-2026-08-09'], unresolvedQuestions: ['Qualifying event frequency and temporal independence are not established.'] },
+      opportunityPresence: 'conditional', opportunityCondition: 'The selected other Ally Sentinel deals Tactical Damage or applies Recovery.', timing: { kind: 'after-event', sourceEvent: 'Selected Crescent Blade recipient deals Tactical Damage or applies Recovery.' }, opportunityCount: { kind: 'unresolved', reason: 'The screenshot caps successful Rising Tide triggers at one per round but does not establish whether a failed qualifying event can be followed by another 50% check.' }, rollScope: 'shared', independence: 'unknown',
+      stackFacts: { stackLabel: 'Rising Tide', maximum: 8, perStackMetricLabel: 'Moondancer Damage Received', perStackDelta: -0.02, thresholds: [4, 6], successfulTriggerLimitPerRound: 1 },
+      evidence: { verificationStatus: 'verified', evidenceIds: ['moondancer-crescent-blade-1-2026-08-09', 'moondancer-crescent-blade-2-2026-08-09', 'moondancer-crescent-blade-3-2026-08-09', 'moondancer-crescent-blade-4-2026-08-09'], unresolvedQuestions: ['Qualifying event frequency and temporal independence are not established.', 'Whether a failed qualifying event can be followed by another 50% check in the same round is not established.'], reviewNote: 'No more than one successful Crescent Blade Rising Tide trigger can occur per round; attempt count is unresolved.' },
     },
     {
       id: 'moondancer-crescent-blade:physical-damage', sourceAbilityId: 'moondancer-crescent-blade', sourceAbilityKind: 'command', reliabilityClass: 'guaranteed',
@@ -50,7 +50,7 @@ export const moondancerReliabilityRegistry = defineDragonReliabilityRegistry({
     {
       id: 'moondancer-new-moon:advantage-uplift', sourceAbilityId: 'moondancer-new-moon', sourceAbilityKind: 'habit', reliabilityClass: 'conditional-deterministic', opportunityPresence: 'not-applicable', timing: { kind: 'conditional-event', condition: 'Any Ally has Advantage.' }, opportunityCount: { kind: 'not-applicable' }, rollScope: 'not-applicable', independence: 'not-applicable', unlock: { minimumStarRank: 2 },
       conditionalUplift: { kind: 'probability-uplift', conditionLabel: 'Advantage', affectedMetricLabel: "New Moon's Rising Tide chance", affectedComponentId: 'moondancer-new-moon:rising-tide', baselineVariantId: 'ordinary', conditionedVariantId: 'advantage', baseline: { kind: 'habit-level', habitAbilityId: 'moondancer-new-moon', byLevel: baseRisingTide }, conditioned: { kind: 'habit-level', habitAbilityId: 'moondancer-new-moon', byLevel: doubledRisingTide }, absoluteDelta: { kind: 'habit-level', habitAbilityId: 'moondancer-new-moon', byLevel: baseRisingTide }, relativeMultiplier: 2, modifier: { kind: 'multiplier', value: 2 } },
-      conditionalUplifts: [{ kind: 'probability-uplift', conditionLabel: 'Advantage', affectedMetricLabel: "Full Moon's Rising Tide chance", affectedComponentId: 'moondancer-full-moon:rising-tide', baselineVariantId: 'ordinary', conditionedVariantId: 'advantage', baseline: { kind: 'habit-level', habitAbilityId: 'moondancer-full-moon', byLevel: baseRisingTide }, conditioned: { kind: 'habit-level', habitAbilityId: 'moondancer-full-moon', byLevel: doubledRisingTide }, absoluteDelta: { kind: 'habit-level', habitAbilityId: 'moondancer-full-moon', byLevel: baseRisingTide }, relativeMultiplier: 2, modifier: { kind: 'multiplier', value: 2 } }],
+      additionalConditionalUpliftComponentIds: ['moondancer-full-moon:advantage-uplift'],
       evidence: { verificationStatus: 'verified', evidenceIds: ['moondancer-new-moon-2026-08-09'], unresolvedQuestions: deterministicConditionQuestions, reviewNote: 'Advantage selects the doubled branch; the Rising Tide result remains probabilistic.' },
     },
     {
@@ -106,9 +106,9 @@ export const moondancerReliabilityRegistry = defineDragonReliabilityRegistry({
     {
       id: 'moondancer-eclipsing-strike:shared-activation', sourceAbilityId: 'moondancer-eclipsing-strike', sourceAbilityKind: 'habit', reliabilityClass: 'chance',
       probability: { kind: 'variants', variants: [{ id: 'below-six-stacks', probability: { kind: 'habit-level', habitAbilityId: 'moondancer-eclipsing-strike', byLevel: eclipsingBase } }, { id: 'six-plus-stacks', probability: { kind: 'habit-level', habitAbilityId: 'moondancer-eclipsing-strike', byLevel: eclipsingDoubled } }] },
-      opportunityPresence: 'guaranteed-at-least-one', timing: { kind: 'each-round' }, opportunityCount: { kind: 'battle-length-dependent' }, rollScope: 'shared', targetFacts: { count: 1, separatePerEffect: false }, independence: 'unknown', durationRounds: 2, unlock: { minimumStarRank: 10 }, researchOnly: true,
+      opportunityPresence: 'guaranteed-at-least-one', timing: { kind: 'each-round' }, opportunityCount: { kind: 'battle-length-dependent' }, rollScope: 'shared', targetFacts: { count: 1, separatePerEffect: false }, independence: 'unknown', durationRounds: 2, unlock: { minimumStarRank: 10 },
       targetSelectorEvidence: { population: 'enemy', stat: 'troops', order: 'highest', recipientCount: 1, tieHandling: 'unresolved' },
-      evidence: { verificationStatus: 'verified', evidenceIds: ['moondancer-eclipsing-strike-2026-08-09'], unresolvedQuestions: ['No tie rule is verified for Enemies tied for Most Troops.', 'Temporal independence across rounds is not established.'], reviewNote: 'Damage Dealt -18% and, at 6+ stacks, Initiative -25% share this successful activation.' },
+      evidence: { verificationStatus: 'verified', evidenceIds: ['moondancer-eclipsing-strike-2026-08-09'], unresolvedQuestions: ["The stat-support payoff applies to Eclipsing Strike's chance-based enemy reductions.", 'Battle length and temporal independence are unresolved.', 'No tie rule is verified for Enemies tied for Most Troops.', 'Temporal independence across rounds is not established.'], reviewNote: 'Damage Dealt -18% and, at 6+ stacks, Initiative -25% share this successful activation.' },
     },
     {
       id: 'moondancer-eclipsing-strike:six-stack-uplift', sourceAbilityId: 'moondancer-eclipsing-strike', sourceAbilityKind: 'habit', reliabilityClass: 'conditional-deterministic', opportunityPresence: 'not-applicable', timing: { kind: 'conditional-event', condition: 'Moondancer has 6+ Rising Tide stacks.' }, opportunityCount: { kind: 'not-applicable' }, rollScope: 'not-applicable', independence: 'not-applicable', unlock: { minimumStarRank: 10 }, researchOnly: true,
@@ -133,6 +133,13 @@ export const moondancerReliabilityRegistry = defineDragonReliabilityRegistry({
       status: 'resolved', signalId: 'moondancer-advantage-rising-tide-payoff', bindingClass: 'conditional-deterministic', paths: [{ pathId: 'advantage-uplifts', events: [event('moondancer-new-moon:advantage-uplift')] }],
     },
     binding('moondancer-crescent-blade-trigger-payoff', 'chance', 'moondancer-crescent-blade:rising-tide-trigger'),
+    binding('moondancer-new-moon-initiative-payoff', 'guaranteed', 'moondancer-new-moon:sentinel-support'),
+    {
+      status: 'resolved', signalId: 'moondancer-eclipsing-strike-initiative-payoff', bindingClass: 'chance', paths: [
+        path('below-six-stacks', 'moondancer-eclipsing-strike:shared-activation', 'below-six-stacks'),
+        path('six-plus-stacks', 'moondancer-eclipsing-strike:shared-activation', 'six-plus-stacks'),
+      ],
+    },
     binding('moondancer-strength-payoff', 'guaranteed', 'moondancer-crescent-blade:physical-damage'),
     binding('moondancer-physical-payoff', 'guaranteed', 'moondancer-crescent-blade:physical-damage'),
   ],

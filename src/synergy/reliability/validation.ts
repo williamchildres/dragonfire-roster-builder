@@ -130,6 +130,27 @@ function validateConditionalUplifts(
   issues: ReliabilityValidationIssue[],
 ): void {
   for (const component of components) {
+    for (const [referenceIndex, componentId] of (
+      component.additionalConditionalUpliftComponentIds ?? []
+    ).entries()) {
+      const path = `components[${component.id}].additionalConditionalUpliftComponentIds[${referenceIndex}]`;
+      const referenced = componentsById.get(componentId);
+      if (!referenced) {
+        addIssue(
+          issues,
+          'conditional-uplift.additional-component-missing',
+          path,
+          `Additional conditional-uplift component "${componentId}" does not exist.`,
+        );
+      } else if (!referenced.conditionalUplift && !referenced.conditionalUplifts?.length) {
+        addIssue(
+          issues,
+          'conditional-uplift.additional-component-empty',
+          path,
+          `Additional component "${componentId}" owns no conditional uplift evidence.`,
+        );
+      }
+    }
     const uplifts = [
       ...(component.conditionalUplift ? [component.conditionalUplift] : []),
       ...(component.conditionalUplifts ?? []),

@@ -2040,7 +2040,7 @@
       "formationCount": 10,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "antares+seasmoke+venator@left-flank:venator|vanguard:antares|right-flank:seasmoke||bevlorin+sheepstealer+vaeldra@left-flank:bevlorin|vanguard:sheepstealer|right-flank:vaeldra||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+jagadrix+tessarion@left-flank:jagadrix|vanguard:crimson|right-flank:tessarion||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||malachite+rhysarion+thunderstrike@left-flank:thunderstrike|vanguard:rhysarion|right-flank:malachite||nyrena+vermax+vhagar@left-flank:nyrena|vanguard:vhagar|right-flank:vermax||shimmer+syrax+tairax@left-flank:shimmer|vanguard:tairax|right-flank:syrax||sunfyre+velar+vesper@left-flank:velar|vanguard:sunfyre|right-flank:vesper",
-      "currentStableSolutionKey": "antares+malachite+moondancer@left-flank:antares|vanguard:malachite|right-flank:moondancer||bevlorin+seasmoke+venator@left-flank:venator|vanguard:bevlorin|right-flank:seasmoke||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+jagadrix+tessarion@left-flank:jagadrix|vanguard:crimson|right-flank:tessarion||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||nyrena+vermax+vhagar@left-flank:nyrena|vanguard:vhagar|right-flank:vermax||rhysarion+tairax+tashix@left-flank:rhysarion|vanguard:tashix|right-flank:tairax||sheepstealer+shimmer+velar@left-flank:shimmer|vanguard:sheepstealer|right-flank:velar||sunfyre+syrax+vesper@left-flank:syrax|vanguard:sunfyre|right-flank:vesper",
+      "currentStableSolutionKey": "antares+malachite+moondancer@left-flank:malachite|vanguard:antares|right-flank:moondancer||bevlorin+seasmoke+venator@left-flank:venator|vanguard:bevlorin|right-flank:seasmoke||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+jagadrix+tessarion@left-flank:jagadrix|vanguard:crimson|right-flank:tessarion||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||nyrena+vermax+vhagar@left-flank:nyrena|vanguard:vhagar|right-flank:vermax||rhysarion+tairax+tashix@left-flank:rhysarion|vanguard:tashix|right-flank:tairax||sheepstealer+shimmer+velar@left-flank:shimmer|vanguard:sheepstealer|right-flank:velar||sunfyre+syrax+vesper@left-flank:syrax|vanguard:sunfyre|right-flank:vesper",
       "historicalAscendingPowerVector": [
         65270,
         65270,
@@ -2090,9 +2090,9 @@
         61
       ],
       "historicalSolutionHash": "fnv1a64:64f50ac2007d43a2",
-      "currentSolutionHash": "fnv1a64:45a77bf050d307b3",
+      "currentSolutionHash": "fnv1a64:3740533824ab64f8",
       "historicalResultHash": "fnv1a64:9f179be56b53f985",
-      "currentResultHash": "fnv1a64:3d9208c620dfd0e5",
+      "currentResultHash": "fnv1a64:3a8acbf07e070c65",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2102,7 +2102,7 @@
       "formationCount": 10,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "antares+seasmoke+venator@left-flank:venator|vanguard:antares|right-flank:seasmoke||bevlorin+sheepstealer+vaeldra@left-flank:bevlorin|vanguard:sheepstealer|right-flank:vaeldra||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+jagadrix+tessarion@left-flank:jagadrix|vanguard:crimson|right-flank:tessarion||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||malachite+rhysarion+thunderstrike@left-flank:thunderstrike|vanguard:rhysarion|right-flank:malachite||nyrena+vermax+vhagar@left-flank:nyrena|vanguard:vhagar|right-flank:vermax||shimmer+syrax+tairax@left-flank:shimmer|vanguard:tairax|right-flank:syrax||sunfyre+velar+vesper@left-flank:velar|vanguard:sunfyre|right-flank:vesper",
-      "currentStableSolutionKey": "antares+malachite+moondancer@left-flank:antares|vanguard:malachite|right-flank:moondancer||bevlorin+seasmoke+venator@left-flank:venator|vanguard:bevlorin|right-flank:seasmoke||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+jagadrix+tessarion@left-flank:jagadrix|vanguard:crimson|right-flank:tessarion||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||nyrena+vermax+vhagar@left-flank:nyrena|vanguard:vhagar|right-flank:vermax||rhysarion+tairax+tashix@left-flank:rhysarion|vanguard:tashix|right-flank:tairax||sheepstealer+shimmer+velar@left-flank:shimmer|vanguard:sheepstealer|right-flank:velar||sunfyre+syrax+vesper@left-flank:syrax|vanguard:sunfyre|right-flank:vesper",
+      "currentStableSolutionKey": "antares+malachite+moondancer@left-flank:malachite|vanguard:antares|right-flank:moondancer||bevlorin+seasmoke+venator@left-flank:venator|vanguard:bevlorin|right-flank:seasmoke||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+jagadrix+tessarion@left-flank:jagadrix|vanguard:crimson|right-flank:tessarion||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||nyrena+vermax+vhagar@left-flank:nyrena|vanguard:vhagar|right-flank:vermax||rhysarion+tairax+tashix@left-flank:rhysarion|vanguard:tashix|right-flank:tairax||sheepstealer+shimmer+velar@left-flank:shimmer|vanguard:sheepstealer|right-flank:velar||sunfyre+syrax+vesper@left-flank:syrax|vanguard:sunfyre|right-flank:vesper",
       "historicalAscendingPowerVector": [
         65270,
         65270,
@@ -2152,9 +2152,9 @@
         61
       ],
       "historicalSolutionHash": "fnv1a64:64f50ac2007d43a2",
-      "currentSolutionHash": "fnv1a64:45a77bf050d307b3",
+      "currentSolutionHash": "fnv1a64:3740533824ab64f8",
       "historicalResultHash": "fnv1a64:9f179be56b53f985",
-      "currentResultHash": "fnv1a64:3d9208c620dfd0e5",
+      "currentResultHash": "fnv1a64:3a8acbf07e070c65",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2296,7 +2296,7 @@
       "formationCount": 2,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+syrax@left-flank:malachite|vanguard:caraxes|right-flank:syrax||crimson+seasmoke+vhagar@left-flank:seasmoke|vanguard:crimson|right-flank:vhagar",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         80070,
         80070
@@ -2314,9 +2314,9 @@
         71
       ],
       "historicalSolutionHash": "fnv1a64:c48f522e3ca641ac",
-      "currentSolutionHash": "fnv1a64:6b81e2e6b64b2701",
+      "currentSolutionHash": "fnv1a64:78693f7e3083f13c",
       "historicalResultHash": "fnv1a64:12617f1c9bacd5ef",
-      "currentResultHash": "fnv1a64:cb184b468c8fa60b",
+      "currentResultHash": "fnv1a64:d8ea2c2911f276a1",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2326,7 +2326,7 @@
       "formationCount": 2,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+syrax@left-flank:malachite|vanguard:caraxes|right-flank:syrax||crimson+seasmoke+vhagar@left-flank:seasmoke|vanguard:crimson|right-flank:vhagar",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         80070,
         80070
@@ -2344,9 +2344,9 @@
         71
       ],
       "historicalSolutionHash": "fnv1a64:c48f522e3ca641ac",
-      "currentSolutionHash": "fnv1a64:6b81e2e6b64b2701",
+      "currentSolutionHash": "fnv1a64:78693f7e3083f13c",
       "historicalResultHash": "fnv1a64:12617f1c9bacd5ef",
-      "currentResultHash": "fnv1a64:cb184b468c8fa60b",
+      "currentResultHash": "fnv1a64:d8ea2c2911f276a1",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2356,7 +2356,7 @@
       "formationCount": 3,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+seasmoke+venator@left-flank:venator|vanguard:caraxes|right-flank:seasmoke||crimson+sunfyre+syrax@left-flank:syrax|vanguard:sunfyre|right-flank:crimson||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+seasmoke+vhagar@left-flank:seasmoke|vanguard:crimson|right-flank:vhagar||sheepstealer+sunfyre+syrax@left-flank:sunfyre|vanguard:sheepstealer|right-flank:syrax",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+seasmoke+vhagar@left-flank:seasmoke|vanguard:crimson|right-flank:vhagar||sheepstealer+sunfyre+syrax@left-flank:sunfyre|vanguard:sheepstealer|right-flank:syrax",
       "historicalAscendingPowerVector": [
         80070,
         80070,
@@ -2378,9 +2378,9 @@
         59
       ],
       "historicalSolutionHash": "fnv1a64:e668d0e3b478190e",
-      "currentSolutionHash": "fnv1a64:418ab25e16905f1b",
+      "currentSolutionHash": "fnv1a64:bab94071d89890ec",
       "historicalResultHash": "fnv1a64:0bccbe7e40161a5c",
-      "currentResultHash": "fnv1a64:daefe08db5ad02ec",
+      "currentResultHash": "fnv1a64:6434fd107db6ebcb",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2390,7 +2390,7 @@
       "formationCount": 3,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+seasmoke+venator@left-flank:venator|vanguard:caraxes|right-flank:seasmoke||crimson+sunfyre+syrax@left-flank:syrax|vanguard:sunfyre|right-flank:crimson||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+seasmoke+vhagar@left-flank:seasmoke|vanguard:crimson|right-flank:vhagar||sheepstealer+sunfyre+syrax@left-flank:sunfyre|vanguard:sheepstealer|right-flank:syrax",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+seasmoke+vhagar@left-flank:seasmoke|vanguard:crimson|right-flank:vhagar||sheepstealer+sunfyre+syrax@left-flank:sunfyre|vanguard:sheepstealer|right-flank:syrax",
       "historicalAscendingPowerVector": [
         80070,
         80070,
@@ -2412,9 +2412,9 @@
         59
       ],
       "historicalSolutionHash": "fnv1a64:e668d0e3b478190e",
-      "currentSolutionHash": "fnv1a64:418ab25e16905f1b",
+      "currentSolutionHash": "fnv1a64:bab94071d89890ec",
       "historicalResultHash": "fnv1a64:0bccbe7e40161a5c",
-      "currentResultHash": "fnv1a64:daefe08db5ad02ec",
+      "currentResultHash": "fnv1a64:6434fd107db6ebcb",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2424,7 +2424,7 @@
       "formationCount": 4,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+sunfyre+syrax@left-flank:syrax|vanguard:sunfyre|right-flank:caraxes||crimson+rhysarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:crimson||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar",
-      "currentStableSolutionKey": "caraxes+crimson+syrax@left-flank:crimson|vanguard:caraxes|right-flank:syrax||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar||moondancer+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:moondancer",
+      "currentStableSolutionKey": "caraxes+crimson+syrax@left-flank:crimson|vanguard:caraxes|right-flank:syrax||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar||moondancer+sunfyre+venator@left-flank:moondancer|vanguard:sunfyre|right-flank:venator",
       "historicalAscendingPowerVector": [
         76040,
         76040,
@@ -2444,15 +2444,15 @@
         56
       ],
       "currentAscendingRatingVector": [
-        45,
+        47,
         50,
         54,
         54
       ],
       "historicalSolutionHash": "fnv1a64:8c3195a6e667ad8e",
-      "currentSolutionHash": "fnv1a64:9e24a13115f7d182",
+      "currentSolutionHash": "fnv1a64:be25110d4a710ee9",
       "historicalResultHash": "fnv1a64:67fc93b3cc884052",
-      "currentResultHash": "fnv1a64:6b02ed7449c9ed78",
+      "currentResultHash": "fnv1a64:a4e436cd64b70b59",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2462,7 +2462,7 @@
       "formationCount": 4,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+sunfyre+syrax@left-flank:syrax|vanguard:sunfyre|right-flank:caraxes||crimson+rhysarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:crimson||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar",
-      "currentStableSolutionKey": "caraxes+crimson+syrax@left-flank:crimson|vanguard:caraxes|right-flank:syrax||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar||moondancer+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:moondancer",
+      "currentStableSolutionKey": "caraxes+crimson+syrax@left-flank:crimson|vanguard:caraxes|right-flank:syrax||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar||moondancer+sunfyre+venator@left-flank:moondancer|vanguard:sunfyre|right-flank:venator",
       "historicalAscendingPowerVector": [
         76040,
         76040,
@@ -2482,15 +2482,15 @@
         56
       ],
       "currentAscendingRatingVector": [
-        45,
+        47,
         50,
         54,
         54
       ],
       "historicalSolutionHash": "fnv1a64:8c3195a6e667ad8e",
-      "currentSolutionHash": "fnv1a64:9e24a13115f7d182",
+      "currentSolutionHash": "fnv1a64:be25110d4a710ee9",
       "historicalResultHash": "fnv1a64:67fc93b3cc884052",
-      "currentResultHash": "fnv1a64:6b02ed7449c9ed78",
+      "currentResultHash": "fnv1a64:a4e436cd64b70b59",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2500,7 +2500,7 @@
       "formationCount": 5,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+sheepstealer+tessarion@left-flank:caraxes|vanguard:sheepstealer|right-flank:tessarion||crimson+tairax+vhagar@left-flank:tairax|vanguard:crimson|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:malachite||rhysarion+syrax+venator@left-flank:syrax|vanguard:venator|right-flank:rhysarion",
-      "currentStableSolutionKey": "caraxes+malachite+tessarion@left-flank:tessarion|vanguard:malachite|right-flank:caraxes||crimson+rhysarion+vhagar@left-flank:crimson|vanguard:rhysarion|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||moondancer+velar+venator@left-flank:velar|vanguard:venator|right-flank:moondancer||sheepstealer+sunfyre+syrax@left-flank:sunfyre|vanguard:sheepstealer|right-flank:syrax",
+      "currentStableSolutionKey": "caraxes+crimson+tessarion@left-flank:caraxes|vanguard:crimson|right-flank:tessarion||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+moondancer+venator@left-flank:moondancer|vanguard:venator|right-flank:malachite||rhysarion+sheepstealer+vhagar@left-flank:rhysarion|vanguard:sheepstealer|right-flank:vhagar||sunfyre+syrax+tashix@left-flank:sunfyre|vanguard:tashix|right-flank:syrax",
       "historicalAscendingPowerVector": [
         76040,
         76040,
@@ -2524,15 +2524,15 @@
       ],
       "currentAscendingRatingVector": [
         50,
-        52,
-        57,
+        53,
+        53,
         59,
-        60
+        62
       ],
       "historicalSolutionHash": "fnv1a64:9e43c0d884198c92",
-      "currentSolutionHash": "fnv1a64:42dbfcfaf8b4c4c6",
+      "currentSolutionHash": "fnv1a64:f92d0bcc1a4283b6",
       "historicalResultHash": "fnv1a64:853f1bd83650ec3d",
-      "currentResultHash": "fnv1a64:59b944c56a23e1f6",
+      "currentResultHash": "fnv1a64:602372c3bde9a6b3",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2542,7 +2542,7 @@
       "formationCount": 5,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+sheepstealer+tessarion@left-flank:caraxes|vanguard:sheepstealer|right-flank:tessarion||crimson+tairax+vhagar@left-flank:tairax|vanguard:crimson|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:malachite||rhysarion+syrax+venator@left-flank:syrax|vanguard:venator|right-flank:rhysarion",
-      "currentStableSolutionKey": "caraxes+malachite+tessarion@left-flank:tessarion|vanguard:malachite|right-flank:caraxes||crimson+rhysarion+vhagar@left-flank:crimson|vanguard:rhysarion|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||moondancer+velar+venator@left-flank:velar|vanguard:venator|right-flank:moondancer||sheepstealer+sunfyre+syrax@left-flank:sunfyre|vanguard:sheepstealer|right-flank:syrax",
+      "currentStableSolutionKey": "caraxes+crimson+tessarion@left-flank:caraxes|vanguard:crimson|right-flank:tessarion||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+moondancer+venator@left-flank:moondancer|vanguard:venator|right-flank:malachite||rhysarion+sheepstealer+vhagar@left-flank:rhysarion|vanguard:sheepstealer|right-flank:vhagar||sunfyre+syrax+tashix@left-flank:sunfyre|vanguard:tashix|right-flank:syrax",
       "historicalAscendingPowerVector": [
         76040,
         76040,
@@ -2566,15 +2566,15 @@
       ],
       "currentAscendingRatingVector": [
         50,
-        52,
-        57,
+        53,
+        53,
         59,
-        60
+        62
       ],
       "historicalSolutionHash": "fnv1a64:9e43c0d884198c92",
-      "currentSolutionHash": "fnv1a64:42dbfcfaf8b4c4c6",
+      "currentSolutionHash": "fnv1a64:f92d0bcc1a4283b6",
       "historicalResultHash": "fnv1a64:853f1bd83650ec3d",
-      "currentResultHash": "fnv1a64:59b944c56a23e1f6",
+      "currentResultHash": "fnv1a64:602372c3bde9a6b3",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2676,7 +2676,7 @@
       "formationCount": 7,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+vermax@left-flank:caraxes|vanguard:malachite|right-flank:vermax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||daemoros+shadowsong+vhagar@left-flank:daemoros|vanguard:shadowsong|right-flank:vhagar||feskar+sheepstealer+syrax@left-flank:feskar|vanguard:sheepstealer|right-flank:syrax||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||rhysarion+tessarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:tessarion||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern",
-      "currentStableSolutionKey": "caraxes+malachite+vermax@left-flank:caraxes|vanguard:malachite|right-flank:vermax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||daemoros+shadowsong+vhagar@left-flank:daemoros|vanguard:shadowsong|right-flank:vhagar||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||moondancer+sheepstealer+velar@left-flank:velar|vanguard:sheepstealer|right-flank:moondancer||rhysarion+tessarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:tessarion||sunfyre+syrax+zivern@left-flank:syrax|vanguard:sunfyre|right-flank:zivern",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:feskar|vanguard:caraxes|right-flank:syrax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:malachite||moondancer+vermax+zivern@left-flank:moondancer|vanguard:zivern|right-flank:vermax||rhysarion+sheepstealer+vhagar@left-flank:rhysarion|vanguard:sheepstealer|right-flank:vhagar||tashix+tessarion+venator@left-flank:tashix|vanguard:venator|right-flank:tessarion",
       "historicalAscendingPowerVector": [
         72010,
         72010,
@@ -2707,16 +2707,16 @@
       "currentAscendingRatingVector": [
         50,
         53,
-        53,
+        54,
         56,
-        57,
-        57,
-        58
+        58,
+        59,
+        59
       ],
       "historicalSolutionHash": "fnv1a64:cc82e12bd52826e1",
-      "currentSolutionHash": "fnv1a64:a0761cc3839c7fca",
+      "currentSolutionHash": "fnv1a64:68e91847f4ba1476",
       "historicalResultHash": "fnv1a64:de78568794a5211f",
-      "currentResultHash": "fnv1a64:8e87e2cf5ed03a24",
+      "currentResultHash": "fnv1a64:4bf2f1248c5aa0ae",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -2726,7 +2726,7 @@
       "formationCount": 7,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+vermax@left-flank:caraxes|vanguard:malachite|right-flank:vermax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||daemoros+shadowsong+vhagar@left-flank:daemoros|vanguard:shadowsong|right-flank:vhagar||feskar+sheepstealer+syrax@left-flank:feskar|vanguard:sheepstealer|right-flank:syrax||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||rhysarion+tessarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:tessarion||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern",
-      "currentStableSolutionKey": "caraxes+malachite+vermax@left-flank:caraxes|vanguard:malachite|right-flank:vermax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||daemoros+shadowsong+vhagar@left-flank:daemoros|vanguard:shadowsong|right-flank:vhagar||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||moondancer+sheepstealer+velar@left-flank:velar|vanguard:sheepstealer|right-flank:moondancer||rhysarion+tessarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:tessarion||sunfyre+syrax+zivern@left-flank:syrax|vanguard:sunfyre|right-flank:zivern",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:feskar|vanguard:caraxes|right-flank:syrax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:malachite||moondancer+vermax+zivern@left-flank:moondancer|vanguard:zivern|right-flank:vermax||rhysarion+sheepstealer+vhagar@left-flank:rhysarion|vanguard:sheepstealer|right-flank:vhagar||tashix+tessarion+venator@left-flank:tashix|vanguard:venator|right-flank:tessarion",
       "historicalAscendingPowerVector": [
         72010,
         72010,
@@ -2757,16 +2757,16 @@
       "currentAscendingRatingVector": [
         50,
         53,
-        53,
+        54,
         56,
-        57,
-        57,
-        58
+        58,
+        59,
+        59
       ],
       "historicalSolutionHash": "fnv1a64:cc82e12bd52826e1",
-      "currentSolutionHash": "fnv1a64:a0761cc3839c7fca",
+      "currentSolutionHash": "fnv1a64:68e91847f4ba1476",
       "historicalResultHash": "fnv1a64:de78568794a5211f",
-      "currentResultHash": "fnv1a64:8e87e2cf5ed03a24",
+      "currentResultHash": "fnv1a64:4bf2f1248c5aa0ae",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3000,7 +3000,7 @@
       "formationCount": 10,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "antares+bevlorin+jagadrix@left-flank:antares|vanguard:bevlorin|right-flank:jagadrix||caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
+      "currentStableSolutionKey": "antares+bevlorin+jagadrix@left-flank:antares|vanguard:bevlorin|right-flank:jagadrix||caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
       "historicalAscendingPowerVector": [
         47760,
         47760,
@@ -3050,9 +3050,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:67d8c113c34b18c1",
-      "currentSolutionHash": "fnv1a64:c16dc124ab43d1ec",
+      "currentSolutionHash": "fnv1a64:36540608b4bc2751",
       "historicalResultHash": "fnv1a64:3474ce83a46c79c4",
-      "currentResultHash": "fnv1a64:155be7f7208c37f0",
+      "currentResultHash": "fnv1a64:74bbf97562446515",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3062,7 +3062,7 @@
       "formationCount": 10,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "antares+bevlorin+jagadrix@left-flank:antares|vanguard:bevlorin|right-flank:jagadrix||caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
+      "currentStableSolutionKey": "antares+bevlorin+jagadrix@left-flank:antares|vanguard:bevlorin|right-flank:jagadrix||caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
       "historicalAscendingPowerVector": [
         47760,
         47760,
@@ -3112,9 +3112,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:67d8c113c34b18c1",
-      "currentSolutionHash": "fnv1a64:c16dc124ab43d1ec",
+      "currentSolutionHash": "fnv1a64:36540608b4bc2751",
       "historicalResultHash": "fnv1a64:3474ce83a46c79c4",
-      "currentResultHash": "fnv1a64:155be7f7208c37f0",
+      "currentResultHash": "fnv1a64:74bbf97562446515",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3124,7 +3124,7 @@
       "formationCount": 11,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||jagadrix+solstryker+thunderstrike@left-flank:solstryker|vanguard:jagadrix|right-flank:thunderstrike||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "antares+bevlorin+jagadrix@left-flank:antares|vanguard:bevlorin|right-flank:jagadrix||arrax+arulix+thunderstrike@left-flank:arulix|vanguard:thunderstrike|right-flank:arrax||caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
+      "currentStableSolutionKey": "antares+bevlorin+jagadrix@left-flank:antares|vanguard:bevlorin|right-flank:jagadrix||arrax+arulix+thunderstrike@left-flank:arulix|vanguard:thunderstrike|right-flank:arrax||caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
       "historicalAscendingPowerVector": [
         47760,
         47760,
@@ -3178,9 +3178,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:e4a0b6727b69c973",
-      "currentSolutionHash": "fnv1a64:e4c27a239024378f",
+      "currentSolutionHash": "fnv1a64:da61f4dfde030efe",
       "historicalResultHash": "fnv1a64:b14394ce0f7bbc8b",
-      "currentResultHash": "fnv1a64:bd107d118b7d2a80",
+      "currentResultHash": "fnv1a64:6c56e75e00e34d92",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3190,7 +3190,7 @@
       "formationCount": 11,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||jagadrix+solstryker+thunderstrike@left-flank:solstryker|vanguard:jagadrix|right-flank:thunderstrike||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "antares+bevlorin+jagadrix@left-flank:antares|vanguard:bevlorin|right-flank:jagadrix||arrax+arulix+thunderstrike@left-flank:arulix|vanguard:thunderstrike|right-flank:arrax||caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
+      "currentStableSolutionKey": "antares+bevlorin+jagadrix@left-flank:antares|vanguard:bevlorin|right-flank:jagadrix||arrax+arulix+thunderstrike@left-flank:arulix|vanguard:thunderstrike|right-flank:arrax||caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
       "historicalAscendingPowerVector": [
         47760,
         47760,
@@ -3244,9 +3244,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:e4a0b6727b69c973",
-      "currentSolutionHash": "fnv1a64:e4c27a239024378f",
+      "currentSolutionHash": "fnv1a64:da61f4dfde030efe",
       "historicalResultHash": "fnv1a64:b14394ce0f7bbc8b",
-      "currentResultHash": "fnv1a64:bd107d118b7d2a80",
+      "currentResultHash": "fnv1a64:6c56e75e00e34d92",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3256,7 +3256,7 @@
       "formationCount": 2,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         80070,
         80070
@@ -3274,9 +3274,9 @@
         71
       ],
       "historicalSolutionHash": "fnv1a64:2052688133bdf5d4",
-      "currentSolutionHash": "fnv1a64:66b97fadf2911807",
+      "currentSolutionHash": "fnv1a64:5653a79f8aff4e18",
       "historicalResultHash": "fnv1a64:34b8e198303883cf",
-      "currentResultHash": "fnv1a64:7e595898847fb919",
+      "currentResultHash": "fnv1a64:ccbb9bdceea11ef0",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3286,7 +3286,7 @@
       "formationCount": 2,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         80070,
         80070
@@ -3304,9 +3304,9 @@
         71
       ],
       "historicalSolutionHash": "fnv1a64:2052688133bdf5d4",
-      "currentSolutionHash": "fnv1a64:66b97fadf2911807",
+      "currentSolutionHash": "fnv1a64:5653a79f8aff4e18",
       "historicalResultHash": "fnv1a64:34b8e198303883cf",
-      "currentResultHash": "fnv1a64:7e595898847fb919",
+      "currentResultHash": "fnv1a64:ccbb9bdceea11ef0",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3316,7 +3316,7 @@
       "formationCount": 3,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         80070,
         80070,
@@ -3338,9 +3338,9 @@
         71
       ],
       "historicalSolutionHash": "fnv1a64:5730efd52b89d248",
-      "currentSolutionHash": "fnv1a64:98a4abfe118382a0",
+      "currentSolutionHash": "fnv1a64:78d8910022b725e4",
       "historicalResultHash": "fnv1a64:70ffdbb18bfb9132",
-      "currentResultHash": "fnv1a64:0c88359fc653ad94",
+      "currentResultHash": "fnv1a64:e59dd8bf202de6c4",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3350,7 +3350,7 @@
       "formationCount": 3,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         80070,
         80070,
@@ -3372,9 +3372,9 @@
         71
       ],
       "historicalSolutionHash": "fnv1a64:5730efd52b89d248",
-      "currentSolutionHash": "fnv1a64:98a4abfe118382a0",
+      "currentSolutionHash": "fnv1a64:78d8910022b725e4",
       "historicalResultHash": "fnv1a64:70ffdbb18bfb9132",
-      "currentResultHash": "fnv1a64:0c88359fc653ad94",
+      "currentResultHash": "fnv1a64:e59dd8bf202de6c4",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3384,7 +3384,7 @@
       "formationCount": 4,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         72010,
         80070,
@@ -3410,9 +3410,9 @@
         71
       ],
       "historicalSolutionHash": "fnv1a64:7802b5d747a17ddb",
-      "currentSolutionHash": "fnv1a64:1626e242dbdf0301",
+      "currentSolutionHash": "fnv1a64:7183b004758647a2",
       "historicalResultHash": "fnv1a64:7dd017468fd0f472",
-      "currentResultHash": "fnv1a64:d3f06dec738a91c1",
+      "currentResultHash": "fnv1a64:cfd0d509062682d1",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3422,7 +3422,7 @@
       "formationCount": 4,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         72010,
         80070,
@@ -3448,9 +3448,9 @@
         71
       ],
       "historicalSolutionHash": "fnv1a64:7802b5d747a17ddb",
-      "currentSolutionHash": "fnv1a64:1626e242dbdf0301",
+      "currentSolutionHash": "fnv1a64:7183b004758647a2",
       "historicalResultHash": "fnv1a64:7dd017468fd0f472",
-      "currentResultHash": "fnv1a64:d3f06dec738a91c1",
+      "currentResultHash": "fnv1a64:cfd0d509062682d1",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3460,7 +3460,7 @@
       "formationCount": 5,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         67980,
         72010,
@@ -3490,9 +3490,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:3c947b0af1fb553e",
-      "currentSolutionHash": "fnv1a64:38b6315983569df4",
+      "currentSolutionHash": "fnv1a64:118b55cd45b41b7f",
       "historicalResultHash": "fnv1a64:6bf67f77ec9bb436",
-      "currentResultHash": "fnv1a64:132fba3a24a559de",
+      "currentResultHash": "fnv1a64:3d65ce6be775651b",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3502,7 +3502,7 @@
       "formationCount": 5,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         67980,
         72010,
@@ -3532,9 +3532,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:3c947b0af1fb553e",
-      "currentSolutionHash": "fnv1a64:38b6315983569df4",
+      "currentSolutionHash": "fnv1a64:118b55cd45b41b7f",
       "historicalResultHash": "fnv1a64:6bf67f77ec9bb436",
-      "currentResultHash": "fnv1a64:132fba3a24a559de",
+      "currentResultHash": "fnv1a64:3d65ce6be775651b",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3544,7 +3544,7 @@
       "formationCount": 6,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         67980,
         67980,
@@ -3578,9 +3578,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:3079fd6ef63e2eb3",
-      "currentSolutionHash": "fnv1a64:409e3c5ab2a0e746",
+      "currentSolutionHash": "fnv1a64:d1d4e473187ea70c",
       "historicalResultHash": "fnv1a64:ee3ffb08f7a8cb12",
-      "currentResultHash": "fnv1a64:7c1863247e609662",
+      "currentResultHash": "fnv1a64:7b076b60f87f12df",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3590,7 +3590,7 @@
       "formationCount": 6,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         67980,
         67980,
@@ -3624,9 +3624,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:3079fd6ef63e2eb3",
-      "currentSolutionHash": "fnv1a64:409e3c5ab2a0e746",
+      "currentSolutionHash": "fnv1a64:d1d4e473187ea70c",
       "historicalResultHash": "fnv1a64:ee3ffb08f7a8cb12",
-      "currentResultHash": "fnv1a64:7c1863247e609662",
+      "currentResultHash": "fnv1a64:7b076b60f87f12df",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3636,7 +3636,7 @@
       "formationCount": 7,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         67980,
         67980,
@@ -3674,9 +3674,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:a6d268d5b4bcab52",
-      "currentSolutionHash": "fnv1a64:3536ddb60592566c",
+      "currentSolutionHash": "fnv1a64:e96b1bc1729a1f6d",
       "historicalResultHash": "fnv1a64:aa0d1885168b0964",
-      "currentResultHash": "fnv1a64:1bc3f1404260ba8d",
+      "currentResultHash": "fnv1a64:e2b3f7ff29eb2640",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3686,7 +3686,7 @@
       "formationCount": 7,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         67980,
         67980,
@@ -3724,9 +3724,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:a6d268d5b4bcab52",
-      "currentSolutionHash": "fnv1a64:3536ddb60592566c",
+      "currentSolutionHash": "fnv1a64:e96b1bc1729a1f6d",
       "historicalResultHash": "fnv1a64:aa0d1885168b0964",
-      "currentResultHash": "fnv1a64:1bc3f1404260ba8d",
+      "currentResultHash": "fnv1a64:e2b3f7ff29eb2640",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3736,7 +3736,7 @@
       "formationCount": 8,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         47760,
         67980,
@@ -3778,9 +3778,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:67267cda4384aa8c",
-      "currentSolutionHash": "fnv1a64:3980523bac1a56f1",
+      "currentSolutionHash": "fnv1a64:502c68c2825f0315",
       "historicalResultHash": "fnv1a64:9931cccf98febcdb",
-      "currentResultHash": "fnv1a64:65341a128839e41b",
+      "currentResultHash": "fnv1a64:5021796af8fac55d",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3790,7 +3790,7 @@
       "formationCount": 8,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
       "historicalAscendingPowerVector": [
         47760,
         67980,
@@ -3832,9 +3832,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:67267cda4384aa8c",
-      "currentSolutionHash": "fnv1a64:3980523bac1a56f1",
+      "currentSolutionHash": "fnv1a64:502c68c2825f0315",
       "historicalResultHash": "fnv1a64:9931cccf98febcdb",
-      "currentResultHash": "fnv1a64:65341a128839e41b",
+      "currentResultHash": "fnv1a64:5021796af8fac55d",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3844,7 +3844,7 @@
       "formationCount": 9,
       "inputOrder": "forward",
       "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
       "historicalAscendingPowerVector": [
         47760,
         47760,
@@ -3890,9 +3890,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:473dd485b2fc7bb2",
-      "currentSolutionHash": "fnv1a64:b1926ac1b850a6d3",
+      "currentSolutionHash": "fnv1a64:45baf2e43fbcc6b7",
       "historicalResultHash": "fnv1a64:b65722c6e4bf6c90",
-      "currentResultHash": "fnv1a64:21c3f4e4d8e2a0d3",
+      "currentResultHash": "fnv1a64:560685ae638bdd9f",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -3902,7 +3902,7 @@
       "formationCount": 9,
       "inputOrder": "reverse",
       "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
-      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:caraxes|vanguard:malachite|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
+      "currentStableSolutionKey": "caraxes+malachite+moondancer@left-flank:malachite|vanguard:caraxes|right-flank:moondancer||crimson+venator+vhagar@left-flank:venator|vanguard:crimson|right-flank:vhagar||daemoros+shadowsong+vaeldra@left-flank:daemoros|vanguard:shadowsong|right-flank:vaeldra||dawnseeker+nyrena+tairax@left-flank:nyrena|vanguard:dawnseeker|right-flank:tairax||feskar+vermax+zivern@left-flank:feskar|vanguard:zivern|right-flank:vermax||kalspire+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:kalspire||rhysarion+tashix+tessarion@left-flank:rhysarion|vanguard:tashix|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke||shadowrend+shimmer+vesper@left-flank:shadowrend|vanguard:shimmer|right-flank:vesper",
       "historicalAscendingPowerVector": [
         47760,
         47760,
@@ -3948,9 +3948,9 @@
         80
       ],
       "historicalSolutionHash": "fnv1a64:473dd485b2fc7bb2",
-      "currentSolutionHash": "fnv1a64:b1926ac1b850a6d3",
+      "currentSolutionHash": "fnv1a64:45baf2e43fbcc6b7",
       "historicalResultHash": "fnv1a64:b65722c6e4bf6c90",
-      "currentResultHash": "fnv1a64:21c3f4e4d8e2a0d3",
+      "currentResultHash": "fnv1a64:560685ae638bdd9f",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -4257,14 +4257,14 @@
         28,
         28,
         30,
-        39,
         40,
-        42
+        42,
+        47
       ],
       "historicalSolutionHash": "fnv1a64:3782cce919dbf6c9",
-      "currentSolutionHash": "fnv1a64:02505f3ec35bdfd8",
+      "currentSolutionHash": "fnv1a64:467f50c6bd1c6d28",
       "historicalResultHash": "fnv1a64:d65f105d568c025c",
-      "currentResultHash": "fnv1a64:fede084821637cf6",
+      "currentResultHash": "fnv1a64:f9ef0deaeab91363",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -4315,14 +4315,14 @@
         28,
         28,
         30,
-        39,
         40,
-        42
+        42,
+        47
       ],
       "historicalSolutionHash": "fnv1a64:3782cce919dbf6c9",
-      "currentSolutionHash": "fnv1a64:02505f3ec35bdfd8",
+      "currentSolutionHash": "fnv1a64:467f50c6bd1c6d28",
       "historicalResultHash": "fnv1a64:d65f105d568c025c",
-      "currentResultHash": "fnv1a64:fede084821637cf6",
+      "currentResultHash": "fnv1a64:f9ef0deaeab91363",
       "reasonCode": "add-legendary-dragon-moondancer"
     },
     {
@@ -4698,5 +4698,5 @@
       "reasonCode": "add-legendary-dragon-moondancer"
     }
   ],
-  "deterministicManifestHash": "sha256:b09524e954e3cefad9787f2cb4d97f918139d339a6dea504c47929696865399c"
+  "deterministicManifestHash": "sha256:0e3a22029d39195b28b662222aa4f32a9dea807ecd2fabdd166dc32e87dbfc91"
 }

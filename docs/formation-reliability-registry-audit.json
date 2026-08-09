@@ -3,14 +3,14 @@
   "contractVersion": 1,
   "counts": {
     "dragonsCovered": 34,
-    "currentScoringSignals": 245,
+    "currentScoringSignals": 247,
     "currentNonScoringSignals": 9,
     "positionClaimsExcluded": 34,
     "components": 240,
-    "bindings": 245,
-    "guaranteedBindings": 141,
+    "bindings": 247,
+    "guaranteedBindings": 142,
     "conditionalDeterministicBindings": 30,
-    "chanceBindings": 71,
+    "chanceBindings": 72,
     "resolvedMixedBindings": 3,
     "componentsWithFixedProbability": 24,
     "componentsWithDirectHabitProbability": 37,
@@ -21,18 +21,18 @@
     "bindingsWithDirectHabitProbability": 34,
     "bindingsWithHabitOverride": 2,
     "bindingsWithRoundSpecificProbability": 2,
-    "bindingsWithVariantProbability": 11,
-    "guaranteedOpportunityPresence": 43,
+    "bindingsWithVariantProbability": 12,
+    "guaranteedOpportunityPresence": 44,
     "conditionalOpportunityPresence": 28,
     "unknownOpportunityPresence": 3,
-    "unresolvedOpportunityCounts": 69,
-    "unresolvedIndependence": 69,
+    "unresolvedOpportunityCounts": 70,
+    "unresolvedIndependence": 70,
     "missingBindings": 0,
     "staleBindings": 0,
     "duplicateBindings": 0,
     "unreferencedComponents": 0,
     "unresolvedMixedBindings": 0,
-    "researchParityDifferences": 31,
+    "researchParityDifferences": 32,
     "researchParityIssues": 0
   },
   "missingBindingIds": [],
@@ -47,6 +47,7 @@
         "arrax-sudden-strike-weakened",
         "crimson-bloodscale-fury-taunt-payoff",
         "moondancer-blood-moon-bleed",
+        "moondancer-eclipsing-strike-initiative-payoff",
         "shadowrend-fueled-by-darkness-advantage",
         "shadowsong-blazing-conductor-burn",
         "shadowsong-scorched-earth-vulnerable",
@@ -133,6 +134,13 @@
         "moondancer-crescent-blade-physical"
       ],
       "explanation": "moondancer-crescent-blade:moondancer-crescent-blade-physical -> moondancer-crescent-blade:physical-damage; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
+        "moondancer-new-moon-initiative-payoff"
+      ],
+      "explanation": "moondancer-new-moon:moondancer-new-moon-initiative-payoff -> moondancer-new-moon:sentinel-support; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
     },
     {
       "kind": "component-id-migration",
@@ -266,6 +274,7 @@
         "malachite-lightning-strike-strength",
         "malachite-thunderous-roar-damage",
         "moondancer-blood-moon-bleed",
+        "moondancer-eclipsing-strike-initiative-payoff",
         "rhysarion-inspiring-melody-initiative",
         "rhysarion-inspiring-melody-resistance",
         "seasmoke-loyal-bond-resistance",
@@ -315,5 +324,5 @@
     }
   ],
   "researchParityIssues": [],
-  "deterministicRegistryHash": "c77c5dbe00eeecfc3d8506f47f4c327bccbb52327b413ff5119d91bec9b2334b"
+  "deterministicRegistryHash": "3c995038f50606d9dc6470976021e1c717c1963ebb21c782455c78cf9652fab0"
 }

@@ -392,19 +392,45 @@ registerChance(['moondancer-blood-moon-bleed'], {
 
 registerChance(['moondancer-crescent-blade-trigger-payoff'], {
   probability: fixed(0.5),
-  rollTiming: 'After the selected Crescent Blade recipient deals Tactical Damage or applies Recovery; at most once per round.',
+  rollTiming: 'After the selected Crescent Blade recipient deals Tactical Damage or applies Recovery; no more than one successful Rising Tide trigger per round.',
   rollScope: 'single-shared-roll',
   opportunityCount: {
-    kind: 'ability-activation-dependent',
-    note: 'Qualifying selected-recipient event frequency is not established.',
+    kind: 'unresolved',
+    note: 'Qualifying selected-recipient event frequency and same-round retry behavior after a failed check are not established.',
   },
   targetCount: 1,
   separatePerTarget: false,
   separatePerEffect: false,
   durationRounds: null,
   independence: 'unknown',
-  unresolvedQuestions: ['Qualifying event frequency and temporal independence are not established.'],
+  unresolvedQuestions: [
+    'Qualifying event frequency and temporal independence are not established.',
+    'Whether a failed qualifying event can be followed by another 50% check in the same round is not established.',
+  ],
   componentSuffix: 'rising-tide-trigger',
+});
+
+registerChance(['moondancer-eclipsing-strike-initiative-payoff'], {
+  probability: {
+    kind: 'multiple',
+    variants: [
+      { label: 'below six Rising Tide stacks', byHabitLevel: [0.2, 0.26, 0.32, 0.4, 0.5] },
+      { label: 'six or more Rising Tide stacks', byHabitLevel: [0.4, 0.52, 0.64, 0.8, 1] },
+    ],
+  },
+  rollTiming: 'Each round after Eclipsing Strike unlocks.',
+  rollScope: 'single-shared-roll',
+  opportunityCount: eachRound(),
+  targetCount: 1,
+  separatePerTarget: false,
+  separatePerEffect: false,
+  durationRounds: 2,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'The stat-support payoff applies to Eclipsing Strike\'s chance-based enemy reductions.',
+    'Battle length and temporal independence are unresolved.',
+  ],
+  componentSuffix: 'shared-activation',
 });
 
 registerChance(['vhagar-skyward-titan-physical'], {
@@ -1247,6 +1273,7 @@ const mixedBySignalId = new Map<string, MixedSpec>([
 const guaranteedSignalIds = new Set([
   'moondancer-crescent-blade-physical',
   'moondancer-new-moon-instinct',
+  'moondancer-new-moon-initiative-payoff',
   'moondancer-new-moon-tactical',
   'moondancer-physical-payoff',
   'moondancer-reactive-instincts-initiative',
@@ -1423,6 +1450,7 @@ const conditionalDeterministicSignalIds = new Set([
 
 const guaranteedAtLeastOneOpportunitySignalIds = new Set([
   'moondancer-blood-moon-bleed',
+  'moondancer-eclipsing-strike-initiative-payoff',
   'antares-relentless-pursuit-vulnerable',
   'arulix-hypnotic-helix-overwhelm',
   'caraxes-crippling-inferno-burn',
@@ -2010,11 +2038,11 @@ function validateCoverage(
   if (simpleSynergyProfiles.length !== 34) {
     throw new Error(`Expected 34 profiles, found ${simpleSynergyProfiles.length}.`);
   }
-  if (signals.length !== 254) {
-    throw new Error(`Expected 254 curated signals, found ${signals.length}.`);
+  if (signals.length !== 256) {
+    throw new Error(`Expected 256 curated signals, found ${signals.length}.`);
   }
-  if (scoringSignals.length !== 245) {
-    throw new Error(`Expected 245 scoring signals, found ${scoringSignals.length}.`);
+  if (scoringSignals.length !== 247) {
+    throw new Error(`Expected 247 scoring signals, found ${scoringSignals.length}.`);
   }
   const signalIds = new Set(signals.map((signal) => signal.signalId));
   const unknownExplicitClassificationIds = [
