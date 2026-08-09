@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.4 - 2026-08-08
+
+- Corrected Vhagar's Burn payoff reliability so a supported Burn opportunity proves the deterministic Fiery Bonds branch change from 25% to 50% Taunt chance without requiring the subsequent 50% Taunt roll as a second relationship event.
+- Preserved both probabilistic Taunt variants and added structured `probability-uplift` evidence for the exact +25 percentage-point / 2× change. Magnitude evidence remains explanatory and does not alter the generic base value or optimizer weights.
+- Kept conditional Burn providers unquantified: Sunfyre still depends on reaching below 50% Troop Capacity, while Tairax's first opportunity still depends on reaching Round 2. Locked Caraxes and Shadowsong habits remain inactive at William's current progression.
+- Audited every canonical Burn provider and analogous conditional mechanics, regenerated all 32,736 Formation Rating v3 placements, and locked 870 Vhagar-only semantic deltas (366 numeric; zero non-Vhagar changes).
+- Added new 0.23.4 Formation Rating, reliability, optimizer-v6, real-world comparison, cumulative current-v5, and release-only optimizer evidence while preserving every 0.23.3 and historical v2 artifact unchanged.
+
 ## 0.23.3 - 2026-08-02
 
 - Corrected Syrax's Blazing Fury so its shared effects target only one eligible ally and unresolved Fire-priority ties no longer grant duplicate synergy credit.

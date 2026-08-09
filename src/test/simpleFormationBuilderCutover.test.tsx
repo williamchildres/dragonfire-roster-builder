@@ -613,10 +613,10 @@ describe('Formation Builder simple synergy cutover', () => {
     const panel = ratingPanel();
     expect(panel).toHaveTextContent(/\/ 100/);
     expect(panel).toHaveTextContent(/Strong|Solid|Developing|Weak|Excellent/);
-    expect(within(panel).getByLabelText('Formation rating 49 out of 100, Solid')).toBeInTheDocument();
+    expect(within(panel).getByLabelText('Formation rating 51 out of 100, Solid')).toBeInTheDocument();
     expect(panel).toHaveTextContent('Active Synergy');
     expect(panel).toHaveTextContent('Placement Effectiveness');
-    expect(panel).toHaveTextContent('29 / 80');
+    expect(panel).toHaveTextContent('31 / 80');
     expect(panel).toHaveTextContent('20 / 20');
     expect(within(panel).getByRole('heading', { name: 'Estimated Formation Power' })).toBeInTheDocument();
     expect(panel).toHaveTextContent('Syrax');
@@ -642,7 +642,7 @@ describe('Formation Builder simple synergy cutover', () => {
 
   it('updates Formation Rating when a dragon changes and when a position is cleared', async () => {
     const user = userEvent.setup();
-    seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 }, shadowsong: {} });
+    seedRoster({ syrax: {}, vhagar: {}, caraxes: { reignLevel: 26 }, antares: {} });
 
     await openFormationBuilder(user);
     await selectFormation(user, { 'left-flank': 'syrax', vanguard: 'vhagar', 'right-flank': 'caraxes' });
@@ -654,7 +654,7 @@ describe('Formation Builder simple synergy cutover', () => {
     expect(ratingPanel()).toHaveTextContent(/Record Star Rank and Dragon Level for all three dragons/i);
     expect(within(ratingPanel()).queryByRole('note', { name: 'Formation Rating limitations' })).not.toBeInTheDocument();
 
-    await chooseDragonForPosition(user, 'right-flank', 'shadowsong');
+    await chooseDragonForPosition(user, 'right-flank', 'antares');
     const updatedLabel = within(ratingPanel()).getByLabelText(/Formation rating .* out of 100/i).getAttribute('aria-label');
     expect(updatedLabel).not.toBe(initialLabel);
   });

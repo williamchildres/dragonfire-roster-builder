@@ -6,11 +6,11 @@
     "currentScoringSignals": 234,
     "currentNonScoringSignals": 5,
     "positionClaimsExcluded": 33,
-    "components": 221,
+    "components": 222,
     "bindings": 234,
     "guaranteedBindings": 133,
-    "conditionalDeterministicBindings": 28,
-    "chanceBindings": 70,
+    "conditionalDeterministicBindings": 29,
+    "chanceBindings": 69,
     "resolvedMixedBindings": 3,
     "componentsWithFixedProbability": 23,
     "componentsWithDirectHabitProbability": 33,
@@ -21,18 +21,18 @@
     "bindingsWithDirectHabitProbability": 34,
     "bindingsWithHabitOverride": 2,
     "bindingsWithRoundSpecificProbability": 2,
-    "bindingsWithVariantProbability": 11,
-    "guaranteedOpportunityPresence": 43,
+    "bindingsWithVariantProbability": 10,
+    "guaranteedOpportunityPresence": 42,
     "conditionalOpportunityPresence": 27,
     "unknownOpportunityPresence": 3,
-    "unresolvedOpportunityCounts": 68,
-    "unresolvedIndependence": 68,
+    "unresolvedOpportunityCounts": 67,
+    "unresolvedIndependence": 67,
     "missingBindings": 0,
     "staleBindings": 0,
     "duplicateBindings": 0,
     "unreferencedComponents": 0,
     "unresolvedMixedBindings": 0,
-    "researchParityDifferences": 21,
+    "researchParityDifferences": 22,
     "researchParityIssues": 0
   },
   "missingBindingIds": [],
@@ -50,7 +50,6 @@
         "shadowsong-blazing-conductor-burn",
         "shadowsong-scorched-earth-vulnerable",
         "shadowsong-scorched-earth-vulnerable-status",
-        "vhagar-fiery-bonds-burn-payoff",
         "vhagar-fiery-bonds-taunt",
         "zivern-cloak-of-terror-overwhelm",
         "zivern-cloak-of-terror-vulnerable-payoff"
@@ -158,6 +157,13 @@
     {
       "kind": "component-id-migration",
       "signalIds": [
+        "vhagar-fiery-bonds-burn-payoff"
+      ],
+      "explanation": "vhagar-fiery-bonds:vhagar-fiery-bonds-burn-payoff -> vhagar-fiery-bonds:burn-taunt-probability-uplift; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
+    },
+    {
+      "kind": "component-id-migration",
+      "signalIds": [
         "zivern-battle-mastery-intelligence-payoff"
       ],
       "explanation": "zivern-battle-mastery:chance-fearsome-reach, zivern-battle-mastery:deterministic-battle-mastery -> zivern-battle-mastery:deterministic-battle-mastery, zivern-fearsome-reach:panic; separate rolls, resolved mixed uses, or explicit event-graph ownership required a semantic production ID."
@@ -244,5 +250,5 @@
     }
   ],
   "researchParityIssues": [],
-  "deterministicRegistryHash": "e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c"
+  "deterministicRegistryHash": "046360fadd35b809919e2cd4e6ae4cb59f537b5d4ef4d9052a1b02897af2d9e6"
 }

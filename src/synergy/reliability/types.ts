@@ -111,6 +111,24 @@ export interface ReliabilityTargetFacts {
 }
 
 /**
+ * Exact, explainable evidence for a condition that changes an existing
+ * activation probability. This describes the modifier itself; it does not
+ * turn the affected output into a guaranteed result.
+ */
+export interface ConditionalProbabilityUplift {
+  kind: 'probability-uplift';
+  conditionLabel: string;
+  affectedMetricLabel: string;
+  affectedComponentId: ReliabilityComponentId;
+  baselineVariantId: string;
+  conditionedVariantId: string;
+  baseline: number;
+  conditioned: number;
+  absoluteDelta: number;
+  relativeMultiplier: number;
+}
+
+/**
  * Production-owned facts about one semantic activation component.
  * Duration and target facts are evidence for future explanations only.
  */
@@ -121,12 +139,15 @@ export interface AbilityReliabilityComponent {
   reliabilityClass: ReliabilityClass;
   probability?: ReliabilityProbability;
   opportunityPresence: OpportunityPresence;
+  /** Exact battle-state prerequisite when opportunityPresence is conditional. */
+  opportunityCondition?: string;
   timing: ReliabilityTiming;
   opportunityCount: OpportunityCount;
   rollScope: ReliabilityRollScope;
   targetFacts?: ReliabilityTargetFacts;
   independence: ReliabilityIndependence;
   durationRounds?: number;
+  conditionalUplift?: ConditionalProbabilityUplift;
   unlock?: ReliabilityUnlockRequirement;
   evidence: ReliabilityEvidence;
 }

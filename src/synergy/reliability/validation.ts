@@ -83,6 +83,7 @@ export function validateReliabilityContract(
   for (const component of input.components) {
     validateComponent(component, abilitiesById, mode, issues);
   }
+  validateConditionalUplifts(input.components, componentsById, issues);
   for (const binding of input.bindings) {
     validateBinding(
       binding,
@@ -119,6 +120,121 @@ export function validateReliabilityContract(
   }
 
   return issues.sort(compareIssues);
+}
+
+function validateConditionalUplifts(
+  components: readonly AbilityReliabilityComponent[],
+  componentsById: ReadonlyMap<string, AbilityReliabilityComponent>,
+  issues: ReliabilityValidationIssue[],
+): void {
+  for (const component of components) {
+    const uplift = component.conditionalUplift;
+    if (!uplift) continue;
+    const path = `components[${component.id}].conditionalUplift`;
+    if (component.reliabilityClass !== 'conditional-deterministic') {
+      addIssue(
+        issues,
+        'conditional-uplift.component-class',
+        path,
+        'A conditional uplift must be owned by a conditional-deterministic component.',
+      );
+    }
+    if (!uplift.conditionLabel.trim()) {
+      addIssue(
+        issues,
+        'conditional-uplift.condition-label-missing',
+        `${path}.conditionLabel`,
+        'A conditional uplift requires a readable condition label.',
+      );
+    }
+    if (!uplift.affectedMetricLabel.trim()) {
+      addIssue(
+        issues,
+        'conditional-uplift.metric-label-missing',
+        `${path}.affectedMetricLabel`,
+        'A conditional uplift requires a readable affected metric label.',
+      );
+    }
+    validateProbabilityValue(uplift.baseline, `${path}.baseline`, issues);
+    validateProbabilityValue(uplift.conditioned, `${path}.conditioned`, issues);
+    if (uplift.conditioned <= uplift.baseline) {
+      addIssue(
+        issues,
+        'conditional-uplift.not-positive',
+        `${path}.conditioned`,
+        'The conditioned probability must be greater than the baseline probability.',
+      );
+    }
+    if (Math.abs(uplift.absoluteDelta - (uplift.conditioned - uplift.baseline)) > 1e-12) {
+      addIssue(
+        issues,
+        'conditional-uplift.absolute-delta-mismatch',
+        `${path}.absoluteDelta`,
+        'absoluteDelta must equal conditioned minus baseline.',
+      );
+    }
+    if (
+      uplift.baseline <= 0 ||
+      Math.abs(uplift.relativeMultiplier - uplift.conditioned / uplift.baseline) > 1e-12
+    ) {
+      addIssue(
+        issues,
+        'conditional-uplift.relative-multiplier-mismatch',
+        `${path}.relativeMultiplier`,
+        'relativeMultiplier must equal conditioned divided by baseline.',
+      );
+    }
+    const affected = componentsById.get(uplift.affectedComponentId);
+    if (!affected) {
+      addIssue(
+        issues,
+        'conditional-uplift.affected-component-missing',
+        `${path}.affectedComponentId`,
+        `Affected component "${uplift.affectedComponentId}" does not exist.`,
+      );
+      continue;
+    }
+    if (affected.sourceAbilityId !== component.sourceAbilityId) {
+      addIssue(
+        issues,
+        'conditional-uplift.ability-mismatch',
+        `${path}.affectedComponentId`,
+        'The uplift and affected output must belong to the same source ability.',
+      );
+    }
+    const probability = affected.probability;
+    if (probability?.kind !== 'variants') {
+      addIssue(
+        issues,
+        'conditional-uplift.affected-variants-missing',
+        `${path}.affectedComponentId`,
+        'The affected component must expose explicit probability variants.',
+      );
+      continue;
+    }
+    const baseline = probability.variants.find(
+      (variant) => variant.id === uplift.baselineVariantId,
+    )?.probability;
+    const conditioned = probability.variants.find(
+      (variant) => variant.id === uplift.conditionedVariantId,
+    )?.probability;
+    if (baseline?.kind !== 'fixed' || baseline.value !== uplift.baseline) {
+      addIssue(
+        issues,
+        'conditional-uplift.baseline-variant-mismatch',
+        `${path}.baselineVariantId`,
+        'The baseline variant must exist as a matching fixed probability.',
+      );
+    }
+    if (conditioned?.kind !== 'fixed' || conditioned.value !== uplift.conditioned) {
+      addIssue(
+        issues,
+        'conditional-uplift.conditioned-variant-mismatch',
+        `${path}.conditionedVariantId`,
+        'The conditioned variant must exist as a matching fixed probability.',
+      );
+    }
+  }
 }
 
 export function assertValidReliabilityContract(
@@ -160,6 +276,24 @@ function validateComponent(
   validateComponentAbility(component, path, abilitiesById, mode, issues);
 
   validateClassAndOpportunitySemantics(component, path, issues);
+  if (component.opportunityCondition !== undefined) {
+    if (component.opportunityPresence !== 'conditional') {
+      addIssue(
+        issues,
+        'component.opportunity-condition-without-conditional-presence',
+        `${path}.opportunityCondition`,
+        'An opportunity condition is valid only for conditional opportunity presence.',
+      );
+    }
+    if (!component.opportunityCondition.trim()) {
+      addIssue(
+        issues,
+        'component.opportunity-condition-empty',
+        `${path}.opportunityCondition`,
+        'A documented opportunity condition must not be empty.',
+      );
+    }
+  }
   if (component.probability) {
     validateProbability(
       component.probability,

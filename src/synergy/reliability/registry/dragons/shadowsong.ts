@@ -42,6 +42,7 @@ export const shadowsongReliabilityRegistry = defineDragonReliabilityRegistry({
         ],
       },
       opportunityPresence: 'conditional',
+      opportunityCondition: 'The battle reaching Round 2.',
       timing: {
         kind: 'scheduled-rounds',
         rounds: [2, 5, 8],

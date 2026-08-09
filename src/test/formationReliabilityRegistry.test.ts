@@ -67,22 +67,22 @@ describe('production Formation Reliability registry', () => {
 
   it('reports exact binding, probability, opportunity, and unresolved-evidence boundaries', () => {
     expect(registryAudit.counts).toMatchObject({
-      components: 221,
+      components: 222,
       bindings: 234,
       guaranteedBindings: 133,
-      conditionalDeterministicBindings: 28,
-      chanceBindings: 70,
+      conditionalDeterministicBindings: 29,
+      chanceBindings: 69,
       resolvedMixedBindings: 3,
       bindingsWithFixedProbability: 22,
       bindingsWithDirectHabitProbability: 34,
       bindingsWithHabitOverride: 2,
       bindingsWithRoundSpecificProbability: 2,
-      bindingsWithVariantProbability: 11,
-      guaranteedOpportunityPresence: 43,
+      bindingsWithVariantProbability: 10,
+      guaranteedOpportunityPresence: 42,
       conditionalOpportunityPresence: 27,
       unknownOpportunityPresence: 3,
-      unresolvedOpportunityCounts: 68,
-      unresolvedIndependence: 68,
+      unresolvedOpportunityCounts: 67,
+      unresolvedIndependence: 67,
       missingBindings: 0,
       staleBindings: 0,
       duplicateBindings: 0,
@@ -163,10 +163,18 @@ describe('production Formation Reliability registry', () => {
       vhagarTaunt.paths.map((path) => path.events[0]?.componentReferences[0]?.probabilityVariantId),
     ).toEqual(['ordinary-target', 'burn-afflicted-target']);
     const vhagarPayoff = resolvedSingleBinding('vhagar-fiery-bonds-burn-payoff');
+    expect(vhagarPayoff.bindingClass).toBe('conditional-deterministic');
     expect(vhagarPayoff.paths).toHaveLength(1);
-    expect(vhagarPayoff.paths[0]?.events[0]?.componentReferences[0]?.probabilityVariantId).toBe(
-      'burn-afflicted-target',
+    expect(vhagarPayoff.paths[0]?.events[0]?.componentReferences[0]).toEqual(
+      {
+        componentId: 'vhagar-fiery-bonds:burn-taunt-probability-uplift',
+      },
     );
+    expect(
+      formationReliabilityComponents.find(
+        (component) => component.id === 'vhagar-fiery-bonds:burn-taunt-probability-uplift',
+      )?.conditionalUplift,
+    ).toMatchObject({ baseline: 0.25, conditioned: 0.5, absoluteDelta: 0.25 });
   });
 
   it('uses an explicit joint setup/payoff event graph for Vaeldra', () => {
@@ -310,10 +318,10 @@ describe('production Formation Reliability registry', () => {
       [...registryAudit.researchParityDifferences].map((difference) => difference.kind).sort(),
     );
     expect(registryAudit.deterministicRegistryHash).toBe(
-      'e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c',
+      '046360fadd35b809919e2cd4e6ae4cb59f537b5d4ef4d9052a1b02897af2d9e6',
     );
     expect(runFormationReliabilityAudit().deterministicHash).toBe(
-      'f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d',
+      'c8e025b2b5f57e5f2c19f24d802d72035e3c7663b595253de7b2712056400299',
     );
   });
 

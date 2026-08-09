@@ -481,7 +481,7 @@ describe('Formation Rating v3 path and mixed-use evaluation', () => {
     });
   });
 
-  it('keeps Vhagar Burn to Fiery Bonds numerically unquantified', () => {
+  it('lets quantified Burn setup reliability drive Vhagar Fiery Bonds payoff', () => {
     const simpleProgression = Object.fromEntries(simpleSynergyProfiles.map(({ dragonId }) => [
       dragonId,
       { starRank: 10, dragonLevel: 16 },
@@ -503,10 +503,11 @@ describe('Formation Rating v3 path and mixed-use evaluation', () => {
       semanticTag === 'status:burn',
     );
     expect(relationship?.quantification).toMatchObject({
-      status: 'unquantified',
+      status: 'quantified',
+      reliability: 0.2,
     });
-    expect(relationship?.adjustedMarginalValue).toBe(0);
-    expect(relationship?.unquantifiedBasePotential).toBeGreaterThan(0);
+    expect(relationship?.adjustedMarginalValue).toBe(2);
+    expect(relationship?.unquantifiedBasePotential).toBe(0);
   });
 
   it('does not multiply distinct chance setup and payoff events', () => {

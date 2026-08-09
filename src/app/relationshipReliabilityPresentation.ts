@@ -11,6 +11,7 @@ import {
   formationReliabilityComponents,
 } from '../synergy/reliability/registry';
 import { SYNERGY_TAG_LABELS } from '../synergy/tags';
+import type { ConditionalProbabilityUplift } from '../synergy/reliability/types';
 
 export const reliabilityMethodLabels: Record<ReliabilityCalculationMethod, string> = {
   guaranteed: 'Guaranteed',
@@ -164,6 +165,51 @@ export function candidateAdjustedValue(
     : 0;
 }
 
+export function conditionalUpliftForRelationship(
+  relationship: FormationRelationshipV3,
+): ConditionalProbabilityUplift | null {
+  for (const componentId of relationship.componentIds) {
+    const uplift = formationReliabilityComponents.find(
+      (component) => component.id === componentId,
+    )?.conditionalUplift;
+    if (uplift) return uplift;
+  }
+  return null;
+}
+
+export function conditionalUpliftSummary(
+  relationship: FormationRelationshipV3,
+  dragonsById: ReadonlyMap<string, Dragon>,
+): string | null {
+  const uplift = conditionalUpliftForRelationship(relationship);
+  if (!uplift) return null;
+  const selectedTrace = relationship.candidateTraces.find(
+    (trace) => trace.candidate.id === relationship.selectedCandidateId,
+  );
+  const providerName =
+    dragonsById.get(relationship.providerDragonId)?.name ?? relationship.providerDragonId;
+  const beneficiaryName =
+    dragonsById.get(relationship.beneficiaryDragonId)?.name ?? relationship.beneficiaryDragonId;
+  const baselinePercent = formatProbability(uplift.baseline);
+  const conditionedPercent = formatProbability(uplift.conditioned);
+  const deltaPoints = formatPercentagePoints(uplift.absoluteDelta);
+  const modifier = `${uplift.conditionLabel} deterministically changes ${uplift.affectedMetricLabel} from ${baselinePercent} to ${conditionedPercent} (+${deltaPoints} percentage points; ${formatMultiplier(uplift.relativeMultiplier)}). The resulting activation remains probabilistic.`;
+  const provider = selectedTrace?.provider;
+  if (provider?.quantification.status === 'quantified') {
+    return `${providerName} can provide ${uplift.conditionLabel} with a ${formatProbability(provider.quantification.reliability)} supported activation opportunity. ${modifier}`;
+  }
+  const providerComponent = provider?.selectedComponentTraces
+    .map((trace) =>
+      formationReliabilityComponents.find((component) => component.id === trace.componentId),
+    )
+    .find((component) => component?.opportunityCondition);
+  const condition = providerComponent?.opportunityCondition;
+  const unresolved = condition
+    ? `its ${uplift.conditionLabel} opportunity depends on ${lowercaseSentence(condition)}`
+    : 'its setup opportunity is not quantitatively established';
+  return `${beneficiaryName} benefits from ${uplift.conditionLabel}: ${modifier} ${providerName} can provide ${uplift.conditionLabel}, but ${unresolved}, so this relationship is not numerically weighted.`;
+}
+
 export function abilityLabel(
   abilityId: string,
   dragonsById: ReadonlyMap<string, Dragon>,
@@ -177,4 +223,21 @@ export function abilityLabel(
     if (ability) return `${dragon.name} — ${ability.name}`;
   }
   return 'Documented ability';
+}
+
+function formatProbability(value: number): string {
+  return `${Math.round(value * 10_000) / 100}%`;
+}
+
+function formatPercentagePoints(value: number): string {
+  return String(Math.round(value * 10_000) / 100);
+}
+
+function formatMultiplier(value: number): string {
+  return `${Math.round(value * 100) / 100}×`;
+}
+
+function lowercaseSentence(value: string): string {
+  const sentence = value.replace(/[.]$/, '');
+  return sentence.startsWith('The ') ? `the ${sentence.slice(4)}` : sentence;
 }

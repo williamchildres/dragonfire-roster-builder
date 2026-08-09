@@ -1,0 +1,3674 @@
+{
+  "schemaVersion": 2,
+  "release": "0.23.4",
+  "sourceBaseCommit": "8b1a5f17cee491e471ca423c10da7d0e7eeb73ce",
+  "historicalOptimizerContract": 5,
+  "historicalOptimizerArtifactIdentity": "fnv1a64:e5ac2432442f5cb0",
+  "currentOptimizerContract": 6,
+  "currentFormationRatingContract": "formation-rating-v3",
+  "reasonCode": "cumulative-formation-rating-v3-corrections-through-0.23.4",
+  "approvedChangedExecutionCount": 78,
+  "deltas": [
+    {
+      "key": "all-one/balanced/1/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 1,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax",
+      "historicalAscendingPowerVector": [
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        29
+      ],
+      "currentAscendingRatingVector": [
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:f671fff3305a0bbb",
+      "currentSolutionHash": "fnv1a64:5e854f7904edd64f",
+      "historicalResultHash": "fnv1a64:14b1eb06cb92d09a",
+      "currentResultHash": "fnv1a64:b75b0f083432c081",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/balanced/1/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 1,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax",
+      "historicalAscendingPowerVector": [
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        29
+      ],
+      "currentAscendingRatingVector": [
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:f671fff3305a0bbb",
+      "currentSolutionHash": "fnv1a64:5e854f7904edd64f",
+      "historicalResultHash": "fnv1a64:14b1eb06cb92d09a",
+      "currentResultHash": "fnv1a64:b75b0f083432c081",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/balanced/10/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 10,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+caraxes+syrax@left-flank:antares|vanguard:caraxes|right-flank:syrax||arrax+crimson+daemoros@left-flank:arrax|vanguard:crimson|right-flank:daemoros||arulix+feskar+kalspire@left-flank:arulix|vanguard:feskar|right-flank:kalspire||bevlorin+malachite+tashix@left-flank:bevlorin|vanguard:malachite|right-flank:tashix||dawnseeker+seasmoke+tessarion@left-flank:dawnseeker|vanguard:seasmoke|right-flank:tessarion||jagadrix+sheepstealer+vaeldra@left-flank:jagadrix|vanguard:sheepstealer|right-flank:vaeldra||nyrena+sunfyre+zivern@left-flank:nyrena|vanguard:sunfyre|right-flank:zivern||rhysarion+tairax+velar@left-flank:rhysarion|vanguard:tairax|right-flank:velar||shadowrend+shadowsong+venator@left-flank:shadowrend|vanguard:shadowsong|right-flank:venator||shimmer+vermax+vhagar@left-flank:shimmer|vanguard:vermax|right-flank:vhagar",
+      "currentStableSolutionKey": "antares+crimson+feskar@left-flank:antares|vanguard:crimson|right-flank:feskar||arrax+caraxes+syrax@left-flank:arrax|vanguard:caraxes|right-flank:syrax||arulix+daemoros+vhagar@left-flank:arulix|vanguard:daemoros|right-flank:vhagar||bevlorin+kalspire+tashix@left-flank:bevlorin|vanguard:kalspire|right-flank:tashix||dawnseeker+malachite+tessarion@left-flank:dawnseeker|vanguard:malachite|right-flank:tessarion||jagadrix+seasmoke+vaeldra@left-flank:jagadrix|vanguard:seasmoke|right-flank:vaeldra||nyrena+sheepstealer+velar@left-flank:nyrena|vanguard:sheepstealer|right-flank:velar||rhysarion+tairax+vermax@left-flank:rhysarion|vanguard:tairax|right-flank:vermax||shadowrend+shadowsong+venator@left-flank:shadowrend|vanguard:shadowsong|right-flank:venator||shimmer+sunfyre+zivern@left-flank:shimmer|vanguard:sunfyre|right-flank:zivern",
+      "historicalAscendingPowerVector": [
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1350,
+        1420
+      ],
+      "currentAscendingPowerVector": [
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1350,
+        1420
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        25,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:451f7ac1ef166f1a",
+      "currentSolutionHash": "fnv1a64:d31a235b56057221",
+      "historicalResultHash": "fnv1a64:46296e741e1bcf79",
+      "currentResultHash": "fnv1a64:2cb09752281c6906",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/10/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 10,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+caraxes+syrax@left-flank:antares|vanguard:caraxes|right-flank:syrax||arrax+crimson+daemoros@left-flank:arrax|vanguard:crimson|right-flank:daemoros||arulix+feskar+kalspire@left-flank:arulix|vanguard:feskar|right-flank:kalspire||bevlorin+malachite+tashix@left-flank:bevlorin|vanguard:malachite|right-flank:tashix||dawnseeker+seasmoke+tessarion@left-flank:dawnseeker|vanguard:seasmoke|right-flank:tessarion||jagadrix+sheepstealer+vaeldra@left-flank:jagadrix|vanguard:sheepstealer|right-flank:vaeldra||nyrena+sunfyre+zivern@left-flank:nyrena|vanguard:sunfyre|right-flank:zivern||rhysarion+tairax+velar@left-flank:rhysarion|vanguard:tairax|right-flank:velar||shadowrend+shadowsong+venator@left-flank:shadowrend|vanguard:shadowsong|right-flank:venator||shimmer+vermax+vhagar@left-flank:shimmer|vanguard:vermax|right-flank:vhagar",
+      "currentStableSolutionKey": "antares+crimson+feskar@left-flank:antares|vanguard:crimson|right-flank:feskar||arrax+caraxes+syrax@left-flank:arrax|vanguard:caraxes|right-flank:syrax||arulix+daemoros+vhagar@left-flank:arulix|vanguard:daemoros|right-flank:vhagar||bevlorin+kalspire+tashix@left-flank:bevlorin|vanguard:kalspire|right-flank:tashix||dawnseeker+malachite+tessarion@left-flank:dawnseeker|vanguard:malachite|right-flank:tessarion||jagadrix+seasmoke+vaeldra@left-flank:jagadrix|vanguard:seasmoke|right-flank:vaeldra||nyrena+sheepstealer+velar@left-flank:nyrena|vanguard:sheepstealer|right-flank:velar||rhysarion+tairax+vermax@left-flank:rhysarion|vanguard:tairax|right-flank:vermax||shadowrend+shadowsong+venator@left-flank:shadowrend|vanguard:shadowsong|right-flank:venator||shimmer+sunfyre+zivern@left-flank:shimmer|vanguard:sunfyre|right-flank:zivern",
+      "historicalAscendingPowerVector": [
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1350,
+        1420
+      ],
+      "currentAscendingPowerVector": [
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1350,
+        1420
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        25,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:451f7ac1ef166f1a",
+      "currentSolutionHash": "fnv1a64:d31a235b56057221",
+      "historicalResultHash": "fnv1a64:46296e741e1bcf79",
+      "currentResultHash": "fnv1a64:2cb09752281c6906",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/11/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 11,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+caraxes+solstryker@left-flank:antares|vanguard:caraxes|right-flank:solstryker||arrax+crimson+daemoros@left-flank:arrax|vanguard:crimson|right-flank:daemoros||arulix+feskar+kalspire@left-flank:arulix|vanguard:feskar|right-flank:kalspire||bevlorin+malachite+tashix@left-flank:bevlorin|vanguard:malachite|right-flank:tashix||dawnseeker+rhysarion+tairax@left-flank:dawnseeker|vanguard:rhysarion|right-flank:tairax||jagadrix+seasmoke+vaeldra@left-flank:jagadrix|vanguard:seasmoke|right-flank:vaeldra||nyrena+syrax+tessarion@left-flank:nyrena|vanguard:syrax|right-flank:tessarion||shadowrend+shadowsong+sheepstealer@left-flank:shadowrend|vanguard:shadowsong|right-flank:sheepstealer||shimmer+sunfyre+zivern@left-flank:shimmer|vanguard:sunfyre|right-flank:zivern||thunderstrike+velar+venator@left-flank:thunderstrike|vanguard:velar|right-flank:venator||vermax+vesper+vhagar@left-flank:vermax|vanguard:vesper|right-flank:vhagar",
+      "currentStableSolutionKey": "antares+caraxes+solstryker@left-flank:antares|vanguard:caraxes|right-flank:solstryker||arrax+crimson+feskar@left-flank:arrax|vanguard:crimson|right-flank:feskar||arulix+daemoros+vhagar@left-flank:arulix|vanguard:daemoros|right-flank:vhagar||bevlorin+kalspire+tashix@left-flank:bevlorin|vanguard:kalspire|right-flank:tashix||dawnseeker+malachite+tessarion@left-flank:dawnseeker|vanguard:malachite|right-flank:tessarion||jagadrix+rhysarion+tairax@left-flank:jagadrix|vanguard:rhysarion|right-flank:tairax||nyrena+syrax+vaeldra@left-flank:nyrena|vanguard:syrax|right-flank:vaeldra||seasmoke+shadowrend+shadowsong@left-flank:seasmoke|vanguard:shadowrend|right-flank:shadowsong||sheepstealer+shimmer+velar@left-flank:sheepstealer|vanguard:shimmer|right-flank:velar||sunfyre+vesper+zivern@left-flank:sunfyre|vanguard:vesper|right-flank:zivern||thunderstrike+venator+vermax@left-flank:thunderstrike|vanguard:venator|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1130,
+        1180,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300
+      ],
+      "currentAscendingPowerVector": [
+        1130,
+        1180,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        27,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        23,
+        24,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:a41fc28cc1290c63",
+      "currentSolutionHash": "fnv1a64:47332df5c52c61fa",
+      "historicalResultHash": "fnv1a64:b32b5d1150bed977",
+      "currentResultHash": "fnv1a64:1a1d1c3f67d67a59",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/11/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 11,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+caraxes+solstryker@left-flank:antares|vanguard:caraxes|right-flank:solstryker||arrax+crimson+daemoros@left-flank:arrax|vanguard:crimson|right-flank:daemoros||arulix+feskar+kalspire@left-flank:arulix|vanguard:feskar|right-flank:kalspire||bevlorin+malachite+tashix@left-flank:bevlorin|vanguard:malachite|right-flank:tashix||dawnseeker+rhysarion+tairax@left-flank:dawnseeker|vanguard:rhysarion|right-flank:tairax||jagadrix+seasmoke+vaeldra@left-flank:jagadrix|vanguard:seasmoke|right-flank:vaeldra||nyrena+syrax+tessarion@left-flank:nyrena|vanguard:syrax|right-flank:tessarion||shadowrend+shadowsong+sheepstealer@left-flank:shadowrend|vanguard:shadowsong|right-flank:sheepstealer||shimmer+sunfyre+zivern@left-flank:shimmer|vanguard:sunfyre|right-flank:zivern||thunderstrike+velar+venator@left-flank:thunderstrike|vanguard:velar|right-flank:venator||vermax+vesper+vhagar@left-flank:vermax|vanguard:vesper|right-flank:vhagar",
+      "currentStableSolutionKey": "antares+caraxes+solstryker@left-flank:antares|vanguard:caraxes|right-flank:solstryker||arrax+crimson+feskar@left-flank:arrax|vanguard:crimson|right-flank:feskar||arulix+daemoros+vhagar@left-flank:arulix|vanguard:daemoros|right-flank:vhagar||bevlorin+kalspire+tashix@left-flank:bevlorin|vanguard:kalspire|right-flank:tashix||dawnseeker+malachite+tessarion@left-flank:dawnseeker|vanguard:malachite|right-flank:tessarion||jagadrix+rhysarion+tairax@left-flank:jagadrix|vanguard:rhysarion|right-flank:tairax||nyrena+syrax+vaeldra@left-flank:nyrena|vanguard:syrax|right-flank:vaeldra||seasmoke+shadowrend+shadowsong@left-flank:seasmoke|vanguard:shadowrend|right-flank:shadowsong||sheepstealer+shimmer+velar@left-flank:sheepstealer|vanguard:shimmer|right-flank:velar||sunfyre+vesper+zivern@left-flank:sunfyre|vanguard:vesper|right-flank:zivern||thunderstrike+venator+vermax@left-flank:thunderstrike|vanguard:venator|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1130,
+        1180,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300
+      ],
+      "currentAscendingPowerVector": [
+        1130,
+        1180,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300,
+        1300
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        27,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        23,
+        24,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:a41fc28cc1290c63",
+      "currentSolutionHash": "fnv1a64:47332df5c52c61fa",
+      "historicalResultHash": "fnv1a64:b32b5d1150bed977",
+      "currentResultHash": "fnv1a64:1a1d1c3f67d67a59",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/2/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 2,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:2406b2b1ace2600c",
+      "currentSolutionHash": "fnv1a64:2ece5ef8cf44c096",
+      "historicalResultHash": "fnv1a64:a625cce628561913",
+      "currentResultHash": "fnv1a64:4b8e531b3608a574",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/balanced/2/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 2,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:2406b2b1ace2600c",
+      "currentSolutionHash": "fnv1a64:2ece5ef8cf44c096",
+      "historicalResultHash": "fnv1a64:a625cce628561913",
+      "currentResultHash": "fnv1a64:4b8e531b3608a574",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/balanced/3/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 3,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:13e5e18375e426d7",
+      "currentSolutionHash": "fnv1a64:7b51beabe40dc339",
+      "historicalResultHash": "fnv1a64:083810d343cea4a5",
+      "currentResultHash": "fnv1a64:8f2debae7e1ba97f",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/balanced/3/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 3,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:13e5e18375e426d7",
+      "currentSolutionHash": "fnv1a64:7b51beabe40dc339",
+      "historicalResultHash": "fnv1a64:083810d343cea4a5",
+      "currentResultHash": "fnv1a64:8f2debae7e1ba97f",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/balanced/4/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 4,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+kalspire+rhysarion@left-flank:crimson|vanguard:kalspire|right-flank:rhysarion||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+daemoros+vhagar@left-flank:crimson|vanguard:daemoros|right-flank:vhagar||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||seasmoke+sheepstealer+venator@left-flank:seasmoke|vanguard:sheepstealer|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1590,
+        1590,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1590,
+        1590,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        24,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        24,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:574783d4c59735ff",
+      "currentSolutionHash": "fnv1a64:a20495aeea13a3a4",
+      "historicalResultHash": "fnv1a64:33b64dc5ca187188",
+      "currentResultHash": "fnv1a64:54bb6156ce9b3678",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/4/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 4,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+seasmoke+syrax@left-flank:caraxes|vanguard:seasmoke|right-flank:syrax||crimson+kalspire+rhysarion@left-flank:crimson|vanguard:kalspire|right-flank:rhysarion||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+daemoros+vhagar@left-flank:crimson|vanguard:daemoros|right-flank:vhagar||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||seasmoke+sheepstealer+venator@left-flank:seasmoke|vanguard:sheepstealer|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1590,
+        1590,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1590,
+        1590,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        24,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        24,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:574783d4c59735ff",
+      "currentSolutionHash": "fnv1a64:a20495aeea13a3a4",
+      "historicalResultHash": "fnv1a64:33b64dc5ca187188",
+      "currentResultHash": "fnv1a64:54bb6156ce9b3678",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/5/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 5,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+shadowsong+syrax@left-flank:caraxes|vanguard:shadowsong|right-flank:syrax||crimson+kalspire+rhysarion@left-flank:crimson|vanguard:kalspire|right-flank:rhysarion||daemoros+seasmoke+sheepstealer@left-flank:daemoros|vanguard:seasmoke|right-flank:sheepstealer||feskar+venator+vhagar@left-flank:feskar|vanguard:venator|right-flank:vhagar||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:caraxes|vanguard:feskar|right-flank:syrax||crimson+kalspire+rhysarion@left-flank:crimson|vanguard:kalspire|right-flank:rhysarion||daemoros+seasmoke+vhagar@left-flank:daemoros|vanguard:seasmoke|right-flank:vhagar||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||shadowsong+sheepstealer+venator@left-flank:shadowsong|vanguard:sheepstealer|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1590,
+        1590,
+        1590,
+        1590,
+        1590
+      ],
+      "currentAscendingPowerVector": [
+        1590,
+        1590,
+        1590,
+        1590,
+        1590
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        24,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        24,
+        24,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:4f4bdd80137bf39e",
+      "currentSolutionHash": "fnv1a64:508a43ba9aa2ab11",
+      "historicalResultHash": "fnv1a64:39f71a2a2773fbba",
+      "currentResultHash": "fnv1a64:480449cf8b83efcc",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/5/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 5,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+shadowsong+syrax@left-flank:caraxes|vanguard:shadowsong|right-flank:syrax||crimson+kalspire+rhysarion@left-flank:crimson|vanguard:kalspire|right-flank:rhysarion||daemoros+seasmoke+sheepstealer@left-flank:daemoros|vanguard:seasmoke|right-flank:sheepstealer||feskar+venator+vhagar@left-flank:feskar|vanguard:venator|right-flank:vhagar||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:caraxes|vanguard:feskar|right-flank:syrax||crimson+kalspire+rhysarion@left-flank:crimson|vanguard:kalspire|right-flank:rhysarion||daemoros+seasmoke+vhagar@left-flank:daemoros|vanguard:seasmoke|right-flank:vhagar||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||shadowsong+sheepstealer+venator@left-flank:shadowsong|vanguard:sheepstealer|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1590,
+        1590,
+        1590,
+        1590,
+        1590
+      ],
+      "currentAscendingPowerVector": [
+        1590,
+        1590,
+        1590,
+        1590,
+        1590
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        24,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        24,
+        24,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:4f4bdd80137bf39e",
+      "currentSolutionHash": "fnv1a64:508a43ba9aa2ab11",
+      "historicalResultHash": "fnv1a64:39f71a2a2773fbba",
+      "currentResultHash": "fnv1a64:480449cf8b83efcc",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/6/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 6,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+shadowsong+syrax@left-flank:caraxes|vanguard:shadowsong|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+kalspire@left-flank:daemoros|vanguard:feskar|right-flank:kalspire||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||seasmoke+sheepstealer+tashix@left-flank:seasmoke|vanguard:sheepstealer|right-flank:tashix||tessarion+venator+vhagar@left-flank:tessarion|vanguard:venator|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:caraxes|vanguard:feskar|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+kalspire+vhagar@left-flank:daemoros|vanguard:kalspire|right-flank:vhagar||malachite+seasmoke+shadowsong@left-flank:malachite|vanguard:seasmoke|right-flank:shadowsong||sheepstealer+tashix+venator@left-flank:sheepstealer|vanguard:tashix|right-flank:venator||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern",
+      "historicalAscendingPowerVector": [
+        1470,
+        1470,
+        1590,
+        1590,
+        1590,
+        1590
+      ],
+      "currentAscendingPowerVector": [
+        1470,
+        1470,
+        1590,
+        1590,
+        1590,
+        1590
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        29,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:8e4faf7207b3e349",
+      "currentSolutionHash": "fnv1a64:120deee97f94cc70",
+      "historicalResultHash": "fnv1a64:873c56b5aef7bbaa",
+      "currentResultHash": "fnv1a64:19c4f51b8267d605",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/6/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 6,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+shadowsong+syrax@left-flank:caraxes|vanguard:shadowsong|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+kalspire@left-flank:daemoros|vanguard:feskar|right-flank:kalspire||malachite+sunfyre+zivern@left-flank:malachite|vanguard:sunfyre|right-flank:zivern||seasmoke+sheepstealer+tashix@left-flank:seasmoke|vanguard:sheepstealer|right-flank:tashix||tessarion+venator+vhagar@left-flank:tessarion|vanguard:venator|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:caraxes|vanguard:feskar|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+kalspire+vhagar@left-flank:daemoros|vanguard:kalspire|right-flank:vhagar||malachite+seasmoke+shadowsong@left-flank:malachite|vanguard:seasmoke|right-flank:shadowsong||sheepstealer+tashix+venator@left-flank:sheepstealer|vanguard:tashix|right-flank:venator||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern",
+      "historicalAscendingPowerVector": [
+        1470,
+        1470,
+        1590,
+        1590,
+        1590,
+        1590
+      ],
+      "currentAscendingPowerVector": [
+        1470,
+        1470,
+        1590,
+        1590,
+        1590,
+        1590
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        29,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:8e4faf7207b3e349",
+      "currentSolutionHash": "fnv1a64:120deee97f94cc70",
+      "historicalResultHash": "fnv1a64:873c56b5aef7bbaa",
+      "currentResultHash": "fnv1a64:19c4f51b8267d605",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/7/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 7,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+shadowsong+syrax@left-flank:caraxes|vanguard:shadowsong|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+kalspire@left-flank:daemoros|vanguard:feskar|right-flank:kalspire||malachite+seasmoke+tashix@left-flank:malachite|vanguard:seasmoke|right-flank:tashix||sheepstealer+tessarion+vaeldra@left-flank:sheepstealer|vanguard:tessarion|right-flank:vaeldra||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern||venator+vermax+vhagar@left-flank:venator|vanguard:vermax|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:caraxes|vanguard:feskar|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+kalspire+vhagar@left-flank:daemoros|vanguard:kalspire|right-flank:vhagar||malachite+seasmoke+shadowsong@left-flank:malachite|vanguard:seasmoke|right-flank:shadowsong||sheepstealer+tashix+tessarion@left-flank:sheepstealer|vanguard:tashix|right-flank:tessarion||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern||vaeldra+venator+vermax@left-flank:vaeldra|vanguard:venator|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1470,
+        1470,
+        1470,
+        1470,
+        1590,
+        1590,
+        1590
+      ],
+      "currentAscendingPowerVector": [
+        1470,
+        1470,
+        1470,
+        1470,
+        1590,
+        1590,
+        1590
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        29,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:e8dbd561a1f7e09e",
+      "currentSolutionHash": "fnv1a64:6b174e4ba59d98bf",
+      "historicalResultHash": "fnv1a64:7125e88992459f1b",
+      "currentResultHash": "fnv1a64:9ee5d7a5320e307a",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/7/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 7,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+shadowsong+syrax@left-flank:caraxes|vanguard:shadowsong|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+kalspire@left-flank:daemoros|vanguard:feskar|right-flank:kalspire||malachite+seasmoke+tashix@left-flank:malachite|vanguard:seasmoke|right-flank:tashix||sheepstealer+tessarion+vaeldra@left-flank:sheepstealer|vanguard:tessarion|right-flank:vaeldra||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern||venator+vermax+vhagar@left-flank:venator|vanguard:vermax|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:caraxes|vanguard:feskar|right-flank:syrax||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+kalspire+vhagar@left-flank:daemoros|vanguard:kalspire|right-flank:vhagar||malachite+seasmoke+shadowsong@left-flank:malachite|vanguard:seasmoke|right-flank:shadowsong||sheepstealer+tashix+tessarion@left-flank:sheepstealer|vanguard:tashix|right-flank:tessarion||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern||vaeldra+venator+vermax@left-flank:vaeldra|vanguard:venator|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1470,
+        1470,
+        1470,
+        1470,
+        1590,
+        1590,
+        1590
+      ],
+      "currentAscendingPowerVector": [
+        1470,
+        1470,
+        1470,
+        1470,
+        1590,
+        1590,
+        1590
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        29,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:e8dbd561a1f7e09e",
+      "currentSolutionHash": "fnv1a64:6b174e4ba59d98bf",
+      "historicalResultHash": "fnv1a64:7125e88992459f1b",
+      "currentResultHash": "fnv1a64:9ee5d7a5320e307a",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/8/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 8,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+caraxes+syrax@left-flank:antares|vanguard:caraxes|right-flank:syrax||arrax+kalspire+malachite@left-flank:arrax|vanguard:kalspire|right-flank:malachite||arulix+seasmoke+sheepstealer@left-flank:arulix|vanguard:seasmoke|right-flank:sheepstealer||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+shadowsong@left-flank:daemoros|vanguard:feskar|right-flank:shadowsong||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern||tashix+tessarion+venator@left-flank:tashix|vanguard:tessarion|right-flank:venator||vaeldra+vermax+vhagar@left-flank:vaeldra|vanguard:vermax|right-flank:vhagar",
+      "currentStableSolutionKey": "antares+kalspire+malachite@left-flank:antares|vanguard:kalspire|right-flank:malachite||arrax+caraxes+syrax@left-flank:arrax|vanguard:caraxes|right-flank:syrax||arulix+seasmoke+sheepstealer@left-flank:arulix|vanguard:seasmoke|right-flank:sheepstealer||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+vhagar@left-flank:daemoros|vanguard:feskar|right-flank:vhagar||shadowsong+tashix+tessarion@left-flank:shadowsong|vanguard:tashix|right-flank:tessarion||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern||vaeldra+venator+vermax@left-flank:vaeldra|vanguard:venator|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1350,
+        1420,
+        1420,
+        1420,
+        1470,
+        1470,
+        1470,
+        1470
+      ],
+      "currentAscendingPowerVector": [
+        1350,
+        1420,
+        1420,
+        1420,
+        1470,
+        1470,
+        1470,
+        1470
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        29,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:75fbb29a75309db3",
+      "currentSolutionHash": "fnv1a64:df3fa6288a5bc58c",
+      "historicalResultHash": "fnv1a64:2839cb9aeff0517c",
+      "currentResultHash": "fnv1a64:56b87b659805725b",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/8/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 8,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+caraxes+syrax@left-flank:antares|vanguard:caraxes|right-flank:syrax||arrax+kalspire+malachite@left-flank:arrax|vanguard:kalspire|right-flank:malachite||arulix+seasmoke+sheepstealer@left-flank:arulix|vanguard:seasmoke|right-flank:sheepstealer||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+shadowsong@left-flank:daemoros|vanguard:feskar|right-flank:shadowsong||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern||tashix+tessarion+venator@left-flank:tashix|vanguard:tessarion|right-flank:venator||vaeldra+vermax+vhagar@left-flank:vaeldra|vanguard:vermax|right-flank:vhagar",
+      "currentStableSolutionKey": "antares+kalspire+malachite@left-flank:antares|vanguard:kalspire|right-flank:malachite||arrax+caraxes+syrax@left-flank:arrax|vanguard:caraxes|right-flank:syrax||arulix+seasmoke+sheepstealer@left-flank:arulix|vanguard:seasmoke|right-flank:sheepstealer||crimson+rhysarion+tairax@left-flank:crimson|vanguard:rhysarion|right-flank:tairax||daemoros+feskar+vhagar@left-flank:daemoros|vanguard:feskar|right-flank:vhagar||shadowsong+tashix+tessarion@left-flank:shadowsong|vanguard:tashix|right-flank:tessarion||sunfyre+velar+zivern@left-flank:sunfyre|vanguard:velar|right-flank:zivern||vaeldra+venator+vermax@left-flank:vaeldra|vanguard:venator|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1350,
+        1420,
+        1420,
+        1420,
+        1470,
+        1470,
+        1470,
+        1470
+      ],
+      "currentAscendingPowerVector": [
+        1350,
+        1420,
+        1420,
+        1420,
+        1470,
+        1470,
+        1470,
+        1470
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        29,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:75fbb29a75309db3",
+      "currentSolutionHash": "fnv1a64:df3fa6288a5bc58c",
+      "historicalResultHash": "fnv1a64:2839cb9aeff0517c",
+      "currentResultHash": "fnv1a64:56b87b659805725b",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/9/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 9,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+caraxes+syrax@left-flank:antares|vanguard:caraxes|right-flank:syrax||arrax+crimson+daemoros@left-flank:arrax|vanguard:crimson|right-flank:daemoros||arulix+kalspire+malachite@left-flank:arulix|vanguard:kalspire|right-flank:malachite||bevlorin+seasmoke+sheepstealer@left-flank:bevlorin|vanguard:seasmoke|right-flank:sheepstealer||dawnseeker+sunfyre+venator@left-flank:dawnseeker|vanguard:sunfyre|right-flank:venator||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+tashix@left-flank:rhysarion|vanguard:tairax|right-flank:tashix||shadowrend+shadowsong+vhagar@left-flank:shadowrend|vanguard:shadowsong|right-flank:vhagar||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+crimson+kalspire@left-flank:antares|vanguard:crimson|right-flank:kalspire||arrax+caraxes+syrax@left-flank:arrax|vanguard:caraxes|right-flank:syrax||arulix+daemoros+vhagar@left-flank:arulix|vanguard:daemoros|right-flank:vhagar||bevlorin+malachite+seasmoke@left-flank:bevlorin|vanguard:malachite|right-flank:seasmoke||dawnseeker+sheepstealer+sunfyre@left-flank:dawnseeker|vanguard:sheepstealer|right-flank:sunfyre||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+tashix@left-flank:rhysarion|vanguard:tairax|right-flank:tashix||shadowrend+shadowsong+venator@left-flank:shadowrend|vanguard:shadowsong|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1300,
+        1300,
+        1350,
+        1350,
+        1350,
+        1420,
+        1420,
+        1420,
+        1420
+      ],
+      "currentAscendingPowerVector": [
+        1300,
+        1300,
+        1350,
+        1350,
+        1350,
+        1420,
+        1420,
+        1420,
+        1420
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        25,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:e2b24e05b7ba4f18",
+      "currentSolutionHash": "fnv1a64:d37210f514b750ad",
+      "historicalResultHash": "fnv1a64:d2d3dbf4b5b326ba",
+      "currentResultHash": "fnv1a64:ce809e7882f48a30",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/balanced/9/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "balanced",
+      "formationCount": 9,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+caraxes+syrax@left-flank:antares|vanguard:caraxes|right-flank:syrax||arrax+crimson+daemoros@left-flank:arrax|vanguard:crimson|right-flank:daemoros||arulix+kalspire+malachite@left-flank:arulix|vanguard:kalspire|right-flank:malachite||bevlorin+seasmoke+sheepstealer@left-flank:bevlorin|vanguard:seasmoke|right-flank:sheepstealer||dawnseeker+sunfyre+venator@left-flank:dawnseeker|vanguard:sunfyre|right-flank:venator||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+tashix@left-flank:rhysarion|vanguard:tairax|right-flank:tashix||shadowrend+shadowsong+vhagar@left-flank:shadowrend|vanguard:shadowsong|right-flank:vhagar||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+crimson+kalspire@left-flank:antares|vanguard:crimson|right-flank:kalspire||arrax+caraxes+syrax@left-flank:arrax|vanguard:caraxes|right-flank:syrax||arulix+daemoros+vhagar@left-flank:arulix|vanguard:daemoros|right-flank:vhagar||bevlorin+malachite+seasmoke@left-flank:bevlorin|vanguard:malachite|right-flank:seasmoke||dawnseeker+sheepstealer+sunfyre@left-flank:dawnseeker|vanguard:sheepstealer|right-flank:sunfyre||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+tashix@left-flank:rhysarion|vanguard:tairax|right-flank:tashix||shadowrend+shadowsong+venator@left-flank:shadowrend|vanguard:shadowsong|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1300,
+        1300,
+        1350,
+        1350,
+        1350,
+        1420,
+        1420,
+        1420,
+        1420
+      ],
+      "currentAscendingPowerVector": [
+        1300,
+        1300,
+        1350,
+        1350,
+        1350,
+        1420,
+        1420,
+        1420,
+        1420
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        25,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:e2b24e05b7ba4f18",
+      "currentSolutionHash": "fnv1a64:d37210f514b750ad",
+      "historicalResultHash": "fnv1a64:d2d3dbf4b5b326ba",
+      "currentResultHash": "fnv1a64:ce809e7882f48a30",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "all-one/strongest-first/1/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 1,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax",
+      "historicalAscendingPowerVector": [
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        29
+      ],
+      "currentAscendingRatingVector": [
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:a5b19654a45aaea1",
+      "currentSolutionHash": "fnv1a64:1b7e734ef74563fd",
+      "historicalResultHash": "fnv1a64:2299661a8f8bcecf",
+      "currentResultHash": "fnv1a64:161d9571ba0f2cb3",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/1/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 1,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax",
+      "historicalAscendingPowerVector": [
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        29
+      ],
+      "currentAscendingRatingVector": [
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:a5b19654a45aaea1",
+      "currentSolutionHash": "fnv1a64:1b7e734ef74563fd",
+      "historicalResultHash": "fnv1a64:2299661a8f8bcecf",
+      "currentResultHash": "fnv1a64:161d9571ba0f2cb3",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/10/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 10,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||jagadrix+nyrena+shadowrend@left-flank:jagadrix|vanguard:nyrena|right-flank:shadowrend||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||jagadrix+nyrena+shadowrend@left-flank:jagadrix|vanguard:nyrena|right-flank:shadowrend||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        840,
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        840,
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:0cc01c24a64a5f55",
+      "currentSolutionHash": "fnv1a64:23331403d68bcf60",
+      "historicalResultHash": "fnv1a64:c922eca75a91b0ca",
+      "currentResultHash": "fnv1a64:4c387fd4e31cfa19",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/10/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 10,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||jagadrix+nyrena+shadowrend@left-flank:jagadrix|vanguard:nyrena|right-flank:shadowrend||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||jagadrix+nyrena+shadowrend@left-flank:jagadrix|vanguard:nyrena|right-flank:shadowrend||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        840,
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        840,
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:0cc01c24a64a5f55",
+      "currentSolutionHash": "fnv1a64:23331403d68bcf60",
+      "historicalResultHash": "fnv1a64:c922eca75a91b0ca",
+      "currentResultHash": "fnv1a64:4c387fd4e31cfa19",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/11/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 11,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||jagadrix+nyrena+shadowrend@left-flank:jagadrix|vanguard:nyrena|right-flank:shadowrend||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||shimmer+thunderstrike+vesper@left-flank:shimmer|vanguard:thunderstrike|right-flank:vesper||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||jagadrix+nyrena+shadowrend@left-flank:jagadrix|vanguard:nyrena|right-flank:shadowrend||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||shimmer+thunderstrike+vesper@left-flank:shimmer|vanguard:thunderstrike|right-flank:vesper||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        840,
+        840,
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        840,
+        840,
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:542c78d93d16b253",
+      "currentSolutionHash": "fnv1a64:eedaf3c13130e956",
+      "historicalResultHash": "fnv1a64:078ea8d763f7dc70",
+      "currentResultHash": "fnv1a64:72d4292686d19f44",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/11/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 11,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||jagadrix+nyrena+shadowrend@left-flank:jagadrix|vanguard:nyrena|right-flank:shadowrend||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||shimmer+thunderstrike+vesper@left-flank:shimmer|vanguard:thunderstrike|right-flank:vesper||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||jagadrix+nyrena+shadowrend@left-flank:jagadrix|vanguard:nyrena|right-flank:shadowrend||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||shimmer+thunderstrike+vesper@left-flank:shimmer|vanguard:thunderstrike|right-flank:vesper||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        840,
+        840,
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        840,
+        840,
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:542c78d93d16b253",
+      "currentSolutionHash": "fnv1a64:eedaf3c13130e956",
+      "historicalResultHash": "fnv1a64:078ea8d763f7dc70",
+      "currentResultHash": "fnv1a64:72d4292686d19f44",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/2/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 2,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:32a5935ab6ba2906",
+      "currentSolutionHash": "fnv1a64:38d6371b0e884ab4",
+      "historicalResultHash": "fnv1a64:c9cf289d023e5b04",
+      "currentResultHash": "fnv1a64:c6bec2d4ce42a9f9",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/2/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 2,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:32a5935ab6ba2906",
+      "currentSolutionHash": "fnv1a64:38d6371b0e884ab4",
+      "historicalResultHash": "fnv1a64:c9cf289d023e5b04",
+      "currentResultHash": "fnv1a64:c6bec2d4ce42a9f9",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/3/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 3,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:4da77abcd7963ee5",
+      "currentSolutionHash": "fnv1a64:31a890684b3d6ad3",
+      "historicalResultHash": "fnv1a64:627e8ae9a575b0f5",
+      "currentResultHash": "fnv1a64:b146436756da327f",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/3/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 3,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:4da77abcd7963ee5",
+      "currentSolutionHash": "fnv1a64:31a890684b3d6ad3",
+      "historicalResultHash": "fnv1a64:627e8ae9a575b0f5",
+      "currentResultHash": "fnv1a64:b146436756da327f",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/4/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 4,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        25,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        25,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:b09d9b74488aeb64",
+      "currentSolutionHash": "fnv1a64:5203456963e3ef44",
+      "historicalResultHash": "fnv1a64:a18e2e6cd0e1c20c",
+      "currentResultHash": "fnv1a64:c40a632a69675fc6",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/4/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 4,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        25,
+        29
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        25,
+        25
+      ],
+      "historicalSolutionHash": "fnv1a64:b09d9b74488aeb64",
+      "currentSolutionHash": "fnv1a64:5203456963e3ef44",
+      "historicalResultHash": "fnv1a64:a18e2e6cd0e1c20c",
+      "currentResultHash": "fnv1a64:c40a632a69675fc6",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/5/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 5,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:faef7fee1ea95590",
+      "currentSolutionHash": "fnv1a64:a2557f99acd12f71",
+      "historicalResultHash": "fnv1a64:4f822c757a0d2f5a",
+      "currentResultHash": "fnv1a64:0f526debad573fbc",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/5/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 5,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:faef7fee1ea95590",
+      "currentSolutionHash": "fnv1a64:a2557f99acd12f71",
+      "historicalResultHash": "fnv1a64:4f822c757a0d2f5a",
+      "currentResultHash": "fnv1a64:0f526debad573fbc",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/6/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 6,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:68d5fa6792d93cfd",
+      "currentSolutionHash": "fnv1a64:5af85bb95bfa0e1a",
+      "historicalResultHash": "fnv1a64:33461757c581eb7e",
+      "currentResultHash": "fnv1a64:3df358f384233b6a",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/6/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 6,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator",
+      "historicalAscendingPowerVector": [
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:68d5fa6792d93cfd",
+      "currentSolutionHash": "fnv1a64:5af85bb95bfa0e1a",
+      "historicalResultHash": "fnv1a64:33461757c581eb7e",
+      "currentResultHash": "fnv1a64:3df358f384233b6a",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/7/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 7,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:c2e185b1a23d3efa",
+      "currentSolutionHash": "fnv1a64:c0a6979ed0f875d7",
+      "historicalResultHash": "fnv1a64:e73c9e6c6fc2788b",
+      "currentResultHash": "fnv1a64:9c0693dd6960318c",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/7/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 7,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:c2e185b1a23d3efa",
+      "currentSolutionHash": "fnv1a64:c0a6979ed0f875d7",
+      "historicalResultHash": "fnv1a64:e73c9e6c6fc2788b",
+      "currentResultHash": "fnv1a64:9c0693dd6960318c",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/8/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 8,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:73183ea59865d386",
+      "currentSolutionHash": "fnv1a64:436b60411d55b469",
+      "historicalResultHash": "fnv1a64:527ee5c94a4ce1b6",
+      "currentResultHash": "fnv1a64:3b6b46127ecb6c9b",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/8/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 8,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:73183ea59865d386",
+      "currentSolutionHash": "fnv1a64:436b60411d55b469",
+      "historicalResultHash": "fnv1a64:527ee5c94a4ce1b6",
+      "currentResultHash": "fnv1a64:3b6b46127ecb6c9b",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/9/forward",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 9,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:84ff75f5732139d2",
+      "currentSolutionHash": "fnv1a64:394eec9914b4bc75",
+      "historicalResultHash": "fnv1a64:916d4eea8a3cf714",
+      "currentResultHash": "fnv1a64:e71ce22d5052f52d",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "all-one/strongest-first/9/reverse",
+      "fixtureId": "all-one",
+      "allocationMode": "strongest-first",
+      "formationCount": 9,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+crimson+syrax@left-flank:caraxes|vanguard:crimson|right-flank:syrax||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||kalspire+malachite+seasmoke@left-flank:kalspire|vanguard:malachite|right-flank:seasmoke||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "currentStableSolutionKey": "antares+arrax+solstryker@left-flank:antares|vanguard:arrax|right-flank:solstryker||arulix+bevlorin+dawnseeker@left-flank:arulix|vanguard:bevlorin|right-flank:dawnseeker||caraxes+kalspire+syrax@left-flank:caraxes|vanguard:kalspire|right-flank:syrax||crimson+malachite+seasmoke@left-flank:crimson|vanguard:malachite|right-flank:seasmoke||daemoros+shadowsong+tashix@left-flank:daemoros|vanguard:shadowsong|right-flank:tashix||feskar+velar+zivern@left-flank:feskar|vanguard:velar|right-flank:zivern||rhysarion+tairax+vhagar@left-flank:rhysarion|vanguard:tairax|right-flank:vhagar||sheepstealer+sunfyre+venator@left-flank:sheepstealer|vanguard:sunfyre|right-flank:venator||tessarion+vaeldra+vermax@left-flank:tessarion|vanguard:vaeldra|right-flank:vermax",
+      "historicalAscendingPowerVector": [
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "currentAscendingPowerVector": [
+        840,
+        840,
+        1350,
+        1350,
+        1350,
+        1470,
+        1710,
+        1710,
+        1710
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        29,
+        30
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        24,
+        25,
+        25,
+        30
+      ],
+      "historicalSolutionHash": "fnv1a64:84ff75f5732139d2",
+      "currentSolutionHash": "fnv1a64:394eec9914b4bc75",
+      "historicalResultHash": "fnv1a64:916d4eea8a3cf714",
+      "currentResultHash": "fnv1a64:e71ce22d5052f52d",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "maxed/balanced/11/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 11,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+tessarion+venator@left-flank:venator|vanguard:antares|right-flank:tessarion||arrax+malachite+vermax@left-flank:malachite|vanguard:arrax|right-flank:vermax||arulix+seasmoke+tashix@left-flank:arulix|vanguard:seasmoke|right-flank:tashix||bevlorin+sheepstealer+vaeldra@left-flank:bevlorin|vanguard:sheepstealer|right-flank:vaeldra||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+nyrena+tairax@left-flank:crimson|vanguard:tairax|right-flank:nyrena||daemoros+jagadrix+shadowsong@left-flank:jagadrix|vanguard:shadowsong|right-flank:daemoros||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||rhysarion+thunderstrike+vhagar@left-flank:thunderstrike|vanguard:rhysarion|right-flank:vhagar||shimmer+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:shimmer||solstryker+syrax+vesper@left-flank:solstryker|vanguard:syrax|right-flank:vesper",
+      "currentStableSolutionKey": "antares+tessarion+venator@left-flank:venator|vanguard:antares|right-flank:tessarion||arrax+velar+vermax@left-flank:velar|vanguard:arrax|right-flank:vermax||arulix+syrax+tashix@left-flank:arulix|vanguard:tashix|right-flank:syrax||bevlorin+sheepstealer+vaeldra@left-flank:bevlorin|vanguard:sheepstealer|right-flank:vaeldra||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+nyrena+tairax@left-flank:crimson|vanguard:tairax|right-flank:nyrena||daemoros+jagadrix+vhagar@left-flank:daemoros|vanguard:jagadrix|right-flank:vhagar||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||malachite+rhysarion+thunderstrike@left-flank:thunderstrike|vanguard:rhysarion|right-flank:malachite||seasmoke+shadowsong+solstryker@left-flank:seasmoke|vanguard:shadowsong|right-flank:solstryker||shimmer+sunfyre+vesper@left-flank:shimmer|vanguard:sunfyre|right-flank:vesper",
+      "historicalAscendingPowerVector": [
+        58530,
+        61240,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270
+      ],
+      "currentAscendingPowerVector": [
+        58530,
+        61240,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270
+      ],
+      "historicalAscendingRatingVector": [
+        48,
+        50,
+        50,
+        51,
+        52,
+        52,
+        52,
+        53,
+        54,
+        59,
+        59
+      ],
+      "currentAscendingRatingVector": [
+        49,
+        50,
+        50,
+        51,
+        52,
+        52,
+        53,
+        53,
+        56,
+        59,
+        59
+      ],
+      "historicalSolutionHash": "fnv1a64:7f9cb23b5dbef6c4",
+      "currentSolutionHash": "fnv1a64:afc779639a73b4f3",
+      "historicalResultHash": "fnv1a64:8f07c52892eba02a",
+      "currentResultHash": "fnv1a64:f6e5ab71e4a37182",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/balanced/11/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 11,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+tessarion+venator@left-flank:venator|vanguard:antares|right-flank:tessarion||arrax+malachite+vermax@left-flank:malachite|vanguard:arrax|right-flank:vermax||arulix+seasmoke+tashix@left-flank:arulix|vanguard:seasmoke|right-flank:tashix||bevlorin+sheepstealer+vaeldra@left-flank:bevlorin|vanguard:sheepstealer|right-flank:vaeldra||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+nyrena+tairax@left-flank:crimson|vanguard:tairax|right-flank:nyrena||daemoros+jagadrix+shadowsong@left-flank:jagadrix|vanguard:shadowsong|right-flank:daemoros||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||rhysarion+thunderstrike+vhagar@left-flank:thunderstrike|vanguard:rhysarion|right-flank:vhagar||shimmer+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:shimmer||solstryker+syrax+vesper@left-flank:solstryker|vanguard:syrax|right-flank:vesper",
+      "currentStableSolutionKey": "antares+tessarion+venator@left-flank:venator|vanguard:antares|right-flank:tessarion||arrax+velar+vermax@left-flank:velar|vanguard:arrax|right-flank:vermax||arulix+syrax+tashix@left-flank:arulix|vanguard:tashix|right-flank:syrax||bevlorin+sheepstealer+vaeldra@left-flank:bevlorin|vanguard:sheepstealer|right-flank:vaeldra||caraxes+dawnseeker+feskar@left-flank:feskar|vanguard:dawnseeker|right-flank:caraxes||crimson+nyrena+tairax@left-flank:crimson|vanguard:tairax|right-flank:nyrena||daemoros+jagadrix+vhagar@left-flank:daemoros|vanguard:jagadrix|right-flank:vhagar||kalspire+shadowrend+zivern@left-flank:shadowrend|vanguard:zivern|right-flank:kalspire||malachite+rhysarion+thunderstrike@left-flank:thunderstrike|vanguard:rhysarion|right-flank:malachite||seasmoke+shadowsong+solstryker@left-flank:seasmoke|vanguard:shadowsong|right-flank:solstryker||shimmer+sunfyre+vesper@left-flank:shimmer|vanguard:sunfyre|right-flank:vesper",
+      "historicalAscendingPowerVector": [
+        58530,
+        61240,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270
+      ],
+      "currentAscendingPowerVector": [
+        58530,
+        61240,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270,
+        65270
+      ],
+      "historicalAscendingRatingVector": [
+        48,
+        50,
+        50,
+        51,
+        52,
+        52,
+        52,
+        53,
+        54,
+        59,
+        59
+      ],
+      "currentAscendingRatingVector": [
+        49,
+        50,
+        50,
+        51,
+        52,
+        52,
+        53,
+        53,
+        56,
+        59,
+        59
+      ],
+      "historicalSolutionHash": "fnv1a64:7f9cb23b5dbef6c4",
+      "currentSolutionHash": "fnv1a64:afc779639a73b4f3",
+      "historicalResultHash": "fnv1a64:8f07c52892eba02a",
+      "currentResultHash": "fnv1a64:f6e5ab71e4a37182",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/balanced/2/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 2,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+syrax@left-flank:malachite|vanguard:caraxes|right-flank:syrax||crimson+seasmoke+vhagar@left-flank:seasmoke|vanguard:crimson|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+seasmoke+vhagar@left-flank:seasmoke|vanguard:caraxes|right-flank:vhagar||malachite+sheepstealer+syrax@left-flank:malachite|vanguard:sheepstealer|right-flank:syrax",
+      "historicalAscendingPowerVector": [
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        57,
+        67
+      ],
+      "currentAscendingRatingVector": [
+        58,
+        64
+      ],
+      "historicalSolutionHash": "fnv1a64:c48f522e3ca641ac",
+      "currentSolutionHash": "fnv1a64:05f3ec8a83fc853d",
+      "historicalResultHash": "fnv1a64:12617f1c9bacd5ef",
+      "currentResultHash": "fnv1a64:b022929123b679df",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/balanced/2/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 2,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+syrax@left-flank:malachite|vanguard:caraxes|right-flank:syrax||crimson+seasmoke+vhagar@left-flank:seasmoke|vanguard:crimson|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+seasmoke+vhagar@left-flank:seasmoke|vanguard:caraxes|right-flank:vhagar||malachite+sheepstealer+syrax@left-flank:malachite|vanguard:sheepstealer|right-flank:syrax",
+      "historicalAscendingPowerVector": [
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        57,
+        67
+      ],
+      "currentAscendingRatingVector": [
+        58,
+        64
+      ],
+      "historicalSolutionHash": "fnv1a64:c48f522e3ca641ac",
+      "currentSolutionHash": "fnv1a64:05f3ec8a83fc853d",
+      "historicalResultHash": "fnv1a64:12617f1c9bacd5ef",
+      "currentResultHash": "fnv1a64:b022929123b679df",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/balanced/4/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 4,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+sunfyre+syrax@left-flank:syrax|vanguard:sunfyre|right-flank:caraxes||crimson+rhysarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:crimson||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+sunfyre+syrax@left-flank:syrax|vanguard:sunfyre|right-flank:caraxes||crimson+rhysarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:crimson||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar",
+      "historicalAscendingPowerVector": [
+        76040,
+        76040,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        76040,
+        76040,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        47,
+        50,
+        54,
+        56
+      ],
+      "currentAscendingRatingVector": [
+        47,
+        50,
+        54,
+        54
+      ],
+      "historicalSolutionHash": "fnv1a64:8c3195a6e667ad8e",
+      "currentSolutionHash": "fnv1a64:8e90d5e9478dccf5",
+      "historicalResultHash": "fnv1a64:67fc93b3cc884052",
+      "currentResultHash": "fnv1a64:d170abd4d01d67f4",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "maxed/balanced/4/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 4,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+sunfyre+syrax@left-flank:syrax|vanguard:sunfyre|right-flank:caraxes||crimson+rhysarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:crimson||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar",
+      "currentStableSolutionKey": "caraxes+sunfyre+syrax@left-flank:syrax|vanguard:sunfyre|right-flank:caraxes||crimson+rhysarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:crimson||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vhagar@left-flank:malachite|vanguard:sheepstealer|right-flank:vhagar",
+      "historicalAscendingPowerVector": [
+        76040,
+        76040,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        76040,
+        76040,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        47,
+        50,
+        54,
+        56
+      ],
+      "currentAscendingRatingVector": [
+        47,
+        50,
+        54,
+        54
+      ],
+      "historicalSolutionHash": "fnv1a64:8c3195a6e667ad8e",
+      "currentSolutionHash": "fnv1a64:8e90d5e9478dccf5",
+      "historicalResultHash": "fnv1a64:67fc93b3cc884052",
+      "currentResultHash": "fnv1a64:d170abd4d01d67f4",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "maxed/balanced/5/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 5,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+sheepstealer+tessarion@left-flank:caraxes|vanguard:sheepstealer|right-flank:tessarion||crimson+tairax+vhagar@left-flank:tairax|vanguard:crimson|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:malachite||rhysarion+syrax+venator@left-flank:syrax|vanguard:venator|right-flank:rhysarion",
+      "currentStableSolutionKey": "caraxes+shadowsong+vhagar@left-flank:caraxes|vanguard:shadowsong|right-flank:vhagar||crimson+sheepstealer+tessarion@left-flank:crimson|vanguard:sheepstealer|right-flank:tessarion||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||malachite+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:malachite||rhysarion+syrax+venator@left-flank:syrax|vanguard:venator|right-flank:rhysarion",
+      "historicalAscendingPowerVector": [
+        76040,
+        76040,
+        76040,
+        76040,
+        76040
+      ],
+      "currentAscendingPowerVector": [
+        76040,
+        76040,
+        76040,
+        76040,
+        76040
+      ],
+      "historicalAscendingRatingVector": [
+        50,
+        52,
+        53,
+        53,
+        54
+      ],
+      "currentAscendingRatingVector": [
+        50,
+        52,
+        53,
+        53,
+        54
+      ],
+      "historicalSolutionHash": "fnv1a64:9e43c0d884198c92",
+      "currentSolutionHash": "fnv1a64:6e4be80e4069d771",
+      "historicalResultHash": "fnv1a64:853f1bd83650ec3d",
+      "currentResultHash": "fnv1a64:e30cfecdfea5e14a",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/balanced/5/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 5,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+sheepstealer+tessarion@left-flank:caraxes|vanguard:sheepstealer|right-flank:tessarion||crimson+tairax+vhagar@left-flank:tairax|vanguard:crimson|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:malachite||rhysarion+syrax+venator@left-flank:syrax|vanguard:venator|right-flank:rhysarion",
+      "currentStableSolutionKey": "caraxes+shadowsong+vhagar@left-flank:caraxes|vanguard:shadowsong|right-flank:vhagar||crimson+sheepstealer+tessarion@left-flank:crimson|vanguard:sheepstealer|right-flank:tessarion||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||malachite+sunfyre+velar@left-flank:velar|vanguard:sunfyre|right-flank:malachite||rhysarion+syrax+venator@left-flank:syrax|vanguard:venator|right-flank:rhysarion",
+      "historicalAscendingPowerVector": [
+        76040,
+        76040,
+        76040,
+        76040,
+        76040
+      ],
+      "currentAscendingPowerVector": [
+        76040,
+        76040,
+        76040,
+        76040,
+        76040
+      ],
+      "historicalAscendingRatingVector": [
+        50,
+        52,
+        53,
+        53,
+        54
+      ],
+      "currentAscendingRatingVector": [
+        50,
+        52,
+        53,
+        53,
+        54
+      ],
+      "historicalSolutionHash": "fnv1a64:9e43c0d884198c92",
+      "currentSolutionHash": "fnv1a64:6e4be80e4069d771",
+      "historicalResultHash": "fnv1a64:853f1bd83650ec3d",
+      "currentResultHash": "fnv1a64:e30cfecdfea5e14a",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/balanced/6/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 6,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+feskar+syrax@left-flank:feskar|vanguard:caraxes|right-flank:syrax||crimson+rhysarion+vhagar@left-flank:crimson|vanguard:rhysarion|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vaeldra@left-flank:malachite|vanguard:sheepstealer|right-flank:vaeldra||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern||tashix+tessarion+venator@left-flank:tashix|vanguard:venator|right-flank:tessarion",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:feskar|vanguard:caraxes|right-flank:syrax||crimson+rhysarion+vhagar@left-flank:crimson|vanguard:rhysarion|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vaeldra@left-flank:malachite|vanguard:sheepstealer|right-flank:vaeldra||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern||tashix+tessarion+venator@left-flank:tashix|vanguard:venator|right-flank:tessarion",
+      "historicalAscendingPowerVector": [
+        72010,
+        72010,
+        76040,
+        76040,
+        76040,
+        76040
+      ],
+      "currentAscendingPowerVector": [
+        72010,
+        72010,
+        76040,
+        76040,
+        76040,
+        76040
+      ],
+      "historicalAscendingRatingVector": [
+        50,
+        54,
+        56,
+        58,
+        59,
+        59
+      ],
+      "currentAscendingRatingVector": [
+        50,
+        54,
+        56,
+        56,
+        59,
+        59
+      ],
+      "historicalSolutionHash": "fnv1a64:ecdcd4f7a36c85c6",
+      "currentSolutionHash": "fnv1a64:c19fa0d566e355f0",
+      "historicalResultHash": "fnv1a64:226bcca9103e0a71",
+      "currentResultHash": "fnv1a64:e10d3f3831c19c44",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "maxed/balanced/6/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 6,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+feskar+syrax@left-flank:feskar|vanguard:caraxes|right-flank:syrax||crimson+rhysarion+vhagar@left-flank:crimson|vanguard:rhysarion|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vaeldra@left-flank:malachite|vanguard:sheepstealer|right-flank:vaeldra||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern||tashix+tessarion+venator@left-flank:tashix|vanguard:venator|right-flank:tessarion",
+      "currentStableSolutionKey": "caraxes+feskar+syrax@left-flank:feskar|vanguard:caraxes|right-flank:syrax||crimson+rhysarion+vhagar@left-flank:crimson|vanguard:rhysarion|right-flank:vhagar||kalspire+seasmoke+shadowsong@left-flank:kalspire|vanguard:shadowsong|right-flank:seasmoke||malachite+sheepstealer+vaeldra@left-flank:malachite|vanguard:sheepstealer|right-flank:vaeldra||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern||tashix+tessarion+venator@left-flank:tashix|vanguard:venator|right-flank:tessarion",
+      "historicalAscendingPowerVector": [
+        72010,
+        72010,
+        76040,
+        76040,
+        76040,
+        76040
+      ],
+      "currentAscendingPowerVector": [
+        72010,
+        72010,
+        76040,
+        76040,
+        76040,
+        76040
+      ],
+      "historicalAscendingRatingVector": [
+        50,
+        54,
+        56,
+        58,
+        59,
+        59
+      ],
+      "currentAscendingRatingVector": [
+        50,
+        54,
+        56,
+        56,
+        59,
+        59
+      ],
+      "historicalSolutionHash": "fnv1a64:ecdcd4f7a36c85c6",
+      "currentSolutionHash": "fnv1a64:c19fa0d566e355f0",
+      "historicalResultHash": "fnv1a64:226bcca9103e0a71",
+      "currentResultHash": "fnv1a64:e10d3f3831c19c44",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "maxed/balanced/7/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 7,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+vermax@left-flank:caraxes|vanguard:malachite|right-flank:vermax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||daemoros+shadowsong+vhagar@left-flank:daemoros|vanguard:shadowsong|right-flank:vhagar||feskar+sheepstealer+syrax@left-flank:feskar|vanguard:sheepstealer|right-flank:syrax||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||rhysarion+tessarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:tessarion||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern",
+      "currentStableSolutionKey": "caraxes+malachite+vermax@left-flank:caraxes|vanguard:malachite|right-flank:vermax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||daemoros+shadowsong+vhagar@left-flank:daemoros|vanguard:shadowsong|right-flank:vhagar||feskar+sheepstealer+syrax@left-flank:feskar|vanguard:sheepstealer|right-flank:syrax||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||rhysarion+tessarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:tessarion||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern",
+      "historicalAscendingPowerVector": [
+        72010,
+        72010,
+        72010,
+        72010,
+        76040,
+        76040,
+        76040
+      ],
+      "currentAscendingPowerVector": [
+        72010,
+        72010,
+        72010,
+        72010,
+        76040,
+        76040,
+        76040
+      ],
+      "historicalAscendingRatingVector": [
+        50,
+        53,
+        53,
+        56,
+        56,
+        57,
+        62
+      ],
+      "currentAscendingRatingVector": [
+        50,
+        53,
+        53,
+        56,
+        57,
+        58,
+        62
+      ],
+      "historicalSolutionHash": "fnv1a64:cc82e12bd52826e1",
+      "currentSolutionHash": "fnv1a64:b8622740fa4482c2",
+      "historicalResultHash": "fnv1a64:de78568794a5211f",
+      "currentResultHash": "fnv1a64:cdede9bd895e1203",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/balanced/7/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "balanced",
+      "formationCount": 7,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+vermax@left-flank:caraxes|vanguard:malachite|right-flank:vermax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||daemoros+shadowsong+vhagar@left-flank:daemoros|vanguard:shadowsong|right-flank:vhagar||feskar+sheepstealer+syrax@left-flank:feskar|vanguard:sheepstealer|right-flank:syrax||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||rhysarion+tessarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:tessarion||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern",
+      "currentStableSolutionKey": "caraxes+malachite+vermax@left-flank:caraxes|vanguard:malachite|right-flank:vermax||crimson+tairax+vaeldra@left-flank:tairax|vanguard:crimson|right-flank:vaeldra||daemoros+shadowsong+vhagar@left-flank:daemoros|vanguard:shadowsong|right-flank:vhagar||feskar+sheepstealer+syrax@left-flank:feskar|vanguard:sheepstealer|right-flank:syrax||kalspire+seasmoke+tashix@left-flank:kalspire|vanguard:seasmoke|right-flank:tashix||rhysarion+tessarion+venator@left-flank:venator|vanguard:rhysarion|right-flank:tessarion||sunfyre+velar+zivern@left-flank:velar|vanguard:sunfyre|right-flank:zivern",
+      "historicalAscendingPowerVector": [
+        72010,
+        72010,
+        72010,
+        72010,
+        76040,
+        76040,
+        76040
+      ],
+      "currentAscendingPowerVector": [
+        72010,
+        72010,
+        72010,
+        72010,
+        76040,
+        76040,
+        76040
+      ],
+      "historicalAscendingRatingVector": [
+        50,
+        53,
+        53,
+        56,
+        56,
+        57,
+        62
+      ],
+      "currentAscendingRatingVector": [
+        50,
+        53,
+        53,
+        56,
+        57,
+        58,
+        62
+      ],
+      "historicalSolutionHash": "fnv1a64:cc82e12bd52826e1",
+      "currentSolutionHash": "fnv1a64:b8622740fa4482c2",
+      "historicalResultHash": "fnv1a64:de78568794a5211f",
+      "currentResultHash": "fnv1a64:cdede9bd895e1203",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/10/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 10,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        47760,
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        47760,
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        33,
+        36,
+        50,
+        51,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        33,
+        36,
+        50,
+        53,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:67d8c113c34b18c1",
+      "currentSolutionHash": "fnv1a64:95e448328e18770f",
+      "historicalResultHash": "fnv1a64:3474ce83a46c79c4",
+      "currentResultHash": "fnv1a64:baeb7a861cd3bf3f",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/10/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 10,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        47760,
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        47760,
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        33,
+        36,
+        50,
+        51,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        33,
+        36,
+        50,
+        53,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:67d8c113c34b18c1",
+      "currentSolutionHash": "fnv1a64:95e448328e18770f",
+      "historicalResultHash": "fnv1a64:3474ce83a46c79c4",
+      "currentResultHash": "fnv1a64:baeb7a861cd3bf3f",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/11/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 11,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||jagadrix+solstryker+thunderstrike@left-flank:solstryker|vanguard:jagadrix|right-flank:thunderstrike||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||jagadrix+solstryker+thunderstrike@left-flank:solstryker|vanguard:jagadrix|right-flank:thunderstrike||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        47760,
+        47760,
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        47760,
+        47760,
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        27,
+        33,
+        36,
+        50,
+        51,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        27,
+        33,
+        36,
+        50,
+        53,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:e4a0b6727b69c973",
+      "currentSolutionHash": "fnv1a64:20ff99839f6687aa",
+      "historicalResultHash": "fnv1a64:b14394ce0f7bbc8b",
+      "currentResultHash": "fnv1a64:57e43997f55cecf3",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/11/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 11,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||jagadrix+solstryker+thunderstrike@left-flank:solstryker|vanguard:jagadrix|right-flank:thunderstrike||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||arrax+arulix+vesper@left-flank:vesper|vanguard:arrax|right-flank:arulix||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||jagadrix+solstryker+thunderstrike@left-flank:solstryker|vanguard:jagadrix|right-flank:thunderstrike||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        47760,
+        47760,
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        47760,
+        47760,
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        27,
+        33,
+        36,
+        50,
+        51,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        27,
+        33,
+        36,
+        50,
+        53,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:e4a0b6727b69c973",
+      "currentSolutionHash": "fnv1a64:20ff99839f6687aa",
+      "historicalResultHash": "fnv1a64:b14394ce0f7bbc8b",
+      "currentResultHash": "fnv1a64:57e43997f55cecf3",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/2/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 2,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        51,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        53,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:2052688133bdf5d4",
+      "currentSolutionHash": "fnv1a64:8171f7cc5d4be29f",
+      "historicalResultHash": "fnv1a64:34b8e198303883cf",
+      "currentResultHash": "fnv1a64:c866a2511c486644",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/2/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 2,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        51,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        53,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:2052688133bdf5d4",
+      "currentSolutionHash": "fnv1a64:8171f7cc5d4be29f",
+      "historicalResultHash": "fnv1a64:34b8e198303883cf",
+      "currentResultHash": "fnv1a64:c866a2511c486644",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/3/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 3,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        51,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        53,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:5730efd52b89d248",
+      "currentSolutionHash": "fnv1a64:2d8e370f5a7fc371",
+      "historicalResultHash": "fnv1a64:70ffdbb18bfb9132",
+      "currentResultHash": "fnv1a64:9d4fd01e3532c4ab",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/3/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 3,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        51,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        53,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:5730efd52b89d248",
+      "currentSolutionHash": "fnv1a64:2d8e370f5a7fc371",
+      "historicalResultHash": "fnv1a64:70ffdbb18bfb9132",
+      "currentResultHash": "fnv1a64:9d4fd01e3532c4ab",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/4/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 4,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        50,
+        51,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        50,
+        53,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:7802b5d747a17ddb",
+      "currentSolutionHash": "fnv1a64:4b957f44d717a5f4",
+      "historicalResultHash": "fnv1a64:7dd017468fd0f472",
+      "currentResultHash": "fnv1a64:cba27d720d5aab47",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/4/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 4,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        50,
+        51,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        50,
+        53,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:7802b5d747a17ddb",
+      "currentSolutionHash": "fnv1a64:4b957f44d717a5f4",
+      "historicalResultHash": "fnv1a64:7dd017468fd0f472",
+      "currentResultHash": "fnv1a64:cba27d720d5aab47",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/5/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 5,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        50,
+        51,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        50,
+        53,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:3c947b0af1fb553e",
+      "currentSolutionHash": "fnv1a64:f7021baea14159b8",
+      "historicalResultHash": "fnv1a64:6bf67f77ec9bb436",
+      "currentResultHash": "fnv1a64:532f9a20d8641ee4",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/5/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 5,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        50,
+        51,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        50,
+        53,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:3c947b0af1fb553e",
+      "currentSolutionHash": "fnv1a64:f7021baea14159b8",
+      "historicalResultHash": "fnv1a64:6bf67f77ec9bb436",
+      "currentResultHash": "fnv1a64:532f9a20d8641ee4",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/6/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 6,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        50,
+        51,
+        56,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        50,
+        53,
+        56,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:3079fd6ef63e2eb3",
+      "currentSolutionHash": "fnv1a64:42c77754f5e3d7b7",
+      "historicalResultHash": "fnv1a64:ee3ffb08f7a8cb12",
+      "currentResultHash": "fnv1a64:fd29889868b6234b",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/6/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 6,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        50,
+        51,
+        56,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        50,
+        53,
+        56,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:3079fd6ef63e2eb3",
+      "currentSolutionHash": "fnv1a64:42c77754f5e3d7b7",
+      "historicalResultHash": "fnv1a64:ee3ffb08f7a8cb12",
+      "currentResultHash": "fnv1a64:fd29889868b6234b",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/7/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 7,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        33,
+        50,
+        51,
+        56,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        33,
+        50,
+        53,
+        56,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:a6d268d5b4bcab52",
+      "currentSolutionHash": "fnv1a64:2ef8f5df7e378df7",
+      "historicalResultHash": "fnv1a64:aa0d1885168b0964",
+      "currentResultHash": "fnv1a64:34290f15ecfacc52",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/7/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 7,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        33,
+        50,
+        51,
+        56,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        33,
+        50,
+        53,
+        56,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:a6d268d5b4bcab52",
+      "currentSolutionHash": "fnv1a64:2ef8f5df7e378df7",
+      "historicalResultHash": "fnv1a64:aa0d1885168b0964",
+      "currentResultHash": "fnv1a64:34290f15ecfacc52",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/8/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 8,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        33,
+        50,
+        51,
+        56,
+        67,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        33,
+        50,
+        53,
+        56,
+        67,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:67267cda4384aa8c",
+      "currentSolutionHash": "fnv1a64:cd82440927eb3b49",
+      "historicalResultHash": "fnv1a64:9931cccf98febcdb",
+      "currentResultHash": "fnv1a64:15f20602115b63ad",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/8/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 8,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        33,
+        50,
+        51,
+        56,
+        67,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        33,
+        50,
+        53,
+        56,
+        67,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:67267cda4384aa8c",
+      "currentSolutionHash": "fnv1a64:cd82440927eb3b49",
+      "historicalResultHash": "fnv1a64:9931cccf98febcdb",
+      "currentResultHash": "fnv1a64:15f20602115b63ad",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/9/forward",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 9,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        33,
+        50,
+        51,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        33,
+        50,
+        53,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:473dd485b2fc7bb2",
+      "currentSolutionHash": "fnv1a64:55e9dfd2e3e670f3",
+      "historicalResultHash": "fnv1a64:b65722c6e4bf6c90",
+      "currentResultHash": "fnv1a64:6e7ee3cf81f8609b",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "maxed/strongest-first/9/reverse",
+      "fixtureId": "maxed",
+      "allocationMode": "strongest-first",
+      "formationCount": 9,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "currentStableSolutionKey": "antares+bevlorin+nyrena@left-flank:antares|vanguard:bevlorin|right-flank:nyrena||caraxes+malachite+vhagar@left-flank:malachite|vanguard:caraxes|right-flank:vhagar||crimson+sunfyre+venator@left-flank:sunfyre|vanguard:venator|right-flank:crimson||daemoros+tairax+vermax@left-flank:daemoros|vanguard:tairax|right-flank:vermax||dawnseeker+shadowrend+shimmer@left-flank:shadowrend|vanguard:shimmer|right-flank:dawnseeker||feskar+velar+zivern@left-flank:velar|vanguard:zivern|right-flank:feskar||kalspire+shadowsong+tessarion@left-flank:kalspire|vanguard:shadowsong|right-flank:tessarion||rhysarion+tashix+vaeldra@left-flank:rhysarion|vanguard:tashix|right-flank:vaeldra||seasmoke+sheepstealer+syrax@left-flank:syrax|vanguard:sheepstealer|right-flank:seasmoke",
+      "historicalAscendingPowerVector": [
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "currentAscendingPowerVector": [
+        47760,
+        47760,
+        67980,
+        67980,
+        67980,
+        72010,
+        80070,
+        80070,
+        80070
+      ],
+      "historicalAscendingRatingVector": [
+        27,
+        33,
+        50,
+        51,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "currentAscendingRatingVector": [
+        27,
+        33,
+        50,
+        53,
+        56,
+        59,
+        67,
+        68,
+        71
+      ],
+      "historicalSolutionHash": "fnv1a64:473dd485b2fc7bb2",
+      "currentSolutionHash": "fnv1a64:55e9dfd2e3e670f3",
+      "historicalResultHash": "fnv1a64:b65722c6e4bf6c90",
+      "currentResultHash": "fnv1a64:6e7ee3cf81f8609b",
+      "reasonCode": "vhagar-burn-fiery-bonds-reliability-correction"
+    },
+    {
+      "key": "mixed/balanced/11/forward",
+      "fixtureId": "mixed",
+      "allocationMode": "balanced",
+      "formationCount": 11,
+      "inputOrder": "forward",
+      "historicalStableSolutionKey": "antares+arulix+seasmoke@left-flank:antares|vanguard:seasmoke|right-flank:arulix||arrax+thunderstrike+vesper@left-flank:vesper|vanguard:arrax|right-flank:thunderstrike||bevlorin+shimmer+sunfyre@left-flank:bevlorin|vanguard:shimmer|right-flank:sunfyre||caraxes+feskar+nyrena@left-flank:caraxes|vanguard:feskar|right-flank:nyrena||crimson+jagadrix+vermax@left-flank:crimson|vanguard:jagadrix|right-flank:vermax||daemoros+dawnseeker+malachite@left-flank:malachite|vanguard:daemoros|right-flank:dawnseeker||kalspire+rhysarion+shadowrend@left-flank:kalspire|vanguard:rhysarion|right-flank:shadowrend||shadowsong+syrax+tairax@left-flank:shadowsong|vanguard:syrax|right-flank:tairax||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar||solstryker+tashix+tessarion@left-flank:solstryker|vanguard:tashix|right-flank:tessarion||vaeldra+velar+zivern@left-flank:vaeldra|vanguard:velar|right-flank:zivern",
+      "currentStableSolutionKey": "antares+arulix+seasmoke@left-flank:antares|vanguard:seasmoke|right-flank:arulix||arrax+thunderstrike+vesper@left-flank:vesper|vanguard:arrax|right-flank:thunderstrike||bevlorin+shimmer+sunfyre@left-flank:bevlorin|vanguard:shimmer|right-flank:sunfyre||caraxes+feskar+nyrena@left-flank:caraxes|vanguard:feskar|right-flank:nyrena||crimson+jagadrix+vermax@left-flank:crimson|vanguard:jagadrix|right-flank:vermax||daemoros+dawnseeker+malachite@left-flank:malachite|vanguard:daemoros|right-flank:dawnseeker||kalspire+rhysarion+shadowrend@left-flank:kalspire|vanguard:rhysarion|right-flank:shadowrend||shadowsong+syrax+tairax@left-flank:shadowsong|vanguard:syrax|right-flank:tairax||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar||solstryker+tashix+tessarion@left-flank:solstryker|vanguard:tashix|right-flank:tessarion||vaeldra+velar+zivern@left-flank:vaeldra|vanguard:velar|right-flank:zivern",
+      "historicalAscendingPowerVector": [
+        24620,
+        24700,
+        24700,
+        24700,
+        24700,
+        24720,
+        24730,
+        24730,
+        24800,
+        24950,
+        25780
+      ],
+      "currentAscendingPowerVector": [
+        24620,
+        24700,
+        24700,
+        24700,
+        24700,
+        24720,
+        24730,
+        24730,
+        24800,
+        24950,
+        25780
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        27,
+        28,
+        33,
+        33,
+        35,
+        37,
+        39,
+        39,
+        40
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        27,
+        28,
+        28,
+        33,
+        35,
+        37,
+        39,
+        39,
+        40
+      ],
+      "historicalSolutionHash": "fnv1a64:a97668d985497980",
+      "currentSolutionHash": "fnv1a64:fa722b2c75de9c2c",
+      "historicalResultHash": "fnv1a64:d9ff4ecc90186c7a",
+      "currentResultHash": "fnv1a64:b8d410d8a766d822",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    },
+    {
+      "key": "mixed/balanced/11/reverse",
+      "fixtureId": "mixed",
+      "allocationMode": "balanced",
+      "formationCount": 11,
+      "inputOrder": "reverse",
+      "historicalStableSolutionKey": "antares+arulix+seasmoke@left-flank:antares|vanguard:seasmoke|right-flank:arulix||arrax+thunderstrike+vesper@left-flank:vesper|vanguard:arrax|right-flank:thunderstrike||bevlorin+shimmer+sunfyre@left-flank:bevlorin|vanguard:shimmer|right-flank:sunfyre||caraxes+feskar+nyrena@left-flank:caraxes|vanguard:feskar|right-flank:nyrena||crimson+jagadrix+vermax@left-flank:crimson|vanguard:jagadrix|right-flank:vermax||daemoros+dawnseeker+malachite@left-flank:malachite|vanguard:daemoros|right-flank:dawnseeker||kalspire+rhysarion+shadowrend@left-flank:kalspire|vanguard:rhysarion|right-flank:shadowrend||shadowsong+syrax+tairax@left-flank:shadowsong|vanguard:syrax|right-flank:tairax||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar||solstryker+tashix+tessarion@left-flank:solstryker|vanguard:tashix|right-flank:tessarion||vaeldra+velar+zivern@left-flank:vaeldra|vanguard:velar|right-flank:zivern",
+      "currentStableSolutionKey": "antares+arulix+seasmoke@left-flank:antares|vanguard:seasmoke|right-flank:arulix||arrax+thunderstrike+vesper@left-flank:vesper|vanguard:arrax|right-flank:thunderstrike||bevlorin+shimmer+sunfyre@left-flank:bevlorin|vanguard:shimmer|right-flank:sunfyre||caraxes+feskar+nyrena@left-flank:caraxes|vanguard:feskar|right-flank:nyrena||crimson+jagadrix+vermax@left-flank:crimson|vanguard:jagadrix|right-flank:vermax||daemoros+dawnseeker+malachite@left-flank:malachite|vanguard:daemoros|right-flank:dawnseeker||kalspire+rhysarion+shadowrend@left-flank:kalspire|vanguard:rhysarion|right-flank:shadowrend||shadowsong+syrax+tairax@left-flank:shadowsong|vanguard:syrax|right-flank:tairax||sheepstealer+venator+vhagar@left-flank:sheepstealer|vanguard:venator|right-flank:vhagar||solstryker+tashix+tessarion@left-flank:solstryker|vanguard:tashix|right-flank:tessarion||vaeldra+velar+zivern@left-flank:vaeldra|vanguard:velar|right-flank:zivern",
+      "historicalAscendingPowerVector": [
+        24620,
+        24700,
+        24700,
+        24700,
+        24700,
+        24720,
+        24730,
+        24730,
+        24800,
+        24950,
+        25780
+      ],
+      "currentAscendingPowerVector": [
+        24620,
+        24700,
+        24700,
+        24700,
+        24700,
+        24720,
+        24730,
+        24730,
+        24800,
+        24950,
+        25780
+      ],
+      "historicalAscendingRatingVector": [
+        20,
+        20,
+        27,
+        28,
+        33,
+        33,
+        35,
+        37,
+        39,
+        39,
+        40
+      ],
+      "currentAscendingRatingVector": [
+        20,
+        20,
+        27,
+        28,
+        28,
+        33,
+        35,
+        37,
+        39,
+        39,
+        40
+      ],
+      "historicalSolutionHash": "fnv1a64:a97668d985497980",
+      "currentSolutionHash": "fnv1a64:fa722b2c75de9c2c",
+      "historicalResultHash": "fnv1a64:d9ff4ecc90186c7a",
+      "currentResultHash": "fnv1a64:b8d410d8a766d822",
+      "reasonCode": "syrax-blazing-fury-recipient-correction"
+    }
+  ],
+  "deterministicManifestHash": "sha256:4f315d86257e481b9b8e6f582a904380158c6ca012f8edf967183a9ab4810b7c"
+}

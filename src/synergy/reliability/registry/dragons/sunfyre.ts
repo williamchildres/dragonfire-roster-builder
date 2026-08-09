@@ -40,6 +40,7 @@ export const sunfyreReliabilityRegistry = defineDragonReliabilityRegistry({
         value: 0.5,
       },
       opportunityPresence: 'conditional',
+      opportunityCondition: 'Sunfyre being below 50% Troop Capacity.',
       timing: {
         kind: 'scheduled-rounds',
         rounds: [1, 4, 7, 10],
@@ -68,7 +69,7 @@ export const sunfyreReliabilityRegistry = defineDragonReliabilityRegistry({
           'Whether the second target is valid on every below-50% activation.',
         ],
         reviewNote:
-          'The schedule is explicit, but actual opportunities depend on the battle reaching every listed round.',
+          'Burn is available only below 50% Troop Capacity. The schedule is explicit, but later opportunities also depend on battle length.',
       },
     },
     {

@@ -1,5 +1,6 @@
 import historicalV5Report from '../../docs/audits/roster-optimizer-v5-0.22.0.json';
-import approvedHistoricalDeltaManifest from './fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.3.json';
+import approvedHistoricalDeltaManifest from './fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.4.json';
+import releaseDeltaManifest from './fixtures/optimizerV6ReleaseDeltas.0.23.3-to-0.23.4.json';
 import { dragons } from '../data/dragons';
 import {
   ESTIMATED_POWER_MODEL_HASH,
@@ -44,22 +45,30 @@ const protectedIdentities = {
   previousFormationRatingV3Numeric:
     '958cf36d329a6fb00c732ecf576d8020d10553d3585b136bda0493a7db754724',
   currentFormationRatingV3Numeric:
+    'f61d546147974d3049227c913cc9a4851ba9d42a76e06d727b5ee2e643603bbe',
+  previousReleaseFormationRatingV3Numeric:
     'c9c93c5a9c89f85c08df958924d3fa61cfbdae555a0c50779c7f3b37d05f9c00',
   previousFormationRatingV3:
     '215f2c669cee0c96d584b6b3014aa2f075302c644f85ec0801c70b4a6740344f',
   currentFormationRatingV3:
+    'eb069e88c3ec5bc636f12b940181492fd6f5e3dabb1007b6bd504982e05d4664',
+  previousReleaseFormationRatingV3:
     'bceda8493e5af3ae4a805fd45dca4861b6a35e2788531699b7e65e707ed6a31a',
   previousFormationRatingV3Audit:
     '0cd7e73c6dffe528dcb738c3eeb1f7a06bf19008c62280aa2bf9a74cdbcaf94a',
   currentFormationRatingV3Audit:
+    '87ef69175aa6bb64fe4223d16a25f8e403999388160c1c0e61471d055aefc7de',
+  previousReleaseFormationRatingV3Audit:
     'fc21d2d75740def4a23b9deeb4a8c03712d9b1724522ab05304b109820a67f3f',
   formationRatingV2:
     '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf',
   reliabilityRegistry:
-    'e966ccec17027a0c7af761f5aff9b0ca50d6163a25e4e483948559a603f79c4c',
+    '046360fadd35b809919e2cd4e6ae4cb59f537b5d4ef4d9052a1b02897af2d9e6',
   previousResearch:
     'f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f',
   currentResearch:
+    'c8e025b2b5f57e5f2c19f24d802d72035e3c7663b595253de7b2712056400299',
+  previousReleaseResearch:
     'f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d',
   estimatedPowerObservation: ESTIMATED_POWER_OBSERVATION_HASH,
   estimatedPowerModel: ESTIMATED_POWER_MODEL_HASH,
@@ -95,10 +104,15 @@ type HistoricalV5Execution = {
 };
 
 export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY =
-  'sha256:7630e354700b908f4e3c86379552a2c13b9e6d1034a0fdaa011772cd4eaff69a' as const;
-export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_COUNT = 50 as const;
+  'sha256:4f315d86257e481b9b8e6f582a904380158c6ca012f8edf967183a9ab4810b7c' as const;
+export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_COUNT = 78 as const;
 export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_REASON =
-  'syrax-blazing-fury-recipient-correction' as const;
+  'cumulative-formation-rating-v3-corrections-through-0.23.4' as const;
+export const OPTIMIZER_V6_RELEASE_DELTA_MANIFEST_IDENTITY =
+  'sha256:c4a28f699030bbe3d7af4d4ae90717012ae239279b0220b567eb4fb689cc24cb' as const;
+export const OPTIMIZER_V6_RELEASE_DELTA_COUNT = 62 as const;
+export const OPTIMIZER_V6_RELEASE_DELTA_REASON =
+  'vhagar-burn-fiery-bonds-reliability-correction' as const;
 
 export interface OptimizerV6ApprovedHistoricalDelta {
   key: string;
@@ -116,7 +130,9 @@ export interface OptimizerV6ApprovedHistoricalDelta {
   currentSolutionHash: string;
   historicalResultHash: string;
   currentResultHash: string;
-  reasonCode: typeof OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_REASON;
+  reasonCode:
+    | 'syrax-blazing-fury-recipient-correction'
+    | typeof OPTIMIZER_V6_RELEASE_DELTA_REASON;
 }
 
 const approvedHistoricalDeltas =
@@ -133,16 +149,27 @@ if (
   throw new Error('Optimizer-v6 approved historical-delta manifest metadata changed unexpectedly.');
 }
 
+if (
+  releaseDeltaManifest.changedExecutionCount !== OPTIMIZER_V6_RELEASE_DELTA_COUNT ||
+  releaseDeltaManifest.deterministicManifestHash !==
+    OPTIMIZER_V6_RELEASE_DELTA_MANIFEST_IDENTITY ||
+  releaseDeltaManifest.reasonCode !== OPTIMIZER_V6_RELEASE_DELTA_REASON
+) {
+  throw new Error('Optimizer-v6 release-delta manifest metadata changed unexpectedly.');
+}
+
 const historicalV5Executions = new Map(
   (historicalV5Report.executions as HistoricalV5Execution[]).map((execution) => [
     historicalKey(execution.fixture, execution.mode, execution.count, execution.inputOrder),
     execution,
   ]),
 );
+const releaseChangedKeys = new Set(releaseDeltaManifest.deltas.map((delta) => delta.key));
 
 export async function runRosterOptimizerV6Audit(
   onExecution?: (message: string) => void,
   requestedFixtureIds: readonly string[] = fixtureDefinitions.map((fixture) => fixture.id),
+  enforceApprovedDeltaContract = true,
 ) {
   const executions: OptimizerV6AuditExecution[] = [];
   let candidatePoolBuilds = 0;
@@ -246,7 +273,12 @@ export async function runRosterOptimizerV6Audit(
     }
   }
 
-  return createReport(executions, candidatePoolBuilds, solverExecutions);
+  return createReport(
+    executions,
+    candidatePoolBuilds,
+    solverExecutions,
+    enforceApprovedDeltaContract,
+  );
 }
 
 export function combineRosterOptimizerV6AuditReports(
@@ -255,6 +287,7 @@ export function combineRosterOptimizerV6AuditReports(
     candidatePoolBuilds: number;
     solverExecutions: number;
   }>,
+  enforceApprovedDeltaContract = true,
 ) {
   const executions = reports.flatMap((report) => report.executions).sort(
     (left, right) =>
@@ -267,6 +300,7 @@ export function combineRosterOptimizerV6AuditReports(
     executions,
     reports.reduce((sum, report) => sum + report.candidatePoolBuilds, 0),
     reports.reduce((sum, report) => sum + report.solverExecutions, 0),
+    enforceApprovedDeltaContract,
   );
 }
 
@@ -274,6 +308,7 @@ function createReport(
   executions: OptimizerV6AuditExecution[],
   candidatePoolBuilds: number,
   solverExecutions: number,
+  enforceApprovedDeltaContract = true,
 ) {
   const fixtureCount = new Set(executions.map((execution) => execution.fixture)).size;
   const expectedExecutions = fixtureCount * modes.length * 11 * 2;
@@ -303,7 +338,7 @@ function createReport(
   if (!forwardReverseEqual) failedChecks.push('one or more forward/reverse hashes differ');
   const historicalDeltaValidation = evaluateApprovedHistoricalDeltas(executions);
   failedChecks.push(...historicalDeltaValidation.failedChecks);
-  if (failedChecks.length > 0) {
+  if (enforceApprovedDeltaContract && failedChecks.length > 0) {
     throw new Error(`Optimizer v6 audit assertions failed: ${failedChecks.join('; ')}.`);
   }
 
@@ -340,7 +375,7 @@ function createReport(
     })),
   };
   return {
-    release: '0.23.3',
+    release: '0.23.4',
     contractVersion: 6,
     ratingContract: 'formation-rating-v3',
     generatedAt: new Date().toISOString(),
@@ -359,6 +394,8 @@ function createReport(
       OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY,
     approvedHistoricalDeltaCount: historicalDeltaValidation.approvedChangedExecutionCount,
     historicalV5DeltaContractValid: historicalDeltaValidation.exactMatch,
+    releaseDeltaManifestIdentity: OPTIMIZER_V6_RELEASE_DELTA_MANIFEST_IDENTITY,
+    releaseDeltaCount: OPTIMIZER_V6_RELEASE_DELTA_COUNT,
     failedChecks: failedChecks.length,
     protectedIdentities,
     executions,
@@ -583,7 +620,9 @@ function historicalDeltaRecord(
     currentSolutionHash: current.solutionHash,
     historicalResultHash: historical.resultHash,
     currentResultHash: current.resultHash,
-    reasonCode: OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_REASON,
+    reasonCode: releaseChangedKeys.has(key)
+      ? OPTIMIZER_V6_RELEASE_DELTA_REASON
+      : 'syrax-blazing-fury-recipient-correction',
   };
 }
 

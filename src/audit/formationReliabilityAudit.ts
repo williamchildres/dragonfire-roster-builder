@@ -344,7 +344,7 @@ registerChance(['syrax-strategic-revival-resistance'], {
   componentSuffix: 'resistance',
 });
 
-registerChance(['vhagar-fiery-bonds-taunt', 'vhagar-fiery-bonds-burn-payoff'], {
+registerChance(['vhagar-fiery-bonds-taunt'], {
   probability: {
     kind: 'multiple',
     variants: [
@@ -1348,6 +1348,7 @@ const conditionalDeterministicSignalIds = new Set([
   'tairax-sunder-control-payoff',
   'syrax-strategic-revival-slow-payoff',
   'caraxes-infernal-burst-first-strike-payoff',
+  'vhagar-fiery-bonds-burn-payoff',
   'seasmoke-infectious-wrath-panic-payoff',
   'crimson-unlikely-hero-vulnerability',
   'kalspire-tactical-strike-tactical',
@@ -1409,7 +1410,6 @@ const guaranteedAtLeastOneOpportunitySignalIds = new Set([
   'vaeldra-lure-taunt',
   'vesper-eventide-strike-slow',
   'vesper-saviors-waltz-resistance',
-  'vhagar-fiery-bonds-burn-payoff',
   'vhagar-fiery-bonds-taunt',
   'zivern-cloak-of-terror-overwhelm',
   'zivern-cloak-of-terror-vulnerable-payoff',

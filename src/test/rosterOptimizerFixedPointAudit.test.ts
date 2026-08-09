@@ -15,8 +15,8 @@ describe('optimizer v3 fixed-point scale evidence', () => {
       scale: entry.scale,
       collisions: entry.collisionCount,
     }))).toEqual([
-      { scale: 1, collisions: 62 },
-      { scale: 10, collisions: 129 },
+      { scale: 1, collisions: 63 },
+      { scale: 10, collisions: 133 },
       { scale: 100, collisions: 0 },
       { scale: 1_000, collisions: 0 },
       { scale: 10_000, collisions: 0 },
