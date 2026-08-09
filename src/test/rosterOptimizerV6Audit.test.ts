@@ -46,10 +46,25 @@ interface AuditReport {
 }
 
 describe('optimizer v6 independent audit artifact', () => {
+  it('preserves the immutable 0.23.3 optimizer and approved-delta evidence', () => {
+    const previousReport = JSON.parse(readFileSync(resolve(
+      process.cwd(),
+      'docs/audits/roster-optimizer-v6-0.23.3.json',
+    ), 'utf8')) as AuditReport;
+    const previousManifest = JSON.parse(readFileSync(resolve(
+      process.cwd(),
+      'src/audit/fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.3.json',
+    ), 'utf8')) as ApprovedDeltaManifest;
+    expect(previousReport.deterministicAuditHash).toBe('fnv1a64:2de5527469a511c0');
+    expect(previousManifest.deterministicManifestHash).toBe(
+      'sha256:7630e354700b908f4e3c86379552a2c13b9e6d1034a0fdaa011772cd4eaff69a',
+    );
+  });
+
   it('records all 198 independent solves and the three-mode matrix', () => {
     const report = JSON.parse(readFileSync(resolve(
       process.cwd(),
-      'docs/audits/roster-optimizer-v6-0.23.3.json',
+      'docs/audits/roster-optimizer-v6-0.23.4.json',
     ), 'utf8')) as AuditReport;
 
     expect(report.executionCount).toBe(198);
@@ -68,8 +83,8 @@ describe('optimizer v6 independent audit artifact', () => {
     expect(report.noDuplicateDragons).toBe(true);
     expect(report.exactReconstruction).toBe(true);
     expect(report.historicalV5Compatible).toBe(false);
-    expect(report.historicalV5ChangedExecutionCount).toBe(50);
-    expect(report.approvedHistoricalDeltaCount).toBe(50);
+    expect(report.historicalV5ChangedExecutionCount).toBe(78);
+    expect(report.approvedHistoricalDeltaCount).toBe(78);
     expect(report.approvedHistoricalDeltaManifestIdentity).toBe(
       OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY,
     );
@@ -95,10 +110,10 @@ describe('optimizer v6 independent audit artifact', () => {
       expect(reverse?.resultHash).toBe(forward?.resultHash);
     }
 
-    expect(report.deterministicAuditHash).toBe('fnv1a64:2de5527469a511c0');
+    expect(report.deterministicAuditHash).toBe('fnv1a64:1acd71772d85f8a8');
   });
 
-  it('matches the exact committed 0.23.3 historical delta manifest', () => {
+  it('matches the exact committed 0.23.4 cumulative historical delta manifest', () => {
     const report = committedAudit();
     const manifest = committedManifest();
     const validation = evaluateApprovedHistoricalDeltas(
@@ -125,6 +140,28 @@ describe('optimizer v6 independent audit artifact', () => {
     expect(`sha256:${createHash('sha256')
       .update(JSON.stringify(identityInput))
       .digest('hex')}`).toBe(OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY);
+  });
+
+  it('locks only the 62 Vhagar correction execution deltas from 0.23.3', () => {
+    const manifest = JSON.parse(readFileSync(resolve(
+      process.cwd(),
+      'src/audit/fixtures/optimizerV6ReleaseDeltas.0.23.3-to-0.23.4.json',
+    ), 'utf8')) as ApprovedDeltaManifest & {
+      changedExecutionCount: number;
+      reasonCode: string;
+    };
+    expect(manifest.changedExecutionCount).toBe(62);
+    expect(manifest.reasonCode).toBe('vhagar-burn-fiery-bonds-reliability-correction');
+    expect(manifest.deltas.every((delta) =>
+      delta.reason === 'vhagar-burn-fiery-bonds-reliability-correction'
+    )).toBe(true);
+    const { deterministicManifestHash: _ignored, ...identityInput } = manifest;
+    void _ignored;
+    expect(`sha256:${createHash('sha256')
+      .update(JSON.stringify(identityInput))
+      .digest('hex')}`).toBe(
+      'sha256:c4a28f699030bbe3d7af4d4ae90717012ae239279b0220b567eb4fb689cc24cb',
+    );
   });
 
   it('rejects one unexpected changed execution', () => {
@@ -200,7 +237,7 @@ describe('optimizer v6 independent audit artifact', () => {
 function committedAudit(): AuditReport {
   return JSON.parse(readFileSync(resolve(
     process.cwd(),
-    'docs/audits/roster-optimizer-v6-0.23.3.json',
+    'docs/audits/roster-optimizer-v6-0.23.4.json',
   ), 'utf8')) as AuditReport;
 }
 
@@ -217,6 +254,6 @@ interface ApprovedDeltaManifest {
 function committedManifest(): ApprovedDeltaManifest {
   return JSON.parse(readFileSync(resolve(
     process.cwd(),
-    'src/audit/fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.3.json',
+    'src/audit/fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.4.json',
   ), 'utf8')) as ApprovedDeltaManifest;
 }

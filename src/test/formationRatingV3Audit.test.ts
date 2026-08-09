@@ -43,15 +43,19 @@ describe('Formation Rating v3 exhaustive audit', () => {
         },
         postCalibrationCounts: {
           Excellent: 381,
-          Strong: 3257,
-          Solid: 14125,
-          Developing: 12822,
+          Strong: 3271,
+          Solid: 13131,
+          Developing: 13802,
           Weak: 2151,
         },
       });
-      expect(report.tierCalibration.derivedThresholds).toEqual(
-        report.tierCalibration.selectedThresholds,
-      );
+      expect(report.tierCalibration.derivedThresholds).toEqual({
+        Excellent: 66,
+        Strong: 53,
+        Solid: 35,
+        Developing: 5,
+      });
+      expect(report.tierCalibration.selectedThresholds.Solid).toBe(34);
       expect(
         report.representativeVelarCases.every((entry) => entry.placements.length === 6),
       ).toBe(true);

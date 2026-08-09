@@ -1,12 +1,12 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-08-02T16:44:01.145Z",
+  "generatedAt": "2026-08-09T00:11:07.087Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/syrax-blazing-fury-recipient-targeting",
-    "commit": "695226d5e0fb05ee7011667b58c7fcffb002e1f7",
-    "databaseVersion": "0.23.3",
+    "branch": "fix/vhagar-burn-fiery-bonds-reliability",
+    "commit": "18aaef87749bda9d6881863df448dd9d34a32cd1",
+    "databaseVersion": "0.23.4",
     "dataSchemaVersion": 13,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
@@ -9275,7 +9275,7 @@
             "tag": "status:burn",
             "abilityId": "vhagar-fiery-bonds",
             "abilityName": "Fiery Bonds",
-            "description": "Burn improves Fiery Bonds Taunt application",
+            "description": "Burn deterministically changes Fiery Bonds' Taunt chance from 25% to 50%; Taunt remains probabilistic",
             "friendlyScope": "formation",
             "confidence": "verified"
           }

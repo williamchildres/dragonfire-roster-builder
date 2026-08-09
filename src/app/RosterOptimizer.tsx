@@ -37,6 +37,7 @@ import { AppLink, type NavigateToRoute } from './appRouter';
 import {
   candidateAbilityLabels,
   candidateAdjustedValue,
+  conditionalUpliftSummary,
   mixedUseLabels,
   nonSharedRequirementLabels,
   relationshipClassLabel,
@@ -777,6 +778,7 @@ export function OptimizerRelationshipDetail({
   const nonSharedRequirements = selectedTrace
     ? nonSharedRequirementLabels(selectedTrace, dragonsById)
     : [];
+  const upliftSummary = conditionalUpliftSummary(relationship, dragonsById);
   return (
     <>
       <p>
@@ -786,6 +788,7 @@ export function OptimizerRelationshipDetail({
           ? `${formatPercent(relationship.quantification.reliability)} reliability`
           : 'Unquantified'}
       </p>
+      {upliftSummary ? <p>{upliftSummary}</p> : null}
       <p>
         {dragonsById.get(relationship.providerDragonId)?.name ?? relationship.providerDragonId}
         {' → '}

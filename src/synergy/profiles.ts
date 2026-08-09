@@ -393,7 +393,8 @@ export const simpleSynergyProfiles = [
         tag: 'status:burn',
         abilityId: 'vhagar-fiery-bonds',
         abilityName: 'Fiery Bonds',
-        description: 'Burn improves Fiery Bonds Taunt application',
+        description:
+          "Burn deterministically changes Fiery Bonds' Taunt chance from 25% to 50%; Taunt remains probabilistic",
         friendlyScope: 'formation',
       }),
     ],

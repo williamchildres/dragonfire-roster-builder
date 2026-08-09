@@ -17,31 +17,31 @@
     "explicitlyNonScoringSignals": 5,
     "positionClaims": 33,
     "guaranteedSignals": 133,
-    "conditionalDeterministicSignals": 28,
-    "chanceBearingSignals": 73,
+    "conditionalDeterministicSignals": 29,
+    "chanceBearingSignals": 72,
     "mixedSignals": 3,
-    "signalsWithExplicitProbability": 69,
+    "signalsWithExplicitProbability": 68,
     "signalsWithHabitLevelProbabilityProgression": 43,
     "signalsWithKnownOpportunityCount": 2,
     "signalsWithKnownRollScope": 57,
     "signalsWithConfirmedSeparatePerTargetChecks": 9,
-    "signalsWithUnresolvedOpportunityCount": 68,
-    "signalsWithUnresolvedIndependence": 68,
+    "signalsWithUnresolvedOpportunityCount": 67,
+    "signalsWithUnresolvedIndependence": 67,
     "signalsWithUnknownProbability": 0,
     "signalsWithCompleteSupportedProbabilityOpportunityScopeAndIndependence": 2,
     "signalsMissingProposedReliabilityCoverage": 0,
-    "signalsWithGuaranteedAtLeastOneOpportunity": 43,
+    "signalsWithGuaranteedAtLeastOneOpportunity": 42,
     "signalsWithConditionalOpportunityPresence": 27,
     "signalsWithUnknownOpportunityPresence": 3,
-    "signalsWithNotApplicableOpportunityPresence": 161
+    "signalsWithNotApplicableOpportunityPresence": 162
   },
   "missingProposedReliabilitySignalIds": [],
   "classificationCounts": {
     "guaranteed": 133,
-    "conditional-deterministic": 28,
+    "conditional-deterministic": 29,
     "known-single-opportunity-chance": 2,
     "known-repeated-opportunity-chance": 23,
-    "known-chance-with-unresolved-opportunity-count": 43,
+    "known-chance-with-unresolved-opportunity-count": 42,
     "probability-present-exact-value-unresolved": 2,
     "probability-unknown": 0,
     "mixed-guaranteed-and-chance-based-ability": 3,
@@ -331,9 +331,9 @@
       "dragonId": "vhagar",
       "dragonName": "Vhagar",
       "scoringSignals": 7,
-      "chanceBearingSignals": 3,
+      "chanceBearingSignals": 2,
       "mixedSignals": 0,
-      "conditionalDeterministicSignals": 0,
+      "conditionalDeterministicSignals": 1,
       "unknownProbabilitySignals": 0
     },
     {
@@ -362,7 +362,7 @@
     {
       "signalCategory": "benefitsFrom",
       "scoringSignals": 44,
-      "chanceBearingSignals": 10,
+      "chanceBearingSignals": 9,
       "mixedSignals": 3
     }
   ],
@@ -12647,40 +12647,29 @@
       "unlockStarRank": null,
       "minimumDragonLevel": null,
       "habitLevelDependent": false,
-      "currentCuratedDescription": "Burn improves Fiery Bonds Taunt application",
+      "currentCuratedDescription": "Burn deterministically changes Fiery Bonds' Taunt chance from 25% to 50%; Taunt remains probabilistic",
       "currentConfidence": "verified",
       "currentRelationshipTypesOrValuesAffected": [
         "conditional-payoff base value 10 as receiving signal"
       ],
       "reliabilityComponentIds": [
-        "vhagar-fiery-bonds:taunt"
+        "vhagar-fiery-bonds:vhagar-fiery-bonds-burn-payoff"
       ],
-      "classification": "known-chance-with-unresolved-opportunity-count",
+      "classification": "conditional-deterministic",
       "probability": {
-        "kind": "multiple",
-        "variants": [
-          {
-            "label": "ordinary target",
-            "fixed": 0.25
-          },
-          {
-            "label": "Burn-afflicted target",
-            "fixed": 0.5
-          }
-        ]
+        "kind": "none"
       },
-      "opportunityPresence": "guaranteed-at-least-one",
-      "rollTiming": "Each round.",
-      "rollScope": "unresolved",
+      "opportunityPresence": "not-applicable",
+      "rollTiming": "Documented condition or trigger.",
+      "rollScope": "not-applicable",
       "opportunityCount": {
-        "kind": "battle-length-dependent",
-        "note": "One check is described each round; actual battle length is unresolved."
+        "kind": "not-applicable"
       },
-      "targetCount": 3,
+      "targetCount": null,
       "separatePerTarget": null,
-      "separatePerEffect": false,
-      "durationRounds": 2,
-      "independence": "unknown",
+      "separatePerEffect": null,
+      "durationRounds": null,
+      "independence": "not-applicable",
       "canonicalEvidence": {
         "abilityRawDescription": "Each Round: 25% chance to Taunt three Enemies in any lane for 2 rounds. Chance doubles to 50% against targets afflicted with Burn. Even-numbered rounds: deal Physical Damage to one Enemy within adjacency at a 120% Damage Rate. Physical Damage is increased by Vhagar's Strength and mitigated by the target's Instinct. Taunt forces the target to launch its Basic Attack against Vhagar. The Taunt roll scope is not stated.",
         "verificationStatus": "screenshot-verified",
@@ -12690,8 +12679,8 @@
         ]
       },
       "unresolvedQuestions": [
-        "Whether Taunt uses one group roll or separate rolls per target.",
-        "Battle length and temporal independence are unresolved."
+        "Activation is deterministic once the documented battle-state or action condition is satisfied.",
+        "The first reliability layer should preserve the condition explicitly rather than fabricate a probability."
       ],
       "coverageStatus": "covered"
     },
@@ -13400,5 +13389,5 @@
       "coverageStatus": "covered"
     }
   ],
-  "deterministicHash": "f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d"
+  "deterministicHash": "c8e025b2b5f57e5f2c19f24d802d72035e3c7663b595253de7b2712056400299"
 }

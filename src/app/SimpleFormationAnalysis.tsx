@@ -12,6 +12,7 @@ import type {
 import {
   candidateAbilityLabels,
   candidateAdjustedValue,
+  conditionalUpliftSummary,
   mixedUseLabels,
   nonSharedRequirementLabels,
   relationshipClassLabel,
@@ -216,6 +217,7 @@ function ReliabilityRelationship({
   const nonSharedRequirements = selectedTrace
     ? nonSharedRequirementLabels(selectedTrace, canonicalDragonsById)
     : [];
+  const upliftSummary = conditionalUpliftSummary(relationship, canonicalDragonsById);
   return (
     <article className="formation-relationship-item">
       <div className="formation-relationship-heading">
@@ -231,6 +233,7 @@ function ReliabilityRelationship({
         {dragonNamesById.get(relationship.beneficiaryDragonId) ??
           relationship.beneficiaryDragonId}
       </p>
+      {upliftSummary ? <p>{upliftSummary}</p> : null}
       <details>
         <summary>Reliability evidence</summary>
         <dl className="formation-analysis-metrics">

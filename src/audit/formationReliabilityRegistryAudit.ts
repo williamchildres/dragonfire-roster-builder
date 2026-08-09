@@ -91,6 +91,7 @@ const allowedComponentIdMigrationSignalIds = new Set([
   'vaeldra-tempting-distraction-vulnerability',
   'velar-gales-of-power-first-strike',
   'velar-gales-of-power-slow',
+  'vhagar-fiery-bonds-burn-payoff',
   'zivern-battle-mastery-intelligence-payoff',
   'zivern-battle-mastery-physical',
 ]);

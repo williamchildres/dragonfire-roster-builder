@@ -100,6 +100,45 @@ export const vhagarReliabilityRegistry = defineDragonReliabilityRegistry({
       },
     },
     {
+      id: 'vhagar-fiery-bonds:burn-taunt-probability-uplift',
+      sourceAbilityId: 'vhagar-fiery-bonds',
+      sourceAbilityKind: 'command',
+      reliabilityClass: 'conditional-deterministic',
+      opportunityPresence: 'not-applicable',
+      timing: {
+        kind: 'conditional-event',
+        condition:
+          'A target is afflicted with Burn, which deterministically selects Fiery Bonds\' enhanced Taunt probability branch.',
+      },
+      opportunityCount: {
+        kind: 'not-applicable',
+      },
+      rollScope: 'not-applicable',
+      independence: 'not-applicable',
+      conditionalUplift: {
+        kind: 'probability-uplift',
+        conditionLabel: 'Burn',
+        affectedMetricLabel: "Fiery Bonds' Taunt chance",
+        affectedComponentId: 'vhagar-fiery-bonds:taunt',
+        baselineVariantId: 'ordinary-target',
+        conditionedVariantId: 'burn-afflicted-target',
+        baseline: 0.25,
+        conditioned: 0.5,
+        absoluteDelta: 0.25,
+        relativeMultiplier: 2,
+      },
+      evidence: {
+        verificationStatus: 'verified',
+        evidenceIds: ['vhagar-fiery-bonds-summary-2026-06-25'],
+        unresolvedQuestions: [
+          'Activation is deterministic once the documented battle-state or action condition is satisfied.',
+          'The first reliability layer should preserve the condition explicitly rather than fabricate a probability.',
+        ],
+        reviewNote:
+          'Burn deterministically changes the applicable Taunt probability; the subsequent Taunt result remains probabilistic.',
+      },
+    },
+    {
       id: 'vhagar-fiery-bonds:vhagar-fiery-bonds-physical',
       sourceAbilityId: 'vhagar-fiery-bonds',
       sourceAbilityKind: 'command',
@@ -226,21 +265,16 @@ export const vhagarReliabilityRegistry = defineDragonReliabilityRegistry({
     {
       status: 'resolved',
       signalId: 'vhagar-fiery-bonds-burn-payoff',
-      bindingClass: 'chance',
+      bindingClass: 'conditional-deterministic',
       paths: [
         {
-          pathId: 'burn-afflicted-target',
-          appliesWhen: {
-            kind: 'probability-context',
-            id: 'burn-afflicted-target',
-          },
+          pathId: 'burn-taunt-probability-uplift',
           events: [
             {
-              eventId: 'vhagar-fiery-bonds:taunt',
+              eventId: 'vhagar-fiery-bonds:burn-taunt-probability-uplift',
               componentReferences: [
                 {
-                  componentId: 'vhagar-fiery-bonds:taunt',
-                  probabilityVariantId: 'burn-afflicted-target',
+                  componentId: 'vhagar-fiery-bonds:burn-taunt-probability-uplift',
                 },
               ],
             },
