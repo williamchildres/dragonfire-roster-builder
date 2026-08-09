@@ -2650,9 +2650,10 @@
         "signalIds": [
           "moondancer-new-moon-instinct",
           "moondancer-new-moon-tactical",
-          "moondancer-advantage-rising-tide-payoff"
+          "moondancer-advantage-rising-tide-payoff",
+          "moondancer-new-moon-initiative-payoff"
         ],
-        "rationale": "New Moon preserves one independently selected other Sentinel, progression-aware support, a 4+ stack magnitude modifier, and the Advantage probability uplift."
+        "rationale": "New Moon preserves one independently selected other Sentinel, progression-aware support, a 4+ stack magnitude modifier, the Advantage probability uplift, and its explicit Initiative-enhanced Instinct support."
       }
     },
     {
@@ -2701,9 +2702,10 @@
         "kind": "represented",
         "signalIds": [
           "moondancer-eclipsing-strike-damage-down",
-          "moondancer-eclipsing-strike-initiative-down"
+          "moondancer-eclipsing-strike-initiative-down",
+          "moondancer-eclipsing-strike-initiative-payoff"
         ],
-        "rationale": "Eclipsing Strike preserves one shared activation, fixed enemy reductions, highest-troop targeting, and unresolved ties as non-scoring battlefield evidence."
+        "rationale": "Eclipsing Strike preserves one shared activation, fixed enemy reductions, highest-troop targeting, unresolved ties, and the explicit Initiative enhancement dependency."
       }
     },
     {

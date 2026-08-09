@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-09T16:25:59.924Z",
+  "generatedAt": "2026-08-09T19:02:27.998Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "feature/add-moondancer",
-    "commit": "1fd89ec1dc26a74f3e5431f980d9053ae7d617dc",
+    "commit": "e3c332047381149350fe4bc00726c4c74e2e4734",
     "databaseVersion": "0.23.5",
     "dataSchemaVersion": 14,
     "localRosterSchemaVersion": 5,
@@ -32,8 +32,8 @@
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 85,
-    "testCaseCount": 729,
+    "testFileCount": 86,
+    "testCaseCount": 734,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

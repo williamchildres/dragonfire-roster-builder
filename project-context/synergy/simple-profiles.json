@@ -4054,11 +4054,35 @@
         "confidence": "verified"
       },
       {
+        "id": "moondancer-new-moon-initiative-payoff",
+        "tag": "stat:initiative",
+        "abilityId": "moondancer-new-moon",
+        "abilityName": "New Moon",
+        "description": "Initiative enhances New Moon's Instinct support",
+        "unlock": {
+          "minimumStarRank": 2
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
+        "id": "moondancer-eclipsing-strike-initiative-payoff",
+        "tag": "stat:initiative",
+        "abilityId": "moondancer-eclipsing-strike",
+        "abilityName": "Eclipsing Strike",
+        "description": "Initiative enhances Eclipsing Strike's Initiative reduction",
+        "unlock": {
+          "minimumStarRank": 10
+        },
+        "friendlyScope": "formation",
+        "confidence": "verified"
+      },
+      {
         "id": "moondancer-strength-payoff",
         "tag": "stat:strength",
         "abilityId": "moondancer-crescent-blade",
         "abilityName": "Crescent Blade",
-        "description": "Strength improves direct Physical Damage",
+        "description": "Strength improves Crescent Blade Physical Damage and, from 4 Stars, both Reactive Instincts buffs",
         "friendlyScope": "formation",
         "confidence": "verified"
       },
