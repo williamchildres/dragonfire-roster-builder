@@ -1,13 +1,13 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-08-09T00:11:07.087Z",
+  "generatedAt": "2026-08-09T16:11:59.275Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/vhagar-burn-fiery-bonds-reliability",
-    "commit": "18aaef87749bda9d6881863df448dd9d34a32cd1",
-    "databaseVersion": "0.23.4",
-    "dataSchemaVersion": 13,
+    "branch": "feature/add-moondancer",
+    "commit": "190a6388827d263b4ba6488061adda7ead580517",
+    "databaseVersion": "0.23.5",
+    "dataSchemaVersion": 14,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
   },
@@ -29,13 +29,13 @@
     ]
   },
   "rosterSummary": {
-    "totalDragons": 33,
-    "detailedDragons": 33,
+    "totalDragons": 34,
+    "detailedDragons": 34,
     "metadataOnlyDragons": 0,
-    "curatedSimpleProfiles": 33,
-    "profileAuditReviews": 231,
-    "evidenceSources": 272,
-    "manualReviews": 46
+    "curatedSimpleProfiles": 34,
+    "profileAuditReviews": 238,
+    "evidenceSources": 283,
+    "manualReviews": 47
   },
   "dragons": [
     {
@@ -8730,6 +8730,268 @@
       ],
       "simpleProfileId": "vermax",
       "simpleProfileStatus": "curated"
+    },
+    {
+      "id": "moondancer",
+      "slug": "moondancer",
+      "name": "Moondancer",
+      "rarity": "Legendary",
+      "breed": "Warrior",
+      "rosterSourceStatus": "in-game-verified-pending-official-site",
+      "dataStatus": "community-verified",
+      "lastVerified": "2026-08-09",
+      "profileCompleteness": "detailed-abilities",
+      "officialProfileUrl": null,
+      "abilities": [
+        {
+          "id": "moondancer-crescent-blade",
+          "kind": "command",
+          "name": "Crescent Blade",
+          "abilityClass": "active",
+          "unlockStarRank": null,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Moondancer Crescent Blade screenshots",
+            "capturedAt": "2026-08-09",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "moondancer-crescent-blade-1-2026-08-09",
+            "moondancer-crescent-blade-2-2026-08-09",
+            "moondancer-crescent-blade-3-2026-08-09",
+            "moondancer-crescent-blade-4-2026-08-09"
+          ],
+          "tags": [
+            "PHYSICAL_DAMAGE",
+            "RISING_TIDE",
+            "TACTICAL_DAMAGE",
+            "RECOVERY",
+            "DAMAGE_RECEIVED_DOWN",
+            "ADJACENT_TARGET",
+            "COMMAND_AUGMENTATION"
+          ],
+          "rawDescription": "Round 1: Grant Crescent Blade to 1 other Ally Sentinel in any lane until the end of battle. When this target deals Tactical Damage, or applies Recovery, 50% chance to grant Moondancer 1 stack of Rising Tide (Max 8 stacks). This effect cannot trigger more than once per round. Each stack of Rising Tide reduces Moondancer's Damage Received by 2%. Even-numbered Rounds: Deal Physical Damage to 2 Enemies within adjacency (Damage Rate: 75%). At 6+ Stars, Full Moon replaces this rate with its Habit-level progression and doubles the active rate when Moondancer has 4+ Rising Tide stacks."
+        },
+        {
+          "id": "moondancer-warriors-zeal",
+          "kind": "trait",
+          "name": "Warrior's Zeal",
+          "abilityClass": "passive",
+          "unlockStarRank": 1,
+          "minimumDragonLevel": 16,
+          "positionRequirement": "vanguard",
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Moondancer Warrior's Zeal screenshot",
+            "capturedAt": "2026-08-09",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "moondancer-warriors-zeal-2026-08-09"
+          ],
+          "tags": [
+            "VANGUARD_REQUIRED",
+            "PHYSICAL_DAMAGE_UP",
+            "INSTINCT_UP",
+            "BUFF_INITIATIVE",
+            "LEFT_FLANK_TARGET"
+          ],
+          "rawDescription": "At Level 16+ and deployed in Vanguard, increase Moondancer's Physical Damage Dealt by 16%. Increase Instinct and Initiative by +20 of the Ally deployed in Left Flank."
+        },
+        {
+          "id": "moondancer-new-moon",
+          "kind": "habit",
+          "name": "New Moon",
+          "abilityClass": "passive",
+          "unlockStarRank": 2,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Moondancer New Moon screenshot",
+            "capturedAt": "2026-08-09",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "moondancer-new-moon-2026-08-09"
+          ],
+          "tags": [
+            "RISING_TIDE",
+            "ADVANTAGE",
+            "INSTINCT_UP",
+            "TACTICAL_DAMAGE_UP",
+            "ENHANCED_BY_INSTINCT"
+          ],
+          "rawDescription": "Rounds 1, 3, 5: 25%/30%/35%/42.5%/50% chance by Habit Level to gain 1 Rising Tide stack; if any Ally has Advantage, deterministically double the chance to 50%/60%/70%/85%/100%. Odd-numbered Rounds: increase Instinct by 9%/10.8%/12.6%/15.3%/18% (enhanced by Initiative) and Tactical Damage Dealt by 6%/7.2%/8.4%/10.2%/12% of 1 other Ally Sentinel for 2 rounds. At 4+ Rising Tide stacks, multiply both support effects by 1.5."
+        },
+        {
+          "id": "moondancer-reactive-instincts",
+          "kind": "habit",
+          "name": "Reactive Instincts",
+          "abilityClass": "passive",
+          "unlockStarRank": 4,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Moondancer Reactive Instincts screenshot",
+            "capturedAt": "2026-08-09",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "moondancer-reactive-instincts-2026-08-09"
+          ],
+          "tags": [
+            "INSTINCT_UP",
+            "BUFF_INITIATIVE",
+            "ENHANCED_BY_STRENGTH"
+          ],
+          "rawDescription": "Start of Combat: increase Instinct by 22%/26.4%/30.8%/37.4%/44% and Initiative by 11%/13.2%/15.4%/18.7%/22% of the Ally with the highest Instinct until the end of combat. Both effects are enhanced by Strength. A unique highest-Instinct target resolves deterministically; an unverified tie remains unresolved."
+        },
+        {
+          "id": "moondancer-full-moon",
+          "kind": "habit",
+          "name": "Full Moon",
+          "abilityClass": "passive",
+          "unlockStarRank": 6,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Moondancer Full Moon screenshot",
+            "capturedAt": "2026-08-09",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "moondancer-full-moon-2026-08-09"
+          ],
+          "tags": [
+            "RISING_TIDE",
+            "ADVANTAGE",
+            "COMMAND_AUGMENTATION",
+            "PHYSICAL_DAMAGE"
+          ],
+          "rawDescription": "Rounds 6, 8, 10: 25%/30%/35%/42.5%/50% chance by Habit Level to gain 1 Rising Tide stack; if any Ally has Advantage, double the chance to 50%/60%/70%/85%/100%. Additionally, gain 1 stack if Moondancer has the least troops of all combatants. Crescent Blade Physical Damage Rate becomes 85%/92%/99%/109.5%/120%; at 4+ Rising Tide stacks, double that rate to 170%/184%/198%/219%/240%."
+        },
+        {
+          "id": "moondancer-blood-moon",
+          "kind": "habit",
+          "name": "Blood Moon",
+          "abilityClass": "passive",
+          "unlockStarRank": 8,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Moondancer Blood Moon screenshot",
+            "capturedAt": "2026-08-09",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "moondancer-blood-moon-2026-08-09"
+          ],
+          "tags": [
+            "RISING_TIDE",
+            "PHYSICAL_DAMAGE_UP",
+            "BLEED",
+            "ADJACENT_TARGET"
+          ],
+          "rawDescription": "Each Round: if Moondancer has 4+ Rising Tide stacks, increase Physical Damage Dealt by 12.5%/15%/17.5%/21.25%/25% until end of the round. Odd-numbered Rounds: 25%/30%/35%/42.5%/50% chance to afflict Bleed on 2 Enemies within adjacency for 2 rounds; at 6+ Rising Tide stacks, double the chance to 50%/60%/70%/85%/100%. The screenshot does not establish whether the two targets share one roll or receive separate rolls."
+        },
+        {
+          "id": "moondancer-eclipsing-strike",
+          "kind": "habit",
+          "name": "Eclipsing Strike",
+          "abilityClass": "passive",
+          "unlockStarRank": 10,
+          "minimumDragonLevel": null,
+          "positionRequirement": null,
+          "verification": {
+            "status": "screenshot-verified",
+            "source": "Moondancer Eclipsing Strike screenshot",
+            "capturedAt": "2026-08-09",
+            "gameVersion": null,
+            "reviewedManually": true
+          },
+          "evidenceIds": [
+            "moondancer-eclipsing-strike-2026-08-09"
+          ],
+          "tags": [
+            "RISING_TIDE",
+            "DAMAGE_DEALT_DOWN",
+            "DEBUFF_INITIATIVE",
+            "MOST_TROOPS_TARGET",
+            "INITIATIVE_SCALING"
+          ],
+          "rawDescription": "Each Round: 20%/26%/32%/40%/50% chance by Habit Level to reduce Damage Dealt of the Enemy with the Most Troops by 18% for 2 rounds. At 6+ Rising Tide stacks, double the activation chance to 40%/52%/64%/80%/100% and also reduce the same target's Initiative by 25%, enhanced by Initiative. The two reductions share the successful Eclipsing Strike activation. An unverified highest-troop tie remains unresolved."
+        }
+      ],
+      "affinities": {
+        "Cavalry": "neutral",
+        "Shieldbearers": "positive",
+        "Archers": "positive",
+        "Spearmen": "neutral",
+        "Siege": "negative"
+      },
+      "verification": {
+        "identity": {
+          "status": "screenshot-verified",
+          "source": "Moondancer main screen screenshot",
+          "capturedAt": "2026-08-09",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "command": {
+          "status": "screenshot-verified",
+          "source": "Moondancer Crescent Blade screenshots",
+          "capturedAt": "2026-08-09",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "trait": {
+          "status": "screenshot-verified",
+          "source": "Moondancer Warrior's Zeal screenshot",
+          "capturedAt": "2026-08-09",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "habits": {
+          "status": "screenshot-verified",
+          "source": "Moondancer Habit screenshots",
+          "capturedAt": "2026-08-09",
+          "gameVersion": null,
+          "reviewedManually": true
+        },
+        "affinities": {
+          "status": "screenshot-verified",
+          "source": "Moondancer main screen screenshot",
+          "capturedAt": "2026-08-09",
+          "gameVersion": null,
+          "reviewedManually": true
+        }
+      },
+      "evidenceIds": [
+        "moondancer-blood-moon-2026-08-09",
+        "moondancer-crescent-blade-1-2026-08-09",
+        "moondancer-crescent-blade-2-2026-08-09",
+        "moondancer-crescent-blade-3-2026-08-09",
+        "moondancer-crescent-blade-4-2026-08-09",
+        "moondancer-eclipsing-strike-2026-08-09",
+        "moondancer-full-moon-2026-08-09",
+        "moondancer-new-moon-2026-08-09",
+        "moondancer-reactive-instincts-2026-08-09",
+        "moondancer-warriors-zeal-2026-08-09"
+      ],
+      "simpleProfileId": "moondancer",
+      "simpleProfileStatus": "curated"
     }
   ],
   "simpleSynergy": {
@@ -8755,6 +9017,9 @@
       "damage:any",
       "effect:recovery",
       "effect:recovery-received",
+      "effect:enemy-debuff",
+      "effect:self-stack",
+      "trigger:tactical-or-recovery",
       "defense:damage-received",
       "defense:physical-damage-received",
       "stat:strength",
@@ -12611,6 +12876,254 @@
         ]
       },
       {
+        "dragonId": "moondancer",
+        "dragonName": "Moondancer",
+        "outputs": [
+          {
+            "id": "moondancer-crescent-blade-physical",
+            "tag": "damage:physical",
+            "damageScope": "non-basic-attack",
+            "scalesWith": [
+              "stat:strength"
+            ],
+            "abilityId": "moondancer-crescent-blade",
+            "abilityName": "Crescent Blade",
+            "description": "deals Physical Damage to two adjacent Enemies on even-numbered rounds",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-blood-moon-bleed",
+            "tag": "status:bleed",
+            "abilityId": "moondancer-blood-moon",
+            "abilityName": "Blood Moon",
+            "description": "can afflict Bleed on two adjacent Enemies for two rounds; multi-target roll scope is unresolved",
+            "publicLabel": "Can apply Bleed to two adjacent Enemies",
+            "unlock": {
+              "minimumStarRank": 8
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-rising-tide-self",
+            "tag": "effect:self-stack",
+            "abilityId": "moondancer-crescent-blade",
+            "abilityName": "Crescent Blade",
+            "description": "each Rising Tide stack reduces Moondancer Damage Received by 2%, to a maximum of eight stacks",
+            "publicLabel": "Rising Tide self-stack defense",
+            "nonScoring": true,
+            "friendlyScope": "self",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-eclipsing-strike-damage-down",
+            "tag": "effect:enemy-debuff",
+            "abilityId": "moondancer-eclipsing-strike",
+            "abilityName": "Eclipsing Strike",
+            "description": "reduces Damage Dealt of the Enemy with the Most Troops by 18%",
+            "publicLabel": "Enemy Damage Dealt reduction",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "nonScoring": true,
+            "friendlyScope": "self",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-eclipsing-strike-initiative-down",
+            "tag": "effect:enemy-debuff",
+            "abilityId": "moondancer-eclipsing-strike",
+            "abilityName": "Eclipsing Strike",
+            "description": "at 6+ Rising Tide, reduces the same Eclipsing Strike target Initiative by 25%",
+            "publicLabel": "Enemy Initiative reduction",
+            "unlock": {
+              "minimumStarRank": 10
+            },
+            "nonScoring": true,
+            "friendlyScope": "self",
+            "confidence": "verified"
+          }
+        ],
+        "supports": [
+          {
+            "id": "moondancer-warriors-zeal-self-physical",
+            "tag": "damage:physical",
+            "abilityId": "moondancer-warriors-zeal",
+            "abilityName": "Warrior's Zeal",
+            "description": "increases Moondancer Physical Damage Dealt by 16%",
+            "unlock": {
+              "minimumStarRank": 1,
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "nonScoring": true,
+            "friendlyScope": "self",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-warriors-zeal-left-stats",
+            "tag": "stat:instinct",
+            "tags": [
+              "stat:instinct",
+              "stat:initiative"
+            ],
+            "abilityId": "moondancer-warriors-zeal",
+            "abilityName": "Warrior's Zeal",
+            "description": "increases Instinct and Initiative by 20 of the Left Flank Ally",
+            "unlock": {
+              "minimumStarRank": 1,
+              "minimumDragonLevel": 16
+            },
+            "requiredSelfPosition": "vanguard",
+            "requiredRecipientPosition": "left-flank",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-new-moon-instinct",
+            "tag": "stat:instinct",
+            "abilityId": "moondancer-new-moon",
+            "abilityName": "New Moon",
+            "description": "increases Instinct of one other Ally Sentinel for two rounds on odd-numbered rounds",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "recipientSelector": {
+              "kind": "breed-one",
+              "breed": "Sentinel",
+              "recipientCount": 1,
+              "includeSelf": false,
+              "selectionGroupId": "moondancer-new-moon-sentinel-recipient"
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-new-moon-tactical",
+            "tag": "damage:tactical",
+            "abilityId": "moondancer-new-moon",
+            "abilityName": "New Moon",
+            "description": "increases Tactical Damage Dealt of the same one other Ally Sentinel for two rounds",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "recipientSelector": {
+              "kind": "breed-one",
+              "breed": "Sentinel",
+              "recipientCount": 1,
+              "includeSelf": false,
+              "selectionGroupId": "moondancer-new-moon-sentinel-recipient"
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-reactive-instincts-instinct",
+            "tag": "stat:instinct",
+            "abilityId": "moondancer-reactive-instincts",
+            "abilityName": "Reactive Instincts",
+            "description": "increases Instinct of the Ally with the highest Instinct until end of combat",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "recipientSelector": {
+              "kind": "highest-stat",
+              "stat": "instinct",
+              "excludeSelf": false,
+              "recipientCount": 1,
+              "selectionGroupId": "moondancer-reactive-instincts-highest-instinct"
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-reactive-instincts-initiative",
+            "tag": "stat:initiative",
+            "abilityId": "moondancer-reactive-instincts",
+            "abilityName": "Reactive Instincts",
+            "description": "increases Initiative of the same highest-Instinct Ally until end of combat",
+            "unlock": {
+              "minimumStarRank": 4
+            },
+            "recipientSelector": {
+              "kind": "highest-stat",
+              "stat": "instinct",
+              "excludeSelf": false,
+              "recipientCount": 1,
+              "selectionGroupId": "moondancer-reactive-instincts-highest-instinct"
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "benefitsFrom": [
+          {
+            "id": "moondancer-advantage-rising-tide-payoff",
+            "tag": "status:advantage",
+            "abilityId": "moondancer-new-moon",
+            "abilityName": "New Moon",
+            "description": "Advantage on any Ally deterministically doubles the documented Rising Tide activation chance branches in New Moon and Full Moon",
+            "publicLabel": "Advantage doubles Rising Tide chance",
+            "unlock": {
+              "minimumStarRank": 2
+            },
+            "providerPresenceSatisfies": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-crescent-blade-trigger-payoff",
+            "tag": "trigger:tactical-or-recovery",
+            "abilityId": "moondancer-crescent-blade",
+            "abilityName": "Crescent Blade",
+            "description": "the one selected other Ally Sentinel can create a Rising Tide roll opportunity by dealing Tactical Damage or applying Recovery",
+            "publicLabel": "Selected Sentinel can trigger Crescent Blade with Tactical Damage or Recovery",
+            "providerSelector": {
+              "kind": "breed-one",
+              "breed": "Sentinel",
+              "recipientCount": 1,
+              "includeSelf": false,
+              "selectionGroupId": "moondancer-crescent-blade-sentinel-recipient"
+            },
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-strength-payoff",
+            "tag": "stat:strength",
+            "abilityId": "moondancer-crescent-blade",
+            "abilityName": "Crescent Blade",
+            "description": "Strength improves direct Physical Damage",
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          },
+          {
+            "id": "moondancer-physical-payoff",
+            "tag": "damage:physical",
+            "abilityId": "moondancer-crescent-blade",
+            "abilityName": "Crescent Blade",
+            "description": "benefits from Physical Damage support",
+            "supportOnly": true,
+            "friendlyScope": "formation",
+            "confidence": "verified"
+          }
+        ],
+        "positionClaims": [
+          {
+            "id": "moondancer-warriors-zeal-vanguard",
+            "abilityId": "moondancer-warriors-zeal",
+            "abilityName": "Warrior's Zeal",
+            "requiredPosition": "vanguard",
+            "unlock": {
+              "minimumStarRank": 1,
+              "minimumDragonLevel": 16
+            },
+            "description": "Warrior's Zeal requires Vanguard",
+            "confidence": "verified"
+          }
+        ]
+      },
+      {
         "dragonId": "tessarion",
         "dragonName": "Tessarion",
         "outputs": [
@@ -12684,11 +13197,11 @@
       }
     ],
     "profileAudit": {
-      "reviewedAbilityCount": 231,
+      "reviewedAbilityCount": 238,
       "dispositionCounts": {
-        "represented": 154,
+        "represented": 160,
         "general-support-only": 13,
-        "reinforces-existing": 9,
+        "reinforces-existing": 10,
         "self-only": 38,
         "no-cross-dragon-synergy": 17
       },
@@ -15294,6 +15807,101 @@
               "dawnseeker-first-light-first-strike"
             ],
             "rationale": "Paired Intelligence and Instinct share one group, while one shared activation grants specifically named First-Strike to both other allies without Control aliasing."
+          }
+        },
+        {
+          "dragonId": "moondancer",
+          "abilityId": "moondancer-crescent-blade",
+          "abilityKind": "command",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "moondancer-crescent-blade-physical",
+              "moondancer-rising-tide-self",
+              "moondancer-crescent-blade-trigger-payoff",
+              "moondancer-strength-payoff",
+              "moondancer-physical-payoff"
+            ],
+            "rationale": "The Command preserves one other Sentinel recipient, qualifying Tactical-or-Recovery trigger evidence, the 50% Rising Tide roll, stack defense, and even-round Strength-based Physical output."
+          }
+        },
+        {
+          "dragonId": "moondancer",
+          "abilityId": "moondancer-warriors-zeal",
+          "abilityKind": "trait",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "moondancer-warriors-zeal-self-physical",
+              "moondancer-warriors-zeal-left-stats",
+              "moondancer-warriors-zeal-vanguard"
+            ],
+            "rationale": "The Vanguard trait preserves self Physical amplification and exact Left Flank Instinct and Initiative support."
+          }
+        },
+        {
+          "dragonId": "moondancer",
+          "abilityId": "moondancer-new-moon",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "moondancer-new-moon-instinct",
+              "moondancer-new-moon-tactical",
+              "moondancer-advantage-rising-tide-payoff"
+            ],
+            "rationale": "New Moon preserves one independently selected other Sentinel, progression-aware support, a 4+ stack magnitude modifier, and the Advantage probability uplift."
+          }
+        },
+        {
+          "dragonId": "moondancer",
+          "abilityId": "moondancer-reactive-instincts",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "moondancer-reactive-instincts-instinct",
+              "moondancer-reactive-instincts-initiative"
+            ],
+            "rationale": "One grouped highest-Instinct selector governs both deterministic start-of-combat stat effects and preserves unresolved ties."
+          }
+        },
+        {
+          "dragonId": "moondancer",
+          "abilityId": "moondancer-full-moon",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "reinforces-existing",
+            "signalIds": [
+              "moondancer-crescent-blade-physical",
+              "moondancer-advantage-rising-tide-payoff"
+            ],
+            "rationale": "Full Moon augments the Command rate and contributes the second progression-aware Advantage uplift while least-troops and 4+ stack conditions remain explicit."
+          }
+        },
+        {
+          "dragonId": "moondancer",
+          "abilityId": "moondancer-blood-moon",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "moondancer-blood-moon-bleed"
+            ],
+            "rationale": "Blood Moon exposes Bleed while retaining conditional Physical amplification, 6+ stack chance uplift, two-target adjacency, duration, and unresolved roll scope."
+          }
+        },
+        {
+          "dragonId": "moondancer",
+          "abilityId": "moondancer-eclipsing-strike",
+          "abilityKind": "habit",
+          "disposition": {
+            "kind": "represented",
+            "signalIds": [
+              "moondancer-eclipsing-strike-damage-down",
+              "moondancer-eclipsing-strike-initiative-down"
+            ],
+            "rationale": "Eclipsing Strike preserves one shared activation, fixed enemy reductions, highest-troop targeting, and unresolved ties as non-scoring battlefield evidence."
           }
         },
         {
@@ -19258,6 +19866,149 @@
       "verificationStatus": "community-verified"
     },
     {
+      "id": "moondancer-main-screen-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer main screen",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-crescent-blade-1-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Crescent Blade summary page 1",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-crescent-blade-2-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Crescent Blade summary page 2",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-crescent-blade-3-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Crescent Blade glossary page 1",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-crescent-blade-4-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Crescent Blade glossary page 2",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-warriors-zeal-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Warrior's Zeal",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-new-moon-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer New Moon",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-reactive-instincts-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Reactive Instincts",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-full-moon-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Full Moon",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-blood-moon-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Blood Moon",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
+      "id": "moondancer-eclipsing-strike-2026-08-09",
+      "type": "in-game-screenshot",
+      "title": "Moondancer Eclipsing Strike",
+      "description": "Descriptive evidence label only. Screenshot files are not committed to the public repository.",
+      "url": null,
+      "capturedAt": "2026-08-09",
+      "language": "English",
+      "gameVersion": null,
+      "submittedBy": "repository owner",
+      "reviewedManually": true,
+      "verificationStatus": "community-verified"
+    },
+    {
       "id": "malachite-wardens-rally-combat-log-self-recovery-2026-06-24",
       "type": "manual-combat-log-observation",
       "title": "Warden's Rally Recovery included Malachite",
@@ -19311,6 +20062,35 @@
     }
   ],
   "manualReviews": [
+    {
+      "id": "moondancer-combat-data-review-2026-08-09",
+      "dragonId": "moondancer",
+      "scope": "habits",
+      "status": "confirmed",
+      "reviewedAt": "2026-08-09",
+      "reviewedAgainstGameBuild": "unknown",
+      "reviewer": "repository-owner",
+      "notes": [
+        "Identity, Warrior breed, Legendary rarity, troop affinities, Command, Trait, and five Habits were manually transcribed from eleven supplied screenshots.",
+        "Personal Level 38, two-Star progression, account stats, and displayed account power are not canonical dragon defaults.",
+        "Crescent Blade and New Moon independently select one other Ally Sentinel; no tie rule is inferred when two qualify.",
+        "Advantage and Rising Tide thresholds select documented enhanced branches without establishing stack uptime or guaranteeing downstream chance results.",
+        "Blood Moon multi-target roll scope and highest-troop tie handling remain unresolved."
+      ],
+      "evidenceIds": [
+        "moondancer-main-screen-2026-08-09",
+        "moondancer-crescent-blade-1-2026-08-09",
+        "moondancer-crescent-blade-2-2026-08-09",
+        "moondancer-crescent-blade-3-2026-08-09",
+        "moondancer-crescent-blade-4-2026-08-09",
+        "moondancer-warriors-zeal-2026-08-09",
+        "moondancer-new-moon-2026-08-09",
+        "moondancer-reactive-instincts-2026-08-09",
+        "moondancer-full-moon-2026-08-09",
+        "moondancer-blood-moon-2026-08-09",
+        "moondancer-eclipsing-strike-2026-08-09"
+      ]
+    },
     {
       "id": "sunfyre-profile-review-2026-07-22",
       "dragonId": "sunfyre",

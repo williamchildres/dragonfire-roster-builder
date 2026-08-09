@@ -1,9 +1,9 @@
 {
-  "reviewedAbilityCount": 231,
+  "reviewedAbilityCount": 238,
   "dispositionCounts": {
-    "represented": 154,
+    "represented": 160,
     "general-support-only": 13,
-    "reinforces-existing": 9,
+    "reinforces-existing": 10,
     "self-only": 38,
     "no-cross-dragon-synergy": 17
   },
@@ -2609,6 +2609,101 @@
           "dawnseeker-first-light-first-strike"
         ],
         "rationale": "Paired Intelligence and Instinct share one group, while one shared activation grants specifically named First-Strike to both other allies without Control aliasing."
+      }
+    },
+    {
+      "dragonId": "moondancer",
+      "abilityId": "moondancer-crescent-blade",
+      "abilityKind": "command",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "moondancer-crescent-blade-physical",
+          "moondancer-rising-tide-self",
+          "moondancer-crescent-blade-trigger-payoff",
+          "moondancer-strength-payoff",
+          "moondancer-physical-payoff"
+        ],
+        "rationale": "The Command preserves one other Sentinel recipient, qualifying Tactical-or-Recovery trigger evidence, the 50% Rising Tide roll, stack defense, and even-round Strength-based Physical output."
+      }
+    },
+    {
+      "dragonId": "moondancer",
+      "abilityId": "moondancer-warriors-zeal",
+      "abilityKind": "trait",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "moondancer-warriors-zeal-self-physical",
+          "moondancer-warriors-zeal-left-stats",
+          "moondancer-warriors-zeal-vanguard"
+        ],
+        "rationale": "The Vanguard trait preserves self Physical amplification and exact Left Flank Instinct and Initiative support."
+      }
+    },
+    {
+      "dragonId": "moondancer",
+      "abilityId": "moondancer-new-moon",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "moondancer-new-moon-instinct",
+          "moondancer-new-moon-tactical",
+          "moondancer-advantage-rising-tide-payoff"
+        ],
+        "rationale": "New Moon preserves one independently selected other Sentinel, progression-aware support, a 4+ stack magnitude modifier, and the Advantage probability uplift."
+      }
+    },
+    {
+      "dragonId": "moondancer",
+      "abilityId": "moondancer-reactive-instincts",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "moondancer-reactive-instincts-instinct",
+          "moondancer-reactive-instincts-initiative"
+        ],
+        "rationale": "One grouped highest-Instinct selector governs both deterministic start-of-combat stat effects and preserves unresolved ties."
+      }
+    },
+    {
+      "dragonId": "moondancer",
+      "abilityId": "moondancer-full-moon",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "reinforces-existing",
+        "signalIds": [
+          "moondancer-crescent-blade-physical",
+          "moondancer-advantage-rising-tide-payoff"
+        ],
+        "rationale": "Full Moon augments the Command rate and contributes the second progression-aware Advantage uplift while least-troops and 4+ stack conditions remain explicit."
+      }
+    },
+    {
+      "dragonId": "moondancer",
+      "abilityId": "moondancer-blood-moon",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "moondancer-blood-moon-bleed"
+        ],
+        "rationale": "Blood Moon exposes Bleed while retaining conditional Physical amplification, 6+ stack chance uplift, two-target adjacency, duration, and unresolved roll scope."
+      }
+    },
+    {
+      "dragonId": "moondancer",
+      "abilityId": "moondancer-eclipsing-strike",
+      "abilityKind": "habit",
+      "disposition": {
+        "kind": "represented",
+        "signalIds": [
+          "moondancer-eclipsing-strike-damage-down",
+          "moondancer-eclipsing-strike-initiative-down"
+        ],
+        "rationale": "Eclipsing Strike preserves one shared activation, fixed enemy reductions, highest-troop targeting, and unresolved ties as non-scoring battlefield evidence."
       }
     },
     {
