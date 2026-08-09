@@ -17,6 +17,7 @@ import {
 import { buildFormationRecommendation } from '../services/formationRecommendation';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { SIMPLE_FORMATION_POSITIONS } from '../synergy/positionRules';
+import { isValidFormationRequirement } from '../synergy/formationRequirements';
 import { metadataOnlyDragonIds, simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import {
@@ -111,6 +112,12 @@ export interface SelectorInventoryRow {
   signalIds: string[];
 }
 
+export interface FormationRequirementInventoryRow {
+  requirement: string;
+  signalCount: number;
+  signalIds: string[];
+}
+
 export interface FormationSummaryRow {
   formation: [string, string, string];
   score: number;
@@ -160,6 +167,7 @@ export interface FullRosterAuditReport {
   perDragon: PerDragonAuditRow[];
   aliasTable: AliasAuditRow[];
   selectorInventory: SelectorInventoryRow[];
+  formationRequirementInventory: FormationRequirementInventoryRow[];
   progression: {
     stars: number[];
     levels: number[];
@@ -491,6 +499,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   );
 
   const selectorInventory = buildSelectorInventory(allSignals);
+  const formationRequirementInventory = buildFormationRequirementInventory(allSignals);
   const progressionResult = auditProgression(addCheck);
   const providerPayoffMatrix = auditProviderPayoffMatrix(addCheck);
   const formationSweep = auditFormationSweep(addCheck);
@@ -686,6 +695,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
     perDragon,
     aliasTable,
     selectorInventory,
+    formationRequirementInventory,
     progression: {
       stars: [...Array.from({ length: 10 }, (_, index) => index + 1)],
       levels: [15, 16],
@@ -808,6 +818,11 @@ function validSignalContract(signal: SynergySignal): boolean {
     !SIMPLE_FORMATION_POSITIONS.includes(signal.requiredRecipientPosition)
   )
     return false;
+  if (
+    signal.formationRequirement !== undefined &&
+    !isValidFormationRequirement(signal.formationRequirement)
+  )
+    return false;
   if (selector?.kind === 'unresolved-group' || selector?.kind === 'adjacent-group') {
     return (
       Number.isInteger(selector.recipientCount) &&
@@ -821,6 +836,26 @@ function validSignalContract(signal: SynergySignal): boolean {
     signal.abilityName.trim().length > 0 &&
     signal.description.trim().length > 0
   );
+}
+
+function buildFormationRequirementInventory(
+  signals: SynergySignal[],
+): FormationRequirementInventoryRow[] {
+  const inventory = new Map<string, string[]>();
+  for (const signal of signals) {
+    if (!signal.formationRequirement) continue;
+    const key = `${signal.formationRequirement.kind}:${signal.formationRequirement.breed}`;
+    const ids = inventory.get(key) ?? [];
+    ids.push(signal.id);
+    inventory.set(key, ids);
+  }
+  return [...inventory.entries()]
+    .map(([requirement, signalIds]) => ({
+      requirement,
+      signalCount: signalIds.length,
+      signalIds: signalIds.sort(),
+    }))
+    .sort((left, right) => left.requirement.localeCompare(right.requirement));
 }
 
 function validClaimContract(claim: PositionClaim): boolean {

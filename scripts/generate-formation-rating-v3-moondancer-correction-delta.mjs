@@ -3,13 +3,19 @@ import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const previousPath = required('--previous');
+const interimPath = required('--interim');
 const currentPath = required('--current');
 const outputPath = required('--output');
 const previous = JSON.parse(await readFile(previousPath, 'utf8'));
+const interim = JSON.parse(await readFile(interimPath, 'utf8'));
 const current = JSON.parse(await readFile(currentPath, 'utf8'));
 
-if (previous.placementCount !== 35_904 || current.placementCount !== 35_904) {
-  throw new Error('Expected two complete 0.23.5 placement snapshots (35,904 rows each).');
+if (
+  previous.placementCount !== 35_904 ||
+  interim.placementCount !== 35_904 ||
+  current.placementCount !== 35_904
+) {
+  throw new Error('Expected three complete 0.23.5 placement snapshots (35,904 rows each).');
 }
 
 const previousRows = new Map(previous.rows.map((row) => [row.formation, row]));
@@ -41,18 +47,37 @@ if (existing33ChangedPlacementCount !== 0) {
   throw new Error(`${existing33ChangedPlacementCount} existing 33-dragon placements changed.`);
 }
 
+const interimRows = new Map(interim.rows.map((row) => [row.formation, row]));
+let noSentinelInitiativeSuppressionPlacementCount = 0;
+let noSentinelExisting33ChangedPlacementCount = 0;
+for (const row of current.rows) {
+  const before = interimRows.get(row.formation);
+  if (!before) throw new Error(`Interim snapshot is missing ${row.formation}.`);
+  if (JSON.stringify(before) === JSON.stringify(row)) continue;
+  noSentinelInitiativeSuppressionPlacementCount += 1;
+  if (!row.dragons.includes('moondancer')) noSentinelExisting33ChangedPlacementCount += 1;
+}
+if (noSentinelExisting33ChangedPlacementCount !== 0) {
+  throw new Error(
+    `${noSentinelExisting33ChangedPlacementCount} existing placements changed from the interim correction.`,
+  );
+}
+
 const identityInput = {
-  contract: 'formation-rating-v3-moondancer-correction-delta-v1',
+  contract: 'formation-rating-v3-moondancer-correction-delta-v2',
   release: '0.23.5-pr-head-correction',
-  reason: 'moondancer-initiative-and-progression-aware-uplift-correction',
+  reason: 'moondancer-initiative-formation-requirement-and-progression-aware-uplift-correction',
   placementCount: current.placementCount,
   previousSnapshotIdentity: previous.snapshotIdentity,
+  interimSnapshotIdentity: interim.snapshotIdentity,
   currentSnapshotIdentity: current.snapshotIdentity,
   changedPlacementCount,
   moondancerChangedPlacementCount,
   existing33ChangedPlacementCount,
   numericChangedPlacementCount,
   relationshipChangedPlacementCount,
+  noSentinelInitiativeSuppressionPlacementCount,
+  noSentinelExisting33ChangedPlacementCount,
 };
 const report = {
   ...identityInput,

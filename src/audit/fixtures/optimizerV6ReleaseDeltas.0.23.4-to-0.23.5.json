@@ -6,7 +6,7 @@
   "currentOptimizerContract": 6,
   "formationRatingContract": "formation-rating-v3",
   "previousOptimizerArtifactIdentity": "fnv1a64:1acd71772d85f8a8",
-  "currentOptimizerArtifactIdentity": "fnv1a64:38b92faea349b548",
+  "currentOptimizerArtifactIdentity": "fnv1a64:701d3db5f5e41ffe",
   "reasonCode": "add-legendary-dragon-moondancer",
   "changedExecutionCount": 198,
   "deltas": [
@@ -10439,5 +10439,5 @@
       "reason": "add-legendary-dragon-moondancer"
     }
   ],
-  "deterministicManifestHash": "sha256:d233f49e09484e10cc724d2601ae74597ee98c2a9ea409996f7728f171c9f14c"
+  "deterministicManifestHash": "sha256:ec76aba971390ed6f8b603b112987067d63886c158fb561a79ba617281da897d"
 }

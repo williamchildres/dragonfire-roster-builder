@@ -162,6 +162,14 @@ export interface ReliabilityTargetSelectorEvidence {
   tieHandling: 'resolved-by-rule' | 'unresolved';
 }
 
+export interface ReliabilityBattleStateComparisonEvidence {
+  subject: 'self';
+  metric: 'troops';
+  comparison: 'minimum';
+  population: 'all-combatants';
+  tieHandling: 'unresolved';
+}
+
 /**
  * Production-owned facts about one semantic activation component.
  * Duration and target facts are evidence for future explanations only.
@@ -191,6 +199,7 @@ export interface AbilityReliabilityComponent {
   conditionalMagnitudeUplifts?: readonly ConditionalMagnitudeUplift[];
   stackFacts?: ReliabilityStackFacts;
   targetSelectorEvidence?: ReliabilityTargetSelectorEvidence;
+  battleStateComparisonEvidence?: ReliabilityBattleStateComparisonEvidence;
   /** Evidence-only components are intentionally excluded from numeric signal bindings. */
   researchOnly?: boolean;
   unlock?: ReliabilityUnlockRequirement;

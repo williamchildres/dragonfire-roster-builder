@@ -5,6 +5,7 @@ import type { AbilityDefinition } from '../models/dragon';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import type {
   DragonSynergyProfile,
+  FormationRequirement,
   PositionClaim,
   SignalConfidence,
   SynergySignal,
@@ -99,6 +100,7 @@ export interface FormationReliabilityAuditSignal {
   abilityKind: string;
   unlockStarRank: number | null;
   minimumDragonLevel: number | null;
+  formationRequirement: FormationRequirement | null;
   habitLevelDependent: boolean;
   currentCuratedDescription: string;
   currentConfidence: SignalConfidence;
@@ -1822,6 +1824,7 @@ function auditSignal(
     abilityKind: ability.kind,
     unlockStarRank: signal.unlock?.minimumStarRank ?? ability.unlockStarRank,
     minimumDragonLevel: signal.unlock?.minimumDragonLevel ?? ability.minimumDragonLevel,
+    formationRequirement: signal.formationRequirement ?? null,
     habitLevelDependent: chance
       ? hasHabitLevelProbabilityValue(chance.probability)
       : ability.kind === 'habit',

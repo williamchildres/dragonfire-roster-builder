@@ -10,7 +10,7 @@
 - Coverage remains: 34 dragons, 238 abilities, 256 curated signals, 32736 ordered formations, 5425 provider/payoff pairs.
 - Baseline comparison covers 26970 formations composed only of the prior 31 dragons; 5766 formations include Sunfyre or Tairax and have no prior-row counterpart.
 - Validation: 32 PASS checks, 0 failed checks, 2 informational/unresolved findings.
-- Runtime: 7612 ms; prior audit 12838 ms; delta -5226 ms.
+- Runtime: 9955 ms; prior audit 12838 ms; delta -2883 ms.
 
 ## Public contract
 

@@ -73,6 +73,11 @@ export interface ProgressionRequirement {
   minimumDragonLevel?: number;
 }
 
+export type FormationRequirement = {
+  kind: 'other-ally-breed-present';
+  breed: DragonBreed;
+};
+
 export interface DragonProgression {
   starRank?: number | null;
   dragonLevel?: number | null;
@@ -97,6 +102,8 @@ export interface SynergySignal {
   providerSelector?: FriendlyRecipientSelector;
   /** The provider only needs to establish the condition somewhere in the formation. */
   providerPresenceSatisfies?: boolean;
+  /** Formation state required for this signal's mechanic to have an eligible downstream use. */
+  formationRequirement?: FormationRequirement;
   nonScoring?: boolean;
   supportOnly?: boolean;
   friendlyScope?: SimpleFriendlyScope;

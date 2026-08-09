@@ -9,6 +9,7 @@ import { buildTargetingResolutionFindings } from '../services/formationFindings'
 import { createEmptyRoster, loadRoster, saveRoster } from '../services/rosterStorage';
 import { evaluateFormation, evaluateFormationCandidates } from '../synergy/evaluateFormation';
 import { simpleSynergyProfiles } from '../synergy/profiles';
+import { signalTargetsRecipient } from '../synergy/recipientSelectors';
 import {
   evaluateBindingReliability,
   evaluateFormationRelationshipsV3,
@@ -234,20 +235,75 @@ describe('Moondancer reliability and magnitude evidence', () => {
     });
   });
 
-  it('maps Initiative from New Moon at 2 Stars and retains Eclipsing Strike at 10 Stars without duplicate credit', () => {
+  it('requires another Sentinel for the 2-Star New Moon Initiative payoff', () => {
+    const current = formation('vhagar', 'caraxes', 'moondancer');
+    const selectedProfiles = profiles(['moondancer', 'vhagar', 'caraxes']);
+    const progression = simpleProgression(
+      ['moondancer', 'vhagar', 'caraxes'],
+      { moondancer: 2 },
+    );
+    const evaluated = evaluateFormationCandidates({
+      formation: current,
+      progression,
+      profiles: selectedProfiles,
+    });
+    const caraxes = selectedProfiles.find(({ dragonId }) => dragonId === 'caraxes')!;
+    const initiativeSupport = caraxes.supports.find(
+      ({ id }) => id === 'caraxes-hunters-wrath-right-stats',
+    )!;
+    expect(signalTargetsRecipient({
+      provider: { dragonId: 'caraxes', position: 'vanguard' },
+      signal: initiativeSupport,
+      recipient: { dragonId: 'moondancer', position: 'right-flank' },
+      selected: [
+        { dragonId: 'vhagar', position: 'left-flank' },
+        { dragonId: 'caraxes', position: 'vanguard' },
+        { dragonId: 'moondancer', position: 'right-flank' },
+      ],
+      progression,
+    })).toBe(true);
+    expect(evaluated.targetingResolutions.find(
+      ({ selectionGroupId }) => selectionGroupId === 'moondancer-new-moon-sentinel-recipient',
+    )).toMatchObject({
+      status: 'unresolved',
+      unresolvedReason: 'no-eligible-breed-candidates',
+      priorityRecipientIds: [],
+    });
+    expect(evaluated.candidates.some(({ beneficiarySignalId }) =>
+      beneficiarySignalId === 'moondancer-new-moon-initiative-payoff'
+    )).toBe(false);
+    expect(evaluateFormationRelationshipsV3({
+      input: {
+        formation: current,
+        progression,
+        reliabilityProgression: reliabilityProgression(
+          ['moondancer', 'vhagar', 'caraxes'],
+          1,
+          { moondancer: 2 },
+        ),
+      },
+      profiles: selectedProfiles,
+    }).filter(({ providerDragonId, beneficiaryDragonId, semanticTag }) =>
+      providerDragonId === 'caraxes' &&
+      beneficiaryDragonId === 'moondancer' &&
+      semanticTag === 'stat:initiative'
+    )).toHaveLength(0);
+  });
+
+  it('activates New Moon Initiative with one Sentinel from 2 Stars', () => {
     const current = formation('vesper', 'caraxes', 'moondancer');
     const selectedProfiles = profiles(['moondancer', 'vesper', 'caraxes']);
-    const relationshipsAt = (starRank: number) => evaluateFormationRelationshipsV3({
+    const relationship = evaluateFormationRelationshipsV3({
       input: {
         formation: current,
         progression: simpleProgression(
           ['moondancer', 'vesper', 'caraxes'],
-          { moondancer: starRank },
+          { moondancer: 2 },
         ),
         reliabilityProgression: reliabilityProgression(
           ['moondancer', 'vesper', 'caraxes'],
           1,
-          { moondancer: starRank },
+          { moondancer: 2 },
         ),
       },
       profiles: selectedProfiles,
@@ -255,25 +311,113 @@ describe('Moondancer reliability and magnitude evidence', () => {
       providerDragonId === 'caraxes' &&
       beneficiaryDragonId === 'moondancer' &&
       semanticTag === 'stat:initiative',
-    );
-
-    const atTwo = relationshipsAt(2);
-    expect(atTwo).toHaveLength(1);
-    expect(atTwo[0]!.candidateTraces).toHaveLength(1);
-    expect(atTwo[0]!.candidateTraces[0]!.candidate.beneficiarySignalId).toBe(
+    )[0]!;
+    expect(relationship.candidateTraces).toHaveLength(1);
+    expect(relationship.candidateTraces[0]!.candidate.beneficiarySignalId).toBe(
       'moondancer-new-moon-initiative-payoff',
     );
-    expect(atTwo[0]!.quantification).toMatchObject({ status: 'quantified', reliability: 1 });
+    expect(relationship.quantification).toMatchObject({ status: 'quantified', reliability: 1 });
+  });
 
-    const atTen = relationshipsAt(10);
-    expect(atTen).toHaveLength(1);
-    expect(atTen[0]!.candidateTraces.map((trace) => trace.candidate.beneficiarySignalId)).toEqual(
+  it('keeps New Moon Initiative active with two unresolved Sentinel recipients', () => {
+    const current = formation('vesper', 'dawnseeker', 'moondancer');
+    const selectedProfiles = profiles(['moondancer', 'vesper', 'dawnseeker']);
+    const progression = simpleProgression(
+      ['moondancer', 'vesper', 'dawnseeker'],
+      { moondancer: 2 },
+    );
+    const evaluated = evaluateFormationCandidates({
+      formation: current,
+      progression,
+      profiles: selectedProfiles,
+    });
+    expect(evaluated.targetingResolutions.find(
+      ({ selectionGroupId }) => selectionGroupId === 'moondancer-new-moon-sentinel-recipient',
+    )).toMatchObject({
+      status: 'unresolved',
+      unresolvedReason: 'multiple-eligible-breed-candidates',
+      priorityRecipientIds: ['dawnseeker', 'vesper'],
+    });
+    const relationships = evaluateFormationRelationshipsV3({
+      input: {
+        formation: current,
+        progression,
+        reliabilityProgression: reliabilityProgression(
+          ['moondancer', 'vesper', 'dawnseeker'],
+          1,
+          { moondancer: 2 },
+        ),
+      },
+      profiles: selectedProfiles,
+    }).filter(({ providerDragonId, beneficiaryDragonId, semanticTag }) =>
+      providerDragonId === 'dawnseeker' &&
+      beneficiaryDragonId === 'moondancer' &&
+      semanticTag === 'stat:initiative'
+    );
+    expect(relationships).toHaveLength(1);
+    expect(relationships[0]!.selectedBeneficiarySignalId).toBe(
+      'moondancer-new-moon-initiative-payoff',
+    );
+    expect(relationships[0]!.quantification).toMatchObject({ status: 'quantified', reliability: 1 });
+  });
+
+  it('uses only Eclipsing Strike at 10 Stars when no Sentinel is present', () => {
+    const current = formation('vhagar', 'caraxes', 'moondancer');
+    const selectedProfiles = profiles(['moondancer', 'vhagar', 'caraxes']);
+    const relationship = evaluateFormationRelationshipsV3({
+      input: {
+        formation: current,
+        progression: simpleProgression(['moondancer', 'vhagar', 'caraxes']),
+        reliabilityProgression: reliabilityProgression(
+          ['moondancer', 'vhagar', 'caraxes'],
+        ),
+      },
+      profiles: selectedProfiles,
+    }).find(({ providerDragonId, beneficiaryDragonId, semanticTag }) =>
+      providerDragonId === 'caraxes' &&
+      beneficiaryDragonId === 'moondancer' &&
+      semanticTag === 'stat:initiative'
+    )!;
+    expect(relationship.candidateTraces.map(
+      (trace) => trace.candidate.beneficiarySignalId,
+    )).toEqual(['moondancer-eclipsing-strike-initiative-payoff']);
+    expect(relationship.selectedBeneficiarySignalId).toBe(
+      'moondancer-eclipsing-strike-initiative-payoff',
+    );
+    expect(relationship.quantification).toMatchObject({
+      status: 'unquantified',
+      reason: 'probability-context-unresolved',
+      conditionalProbabilities: [0.2, 0.4],
+    });
+  });
+
+  it('deduplicates New Moon and Eclipsing Strike at 10 Stars when a Sentinel is present', () => {
+    const current = formation('vesper', 'caraxes', 'moondancer');
+    const selectedProfiles = profiles(['moondancer', 'vesper', 'caraxes']);
+    const relationship = evaluateFormationRelationshipsV3({
+      input: {
+        formation: current,
+        progression: simpleProgression(['moondancer', 'vesper', 'caraxes']),
+        reliabilityProgression: reliabilityProgression(['moondancer', 'vesper', 'caraxes']),
+      },
+      profiles: selectedProfiles,
+    }).filter(({ providerDragonId, beneficiaryDragonId, semanticTag }) =>
+      providerDragonId === 'caraxes' &&
+      beneficiaryDragonId === 'moondancer' &&
+      semanticTag === 'stat:initiative'
+    );
+
+    expect(relationship).toHaveLength(1);
+    expect(relationship[0]!.candidateTraces.map((trace) => trace.candidate.beneficiarySignalId)).toEqual(
       expect.arrayContaining([
         'moondancer-new-moon-initiative-payoff',
         'moondancer-eclipsing-strike-initiative-payoff',
       ]),
     );
-    expect(atTen[0]!.adjustedMarginalValue).toBe(atTwo[0]!.adjustedMarginalValue);
+    expect(relationship[0]!.selectedBeneficiarySignalId).toBe(
+      'moondancer-new-moon-initiative-payoff',
+    );
+    expect(relationship[0]!.quantification).toMatchObject({ status: 'quantified', reliability: 1 });
   });
 
   it('keeps one Strength relationship while acknowledging Reactive Instincts', () => {
@@ -302,7 +446,18 @@ describe('Moondancer reliability and magnitude evidence', () => {
     expect(components.get('moondancer-crescent-blade:physical-damage')?.conditionalMagnitudeUplifts?.[0]).toMatchObject({ baseline: 0.75, conditioned: { byLevel: { '1': 0.85, '5': 1.2 } } });
     expect(components.get('moondancer-full-moon:four-stack-damage-rate')?.conditionalMagnitudeUplifts?.[0]).toMatchObject({ modifier: { kind: 'multiplier', value: 2 }, conditioned: { byLevel: { '1': 1.7, '5': 2.4 } } });
     expect(components.get('moondancer-new-moon:sentinel-support')?.conditionalMagnitudeUplifts).toHaveLength(2);
-    expect(components.get('moondancer-full-moon:least-troops-stack')).toMatchObject({ reliabilityClass: 'conditional-deterministic', researchOnly: true, targetSelectorEvidence: { order: 'lowest', stat: 'troops', tieHandling: 'unresolved' } });
+    expect(components.get('moondancer-full-moon:least-troops-stack')).toMatchObject({
+      reliabilityClass: 'conditional-deterministic',
+      researchOnly: true,
+      battleStateComparisonEvidence: {
+        subject: 'self',
+        metric: 'troops',
+        comparison: 'minimum',
+        population: 'all-combatants',
+        tieHandling: 'unresolved',
+      },
+    });
+    expect(components.get('moondancer-full-moon:least-troops-stack')?.targetSelectorEvidence).toBeUndefined();
   });
 
   it('keeps Blood Moon Bleed multi-target roll scope unresolved and doubles all levels at 6+ stacks', () => {
@@ -340,9 +495,11 @@ describe('Moondancer roster and optimizer compatibility', () => {
     });
     expect(correctionDelta).toMatchObject({
       placementCount: 35_904,
-      changedPlacementCount: 2_001,
-      moondancerChangedPlacementCount: 2_001,
+      changedPlacementCount: 1_593,
+      moondancerChangedPlacementCount: 1_593,
       existing33ChangedPlacementCount: 0,
+      noSentinelInitiativeSuppressionPlacementCount: 1_095,
+      noSentinelExisting33ChangedPlacementCount: 0,
     });
   });
 

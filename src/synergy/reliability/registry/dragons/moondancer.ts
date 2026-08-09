@@ -80,8 +80,8 @@ export const moondancerReliabilityRegistry = defineDragonReliabilityRegistry({
     },
     {
       id: 'moondancer-full-moon:least-troops-stack', sourceAbilityId: 'moondancer-full-moon', sourceAbilityKind: 'habit', reliabilityClass: 'conditional-deterministic', opportunityPresence: 'not-applicable', timing: { kind: 'conditional-event', condition: 'On Rounds 6, 8, and 10, Moondancer has the least troops of all combatants.' }, opportunityCount: { kind: 'not-applicable' }, rollScope: 'not-applicable', independence: 'not-applicable', unlock: { minimumStarRank: 6 }, researchOnly: true,
-      targetSelectorEvidence: { population: 'friendly', stat: 'troops', order: 'lowest', recipientCount: 1, includeSelf: true, tieHandling: 'unresolved' },
-      evidence: { verificationStatus: 'verified', evidenceIds: ['moondancer-full-moon-2026-08-09'], unresolvedQuestions: deterministicConditionQuestions, reviewNote: 'This additional stack can coexist with a successful chance-based stack; no mutual exclusion is stated.' },
+      battleStateComparisonEvidence: { subject: 'self', metric: 'troops', comparison: 'minimum', population: 'all-combatants', tieHandling: 'unresolved' },
+      evidence: { verificationStatus: 'verified', evidenceIds: ['moondancer-full-moon-2026-08-09'], unresolvedQuestions: [...deterministicConditionQuestions, 'Tie handling is unresolved when multiple combatants share the least troops.'], reviewNote: 'This additional stack can coexist with a successful chance-based stack; no mutual exclusion is stated.' },
     },
     {
       id: 'moondancer-full-moon:four-stack-damage-rate', sourceAbilityId: 'moondancer-full-moon', sourceAbilityKind: 'habit', reliabilityClass: 'conditional-deterministic', opportunityPresence: 'not-applicable', timing: { kind: 'conditional-event', condition: 'Moondancer has 4+ Rising Tide stacks.' }, opportunityCount: { kind: 'not-applicable' }, rollScope: 'not-applicable', independence: 'not-applicable', unlock: { minimumStarRank: 6 }, researchOnly: true,

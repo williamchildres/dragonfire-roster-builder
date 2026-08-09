@@ -1,6 +1,6 @@
 # Optimizer v6 audit — 0.23.5
 
-- Generated: 2026-08-09T18:43:01.681Z
+- Generated: 2026-08-09T21:35:10.683Z
 - Contract: 6 / formation-rating-v3 / best-overall-v1
 - Execution records: 198
 - Independent candidate-pool builds: 6
@@ -15,15 +15,15 @@
 - Approved-delta manifest: `sha256:0e3a22029d39195b28b662222aa4f32a9dea807ecd2fabdd166dc32e87dbfc91`
 - Exact historical-delta contract valid: true
 - Approved 0.23.4 → 0.23.5 release deltas: 198
-- Release-delta manifest: `sha256:d233f49e09484e10cc724d2601ae74597ee98c2a9ea409996f7728f171c9f14c`
+- Release-delta manifest: `sha256:ec76aba971390ed6f8b603b112987067d63886c158fb561a79ba617281da897d`
 - Failed checks: 0
-- Deterministic audit hash: `fnv1a64:38b92faea349b548`
+- Deterministic audit hash: `fnv1a64:701d3db5f5e41ffe`
 
 ## Maximum Node telemetry
 
-- Candidate generation: 8184.03 ms
-- Solver: 151662.444 ms
-- Total: 157410.426 ms
+- Candidate generation: 6960.36 ms
+- Solver: 146142.208 ms
+- Total: 151363.207 ms
 - Solver passes: 534
 - Exact-search nodes: 19569
 - Model builds: 1

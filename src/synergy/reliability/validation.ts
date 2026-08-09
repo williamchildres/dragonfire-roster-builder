@@ -375,7 +375,31 @@ function validateComponent(
   validateTiming(component, path, issues);
   validateOpportunityCount(component, path, issues);
   validateNumericEvidenceFacts(component, path, issues);
+  validateBattleStateComparisonEvidence(component, path, issues);
   validateEvidence(component, path, issues);
+}
+
+function validateBattleStateComparisonEvidence(
+  component: AbilityReliabilityComponent,
+  path: string,
+  issues: ReliabilityValidationIssue[],
+): void {
+  const comparison = component.battleStateComparisonEvidence;
+  if (!comparison) return;
+  if (
+    comparison.subject !== 'self' ||
+    comparison.metric !== 'troops' ||
+    comparison.comparison !== 'minimum' ||
+    comparison.population !== 'all-combatants' ||
+    comparison.tieHandling !== 'unresolved'
+  ) {
+    addIssue(
+      issues,
+      'component.battle-state-comparison-invalid',
+      `${path}.battleStateComparisonEvidence`,
+      'Battle-state comparison evidence must describe self having minimum troops among all combatants with unresolved ties.',
+    );
+  }
 }
 
 function validateComponentAbility(

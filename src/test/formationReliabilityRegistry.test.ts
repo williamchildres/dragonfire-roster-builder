@@ -318,10 +318,10 @@ describe('production Formation Reliability registry', () => {
       [...registryAudit.researchParityDifferences].map((difference) => difference.kind).sort(),
     );
     expect(registryAudit.deterministicRegistryHash).toBe(
-      '3c995038f50606d9dc6470976021e1c717c1963ebb21c782455c78cf9652fab0',
+      '246bbef69594d91df916378e5a92755392108caff8b659b8ea977c1535480d6e',
     );
     expect(runFormationReliabilityAudit().deterministicHash).toBe(
-      'd2b662b302414611ab4bb03a0997f592fdb4482a79d6a191d6f26bd89977af21',
+      '332856d0d08eaf8922b589d28c8c521c2a2ba3d1e329881ee9137667bdf11ba0',
     );
   });
 

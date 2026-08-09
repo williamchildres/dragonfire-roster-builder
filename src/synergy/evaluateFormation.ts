@@ -7,6 +7,7 @@ import {
   type RecipientCandidate,
 } from './recipientSelectors';
 import { tagSatisfies, type SynergyTag } from './tags';
+import { formationRequirementSatisfied } from './formationRequirements';
 import {
   explainAmplifierOutput,
   explainMissingEnabler,
@@ -341,6 +342,21 @@ function addRelationshipCandidate(
   tagMatch: SynergyTagMatch,
 ): void {
   if (provider.profile.dragonId === beneficiary.profile.dragonId) {
+    return;
+  }
+
+  if (
+    !formationRequirementSatisfied({
+      requirement: providerSignal.formationRequirement,
+      ownerDragonId: provider.profile.dragonId,
+      formation: input.formation,
+    }) ||
+    !formationRequirementSatisfied({
+      requirement: beneficiarySignal.formationRequirement,
+      ownerDragonId: beneficiary.profile.dragonId,
+      formation: input.formation,
+    })
+  ) {
     return;
   }
 

@@ -221,9 +221,9 @@
         "powerSpread": 50390
       },
       "telemetry": {
-        "candidateGenerationMs": 4752.707,
-        "solverMs": 12.919,
-        "totalMs": 4765.626,
+        "candidateGenerationMs": 3724.936,
+        "solverMs": 13.609,
+        "totalMs": 3738.545,
         "solverPasses": 11,
         "exactSearchNodes": 17391,
         "modelBuilds": 0,
@@ -422,9 +422,9 @@
         "powerSpread": 55980
       },
       "telemetry": {
-        "candidateGenerationMs": 4752.707,
-        "solverMs": 2.763,
-        "totalMs": 4755.47,
+        "candidateGenerationMs": 3724.936,
+        "solverMs": 2.793,
+        "totalMs": 3727.729,
         "solverPasses": 11,
         "exactSearchNodes": 5456,
         "modelBuilds": 0,
@@ -623,9 +623,9 @@
         "powerSpread": 1680
       },
       "telemetry": {
-        "candidateGenerationMs": 4752.707,
-        "solverMs": 57311.258,
-        "totalMs": 62063.965,
+        "candidateGenerationMs": 3724.936,
+        "solverMs": 52871.331,
+        "totalMs": 56596.267,
         "solverPasses": 313,
         "exactSearchNodes": 69,
         "modelBuilds": 1,

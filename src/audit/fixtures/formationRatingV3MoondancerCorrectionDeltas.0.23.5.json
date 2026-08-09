@@ -1,14 +1,17 @@
 {
-  "contract": "formation-rating-v3-moondancer-correction-delta-v1",
+  "contract": "formation-rating-v3-moondancer-correction-delta-v2",
   "release": "0.23.5-pr-head-correction",
-  "reason": "moondancer-initiative-and-progression-aware-uplift-correction",
+  "reason": "moondancer-initiative-formation-requirement-and-progression-aware-uplift-correction",
   "placementCount": 35904,
   "previousSnapshotIdentity": "sha256:4c733103a31ef5c3747fdfecaaa3c223ea1cbb8003634ad3d3628ddd2c69764d",
-  "currentSnapshotIdentity": "sha256:4e695d5c106bec70174afbe673d562da51c52c31844aabb07fb97b53c4cb7a4d",
-  "changedPlacementCount": 2001,
-  "moondancerChangedPlacementCount": 2001,
+  "interimSnapshotIdentity": "sha256:4e695d5c106bec70174afbe673d562da51c52c31844aabb07fb97b53c4cb7a4d",
+  "currentSnapshotIdentity": "sha256:423ee44d186ff842db5d500306c20a191bba13a4bfd25b5927159c1998766193",
+  "changedPlacementCount": 1593,
+  "moondancerChangedPlacementCount": 1593,
   "existing33ChangedPlacementCount": 0,
-  "numericChangedPlacementCount": 2001,
+  "numericChangedPlacementCount": 906,
   "relationshipChangedPlacementCount": 1359,
-  "deterministicManifestHash": "sha256:60426a3a31cd26e18a85784f32c2ff8e3100e2a45923ed1ede0a26f43fb7a7bd"
+  "noSentinelInitiativeSuppressionPlacementCount": 1095,
+  "noSentinelExisting33ChangedPlacementCount": 0,
+  "deterministicManifestHash": "sha256:281078aa16075eff4c7178dacdf32aa164e6321cb069b71a8077053c4bd52430"
 }
