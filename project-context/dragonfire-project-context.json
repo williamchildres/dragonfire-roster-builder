@@ -1,11 +1,11 @@
 {
   "format": "dragonfire-lab-project-context",
   "contextVersion": 3,
-  "generatedAt": "2026-08-09T19:02:27.998Z",
+  "generatedAt": "2026-08-09T21:42:23.488Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
     "branch": "feature/add-moondancer",
-    "commit": "e3c332047381149350fe4bc00726c4c74e2e4734",
+    "commit": "5b46fa5db5c9f13e818775a80129ea2763c54cc0",
     "databaseVersion": "0.23.5",
     "dataSchemaVersion": 14,
     "localRosterSchemaVersion": 5,
@@ -13093,9 +13093,13 @@
             "tag": "stat:initiative",
             "abilityId": "moondancer-new-moon",
             "abilityName": "New Moon",
-            "description": "Initiative enhances New Moon's Instinct support",
+            "description": "Initiative enhances New Moon's Instinct support when another allied Sentinel is present to receive it",
             "unlock": {
               "minimumStarRank": 2
+            },
+            "formationRequirement": {
+              "kind": "other-ally-breed-present",
+              "breed": "Sentinel"
             },
             "friendlyScope": "formation",
             "confidence": "verified"

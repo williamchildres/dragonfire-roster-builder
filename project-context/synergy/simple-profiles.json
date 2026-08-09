@@ -4058,9 +4058,13 @@
         "tag": "stat:initiative",
         "abilityId": "moondancer-new-moon",
         "abilityName": "New Moon",
-        "description": "Initiative enhances New Moon's Instinct support",
+        "description": "Initiative enhances New Moon's Instinct support when another allied Sentinel is present to receive it",
         "unlock": {
           "minimumStarRank": 2
+        },
+        "formationRequirement": {
+          "kind": "other-ally-breed-present",
+          "breed": "Sentinel"
         },
         "friendlyScope": "formation",
         "confidence": "verified"

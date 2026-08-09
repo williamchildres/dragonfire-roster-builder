@@ -1,8 +1,8 @@
 # Dragonfire Roster Lab Project Context
 
-Generated: 2026-08-09T19:02:27.998Z
+Generated: 2026-08-09T21:42:23.488Z
 Branch: feature/add-moondancer
-Commit: e3c332047381149350fe4bc00726c4c74e2e4734
+Commit: 5b46fa5db5c9f13e818775a80129ea2763c54cc0
 
 Dragonfire Roster Lab is a curated dragon knowledge base and transparent tag-and-position formation recommender. It is not a combat simulator.
 
