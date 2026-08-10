@@ -45,10 +45,10 @@ describe('Dragonfire Lab app', () => {
     render(<App />);
 
     await openAddDragon(user);
-    expect(screen.getByText(/showing 33 of 33 dragons/i)).toBeInTheDocument();
+    expect(screen.getByText(/showing 34 of 34 dragons/i)).toBeInTheDocument();
 
     await user.type(screen.getByLabelText(/search by dragon name/i), 'Syrax');
-    expect(screen.getByText(/showing 1 of 33 dragons/i)).toBeInTheDocument();
+    expect(screen.getByText(/showing 1 of 34 dragons/i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Syrax' })).toBeInTheDocument();
   });
 
@@ -221,11 +221,11 @@ describe('Dragonfire Lab app', () => {
     expect(screen.queryByText('Choose Your Optimizer Strategy')).not.toBeInTheDocument();
     expect(screen.queryByText('Private by design')).not.toBeInTheDocument();
     const datasetStatus = screen.getByLabelText('Dataset status');
-    expect(datasetStatus).toHaveTextContent('33 / 33');
-    expect(datasetStatus).toHaveTextContent('231');
-    expect(datasetStatus).toHaveTextContent('33');
+    expect(datasetStatus).toHaveTextContent('34 / 34');
+    expect(datasetStatus).toHaveTextContent('238');
+    expect(datasetStatus).toHaveTextContent('34');
     expect(screen.getByText('Recent Update')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Version 0.23.4' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Version 0.23.5' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /view all updates/i })).toHaveAttribute('href', '/updates');
 
     await user.click(screen.getByRole('link', { name: /^about$/i }));
@@ -238,11 +238,11 @@ describe('Dragonfire Lab app', () => {
     expect(screen.queryByText(/All 31 known dragons/i)).not.toBeInTheDocument();
 
     const methodologyMetrics = screen.getByLabelText('Methodology at a glance');
-    expect(methodologyMetrics).toHaveTextContent('33');
-    expect(methodologyMetrics).toHaveTextContent('231');
-    expect(methodologyMetrics).toHaveTextContent('239');
-    expect(methodologyMetrics).toHaveTextContent('32,736');
-    expect(methodologyMetrics).toHaveTextContent('5,456');
+    expect(methodologyMetrics).toHaveTextContent('34');
+    expect(methodologyMetrics).toHaveTextContent('238');
+    expect(methodologyMetrics).toHaveTextContent('256');
+    expect(methodologyMetrics).toHaveTextContent('35,904');
+    expect(methodologyMetrics).toHaveTextContent('5,984');
     expect(methodologyMetrics).toHaveTextContent('500+');
 
     const aiSection = screen.getByRole('heading', { name: 'Why this is different from asking AI for formations' }).closest('section');

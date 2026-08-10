@@ -4,13 +4,13 @@ import type { AbilityDefinition } from '../models/dragon';
 import { BREEDS, RARITIES, TROOP_TYPES } from '../models/dragon';
 
 describe('seeded dragon data integrity', () => {
-  it('contains exactly 33 seeded dragons and keeps unsupported combat data unknown', () => {
-    const combatDragonIds = new Set(['sunfyre', 'tairax', 'syrax', 'vhagar', 'caraxes', 'seasmoke', 'solstryker', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax', 'feskar', 'rhysarion', 'shadowsong', 'tashix', 'velar', 'zivern', 'antares', 'shimmer', 'jagadrix', 'bevlorin', 'shadowrend', 'thunderstrike', 'vesper', 'arulix', 'nyrena', 'dawnseeker', 'arrax', 'tessarion']);
+  it('contains exactly 34 seeded dragons and keeps unsupported combat data unknown', () => {
+    const combatDragonIds = new Set(['sunfyre', 'tairax', 'syrax', 'vhagar', 'caraxes', 'seasmoke', 'solstryker', 'crimson', 'kalspire', 'malachite', 'venator', 'daemoros', 'vaeldra', 'sheepstealer', 'vermax', 'feskar', 'rhysarion', 'shadowsong', 'tashix', 'velar', 'zivern', 'antares', 'shimmer', 'jagadrix', 'bevlorin', 'shadowrend', 'thunderstrike', 'vesper', 'arulix', 'nyrena', 'dawnseeker', 'arrax', 'tessarion', 'moondancer']);
 
-    expect(dragons).toHaveLength(33);
-    expect(new Set(dragons.map((dragon) => dragon.id))).toHaveLength(33);
-    expect(new Set(dragons.map((dragon) => dragon.slug))).toHaveLength(33);
-    expect(new Set(dragons.map((dragon) => dragon.name))).toHaveLength(33);
+    expect(dragons).toHaveLength(34);
+    expect(new Set(dragons.map((dragon) => dragon.id))).toHaveLength(34);
+    expect(new Set(dragons.map((dragon) => dragon.slug))).toHaveLength(34);
+    expect(new Set(dragons.map((dragon) => dragon.name))).toHaveLength(34);
     expect(dragons.filter((dragon) => dragon.rarity === 'Epic')).toHaveLength(11);
 
     for (const dragon of dragons) {
@@ -42,7 +42,7 @@ describe('seeded dragon data integrity', () => {
     const newNames = dragons.filter((dragon) => dragon.isNew).map((dragon) => dragon.name);
 
     expect(newNames.sort()).toEqual(
-      ['Arrax', 'Arulix', 'Daemoros', 'Dawnseeker', 'Feskar', 'Nyrena', 'Rhysarion', 'Shadowsong', 'Sheepstealer', 'Sunfyre', 'Tairax', 'Tessarion', 'Vaeldra', 'Vermax'].sort(),
+      ['Arrax', 'Arulix', 'Daemoros', 'Dawnseeker', 'Feskar', 'Moondancer', 'Nyrena', 'Rhysarion', 'Shadowsong', 'Sheepstealer', 'Sunfyre', 'Tairax', 'Tessarion', 'Vaeldra', 'Vermax'].sort(),
     );
   });
 

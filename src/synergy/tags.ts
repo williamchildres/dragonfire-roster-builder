@@ -20,6 +20,9 @@ export const SYNERGY_TAGS = [
   'damage:any',
   'effect:recovery',
   'effect:recovery-received',
+  'effect:enemy-debuff',
+  'effect:self-stack',
+  'trigger:tactical-or-recovery',
   'defense:damage-received',
   'defense:physical-damage-received',
   'stat:strength',
@@ -52,6 +55,9 @@ export const SYNERGY_TAG_LABELS: Record<SynergyTag, string> = {
   'damage:any': 'Damage Dealt',
   'effect:recovery': 'Recovery',
   'effect:recovery-received': 'Recovery Received',
+  'effect:enemy-debuff': 'Enemy debuff',
+  'effect:self-stack': 'Self stack mechanic',
+  'trigger:tactical-or-recovery': 'Tactical Damage or Recovery trigger',
   'defense:damage-received': 'Damage Received reduction',
   'defense:physical-damage-received': 'Physical Damage Received reduction',
   'stat:strength': 'Strength',
@@ -78,6 +84,12 @@ export function categoryTagsFor(tag: SynergyTag): SynergyTag[] {
 }
 
 export function tagSatisfies(providerTag: SynergyTag, beneficiaryTag: SynergyTag): boolean {
+  if (
+    beneficiaryTag === 'trigger:tactical-or-recovery' &&
+    (providerTag === 'damage:tactical' || providerTag === 'effect:recovery')
+  ) {
+    return true;
+  }
   return providerTag === beneficiaryTag || categoryTagsFor(providerTag).includes(beneficiaryTag);
 }
 

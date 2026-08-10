@@ -9,9 +9,9 @@ Public site: https://dragonfirelab.com/overview
 ## Current Features
 
 - A compact, filterable My Roster workspace with selectable owned-dragon rows, current Estimated Power high-to-low sorting, one dedicated editor, a focused phone list/editor flow, and an Add All Dragons convenience action.
-- Full raw Command, Trait, and Habit wording for all 33 known dragons.
-- Curated simple synergy profiles for all 33 known dragons.
-- Complete detailed coverage for all 33 dragons and 231 abilities.
+- Full raw Command, Trait, and Habit wording for all 34 known dragons.
+- Curated simple synergy profiles for all 34 known dragons.
+- Complete detailed coverage for all 34 dragons and 238 abilities.
 - Owned / Hatched roster tracking with Star Rank, Dragon Level, notes, and Habit Levels.
 - Read-only Estimated Power v2 diagnostics for roster dragons and complete formations, using 59 provenance observations and support-aware rarity-specific Star-plus-Level curves.
 - Optional production-configured Google OAuth, email/password, password recovery, and email magic-link account sign-in through Supabase; local-only use remains fully supported.
@@ -52,7 +52,7 @@ Blazing Fury uses one shared `capability-priority-one` recipient selection for F
 
 Active Synergy caps conditional payoff at 30, output amplification at 30, and stat support at 15, then adds +5 when all three dragons participate or +2 when exactly two participate. Placement Effectiveness evaluates all six Left Flank/Vanguard/Right Flank assignments for the same trio. A placement improvement is meaningful only when it reaches both +5 relationship value and a 10% relative gain; otherwise Placement Effectiveness remains 20. A meaningful loss scores `round(20 × current relationship value / best relationship value)`. Missing enablers, unsupported outputs, unused support, alternative Vanguard Traits, and future unlocks explain gaps without another hidden deduction.
 
-The v3 tiers are calibrated independently from the complete 33-dragon distribution: Excellent ≥66, Strong ≥53, Solid ≥34, Developing ≥5, and Weak below 5. The exhaustive audit covers 32,736 ordered placements. Incomplete is reserved for invalid, duplicate, or partial selections and has no numeric score. The rating remains deterministic and explainable; unresolved joint chance behavior, battle-state conditions, or missing progression stay explicitly unquantified rather than being guessed.
+The v3 tiers use the established thresholds across the complete 34-dragon distribution: Excellent ≥66, Strong ≥53, Solid ≥34, Developing ≥5, and Weak below 5. The exhaustive audit covers 35,904 ordered placements. Incomplete is reserved for invalid, duplicate, or partial selections and has no numeric score. The rating remains deterministic and explainable; unresolved joint chance behavior, battle-state conditions, or missing progression stay explicitly unquantified rather than being guessed.
 
 Typed defensive and Recovery Received support may be presented through explicitly non-scoring simple-profile signals. Battlefield-only conditions, troop-gated effects without selected troop context, and conditional status-copy mechanics remain detailed-only. This keeps those mechanics visible without treating defense as offensive support.
 
@@ -89,7 +89,7 @@ npm run validate:context
 npm run package:context
 ```
 
-The normal full-roster audit validates all 32,736 ordered placements in memory against the unchanged public hash and the committed Markdown summary. When a complete diagnostic trace is needed, `npm run audit:full-roster:write-json` writes an ignored file under `Scratch/`; release branches do not commit duplicate full JSON traces.
+The normal current-roster audit validates all 35,904 ordered placements in memory while separately preserving the historical 32,736-placement v2 hash and committed history. When a complete diagnostic trace is needed, `npm run audit:full-roster:write-json` writes an ignored file under `Scratch/`; release branches do not commit duplicate full JSON traces.
 
 If `npm` is unavailable in the local shell, run the equivalent direct Node entry points through the installed dependencies.
 
@@ -119,4 +119,4 @@ Do not add capability outputs, modifier capabilities, traces, expected interacti
 
 ## Version Notes
 
-Current release: `0.23.4`. Source data schema: `13`. Local and cloud roster schemas remain `5`; Saved Formation Library schema is `2` with schema 1 still readable; optimizer contract remains `6`; live rating contract remains `formation-rating-v3`; troop-affinity contract is `troop-affinity-recommendation-v1`. This release corrects Vhagar's Burn payoff reliability without changing weights, comparators, Estimated Power, persistence, or troop-affinity identities. Fiery Bonds still has distinct 25% ordinary-target and 50% Burn-afflicted Taunt output variants; Burn now proves the deterministic probability uplift rather than requiring the later Taunt roll as a second relationship event. Existing saved formations remain valid and their displayed ratings may recalculate. Historical v2 and all 0.23.3 evidence remain immutable; see the [Vhagar reliability audit](docs/audits/vhagar-burn-fiery-bonds-reliability-0.23.4.md). The canonical database contains 33 dragons, 231 reviewed abilities, 33 curated profiles, and 239 curated scoring signals. The existing `user_saved_formations` table stores schema-2 JSON without a new migration.
+Current release: `0.23.5`. Source data schema: `14`. Local and cloud roster schemas remain `5`; Saved Formation Library schema is `2` with schema 1 still readable; optimizer contract remains `6`; live rating contract remains `formation-rating-v3`; troop-affinity contract is `troop-affinity-recommendation-v1`. This release adds screenshot-verified Legendary Warrior Moondancer and progression-aware conditional-uplift evidence without changing weights, comparators, Estimated Power, persistence, or troop-affinity contracts. Existing 33-dragon placements and Vhagar's fixed Fiery Bonds uplift remain unchanged. The canonical database contains 34 dragons, 238 reviewed abilities, 34 curated profiles, and 245 curated scoring signals. The existing `user_saved_formations` table stores schema-2 JSON without a new migration.

@@ -4,14 +4,14 @@ This audit covers the curated simple-synergy profiles used by the live Formation
 
 ## Coverage
 
-- Total roster: 33 dragons.
-- Detailed ability data: 33 dragons.
+- Total roster: 34 dragons.
+- Detailed ability data: 34 dragons.
 - Metadata-only and unmapped: 0 dragons.
-- Detailed abilities reviewed: 231 Commands, Traits, and Habits.
-- Curated scoring signals: 239, excluding 33 position claims.
-- Simple profiles: 33.
+- Detailed abilities reviewed: 238 Commands, Traits, and Habits.
+- Curated scoring signals: 245, excluding 9 explicitly non-scoring signals and 34 position claims.
+- Simple profiles: 34.
 
-Mapped dragons: Sunfyre, Tairax, Syrax, Vhagar, Caraxes, Seasmoke, Solstryker, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Tashix, Vaeldra, Velar, Zivern, Antares, Shimmer, Jagadrix, Bevlorin, Shadowrend, Thunderstrike, Vesper, Arulix, Nyrena, Dawnseeker, Arrax, Tessarion, Sheepstealer, Vermax.
+Mapped dragons: Sunfyre, Tairax, Syrax, Vhagar, Caraxes, Seasmoke, Solstryker, Crimson, Kalspire, Malachite, Venator, Daemoros, Feskar, Rhysarion, Shadowsong, Tashix, Vaeldra, Velar, Zivern, Antares, Shimmer, Jagadrix, Bevlorin, Shadowrend, Thunderstrike, Vesper, Arulix, Nyrena, Dawnseeker, Arrax, Tessarion, Sheepstealer, Vermax, Moondancer.
 
 Metadata-only dragons: none.
 
@@ -41,7 +41,9 @@ Release 0.23.3 gives both scoring branches of Syrax's Blazing Fury one shared `c
 
 ## Disposition Coverage
 
-All 231 detailed Commands, Traits, and Habits have exactly one disposition in `src/synergy/profileAudit.ts`. Every represented or reinforcing disposition references at least one simple profile signal; automated integrity tests derive and validate the disposition totals from source.
+All 238 detailed Commands, Traits, and Habits have exactly one disposition in `src/synergy/profileAudit.ts`. Every represented or reinforcing disposition references at least one simple profile signal; automated integrity tests derive and validate the disposition totals from source.
+
+Moondancer contributes Physical Damage and Bleed output; Vanguard-to-Left-Flank Instinct/Initiative support; one-other-Sentinel Tactical/Instinct support; unique-highest-Instinct support; and explicit Advantage plus Tactical-Damage-or-Recovery payoffs. Rising Tide and Eclipsing Strike battlefield facts remain inspectable non-scoring evidence where no teammate relationship exists. Her Crescent Blade and New Moon recipient groups are independent and unresolved ties never receive duplicate numeric credit.
 
 ## Repeated Path Aggregation
 

@@ -4,12 +4,19 @@ Recipient selectors determine whether a verified provider signal can create a re
 
 ## Existing selectors
 
-- `highest-stat` resolves only one unique leader when all relevant combat-stat values are known. Ties or missing values remain unresolved.
+- `highest-stat` resolves only one unique leader when all relevant combat-stat values are known. Ties (`highest-stat-tie`) or missing values (`missing-stat-data`) remain unresolved. Signals that describe sibling effects share a `selectionGroupId`, so both effects use the same resolved recipient.
+- `breed-one` selects one verified eligible ally of a named breed, honors `includeSelf`, and never invents a tie-break. One candidate resolves; multiple candidates remain unresolved as `multiple-eligible-breed-candidates`; no candidates produce `no-eligible-breed-candidates`.
 - `position-priority` follows a verified lane preference and its established self rule.
 - `adjacent-group` resolves only when the eligible adjacent set does not exceed the verified recipient count.
 - `unresolved-group` deliberately creates no recipient-specific relationship when the group membership rule is unknown.
 
-These contracts are unchanged in 0.23.3.
+Release 0.23.5 generalizes `highest-stat` and adds `breed-one` for Moondancer without changing the established capability-priority contract.
+
+## Moondancer selectors
+
+`moondancer-crescent-blade-recipient` and `moondancer-new-moon-recipient` are separate `breed-one` groups for one other Sentinel. Their selections are deliberately independent because the source never says the two abilities share a target. Crescent Blade's Tactical Damage and Recovery trigger branches share the Crescent Blade group, preventing sibling branches from selecting different Sentinels.
+
+`moondancer-reactive-instincts-recipient` is a grouped `highest-stat` selector for Instinct. A unique highest-Instinct ally receives both Instinct and Initiative support. A tie stays unresolved and formation order, position, ID, and power do not break it.
 
 ## Capability-priority one
 

@@ -1,6 +1,6 @@
 import historicalV5Report from '../../docs/audits/roster-optimizer-v5-0.22.0.json';
-import approvedHistoricalDeltaManifest from './fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.4.json';
-import releaseDeltaManifest from './fixtures/optimizerV6ReleaseDeltas.0.23.3-to-0.23.4.json';
+import approvedHistoricalDeltaManifest from './fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.5.json';
+import releaseDeltaManifest from './fixtures/optimizerV6ReleaseDeltas.0.23.4-to-0.23.5.json';
 import { dragons } from '../data/dragons';
 import {
   ESTIMATED_POWER_MODEL_HASH,
@@ -45,29 +45,29 @@ const protectedIdentities = {
   previousFormationRatingV3Numeric:
     '958cf36d329a6fb00c732ecf576d8020d10553d3585b136bda0493a7db754724',
   currentFormationRatingV3Numeric:
-    'f61d546147974d3049227c913cc9a4851ba9d42a76e06d727b5ee2e643603bbe',
+    '939b488ea17aac779b16c1313f6759f0bea76e0a7d9182c09f2fe32f3e9d5f86',
   previousReleaseFormationRatingV3Numeric:
     'c9c93c5a9c89f85c08df958924d3fa61cfbdae555a0c50779c7f3b37d05f9c00',
   previousFormationRatingV3:
     '215f2c669cee0c96d584b6b3014aa2f075302c644f85ec0801c70b4a6740344f',
   currentFormationRatingV3:
-    'eb069e88c3ec5bc636f12b940181492fd6f5e3dabb1007b6bd504982e05d4664',
+    '9ea93aaaac6edaf830410d59f23d88f473b30a4e41ce032a7decb260592ad01a',
   previousReleaseFormationRatingV3:
     'bceda8493e5af3ae4a805fd45dca4861b6a35e2788531699b7e65e707ed6a31a',
   previousFormationRatingV3Audit:
     '0cd7e73c6dffe528dcb738c3eeb1f7a06bf19008c62280aa2bf9a74cdbcaf94a',
   currentFormationRatingV3Audit:
-    '87ef69175aa6bb64fe4223d16a25f8e403999388160c1c0e61471d055aefc7de',
+    'abaf4ebab4ef6da6796183578f005983082343f93577e0d4b211ef422cd82efd',
   previousReleaseFormationRatingV3Audit:
     'fc21d2d75740def4a23b9deeb4a8c03712d9b1724522ab05304b109820a67f3f',
   formationRatingV2:
     '5678952ad31630f7702fc2c56c6c9c5378b2445292696e39accb58f078ba9baf',
   reliabilityRegistry:
-    '046360fadd35b809919e2cd4e6ae4cb59f537b5d4ef4d9052a1b02897af2d9e6',
+    '246bbef69594d91df916378e5a92755392108caff8b659b8ea977c1535480d6e',
   previousResearch:
     'f2984df99ea2d2cbc0b12866287cc3c03248048c86b9f5e3ffed490e0449918f',
   currentResearch:
-    'c8e025b2b5f57e5f2c19f24d802d72035e3c7663b595253de7b2712056400299',
+    '332856d0d08eaf8922b589d28c8c521c2a2ba3d1e329881ee9137667bdf11ba0',
   previousReleaseResearch:
     'f2d2b87abc803494e2f1eadd92dcd5fd79d9bcb8c389254d47b4e5f28471b73d',
   estimatedPowerObservation: ESTIMATED_POWER_OBSERVATION_HASH,
@@ -104,15 +104,15 @@ type HistoricalV5Execution = {
 };
 
 export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY =
-  'sha256:4f315d86257e481b9b8e6f582a904380158c6ca012f8edf967183a9ab4810b7c' as const;
-export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_COUNT = 78 as const;
+  'sha256:0e3a22029d39195b28b662222aa4f32a9dea807ecd2fabdd166dc32e87dbfc91' as const;
+export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_COUNT = 96 as const;
 export const OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_REASON =
-  'cumulative-formation-rating-v3-corrections-through-0.23.4' as const;
+  'cumulative-formation-rating-v3-corrections-through-0.23.5' as const;
 export const OPTIMIZER_V6_RELEASE_DELTA_MANIFEST_IDENTITY =
-  'sha256:c4a28f699030bbe3d7af4d4ae90717012ae239279b0220b567eb4fb689cc24cb' as const;
-export const OPTIMIZER_V6_RELEASE_DELTA_COUNT = 62 as const;
+  'sha256:ec76aba971390ed6f8b603b112987067d63886c158fb561a79ba617281da897d' as const;
+export const OPTIMIZER_V6_RELEASE_DELTA_COUNT = 198 as const;
 export const OPTIMIZER_V6_RELEASE_DELTA_REASON =
-  'vhagar-burn-fiery-bonds-reliability-correction' as const;
+  'add-legendary-dragon-moondancer' as const;
 
 export interface OptimizerV6ApprovedHistoricalDelta {
   key: string;
@@ -132,6 +132,7 @@ export interface OptimizerV6ApprovedHistoricalDelta {
   currentResultHash: string;
   reasonCode:
     | 'syrax-blazing-fury-recipient-correction'
+    | 'vhagar-burn-fiery-bonds-reliability-correction'
     | typeof OPTIMIZER_V6_RELEASE_DELTA_REASON;
 }
 
@@ -375,7 +376,7 @@ function createReport(
     })),
   };
   return {
-    release: '0.23.4',
+    release: '0.23.5',
     contractVersion: 6,
     ratingContract: 'formation-rating-v3',
     generatedAt: new Date().toISOString(),

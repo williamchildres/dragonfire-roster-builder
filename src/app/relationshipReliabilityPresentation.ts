@@ -11,7 +11,11 @@ import {
   formationReliabilityComponents,
 } from '../synergy/reliability/registry';
 import { SYNERGY_TAG_LABELS } from '../synergy/tags';
-import type { ConditionalProbabilityUplift } from '../synergy/reliability/types';
+import type {
+  ConditionalProbabilityUplift,
+  FixedOrHabitLevelEvidenceValue,
+} from '../synergy/reliability/types';
+import type { DragonProgression, SimpleProgressionByDragonId } from '../synergy/types';
 
 export const reliabilityMethodLabels: Record<ReliabilityCalculationMethod, string> = {
   guaranteed: 'Guaranteed',
@@ -169,19 +173,51 @@ export function conditionalUpliftForRelationship(
   relationship: FormationRelationshipV3,
 ): ConditionalProbabilityUplift | null {
   for (const componentId of relationship.componentIds) {
-    const uplift = formationReliabilityComponents.find(
-      (component) => component.id === componentId,
-    )?.conditionalUplift;
+    const component = formationReliabilityComponents.find((candidate) => candidate.id === componentId);
+    const uplift = component?.conditionalUplift ?? component?.conditionalUplifts?.[0];
     if (uplift) return uplift;
   }
   return null;
 }
 
+export function conditionalUpliftsForRelationship(
+  relationship: FormationRelationshipV3,
+  progression?: SimpleProgressionByDragonId,
+): ConditionalProbabilityUplift[] {
+  const directComponents = relationship.componentIds.flatMap((componentId) => {
+    const component = formationReliabilityComponents.find((candidate) => candidate.id === componentId);
+    return component ? [component] : [];
+  });
+  const relatedComponents = progression
+    ? directComponents.flatMap((component) =>
+        (component.additionalConditionalUpliftComponentIds ?? []).flatMap((componentId) => {
+          const related = formationReliabilityComponents.find(
+            (candidate) => candidate.id === componentId,
+          );
+          return related && componentUnlockSatisfied(
+            related.unlock,
+            progression[relationship.beneficiaryDragonId],
+          )
+            ? [related]
+            : [];
+        }),
+      )
+    : [];
+  return [...new Map([...directComponents, ...relatedComponents].map((component) => [component.id, component])).values()].flatMap((component) => {
+    return [
+      ...(component?.conditionalUplift ? [component.conditionalUplift] : []),
+      ...(component?.conditionalUplifts ?? []),
+    ];
+  });
+}
+
 export function conditionalUpliftSummary(
   relationship: FormationRelationshipV3,
   dragonsById: ReadonlyMap<string, Dragon>,
+  progression?: SimpleProgressionByDragonId,
 ): string | null {
-  const uplift = conditionalUpliftForRelationship(relationship);
+  const uplifts = conditionalUpliftsForRelationship(relationship, progression);
+  const uplift = uplifts[0];
   if (!uplift) return null;
   const selectedTrace = relationship.candidateTraces.find(
     (trace) => trace.candidate.id === relationship.selectedCandidateId,
@@ -190,10 +226,12 @@ export function conditionalUpliftSummary(
     dragonsById.get(relationship.providerDragonId)?.name ?? relationship.providerDragonId;
   const beneficiaryName =
     dragonsById.get(relationship.beneficiaryDragonId)?.name ?? relationship.beneficiaryDragonId;
-  const baselinePercent = formatProbability(uplift.baseline);
-  const conditionedPercent = formatProbability(uplift.conditioned);
-  const deltaPoints = formatPercentagePoints(uplift.absoluteDelta);
-  const modifier = `${uplift.conditionLabel} deterministically changes ${uplift.affectedMetricLabel} from ${baselinePercent} to ${conditionedPercent} (+${deltaPoints} percentage points; ${formatMultiplier(uplift.relativeMultiplier)}). The resulting activation remains probabilistic.`;
+  const modifier = uplifts.map((candidate) => {
+    const baselinePercent = formatEvidenceProbability(candidate.baseline);
+    const conditionedPercent = formatEvidenceProbability(candidate.conditioned);
+    const deltaPoints = formatEvidencePercentagePoints(candidate.absoluteDelta);
+    return `${candidate.conditionLabel} deterministically changes ${candidate.affectedMetricLabel} from ${baselinePercent} to ${conditionedPercent} (+${deltaPoints} percentage points; ${formatMultiplier(candidate.relativeMultiplier)}). The resulting activation remains probabilistic.`;
+  }).join(' ');
   const provider = selectedTrace?.provider;
   if (provider?.quantification.status === 'quantified') {
     return `${providerName} can provide ${uplift.conditionLabel} with a ${formatProbability(provider.quantification.reliability)} supported activation opportunity. ${modifier}`;
@@ -227,6 +265,36 @@ export function abilityLabel(
 
 function formatProbability(value: number): string {
   return `${Math.round(value * 10_000) / 100}%`;
+}
+
+function componentUnlockSatisfied(
+  unlock: { minimumStarRank?: number; minimumDragonLevel?: number } | undefined,
+  progression: DragonProgression | undefined,
+): boolean {
+  if (!unlock) return true;
+  if (
+    unlock.minimumStarRank !== undefined &&
+    (progression?.starRank == null || progression.starRank < unlock.minimumStarRank)
+  ) {
+    return false;
+  }
+  if (
+    unlock.minimumDragonLevel !== undefined &&
+    (progression?.dragonLevel == null || progression.dragonLevel < unlock.minimumDragonLevel)
+  ) {
+    return false;
+  }
+  return true;
+}
+
+function formatEvidenceProbability(value: FixedOrHabitLevelEvidenceValue): string {
+  if (typeof value === 'number') return formatProbability(value);
+  return `Habit Levels 1–5 ${[1, 2, 3, 4, 5].map((level) => formatProbability(value.byLevel[level as 1 | 2 | 3 | 4 | 5])).join('/')}`;
+}
+
+function formatEvidencePercentagePoints(value: FixedOrHabitLevelEvidenceValue): string {
+  if (typeof value === 'number') return formatPercentagePoints(value);
+  return `Habit Levels 1–5 ${[1, 2, 3, 4, 5].map((level) => formatPercentagePoints(value.byLevel[level as 1 | 2 | 3 | 4 | 5])).join('/')}`;
 }
 
 function formatPercentagePoints(value: number): string {

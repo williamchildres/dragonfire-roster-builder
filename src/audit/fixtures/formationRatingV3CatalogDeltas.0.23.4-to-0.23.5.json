@@ -1,0 +1,15 @@
+{
+  "contract": "formation-rating-v3-catalog-delta-v1",
+  "release": "0.23.4-to-0.23.5",
+  "reason": "add-legendary-dragon-moondancer",
+  "previousPlacementCount": 32736,
+  "currentPlacementCount": 35904,
+  "existingPlacementCount": 32736,
+  "existingChangedPlacementCount": 0,
+  "introducedMoondancerPlacementCount": 3168,
+  "previousSnapshotIdentity": "sha256:3e7c70f4a8d8133171465b5f24c490a60431fe1c7d9665ab936d665c55f79984",
+  "currentSnapshotIdentity": "sha256:423ee44d186ff842db5d500306c20a191bba13a4bfd25b5927159c1998766193",
+  "introducedRowsIdentity": "sha256:139b75330f380602eda10afc2b838cf5f5bcab4dbd7fcbec72272ff9de47af29",
+  "existingChanged": [],
+  "deterministicManifestHash": "sha256:1601e7a442426190a0567174ef5da766b90b1dcd31006fd831bacf6435ce2b09"
+}

@@ -1,6 +1,6 @@
 {
-  "count": 33,
-  "detailedDragonCount": 33,
+  "count": 34,
+  "detailedDragonCount": 34,
   "metadataOnlyDragonCount": 0,
   "dragons": [
     {
@@ -296,6 +296,15 @@
       "slug": "vermax",
       "name": "Vermax",
       "rarity": "Epic",
+      "breed": "Warrior",
+      "profileCompleteness": "detailed-abilities",
+      "simpleProfileStatus": "curated"
+    },
+    {
+      "id": "moondancer",
+      "slug": "moondancer",
+      "name": "Moondancer",
+      "rarity": "Legendary",
       "breed": "Warrior",
       "profileCompleteness": "detailed-abilities",
       "simpleProfileStatus": "curated"

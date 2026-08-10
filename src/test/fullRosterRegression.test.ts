@@ -50,26 +50,26 @@ describe('full-roster regression audit', () => {
 
     expect(result.reliable).toBe(true);
     expect(result.generatedFrom).toEqual({
-      databaseVersion: '0.23.4',
-      dataSchemaVersion: 13,
+      databaseVersion: '0.23.5',
+      dataSchemaVersion: 14,
       localRosterSchemaVersion: 5,
     });
-    expect(result.rarityCoverage).toEqual({ Epic: 11, Legendary: 10, Rare: 12 });
+    expect(result.rarityCoverage).toEqual({ Epic: 11, Legendary: 11, Rare: 12 });
     expect(result.totals).toMatchObject({
-      dragons: 33,
-      abilities: 231,
-      profileSignals: 239,
-      positionClaims: 33,
-      auditDispositions: 231,
-      progressionStatesEvaluated: 16_320,
-      providerPayoffPairsEvaluated: 4_563,
+      dragons: 34,
+      abilities: 238,
+      profileSignals: 256,
+      positionClaims: 34,
+      auditDispositions: 238,
+      progressionStatesEvaluated: 17_400,
+      providerPayoffPairsEvaluated: 5_425,
       orderedFormationsEvaluated: 32_736,
       passChecks: 32,
       failedChecks: 0,
     });
     expect(result.checks.find((check) => check.id === 'FRR-C030')?.status).toBe('PASS');
     expect(result.findings.map((finding) => finding.id)).toEqual(['FRR-F001', 'FRR-F002']);
-    expect(result.perDragon).toHaveLength(33);
+    expect(result.perDragon).toHaveLength(34);
     expect(result.perDragon.every((row) => row.status === 'PASS')).toBe(true);
   }, 120_000);
 

@@ -1,11 +1,13 @@
 import type { FormationPosition } from '../models/dragon';
 import { areAdjacent, SIMPLE_FORMATION_POSITIONS } from './positionRules';
 import {
-  resolveCapabilityPriorityRecipientGroups,
+  isGroupedSelector,
+  resolveTargetingRecipientGroups,
   signalTargetsRecipient,
   type RecipientCandidate,
 } from './recipientSelectors';
 import { tagSatisfies, type SynergyTag } from './tags';
+import { formationRequirementSatisfied } from './formationRequirements';
 import {
   explainAmplifierOutput,
   explainMissingEnabler,
@@ -87,19 +89,18 @@ function evaluateFormationInternal(input: EvaluateFormationInput, collectEnriche
 } {
   const selected = selectedProfiles(input);
   const recipients = formationRecipients(input);
-  const targetingResolutions = resolveCapabilityPriorityRecipientGroups({
+  const targetingResolutions = resolveTargetingRecipientGroups({
     signals: selected.flatMap((entry) =>
-      [...entry.profile.outputs, ...entry.profile.supports].flatMap((signal) =>
-        signal.recipientSelector?.kind === 'capability-priority-one'
+      [...entry.profile.outputs, ...entry.profile.supports, ...entry.profile.benefitsFrom].flatMap((signal) => {
+        const selector = signal.providerSelector ?? signal.recipientSelector;
+        return isGroupedSelector(selector)
           ? [{
               provider: { dragonId: entry.profile.dragonId, position: entry.position },
-              signal: signal as SynergySignal & {
-                recipientSelector: Extract<NonNullable<SynergySignal['recipientSelector']>, { kind: 'capability-priority-one' }>;
-              },
+              signal,
+              selector,
             }]
-          : [],
-      ),
-    ),
+          : [];
+      })),
     selected: recipients,
     profiles: input.profiles,
     progression: input.progression,
@@ -190,7 +191,7 @@ function addSetupPayoffResults(
   const providers = selected.filter(
     (provider) =>
       provider.profile.dragonId !== beneficiary.profile.dragonId &&
-      provider.profile.outputs.some((output) => matchingSetupTag(output, benefit) !== null && signalCanReachTeammate(output)),
+      provider.profile.outputs.some((output) => matchingSetupTag(output, benefit) !== null && (benefit.providerPresenceSatisfies || signalCanReachTeammate(output))),
   );
 
   if (providers.length === 0 && selfOutputsTag) {
@@ -213,8 +214,9 @@ function addSetupPayoffResults(
     for (const output of provider.profile.outputs.filter(
       (candidate) =>
         matchingSetupTag(candidate, benefit) !== null &&
-        signalCanReachTeammate(candidate) &&
-        targetsBeneficiary(input, selected, targetingResolutions, provider, candidate, beneficiary),
+        (benefit.providerPresenceSatisfies || signalCanReachTeammate(candidate)) &&
+        (benefit.providerPresenceSatisfies || targetsBeneficiary(input, selected, targetingResolutions, provider, candidate, beneficiary)) &&
+        benefitTargetsProvider(input, selected, targetingResolutions, beneficiary, benefit, provider),
     )) {
       const tagMatch = matchingSetupTag(output, benefit);
       if (tagMatch) {
@@ -232,6 +234,27 @@ function addSetupPayoffResults(
       }
     }
   }
+}
+
+function benefitTargetsProvider(
+  input: EvaluateFormationInput,
+  selected: SelectedProfile[],
+  targetingResolutions: TargetingResolution[],
+  beneficiary: SelectedProfile,
+  benefit: SynergySignal,
+  provider: SelectedProfile,
+): boolean {
+  if (!benefit.providerSelector) return true;
+  return signalTargetsRecipient({
+    provider: { dragonId: beneficiary.profile.dragonId, position: beneficiary.position },
+    signal: benefit,
+    recipient: { dragonId: provider.profile.dragonId, position: provider.position },
+    selected: selected.map((entry) => ({ dragonId: entry.profile.dragonId, position: entry.position })),
+    progression: input.progression,
+    profiles: input.profiles,
+    targetingResolutions,
+    selectorOverride: benefit.providerSelector,
+  });
 }
 
 function addAmplifierOutputResults(
@@ -319,6 +342,21 @@ function addRelationshipCandidate(
   tagMatch: SynergyTagMatch,
 ): void {
   if (provider.profile.dragonId === beneficiary.profile.dragonId) {
+    return;
+  }
+
+  if (
+    !formationRequirementSatisfied({
+      requirement: providerSignal.formationRequirement,
+      ownerDragonId: provider.profile.dragonId,
+      formation: input.formation,
+    }) ||
+    !formationRequirementSatisfied({
+      requirement: beneficiarySignal.formationRequirement,
+      ownerDragonId: beneficiary.profile.dragonId,
+      formation: input.formation,
+    })
+  ) {
     return;
   }
 
@@ -630,7 +668,10 @@ function matchingTagFromLists(providerTags: SynergyTag[], beneficiaryTags: Syner
     for (const beneficiaryTag of beneficiaryTags) {
       if (tagsAreCompatible(providerTag, beneficiaryTag)) {
         return {
-          semanticTag: beneficiaryTag === 'status:control' ? 'status:control' : providerTag,
+          semanticTag:
+            beneficiaryTag === 'status:control' || beneficiaryTag === 'trigger:tactical-or-recovery'
+              ? beneficiaryTag
+              : providerTag,
           providerTag,
           beneficiaryTag,
         };

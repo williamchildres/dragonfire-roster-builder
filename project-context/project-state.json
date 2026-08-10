@@ -1,39 +1,39 @@
 {
-  "generatedAt": "2026-08-09T00:11:07.087Z",
+  "generatedAt": "2026-08-09T21:42:23.488Z",
   "source": {
     "repository": "https://github.com/williamchildres/dragonfire-roster-builder",
-    "branch": "fix/vhagar-burn-fiery-bonds-reliability",
-    "commit": "18aaef87749bda9d6881863df448dd9d34a32cd1",
-    "databaseVersion": "0.23.4",
-    "dataSchemaVersion": 13,
+    "branch": "feature/add-moondancer",
+    "commit": "5b46fa5db5c9f13e818775a80129ea2763c54cc0",
+    "databaseVersion": "0.23.5",
+    "dataSchemaVersion": 14,
     "localRosterSchemaVersion": 5,
     "gameBuild": "26.6.53509"
   },
   "contextVersion": 3,
   "format": "dragonfire-lab-project-context",
   "rosterSummary": {
-    "totalDragons": 33,
-    "detailedDragons": 33,
+    "totalDragons": 34,
+    "detailedDragons": 34,
     "metadataOnlyDragons": 0,
-    "curatedSimpleProfiles": 33,
-    "profileAuditReviews": 231,
-    "evidenceSources": 272,
-    "manualReviews": 46
+    "curatedSimpleProfiles": 34,
+    "profileAuditReviews": 238,
+    "evidenceSources": 283,
+    "manualReviews": 47
   },
   "profileAuditSummary": {
-    "reviewedAbilityCount": 231,
+    "reviewedAbilityCount": 238,
     "dispositionCounts": {
-      "represented": 154,
+      "represented": 160,
       "general-support-only": 13,
-      "reinforces-existing": 9,
+      "reinforces-existing": 10,
       "self-only": 38,
       "no-cross-dragon-synergy": 17
     }
   },
   "testTotals": {
     "runner": "vitest",
-    "testFileCount": 84,
-    "testCaseCount": 711,
+    "testFileCount": 87,
+    "testCaseCount": 741,
     "lastRunStatus": "not-run-by-exporter",
     "countingMethod": "static working-tree test declaration scan; runtime pass/fail is reported by npm run test"
   },

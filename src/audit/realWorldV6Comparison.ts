@@ -97,7 +97,7 @@ export async function runRealWorldV6Comparison() {
   };
 
   return {
-    release: '0.23.4',
+    release: '0.23.5',
     contractVersion: 6,
     fixtureDragonCount: snapshot.length,
     candidatePoolBuilds: 1,

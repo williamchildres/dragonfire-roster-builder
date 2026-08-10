@@ -40,4 +40,4 @@ Siege remains one of the five evaluated candidates and is never given an invente
 
 Formation Builder, Saved Formations, and all three optimizer modes derive the same service result from current canonical dragon data at render time. Saved records continue to store only schema-2 fields; optimizer contract 6, candidates, arrangements, objectives, fingerprints, solution hashes, result hashes, and reservation-context fingerprints remain unchanged.
 
-The service emits no Estimated Power adjustment, Formation Rating adjustment, combined percentage, or affinity scoring objective. The independent audit report is [`audits/troop-affinity-recommendation-0.23.2.md`](audits/troop-affinity-recommendation-0.23.2.md).
+The service emits no Estimated Power adjustment, Formation Rating adjustment, combined percentage, or affinity scoring objective. The current independent audit report is [`audits/troop-affinity-recommendation-0.23.5.md`](audits/troop-affinity-recommendation-0.23.5.md); the 0.23.2 artifact remains immutable historical evidence.

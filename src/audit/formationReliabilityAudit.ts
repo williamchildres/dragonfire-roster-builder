@@ -5,6 +5,7 @@ import type { AbilityDefinition } from '../models/dragon';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import type {
   DragonSynergyProfile,
+  FormationRequirement,
   PositionClaim,
   SignalConfidence,
   SynergySignal,
@@ -99,6 +100,7 @@ export interface FormationReliabilityAuditSignal {
   abilityKind: string;
   unlockStarRank: number | null;
   minimumDragonLevel: number | null;
+  formationRequirement: FormationRequirement | null;
   habitLevelDependent: boolean;
   currentCuratedDescription: string;
   currentConfidence: SignalConfidence;
@@ -365,6 +367,72 @@ registerChance(['vhagar-fiery-bonds-taunt'], {
     'Battle length and temporal independence are unresolved.',
   ],
   componentSuffix: 'taunt',
+});
+
+registerChance(['moondancer-blood-moon-bleed'], {
+  probability: {
+    kind: 'multiple',
+    variants: [
+      { label: 'below six Rising Tide stacks', byHabitLevel: [0.25, 0.3, 0.35, 0.425, 0.5] },
+      { label: 'six or more Rising Tide stacks', byHabitLevel: [0.5, 0.6, 0.7, 0.85, 1] },
+    ],
+  },
+  rollTiming: 'Odd-numbered rounds.',
+  rollScope: 'unresolved',
+  opportunityCount: scheduled([1, 3, 5, 7, 9]),
+  targetCount: 2,
+  separatePerTarget: null,
+  separatePerEffect: false,
+  durationRounds: 2,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'Whether one shared roll or separate per-target rolls control the two Bleed targets.',
+    'Temporal independence across odd rounds is not established.',
+  ],
+  componentSuffix: 'bleed',
+});
+
+registerChance(['moondancer-crescent-blade-trigger-payoff'], {
+  probability: fixed(0.5),
+  rollTiming: 'After the selected Crescent Blade recipient deals Tactical Damage or applies Recovery; no more than one successful Rising Tide trigger per round.',
+  rollScope: 'single-shared-roll',
+  opportunityCount: {
+    kind: 'unresolved',
+    note: 'Qualifying selected-recipient event frequency and same-round retry behavior after a failed check are not established.',
+  },
+  targetCount: 1,
+  separatePerTarget: false,
+  separatePerEffect: false,
+  durationRounds: null,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'Qualifying event frequency and temporal independence are not established.',
+    'Whether a failed qualifying event can be followed by another 50% check in the same round is not established.',
+  ],
+  componentSuffix: 'rising-tide-trigger',
+});
+
+registerChance(['moondancer-eclipsing-strike-initiative-payoff'], {
+  probability: {
+    kind: 'multiple',
+    variants: [
+      { label: 'below six Rising Tide stacks', byHabitLevel: [0.2, 0.26, 0.32, 0.4, 0.5] },
+      { label: 'six or more Rising Tide stacks', byHabitLevel: [0.4, 0.52, 0.64, 0.8, 1] },
+    ],
+  },
+  rollTiming: 'Each round after Eclipsing Strike unlocks.',
+  rollScope: 'single-shared-roll',
+  opportunityCount: eachRound(),
+  targetCount: 1,
+  separatePerTarget: false,
+  separatePerEffect: false,
+  durationRounds: 2,
+  independence: 'unknown',
+  unresolvedQuestions: [
+    'The stat-support payoff applies to Eclipsing Strike\'s chance-based enemy reductions.',
+    'Battle length and temporal independence are unresolved.',
+  ],
+  componentSuffix: 'shared-activation',
 });
 
 registerChance(['vhagar-skyward-titan-physical'], {
@@ -1205,6 +1273,15 @@ const mixedBySignalId = new Map<string, MixedSpec>([
 ]);
 
 const guaranteedSignalIds = new Set([
+  'moondancer-crescent-blade-physical',
+  'moondancer-new-moon-instinct',
+  'moondancer-new-moon-initiative-payoff',
+  'moondancer-new-moon-tactical',
+  'moondancer-physical-payoff',
+  'moondancer-reactive-instincts-initiative',
+  'moondancer-reactive-instincts-instinct',
+  'moondancer-strength-payoff',
+  'moondancer-warriors-zeal-left-stats',
   'antares-blazing-onslaught-fire-vulnerability',
   'antares-blazing-onslaught-non-basic-physical-vulnerability',
   'antares-hunters-wrath-right-stats',
@@ -1341,6 +1418,7 @@ const guaranteedSignalIds = new Set([
 ]);
 
 const conditionalDeterministicSignalIds = new Set([
+  'moondancer-advantage-rising-tide-payoff',
   'sunfyre-golden-wrath-fire',
   'sunfyre-adaptive-glory-damage',
   'tairax-gleamstrike-fire',
@@ -1373,6 +1451,8 @@ const conditionalDeterministicSignalIds = new Set([
 ]);
 
 const guaranteedAtLeastOneOpportunitySignalIds = new Set([
+  'moondancer-blood-moon-bleed',
+  'moondancer-eclipsing-strike-initiative-payoff',
   'antares-relentless-pursuit-vulnerable',
   'arulix-hypnotic-helix-overwhelm',
   'caraxes-crippling-inferno-burn',
@@ -1418,6 +1498,7 @@ const guaranteedAtLeastOneOpportunitySignalIds = new Set([
 ]);
 
 const conditionalOpportunitySignalIds = new Set([
+  'moondancer-crescent-blade-trigger-payoff',
   'arrax-sudden-strike-bleed-payoff',
   'arrax-sudden-strike-weakened',
   'arulix-hypnotic-helix-stagger',
@@ -1743,6 +1824,7 @@ function auditSignal(
     abilityKind: ability.kind,
     unlockStarRank: signal.unlock?.minimumStarRank ?? ability.unlockStarRank,
     minimumDragonLevel: signal.unlock?.minimumDragonLevel ?? ability.minimumDragonLevel,
+    formationRequirement: signal.formationRequirement ?? null,
     habitLevelDependent: chance
       ? hasHabitLevelProbabilityValue(chance.probability)
       : ability.kind === 'habit',
@@ -1956,14 +2038,14 @@ function validateCoverage(
   signals: FormationReliabilityAuditSignal[],
   scoringSignals: FormationReliabilityAuditSignal[],
 ): void {
-  if (simpleSynergyProfiles.length !== 33) {
-    throw new Error(`Expected 33 profiles, found ${simpleSynergyProfiles.length}.`);
+  if (simpleSynergyProfiles.length !== 34) {
+    throw new Error(`Expected 34 profiles, found ${simpleSynergyProfiles.length}.`);
   }
-  if (signals.length !== 239) {
-    throw new Error(`Expected 239 curated signals, found ${signals.length}.`);
+  if (signals.length !== 256) {
+    throw new Error(`Expected 256 curated signals, found ${signals.length}.`);
   }
-  if (scoringSignals.length !== 234) {
-    throw new Error(`Expected 234 scoring signals, found ${scoringSignals.length}.`);
+  if (scoringSignals.length !== 247) {
+    throw new Error(`Expected 247 scoring signals, found ${scoringSignals.length}.`);
   }
   const signalIds = new Set(signals.map((signal) => signal.signalId));
   const unknownExplicitClassificationIds = [

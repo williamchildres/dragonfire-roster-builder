@@ -16,9 +16,9 @@ describe('Formation Rating v3 exhaustive audit', () => {
     () => {
       const report = runFormationRatingV3Audit();
       expect(report.coverage).toMatchObject({
-        dragons: 33,
-        unorderedTrios: 5456,
-        orderedFormations: 32736,
+        dragons: 34,
+        unorderedTrios: 5984,
+        orderedFormations: 35904,
         failedChecks: 0,
       });
       expect(report.sourceHashes).toEqual({
@@ -42,17 +42,17 @@ describe('Formation Rating v3 exhaustive audit', () => {
           Developing: 5,
         },
         postCalibrationCounts: {
-          Excellent: 381,
-          Strong: 3271,
-          Solid: 13131,
-          Developing: 13802,
-          Weak: 2151,
+          Excellent: 386,
+          Strong: 3487,
+          Solid: 15840,
+          Developing: 13803,
+          Weak: 2388,
         },
       });
       expect(report.tierCalibration.derivedThresholds).toEqual({
         Excellent: 66,
         Strong: 53,
-        Solid: 35,
+        Solid: 34,
         Developing: 5,
       });
       expect(report.tierCalibration.selectedThresholds.Solid).toBe(34);

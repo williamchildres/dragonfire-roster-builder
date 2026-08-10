@@ -272,9 +272,27 @@ function targetingResolutionSummary(
   const names = (ids: string[]) => ids.map((id) => dragonNamesById.get(id) ?? id);
   if (resolution.status === 'resolved') {
     const selected = dragonNamesById.get(resolution.selectedRecipientId!) ?? resolution.selectedRecipientId!;
+    if (resolution.selectorKind === 'breed-one') {
+      return `${abilityName} selects ${selected} as its one verified eligible breed recipient.`;
+    }
+    if (resolution.selectorKind === 'highest-stat') {
+      return `${abilityName} selects ${selected} as the unique highest-stat eligible Ally.`;
+    }
     return resolution.priorityRecipientIds.length === 1
       ? `${abilityName} selects ${selected} as its shared recipient because ${selected} is the unique active Fire Damage ally.`
       : `${abilityName} selects ${selected} as its shared fallback recipient because no active Fire Damage ally qualifies.`;
+  }
+  if (resolution.unresolvedReason === 'multiple-eligible-breed-candidates') {
+    return `${abilityName} selects one eligible Ally, but ${joinNames(names(resolution.priorityRecipientIds))} qualify and no tie rule is verified.`;
+  }
+  if (resolution.unresolvedReason === 'no-eligible-breed-candidates') {
+    return `${abilityName} has no valid eligible breed recipient in this formation.`;
+  }
+  if (resolution.unresolvedReason === 'highest-stat-tie') {
+    return `${abilityName} targets the highest-stat Ally, but ${joinNames(names(resolution.priorityRecipientIds))} are tied and no tie rule is verified.`;
+  }
+  if (resolution.unresolvedReason === 'missing-stat-data') {
+    return `${abilityName} target selection is unresolved because current combat-stat data is incomplete.`;
   }
   if (resolution.unresolvedReason === 'multiple-priority-candidates') {
     const candidateNames = names(resolution.priorityRecipientIds);

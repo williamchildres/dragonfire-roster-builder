@@ -201,7 +201,7 @@ describe('Estimated Dragon Power v2', () => {
     const canonicalNames = new Set(dragons.map((dragon) => dragon.name));
     expect(canonicalNames.has('Sunfyre')).toBe(true);
     expect(canonicalNames.has('Tairax')).toBe(true);
-    expect(dragons).toHaveLength(33);
+    expect(dragons).toHaveLength(34);
   });
 
   it('keeps observation and model identities deterministic and order independent', () => {

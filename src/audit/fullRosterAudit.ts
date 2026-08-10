@@ -17,6 +17,7 @@ import {
 import { buildFormationRecommendation } from '../services/formationRecommendation';
 import { evaluateFormation } from '../synergy/evaluateFormation';
 import { SIMPLE_FORMATION_POSITIONS } from '../synergy/positionRules';
+import { isValidFormationRequirement } from '../synergy/formationRequirements';
 import { metadataOnlyDragonIds, simpleSynergyAbilityReviews } from '../synergy/profileAudit';
 import { simpleSynergyProfiles } from '../synergy/profiles';
 import {
@@ -111,6 +112,12 @@ export interface SelectorInventoryRow {
   signalIds: string[];
 }
 
+export interface FormationRequirementInventoryRow {
+  requirement: string;
+  signalCount: number;
+  signalIds: string[];
+}
+
 export interface FormationSummaryRow {
   formation: [string, string, string];
   score: number;
@@ -160,6 +167,7 @@ export interface FullRosterAuditReport {
   perDragon: PerDragonAuditRow[];
   aliasTable: AliasAuditRow[];
   selectorInventory: SelectorInventoryRow[];
+  formationRequirementInventory: FormationRequirementInventoryRow[];
   progression: {
     stars: number[];
     levels: number[];
@@ -227,7 +235,7 @@ export interface FullRosterAuditReport {
 }
 
 const EXPECTED_RARITY_COUNTS: Record<string, number> = {
-  Legendary: 10,
+  Legendary: 11,
   Epic: 11,
   Rare: 12,
 };
@@ -266,18 +274,18 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   const rarityCoverage = countBy(dragons, (dragon) => dragon.rarity);
   addCheck(
     'FRR-C001',
-    databaseMetadata.databaseVersion === '0.23.4',
+    databaseMetadata.databaseVersion === '0.23.5',
     `Database version is ${databaseMetadata.databaseVersion}.`,
   );
   addCheck(
     'FRR-C002',
-    databaseMetadata.schemaVersion === 13,
+    databaseMetadata.schemaVersion === 14,
     `Data schema is ${databaseMetadata.schemaVersion}.`,
   );
-  addCheck('FRR-C003', dragons.length === 33, `${dragons.length} known dragons loaded.`);
+  addCheck('FRR-C003', dragons.length === 34, `${dragons.length} known dragons loaded.`);
   addCheck(
     'FRR-C004',
-    simpleSynergyProfiles.length === 33,
+    simpleSynergyProfiles.length === 34,
     `${simpleSynergyProfiles.length} curated profiles loaded.`,
   );
   addCheck(
@@ -340,7 +348,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   );
   addCheck(
     'FRR-C015',
-    allAbilities.length === 231,
+    allAbilities.length === 238,
     `${allAbilities.length} canonical abilities loaded.`,
   );
   addCheck(
@@ -491,6 +499,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
   );
 
   const selectorInventory = buildSelectorInventory(allSignals);
+  const formationRequirementInventory = buildFormationRequirementInventory(allSignals);
   const progressionResult = auditProgression(addCheck);
   const providerPayoffMatrix = auditProviderPayoffMatrix(addCheck);
   const formationSweep = auditFormationSweep(addCheck);
@@ -686,6 +695,7 @@ export function runFullRosterAudit(): FullRosterAuditReport {
     perDragon,
     aliasTable,
     selectorInventory,
+    formationRequirementInventory,
     progression: {
       stars: [...Array.from({ length: 10 }, (_, index) => index + 1)],
       levels: [15, 16],
@@ -808,6 +818,11 @@ function validSignalContract(signal: SynergySignal): boolean {
     !SIMPLE_FORMATION_POSITIONS.includes(signal.requiredRecipientPosition)
   )
     return false;
+  if (
+    signal.formationRequirement !== undefined &&
+    !isValidFormationRequirement(signal.formationRequirement)
+  )
+    return false;
   if (selector?.kind === 'unresolved-group' || selector?.kind === 'adjacent-group') {
     return (
       Number.isInteger(selector.recipientCount) &&
@@ -821,6 +836,26 @@ function validSignalContract(signal: SynergySignal): boolean {
     signal.abilityName.trim().length > 0 &&
     signal.description.trim().length > 0
   );
+}
+
+function buildFormationRequirementInventory(
+  signals: SynergySignal[],
+): FormationRequirementInventoryRow[] {
+  const inventory = new Map<string, string[]>();
+  for (const signal of signals) {
+    if (!signal.formationRequirement) continue;
+    const key = `${signal.formationRequirement.kind}:${signal.formationRequirement.breed}`;
+    const ids = inventory.get(key) ?? [];
+    ids.push(signal.id);
+    inventory.set(key, ids);
+  }
+  return [...inventory.entries()]
+    .map(([requirement, signalIds]) => ({
+      requirement,
+      signalCount: signalIds.length,
+      signalIds: signalIds.sort(),
+    }))
+    .sort((left, right) => left.requirement.localeCompare(right.requirement));
 }
 
 function validClaimContract(claim: PositionClaim): boolean {
@@ -1040,13 +1075,15 @@ function auditFormationSweep(
     [];
   const comparisonCandidatesByTrio = new Map<string, PlacementCandidate[]>();
   const dragonNamesById = new Map(dragons.map((dragon) => [dragon.id, dragon.name]));
+  const historicalDragonIds = new Set(historicalFormationRatingV2Profiles.map((profile) => profile.dragonId));
+  const historicalDragons = dragons.filter((dragon) => historicalDragonIds.has(dragon.id));
   let meaningfulPlacementRecommendationCount = 0;
   let bestOrTiedBestCount = 0;
 
-  for (const left of dragons) {
-    for (const vanguard of dragons) {
+  for (const left of historicalDragons) {
+    for (const vanguard of historicalDragons) {
       if (vanguard.id === left.id) continue;
-      for (const right of dragons) {
+      for (const right of historicalDragons) {
         if (right.id === left.id || right.id === vanguard.id) continue;
         const formation: SimpleFormation = {
           'left-flank': left.id,

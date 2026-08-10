@@ -71,8 +71,8 @@ describe('Daemoros, Feskar, Rhysarion, Shadowsong, Vaeldra, and Vermax screensho
     expect(description('shadowsong', 'shadowsong-hunters-wrath')).toBe('At Level 16+ and deployed in Vanguard: Shadowsong Fire Damage Dealt +16%; Right Flank ally Strength and Initiative +20.');
     expect(description('vaeldra', 'vaeldra-warriors-resilience')).toBe('At Level 16+ and deployed in Vanguard: Vaeldra Damage Received -8%; Left Flank ally Tactical Damage Dealt +16%.');
     expect(description('vermax', 'vermax-warriors-zeal')).toBe('At Level 16+ and deployed in Vanguard, increase Vermax Physical Damage Dealt by 16%. Increase Instinct and Initiative of Left Flank ally by +20.');
-    expect(simpleSynergyProfiles).toHaveLength(33);
-    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(239);
-    expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(231);
+    expect(simpleSynergyProfiles).toHaveLength(34);
+    expect(simpleSynergyProfiles.flatMap((entry) => [...entry.outputs, ...entry.supports, ...entry.benefitsFrom])).toHaveLength(256);
+    expect(dragons.flatMap((entry) => [entry.command, entry.trait, ...entry.habits])).toHaveLength(238);
   });
 });

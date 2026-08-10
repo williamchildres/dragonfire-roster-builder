@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const jsonPath = path.join(root, 'docs', 'audits', 'troop-affinity-recommendation-0.23.2.json');
-const markdownPath = path.join(root, 'docs', 'audits', 'troop-affinity-recommendation-0.23.2.md');
+const jsonPath = path.join(root, 'docs', 'audits', 'troop-affinity-recommendation-0.23.5.json');
+const markdownPath = path.join(root, 'docs', 'audits', 'troop-affinity-recommendation-0.23.5.md');
 const write = process.argv.includes('--write');
 const server = await createServer({ root, appType: 'custom', server: { middlewareMode: true }, logLevel: 'error' });
 

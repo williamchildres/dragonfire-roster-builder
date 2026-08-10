@@ -49,7 +49,7 @@ describe('optimizer v6 real-world acceptance fixture', () => {
   it('records the complete three-mode comparison and Caraxes/Syrax diagnostic', () => {
     const report = JSON.parse(readFileSync(resolve(
       process.cwd(),
-      'docs/audits/roster-optimizer-v6-real-world-0.23.4.json',
+      'docs/audits/roster-optimizer-v6-real-world-0.23.5.json',
     ), 'utf8')) as {
       fixtureDragonCount: number;
       candidatePoolBuilds: number;

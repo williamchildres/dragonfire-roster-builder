@@ -5,8 +5,8 @@ const write = process.argv.includes('--write');
 const merge = process.argv.includes('--merge');
 const bootstrapDeltas = process.argv.includes('--bootstrap-deltas');
 const fixture = value('--fixture');
-const jsonPath = new URL('../docs/audits/roster-optimizer-v6-0.23.4.json', import.meta.url);
-const markdownPath = new URL('../docs/audits/roster-optimizer-v6-0.23.4.md', import.meta.url);
+const jsonPath = new URL('../docs/audits/roster-optimizer-v6-0.23.5.json', import.meta.url);
+const markdownPath = new URL('../docs/audits/roster-optimizer-v6-0.23.5.md', import.meta.url);
 const scratchDirectory = new URL('../Scratch/', import.meta.url);
 const server = await createServer({
   root: process.cwd(),
@@ -99,7 +99,7 @@ try {
 function renderMarkdown(report) {
   const unique = report.executions.filter((execution) => execution.inputOrder === 'forward');
   const maximum = (field) => Math.max(...unique.map((execution) => execution.telemetry[field]));
-  return `# Optimizer v6 audit — 0.23.4
+  return `# Optimizer v6 audit — 0.23.5
 
 - Generated: ${report.generatedAt}
 - Contract: 6 / formation-rating-v3 / best-overall-v1
@@ -115,7 +115,7 @@ function renderMarkdown(report) {
 - Approved cumulative current-v5 deltas: ${report.approvedHistoricalDeltaCount}
 - Approved-delta manifest: \`${report.approvedHistoricalDeltaManifestIdentity}\`
 - Exact historical-delta contract valid: ${report.historicalV5DeltaContractValid}
-- Approved 0.23.3 → 0.23.4 release deltas: ${report.releaseDeltaCount}
+- Approved 0.23.4 → 0.23.5 release deltas: ${report.releaseDeltaCount}
 - Release-delta manifest: \`${report.releaseDeltaManifestIdentity}\`
 - Failed checks: ${report.failedChecks}
 - Deterministic audit hash: \`${report.deterministicAuditHash}\`

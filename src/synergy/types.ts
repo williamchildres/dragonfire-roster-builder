@@ -1,4 +1,4 @@
-import type { EffectTag, FormationPosition } from '../models/dragon';
+import type { DragonBreed, EffectTag, FormationPosition } from '../models/dragon';
 import type { SynergyTag } from './tags';
 
 export type SimpleFriendlyScope = 'formation' | 'adjacent' | 'self';
@@ -11,6 +11,8 @@ export type FriendlyRecipientSelector =
       kind: 'highest-stat';
       stat: TargetingStat;
       excludeSelf: boolean;
+      recipientCount?: 1;
+      selectionGroupId?: string;
     }
   | {
       kind: 'position-priority';
@@ -33,13 +35,24 @@ export type FriendlyRecipientSelector =
       recipientCount: 1;
       includeSelf: boolean;
       selectionGroupId: string;
+    }
+  | {
+      kind: 'breed-one';
+      breed: DragonBreed;
+      recipientCount: 1;
+      includeSelf: boolean;
+      selectionGroupId: string;
     };
 
 export type TargetingResolutionStatus = 'resolved' | 'unresolved';
 export type TargetingUnresolvedReason =
   | 'multiple-priority-candidates'
   | 'multiple-fallback-candidates'
-  | 'missing-capability-data';
+  | 'missing-capability-data'
+  | 'multiple-eligible-breed-candidates'
+  | 'no-eligible-breed-candidates'
+  | 'highest-stat-tie'
+  | 'missing-stat-data';
 
 export interface TargetingResolution {
   selectorKind: FriendlyRecipientSelector['kind'];
@@ -59,6 +72,11 @@ export interface ProgressionRequirement {
   minimumStarRank?: number;
   minimumDragonLevel?: number;
 }
+
+export type FormationRequirement = {
+  kind: 'other-ally-breed-present';
+  breed: DragonBreed;
+};
 
 export interface DragonProgression {
   starRank?: number | null;
@@ -80,6 +98,12 @@ export interface SynergySignal {
   requiredSelfPosition?: FormationPosition;
   requiredRecipientPosition?: FormationPosition;
   recipientSelector?: FriendlyRecipientSelector;
+  /** Selects which teammate may provide this benefits-from signal. */
+  providerSelector?: FriendlyRecipientSelector;
+  /** The provider only needs to establish the condition somewhere in the formation. */
+  providerPresenceSatisfies?: boolean;
+  /** Formation state required for this signal's mechanic to have an eligible downstream use. */
+  formationRequirement?: FormationRequirement;
   nonScoring?: boolean;
   supportOnly?: boolean;
   friendlyScope?: SimpleFriendlyScope;

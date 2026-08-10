@@ -124,7 +124,8 @@ export type EffectTag =
   | 'FIRE_DAMAGE_ALLY_TARGET'
   | 'HIGHEST_STRENGTH_TARGET'
   | 'STEADY_EROSION'
-  | 'NULLIFY_RECOVERY';
+  | 'NULLIFY_RECOVERY'
+  | 'RISING_TIDE';
 
 export type AbilityKind = 'command' | 'trait' | 'habit';
 

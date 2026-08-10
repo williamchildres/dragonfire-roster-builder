@@ -6,6 +6,35 @@ const build = databaseMetadata.currentDocumentedGameBuild;
 
 export const manualReviewRecords: ManualReviewRecord[] = [
   {
+    id: 'moondancer-combat-data-review-2026-08-09',
+    dragonId: 'moondancer',
+    scope: 'habits',
+    status: 'confirmed',
+    reviewedAt: '2026-08-09',
+    reviewedAgainstGameBuild: 'unknown',
+    reviewer: 'repository-owner',
+    notes: [
+      'Identity, Warrior breed, Legendary rarity, troop affinities, Command, Trait, and five Habits were manually transcribed from eleven supplied screenshots.',
+      'Personal Level 38, two-Star progression, account stats, and displayed account power are not canonical dragon defaults.',
+      'Crescent Blade and New Moon independently select one other Ally Sentinel; no tie rule is inferred when two qualify.',
+      'Advantage and Rising Tide thresholds select documented enhanced branches without establishing stack uptime or guaranteeing downstream chance results.',
+      'Blood Moon multi-target roll scope and highest-troop tie handling remain unresolved.',
+    ],
+    evidenceIds: [
+      'moondancer-main-screen-2026-08-09',
+      'moondancer-crescent-blade-1-2026-08-09',
+      'moondancer-crescent-blade-2-2026-08-09',
+      'moondancer-crescent-blade-3-2026-08-09',
+      'moondancer-crescent-blade-4-2026-08-09',
+      'moondancer-warriors-zeal-2026-08-09',
+      'moondancer-new-moon-2026-08-09',
+      'moondancer-reactive-instincts-2026-08-09',
+      'moondancer-full-moon-2026-08-09',
+      'moondancer-blood-moon-2026-08-09',
+      'moondancer-eclipsing-strike-2026-08-09',
+    ],
+  },
+  {
     id: 'sunfyre-profile-review-2026-07-22',
     dragonId: 'sunfyre',
     scope: 'habits',

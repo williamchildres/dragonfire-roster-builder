@@ -59,12 +59,24 @@ describe('optimizer v6 independent audit artifact', () => {
     expect(previousManifest.deterministicManifestHash).toBe(
       'sha256:7630e354700b908f4e3c86379552a2c13b9e6d1034a0fdaa011772cd4eaff69a',
     );
+    const v0234Report = JSON.parse(readFileSync(resolve(
+      process.cwd(),
+      'docs/audits/roster-optimizer-v6-0.23.4.json',
+    ), 'utf8')) as AuditReport;
+    const v0234Manifest = JSON.parse(readFileSync(resolve(
+      process.cwd(),
+      'src/audit/fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.4.json',
+    ), 'utf8')) as ApprovedDeltaManifest;
+    expect(v0234Report.deterministicAuditHash).toBe('fnv1a64:1acd71772d85f8a8');
+    expect(v0234Manifest.deterministicManifestHash).toBe(
+      'sha256:4f315d86257e481b9b8e6f582a904380158c6ca012f8edf967183a9ab4810b7c',
+    );
   });
 
   it('records all 198 independent solves and the three-mode matrix', () => {
     const report = JSON.parse(readFileSync(resolve(
       process.cwd(),
-      'docs/audits/roster-optimizer-v6-0.23.4.json',
+      'docs/audits/roster-optimizer-v6-0.23.5.json',
     ), 'utf8')) as AuditReport;
 
     expect(report.executionCount).toBe(198);
@@ -83,8 +95,8 @@ describe('optimizer v6 independent audit artifact', () => {
     expect(report.noDuplicateDragons).toBe(true);
     expect(report.exactReconstruction).toBe(true);
     expect(report.historicalV5Compatible).toBe(false);
-    expect(report.historicalV5ChangedExecutionCount).toBe(78);
-    expect(report.approvedHistoricalDeltaCount).toBe(78);
+    expect(report.historicalV5ChangedExecutionCount).toBe(96);
+    expect(report.approvedHistoricalDeltaCount).toBe(96);
     expect(report.approvedHistoricalDeltaManifestIdentity).toBe(
       OPTIMIZER_V6_APPROVED_HISTORICAL_DELTA_MANIFEST_IDENTITY,
     );
@@ -110,10 +122,10 @@ describe('optimizer v6 independent audit artifact', () => {
       expect(reverse?.resultHash).toBe(forward?.resultHash);
     }
 
-    expect(report.deterministicAuditHash).toBe('fnv1a64:1acd71772d85f8a8');
+    expect(report.deterministicAuditHash).toBe('fnv1a64:701d3db5f5e41ffe');
   });
 
-  it('matches the exact committed 0.23.4 cumulative historical delta manifest', () => {
+  it('matches the exact committed 0.23.5 cumulative historical delta manifest', () => {
     const report = committedAudit();
     const manifest = committedManifest();
     const validation = evaluateApprovedHistoricalDeltas(
@@ -161,6 +173,28 @@ describe('optimizer v6 independent audit artifact', () => {
       .update(JSON.stringify(identityInput))
       .digest('hex')}`).toBe(
       'sha256:c4a28f699030bbe3d7af4d4ae90717012ae239279b0220b567eb4fb689cc24cb',
+    );
+  });
+
+  it('locks the 198 catalog-expansion execution deltas from 0.23.4', () => {
+    const manifest = JSON.parse(readFileSync(resolve(
+      process.cwd(),
+      'src/audit/fixtures/optimizerV6ReleaseDeltas.0.23.4-to-0.23.5.json',
+    ), 'utf8')) as ApprovedDeltaManifest & {
+      changedExecutionCount: number;
+      reasonCode: string;
+    };
+    expect(manifest.changedExecutionCount).toBe(198);
+    expect(manifest.reasonCode).toBe('add-legendary-dragon-moondancer');
+    expect(manifest.deltas.every((delta) =>
+      delta.reason === 'add-legendary-dragon-moondancer'
+    )).toBe(true);
+    const { deterministicManifestHash: _ignored, ...identityInput } = manifest;
+    void _ignored;
+    expect(`sha256:${createHash('sha256')
+      .update(JSON.stringify(identityInput))
+      .digest('hex')}`).toBe(
+      'sha256:ec76aba971390ed6f8b603b112987067d63886c158fb561a79ba617281da897d',
     );
   });
 
@@ -237,7 +271,7 @@ describe('optimizer v6 independent audit artifact', () => {
 function committedAudit(): AuditReport {
   return JSON.parse(readFileSync(resolve(
     process.cwd(),
-    'docs/audits/roster-optimizer-v6-0.23.4.json',
+    'docs/audits/roster-optimizer-v6-0.23.5.json',
   ), 'utf8')) as AuditReport;
 }
 
@@ -254,6 +288,6 @@ interface ApprovedDeltaManifest {
 function committedManifest(): ApprovedDeltaManifest {
   return JSON.parse(readFileSync(resolve(
     process.cwd(),
-    'src/audit/fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.4.json',
+    'src/audit/fixtures/optimizerV6ApprovedHistoricalDeltas.0.23.5.json',
   ), 'utf8')) as ApprovedDeltaManifest;
 }

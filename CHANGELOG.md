@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.23.5 - 2026-08-09
+
+- Added Legendary dragon Moondancer with complete screenshot-verified Command, Trait, Habits, troop affinities, targeting, Rising Tide mechanics, reliability modeling, and Formation Rating/optimizer support.
+- Generalized deterministic conditional-probability uplift evidence for Habit-level progressions while preserving Vhagar's fixed 25% to 50% Fiery Bonds contract and all 32,736 existing placement results.
+- Added conservative one-recipient breed and grouped highest-stat selectors: multiple eligible Sentinels and highest-stat ties remain explicit and unresolved without invented tie rules.
+- Expanded the current catalog to 34 dragons, 238 abilities, 34 curated profiles, 254 signals, 35,904 ordered placements, and 5,984 optimizer trio candidates without changing Formation Rating v3, Estimated Power v2, optimizer contract 6, or Best Overall 60/40 weighting.
+
 ## 0.23.4 - 2026-08-08
 
 - Corrected Vhagar's Burn payoff reliability so a supported Burn opportunity proves the deterministic Fiery Bonds branch change from 25% to 50% Taunt chance without requiring the subsequent 50% Taunt roll as a second relationship event.

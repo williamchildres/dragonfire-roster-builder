@@ -44,9 +44,9 @@ function signalsFor(dragonId: string): SynergySignal[] {
 
 describe('first Rare dragon batch', () => {
   it('keeps the first Rare batch complete with controller-verified affinities', () => {
-    expect(dragons).toHaveLength(33);
-    expect(dragons.filter((dragon) => dragon.command !== null)).toHaveLength(33);
-    expect(simpleSynergyProfiles).toHaveLength(33);
+    expect(dragons).toHaveLength(34);
+    expect(dragons.filter((dragon) => dragon.command !== null)).toHaveLength(34);
+    expect(simpleSynergyProfiles).toHaveLength(34);
     expect(metadataOnlyDragonIds).toHaveLength(0);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare' && dragon.command !== null)).toHaveLength(12);
 
@@ -65,7 +65,7 @@ describe('first Rare dragon batch', () => {
       expect(Object.values(dragon.stats).every((value) => value === null)).toBe(true);
     }
 
-    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.23.4', schemaVersion: 13 });
+    expect(databaseMetadata).toMatchObject({ databaseVersion: '0.23.5', schemaVersion: 14 });
     expect(ROSTER_SCHEMA_VERSION).toBe(5);
   });
 

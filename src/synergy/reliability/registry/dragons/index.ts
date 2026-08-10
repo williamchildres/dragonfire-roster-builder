@@ -10,6 +10,7 @@ import { feskarReliabilityRegistry } from './feskar';
 import { jagadrixReliabilityRegistry } from './jagadrix';
 import { kalspireReliabilityRegistry } from './kalspire';
 import { malachiteReliabilityRegistry } from './malachite';
+import { moondancerReliabilityRegistry } from './moondancer';
 import { nyrenaReliabilityRegistry } from './nyrena';
 import { rhysarionReliabilityRegistry } from './rhysarion';
 import { seasmokeReliabilityRegistry } from './seasmoke';
@@ -45,6 +46,7 @@ export const dragonReliabilityRegistries = [
   jagadrixReliabilityRegistry,
   kalspireReliabilityRegistry,
   malachiteReliabilityRegistry,
+  moondancerReliabilityRegistry,
   nyrenaReliabilityRegistry,
   rhysarionReliabilityRegistry,
   seasmokeReliabilityRegistry,

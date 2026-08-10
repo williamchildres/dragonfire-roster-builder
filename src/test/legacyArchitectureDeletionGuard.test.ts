@@ -103,9 +103,9 @@ describe('legacy combat-analysis architecture deletion guard', () => {
       ]).map((signal) => signal.id),
     );
 
-    expect(dragons).toHaveLength(33);
-    expect(detailed).toHaveLength(33);
-    expect(simpleSynergyProfiles).toHaveLength(33);
+    expect(dragons).toHaveLength(34);
+    expect(detailed).toHaveLength(34);
+    expect(simpleSynergyProfiles).toHaveLength(34);
     expect(metadataOnlyDragonIds).toHaveLength(0);
 
     for (const dragon of detailed) {

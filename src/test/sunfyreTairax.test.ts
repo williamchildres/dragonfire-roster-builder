@@ -26,8 +26,8 @@ const signals = (dragonId: string) => {
 
 describe('Sunfyre and Tairax canonical data', () => {
   it('adds the exact canonical identities, rarity totals, affinities, and null private stats', () => {
-    expect(dragons).toHaveLength(33);
-    expect(dragons.filter((dragon) => dragon.rarity === 'Legendary')).toHaveLength(10);
+    expect(dragons).toHaveLength(34);
+    expect(dragons.filter((dragon) => dragon.rarity === 'Legendary')).toHaveLength(11);
     expect(dragons.filter((dragon) => dragon.rarity === 'Epic')).toHaveLength(11);
     expect(dragons.filter((dragon) => dragon.rarity === 'Rare')).toHaveLength(12);
     expect(sunfyre).toMatchObject({ name: 'Sunfyre', rarity: 'Legendary', breed: 'Sentinel', firstObservedInGame: '2026-07-22', officialProfileUrl: null, isNew: true });
@@ -63,7 +63,7 @@ describe('Sunfyre and Tairax canonical data', () => {
       expect(actual.filter((ability) => ability.id === id)).toHaveLength(1);
       expect(actual.find((ability) => ability.id === id)).toMatchObject({ kind, unlockStarRank, minimumDragonLevel, positionRequirement });
     }
-    expect(dragons.flatMap((dragon) => [dragon.command, dragon.trait, ...dragon.habits])).toHaveLength(231);
+    expect(dragons.flatMap((dragon) => [dragon.command, dragon.trait, ...dragon.habits])).toHaveLength(238);
   });
 
   it('preserves every progression and rounded-summary discrepancy from the screenshots', () => {
@@ -86,11 +86,11 @@ describe('Sunfyre and Tairax canonical data', () => {
   });
 
   it('adds exactly the requested 15 curated signals and 14 audit dispositions', () => {
-    expect(simpleSynergyProfiles).toHaveLength(33);
-    expect(simpleSynergyProfiles.flatMap((profile) => [...profile.outputs, ...profile.supports, ...profile.benefitsFrom])).toHaveLength(239);
+    expect(simpleSynergyProfiles).toHaveLength(34);
+    expect(simpleSynergyProfiles.flatMap((profile) => [...profile.outputs, ...profile.supports, ...profile.benefitsFrom])).toHaveLength(256);
     expect(signals('sunfyre')).toHaveLength(6);
     expect(signals('tairax')).toHaveLength(9);
-    expect(simpleSynergyAbilityReviews).toHaveLength(231);
+    expect(simpleSynergyAbilityReviews).toHaveLength(238);
     expect(simpleSynergyAbilityReviews.filter((review) => ['sunfyre', 'tairax'].includes(review.dragonId))).toHaveLength(14);
     expect(signals('tairax').filter((signal) => signal.tag === 'status:stagger')).toHaveLength(1);
     expect(signals('tairax').filter((signal) => signal.tag === 'status:control')).toHaveLength(1);
